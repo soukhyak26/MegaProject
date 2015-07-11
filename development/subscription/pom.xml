@@ -9,11 +9,11 @@
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <modules>
-        <module>domain-services/item-registration</module>
         <module>libs/axon-commons</module>
+        <module>domain-services/item-registration</module>
     </modules>
     <properties>
-        <axon.version>2.5.SNAPSHOT</axon.version>
+        <axon.version>2.4.2</axon.version>
         <springboot.version>1.2.1.RELEASE</springboot.version>
         <jackson.verson>2.4.4</jackson.verson>
     </properties>
@@ -38,12 +38,12 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>2.5</version>
                     <configuration>
-                        <archieve>
+                        <archive>
                             <manifest>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             </manifest>
-                        </archieve>
+                        </archive>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                         <attachClasses>true</attachClasses>
                     </configuration>
@@ -185,15 +185,15 @@
                 <version>3.3.2</version>
             </dependency>
             <dependency>
-                <groupId>com.jayway.restassuared</groupId>
-                <artifactId>rest-assuared</artifactId>
-                <version>2.4.0</version>
+                <groupId>com.jayway.restassured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>2.4.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.jayway.restassuared</groupId>
                 <artifactId>spring-mock-mvc</artifactId>
-                <version>2.4.0</version>
+                <version>2.4.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -354,20 +354,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>repo</id>
-            <name>subscription-repo</name>
-            <url>C:\Users\NIKUNJ\.m2\repository</url>
-        </repository>
-        <repository>
-            <id>central</id>
-            <name>maven-repo</name>
-            <layout>default</layout>
-            <url>http://repo1.maven.org/maven2</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

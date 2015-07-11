@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>
-            <artifactId>axon-distributed-commondbus</artifactId>
+            <artifactId>axon-distributed-commandbus</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jgroups</groupId>
@@ -64,8 +64,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jayway.restassuared</groupId>
-            <artifactId>rest-assuared</artifactId>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
         </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>
