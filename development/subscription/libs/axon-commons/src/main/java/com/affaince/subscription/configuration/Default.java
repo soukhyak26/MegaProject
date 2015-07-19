@@ -2,6 +2,7 @@ package com.affaince.subscription.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.Mongo;
+import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -55,12 +56,13 @@ public class Default {
         return IdentifierFactory.getInstance();
     }
 
+    @Bean
     public EventStore eventStore (@Qualifier("axonmongo")MongoTemplate mongoTemplate) throws SQLException {
         MongoEventStore mongoEventStore = new MongoEventStore(mongoTemplate);
         return mongoEventStore;
     }
 
-    @Bean (name = "axonnmongo")
+    @Bean (name = "axonmongo")
     public MongoTemplate mongoTemplate (Mongo mongo) {
         MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongo, "items", "domainevents", "snapshotevents", null, null);
         return mongoTemplate;
@@ -91,8 +93,8 @@ public class Default {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory (@Value("${spring.activemq.brokerurl}") String brokerURL, ActiveMQConnectionFactory activeMQConnectionFactory) {
-        return new ActiveMQConnectionFactory(brokerURL);
+    public ConnectionFactory connectionFactory (@Value("${spring.activemq.brokerurl}") String brokerURL) {
+        return new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_BROKER_URL);
     }
 
     @Bean
@@ -106,7 +108,7 @@ public class Default {
     }
 
     @Bean
-    public AbstractMessageListenerContainer listenerContainer (@Value("axon.eventBus.queuename") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
+    public AbstractMessageListenerContainer listenerContainer (@Value("${axon.eventBus.queuename}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
         DefaultMessageListenerContainer listenerContainer =
                 new DefaultMessageListenerContainer();
         listenerContainer.setDestinationName(queueName);
