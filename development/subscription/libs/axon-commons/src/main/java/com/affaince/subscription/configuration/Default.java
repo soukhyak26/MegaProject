@@ -1,6 +1,9 @@
 package com.affaince.subscription.configuration;
 
+import com.affaince.subscription.repository.DefaultIdGenerator;
+import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -10,10 +13,9 @@ import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
 import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.axonframework.domain.IdentifierFactory;
-import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.EventBusTerminal;
-import org.axonframework.eventhandling.EventTemplate;
-import org.axonframework.eventhandling.SimpleEventBus;
+import org.axonframework.eventhandling.*;
+import org.axonframework.eventhandling.async.AsynchronousCluster;
+import org.axonframework.eventhandling.async.SequentialPerAggregatePolicy;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.eventstore.mongo.DefaultMongoTemplate;
 import org.axonframework.eventstore.mongo.MongoEventStore;
@@ -23,7 +25,6 @@ import org.axonframework.saga.spring.SpringResourceInjector;
 import org.axonframework.serializer.SerializedType;
 import org.axonframework.serializer.Serializer;
 import org.axonframework.serializer.json.JacksonSerializer;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +42,9 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadFactory;
 
+import static java.util.concurrent.Executors.defaultThreadFactory;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
 /**
@@ -126,8 +129,21 @@ public class Default {
     }
 
     @Bean
-    public EventBus eventBus () {
-        return new SimpleEventBus();
+    public ClusterSelector selector (Cluster cluster) {
+        return new DefaultClusterSelector(cluster);
+    }
+
+    @Bean
+    public Cluster asyncCluster (@Value("${asyncCluster.pool.size:20}") int maximumPoolSize) {
+        ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
+                .setNameFormat("asyncCluster-%d").build();
+        return new AsynchronousCluster("asyncCluster",
+                newScheduledThreadPool(maximumPoolSize,threadFactory), new SequentialPerAggregatePolicy());
+    }
+
+    @Bean
+    public EventBus eventBus (ClusterSelector selector) {
+        return new ClusteringEventBus(selector);
     }
 
     protected Map<String, String> types () {
@@ -163,5 +179,10 @@ public class Default {
     @Bean
     public ResourceInjector  resourceInjector () {
         return new SpringResourceInjector();
+    }
+
+    @Bean
+    public IdGenerator generator () {
+        return new DefaultIdGenerator();
     }
 }

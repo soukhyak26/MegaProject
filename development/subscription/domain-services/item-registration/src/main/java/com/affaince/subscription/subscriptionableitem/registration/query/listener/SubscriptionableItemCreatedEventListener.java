@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
  * Created by rbsavaliya on 19-07-2015.
  */
 @Component
-public class SubscriptionableItemCreatedEventListiner {
+public class SubscriptionableItemCreatedEventListener {
     private final SubscriptionableItemRepository repository;
 
     @Autowired
-    public SubscriptionableItemCreatedEventListiner(SubscriptionableItemRepository repository) {
+    public SubscriptionableItemCreatedEventListener(SubscriptionableItemRepository repository) {
         this.repository = repository;
     }
 
