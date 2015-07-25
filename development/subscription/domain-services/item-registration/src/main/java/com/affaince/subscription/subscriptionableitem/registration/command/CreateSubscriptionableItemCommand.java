@@ -1,8 +1,7 @@
 package com.affaince.subscription.subscriptionableitem.registration.command;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -22,7 +21,7 @@ public class CreateSubscriptionableItemCommand {
     private LocalDate currentPrizeDate;
 
     public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
-        this.itemId = itemId;
+        this.itemId = id;
         this.batchId = batchId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;

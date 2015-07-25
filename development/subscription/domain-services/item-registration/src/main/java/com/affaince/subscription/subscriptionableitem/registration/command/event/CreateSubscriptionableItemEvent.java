@@ -1,6 +1,6 @@
 package com.affaince.subscription.subscriptionableitem.registration.command.event;
 
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
 
 /**
  * Created by rbsavaliya on 19-07-2015.

@@ -8,18 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by rbsavaliya on 19-07-2015.
+ * Created by rbsavaliya on 25-07-2015.
  */
+
 @Component
 public class CreateSubscriptionableItemCommandHandler {
 
-    private final Repository <SubscriptionableItem> itemRepository;
+    private Repository<SubscriptionableItem> itemRepository;
 
     @Autowired
     public CreateSubscriptionableItemCommandHandler (Repository<SubscriptionableItem> itemRepository) {
-        this.itemRepository= itemRepository;
+        this.itemRepository = itemRepository;
     }
-
 
     @CommandHandler
     public void handle (CreateSubscriptionableItemCommand command) {

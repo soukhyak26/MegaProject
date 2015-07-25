@@ -3,6 +3,7 @@ package com.affaince.subscription.subscriptionableitem.registration.configuratio
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriptionableitem.registration.command.domain.SubscriptionableItem;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
+import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -20,14 +21,17 @@ public class Axon extends Default {
 
     @Bean
     public Repository<SubscriptionableItem> createRepository (DisruptorCommandBus commandBus) {
+
         Repository <SubscriptionableItem> repository = commandBus.createRepository(new GenericAggregateFactory<>(SubscriptionableItem.class));
+        //commandBus.subscribe(CreateSubscriptionableItemCommand.class.getName(),new CreateSubscriptionableItemCommandHandler<CreateSubscriptionableItemCommand>(repository));
         return repository;
     }
 
     @Override
     protected Map<String, String> types () {
         return new HashMap<String, String>() {{
-            put("com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent", "CreateSubscriptionableItemEvent");
+            put("com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent", CreateSubscriptionableItemEvent.class.getName());
+            put("com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent", UpdatePriceAndStockParametersEvent.class.getName());
         }};
     }
 }

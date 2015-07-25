@@ -1,6 +1,5 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.request;
 
-import java.time.LocalDate;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -15,7 +14,6 @@ public class CreateSubscriptionableItemRequest {
     private String productId;
     private double currentMRP;
     private int currentStockInUnits;
-    private LocalDate currentPrizeDate;
 
     public String getBatchId() {
         return batchId;
@@ -79,13 +77,5 @@ public class CreateSubscriptionableItemRequest {
 
     public void setCurrentStockInUnits(int currentStockInUnits) {
         this.currentStockInUnits = currentStockInUnits;
-    }
-
-    public LocalDate getCurrentPrizeDate() {
-        return currentPrizeDate;
-    }
-
-    public void setCurrentPrizeDate(LocalDate currentPrizeDate) {
-        this.currentPrizeDate = currentPrizeDate;
     }
 }

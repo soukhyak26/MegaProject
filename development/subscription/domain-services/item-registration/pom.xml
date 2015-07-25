@@ -12,19 +12,6 @@
     <artifactId>item-registration</artifactId>
     <packaging>war</packaging>
     <build>
-        <directory>target</directory>
-        <outputDirectory>target/classes</outputDirectory>
-        <testOutputDirectory>target/test-classes</testOutputDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>

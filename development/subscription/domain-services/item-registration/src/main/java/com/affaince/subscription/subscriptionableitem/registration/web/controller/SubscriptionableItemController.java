@@ -1,8 +1,11 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.controller;
 
 import com.affaince.subscription.subscriptionableitem.registration.command.CreateSubscriptionableItemCommand;
+import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.CreateSubscriptionableItemRequest;
+import com.affaince.subscription.subscriptionableitem.registration.web.request.UpdatePriceAndStockParametersRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.PathParam;
 import java.util.UUID;
 
 /**
@@ -43,9 +47,22 @@ public class SubscriptionableItemController {
                 request.getProductId(),
                 request.getCurrentMRP(),
                 request.getCurrentStockInUnits(),
-                request.getCurrentPrizeDate()
+                LocalDate.now()
         );
         commandGateway.sendAndWait(createCommand);
         return new ResponseEntity<Object>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping (method = RequestMethod.PUT, value = "/{itemid}")
+    @Consumes ("application/json")
+    public ResponseEntity<Object> updatePriceAndStockParameters (@RequestBody UpdatePriceAndStockParametersRequest request, @PathParam("itemid") String itemId) {
+        UpdatePriceAndStockParametersCommand command = new UpdatePriceAndStockParametersCommand(
+                itemId,
+                request.getCurrentMRP(),
+                request.getCurrentStockInUnits(),
+                LocalDate.now()
+        );
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

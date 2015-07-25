@@ -1,8 +1,7 @@
 package com.affaince.subscription.subscriptionableitem.registration.query.view;
 
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
-
-import java.time.LocalDate;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
