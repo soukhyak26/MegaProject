@@ -13,6 +13,7 @@ import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -45,6 +46,8 @@ public class Axon extends Default {
     @Autowired
     StepBuilderFactory stepBuilderFactory;
 
+    @Autowired
+    CamelContext camelContext;
     public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
 
     /*
@@ -124,14 +127,8 @@ public class Axon extends Default {
     }
 */
     @Bean
-    public CamelContext camelContext() throws Exception {
-        CamelContext camelContext = new DefaultCamelContext();
-        return camelContext;
-    }
-
-    @Bean
     public BindyCsvDataFormat bindyForIn() {
-        BindyCsvDataFormat dataFormat = new BindyCsvDataFormat("com.affaince.subscripton.integration");
+        BindyCsvDataFormat dataFormat = new BindyCsvDataFormat("com.affaince.subscription.integration");
         dataFormat.setLocale("default");
         return dataFormat;
     }
@@ -140,9 +137,20 @@ public class Axon extends Default {
     public RouteBuilder route() {
         return new RouteBuilder() {
             public void configure() {
-                from("file:src/main/resources?fileName=subscriptionableItemsFeed.in&amp;noop=true").unmarshal("bindyForIn").to("activemq:eventbustopic");
+                from("file:src/main/resources?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").to("jms:eventbustopic");
 
             }
         };
     }
+
+    @Bean
+    CamelContextConfiguration contextConfiguration() {
+        return new CamelContextConfiguration() {
+            @Override
+            public void beforeApplicationStart(CamelContext context) {
+                System.out.println("@@@@@@@@@@@Hey Camel Started@@@@@@@@@@@");
+            }
+        };
+    }
+
 }
