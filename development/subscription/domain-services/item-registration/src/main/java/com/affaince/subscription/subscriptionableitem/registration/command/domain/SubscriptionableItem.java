@@ -1,8 +1,10 @@
 package com.affaince.subscription.subscriptionableitem.registration.command.domain;
 
 import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
+import com.affaince.subscription.subscriptionableitem.registration.command.AddSubscriptionableItemRuleParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.AddProjectionParametersEvent;
+import com.affaince.subscription.subscriptionableitem.registration.command.event.AddSubscriptionableItemRuleParametersEvent;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -27,6 +29,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
     private ProjectionParameters projectionParameters;
+    private RuleParameters ruleParameters;
 
     public SubscriptionableItem () {
 
@@ -73,6 +76,19 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
         this.projectionParameters = projectionParameters;
     }
 
+    @EventSourcingHandler
+    public void on (AddSubscriptionableItemRuleParametersEvent event) {
+        this.itemId = itemId;
+        RuleParameters ruleParameters = new RuleParameters(
+                event.getMinPermissibleDiscount(),
+                event.getMaxPermissibleDiscount(),
+                event.getMaxPermissibleUnits(),
+                event.getMaxPermissibleSubscriptionPeriod(),
+                event.getMaxPermissibleSubscriptionPeriodUnit()
+        );
+        this.ruleParameters = ruleParameters;
+    }
+
     public void updatePriceAndStockParemeters(UpdatePriceAndStockParametersCommand command) {
         apply(new UpdatePriceAndStockParametersEvent(this.itemId, command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
@@ -87,6 +103,17 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
                 command.getMaximumProfitMargin(),
                 command.getDemandToSupplyRatio(),
                 command.getConsumptionFrequency()
+        ));
+    }
+
+    public void addSubscriptionableItemRuleParameters(AddSubscriptionableItemRuleParametersCommand command) {
+        apply(new AddSubscriptionableItemRuleParametersEvent(
+                this.itemId,
+                command.getMinPermissibleDiscount(),
+                command.getMaxPermissibleDiscount(),
+                command.getMaxPermissibleUnits(),
+                command.getMaxPermissibleSubscriptionPeriod(),
+                command.getMaxPermissibleSubscriptionPeriodUnit()
         ));
     }
 }

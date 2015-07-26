@@ -112,4 +112,12 @@ public class CreateSubscriptionableItemCommand {
     public void setCurrentPrizeDate(LocalDate currentPrizeDate) {
         this.currentPrizeDate = currentPrizeDate;
     }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
+    }
 }

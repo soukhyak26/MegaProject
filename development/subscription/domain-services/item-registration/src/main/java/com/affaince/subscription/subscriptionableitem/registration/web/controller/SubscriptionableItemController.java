@@ -1,9 +1,11 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.controller;
 
 import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
+import com.affaince.subscription.subscriptionableitem.registration.command.AddSubscriptionableItemRuleParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.CreateSubscriptionableItemCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.AddProjectionParametersRequest;
+import com.affaince.subscription.subscriptionableitem.registration.web.request.AddSubscriptionableItemRuleParametersRequest;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.CreateSubscriptionableItemRequest;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.UpdatePriceAndStockParametersRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -80,6 +82,21 @@ public class SubscriptionableItemController {
                 request.getMaximumProfitMargin(),
                 request.getDemandToSupplyRatio(),
                 request.getConsumptionFrequency()
+        );
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "addsubscriptionableitemruleparameters/{itemid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> AddSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathParam("itemid") String itemId) {
+        AddSubscriptionableItemRuleParametersCommand command = new AddSubscriptionableItemRuleParametersCommand(
+                itemId,
+                request.getMinPermissibleDiscount(),
+                request.getMaxPermissibleDiscount(),
+                request.getMaxPermissibleUnits(),
+                request.getMaxPermissibleSubscriptionPeriod(),
+                request.getMaxPermissibleSubscriptionPeriodUnit()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

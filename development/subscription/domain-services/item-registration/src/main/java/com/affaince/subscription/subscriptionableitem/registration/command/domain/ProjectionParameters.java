@@ -6,7 +6,7 @@ package com.affaince.subscription.subscriptionableitem.registration.command.doma
 class ProjectionParameters {
 
     private int targetConsumptionPeriod;
-    private ConsumptionPeriodUnit targetConsumptionPeriodUnit;
+    private Period targetConsumptionPeriodUnit;
     private long targetSalePerConsumptionPeriod;
     private short minimumProfitMargin;
     private short maximumProfitMargin;
@@ -15,7 +15,7 @@ class ProjectionParameters {
 
     public ProjectionParameters(int targetConsumptionPeriod, String targetConsumptionPeriodUnit, long targetSalePerConsumptionPeriod, short minimumProfitMargin, short maximumProfitMargin, float demandToSupplyRatio, short consumptionFrequency) {
         this.targetConsumptionPeriod = targetConsumptionPeriod;
-        this.targetConsumptionPeriodUnit = ConsumptionPeriodUnit.valueOf(targetConsumptionPeriodUnit.toUpperCase());
+        this.targetConsumptionPeriodUnit = Period.valueOf(targetConsumptionPeriodUnit.toUpperCase());
         this.targetSalePerConsumptionPeriod = targetSalePerConsumptionPeriod;
         this.minimumProfitMargin = minimumProfitMargin;
         this.maximumProfitMargin = maximumProfitMargin;
@@ -31,11 +31,11 @@ class ProjectionParameters {
         this.targetConsumptionPeriod = targetConsumptionPeriod;
     }
 
-    public ConsumptionPeriodUnit getTargetConsumptionPeriodUnit() {
+    public Period getTargetConsumptionPeriodUnit() {
         return targetConsumptionPeriodUnit;
     }
 
-    public void setTargetConsumptionPeriodUnit(ConsumptionPeriodUnit targetConsumptionPeriodUnit) {
+    public void setTargetConsumptionPeriodUnit(Period targetConsumptionPeriodUnit) {
         this.targetConsumptionPeriodUnit = targetConsumptionPeriodUnit;
     }
 

@@ -34,6 +34,7 @@ public class SubscriptionableItemCreatedEventListener {
                 event.getCurrentMRP(),
                 event.getCurrentStockInUnits(),
                 event.getCurrentPrizeDate(),
+                null,
                 null
         );
         itemRepository.save(subscriptionableItemView);

@@ -3,7 +3,7 @@ package com.affaince.subscription.subscriptionableitem.registration.command.doma
 /**
  * Created by rbsavaliya on 26-07-2015.
  */
-enum ConsumptionPeriodUnit {
+enum Period {
 
     WEEK, MONTH, QUARTER, YEAR;
 }

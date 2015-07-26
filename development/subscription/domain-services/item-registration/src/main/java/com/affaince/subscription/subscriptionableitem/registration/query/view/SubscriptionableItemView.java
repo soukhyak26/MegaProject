@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriptionableitem.registration.query.view;
 
+import org.apache.commons.codec.language.bm.Rule;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 
@@ -20,19 +21,21 @@ public class SubscriptionableItemView {
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
     private ProjectionParameters projectionParameters;
+    private RuleParameters ruleParameters;
 
-    public SubscriptionableItemView(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters) {
+    public SubscriptionableItemView(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.subCategoryId = subCategoryId;
-        this.subCategoryName = subCategoryNmae;
+        this.subCategoryName = subCategoryName;
         this.productId = productId;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPrizeDate = currentPrizeDate;
         this.projectionParameters = projectionParameters;
+        this.ruleParameters = ruleParameters;
     }
 
     public String getItemId() {
@@ -75,11 +78,11 @@ public class SubscriptionableItemView {
         this.subCategoryId = subCategoryId;
     }
 
-    public String getGetSubCategoryName() {
+    public String getSubCategoryName() {
         return subCategoryName;
     }
 
-    public void setGetSubCategoryName(String subCategoryNmae) {
+    public void setSubCategoryName(String subCategoryNmae) {
         this.subCategoryName = subCategoryNmae;
     }
 
@@ -121,5 +124,13 @@ public class SubscriptionableItemView {
 
     public void setProjectionParameters(ProjectionParameters projectionParameters) {
         this.projectionParameters = projectionParameters;
+    }
+
+    public RuleParameters getRuleParameters() {
+        return ruleParameters;
+    }
+
+    public void setRuleParameters(RuleParameters ruleParameters) {
+        this.ruleParameters = ruleParameters;
     }
 }
