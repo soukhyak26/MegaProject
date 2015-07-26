@@ -19,8 +19,9 @@ public class SubscriptionableItemView {
     private double currentMRP;
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
+    private ProjectionParameters projectionParameters;
 
-    public SubscriptionableItemView(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
+    public SubscriptionableItemView(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -31,6 +32,7 @@ public class SubscriptionableItemView {
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPrizeDate = currentPrizeDate;
+        this.projectionParameters = projectionParameters;
     }
 
     public String getItemId() {
@@ -73,11 +75,11 @@ public class SubscriptionableItemView {
         this.subCategoryId = subCategoryId;
     }
 
-    public String getGetSubCategoryNmae() {
+    public String getGetSubCategoryName() {
         return subCategoryName;
     }
 
-    public void setGetSubCategoryNmae(String subCategoryNmae) {
+    public void setGetSubCategoryName(String subCategoryNmae) {
         this.subCategoryName = subCategoryNmae;
     }
 
@@ -111,5 +113,13 @@ public class SubscriptionableItemView {
 
     public void setCurrentPrizeDate(LocalDate currentPrizeDate) {
         this.currentPrizeDate = currentPrizeDate;
+    }
+
+    public ProjectionParameters getProjectionParameters() {
+        return projectionParameters;
+    }
+
+    public void setProjectionParameters(ProjectionParameters projectionParameters) {
+        this.projectionParameters = projectionParameters;
     }
 }

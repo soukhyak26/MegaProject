@@ -1,6 +1,8 @@
 package com.affaince.subscription.subscriptionableitem.registration.command.domain;
 
+import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
+import com.affaince.subscription.subscriptionableitem.registration.command.event.AddProjectionParametersEvent;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -24,22 +26,13 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     private double currentMRP;
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
+    private ProjectionParameters projectionParameters;
 
     public SubscriptionableItem () {
 
     }
 
     public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
-        /*this.id = id;
-        this.batchId = batchId;
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.subCategoryId = subCategoryId;
-        this.getSubCategoryNmae = getSubCategoryNmae;
-        this.productId = productId;
-        this.currentMRP = currentMRP;
-        this.currentStockInUnits = currentStockInUnits;
-        this.currentPrizeDate = currentPrizeDate;*/
         apply (new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentMRP, currentStockInUnits, currentPrizeDate));
     }
 
@@ -65,7 +58,35 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
         this.currentStockInUnits = currentStockInUnits;
     }
 
+    @EventSourcingHandler
+    public void on (AddProjectionParametersEvent event) {
+        this.itemId = event.getItemId();
+        ProjectionParameters projectionParameters = new ProjectionParameters(
+                event.getTargetConsumptionPeriod(),
+                event.getTargetConsumptionPeriodUnit(),
+                event.getTargetSalePerConsumptionPeriod(),
+                event.getMinimumProfitMargin(),
+                event.getMaximumProfitMargin(),
+                event.getDemandToSupplyRatio(),
+                event.getConsumptionFrequency()
+        );
+        this.projectionParameters = projectionParameters;
+    }
+
     public void updatePriceAndStockParemeters(UpdatePriceAndStockParametersCommand command) {
         apply(new UpdatePriceAndStockParametersEvent(this.itemId, command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
+    }
+
+    public void addProjectionParameters(AddProjectionParametersCommand command) {
+        apply(new AddProjectionParametersEvent(
+                this.itemId,
+                command.getTargetConsumptionPeriod(),
+                command.getTargetConsumptionPeriodUnit(),
+                command.getTargetSalePerConsumptionPeriod(),
+                command.getMinimumProfitMargin(),
+                command.getMaximumProfitMargin(),
+                command.getDemandToSupplyRatio(),
+                command.getConsumptionFrequency()
+        ));
     }
 }

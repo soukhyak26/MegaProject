@@ -1,7 +1,9 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.controller;
 
+import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.CreateSubscriptionableItemCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
+import com.affaince.subscription.subscriptionableitem.registration.web.request.AddProjectionParametersRequest;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.CreateSubscriptionableItemRequest;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.UpdatePriceAndStockParametersRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -23,20 +25,20 @@ import java.util.UUID;
  * Created by rbsavaliya on 19-07-2015.
  */
 @RestController
-@RequestMapping (value = "/subscriptionableitem")
+@RequestMapping(value = "/subscriptionableitem")
 @Component
 public class SubscriptionableItemController {
 
     private final CommandGateway commandGateway;
 
     @Autowired
-    public SubscriptionableItemController (CommandGateway commandGateway) {
+    public SubscriptionableItemController(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping (method = RequestMethod.POST)
-    @Consumes ("application/json")
-    public ResponseEntity<Object> createItem (@RequestBody CreateSubscriptionableItemRequest request) {
+    @RequestMapping(method = RequestMethod.POST)
+    @Consumes("application/json")
+    public ResponseEntity<Object> createItem(@RequestBody CreateSubscriptionableItemRequest request) {
         CreateSubscriptionableItemCommand createCommand = new CreateSubscriptionableItemCommand(
                 UUID.randomUUID().toString(),
                 request.getBatchId(),
@@ -53,14 +55,31 @@ public class SubscriptionableItemController {
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "/{itemid}")
-    @Consumes ("application/json")
-    public ResponseEntity<Object> updatePriceAndStockParameters (@RequestBody UpdatePriceAndStockParametersRequest request, @PathParam("itemid") String itemId) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/{itemid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> updatePriceAndStockParameters(@RequestBody UpdatePriceAndStockParametersRequest request, @PathParam("itemid") String itemId) {
         UpdatePriceAndStockParametersCommand command = new UpdatePriceAndStockParametersCommand(
                 itemId,
                 request.getCurrentMRP(),
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
+        );
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{itemid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> AddProjecttionParameters(@RequestBody AddProjectionParametersRequest request, @PathParam("itemid") String itemId) {
+        AddProjectionParametersCommand command = new AddProjectionParametersCommand(
+                itemId,
+                request.getTargetConsumptionPeriod(),
+                request.getTargetConsumptionPeriodUnit(),
+                request.getTargetSalePerConsumptionPeriod(),
+                request.getMinimumProfitMargin(),
+                request.getMaximumProfitMargin(),
+                request.getDemandToSupplyRatio(),
+                request.getConsumptionFrequency()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

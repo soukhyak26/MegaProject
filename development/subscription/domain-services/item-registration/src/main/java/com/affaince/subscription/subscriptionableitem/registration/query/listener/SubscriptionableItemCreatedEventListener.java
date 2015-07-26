@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriptionableitem.registration.query.listen
 
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
 import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.subscriptionableitem.registration.query.view.ProjectionParameters;
 import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SubscriptionableItemCreatedEventListener {
-    private final SubscriptionableItemRepository repository;
+    private final SubscriptionableItemRepository itemRepository;
 
     @Autowired
     public SubscriptionableItemCreatedEventListener(SubscriptionableItemRepository repository) {
-        this.repository = repository;
+        this.itemRepository = repository;
     }
 
 
@@ -32,8 +33,9 @@ public class SubscriptionableItemCreatedEventListener {
                 event.getProductId(),
                 event.getCurrentMRP(),
                 event.getCurrentStockInUnits(),
-                event.getCurrentPrizeDate()
+                event.getCurrentPrizeDate(),
+                null
         );
-        repository.save(subscriptionableItemView);
+        itemRepository.save(subscriptionableItemView);
     }
 }
