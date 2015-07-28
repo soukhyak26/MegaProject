@@ -7,30 +7,47 @@ import org.joda.time.LocalDate;
 /**
  * Created by mandark on 18-07-2015.
  */
-@CsvRecord(separator = ",",skipFirstLine = true )
+@CsvRecord(separator = ",", skipFirstLine = true)
 public class SubscriptionableItemReceivedEvent {
-    @DataField(name="BATCH_ID",pos=1,trim=true)
+
+    public String getItemId() {
+        return this.itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+        this.currentPriceDate = currentPriceDate;
+    }
+
+    @DataField(name = "ITEM_ID", pos = 1, trim = true)
+    private String itemId;
+
+    @DataField(name = "BATCH_ID", pos = 2, trim = true)
     private String batchId;
-    @DataField(name="CATEGORY_ID",pos=2,trim=true)
+    @DataField(name = "CATEGORY_ID", pos = 3, trim = true)
     private String categroyId;
-    @DataField(name="CATEGORY_NAME",pos=3,trim=true)
+    @DataField(name = "CATEGORY_NAME", pos = 4, trim = true)
     private String categoryName;
-    @DataField(name="SUBCATEGORY_ID",pos=4,trim=true)
+    @DataField(name = "SUBCATEGORY_ID", pos = 5, trim = true)
     private String subCategoryId;
-    @DataField(name="SUBCATEGORY_NAME",pos=5,trim=true)
+    @DataField(name = "SUBCATEGORY_NAME", pos = 6, trim = true)
     private String subCategoryName;
-    @DataField(name="PRODUCT_ID",pos=6,trim=true)
+    @DataField(name = "PRODUCT_ID", pos = 7, trim = true)
     private String productId;
-    @DataField(name="CURRENT_PURCHASE_PRICE_PER_UNIT",pos=7,trim=true)
+    @DataField(name = "CURRENT_PURCHASE_PRICE_PER_UNIT", pos = 8, trim = true)
     private double currentPurchasePricePerUnit;
-    @DataField(name="CURRENT_MRP",pos=8,trim=true)
+    @DataField(name = "CURRENT_MRP", pos = 9, trim = true)
     private double currentMRP;
-    @DataField(name="CURRENT_STOCK",pos=9,trim=true)
+    @DataField(name = "CURRENT_STOCK", pos = 10, trim = true)
     private int currentStockInUnits;
 
     private LocalDate currentPriceDate = LocalDate.now();
 
-    public SubscriptionableItemReceivedEvent(){}
+    public SubscriptionableItemReceivedEvent() {
+    }
 
     public String getSubCategoryId() {
         return this.subCategoryId;
@@ -52,7 +69,7 @@ public class SubscriptionableItemReceivedEvent {
         this.batchId = batchId;
     }
 
-    public void setCategroyId(String categroyId) {
+    public void setCategoryId(String categroyId) {
         this.categroyId = categroyId;
     }
 
@@ -80,7 +97,7 @@ public class SubscriptionableItemReceivedEvent {
         return batchId;
     }
 
-    public String getCategroyId() {
+    public String getCategoryId() {
         return categroyId;
     }
 
@@ -106,5 +123,22 @@ public class SubscriptionableItemReceivedEvent {
 
     public LocalDate getCurrentPriceDate() {
         return this.currentPriceDate;
+    }
+
+    @Override
+    public String toString() {
+        return "SubscriptionableItemReceivedEvent{" +
+                "itemId='" + itemId + '\'' +
+                ", batchId='" + batchId + '\'' +
+                ", categroyId='" + categroyId + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", subCategoryId='" + subCategoryId + '\'' +
+                ", subCategoryName='" + subCategoryName + '\'' +
+                ", productId='" + productId + '\'' +
+                ", currentPurchasePricePerUnit=" + currentPurchasePricePerUnit +
+                ", currentMRP=" + currentMRP +
+                ", currentStockInUnits=" + currentStockInUnits +
+                ", currentPriceDate=" + currentPriceDate +
+                '}';
     }
 }

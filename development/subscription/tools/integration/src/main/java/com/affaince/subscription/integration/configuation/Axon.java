@@ -1,6 +1,7 @@
 package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.integration.command.event.GenericEventPublisher;
 import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
 import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
 import com.affaince.subscription.integration.command.listener.LogProcessListener;
@@ -8,12 +9,19 @@ import com.affaince.subscription.integration.command.listener.ReadEventListener;
 import com.affaince.subscription.integration.command.mapper.SubscriptionableItemReceivedEventFieldSetMapper;
 import com.affaince.subscription.integration.command.processor.SubscriptionableItemReceivedEventProcessor;
 import com.affaince.subscription.integration.command.writer.Writer;
+import org.apache.activemq.broker.Broker;
+import org.apache.activemq.broker.BrokerService;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.model.dataformat.JsonDataFormat;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
+import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -134,10 +142,23 @@ public class Axon extends Default {
     }
 
     @Bean
-    public RouteBuilder route() {
+    public GenericEventPublisher publisher(EventTemplate template){
+        return new GenericEventPublisher(template);
+    }
+    @Bean
+    public Processor myProcessor(GenericEventPublisher publisher){
+         return new SubscriptionableItemReceivedEventProcessor(publisher);
+    }
+    @Bean
+    public RouteBuilder route(Processor myProcessor) {
         return new RouteBuilder() {
             public void configure() {
-                from("file:src/main/resources?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").to("jms:eventbustopic");
+/*
+                from("file:D://abc?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").marshal().json(JsonLibrary.Jackson).to("activemq:eventbustopic");
+*/
+
+                from("file:D://abc?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").process(myProcessor).
+                to("activemq:eventbustopic");
 
             }
         };

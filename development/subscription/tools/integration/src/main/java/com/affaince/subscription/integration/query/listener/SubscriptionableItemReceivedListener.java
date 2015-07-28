@@ -1,12 +1,45 @@
-package com.affaince.subscription.integration.command.handler;
+package com.affaince.subscription.integration.query.listener;
 
 import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
+import com.affaince.subscription.integration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.integration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandark on 26-07-2015.
  */
+@Component
 public class SubscriptionableItemReceivedListener {
+    SubscriptionableItemRepository itemRepository;
+    @Autowired
+    public SubscriptionableItemReceivedListener(SubscriptionableItemRepository repository) {
+        this.itemRepository = repository;
+    }
+
+
+    @EventHandler
+    public void on (SubscriptionableItemReceivedEvent event) {
+        SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
+                event.getItemId(),
+                event.getBatchId(),
+                event.getCategoryId(),
+                event.getCategoryName(),
+                event.getSubCategoryId(),
+                event.getSubCategoryName(),
+                event.getProductId(),
+                event.getCurrentMRP(),
+                event.getCurrentStockInUnits(),
+
+                null,
+                null
+        );
+        itemRepository.save(subscriptionableItemView);
+        System.out.println("@@@@Item saved successfully");
+    }
+
+/*
     @EventHandler
     public void handle(SubscriptionableItemReceivedEvent subscriptionableItemReceivedEvent) {
         System.out.println("@@@@@BatchId:" + subscriptionableItemReceivedEvent.getBatchId());
@@ -19,6 +52,6 @@ public class SubscriptionableItemReceivedListener {
         System.out.println("@@@@@Current Purchase Price Per Unit:" + subscriptionableItemReceivedEvent.getCurrentPurchasePricePerUnit());
         System.out.println("@@@@@Current Stocks:" + subscriptionableItemReceivedEvent.getCurrentStockInUnits());
 
-
     }
+*/
 }

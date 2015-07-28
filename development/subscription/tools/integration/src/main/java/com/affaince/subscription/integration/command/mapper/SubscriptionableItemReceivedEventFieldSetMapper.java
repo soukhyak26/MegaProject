@@ -14,7 +14,7 @@ public class SubscriptionableItemReceivedEventFieldSetMapper implements FieldSet
     public SubscriptionableItemReceivedEvent mapFieldSet(FieldSet fieldSet) throws BindException {
         SubscriptionableItemReceivedEvent subscriptionableItemReceivedEvent = new SubscriptionableItemReceivedEvent();
         subscriptionableItemReceivedEvent.setBatchId(fieldSet.readString("BATCH_ID"));
-        subscriptionableItemReceivedEvent.setCategroyId(fieldSet.readString("CATEGORY_ID"));
+        subscriptionableItemReceivedEvent.setCategoryId(fieldSet.readString("CATEGORY_ID"));
         subscriptionableItemReceivedEvent.setCategoryName(fieldSet.readString("CATEGORY_NAME"));
         subscriptionableItemReceivedEvent.setSubCategoryId(fieldSet.readString("SUBCATEGORY_ID"));
         subscriptionableItemReceivedEvent.setSubCategoryName(fieldSet.readString("SUBCATEGORY_NAME"));
