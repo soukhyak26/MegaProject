@@ -3,10 +3,12 @@ package com.affaince.subscription.subscriptionableitem.registration.query.view;
 import org.apache.commons.codec.language.bm.Rule;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
  */
+@Document (collection = "SubscriptionableItem")
 public class SubscriptionableItemView {
 
     @Id
@@ -23,7 +25,7 @@ public class SubscriptionableItemView {
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
-    public SubscriptionableItemView(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
+    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;

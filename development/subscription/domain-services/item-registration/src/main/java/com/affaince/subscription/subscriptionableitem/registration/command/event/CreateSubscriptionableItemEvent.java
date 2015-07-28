@@ -18,7 +18,7 @@ public class CreateSubscriptionableItemEvent {
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
 
-    public CreateSubscriptionableItemEvent(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
+    public CreateSubscriptionableItemEvent(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;

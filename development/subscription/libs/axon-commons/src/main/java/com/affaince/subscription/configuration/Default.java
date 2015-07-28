@@ -7,6 +7,8 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
@@ -170,7 +172,7 @@ public class Default {
     }
 
     @Bean
-    public CommandGateway commandGateway (DisruptorCommandBus commandBus) {
+    public CommandGateway commandGateway (CommandBus commandBus) {
         RetryScheduler retryScheduler = new IntervalRetryScheduler(newScheduledThreadPool(1), 100, 3);
         CommandGateway commandGateway = new DefaultCommandGateway(commandBus, retryScheduler);
         return commandGateway;
