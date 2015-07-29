@@ -13,19 +13,19 @@ import java.util.Map;
 /**
  * Created by mandark on 18-07-2015.
  */
-public class SubscriptionableItemReceivedEventProcessor implements Processor {
+public class SubscriptionableItemReceivedEventProcessor {
 
     private final GenericEventPublisher eventPublisher;
     @Autowired
     public SubscriptionableItemReceivedEventProcessor(GenericEventPublisher publisher){
         this.eventPublisher= publisher;
     }
-    @Override
-    public void process(Exchange exchange) {
-        System.out.println("@@@@@@@FINALLY INSIDE PROCESSOR@@@@@@@:" + exchange.getIn());
-        List<Map<String,Object>> map = (List<Map<String,Object>>)exchange.getIn().getBody();
-        SubscriptionableItemReceivedEvent event=(SubscriptionableItemReceivedEvent)map.get(0).get(SubscriptionableItemReceivedEvent.class.getCanonicalName());
+
+    public Object process(Map<String,Object> map) {
+        System.out.println("@@@@@@@FINALLY INSIDE PROCESSOR@@@@@@@:");
+        Object event=map.values().toArray()[0];
         System.out.println("@@@@@The Event is:" + event);
-                eventPublisher.publish(event);
+                //eventPublisher.publish(event);
+         return event;
     }
 }

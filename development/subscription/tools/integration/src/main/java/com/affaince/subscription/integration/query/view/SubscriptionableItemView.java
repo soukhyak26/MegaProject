@@ -22,7 +22,7 @@ public class SubscriptionableItemView {
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
-    public SubscriptionableItemView(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
+    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -37,9 +37,6 @@ public class SubscriptionableItemView {
         this.ruleParameters = ruleParameters;
     }
 
-    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, Object o, Object o1) {
-
-    }
 
     public String getItemId() {
         return itemId;

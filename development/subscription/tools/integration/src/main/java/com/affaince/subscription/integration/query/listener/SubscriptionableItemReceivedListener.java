@@ -21,6 +21,7 @@ public class SubscriptionableItemReceivedListener {
 
     @EventHandler
     public void on (SubscriptionableItemReceivedEvent event) {
+        System.out.println("@@@@@@@@Listener: Received even object: "+ event);
         SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
                 event.getItemId(),
                 event.getBatchId(),
@@ -31,7 +32,7 @@ public class SubscriptionableItemReceivedListener {
                 event.getProductId(),
                 event.getCurrentMRP(),
                 event.getCurrentStockInUnits(),
-
+                event.getCurrentPriceDate(),
                 null,
                 null
         );

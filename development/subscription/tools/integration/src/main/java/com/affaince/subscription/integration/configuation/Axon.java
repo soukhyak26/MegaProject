@@ -142,23 +142,28 @@ public class Axon extends Default {
     }
 
     @Bean
-    public GenericEventPublisher publisher(EventTemplate template){
+    public GenericEventPublisher publisher(EventTemplate template) {
         return new GenericEventPublisher(template);
     }
+
     @Bean
-    public Processor myProcessor(GenericEventPublisher publisher){
-         return new SubscriptionableItemReceivedEventProcessor(publisher);
+    public SubscriptionableItemReceivedEventProcessor myProcessor(GenericEventPublisher publisher) {
+        return new SubscriptionableItemReceivedEventProcessor(publisher);
     }
+
     @Bean
-    public RouteBuilder route(Processor myProcessor) {
+    public RouteBuilder route() {
         return new RouteBuilder() {
             public void configure() {
 /*
                 from("file:D://abc?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").marshal().json(JsonLibrary.Jackson).to("activemq:eventbustopic");
 */
 
-                from("file:D://abc?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").process(myProcessor).
-                to("activemq:eventbustopic");
+                from("file:D://abc?fileName=subscriptionableItemsFeed.in").
+                        unmarshal("bindyForIn").
+                        split().body().
+                        to("bean:myProcessor").
+                        to("bean:publisher");
 
             }
         };
