@@ -7,7 +7,6 @@ import com.affaince.subscription.integration.command.event.SubscriptionableItemR
 import com.affaince.subscription.integration.command.listener.LogProcessListener;
 import com.affaince.subscription.integration.command.listener.ReadEventListener;
 import com.affaince.subscription.integration.command.mapper.SubscriptionableItemReceivedEventFieldSetMapper;
-import com.affaince.subscription.integration.command.processor.SubscriptionableItemReceivedEventProcessor;
 import com.affaince.subscription.integration.command.writer.Writer;
 import org.apache.activemq.broker.Broker;
 import org.apache.activemq.broker.BrokerService;
@@ -18,6 +17,7 @@ import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.model.dataformat.BindyType;
 import org.apache.camel.model.dataformat.JsonDataFormat;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
@@ -135,21 +135,10 @@ public class Axon extends Default {
     }
 */
     @Bean
-    public BindyCsvDataFormat bindyForIn() {
-        BindyCsvDataFormat dataFormat = new BindyCsvDataFormat("com.affaince.subscription.integration");
-        dataFormat.setLocale("default");
-        return dataFormat;
-    }
-
-    @Bean
     public GenericEventPublisher publisher(EventTemplate template) {
         return new GenericEventPublisher(template);
     }
 
-    @Bean
-    public SubscriptionableItemReceivedEventProcessor myProcessor(GenericEventPublisher publisher) {
-        return new SubscriptionableItemReceivedEventProcessor(publisher);
-    }
 
     @Bean
     public RouteBuilder route() {
@@ -159,10 +148,9 @@ public class Axon extends Default {
                 from("file:D://abc?fileName=subscriptionableItemsFeed.in").unmarshal("bindyForIn").marshal().json(JsonLibrary.Jackson).to("activemq:eventbustopic");
 */
 
-                from("file:D://abc?fileName=subscriptionableItemsFeed.in").
-                        unmarshal("bindyForIn").
+                from("file:D://abc").
+                        unmarshal().bindy(BindyType.Csv, SubscriptionableItemReceivedEvent.class).
                         split().body().
-                        to("bean:myProcessor").
                         to("bean:publisher");
 
             }
