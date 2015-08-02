@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.command.domain;
 
+import com.affaince.subscription.subscriber.command.event.SubscriberContactDetailsUpdatedEvent;
 import com.affaince.subscription.subscriber.command.event.SubscriberCreatedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -55,5 +56,20 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 event.getAlternativeNumber()
         );
         this.contactDetails = contactDetails;
+    }
+
+    @EventSourcingHandler
+    public void on (SubscriberContactDetailsUpdatedEvent event) {
+        ContactDetails contactDetails = new ContactDetails(
+                event.getEmail(),
+                event.getMobileNumber(),
+                event.getAlternativeNumber()
+        );
+        this.contactDetails = contactDetails;
+    }
+
+    public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
+        ContactDetails contactDetails = new ContactDetails(email, mobileNumber, alternativeNumber);
+        apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
 }
