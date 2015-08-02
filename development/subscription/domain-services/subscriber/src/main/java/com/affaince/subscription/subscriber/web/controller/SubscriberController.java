@@ -1,8 +1,10 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.subscriber.command.CreateSubscriberCommand;
+import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberContactDetailsCommand;
 import com.affaince.subscription.subscriber.web.request.CreateSubscriberRequest;
+import com.affaince.subscription.subscriber.web.request.UpdateSubscriberAddressRequest;
 import com.affaince.subscription.subscriber.web.request.UpdateSubscriberContactDetailsRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,18 @@ public class SubscriberController {
                                                                    @PathVariable ("subscriberid") String subscriberId) {
         UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand (
                 subscriberId, request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
+        );
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping (method = RequestMethod.PUT, value = "updateaddress/{subscriberid}")
+    @Consumes ("application/json")
+    public ResponseEntity <Object> updateSubscriberAddress (@RequestBody UpdateSubscriberAddressRequest request,
+                                                                   @PathVariable ("subscriberid") String subscriberId) {
+        UpdateSubscriberAddressCommand command = new UpdateSubscriberAddressCommand (
+                subscriberId, request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
+                request.getState(), request.getCountry(), request.getPinCode()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
