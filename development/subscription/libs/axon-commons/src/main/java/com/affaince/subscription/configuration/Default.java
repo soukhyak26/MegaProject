@@ -3,6 +3,7 @@ package com.affaince.subscription.configuration;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
 import org.apache.activemq.ActiveMQConnection;
@@ -163,6 +164,7 @@ public class Default {
                 return result == null? name:result;
             }
         };
+        serializer.getObjectMapper().registerModule(new SimpleModule("Axon"));
         return serializer;
     }
 

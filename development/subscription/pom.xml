@@ -12,6 +12,7 @@
         <module>libs/axon-commons</module>
         <module>domain-services/item-registration</module>
         <module>tools/integration</module>
+        <module>domain-services/subscriber</module>
     </modules>
     <properties>
         <axon.version>2.4.2</axon.version>
