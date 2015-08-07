@@ -3,10 +3,7 @@ package com.affaince.subscription.subscriptionableitem.registration.command.doma
 import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.AddSubscriptionableItemRuleParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
-import com.affaince.subscription.subscriptionableitem.registration.command.event.AddProjectionParametersEvent;
-import com.affaince.subscription.subscriptionableitem.registration.command.event.AddSubscriptionableItemRuleParametersEvent;
-import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
-import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
+import com.affaince.subscription.subscriptionableitem.registration.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -91,6 +88,12 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
         this.ruleParameters = ruleParameters;
     }
 
+    @EventSourcingHandler
+    public void on (CurrentOfferedPriceAddedEvent event) {
+        this.itemId = event.getItemId();
+        this.currentOfferedPrice = event.getCurrentOfferedPrice();
+    }
+
     public void updatePriceAndStockParemeters(UpdatePriceAndStockParametersCommand command) {
         apply(new UpdatePriceAndStockParametersEvent(this.itemId, command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
@@ -117,5 +120,9 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
                 command.getMaxPermissibleSubscriptionPeriod(),
                 command.getMaxPermissibleSubscriptionPeriodUnit()
         ));
+    }
+
+    public void addCurrentOfferedPrice(double currentOfferedPrice) {
+        apply(new CurrentOfferedPriceAddedEvent(this.itemId, currentOfferedPrice));
     }
 }

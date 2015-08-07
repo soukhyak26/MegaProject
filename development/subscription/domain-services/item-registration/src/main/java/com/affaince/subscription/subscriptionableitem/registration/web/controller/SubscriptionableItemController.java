@@ -1,23 +1,14 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.controller;
 
-import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
-import com.affaince.subscription.subscriptionableitem.registration.command.AddSubscriptionableItemRuleParametersCommand;
-import com.affaince.subscription.subscriptionableitem.registration.command.CreateSubscriptionableItemCommand;
-import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
-import com.affaince.subscription.subscriptionableitem.registration.web.request.AddProjectionParametersRequest;
-import com.affaince.subscription.subscriptionableitem.registration.web.request.AddSubscriptionableItemRuleParametersRequest;
-import com.affaince.subscription.subscriptionableitem.registration.web.request.CreateSubscriptionableItemRequest;
-import com.affaince.subscription.subscriptionableitem.registration.web.request.UpdatePriceAndStockParametersRequest;
+import com.affaince.subscription.subscriptionableitem.registration.command.*;
+import com.affaince.subscription.subscriptionableitem.registration.web.request.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
@@ -73,7 +64,7 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> AddProjecttionParameters(@RequestBody AddProjectionParametersRequest request, @PathParam("itemid") String itemId) {
+    public ResponseEntity<Object> addProjecttionParameters(@RequestBody AddProjectionParametersRequest request, @PathParam("itemid") String itemId) {
         AddProjectionParametersCommand command = new AddProjectionParametersCommand(
                 itemId,
                 request.getTargetConsumptionPeriod(),
@@ -90,7 +81,7 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addsubscriptionableitemruleparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> AddSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathParam("itemid") String itemId) {
+    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathParam("itemid") String itemId) {
         AddSubscriptionableItemRuleParametersCommand command = new AddSubscriptionableItemRuleParametersCommand(
                 itemId,
                 request.getMinPermissibleDiscount(),
@@ -99,6 +90,14 @@ public class SubscriptionableItemController {
                 request.getMaxPermissibleSubscriptionPeriod(),
                 request.getMaxPermissibleSubscriptionPeriodUnit()
         );
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping (method = RequestMethod.PUT, value = "/setcurrentofferedprice/{itemid}")
+    @Consumes ("application/json")
+    public  ResponseEntity <Object> setCurrentOfferedPrice (@PathVariable ("itemid") String itemId, @RequestBody AddCurrentOfferedPriceRequest request) {
+        AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(itemId, request.getCurrentOfferedPrice());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
