@@ -21,7 +21,7 @@ public class PriceAndStockParametersUpdatedEventListener {
         SubscriptionableItemView subscriptionableItemView = itemRepository.findOneByItemId(event.getItemId());
         subscriptionableItemView.setCurrentMRP(event.getCurrentMRP());
         subscriptionableItemView.setCurrentStockInUnits(event.getCurrentStockInUnits());
-        subscriptionableItemView.setCurrentPrizeDate(event.getCurrentPrizeDate());
+        subscriptionableItemView.setCurrentPriceDate(event.getCurrentPrizeDate());
         itemRepository.save(subscriptionableItemView);
     }
 }

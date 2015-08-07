@@ -32,8 +32,9 @@ public class CreateSubscriptionableItemCommandHandler {
                 command.getGetSubCategoryNmae(),
                 command.getProductId(),
                 command.getCurrentMRP(),
+                command.getCurrentOfferedPrice(),
                 command.getCurrentStockInUnits(),
-                command.getCurrentPrizeDate()
+                command.getCurrentPriceDate()
         );
         itemRepository.add(subscriptionableItem);
     }

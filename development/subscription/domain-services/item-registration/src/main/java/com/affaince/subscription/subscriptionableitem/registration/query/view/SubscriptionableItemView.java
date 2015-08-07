@@ -1,6 +1,5 @@
 package com.affaince.subscription.subscriptionableitem.registration.query.view;
 
-import org.apache.commons.codec.language.bm.Rule;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,11 +20,12 @@ public class SubscriptionableItemView {
     private String productId;
     private double currentMRP;
     private int currentStockInUnits;
-    private LocalDate currentPrizeDate;
+    private double currentOfferedPrice;
+    private LocalDate currentPriceDate;
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
-    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
+    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -35,7 +35,8 @@ public class SubscriptionableItemView {
         this.productId = productId;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
-        this.currentPrizeDate = currentPrizeDate;
+        this.currentOfferedPrice = currentOfferedPrice;
+        this.currentPriceDate = currentPriceDate;
         this.projectionParameters = projectionParameters;
         this.ruleParameters = ruleParameters;
     }
@@ -104,6 +105,14 @@ public class SubscriptionableItemView {
         this.currentMRP = currentMRP;
     }
 
+    public double getCurrentOfferedPrice() {
+        return currentOfferedPrice;
+    }
+
+    public void setCurrentOfferedPrice(double currentOfferedPrice) {
+        this.currentOfferedPrice = currentOfferedPrice;
+    }
+
     public int getCurrentStockInUnits() {
         return currentStockInUnits;
     }
@@ -112,12 +121,12 @@ public class SubscriptionableItemView {
         this.currentStockInUnits = currentStockInUnits;
     }
 
-    public LocalDate getCurrentPrizeDate() {
-        return currentPrizeDate;
+    public LocalDate getCurrentPriceDate() {
+        return currentPriceDate;
     }
 
-    public void setCurrentPrizeDate(LocalDate currentPrizeDate) {
-        this.currentPrizeDate = currentPrizeDate;
+    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+        this.currentPriceDate = currentPriceDate;
     }
 
     public ProjectionParameters getProjectionParameters() {

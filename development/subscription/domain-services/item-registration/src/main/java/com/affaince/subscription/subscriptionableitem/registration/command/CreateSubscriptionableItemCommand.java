@@ -17,10 +17,11 @@ public class CreateSubscriptionableItemCommand {
     private String subCategoryName;
     private String productId;
     private double currentMRP;
+    private double currentOfferedPrice;
     private int currentStockInUnits;
-    private LocalDate currentPrizeDate;
+    private LocalDate currentPriceDate;
 
-    public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
+    public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
         this.itemId = id;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -29,8 +30,9 @@ public class CreateSubscriptionableItemCommand {
         this.subCategoryName = subCategoryNmae;
         this.productId = productId;
         this.currentMRP = currentMRP;
+        this.currentOfferedPrice = currentOfferedPrice;
         this.currentStockInUnits = currentStockInUnits;
-        this.currentPrizeDate = currentPrizeDate;
+        this.currentPriceDate = currentPriceDate;
     }
 
     public String getItemId() {
@@ -97,6 +99,14 @@ public class CreateSubscriptionableItemCommand {
         this.currentMRP = currentMRP;
     }
 
+    public double getCurrentOfferedPrice() {
+        return currentOfferedPrice;
+    }
+
+    public void setCurrentOfferedPrice(double currentOfferedPrice) {
+        this.currentOfferedPrice = currentOfferedPrice;
+    }
+
     public int getCurrentStockInUnits() {
         return currentStockInUnits;
     }
@@ -105,12 +115,12 @@ public class CreateSubscriptionableItemCommand {
         this.currentStockInUnits = currentStockInUnits;
     }
 
-    public LocalDate getCurrentPrizeDate() {
-        return currentPrizeDate;
+    public LocalDate getCurrentPriceDate() {
+        return currentPriceDate;
     }
 
-    public void setCurrentPrizeDate(LocalDate currentPrizeDate) {
-        this.currentPrizeDate = currentPrizeDate;
+    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+        this.currentPriceDate = currentPriceDate;
     }
 
     public String getSubCategoryName() {

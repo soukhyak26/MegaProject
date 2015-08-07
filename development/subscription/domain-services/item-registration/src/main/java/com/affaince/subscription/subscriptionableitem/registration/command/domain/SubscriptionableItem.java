@@ -26,8 +26,9 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     private String subCategoryNmae;
     private String productId;
     private double currentMRP;
+    private double currentOfferedPrice;
     private int currentStockInUnits;
-    private LocalDate currentPrizeDate;
+    private LocalDate currentPriceDate;
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
@@ -35,8 +36,8 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
 
     }
 
-    public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
-        apply (new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentMRP, currentStockInUnits, currentPrizeDate));
+    public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+        apply (new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentMRP, currentOfferedPrice, currentStockInUnits, currentPriceDate));
     }
 
     @EventSourcingHandler
@@ -46,10 +47,11 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
         this.categoryId = event.getCategoryId();
         this.categoryName = event.getCategoryName();
         this.subCategoryId = event.getSubCategoryId();
-        this.subCategoryNmae = event.getGetSubCategoryNmae();
+        this.subCategoryNmae = event.getSubCategoryNmae();
         this.productId = event.getProductId();
         this.currentMRP = event.getCurrentMRP();
-        this.currentPrizeDate = event.getCurrentPrizeDate();
+        this.currentOfferedPrice = currentOfferedPrice;
+        this.currentPriceDate = event.getCurrentPriceDate();
         this.currentStockInUnits = currentStockInUnits;
     }
 
@@ -57,7 +59,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     public void on (UpdatePriceAndStockParametersEvent event) {
         this.itemId = event.getItemId();
         this.currentMRP = event.getCurrentMRP();
-        this.currentPrizeDate = event.getCurrentPrizeDate();
+        this.currentPriceDate = event.getCurrentPrizeDate();
         this.currentStockInUnits = currentStockInUnits;
     }
 

@@ -13,6 +13,7 @@ public class CreateSubscriptionableItemRequest {
     private String getSubCategoryNmae;
     private String productId;
     private double currentMRP;
+    private double currentOfferedPrice;
     private int currentStockInUnits;
 
     public String getBatchId() {
@@ -69,6 +70,14 @@ public class CreateSubscriptionableItemRequest {
 
     public void setCurrentMRP(double currentMRP) {
         this.currentMRP = currentMRP;
+    }
+
+    public double getCurrentOfferedPrice() {
+        return currentOfferedPrice;
+    }
+
+    public void setCurrentOfferedPrice(double currentOfferedPrice) {
+        this.currentOfferedPrice = currentOfferedPrice;
     }
 
     public int getCurrentStockInUnits() {

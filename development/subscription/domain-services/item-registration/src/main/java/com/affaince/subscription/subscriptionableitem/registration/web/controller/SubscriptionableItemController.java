@@ -50,6 +50,7 @@ public class SubscriptionableItemController {
                 request.getGetSubCategoryNmae(),
                 request.getProductId(),
                 request.getCurrentMRP(),
+                request.getCurrentOfferedPrice(),
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
         );

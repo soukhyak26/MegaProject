@@ -2,7 +2,6 @@ package com.affaince.subscription.subscriptionableitem.registration.query.listen
 
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
 import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
-import com.affaince.subscription.subscriptionableitem.registration.query.view.ProjectionParameters;
 import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +28,12 @@ public class SubscriptionableItemCreatedEventListener {
                 event.getCategoryId(),
                 event.getCategoryName(),
                 event.getSubCategoryId(),
-                event.getGetSubCategoryNmae(),
+                event.getSubCategoryNmae(),
                 event.getProductId(),
                 event.getCurrentMRP(),
+                event.getCurrentOfferedPrice(),
                 event.getCurrentStockInUnits(),
-                event.getCurrentPrizeDate(),
+                event.getCurrentPriceDate(),
                 null,
                 null
         );
