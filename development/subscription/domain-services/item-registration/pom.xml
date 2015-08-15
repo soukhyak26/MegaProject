@@ -27,7 +27,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5001
                     </jvmArguments>
                     <addResources>false</addResources>
                 </configuration>
@@ -96,5 +96,10 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

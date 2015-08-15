@@ -1,15 +1,21 @@
 package com.affaince.subscription.configuration;
 
+import com.affaince.subscription.events.ListenerContainerFactory;
+import com.affaince.subscription.events.SubscriptionEventBusTerminal;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
+import javafx.application.Application;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
@@ -17,6 +23,7 @@ import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
 import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.eventhandling.*;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventhandling.async.AsynchronousCluster;
 import org.axonframework.eventhandling.async.SequentialPerAggregatePolicy;
 import org.axonframework.eventstore.EventStore;
@@ -31,6 +38,7 @@ import org.axonframework.serializer.json.JacksonSerializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.jms.SubscribableJmsChannel;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
@@ -41,6 +49,7 @@ import org.springframework.util.ErrorHandler;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Session;
+import java.lang.annotation.Annotation;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -54,7 +63,7 @@ import static java.util.concurrent.Executors.newScheduledThreadPool;
  * Created by NIKUNJ on 7/12/2015.
  */
 public class Default {
-    private static final int DEFAULT_JGROUPS_PORT = 12001;
+    //  private static final int DEFAULT_JGROUPS_PORT = 12001;
     //private static final Logger = getLogger (Default.class);
 
     @Bean
@@ -63,7 +72,7 @@ public class Default {
     }
 
     @Bean
-    public EventStore eventStore (@Qualifier("axonmongo")MongoTemplate mongoTemplate) throws SQLException {
+    public EventStore eventStore (@Qualifier("axonmongo") MongoTemplate mongoTemplate) throws SQLException {
         MongoEventStore mongoEventStore = new MongoEventStore(mongoTemplate);
         return mongoEventStore;
     }
@@ -99,7 +108,7 @@ public class Default {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory (@Value("${spring.activemq.brokerurl}") String brokerURL) {
+    public ConnectionFactory connectionFactory (@Value("${spring.activemq.broker-url}") String brokerURL) {
         return new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_BROKER_URL);
     }
 
@@ -114,21 +123,27 @@ public class Default {
     }
 
     @Bean
-    public AbstractMessageListenerContainer listenerContainer (@Value("${axon.eventBus.queuename}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
-        DefaultMessageListenerContainer listenerContainer =
-                new DefaultMessageListenerContainer();
-        listenerContainer.setDestinationName(queueName);
-        listenerContainer.setConnectionFactory(connectionFactory);
-        listenerContainer.setErrorHandler(errorHandler);
-        listenerContainer.setConcurrency("2-20");
-        listenerContainer.setIdleConsumerLimit(10);
-        listenerContainer.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
-        return listenerContainer;
-    }
+    public ListenerContainerFactory listenerContainerFactory(@Value("${axon.eventBus.queueName}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler){
+        ListenerContainerFactory containerFactory = new ListenerContainerFactory();
+        containerFactory.setDestinationName(queueName);
+        containerFactory.setConnectionFactory(connectionFactory);
+        containerFactory.setErrorHandler(errorHandler);
+        containerFactory.setConcurrency("2-20");
+        containerFactory.setIdleConsumerLimit(10);
+        containerFactory.setAnnotation(EventHandler.class);
+        containerFactory.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
+        containerFactory.setConsumedEventTypes(types());
+        return containerFactory;
 
+    }
     @Bean
     public SubscribableChannel eventChannel (JmsTemplate jmsTemplate, AbstractMessageListenerContainer listenerContainer) {
         return new SubscribableJmsChannel(listenerContainer, jmsTemplate);
+    }
+
+    @Bean
+    public EventBusTerminal subscriptionEventBusTerminal(Cluster asyncCluster, Serializer serializer, @Qualifier("eventChannel") final SubscribableChannel subscribableChannel) {
+     return new SubscriptionEventBusTerminal(serializer,subscribableChannel,asyncCluster);
     }
 
     @Bean
@@ -141,12 +156,12 @@ public class Default {
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
                 .setNameFormat("asyncCluster-%d").build();
         return new AsynchronousCluster("asyncCluster",
-                newScheduledThreadPool(maximumPoolSize,threadFactory), new SequentialPerAggregatePolicy());
+                newScheduledThreadPool(maximumPoolSize, threadFactory), new SequentialPerAggregatePolicy());
     }
 
     @Bean
-    public EventBus eventBus (ClusterSelector selector) {
-        return new ClusteringEventBus(selector);
+    public EventBus eventBus (ClusterSelector selector,EventBusTerminal subscriptionEventBusTerminal) {
+        return new ClusteringEventBus(selector,subscriptionEventBusTerminal);
     }
 
     protected Map<String, String> types () {
@@ -154,17 +169,26 @@ public class Default {
     }
 
     @Bean
-    public Serializer serializer (ObjectMapper mapper) {
-        final JacksonSerializer serializer = new JacksonSerializer(mapper) {
-          private Map <String, String> types = types();
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enableDefaultTyping();
+        objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+        return objectMapper;
+    }
+
+    @Bean
+    public Serializer serializer(ObjectMapper objectMapper) {
+        final JacksonSerializer serializer = new JacksonSerializer(objectMapper) {
+            private Map<String, String> types = types();
 
             public String resolveClassName (SerializedType serializedType) {
                 String name = serializedType.getName();
                 String result = types.get(name);
-                return result == null? name:result;
+                return result == null ?  name : result;
             }
         };
         serializer.getObjectMapper().registerModule(new SimpleModule("Axon"));
+        serializer.getObjectMapper().registerModule(new JodaModule());
         return serializer;
     }
 

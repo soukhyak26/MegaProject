@@ -1,8 +1,8 @@
-package com.affaince.subscription.integration.query.listener;
+package com.affaince.subscription.subscriptionableitem.registration.query.listener;
 
-import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
-import com.affaince.subscription.integration.query.repository.SubscriptionableItemRepository;
-import com.affaince.subscription.integration.query.view.SubscriptionableItemView;
+import com.affaince.subscription.subscriptionableitem.registration.query.event.SubscriptionableItemReceivedEvent;
+import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,6 @@ public class SubscriptionableItemReceivedListener {
     public SubscriptionableItemReceivedListener(SubscriptionableItemRepository repository) {
         this.itemRepository = repository;
     }
-
 
     @EventHandler
     public void on (SubscriptionableItemReceivedEvent event) {

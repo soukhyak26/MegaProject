@@ -4,6 +4,7 @@ import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriptionableitem.registration.command.domain.SubscriptionableItem;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
 import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
+import com.affaince.subscription.subscriptionableitem.registration.query.event.SubscriptionableItemReceivedEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -28,10 +29,9 @@ public class Axon extends Default {
     }
 
     @Override
-    protected Map<String, String> types () {
+    protected Map<String, String> types() {
         return new HashMap<String, String>() {{
-            put("com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent", CreateSubscriptionableItemEvent.class.getName());
-            put("com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent", UpdatePriceAndStockParametersEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event", SubscriptionableItemReceivedEvent.class.getName());
         }};
     }
 }

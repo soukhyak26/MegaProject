@@ -158,6 +158,10 @@
             <artifactId>camel-jackson</artifactId>
             <version>${camel.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
 
     </dependencies>
 
