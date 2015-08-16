@@ -22,6 +22,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     private String subCategoryId;
     private String subCategoryNmae;
     private String productId;
+    private double currentPurchasePricePerUnit;
     private double currentMRP;
     private double currentOfferedPrice;
     private int currentStockInUnits;
@@ -33,8 +34,8 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
 
     }
 
-    public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
-        apply (new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentMRP, currentOfferedPrice, currentStockInUnits, currentPriceDate));
+    public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit,double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+        apply (new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentPurchasePricePerUnit,currentMRP, currentOfferedPrice, currentStockInUnits, currentPriceDate));
     }
 
     @EventSourcingHandler

@@ -30,6 +30,7 @@ public class SubscriptionableItemCreatedEventListener {
                 event.getSubCategoryId(),
                 event.getSubCategoryNmae(),
                 event.getProductId(),
+                event.getPurchasePricePerUnit(),
                 event.getCurrentMRP(),
                 event.getCurrentOfferedPrice(),
                 event.getCurrentStockInUnits(),

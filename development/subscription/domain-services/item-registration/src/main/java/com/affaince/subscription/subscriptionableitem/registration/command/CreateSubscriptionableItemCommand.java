@@ -12,16 +12,26 @@ public class CreateSubscriptionableItemCommand {
     private String itemId;
     private String batchId;
     private String categoryId;
+
+    public double getCurrentPurchasePricePerUnit() {
+        return this.currentPurchasePricePerUnit;
+    }
+
+    public void setCurrentPurchasePricePerUnit(double currentPurchasePricePerUnit) {
+        this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
+    }
+
     private String categoryName;
     private String subCategoryId;
     private String subCategoryName;
     private String productId;
+    private double currentPurchasePricePerUnit;
     private double currentMRP;
     private double currentOfferedPrice;
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+    public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit,double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
         this.itemId = id;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -29,6 +39,7 @@ public class CreateSubscriptionableItemCommand {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryNmae;
         this.productId = productId;
+        this.currentPurchasePricePerUnit= currentPurchasePricePerUnit;
         this.currentMRP = currentMRP;
         this.currentOfferedPrice = currentOfferedPrice;
         this.currentStockInUnits = currentStockInUnits;

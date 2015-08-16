@@ -12,6 +12,16 @@ public class CreateSubscriptionableItemRequest {
     private String subCategoryId;
     private String getSubCategoryNmae;
     private String productId;
+
+    public double getCurrentPurchasePricePerUnit() {
+        return this.currentPurchasePricePerUnit;
+    }
+
+    public void setCurrentPurchasePricePerUnit(double currentPurchasePricePerUnit) {
+        this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
+    }
+
+    private double currentPurchasePricePerUnit;
     private double currentMRP;
     private double currentOfferedPrice;
     private int currentStockInUnits;

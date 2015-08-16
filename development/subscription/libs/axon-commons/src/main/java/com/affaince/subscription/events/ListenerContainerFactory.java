@@ -120,13 +120,16 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        System.out.println("@@@IN AfterProertiesSet");
         container = new DefaultMessageListenerContainer();
         container.setDestinationName(destinationName);
-        container.setErrorHandler(errorHandler);
         container.setConnectionFactory(connectionFactory);
+        container.setErrorHandler(errorHandler);
         container.setConcurrency(concurrency);
         container.setIdleConsumerLimit(idleConsumerLimit);
         container.setSessionAcknowledgeMode(sessionAcknowledgeMode);
+
+        System.out.println("@@@selector output: "+ selector());
         container.setMessageSelector(selector());
     }
 
@@ -140,12 +143,13 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
                 return format("JMSType IN(%s)", on(",").join(quoted));
             }
         }
+
         return "JMSType=Void";
     }
 
     public Iterable<String> selectors() {
         final ClassPathScanningCandidateComponentProvider localTypeScanner = new ClassPathScanningCandidateComponentProvider(false, environment);
-//        System.out.println("@@@Annotation@@@: " + annotation.getName());
+        System.out.println("@@@Annotation@@@: " + annotation.getName());
         localTypeScanner.addIncludeFilter(new MethodAnnotationTypeFilter(annotation));
         final Multimap<String, String> reverseMap = invertMap(consumedEventTypes);
         final Iterable<String> producedEventTypes = from(packagesToScan()).transformAndConcat(toClassName(localTypeScanner)).transformAndConcat(new Function<String, Iterable<String>>() {

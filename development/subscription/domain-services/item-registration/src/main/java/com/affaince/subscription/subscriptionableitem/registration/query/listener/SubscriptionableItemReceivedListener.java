@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SubscriptionableItemReceivedListener {
-    SubscriptionableItemRepository itemRepository;
+    private final SubscriptionableItemRepository itemRepository;
     @Autowired
     public SubscriptionableItemReceivedListener(SubscriptionableItemRepository repository) {
         this.itemRepository = repository;
@@ -21,7 +21,7 @@ public class SubscriptionableItemReceivedListener {
     @EventHandler
     public void on (SubscriptionableItemReceivedEvent event) {
         System.out.println("@@@@@@@@Listener: Received even object: "+ event);
-        SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
+        SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView (
                 event.getItemId(),
                 event.getBatchId(),
                 event.getCategoryId(),
@@ -29,7 +29,9 @@ public class SubscriptionableItemReceivedListener {
                 event.getSubCategoryId(),
                 event.getSubCategoryName(),
                 event.getProductId(),
+                event.getCurrentPurchasePricePerUnit(),
                 event.getCurrentMRP(),
+                0.0,
                 event.getCurrentStockInUnits(),
                 event.getCurrentPriceDate(),
                 null,

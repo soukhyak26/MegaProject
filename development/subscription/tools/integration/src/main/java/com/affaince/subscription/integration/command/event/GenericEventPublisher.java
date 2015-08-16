@@ -17,5 +17,6 @@ public class GenericEventPublisher {
 
     public void publish(Object genericEvent){
        eventTemplate.publishEvent(genericEvent);
+        System.out.println("@@@Event published successfully: "+genericEvent );
     }
 }

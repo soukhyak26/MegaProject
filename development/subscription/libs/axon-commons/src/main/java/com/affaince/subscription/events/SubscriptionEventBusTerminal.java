@@ -37,7 +37,9 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
     public void publish(EventMessage... eventMessages) {
         for (EventMessage event : eventMessages) {
             try {
+                System.out.println("@@@@Inside EventMessageTerminal publish" + event);
                 Map<String, String> metadataMap = new HashMap<>();
+                System.out.println("@@@@Inside EventMessageTerminal payload type metadata" + event.getPayloadType().getName());
                 metadataMap.put(PAYLOAD_TYPE_NAME, event.getPayloadType().getName());
                 event = event.andMetaData(metadataMap);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -57,6 +59,7 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
         channel.subscribe(new MessageHandler() {
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
+                System.out.println("@@@@Inside EventMessageTerminal onClusterCreated" + message);
                 try {
                     EventMessageReader reader = new EventMessageReader(new DataInputStream(new ByteArrayInputStream(
                             (byte[]) message.getPayload())), serializer);

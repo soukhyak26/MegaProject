@@ -18,6 +18,7 @@ public class SubscriptionableItemView {
     private String subCategoryId;
     private String subCategoryName;
     private String productId;
+    private double currentPurchasePricePerUnit;
     private double currentMRP;
     private int currentStockInUnits;
     private double currentOfferedPrice;
@@ -25,7 +26,7 @@ public class SubscriptionableItemView {
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
-    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
+    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double purchasePricePerUnit,double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -33,6 +34,7 @@ public class SubscriptionableItemView {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.productId = productId;
+        this.currentPurchasePricePerUnit=purchasePricePerUnit;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentOfferedPrice = currentOfferedPrice;
