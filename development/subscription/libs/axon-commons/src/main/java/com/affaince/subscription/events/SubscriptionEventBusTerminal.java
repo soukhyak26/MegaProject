@@ -12,6 +12,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.SubscribableChannel;
 import org.springframework.messaging.support.GenericMessage;
+import static org.springframework.integration.jms.JmsHeaders.TYPE;
 
 import java.io.*;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
                 System.out.println("@@@@Inside EventMessageTerminal publish" + event);
                 Map<String, String> metadataMap = new HashMap<>();
                 System.out.println("@@@@Inside EventMessageTerminal payload type metadata" + event.getPayloadType().getName());
-                metadataMap.put(PAYLOAD_TYPE_NAME, event.getPayloadType().getName());
+                metadataMap.put(TYPE, event.getPayloadType().getName());
                 event = event.andMetaData(metadataMap);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 EventMessageWriter out = new EventMessageWriter(new DataOutputStream(outputStream), serializer);

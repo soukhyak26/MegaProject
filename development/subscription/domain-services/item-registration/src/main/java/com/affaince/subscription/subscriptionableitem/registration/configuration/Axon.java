@@ -23,10 +23,9 @@ import java.util.Map;
 public class Axon extends Default {
 
     @Bean
-    public Repository<SubscriptionableItem> createRepository (DisruptorCommandBus commandBus) {
+    public Repository<SubscriptionableItem> createRepository(DisruptorCommandBus commandBus) {
 
-        Repository <SubscriptionableItem> repository = commandBus.createRepository(new GenericAggregateFactory<>(SubscriptionableItem.class));
-        //commandBus.subscribe(CreateSubscriptionableItemCommand.class.getName(),new CreateSubscriptionableItemCommandHandler<CreateSubscriptionableItemCommand>(repository));
+        Repository<SubscriptionableItem> repository = commandBus.createRepository(new GenericAggregateFactory<>(SubscriptionableItem.class));
         return repository;
     }
 

@@ -4,6 +4,7 @@ import com.affaince.subscription.events.ListenerContainerFactory;
 import com.affaince.subscription.events.SubscriptionEventBusTerminal;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
+import com.affaince.subscription.transformation.MetadataDeserializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -22,6 +23,7 @@ import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
 import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.axonframework.domain.IdentifierFactory;
+import org.axonframework.domain.MetaData;
 import org.axonframework.eventhandling.*;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventhandling.async.AsynchronousCluster;
@@ -70,31 +72,31 @@ public class Default {
     //private static final Logger = getLogger (Default.class);
 
     @Bean
-    public LoggingHandler loggingHandler(){
+    public LoggingHandler loggingHandler() {
         return new LoggingHandler("DEBUG");
     }
 
     @Bean
-    public IdentifierFactory identifierFactory () {
+    public IdentifierFactory identifierFactory() {
         return IdentifierFactory.getInstance();
     }
 
     @Bean
-    public EventStore eventStore (@Qualifier("axonmongo") MongoTemplate mongoTemplate) throws SQLException {
+    public EventStore eventStore(@Qualifier("axonmongo") MongoTemplate mongoTemplate) throws SQLException {
         MongoEventStore mongoEventStore = new MongoEventStore(mongoTemplate);
         return mongoEventStore;
     }
 
-    @Bean (name = "axonmongo")
-    public MongoTemplate mongoTemplate (Mongo mongo) {
+    @Bean(name = "axonmongo")
+    public MongoTemplate mongoTemplate(Mongo mongo) {
         MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongo, "items", "domainevents", "snapshotevents", null, null);
         return mongoTemplate;
     }
 
     @Bean
-    public Mongo mongo () {
+    public Mongo mongo() {
         try {
-            return new Mongo ("localhost", 27017);
+            return new Mongo("localhost", 27017);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -102,27 +104,28 @@ public class Default {
     }
 
     @Bean
-    public EventTemplate eventTemplate (EventBus eventBus) {
+    public EventTemplate eventTemplate(EventBus eventBus) {
         return new EventTemplate(eventBus);
     }
 
     @Bean
-    public JmsTemplate jmsTemplate (@Value("${axon.eventBus.topicName}") String topicName, ConnectionFactory connectionFactory) {
+    public JmsTemplate jmsTemplate(@Value("${axon.eventBus.topicName}") String topicName, ConnectionFactory connectionFactory) {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
         jmsTemplate.setDefaultDestinationName(topicName);
         jmsTemplate.setPubSubDomain(true);
+        jmsTemplate.setPubSubNoLocal(false);
         jmsTemplate.setMessageConverter(new MessagingMessageConverter());
         return jmsTemplate;
     }
 
     @Bean
-    public ConnectionFactory connectionFactory (@Value("${spring.activemq.broker-url}") String brokerURL) {
+    public ConnectionFactory connectionFactory(@Value("${spring.activemq.broker-url}") String brokerURL) {
         return new ActiveMQConnectionFactory(brokerURL);
         //return new CachingConnectionFactory(new ActiveMQConnectionFactory(brokerURL));
     }
 
     @Bean
-    public ErrorHandler errorHandler () {
+    public ErrorHandler errorHandler() {
         return new ErrorHandler() {
             @Override
             public void handleError(Throwable throwable) {
@@ -133,7 +136,8 @@ public class Default {
     }
 
     @Bean
-    public ListenerContainerFactory listenerContainerFactory(@Value("${axon.eventBus.queueName}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler){
+    public ListenerContainerFactory listenerContainerFactory(@Value("${axon.eventBus.queueName}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
+        System.out.println("@@Queue Name:" + queueName);
         ListenerContainerFactory containerFactory = new ListenerContainerFactory();
         containerFactory.setDestinationName(queueName);
         containerFactory.setConnectionFactory(connectionFactory);
@@ -146,26 +150,27 @@ public class Default {
         return containerFactory;
 
     }
+
     @Bean
-    public SubscribableChannel eventChannel (JmsTemplate jmsTemplate, AbstractMessageListenerContainer listenerContainer) {
-        System.out.println("@@@listenerContainer:"+ listenerContainer.getMessageListener());
-        return new SubscribableJmsChannel(listenerContainer, jmsTemplate);
+    public SubscribableChannel eventChannel(JmsTemplate jmsTemplate, ListenerContainerFactory listenerContainerFactory) throws Exception {
+
+        SubscribableChannel channel = new SubscribableJmsChannel(listenerContainerFactory.getObject(), jmsTemplate);
+        return channel;
     }
 
     @Bean
     public EventBusTerminal subscriptionEventBusTerminal(Cluster asyncCluster, Serializer serializer, @Qualifier("eventChannel") final SubscribableChannel subscribableChannel) {
-     return new SubscriptionEventBusTerminal(serializer,subscribableChannel,asyncCluster);
+        return new SubscriptionEventBusTerminal(serializer, subscribableChannel, asyncCluster);
     }
 
     @Bean
-    public ClusterSelector selector (Cluster cluster) {
-
+    public ClusterSelector selector(@Qualifier("asyncCluster") Cluster cluster) {
         return new DefaultClusterSelector(cluster);
         //return new AnnotationClusterSelector(EventHandler.class,cluster);
     }
 
-    @Bean
-    public Cluster asyncCluster (@Value("${asyncCluster.pool.size:20}") int maximumPoolSize) {
+    @Bean(name = "asyncCluster")
+    public Cluster asyncCluster(@Value("${asyncCluster.pool.size:20}") int maximumPoolSize) {
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
                 .setNameFormat("asyncCluster-%d").build();
         return new AsynchronousCluster("asyncCluster",
@@ -173,12 +178,12 @@ public class Default {
     }
 
     @Bean
-    public EventBus eventBus (ClusterSelector selector,EventBusTerminal subscriptionEventBusTerminal) {
-        return new ClusteringEventBus(selector,subscriptionEventBusTerminal);
+    public EventBus eventBus(ClusterSelector selector, EventBusTerminal subscriptionEventBusTerminal) {
+        return new ClusteringEventBus(selector, subscriptionEventBusTerminal);
     }
 
-    protected Map<String, String> types () {
-        return  new HashMap<>();
+    protected Map<String, String> types() {
+        return new HashMap<>();
     }
 
     @Bean
@@ -194,36 +199,36 @@ public class Default {
         final JacksonSerializer serializer = new JacksonSerializer(objectMapper) {
             private Map<String, String> types = types();
 
-            public String resolveClassName (SerializedType serializedType) {
+            public String resolveClassName(SerializedType serializedType) {
                 String name = serializedType.getName();
                 String result = types.get(name);
-                return result == null ?  name : result;
+                return result == null ? name : result;
             }
         };
-        serializer.getObjectMapper().registerModule(new SimpleModule("Axon"));
+        serializer.getObjectMapper().registerModule(new SimpleModule("Axon").addDeserializer(MetaData.class,new MetadataDeserializer()));
         serializer.getObjectMapper().registerModule(new JodaModule());
         return serializer;
     }
 
     @Bean
-    public DisruptorCommandBus localSegment (EventStore eventStore, EventBus eventBus) {
+    public DisruptorCommandBus localSegment(EventStore eventStore, EventBus eventBus) {
         return new DisruptorCommandBus(eventStore, eventBus);
     }
 
     @Bean
-    public CommandGateway commandGateway (CommandBus commandBus) {
+    public CommandGateway commandGateway(CommandBus commandBus) {
         RetryScheduler retryScheduler = new IntervalRetryScheduler(newScheduledThreadPool(1), 100, 3);
         CommandGateway commandGateway = new DefaultCommandGateway(commandBus, retryScheduler);
         return commandGateway;
     }
 
     @Bean
-    public ResourceInjector  resourceInjector () {
+    public ResourceInjector resourceInjector() {
         return new SpringResourceInjector();
     }
 
     @Bean
-    public IdGenerator generator () {
+    public IdGenerator generator() {
         return new DefaultIdGenerator();
     }
 }
