@@ -2,8 +2,6 @@ package com.affaince.subscription.subscriptionableitem.registration.configuratio
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriptionableitem.registration.command.domain.SubscriptionableItem;
-import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
-import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
 import com.affaince.subscription.subscriptionableitem.registration.query.event.SubscriptionableItemReceivedEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;

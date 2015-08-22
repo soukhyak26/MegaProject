@@ -10,18 +10,6 @@ import org.joda.time.LocalDate;
 @CsvRecord(separator = ",", skipFirstLine = true)
 public class SubscriptionableItemReceivedEvent {
 
-    public String getItemId() {
-        return this.itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
-    }
-
-    public void setCurrentPriceDate(LocalDate currentPriceDate) {
-        this.currentPriceDate = currentPriceDate;
-    }
-
     @DataField(name = "ITEM_ID", pos = 1, trim = true)
     private String itemId;
 
@@ -125,6 +113,20 @@ public class SubscriptionableItemReceivedEvent {
         return this.currentPriceDate;
     }
 
+    public String getItemId() {
+        return this.itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+        this.currentPriceDate = currentPriceDate;
+    }
+
+
+
     @Override
     public String toString() {
         return "SubscriptionableItemReceivedEvent{" +
@@ -141,4 +143,5 @@ public class SubscriptionableItemReceivedEvent {
                 ", currentPriceDate=" + currentPriceDate +
                 '}';
     }
+
 }
