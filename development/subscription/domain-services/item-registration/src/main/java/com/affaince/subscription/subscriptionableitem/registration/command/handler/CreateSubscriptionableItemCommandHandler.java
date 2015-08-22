@@ -17,12 +17,12 @@ public class CreateSubscriptionableItemCommandHandler {
     private Repository<SubscriptionableItem> itemRepository;
 
     @Autowired
-    public CreateSubscriptionableItemCommandHandler (Repository<SubscriptionableItem> itemRepository) {
+    public CreateSubscriptionableItemCommandHandler(Repository<SubscriptionableItem> itemRepository) {
         this.itemRepository = itemRepository;
     }
 
     @CommandHandler
-    public void handle (CreateSubscriptionableItemCommand command) {
+    public void handle(CreateSubscriptionableItemCommand command) {
         SubscriptionableItem subscriptionableItem = new SubscriptionableItem(
                 command.getItemId(),
                 command.getBatchId(),

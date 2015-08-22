@@ -95,9 +95,9 @@ public class SubscriptionableItemController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "/setcurrentofferedprice/{itemid}")
-    @Consumes ("application/json")
-    public  ResponseEntity <Object> setCurrentOfferedPrice (@PathVariable ("itemid") String itemId, @RequestBody AddCurrentOfferedPriceRequest request) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{itemid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable("itemid") String itemId, @RequestBody AddCurrentOfferedPriceRequest request) {
         AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(itemId, request.getCurrentOfferedPrice());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

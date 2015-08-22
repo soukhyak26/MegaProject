@@ -18,14 +18,14 @@ import java.util.Map;
 public class Axon extends Default {
 
     @Bean
-    public Repository<Subscriber> createRepository (DisruptorCommandBus commandBus) {
+    public Repository<Subscriber> createRepository(DisruptorCommandBus commandBus) {
 
-        Repository <Subscriber> repository = commandBus.createRepository(new GenericAggregateFactory<>(Subscriber.class));
+        Repository<Subscriber> repository = commandBus.createRepository(new GenericAggregateFactory<>(Subscriber.class));
         return repository;
     }
 
     @Override
-    protected Map<String, String> types () {
+    protected Map<String, String> types() {
         return new HashMap<String, String>() {{
         }};
     }

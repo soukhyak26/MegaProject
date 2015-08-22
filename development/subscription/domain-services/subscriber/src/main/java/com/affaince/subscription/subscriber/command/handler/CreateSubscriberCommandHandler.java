@@ -16,14 +16,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateSubscriberCommandHandler {
 
-    private final Repository <Subscriber> repository;
+    private final Repository<Subscriber> repository;
+
     @Autowired
     public CreateSubscriberCommandHandler(Repository<Subscriber> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle (CreateSubscriberCommand command) {
+    public void handle(CreateSubscriberCommand command) {
         SubscriberName subscriberName = new SubscriberName(
                 command.getFirstName(),
                 command.getMiddleName(),

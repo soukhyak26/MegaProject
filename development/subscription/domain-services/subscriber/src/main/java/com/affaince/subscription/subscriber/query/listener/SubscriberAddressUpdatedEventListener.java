@@ -22,7 +22,7 @@ public class SubscriberAddressUpdatedEventListener {
     }
 
     @EventHandler
-    public void on (SubscriberAddressUpdatedEvent event) {
+    public void on(SubscriberAddressUpdatedEvent event) {
         Address address = new Address(
                 event.getAddressLine1(),
                 event.getAddressLine2(),

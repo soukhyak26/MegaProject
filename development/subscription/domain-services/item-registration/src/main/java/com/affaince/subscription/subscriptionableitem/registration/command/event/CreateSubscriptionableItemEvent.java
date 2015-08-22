@@ -20,7 +20,7 @@ public class CreateSubscriptionableItemEvent {
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public CreateSubscriptionableItemEvent(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double purchasePricePerUnit,double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+    public CreateSubscriptionableItemEvent(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double purchasePricePerUnit, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -29,7 +29,7 @@ public class CreateSubscriptionableItemEvent {
         this.subCategoryName = subCategoryNmae;
         this.productId = productId;
         this.currentMRP = currentMRP;
-        this.purchasePricePerUnit=purchasePricePerUnit;
+        this.purchasePricePerUnit = purchasePricePerUnit;
         this.currentOfferedPrice = currentOfferedPrice;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPriceDate = currentPriceDate;

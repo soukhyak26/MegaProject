@@ -22,7 +22,7 @@ public class SubscriberContactDetailsUpdatedEventListener {
     }
 
     @EventHandler
-    public void on (SubscriberContactDetailsUpdatedEvent event) {
+    public void on(SubscriberContactDetailsUpdatedEvent event) {
         SubscriberView subscriberView = subscriberViewRepository.findOne(event.getSubscriberId());
         ContactDetails contactDetails = new ContactDetails(
                 event.getEmail(),

@@ -12,18 +12,19 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.SubscribableChannel;
 import org.springframework.messaging.support.GenericMessage;
-import static org.springframework.integration.jms.JmsHeaders.TYPE;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.springframework.integration.jms.JmsHeaders.TYPE;
 
 /**
  * Created by mandark on 05-08-2015.
  */
 public class SubscriptionEventBusTerminal implements EventBusTerminal {
     private static final int DEAULT_TIMEOUT_IN_MILLISECONDS = 100;
-    private static final String PAYLOAD_TYPE_NAME= "payloadTypeName" ;
+    private static final String PAYLOAD_TYPE_NAME = "payloadTypeName";
     private final Serializer serializer;
     private final SubscribableChannel channel;
     private final Cluster cluster;

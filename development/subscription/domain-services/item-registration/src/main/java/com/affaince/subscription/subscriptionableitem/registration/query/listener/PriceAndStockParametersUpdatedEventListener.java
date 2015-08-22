@@ -10,14 +10,14 @@ import org.axonframework.eventhandling.annotation.EventHandler;
  */
 public class PriceAndStockParametersUpdatedEventListener {
 
-    private SubscriptionableItemRepository itemRepository;
+    private final SubscriptionableItemRepository itemRepository;
 
-    public PriceAndStockParametersUpdatedEventListener (SubscriptionableItemRepository itemRepository) {
+    public PriceAndStockParametersUpdatedEventListener(SubscriptionableItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
 
     @EventHandler
-    public void on (UpdatePriceAndStockParametersEvent event) {
+    public void on(UpdatePriceAndStockParametersEvent event) {
         SubscriptionableItemView subscriptionableItemView = itemRepository.findOneByItemId(event.getItemId());
         subscriptionableItemView.setCurrentMRP(event.getCurrentMRP());
         subscriptionableItemView.setCurrentStockInUnits(event.getCurrentStockInUnits());

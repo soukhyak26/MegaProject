@@ -7,7 +7,7 @@ import java.util.UUID;
  */
 public class DefaultIdGenerator implements IdGenerator {
     @Override
-    public String generator () {
+    public String generator() {
         return UUID.randomUUID().toString();
     }
 }

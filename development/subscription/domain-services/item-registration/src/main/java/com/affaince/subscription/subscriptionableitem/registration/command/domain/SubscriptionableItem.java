@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
 /**
  * Created by rbsavaliya on 19-07-2015.
  */
-public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
+public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
     private String itemId;
@@ -30,16 +30,16 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
-    public SubscriptionableItem () {
+    public SubscriptionableItem() {
 
     }
 
-    public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit,double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
-        apply (new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentPurchasePricePerUnit,currentMRP, currentOfferedPrice, currentStockInUnits, currentPriceDate));
+    public SubscriptionableItem(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+        apply(new CreateSubscriptionableItemEvent(itemId, batchId, categoryId, categoryName, subCategoryId, subCategoryNmae, productId, currentPurchasePricePerUnit, currentMRP, currentOfferedPrice, currentStockInUnits, currentPriceDate));
     }
 
     @EventSourcingHandler
-    public void on (CreateSubscriptionableItemEvent event) {
+    public void on(CreateSubscriptionableItemEvent event) {
         this.itemId = event.getItemId();
         this.batchId = event.getBatchId();
         this.categoryId = event.getCategoryId();
@@ -54,7 +54,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     }
 
     @EventSourcingHandler
-    public void on (UpdatePriceAndStockParametersEvent event) {
+    public void on(UpdatePriceAndStockParametersEvent event) {
         this.itemId = event.getItemId();
         this.currentMRP = event.getCurrentMRP();
         this.currentPriceDate = event.getCurrentPrizeDate();
@@ -62,7 +62,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     }
 
     @EventSourcingHandler
-    public void on (AddProjectionParametersEvent event) {
+    public void on(AddProjectionParametersEvent event) {
         this.itemId = event.getItemId();
         ProjectionParameters projectionParameters = new ProjectionParameters(
                 event.getTargetConsumptionPeriod(),
@@ -77,7 +77,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     }
 
     @EventSourcingHandler
-    public void on (AddSubscriptionableItemRuleParametersEvent event) {
+    public void on(AddSubscriptionableItemRuleParametersEvent event) {
         this.itemId = itemId;
         RuleParameters ruleParameters = new RuleParameters(
                 event.getMinPermissibleDiscount(),
@@ -90,7 +90,7 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot{
     }
 
     @EventSourcingHandler
-    public void on (CurrentOfferedPriceAddedEvent event) {
+    public void on(CurrentOfferedPriceAddedEvent event) {
         this.itemId = event.getItemId();
         this.currentOfferedPrice = event.getCurrentOfferedPrice();
     }

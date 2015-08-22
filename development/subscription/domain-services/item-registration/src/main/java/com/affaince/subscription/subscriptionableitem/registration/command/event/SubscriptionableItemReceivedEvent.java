@@ -19,7 +19,8 @@ public class SubscriptionableItemReceivedEvent {
 
     private LocalDate currentPriceDate = LocalDate.now();
 
-    public SubscriptionableItemReceivedEvent(){}
+    public SubscriptionableItemReceivedEvent() {
+    }
 
     public String getSubCategoryId() {
         return this.subCategoryId;

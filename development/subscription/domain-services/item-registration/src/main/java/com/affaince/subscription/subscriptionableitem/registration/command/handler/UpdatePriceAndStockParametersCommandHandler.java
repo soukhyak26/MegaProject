@@ -13,16 +13,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdatePriceAndStockParametersCommandHandler {
 
-    private Repository<SubscriptionableItem> repository;
+    private final Repository<SubscriptionableItem> repository;
 
     @Autowired
-    public UpdatePriceAndStockParametersCommandHandler (Repository<SubscriptionableItem> repository) {
+    public UpdatePriceAndStockParametersCommandHandler(Repository<SubscriptionableItem> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle (UpdatePriceAndStockParametersCommand command) {
+    public void handle(UpdatePriceAndStockParametersCommand command) {
         SubscriptionableItem item = repository.load(command.getItemId());
-        item.updatePriceAndStockParemeters (command);
+        item.updatePriceAndStockParemeters(command);
     }
 }

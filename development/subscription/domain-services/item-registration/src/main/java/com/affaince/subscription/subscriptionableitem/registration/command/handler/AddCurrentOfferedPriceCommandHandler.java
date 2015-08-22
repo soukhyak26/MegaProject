@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddCurrentOfferedPriceCommandHandler {
 
-    private final Repository <SubscriptionableItem> repository;
+    private final Repository<SubscriptionableItem> repository;
 
     @Autowired
     public AddCurrentOfferedPriceCommandHandler(Repository<SubscriptionableItem> repository) {
@@ -21,8 +21,8 @@ public class AddCurrentOfferedPriceCommandHandler {
     }
 
     @CommandHandler
-    public void handle (AddCurrentOfferedPriceCommand command) {
+    public void handle(AddCurrentOfferedPriceCommand command) {
         SubscriptionableItem subscriptionableItem = repository.load(command.getItemId());
-        subscriptionableItem.addCurrentOfferedPrice (command.getCurrentOfferedPrice());
+        subscriptionableItem.addCurrentOfferedPrice(command.getCurrentOfferedPrice());
     }
 }
