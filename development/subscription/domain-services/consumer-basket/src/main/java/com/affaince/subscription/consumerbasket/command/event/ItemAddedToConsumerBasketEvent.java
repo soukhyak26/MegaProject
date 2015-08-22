@@ -1,15 +1,37 @@
-package com.affaince.subscription.consumerbasket.web.request;
+package com.affaince.subscription.consumerbasket.command.event;
 
 /**
- * Created by rbsavaliya on 09-08-2015.
+ * Created by rbsavaliya on 23-08-2015.
  */
-public class BasketItemRequest {
+public class ItemAddedToConsumerBasketEvent {
+    private String basketId;
     private String itemId;
     private String productId;
     private int quantityPerBasket;
     private int frequency;
     private double itemMRP;
     private double itemDiscountedPrice;
+
+    public ItemAddedToConsumerBasketEvent(String basketId, String itemId, String productId, int quantityPerBasket, int frequency, double itemMRP, double itemDiscountedPrice) {
+        this.basketId = basketId;
+        this.itemId = itemId;
+        this.productId = productId;
+        this.quantityPerBasket = quantityPerBasket;
+        this.frequency = frequency;
+        this.itemMRP = itemMRP;
+        this.itemDiscountedPrice = itemDiscountedPrice;
+    }
+
+    public ItemAddedToConsumerBasketEvent() {
+    }
+
+    public String getBasketId() {
+        return basketId;
+    }
+
+    public void setBasketId(String basketId) {
+        this.basketId = basketId;
+    }
 
     public String getItemId() {
         return itemId;

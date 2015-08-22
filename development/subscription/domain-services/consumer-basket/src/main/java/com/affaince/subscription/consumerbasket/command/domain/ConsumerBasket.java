@@ -1,14 +1,13 @@
 package com.affaince.subscription.consumerbasket.command.domain;
 
 import com.affaince.subscription.consumerbasket.command.AddAddressToConsumerBasketCommand;
-import com.affaince.subscription.consumerbasket.command.event.BillingAddressAddedToConsumerBasketEvent;
-import com.affaince.subscription.consumerbasket.command.event.ConsumerBasketCreatedEvent;
-import com.affaince.subscription.consumerbasket.command.event.ContactDetailsAddedEvent;
-import com.affaince.subscription.consumerbasket.command.event.ShippingAddressAddedToConsumerBasketEvent;
+import com.affaince.subscription.consumerbasket.command.AddItemToConsumerBasketCommand;
+import com.affaince.subscription.consumerbasket.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,6 +75,17 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
         this.billingAddress = address;
     }
 
+    @EventSourcingHandler
+    public void on(ItemAddedToConsumerBasketEvent event) {
+        BasketItem basketItem = new BasketItem(event.getItemId(), event.getProductId(),
+                event.getQuantityPerBasket(), event.getFrequency(), event.getItemMRP(),
+                event.getItemDiscountedPrice());
+        if (basketItems == null) {
+            basketItems = new ArrayList<>();
+        }
+        basketItems.add(basketItem);
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new ContactDetailsAddedEvent(this.basketId, email, mobileNumber, alternativeNumber));
     }
@@ -98,5 +108,11 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
                     command.getCountry(),
                     command.getPinCode()));
         }
+    }
+
+    public void addItemToBasket(AddItemToConsumerBasketCommand command) {
+        apply(new ItemAddedToConsumerBasketEvent(this.basketId, command.getItemId(),
+                command.getProductId(), command.getFrequency(), command.getQuantityPerBasket(),
+                command.getItemMRP(), command.getItemDiscountedPrice()));
     }
 }

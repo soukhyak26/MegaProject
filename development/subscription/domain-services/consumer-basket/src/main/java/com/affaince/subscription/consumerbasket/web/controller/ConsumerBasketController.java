@@ -2,8 +2,10 @@ package com.affaince.subscription.consumerbasket.web.controller;
 
 import com.affaince.subscription.consumerbasket.command.AddAddressToConsumerBasketCommand;
 import com.affaince.subscription.consumerbasket.command.AddContactDetailsCommand;
+import com.affaince.subscription.consumerbasket.command.AddItemToConsumerBasketCommand;
 import com.affaince.subscription.consumerbasket.command.CreateConsumerBasketCommand;
 import com.affaince.subscription.consumerbasket.web.request.AddressRequest;
+import com.affaince.subscription.consumerbasket.web.request.BasketItemRequest;
 import com.affaince.subscription.consumerbasket.web.request.ConsumerBasketRequest;
 import com.affaince.subscription.consumerbasket.web.request.ContactDetailsRequest;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -35,24 +37,18 @@ public class ConsumerBasketController {
         final String basketId = UUID.randomUUID().toString();
         CreateConsumerBasketCommand command = new CreateConsumerBasketCommand(basketId, request.getUserId());
         commandGateway.sendAndWait(command);
-       /* final ContactDetails contactDetails = request.getContactDetails();
-        AddContactDetailsCommand contactDetailsCommand = new AddContactDetailsCommand(basketId,
-                contactDetails.getEmail(), contactDetails.getMobileNumber(), contactDetails.getAlternativeNumber()
-        );
-        commandGateway.sendAndWait(contactDetailsCommand);
-        final Address billingAddress = request.getBillingAddress();
-        AddAddressToConsumerBasketCommand addBillingAddressCommand = new AddAddressToConsumerBasketCommand(
-                basketId, "billing", billingAddress.getAddressLine1(), billingAddress.getAddressLine2(), billingAddress.getCity(),
-                billingAddress.getState(), billingAddress.getCountry(), billingAddress.getPinCode()
-        );
-        commandGateway.sendAndWait(addBillingAddressCommand);
-        final Address shippingAddress = request.getShippingAddress();
-        AddAddressToConsumerBasketCommand addShippingAddressComand = new AddAddressToConsumerBasketCommand(
-                basketId, "shipping", shippingAddress.getAddressLine1(), shippingAddress.getAddressLine2(), shippingAddress.getCity(),
-                shippingAddress.getState(), shippingAddress.getCountry(), shippingAddress.getPinCode()
-        );
-        commandGateway.sendAndWait(addShippingAddressComand);*/
         return new ResponseEntity<Object>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "additem/{basketid}", method = RequestMethod.PUT)
+    @Consumes("application/json")
+    public ResponseEntity<Object> addItemToConsumerBasket(@PathVariable("basketid") String basketId,
+                                                          @RequestBody BasketItemRequest request) {
+        AddItemToConsumerBasketCommand command = new AddItemToConsumerBasketCommand(basketId,
+                request.getItemId(), request.getProductId(), request.getFrequency(), request.getQuantityPerBasket(),
+                request.getItemMRP(), request.getItemDiscountedPrice());
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "addshippingaddress/{basketid}", method = RequestMethod.PUT)

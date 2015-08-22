@@ -7,9 +7,18 @@ public class BasketItem {
     private String itemId;
     private String productId;
     private int quantityPerBasket;
-    private String frequency;
+    private int frequency;
     private double itemMRP;
     private double itemDiscountedPrice;
+
+    public BasketItem(String itemId, String productId, int quantityPerBasket, int frequency, double itemMRP, double itemDiscountedPrice) {
+        this.itemId = itemId;
+        this.productId = productId;
+        this.quantityPerBasket = quantityPerBasket;
+        this.frequency = frequency;
+        this.itemMRP = itemMRP;
+        this.itemDiscountedPrice = itemDiscountedPrice;
+    }
 
     public String getItemId() {
         return itemId;
@@ -35,11 +44,11 @@ public class BasketItem {
         this.quantityPerBasket = quantityPerBasket;
     }
 
-    public String getFrequency() {
+    public int getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
 
