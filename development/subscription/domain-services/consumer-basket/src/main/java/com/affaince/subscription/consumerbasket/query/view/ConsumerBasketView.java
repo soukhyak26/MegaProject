@@ -14,6 +14,7 @@ public class ConsumerBasketView {
     @Id
     private String basketId;
     private String userId;
+    private int consumerBasketStatus;
     private List<BasketItem> basketItems;
     private Address shippingAddress;
     private Address billingAddress;
@@ -21,9 +22,10 @@ public class ConsumerBasketView {
     private double totalAmount;
     private double totalAmountAfterDiscount;
 
-    public ConsumerBasketView(String basketId, String userId, List<BasketItem> basketItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmount, double totalAmountAfterDiscount) {
+    public ConsumerBasketView(String basketId, String userId, int consumerBasketStatus, List<BasketItem> basketItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmount, double totalAmountAfterDiscount) {
         this.basketId = basketId;
         this.userId = userId;
+        this.consumerBasketStatus = consumerBasketStatus;
         this.basketItems = basketItems;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
@@ -46,6 +48,14 @@ public class ConsumerBasketView {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public int getConsumerBasketStatus() {
+        return consumerBasketStatus;
+    }
+
+    public void setConsumerBasketStatus(int consumerBasketStatus) {
+        this.consumerBasketStatus = consumerBasketStatus;
     }
 
     public List<BasketItem> getBasketItems() {

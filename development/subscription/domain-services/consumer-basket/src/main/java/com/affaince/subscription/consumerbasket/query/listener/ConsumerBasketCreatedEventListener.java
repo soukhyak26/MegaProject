@@ -2,6 +2,7 @@ package com.affaince.subscription.consumerbasket.query.listener;
 
 import com.affaince.subscription.consumerbasket.command.event.ConsumerBasketCreatedEvent;
 import com.affaince.subscription.consumerbasket.query.repository.ConsumerBasketRepository;
+import com.affaince.subscription.consumerbasket.query.view.ConsumerBasketStatus;
 import com.affaince.subscription.consumerbasket.query.view.ConsumerBasketView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ConsumerBasketCreatedEventListener {
     @EventHandler
     public void on(ConsumerBasketCreatedEvent event) {
         ConsumerBasketView consumerBasketView = new ConsumerBasketView(event.getBasketId(),
-                event.getUserId(), null, null, null, null, 0.0, 0.0);
+                event.getUserId(), ConsumerBasketStatus.CREATED.getStatusCode(), null, null, null, null, 0.0, 0.0);
         basketRepository.save(consumerBasketView);
     }
 }
