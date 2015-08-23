@@ -7,14 +7,11 @@ import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.transformation.MetadataDeserializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
-import javafx.application.Application;
-import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -40,21 +37,15 @@ import org.axonframework.serializer.json.JacksonSerializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.config.xml.LoggingChannelAdapterParser;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.jms.SubscribableJmsChannel;
-import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.listener.AbstractMessageListenerContainer;
-import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.support.converter.MessagingMessageConverter;
 import org.springframework.messaging.SubscribableChannel;
 import org.springframework.util.ErrorHandler;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Session;
-import java.lang.annotation.Annotation;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -205,7 +196,7 @@ public class Default {
                 return result == null ? name : result;
             }
         };
-        serializer.getObjectMapper().registerModule(new SimpleModule("Axon").addDeserializer(MetaData.class,new MetadataDeserializer()));
+        serializer.getObjectMapper().registerModule(new SimpleModule("Axon").addDeserializer(MetaData.class, new MetadataDeserializer()));
         serializer.getObjectMapper().registerModule(new JodaModule());
         return serializer;
     }

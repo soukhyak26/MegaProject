@@ -31,7 +31,7 @@ public class CreateSubscriptionableItemCommand {
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit,double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+    public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
         this.itemId = id;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -39,7 +39,7 @@ public class CreateSubscriptionableItemCommand {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryNmae;
         this.productId = productId;
-        this.currentPurchasePricePerUnit= currentPurchasePricePerUnit;
+        this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
         this.currentMRP = currentMRP;
         this.currentOfferedPrice = currentOfferedPrice;
         this.currentStockInUnits = currentStockInUnits;

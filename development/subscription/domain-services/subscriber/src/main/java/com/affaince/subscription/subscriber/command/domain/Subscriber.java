@@ -35,7 +35,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on (SubscriberCreatedEvent event) {
+    public void on(SubscriberCreatedEvent event) {
         this.subscriberId = event.getSubscriberId();
         SubscriberName subscriberName = new SubscriberName(
                 event.getFirstName(),
@@ -61,7 +61,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on (SubscriberContactDetailsUpdatedEvent event) {
+    public void on(SubscriberContactDetailsUpdatedEvent event) {
         ContactDetails contactDetails = new ContactDetails(
                 event.getEmail(),
                 event.getMobileNumber(),
@@ -71,7 +71,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on (SubscriberAddressUpdatedEvent event) {
+    public void on(SubscriberAddressUpdatedEvent event) {
         this.subscriberName = subscriberName;
         Address address = new Address(
                 event.getAddressLine1(),

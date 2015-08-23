@@ -21,7 +21,7 @@ public class SubscriptionableItemCreatedEventListener {
 
 
     @EventHandler
-    public void on (CreateSubscriptionableItemEvent event) {
+    public void on(CreateSubscriptionableItemEvent event) {
         SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
                 event.getItemId(),
                 event.getBatchId(),

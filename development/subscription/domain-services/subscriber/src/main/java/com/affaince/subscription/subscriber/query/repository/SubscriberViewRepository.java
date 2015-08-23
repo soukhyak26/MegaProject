@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
-public interface SubscriberViewRepository extends CrudRepository <SubscriberView, String> {
+public interface SubscriberViewRepository extends CrudRepository<SubscriberView, String> {
 }

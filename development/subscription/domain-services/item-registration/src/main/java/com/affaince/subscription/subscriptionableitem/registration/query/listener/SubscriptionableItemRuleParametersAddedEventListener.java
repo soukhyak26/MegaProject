@@ -14,15 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubscriptionableItemRuleParametersAddedEventListener {
 
-    SubscriptionableItemRepository itemRepository;
+    private final SubscriptionableItemRepository itemRepository;
 
     @Autowired
-    public SubscriptionableItemRuleParametersAddedEventListener (SubscriptionableItemRepository itemRepository) {
+    public SubscriptionableItemRuleParametersAddedEventListener(SubscriptionableItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
 
     @EventHandler
-    public void on (AddSubscriptionableItemRuleParametersEvent event) {
+    public void on(AddSubscriptionableItemRuleParametersEvent event) {
         SubscriptionableItemView subscriptionableItemView = itemRepository.findOneByItemId(event.getItemId());
         RuleParameters ruleParameters = new RuleParameters(
                 event.getMinPermissibleDiscount(),

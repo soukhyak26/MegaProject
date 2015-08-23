@@ -1,41 +1,38 @@
 package com.affaince.subscription.events;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.env.Environment;
-import org.springframework.jms.listener.DefaultMessageListenerContainer;
-
-import javax.jms.ConnectionFactory;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.*;
-import java.lang.reflect.Method;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.util.ErrorHandler;
 import org.springframework.util.ReflectionUtils;
+
+import javax.jms.ConnectionFactory;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.*;
 
 import static com.google.common.base.Joiner.on;
 import static com.google.common.collect.FluentIterable.from;
 import static com.google.common.collect.Iterables.getFirst;
 import static com.google.common.collect.Iterables.transform;
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.lang.String.format;
 import static javax.jms.Session.AUTO_ACKNOWLEDGE;
@@ -129,7 +126,7 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
         container.setIdleConsumerLimit(idleConsumerLimit);
         container.setSessionAcknowledgeMode(sessionAcknowledgeMode);
 
-        System.out.println("@@@selector output: "+ selector());
+        System.out.println("@@@selector output: " + selector());
         container.setMessageSelector(selector());
     }
 

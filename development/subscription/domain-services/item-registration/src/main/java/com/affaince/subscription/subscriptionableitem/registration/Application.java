@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan ("com.affaince")
+@ComponentScan("com.affaince")
 @AnnotationDriven
 public class Application extends SpringBootServletInitializer {
 
@@ -22,7 +22,7 @@ public class Application extends SpringBootServletInitializer {
         return application.sources(Application.class);
     }
 
-    public static void main (String [] args) {
+    public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.run();
     }

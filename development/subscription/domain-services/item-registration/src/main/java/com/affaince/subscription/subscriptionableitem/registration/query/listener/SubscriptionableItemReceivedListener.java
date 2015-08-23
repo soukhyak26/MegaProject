@@ -13,15 +13,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubscriptionableItemReceivedListener {
     private final SubscriptionableItemRepository itemRepository;
+
     @Autowired
     public SubscriptionableItemReceivedListener(SubscriptionableItemRepository repository) {
         this.itemRepository = repository;
     }
 
     @EventHandler
-    public void on (SubscriptionableItemReceivedEvent event) {
-        System.out.println("@@@@@@@@Listener: Received even object: "+ event);
-        SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView (
+    public void on(SubscriptionableItemReceivedEvent event) {
+        System.out.println("@@@@@@@@Listener: Received even object: " + event);
+        SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
                 event.getItemId(),
                 event.getBatchId(),
                 event.getCategoryId(),

@@ -13,16 +13,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddProjectionParametersCommandHandler {
 
-    private Repository<SubscriptionableItem> repository;
+    private final Repository<SubscriptionableItem> repository;
 
     @Autowired
-    public AddProjectionParametersCommandHandler (Repository<SubscriptionableItem> repository) {
+    public AddProjectionParametersCommandHandler(Repository<SubscriptionableItem> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle (AddProjectionParametersCommand command) {
+    public void handle(AddProjectionParametersCommand command) {
         SubscriptionableItem subscriptionableItem = repository.load(command.getItemId());
-        subscriptionableItem.addProjectionParameters (command);
+        subscriptionableItem.addProjectionParameters(command);
     }
 }

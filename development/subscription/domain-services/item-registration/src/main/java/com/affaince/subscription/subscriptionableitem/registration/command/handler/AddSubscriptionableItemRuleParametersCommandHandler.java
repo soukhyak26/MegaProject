@@ -13,16 +13,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddSubscriptionableItemRuleParametersCommandHandler {
 
-    Repository<SubscriptionableItem> repository;
+    private final Repository<SubscriptionableItem> repository;
 
     @Autowired
-    public AddSubscriptionableItemRuleParametersCommandHandler (Repository<SubscriptionableItem> repository) {
+    public AddSubscriptionableItemRuleParametersCommandHandler(Repository<SubscriptionableItem> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle (AddSubscriptionableItemRuleParametersCommand command) {
+    public void handle(AddSubscriptionableItemRuleParametersCommand command) {
         SubscriptionableItem subscriptionableItem = repository.load(command.getItemId());
-        subscriptionableItem.addSubscriptionableItemRuleParameters (command);
+        subscriptionableItem.addSubscriptionableItemRuleParameters(command);
     }
 }

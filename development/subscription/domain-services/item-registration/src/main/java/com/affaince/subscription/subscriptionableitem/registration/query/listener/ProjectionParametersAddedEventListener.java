@@ -14,15 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectionParametersAddedEventListener {
 
-    private SubscriptionableItemRepository itemRepository;
+    private final SubscriptionableItemRepository itemRepository;
 
     @Autowired
-    public ProjectionParametersAddedEventListener (SubscriptionableItemRepository itemRepository) {
+    public ProjectionParametersAddedEventListener(SubscriptionableItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
 
     @EventHandler
-    public void on (AddProjectionParametersEvent event) {
+    public void on(AddProjectionParametersEvent event) {
         ProjectionParameters projectionParameters = new ProjectionParameters(
                 event.getTargetConsumptionPeriod(),
                 event.getTargetConsumptionPeriodUnit(),

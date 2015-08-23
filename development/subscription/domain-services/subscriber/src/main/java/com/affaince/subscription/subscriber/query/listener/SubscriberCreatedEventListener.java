@@ -24,7 +24,7 @@ public class SubscriberCreatedEventListener {
     }
 
     @EventHandler
-    public void on (SubscriberCreatedEvent event) {
+    public void on(SubscriberCreatedEvent event) {
         SubscriberName subscriberName = new SubscriberName(
                 event.getFirstName(),
                 event.getMiddleName(),

@@ -14,14 +14,15 @@ import org.springframework.stereotype.Component;
 public class UpdateSubscriberAddressCommandHandler {
 
     private final Repository<Subscriber> repository;
+
     @Autowired
     public UpdateSubscriberAddressCommandHandler(Repository<Subscriber> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle (UpdateSubscriberAddressCommand command) {
+    public void handle(UpdateSubscriberAddressCommand command) {
         Subscriber subscriber = repository.load(command.getSubscriberId());
-        subscriber.updateAddress (command);
+        subscriber.updateAddress(command);
     }
 }

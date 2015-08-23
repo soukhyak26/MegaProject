@@ -19,19 +19,20 @@ import java.util.UUID;
  * Created by rbsavaliya on 02-08-2015.
  */
 @RestController
-@RequestMapping (value = "subscriber")
+@RequestMapping(value = "subscriber")
 public class SubscriberController {
 
     private final CommandGateway commandGateway;
+
     @Autowired
     public SubscriberController(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping (method = RequestMethod.POST)
-    @Consumes ("application/json")
-    public ResponseEntity<Object> createSubscriber (@RequestBody CreateSubscriberRequest request) {
-        CreateSubscriberCommand command = new CreateSubscriberCommand (
+    @RequestMapping(method = RequestMethod.POST)
+    @Consumes("application/json")
+    public ResponseEntity<Object> createSubscriber(@RequestBody CreateSubscriberRequest request) {
+        CreateSubscriberCommand command = new CreateSubscriberCommand(
                 UUID.randomUUID().toString(),
                 request.getFirstName(),
                 request.getMiddleName(),
@@ -50,22 +51,22 @@ public class SubscriberController {
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "updatecontactdetails/{subscriberid}")
-    @Consumes ("application/json")
-    public ResponseEntity <Object> updateSubscriberContactDetails (@RequestBody UpdateSubscriberContactDetailsRequest request,
-                                                                   @PathVariable ("subscriberid") String subscriberId) {
-        UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand (
+    @RequestMapping(method = RequestMethod.PUT, value = "updatecontactdetails/{subscriberid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> updateSubscriberContactDetails(@RequestBody UpdateSubscriberContactDetailsRequest request,
+                                                                 @PathVariable("subscriberid") String subscriberId) {
+        UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand(
                 subscriberId, request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "updateaddress/{subscriberid}")
-    @Consumes ("application/json")
-    public ResponseEntity <Object> updateSubscriberAddress (@RequestBody UpdateSubscriberAddressRequest request,
-                                                                   @PathVariable ("subscriberid") String subscriberId) {
-        UpdateSubscriberAddressCommand command = new UpdateSubscriberAddressCommand (
+    @RequestMapping(method = RequestMethod.PUT, value = "updateaddress/{subscriberid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> updateSubscriberAddress(@RequestBody UpdateSubscriberAddressRequest request,
+                                                          @PathVariable("subscriberid") String subscriberId) {
+        UpdateSubscriberAddressCommand command = new UpdateSubscriberAddressCommand(
                 subscriberId, request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
                 request.getState(), request.getCountry(), request.getPinCode()
         );

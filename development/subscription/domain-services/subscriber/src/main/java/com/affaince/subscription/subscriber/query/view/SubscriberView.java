@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
-@Document (collection = "SubscriberView")
+@Document(collection = "SubscriberView")
 public class SubscriberView {
     @Id
     private String subscriberId;
