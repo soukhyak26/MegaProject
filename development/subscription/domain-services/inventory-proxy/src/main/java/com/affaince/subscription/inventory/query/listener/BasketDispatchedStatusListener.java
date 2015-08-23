@@ -16,9 +16,9 @@ public class BasketDispatchedStatusListener {
     @EventHandler
     public void on (BasketDispatchedStatusEvent event) {
         //BasketView basketView =subscriptionBasketRepository.findOneByItemId(event.getBasketId());
-        System.out.println("BasketDispatchStatusEvent ID: " + event.getBasketId());
-        System.out.println("BasketDispatchStatusEvent status code: " + event.getDispactchStatusCode());
-        System.out.println("BasketDispatchStatusEvent dispatch date: " + event.getDispatchDate());
-        System.out.println("BasketDispatchStatusEvent reason code: " + event.getReasonCode());
+        System.out.println("@@@@@BasketDispatchStatusEvent ID: " + event.getBasketId());
+        System.out.println("@@@@@@@BasketDispatchStatusEvent status code: " + event.getDispactchStatusCode());
+        System.out.println("@@@@@@BasketDispatchStatusEvent dispatch date: " + event.getDispatchDate());
+        System.out.println("@@@@@@@BasketDispatchStatusEvent reason code: " + event.getReasonCode());
     }
 }

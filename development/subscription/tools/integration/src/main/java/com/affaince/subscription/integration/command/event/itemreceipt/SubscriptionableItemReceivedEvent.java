@@ -1,4 +1,4 @@
-package com.affaince.subscription.integration.command.event;
+package com.affaince.subscription.integration.command.event.itemreceipt;
 
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;

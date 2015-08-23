@@ -1,5 +1,7 @@
-package com.affaince.subscription.integration.command.event;
+package com.affaince.subscription.integration.command.event.basketdispatch;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 import org.joda.time.LocalDate;
@@ -11,12 +13,17 @@ import org.joda.time.LocalDate;
 public class BasketDispatchedStatusEvent {
     @DataField(name = "BASKET_ID", pos = 1, trim = true)
     private String basketId;
+
+    @JsonSerialize(using=DateTimeSerializer.class)
     @DataField(name = "DISPATCH_DATE", pos = 2, trim = true)
     private LocalDate dispatchDate;
     @DataField(name = "DISPATCH_STATUS", pos = 3, trim = true)
     private int dispactchStatusCode;
     @DataField(name = "REASON_CODE", pos = 4, trim = true)
     private int reasonCode;
+
+    public BasketDispatchedStatusEvent() {
+    }
 
     public BasketDispatchedStatusEvent(String basketId, LocalDate dispatchDate, int dispactchStatusCode, int reasonCode) {
         this.basketId = basketId;

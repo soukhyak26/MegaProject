@@ -1,7 +1,6 @@
 package com.affaince.subscription.integration.command.writer;
 
-import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
-import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
+import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
 import org.springframework.batch.item.ItemWriter;
 
 import java.util.List;

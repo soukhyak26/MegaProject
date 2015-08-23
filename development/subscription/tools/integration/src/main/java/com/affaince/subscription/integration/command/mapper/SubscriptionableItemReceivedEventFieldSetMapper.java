@@ -1,6 +1,6 @@
 package com.affaince.subscription.integration.command.mapper;
 
-import com.affaince.subscription.integration.command.event.SubscriptionableItemReceivedEvent;
+import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
