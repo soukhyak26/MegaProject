@@ -15,19 +15,19 @@ import java.util.List;
  * Created by rbsavaliya on 23-08-2015.
  */
 @Component
-public class ItemAddedToConsumerBasketEventHandler {
+public class ItemAddedToConsumerBasketEventListener {
 
     private final ConsumerBasketRepository repository;
 
     @Autowired
-    public ItemAddedToConsumerBasketEventHandler(ConsumerBasketRepository repository) {
+    public ItemAddedToConsumerBasketEventListener(ConsumerBasketRepository repository) {
         this.repository = repository;
     }
 
     @EventHandler
     public void on(ItemAddedToConsumerBasketEvent event) {
         BasketItem basketItem = new BasketItem(event.getItemId(), event.getProductId(),
-                event.getQuantityPerBasket(), event.getFrequency(), event.getItemMRP(),
+                event.getQuantityPerBasket(), event.getFrequency(), event.getFrequencyUnit(), event.getItemMRP(),
                 event.getItemDiscountedPrice());
         ConsumerBasketView consumerBasketView = repository.findOne(event.getBasketId());
         List<BasketItem> basketItems = consumerBasketView.getBasketItems();

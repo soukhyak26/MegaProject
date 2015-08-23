@@ -77,8 +77,10 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(ItemAddedToConsumerBasketEvent event) {
+        System.out.println("in event publish " + event.getFrequencyUnit());
+        Frequency frequency = new Frequency(event.getFrequency(), event.getFrequencyUnit());
         BasketItem basketItem = new BasketItem(event.getItemId(), event.getProductId(),
-                event.getQuantityPerBasket(), event.getFrequency(), event.getItemMRP(),
+                event.getQuantityPerBasket(), frequency, event.getItemMRP(),
                 event.getItemDiscountedPrice());
         if (basketItems == null) {
             basketItems = new ArrayList<>();
@@ -111,8 +113,9 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void addItemToBasket(AddItemToConsumerBasketCommand command) {
+        System.out.println("in aggregate " + command.getFrequencyUnit());
         apply(new ItemAddedToConsumerBasketEvent(this.basketId, command.getItemId(),
-                command.getProductId(), command.getFrequency(), command.getQuantityPerBasket(),
+                command.getProductId(), command.getQuantityPerBasket(), command.getFrequency(), command.getFrequencyUnit(),
                 command.getItemMRP(), command.getItemDiscountedPrice()));
     }
 }

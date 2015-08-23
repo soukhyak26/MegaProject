@@ -44,8 +44,10 @@ public class ConsumerBasketController {
     @Consumes("application/json")
     public ResponseEntity<Object> addItemToConsumerBasket(@PathVariable("basketid") String basketId,
                                                           @RequestBody BasketItemRequest request) {
+        System.out.println("in controller" + request.getFrequencyUnit());
         AddItemToConsumerBasketCommand command = new AddItemToConsumerBasketCommand(basketId,
-                request.getItemId(), request.getProductId(), request.getFrequency(), request.getQuantityPerBasket(),
+                request.getItemId(), request.getProductId(), request.getQuantityPerBasket(),
+                request.getFrequency(), request.getFrequencyUnit(),
                 request.getItemMRP(), request.getItemDiscountedPrice());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

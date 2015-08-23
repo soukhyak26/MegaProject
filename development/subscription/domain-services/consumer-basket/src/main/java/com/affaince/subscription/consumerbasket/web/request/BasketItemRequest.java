@@ -8,6 +8,7 @@ public class BasketItemRequest {
     private String productId;
     private int quantityPerBasket;
     private int frequency;
+    private String frequencyUnit;
     private double itemMRP;
     private double itemDiscountedPrice;
 
@@ -41,6 +42,14 @@ public class BasketItemRequest {
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public String getFrequencyUnit() {
+        return frequencyUnit;
+    }
+
+    public void setFrequencyUnit(String frequencyUnit) {
+        this.frequencyUnit = frequencyUnit;
     }
 
     public double getItemMRP() {
