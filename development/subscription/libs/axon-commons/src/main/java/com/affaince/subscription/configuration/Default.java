@@ -14,11 +14,14 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.CommandDispatchInterceptor;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
+import org.axonframework.commandhandling.disruptor.DisruptorConfiguration;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
 import org.axonframework.commandhandling.gateway.RetryScheduler;
+import org.axonframework.commandhandling.interceptors.BeanValidationInterceptor;
 import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.domain.MetaData;
 import org.axonframework.eventhandling.*;
@@ -48,7 +51,9 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Session;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
@@ -203,7 +208,11 @@ public class Default {
 
     @Bean
     public DisruptorCommandBus localSegment(EventStore eventStore, EventBus eventBus) {
-        return new DisruptorCommandBus(eventStore, eventBus);
+        DisruptorConfiguration configuration = new DisruptorConfiguration();
+        List<CommandDispatchInterceptor>  dispatchInterceptors = new ArrayList<>();
+        dispatchInterceptors.add(new BeanValidationInterceptor());
+        configuration.setDispatchInterceptors(dispatchInterceptors);
+        return new DisruptorCommandBus(eventStore, eventBus, configuration);
     }
 
     @Bean
