@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriptionableitem.registration.query.listen
 
 import com.affaince.subscription.subscriptionableitem.registration.command.event.UpdatePriceAndStockParametersEvent;
 import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.subscriptionableitem.registration.query.view.PriceParameters;
 import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 
@@ -19,9 +20,11 @@ public class PriceAndStockParametersUpdatedEventListener {
     @EventHandler
     public void on(UpdatePriceAndStockParametersEvent event) {
         SubscriptionableItemView subscriptionableItemView = itemRepository.findOneByItemId(event.getItemId());
-        subscriptionableItemView.setCurrentMRP(event.getCurrentMRP());
-        subscriptionableItemView.setCurrentStockInUnits(event.getCurrentStockInUnits());
-        subscriptionableItemView.setCurrentPriceDate(event.getCurrentPrizeDate());
+        PriceParameters priceParameters = subscriptionableItemView.getPriceParameters();
+        priceParameters.setCurrentMRP(event.getCurrentMRP());
+        priceParameters.setCurrentStockInUnits(event.getCurrentStockInUnits());
+        priceParameters.setCurrentPriceDate(event.getCurrentPrizeDate());
+        subscriptionableItemView.setPriceParameters(priceParameters);
         itemRepository.save(subscriptionableItemView);
     }
 }

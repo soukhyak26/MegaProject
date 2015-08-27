@@ -20,19 +20,22 @@ public class CreateSubscriptionableItemEvent {
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public CreateSubscriptionableItemEvent(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentMRP, double purchasePricePerUnit, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+    public CreateSubscriptionableItemEvent(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, double purchasePricePerUnit, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.subCategoryId = subCategoryId;
-        this.subCategoryName = subCategoryNmae;
+        this.subCategoryName = subCategoryName;
         this.productId = productId;
         this.currentMRP = currentMRP;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.currentOfferedPrice = currentOfferedPrice;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPriceDate = currentPriceDate;
+    }
+
+    public CreateSubscriptionableItemEvent() {
     }
 
     public String getItemId() {
@@ -85,10 +88,6 @@ public class CreateSubscriptionableItemEvent {
 
     public void setSubCategoryId(String subCategoryId) {
         this.subCategoryId = subCategoryId;
-    }
-
-    public String getSubCategoryNmae() {
-        return subCategoryName;
     }
 
     public void setSubCategoryName(String subCategoryName) {

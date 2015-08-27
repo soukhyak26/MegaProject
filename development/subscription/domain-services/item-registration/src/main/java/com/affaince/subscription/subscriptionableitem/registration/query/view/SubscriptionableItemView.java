@@ -18,15 +18,11 @@ public class SubscriptionableItemView {
     private String subCategoryId;
     private String subCategoryName;
     private String productId;
-    private double currentPurchasePricePerUnit;
-    private double currentMRP;
-    private int currentStockInUnits;
-    private double currentOfferedPrice;
-    private LocalDate currentPriceDate;
+    private PriceParameters priceParameters;
     private ProjectionParameters projectionParameters;
     private RuleParameters ruleParameters;
 
-    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double purchasePricePerUnit, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
+    public SubscriptionableItemView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, PriceParameters priceParameters, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
         this.itemId = itemId;
         this.batchId = batchId;
         this.categoryId = categoryId;
@@ -34,11 +30,7 @@ public class SubscriptionableItemView {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.productId = productId;
-        this.currentPurchasePricePerUnit = purchasePricePerUnit;
-        this.currentMRP = currentMRP;
-        this.currentStockInUnits = currentStockInUnits;
-        this.currentOfferedPrice = currentOfferedPrice;
-        this.currentPriceDate = currentPriceDate;
+        this.priceParameters = priceParameters;
         this.projectionParameters = projectionParameters;
         this.ruleParameters = ruleParameters;
     }
@@ -87,8 +79,8 @@ public class SubscriptionableItemView {
         return subCategoryName;
     }
 
-    public void setSubCategoryName(String subCategoryNmae) {
-        this.subCategoryName = subCategoryNmae;
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
     }
 
     public String getProductId() {
@@ -99,36 +91,12 @@ public class SubscriptionableItemView {
         this.productId = productId;
     }
 
-    public double getCurrentMRP() {
-        return currentMRP;
+    public PriceParameters getPriceParameters() {
+        return priceParameters;
     }
 
-    public void setCurrentMRP(double currentMRP) {
-        this.currentMRP = currentMRP;
-    }
-
-    public double getCurrentOfferedPrice() {
-        return currentOfferedPrice;
-    }
-
-    public void setCurrentOfferedPrice(double currentOfferedPrice) {
-        this.currentOfferedPrice = currentOfferedPrice;
-    }
-
-    public int getCurrentStockInUnits() {
-        return currentStockInUnits;
-    }
-
-    public void setCurrentStockInUnits(int currentStockInUnits) {
-        this.currentStockInUnits = currentStockInUnits;
-    }
-
-    public LocalDate getCurrentPriceDate() {
-        return currentPriceDate;
-    }
-
-    public void setCurrentPriceDate(LocalDate currentPriceDate) {
-        this.currentPriceDate = currentPriceDate;
+    public void setPriceParameters(PriceParameters priceParameters) {
+        this.priceParameters = priceParameters;
     }
 
     public ProjectionParameters getProjectionParameters() {

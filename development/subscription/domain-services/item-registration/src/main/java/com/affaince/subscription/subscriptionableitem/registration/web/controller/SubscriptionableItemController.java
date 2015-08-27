@@ -38,7 +38,7 @@ public class SubscriptionableItemController {
                 request.getCategoryId(),
                 request.getCategoryName(),
                 request.getSubCategoryId(),
-                request.getGetSubCategoryNmae(),
+                request.getSubCategoryName(),
                 request.getProductId(),
                 request.getCurrentPurchasePricePerUnit(),
                 request.getCurrentMRP(),

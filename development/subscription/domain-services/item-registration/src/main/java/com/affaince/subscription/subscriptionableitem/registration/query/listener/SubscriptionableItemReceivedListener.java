@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriptionableitem.registration.query.listen
 
 import com.affaince.subscription.subscriptionableitem.registration.query.event.SubscriptionableItemReceivedEvent;
 import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.subscriptionableitem.registration.query.view.PriceParameters;
 import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,13 @@ public class SubscriptionableItemReceivedListener {
 
     @EventHandler
     public void on(SubscriptionableItemReceivedEvent event) {
-        System.out.println("@@@@@@@@Listener: Received even object: " + event);
+        PriceParameters priceParameters = new PriceParameters(
+                event.getCurrentPurchasePricePerUnit(),
+                event.getCurrentMRP(),
+                event.getCurrentStockInUnits(),
+                0.0,
+                event.getCurrentPriceDate()
+        );
         SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
                 event.getItemId(),
                 event.getBatchId(),
@@ -30,11 +37,7 @@ public class SubscriptionableItemReceivedListener {
                 event.getSubCategoryId(),
                 event.getSubCategoryName(),
                 event.getProductId(),
-                event.getCurrentPurchasePricePerUnit(),
-                event.getCurrentMRP(),
-                0.0,
-                event.getCurrentStockInUnits(),
-                event.getCurrentPriceDate(),
+                priceParameters,
                 null,
                 null
         );

@@ -10,21 +10,20 @@ public class CreateSubscriptionableItemRequest {
     private String categoryId;
     private String categoryName;
     private String subCategoryId;
-    private String getSubCategoryNmae;
+    private String subCategoryName;
     private String productId;
+    private double currentPurchasePricePerUnit;
+    private double currentMRP;
+    private double currentOfferedPrice;
+    private int currentStockInUnits;
 
     public double getCurrentPurchasePricePerUnit() {
-        return this.currentPurchasePricePerUnit;
+        return currentPurchasePricePerUnit;
     }
 
     public void setCurrentPurchasePricePerUnit(double currentPurchasePricePerUnit) {
         this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
     }
-
-    private double currentPurchasePricePerUnit;
-    private double currentMRP;
-    private double currentOfferedPrice;
-    private int currentStockInUnits;
 
     public String getBatchId() {
         return batchId;
@@ -58,12 +57,12 @@ public class CreateSubscriptionableItemRequest {
         this.subCategoryId = subCategoryId;
     }
 
-    public String getGetSubCategoryNmae() {
-        return getSubCategoryNmae;
+    public String getSubCategoryName() {
+        return subCategoryName;
     }
 
-    public void setGetSubCategoryNmae(String getSubCategoryNmae) {
-        this.getSubCategoryNmae = getSubCategoryNmae;
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
     }
 
     public String getProductId() {

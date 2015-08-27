@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriptionableitem.registration.query.listen
 
 import com.affaince.subscription.subscriptionableitem.registration.command.event.CreateSubscriptionableItemEvent;
 import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.subscriptionableitem.registration.query.view.PriceParameters;
 import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +23,22 @@ public class SubscriptionableItemCreatedEventListener {
 
     @EventHandler
     public void on(CreateSubscriptionableItemEvent event) {
-        SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
+        final PriceParameters priceParameters = new PriceParameters(
+                event.getPurchasePricePerUnit(),
+                event.getCurrentMRP(),
+                event.getCurrentStockInUnits(),
+                event.getCurrentOfferedPrice(),
+                event.getCurrentPriceDate()
+        );
+        final SubscriptionableItemView subscriptionableItemView = new SubscriptionableItemView(
                 event.getItemId(),
                 event.getBatchId(),
                 event.getCategoryId(),
                 event.getCategoryName(),
                 event.getSubCategoryId(),
-                event.getSubCategoryNmae(),
+                event.getSubCategoryName(),
                 event.getProductId(),
-                event.getPurchasePricePerUnit(),
-                event.getCurrentMRP(),
-                event.getCurrentOfferedPrice(),
-                event.getCurrentStockInUnits(),
-                event.getCurrentPriceDate(),
+                priceParameters,
                 null,
                 null
         );

@@ -23,7 +23,7 @@ public class CurrentOfferedPriceAddedEventListener {
     @EventHandler
     public void on(CurrentOfferedPriceAddedEvent event) {
         SubscriptionableItemView itemView = itemRepository.findOneByItemId(event.getItemId());
-        itemView.setCurrentOfferedPrice(event.getCurrentOfferedPrice());
+        itemView.getPriceParameters().setCurrentOfferedPrice(event.getCurrentOfferedPrice());
         itemRepository.save(itemView);
     }
 }
