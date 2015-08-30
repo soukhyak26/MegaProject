@@ -65,7 +65,8 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> addProjecttionParameters(@RequestBody AddProjectionParametersRequest request, @PathParam("itemid") String itemId) {
+    public ResponseEntity<Object> addProjecttionParameters(@RequestBody AddProjectionParametersRequest request,
+                                                           @PathVariable ("itemid") String itemId) {
         AddProjectionParametersCommand command = new AddProjectionParametersCommand(
                 itemId,
                 request.getTargetConsumptionPeriod(),
@@ -74,7 +75,9 @@ public class SubscriptionableItemController {
                 request.getMinimumProfitMargin(),
                 request.getMaximumProfitMargin(),
                 request.getDemandToSupplyRatio(),
-                request.getConsumptionFrequency()
+                request.getConsumptionFrequency(),
+                request.getConsumptionFrequencyPeriod(),
+                request.getConsumptionFrequencyPeriodUnitCode()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
@@ -82,14 +85,16 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addsubscriptionableitemruleparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathParam("itemid") String itemId) {
+    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathVariable("itemid") String itemId) {
+        System.out.println ("@@@@@@@@@@@@@@@@@@@" + itemId);
         AddSubscriptionableItemRuleParametersCommand command = new AddSubscriptionableItemRuleParametersCommand(
                 itemId,
                 request.getMinPermissibleDiscount(),
                 request.getMaxPermissibleDiscount(),
+                request.getDiscountUnitCode(),
                 request.getMaxPermissibleUnits(),
                 request.getMaxPermissibleSubscriptionPeriod(),
-                request.getMaxPermissibleSubscriptionPeriodUnit()
+                request.getMaxPermissibleSubscriptionPeriodUnitCode()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

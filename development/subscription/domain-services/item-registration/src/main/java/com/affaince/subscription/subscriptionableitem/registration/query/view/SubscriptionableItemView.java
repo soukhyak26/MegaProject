@@ -1,6 +1,5 @@
 package com.affaince.subscription.subscriptionableitem.registration.query.view;
 
-import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

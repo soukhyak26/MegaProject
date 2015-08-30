@@ -18,6 +18,9 @@ public class UpdatePriceAndStockParametersEvent {
         this.currentPrizeDate = currentPriceDate;
     }
 
+    public UpdatePriceAndStockParametersEvent() {
+    }
+
     public String getItemId() {
         return itemId;
     }

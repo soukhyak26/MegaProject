@@ -8,19 +8,21 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 public class AddSubscriptionableItemRuleParametersCommand {
     @TargetAggregateIdentifier
     private String itemId;
-    private short minPermissibleDiscount;
-    private short maxPermissibleDiscount;
+    private float minPermissibleDiscount;
+    private float maxPermissibleDiscount;
+    private int discountUnitCode;
     private short maxPermissibleUnits;
     private short maxPermissibleSubscriptionPeriod;
-    private String maxPermissibleSubscriptionPeriodUnit;
+    private int maxPermissibleSubscriptionPeriodUnitCode;
 
-    public AddSubscriptionableItemRuleParametersCommand(String itemId, short minPermissibleDiscount, short maxPermissibleDiscount, short maxPermissibleUnits, short maxPermissibleSubscriptionPeriod, String maxPermissibleSubscriptionPeriodUnit) {
+    public AddSubscriptionableItemRuleParametersCommand(String itemId, float minPermissibleDiscount, float maxPermissibleDiscount, int discountUnitCode, short maxPermissibleUnits, short maxPermissibleSubscriptionPeriod, int maxPermissibleSubscriptionPeriodUnitCode) {
         this.itemId = itemId;
         this.minPermissibleDiscount = minPermissibleDiscount;
         this.maxPermissibleDiscount = maxPermissibleDiscount;
-        this.maxPermissibleUnits = this.maxPermissibleUnits;
+        this.discountUnitCode = discountUnitCode;
+        this.maxPermissibleUnits = maxPermissibleUnits;
         this.maxPermissibleSubscriptionPeriod = maxPermissibleSubscriptionPeriod;
-        this.maxPermissibleSubscriptionPeriodUnit = maxPermissibleSubscriptionPeriodUnit;
+        this.maxPermissibleSubscriptionPeriodUnitCode = maxPermissibleSubscriptionPeriodUnitCode;
     }
 
     public String getItemId() {
@@ -31,20 +33,28 @@ public class AddSubscriptionableItemRuleParametersCommand {
         this.itemId = itemId;
     }
 
-    public short getMinPermissibleDiscount() {
+    public float getMinPermissibleDiscount() {
         return minPermissibleDiscount;
     }
 
-    public void setMinPermissibleDiscount(short minPermissibleDiscount) {
+    public void setMinPermissibleDiscount(float minPermissibleDiscount) {
         this.minPermissibleDiscount = minPermissibleDiscount;
     }
 
-    public short getMaxPermissibleDiscount() {
+    public float getMaxPermissibleDiscount() {
         return maxPermissibleDiscount;
     }
 
-    public void setMaxPermissibleDiscount(short maxPermissibleDiscount) {
+    public void setMaxPermissibleDiscount(float maxPermissibleDiscount) {
         this.maxPermissibleDiscount = maxPermissibleDiscount;
+    }
+
+    public int getDiscountUnitCode() {
+        return discountUnitCode;
+    }
+
+    public void setDiscountUnitCode(int discountUnitCode) {
+        this.discountUnitCode = discountUnitCode;
     }
 
     public short getMaxPermissibleUnits() {
@@ -63,11 +73,11 @@ public class AddSubscriptionableItemRuleParametersCommand {
         this.maxPermissibleSubscriptionPeriod = maxPermissibleSubscriptionPeriod;
     }
 
-    public String getMaxPermissibleSubscriptionPeriodUnit() {
-        return maxPermissibleSubscriptionPeriodUnit;
+    public int getMaxPermissibleSubscriptionPeriodUnitCode() {
+        return maxPermissibleSubscriptionPeriodUnitCode;
     }
 
-    public void setMaxPermissibleSubscriptionPeriodUnit(String maxPermissibleSubscriptionPeriodUnit) {
-        this.maxPermissibleSubscriptionPeriodUnit = maxPermissibleSubscriptionPeriodUnit;
+    public void setMaxPermissibleSubscriptionPeriodUnitCode(int maxPermissibleSubscriptionPeriodUnitCode) {
+        this.maxPermissibleSubscriptionPeriodUnitCode = maxPermissibleSubscriptionPeriodUnitCode;
     }
 }

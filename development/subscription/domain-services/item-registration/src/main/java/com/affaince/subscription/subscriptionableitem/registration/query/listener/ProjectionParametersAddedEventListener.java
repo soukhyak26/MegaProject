@@ -25,7 +25,6 @@ public class ProjectionParametersAddedEventListener {
     public void on(AddProjectionParametersEvent event) {
         ProjectionParameters projectionParameters = new ProjectionParameters(
                 event.getTargetConsumptionPeriod(),
-                event.getTargetConsumptionPeriodUnit(),
                 event.getTargetSalePerConsumptionPeriod(),
                 event.getMinimumProfitMargin(),
                 event.getMaximumProfitMargin(),

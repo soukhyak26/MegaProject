@@ -1,23 +1,27 @@
 package com.affaince.subscription.subscriptionableitem.registration.command.event;
 
+import com.affaince.subscription.common.type.Discount;
+import com.affaince.subscription.common.type.Period;
+
 /**
  * Created by rbsavaliya on 26-07-2015.
  */
 public class AddSubscriptionableItemRuleParametersEvent {
     private String itemId;
-    private short minPermissibleDiscount;
-    private short maxPermissibleDiscount;
+    private Discount minPermissibleDiscount;
+    private Discount maxPermissibleDiscount;
     private short maxPermissibleUnits;
-    private short maxPermissibleSubscriptionPeriod;
-    private String maxPermissibleSubscriptionPeriodUnit;
+    private Period maxPermissibleSubscriptionPeriod;
 
-    public AddSubscriptionableItemRuleParametersEvent(String itemId, short minPermissibleDiscount, short maxPermissibleDiscount, short maxPermissibleUnits, short maxPermissibleSubscriptionPeriod, String maxPermissibleSubscriptionPeriodUnit) {
+    public AddSubscriptionableItemRuleParametersEvent(String itemId, Discount minPermissibleDiscount, Discount maxPermissibleDiscount, short maxPermissibleUnits, Period maxPermissibleSubscriptionPeriod) {
         this.itemId = itemId;
         this.minPermissibleDiscount = minPermissibleDiscount;
         this.maxPermissibleDiscount = maxPermissibleDiscount;
-        this.maxPermissibleUnits = this.maxPermissibleUnits;
+        this.maxPermissibleUnits = maxPermissibleUnits;
         this.maxPermissibleSubscriptionPeriod = maxPermissibleSubscriptionPeriod;
-        this.maxPermissibleSubscriptionPeriodUnit = maxPermissibleSubscriptionPeriodUnit;
+    }
+
+    public AddSubscriptionableItemRuleParametersEvent() {
     }
 
     public String getItemId() {
@@ -28,19 +32,19 @@ public class AddSubscriptionableItemRuleParametersEvent {
         this.itemId = itemId;
     }
 
-    public short getMinPermissibleDiscount() {
+    public Discount getMinPermissibleDiscount() {
         return minPermissibleDiscount;
     }
 
-    public void setMinPermissibleDiscount(short minPermissibleDiscount) {
+    public void setMinPermissibleDiscount(Discount minPermissibleDiscount) {
         this.minPermissibleDiscount = minPermissibleDiscount;
     }
 
-    public short getMaxPermissibleDiscount() {
+    public Discount getMaxPermissibleDiscount() {
         return maxPermissibleDiscount;
     }
 
-    public void setMaxPermissibleDiscount(short maxPermissibleDiscount) {
+    public void setMaxPermissibleDiscount(Discount maxPermissibleDiscount) {
         this.maxPermissibleDiscount = maxPermissibleDiscount;
     }
 
@@ -52,19 +56,11 @@ public class AddSubscriptionableItemRuleParametersEvent {
         this.maxPermissibleUnits = maxPermissibleUnits;
     }
 
-    public short getMaxPermissibleSubscriptionPeriod() {
+    public Period getMaxPermissibleSubscriptionPeriod() {
         return maxPermissibleSubscriptionPeriod;
     }
 
-    public void setMaxPermissibleSubscriptionPeriod(short maxPermissibleSubscriptionPeriod) {
+    public void setMaxPermissibleSubscriptionPeriod(Period maxPermissibleSubscriptionPeriod) {
         this.maxPermissibleSubscriptionPeriod = maxPermissibleSubscriptionPeriod;
-    }
-
-    public String getMaxPermissibleSubscriptionPeriodUnit() {
-        return maxPermissibleSubscriptionPeriodUnit;
-    }
-
-    public void setMaxPermissibleSubscriptionPeriodUnit(String maxPermissibleSubscriptionPeriodUnit) {
-        this.maxPermissibleSubscriptionPeriodUnit = maxPermissibleSubscriptionPeriodUnit;
     }
 }

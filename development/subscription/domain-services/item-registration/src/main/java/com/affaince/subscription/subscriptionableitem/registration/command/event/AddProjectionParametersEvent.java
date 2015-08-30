@@ -1,27 +1,31 @@
 package com.affaince.subscription.subscriptionableitem.registration.command.event;
 
+import com.affaince.subscription.common.type.Frequency;
+import com.affaince.subscription.common.type.Period;
+
 /**
  * Created by rbsavaliya on 26-07-2015.
  */
 public class AddProjectionParametersEvent {
     private String itemId;
-    private int targetConsumptionPeriod;
-    private String targetConsumptionPeriodUnit;
+    private Period targetConsumptionPeriod;
     private long targetSalePerConsumptionPeriod;
-    private short minimumProfitMargin;
-    private short maximumProfitMargin;
+    private float minimumProfitMargin;
+    private float maximumProfitMargin;
     private float demandToSupplyRatio;
-    private short consumptionFrequency;
+    private Frequency consumptionFrequency;
 
-    public AddProjectionParametersEvent(String itemId, int targetConsumptionPeriod, String targetConsumptionPeriodUnit, long targetSalePerConsumptionPeriod, short minimumProfitMargin, short maximumProfitMargin, float demandToSupplyRatio, short consumptionFrequency) {
+    public AddProjectionParametersEvent(String itemId, Period targetConsumptionPeriod, long targetSalePerConsumptionPeriod, float minimumProfitMargin, float maximumProfitMargin, float demandToSupplyRatio, Frequency consumptionFrequency) {
         this.itemId = itemId;
         this.targetConsumptionPeriod = targetConsumptionPeriod;
-        this.targetConsumptionPeriodUnit = targetConsumptionPeriodUnit;
         this.targetSalePerConsumptionPeriod = targetSalePerConsumptionPeriod;
         this.minimumProfitMargin = minimumProfitMargin;
         this.maximumProfitMargin = maximumProfitMargin;
         this.demandToSupplyRatio = demandToSupplyRatio;
         this.consumptionFrequency = consumptionFrequency;
+    }
+
+    public AddProjectionParametersEvent() {
     }
 
     public String getItemId() {
@@ -32,20 +36,12 @@ public class AddProjectionParametersEvent {
         this.itemId = itemId;
     }
 
-    public int getTargetConsumptionPeriod() {
+    public Period getTargetConsumptionPeriod() {
         return targetConsumptionPeriod;
     }
 
-    public void setTargetConsumptionPeriod(int targetConsumptionPeriod) {
+    public void setTargetConsumptionPeriod(Period targetConsumptionPeriod) {
         this.targetConsumptionPeriod = targetConsumptionPeriod;
-    }
-
-    public String getTargetConsumptionPeriodUnit() {
-        return targetConsumptionPeriodUnit;
-    }
-
-    public void setTargetConsumptionPeriodUnit(String targetConsumptionPeriodUnit) {
-        this.targetConsumptionPeriodUnit = targetConsumptionPeriodUnit;
     }
 
     public long getTargetSalePerConsumptionPeriod() {
@@ -56,19 +52,19 @@ public class AddProjectionParametersEvent {
         this.targetSalePerConsumptionPeriod = targetSalePerConsumptionPeriod;
     }
 
-    public short getMinimumProfitMargin() {
+    public float getMinimumProfitMargin() {
         return minimumProfitMargin;
     }
 
-    public void setMinimumProfitMargin(short minimumProfitMargin) {
+    public void setMinimumProfitMargin(float minimumProfitMargin) {
         this.minimumProfitMargin = minimumProfitMargin;
     }
 
-    public short getMaximumProfitMargin() {
+    public float getMaximumProfitMargin() {
         return maximumProfitMargin;
     }
 
-    public void setMaximumProfitMargin(short maximumProfitMargin) {
+    public void setMaximumProfitMargin(float maximumProfitMargin) {
         this.maximumProfitMargin = maximumProfitMargin;
     }
 
@@ -80,11 +76,11 @@ public class AddProjectionParametersEvent {
         this.demandToSupplyRatio = demandToSupplyRatio;
     }
 
-    public short getConsumptionFrequency() {
+    public Frequency getConsumptionFrequency() {
         return consumptionFrequency;
     }
 
-    public void setConsumptionFrequency(short consumptionFrequency) {
+    public void setConsumptionFrequency(Frequency consumptionFrequency) {
         this.consumptionFrequency = consumptionFrequency;
     }
 }

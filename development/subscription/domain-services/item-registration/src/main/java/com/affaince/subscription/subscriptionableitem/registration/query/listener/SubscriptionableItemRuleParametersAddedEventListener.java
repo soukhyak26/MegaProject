@@ -28,8 +28,7 @@ public class SubscriptionableItemRuleParametersAddedEventListener {
                 event.getMinPermissibleDiscount(),
                 event.getMaxPermissibleDiscount(),
                 event.getMaxPermissibleUnits(),
-                event.getMaxPermissibleSubscriptionPeriod(),
-                event.getMaxPermissibleSubscriptionPeriodUnit()
+                event.getMaxPermissibleSubscriptionPeriod()
         );
         subscriptionableItemView.setRuleParameters(ruleParameters);
         itemRepository.save(subscriptionableItemView);

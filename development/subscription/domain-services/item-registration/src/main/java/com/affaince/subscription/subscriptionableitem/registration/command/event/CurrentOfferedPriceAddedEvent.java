@@ -13,6 +13,9 @@ public class CurrentOfferedPriceAddedEvent {
         this.currentOfferedPrice = currentOfferedPrice;
     }
 
+    public CurrentOfferedPriceAddedEvent() {
+    }
+
     public String getItemId() {
         return itemId;
     }

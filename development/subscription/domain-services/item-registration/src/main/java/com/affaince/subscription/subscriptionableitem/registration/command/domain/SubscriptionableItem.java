@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriptionableitem.registration.command.domain;
 
+import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.subscriptionableitem.registration.command.AddProjectionParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.AddSubscriptionableItemRuleParametersCommand;
 import com.affaince.subscription.subscriptionableitem.registration.command.UpdatePriceAndStockParametersCommand;
@@ -66,7 +67,6 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot {
         this.itemId = event.getItemId();
         ProjectionParameters projectionParameters = new ProjectionParameters(
                 event.getTargetConsumptionPeriod(),
-                event.getTargetConsumptionPeriodUnit(),
                 event.getTargetSalePerConsumptionPeriod(),
                 event.getMinimumProfitMargin(),
                 event.getMaximumProfitMargin(),
@@ -78,13 +78,11 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot {
 
     @EventSourcingHandler
     public void on(AddSubscriptionableItemRuleParametersEvent event) {
-        this.itemId = itemId;
         RuleParameters ruleParameters = new RuleParameters(
                 event.getMinPermissibleDiscount(),
                 event.getMaxPermissibleDiscount(),
                 event.getMaxPermissibleUnits(),
-                event.getMaxPermissibleSubscriptionPeriod(),
-                event.getMaxPermissibleSubscriptionPeriodUnit()
+                event.getMaxPermissibleSubscriptionPeriod()
         );
         this.ruleParameters = ruleParameters;
     }
@@ -100,26 +98,40 @@ public class SubscriptionableItem extends AbstractAnnotatedAggregateRoot {
     }
 
     public void addProjectionParameters(AddProjectionParametersCommand command) {
+        final Period targetConsumptionPeriod = new Period(
+                command.getTargetConsumptionPeriod(), PeriodUnit.valueOf(command.getTargetConsumptionPeriodUnit())
+        );
+        final Frequency consumptionFrequency = new Frequency(
+                command.getConsumptionFrequency(),
+                new Period(
+                        command.getTargetConsumptionPeriod(),
+                        PeriodUnit.valueOf(command.getConsumptionFrequencyPeriodUnitCode())
+                )
+        );
         apply(new AddProjectionParametersEvent(
                 this.itemId,
-                command.getTargetConsumptionPeriod(),
-                command.getTargetConsumptionPeriodUnit(),
+                targetConsumptionPeriod,
                 command.getTargetSalePerConsumptionPeriod(),
                 command.getMinimumProfitMargin(),
                 command.getMaximumProfitMargin(),
                 command.getDemandToSupplyRatio(),
-                command.getConsumptionFrequency()
+                consumptionFrequency
         ));
     }
 
     public void addSubscriptionableItemRuleParameters(AddSubscriptionableItemRuleParametersCommand command) {
-        apply(new AddSubscriptionableItemRuleParametersEvent(
-                this.itemId,
-                command.getMinPermissibleDiscount(),
-                command.getMaxPermissibleDiscount(),
-                command.getMaxPermissibleUnits(),
+        final Discount minDiscount = new Discount(
+                command.getMinPermissibleDiscount(), DiscountUnit.valueOf(command.getDiscountUnitCode())
+        );
+        final Discount maxDiscount = new Discount(
+                command.getMaxPermissibleDiscount(), DiscountUnit.valueOf(command.getDiscountUnitCode())
+        );
+        final Period maxSubscriptionPeriod = new Period(
                 command.getMaxPermissibleSubscriptionPeriod(),
-                command.getMaxPermissibleSubscriptionPeriodUnit()
+                PeriodUnit.valueOf(command.getMaxPermissibleSubscriptionPeriodUnitCode())
+        );
+        apply(new AddSubscriptionableItemRuleParametersEvent(
+                this.itemId, minDiscount, maxDiscount, command.getMaxPermissibleUnits(), maxSubscriptionPeriod
         ));
     }
 

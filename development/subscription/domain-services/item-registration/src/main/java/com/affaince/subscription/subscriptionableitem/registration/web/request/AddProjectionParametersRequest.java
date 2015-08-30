@@ -6,12 +6,14 @@ package com.affaince.subscription.subscriptionableitem.registration.web.request;
 public class AddProjectionParametersRequest {
 
     private int targetConsumptionPeriod;
-    private String targetConsumptionPeriodUnit;
+    private int targetConsumptionPeriodUnit;
     private long targetSalePerConsumptionPeriod;
-    private short minimumProfitMargin;
-    private short maximumProfitMargin;
+    private float minimumProfitMargin;
+    private float maximumProfitMargin;
     private float demandToSupplyRatio;
     private short consumptionFrequency;
+    private float consumptionFrequencyPeriod;
+    private int consumptionFrequencyPeriodUnitCode;
 
     public int getTargetConsumptionPeriod() {
         return targetConsumptionPeriod;
@@ -21,11 +23,11 @@ public class AddProjectionParametersRequest {
         this.targetConsumptionPeriod = targetConsumptionPeriod;
     }
 
-    public String getTargetConsumptionPeriodUnit() {
+    public int getTargetConsumptionPeriodUnit() {
         return targetConsumptionPeriodUnit;
     }
 
-    public void setTargetConsumptionPeriodUnit(String targetConsumptionPeriodUnit) {
+    public void setTargetConsumptionPeriodUnit(int targetConsumptionPeriodUnit) {
         this.targetConsumptionPeriodUnit = targetConsumptionPeriodUnit;
     }
 
@@ -37,19 +39,19 @@ public class AddProjectionParametersRequest {
         this.targetSalePerConsumptionPeriod = targetSalePerConsumptionPeriod;
     }
 
-    public short getMinimumProfitMargin() {
+    public float getMinimumProfitMargin() {
         return minimumProfitMargin;
     }
 
-    public void setMinimumProfitMargin(short minimumProfitMargin) {
+    public void setMinimumProfitMargin(float minimumProfitMargin) {
         this.minimumProfitMargin = minimumProfitMargin;
     }
 
-    public short getMaximumProfitMargin() {
+    public float getMaximumProfitMargin() {
         return maximumProfitMargin;
     }
 
-    public void setMaximumProfitMargin(short maximumProfitMargin) {
+    public void setMaximumProfitMargin(float maximumProfitMargin) {
         this.maximumProfitMargin = maximumProfitMargin;
     }
 
@@ -67,5 +69,21 @@ public class AddProjectionParametersRequest {
 
     public void setConsumptionFrequency(short consumptionFrequency) {
         this.consumptionFrequency = consumptionFrequency;
+    }
+
+    public float getConsumptionFrequencyPeriod() {
+        return consumptionFrequencyPeriod;
+    }
+
+    public void setConsumptionFrequencyPeriod(float consumptionFrequencyPeriod) {
+        this.consumptionFrequencyPeriod = consumptionFrequencyPeriod;
+    }
+
+    public int getConsumptionFrequencyPeriodUnitCode() {
+        return consumptionFrequencyPeriodUnitCode;
+    }
+
+    public void setConsumptionFrequencyPeriodUnitCode(int consumptionFrequencyPeriodUnitCode) {
+        this.consumptionFrequencyPeriodUnitCode = consumptionFrequencyPeriodUnitCode;
     }
 }
