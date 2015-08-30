@@ -8,6 +8,7 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -116,5 +117,13 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
         apply(new ItemAddedToConsumerBasketEvent(this.basketId, command.getItemId(),
                 command.getProductId(), command.getQuantityPerBasket(), command.getFrequency(), command.getFrequencyUnit(),
                 command.getItemMRP(), command.getItemDiscountedPrice()));
+    }
+
+    public void updateBasketStatus(int statusCode,int reasonCode,Date dispatchDate){
+        System.out.println("****@@@ConsumerBasket: basketId:" + this.basketId);
+        System.out.println("****@@@ConsumerBasket: status code:"+ statusCode);
+        System.out.println("****@@@ConsumerBasket: reason code:"+ reasonCode);
+        System.out.println("****@@@ConsumerBasket: dispatch date:"+ dispatchDate);
+        apply(new BasketDispatchStatusUpdatedEvent(basketId,dispatchDate,statusCode,reasonCode));
     }
 }
