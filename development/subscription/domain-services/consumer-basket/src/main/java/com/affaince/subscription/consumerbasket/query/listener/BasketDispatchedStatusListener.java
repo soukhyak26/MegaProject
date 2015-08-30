@@ -1,16 +1,16 @@
-package com.affaince.subscription.inventory.query.listener;
+package com.affaince.subscription.consumerbasket.query.listener;
 
-import com.affaince.subscription.inventory.query.event.BasketDispatchedStatusEvent;
-import com.affaince.subscription.inventory.query.repository.SubscriptionBasketRepository;
+import com.affaince.subscription.consumerbasket.command.event.BasketDispatchedStatusEvent;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandark on 22-08-2015.
  */
+@Component
 public class BasketDispatchedStatusListener {
-    private final SubscriptionBasketRepository subscriptionBasketRepository;
-    public BasketDispatchedStatusListener(SubscriptionBasketRepository repository) {
-        this.subscriptionBasketRepository=repository;
+    public BasketDispatchedStatusListener() {
     }
 
     @EventHandler

@@ -1,5 +1,6 @@
 package com.affaince.subscription.configuration;
 
+import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
 import com.affaince.subscription.events.ListenerContainerFactory;
 import com.affaince.subscription.events.SubscriptionEventBusTerminal;
 import com.affaince.subscription.repository.DefaultIdGenerator;
@@ -17,10 +18,7 @@ import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandDispatchInterceptor;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorConfiguration;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
-import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
-import org.axonframework.commandhandling.gateway.RetryScheduler;
+import org.axonframework.commandhandling.gateway.*;
 import org.axonframework.commandhandling.interceptors.BeanValidationInterceptor;
 import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.domain.MetaData;
@@ -216,10 +214,13 @@ public class Default {
     }
 
     @Bean
-    public CommandGateway commandGateway(CommandBus commandBus) {
+    public CommandGatewayFactoryBean commandGateway(CommandBus commandBus) {
         RetryScheduler retryScheduler = new IntervalRetryScheduler(newScheduledThreadPool(1), 100, 3);
-        CommandGateway commandGateway = new DefaultCommandGateway(commandBus, retryScheduler);
-        return commandGateway;
+        CommandGatewayFactoryBean commandGatewayFactoryBean = new CommandGatewayFactoryBean();
+        commandGatewayFactoryBean.setCommandBus(commandBus);
+        commandGatewayFactoryBean.setRetryScheduler(retryScheduler);
+        commandGatewayFactoryBean.setCommandDispatchInterceptors( new CommandLoggingInterceptor("commandlogging"));
+    return commandGatewayFactoryBean ;
     }
 
     @Bean

@@ -6,6 +6,7 @@ import com.affaince.subscription.integration.command.event.GenericEventPublisher
 import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.model.dataformat.BindyType;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.axonframework.eventhandling.EventTemplate;
@@ -34,11 +35,13 @@ public class Axon extends Default {
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() {
+
                 from("file:D://abc?fileName=subscriptionableItemsFeed.in").
                         unmarshal().bindy(BindyType.Csv, SubscriptionableItemReceivedEvent.class).
                         split().body().
                         to("bean:publisher");
 
+                JacksonDataFormat df = new JacksonDataFormat(objectMapper(), BasketDispatchedStatusEvent.class);
                 from("file:D://abc?fileName=BasketDispatchedStatus.in").
                         unmarshal().bindy(BindyType.Csv, BasketDispatchedStatusEvent.class).
                         split().body().

@@ -1,10 +1,19 @@
 package com.affaince.subscription.integration.command.event.basketdispatch;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
+import org.apache.camel.spi.DataFormat;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.format.datetime.DateFormatter;
+
+import java.util.Date;
 
 /**
  * Created by mandark on 21-08-2015.
@@ -14,9 +23,11 @@ public class BasketDispatchedStatusEvent {
     @DataField(name = "BASKET_ID", pos = 1, trim = true)
     private String basketId;
 
-    @JsonSerialize(using=DateTimeSerializer.class)
-    @DataField(name = "DISPATCH_DATE", pos = 2, trim = true)
-    private LocalDate dispatchDate;
+
+    @DataField(name = "DISPATCH_DATE", pos = 2, pattern= "mmddyyyy", trim = true)
+    @JsonDeserialize(using=LocalDateDeserializer.class)
+    private Date dispatchDate;
+
     @DataField(name = "DISPATCH_STATUS", pos = 3, trim = true)
     private int dispactchStatusCode;
     @DataField(name = "REASON_CODE", pos = 4, trim = true)
@@ -25,7 +36,7 @@ public class BasketDispatchedStatusEvent {
     public BasketDispatchedStatusEvent() {
     }
 
-    public BasketDispatchedStatusEvent(String basketId, LocalDate dispatchDate, int dispactchStatusCode, int reasonCode) {
+    public BasketDispatchedStatusEvent(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode) {
         this.basketId = basketId;
         this.dispatchDate = dispatchDate;
         this.dispactchStatusCode = dispactchStatusCode;
@@ -40,11 +51,11 @@ public class BasketDispatchedStatusEvent {
         this.basketId = basketId;
     }
 
-    public LocalDate getDispatchDate() {
+    public Date getDispatchDate() {
         return this.dispatchDate;
     }
 
-    public void setDispatchDate(LocalDate dispatchDate) {
+    public void setDispatchDate(Date dispatchDate) {
         this.dispatchDate = dispatchDate;
     }
 

@@ -1,21 +1,19 @@
-package com.affaince.subscription.inventory.query.event;
+package com.affaince.subscription.consumerbasket.command.event;
 
 import org.joda.time.LocalDate;
+
+import java.util.Date;
 
 /**
  * Created by mandark on 21-08-2015.
  */
 public class BasketDispatchedStatusEvent {
     private String basketId;
-    private LocalDate dispatchDate;
+    private Date dispatchDate;
     private int dispactchStatusCode;
     private int reasonCode;
 
-    public BasketDispatchedStatusEvent(String basketId, LocalDate dispatchDate, int dispactchStatusCode, int reasonCode) {
-        this.basketId = basketId;
-        this.dispatchDate = dispatchDate;
-        this.dispactchStatusCode = dispactchStatusCode;
-        this.reasonCode = reasonCode;
+    public BasketDispatchedStatusEvent() {
     }
 
     public String getBasketId() {
@@ -26,11 +24,11 @@ public class BasketDispatchedStatusEvent {
         this.basketId = basketId;
     }
 
-    public LocalDate getDispatchDate() {
+    public Date getDispatchDate() {
         return this.dispatchDate;
     }
 
-    public void setDispatchDate(LocalDate dispatchDate) {
+    public void setDispatchDate(Date dispatchDate) {
         this.dispatchDate = dispatchDate;
     }
 

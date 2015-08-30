@@ -2,6 +2,7 @@ package com.affaince.subscription.consumerbasket.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.consumerbasket.command.domain.ConsumerBasket;
+import com.affaince.subscription.consumerbasket.command.event.BasketDispatchedStatusEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -26,6 +27,8 @@ public class Axon extends Default {
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
+            put("com.affaince.subscription.integration.command.event.basketdispatch.BasketDispatchedStatusEvent", BasketDispatchedStatusEvent.class.getName());
+
         }};
     }
 }

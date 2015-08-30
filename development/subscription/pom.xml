@@ -13,7 +13,6 @@
         <module>domain-services/item-registration</module>
         <module>domain-services/subscriber</module>
         <module>domain-services/consumer-basket</module>
-        <module>domain-services/inventory-proxy</module>
         <module>tools/integration</module>
     </modules>
     <properties>
@@ -360,7 +359,17 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-joda</artifactId>
-                <version>2.4.0</version>
+                <version>2.4.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.4.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.4.3</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
