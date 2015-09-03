@@ -16,6 +16,9 @@ public class SubscriberContactDetailsUpdatedEvent {
         this.alternativeNumber = alternativeNumber;
     }
 
+    public SubscriberContactDetailsUpdatedEvent() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }

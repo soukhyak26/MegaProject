@@ -1,8 +1,8 @@
 package com.affaince.subscription.subscriber.query.listener;
 
+import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.subscriber.command.event.SubscriberContactDetailsUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
-import com.affaince.subscription.subscriber.query.view.ContactDetails;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;

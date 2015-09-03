@@ -1,8 +1,8 @@
 package com.affaince.subscription.subscriber.query.listener;
 
+import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.subscriber.command.event.SubscriberAddressUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
-import com.affaince.subscription.subscriber.query.view.Address;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class SubscriberAddressUpdatedEventListener {
                 event.getPinCode()
         );
         SubscriberView subscriberView = subscriberViewRepository.findOne(event.getSubscriberId());
-        subscriberView.setAddress(address);
+        subscriberView.setBillingAddress(address);
         subscriberViewRepository.save(subscriberView);
     }
 }

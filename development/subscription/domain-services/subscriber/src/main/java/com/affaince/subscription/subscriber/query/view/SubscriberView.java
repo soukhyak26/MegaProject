@@ -1,5 +1,9 @@
 package com.affaince.subscription.subscriber.query.view;
 
+import com.affaince.subscription.common.type.NetWorthSubscriberStatus;
+import com.affaince.subscription.common.vo.Address;
+import com.affaince.subscription.common.vo.ContactDetails;
+import com.affaince.subscription.common.vo.SubscriberName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,14 +15,18 @@ public class SubscriberView {
     @Id
     private String subscriberId;
     private SubscriberName subscriberName;
-    private Address address;
+    private Address billingAddress;
+    private Address shippingAddress;
     private ContactDetails contactDetails;
+    private NetWorthSubscriberStatus status;
 
-    public SubscriberView(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
+    public SubscriberView(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails, NetWorthSubscriberStatus status) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
-        this.address = address;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
         this.contactDetails = contactDetails;
+        this.status = status;
     }
 
     public String getSubscriberId() {
@@ -37,12 +45,20 @@ public class SubscriberView {
         this.subscriberName = subscriberName;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public ContactDetails getContactDetails() {
@@ -51,5 +67,13 @@ public class SubscriberView {
 
     public void setContactDetails(ContactDetails contactDetails) {
         this.contactDetails = contactDetails;
+    }
+
+    public NetWorthSubscriberStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(NetWorthSubscriberStatus status) {
+        this.status = status;
     }
 }

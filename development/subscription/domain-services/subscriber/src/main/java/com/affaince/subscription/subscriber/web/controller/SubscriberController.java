@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.web.controller;
 
+import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.subscriber.command.CreateSubscriberCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberContactDetailsCommand;
@@ -32,20 +33,9 @@ public class SubscriberController {
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscriber(@RequestBody CreateSubscriberRequest request) {
-        CreateSubscriberCommand command = new CreateSubscriberCommand(
-                UUID.randomUUID().toString(),
-                request.getFirstName(),
-                request.getMiddleName(),
-                request.getLastName(),
-                request.getAddressLine1(),
-                request.getAddressLine2(),
-                request.getCity(),
-                request.getState(),
-                request.getCountry(),
-                request.getPinCode(),
-                request.getEmail(),
-                request.getMobileNumber(),
-                request.getAlternativeNumber()
+        CreateSubscriberCommand command = new CreateSubscriberCommand(UUID.randomUUID().toString(),
+                request.getSubscriberName(), request.getBillingAddress(), request.getShippingAddress(),
+                request.getContactDetails()
         );
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.CREATED);
