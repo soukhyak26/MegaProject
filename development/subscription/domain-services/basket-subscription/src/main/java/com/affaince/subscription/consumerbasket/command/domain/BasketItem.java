@@ -67,4 +67,23 @@ public class BasketItem {
     public void setItemDiscountedPrice(double itemDiscountedPrice) {
         this.itemDiscountedPrice = itemDiscountedPrice;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasketItem)) return false;
+
+        BasketItem that = (BasketItem) o;
+
+        if (!itemId.equals(that.itemId)) return false;
+        return productId.equals(that.productId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = itemId.hashCode();
+        result = 31 * result + productId.hashCode();
+        return result;
+    }
 }
