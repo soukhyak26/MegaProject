@@ -1,14 +1,7 @@
 package com.affaince.subscription.subscriber.web.controller;
 
-import com.affaince.subscription.common.vo.SubscriberName;
-import com.affaince.subscription.subscriber.command.AddRewardPointsCommand;
-import com.affaince.subscription.subscriber.command.CreateSubscriberCommand;
-import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
-import com.affaince.subscription.subscriber.command.UpdateSubscriberContactDetailsCommand;
-import com.affaince.subscription.subscriber.web.request.AddRewardPointsRequest;
-import com.affaince.subscription.subscriber.web.request.CreateSubscriberRequest;
-import com.affaince.subscription.subscriber.web.request.UpdateSubscriberAddressRequest;
-import com.affaince.subscription.subscriber.web.request.UpdateSubscriberContactDetailsRequest;
+import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.web.request.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,6 +65,16 @@ public class SubscriberController {
                                                     @PathVariable ("subscriberid") String subscriberId) {
 
         final AddRewardPointsCommand command = new AddRewardPointsCommand (subscriberId, request.getRewardPoints());
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping (method = RequestMethod.PUT, value = "addcouponcode/{subscriberid}")
+    @Consumes ("application/json")
+    public ResponseEntity <Object> addRewardPoints (@RequestBody AddCoupanCodeRequest request,
+                                                    @PathVariable ("subscriberid") String subscriberId) {
+
+        final AddCouponCodeCommand command = new AddCouponCodeCommand(subscriberId, request.getCouponCode());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

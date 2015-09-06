@@ -5,14 +5,12 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
-import com.affaince.subscription.subscriber.command.event.RewardPointsAddedEvent;
-import com.affaince.subscription.subscriber.command.event.SubscriberAddressUpdatedEvent;
-import com.affaince.subscription.subscriber.command.event.SubscriberContactDetailsUpdatedEvent;
-import com.affaince.subscription.subscriber.command.event.SubscriberCreatedEvent;
+import com.affaince.subscription.subscriber.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,6 +74,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         this.rewardPoints = this.rewardPoints + event.getRewardPoints();
     }
 
+    @EventSourcingHandler
+    public void on (CouponCodeAddedEvent event) {
+        if (this.couponCodes == null) {
+            this.couponCodes = new ArrayList<>();
+        }
+        this.couponCodes.add(event.getCouponCode());
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
@@ -93,5 +99,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void addRewardPoints(int rewardPoints) {
         apply(new RewardPointsAddedEvent(this.subscriberId, rewardPoints));
+    }
+
+    public void addCouponCode(String couponCode) {
+        apply(new CouponCodeAddedEvent(this.subscriberId, couponCode));
     }
 }
