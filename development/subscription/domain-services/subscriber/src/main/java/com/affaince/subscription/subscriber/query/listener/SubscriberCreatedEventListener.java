@@ -25,7 +25,7 @@ public class SubscriberCreatedEventListener {
     public void on(SubscriberCreatedEvent event) {
         SubscriberView subscriberView = new SubscriberView(event.getSubscriberId(),
                 event.getSubscriberName(), event.getBillingAddress(), event.getShippingAddress(),
-                event.getContactDetails(), NetWorthSubscriberStatus.valueOf(event.getSubscriberStatusCode()));
+                event.getContactDetails(), NetWorthSubscriberStatus.valueOf(event.getSubscriberStatusCode()), null, 0);
         subscriberViewRepository.save(subscriberView);
     }
 }

@@ -7,6 +7,8 @@ import com.affaince.subscription.common.vo.SubscriberName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
@@ -19,14 +21,18 @@ public class SubscriberView {
     private Address shippingAddress;
     private ContactDetails contactDetails;
     private NetWorthSubscriberStatus status;
+    private List <String> couponCodes;
+    private int rewardPoints;
 
-    public SubscriberView(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails, NetWorthSubscriberStatus status) {
+    public SubscriberView(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails, NetWorthSubscriberStatus status, List<String> couponCodes, int rewardPoints) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
         this.contactDetails = contactDetails;
         this.status = status;
+        this.couponCodes = couponCodes;
+        this.rewardPoints = rewardPoints;
     }
 
     public String getSubscriberId() {
@@ -75,5 +81,21 @@ public class SubscriberView {
 
     public void setStatus(NetWorthSubscriberStatus status) {
         this.status = status;
+    }
+
+    public List<String> getCouponCodes() {
+        return couponCodes;
+    }
+
+    public void setCouponCodes(List<String> couponCodes) {
+        this.couponCodes = couponCodes;
+    }
+
+    public int getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public void setRewardPoints(int rewardPoints) {
+        this.rewardPoints = rewardPoints;
     }
 }

@@ -1,9 +1,11 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.common.vo.SubscriberName;
+import com.affaince.subscription.subscriber.command.AddRewardPointsCommand;
 import com.affaince.subscription.subscriber.command.CreateSubscriberCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberContactDetailsCommand;
+import com.affaince.subscription.subscriber.web.request.AddRewardPointsRequest;
 import com.affaince.subscription.subscriber.web.request.CreateSubscriberRequest;
 import com.affaince.subscription.subscriber.web.request.UpdateSubscriberAddressRequest;
 import com.affaince.subscription.subscriber.web.request.UpdateSubscriberContactDetailsRequest;
@@ -33,7 +35,7 @@ public class SubscriberController {
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscriber(@RequestBody CreateSubscriberRequest request) {
-        CreateSubscriberCommand command = new CreateSubscriberCommand(UUID.randomUUID().toString(),
+        final CreateSubscriberCommand command = new CreateSubscriberCommand(UUID.randomUUID().toString(),
                 request.getSubscriberName(), request.getBillingAddress(), request.getShippingAddress(),
                 request.getContactDetails()
         );
@@ -45,7 +47,7 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> updateSubscriberContactDetails(@RequestBody UpdateSubscriberContactDetailsRequest request,
                                                                  @PathVariable("subscriberid") String subscriberId) {
-        UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand(
+        final UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand(
                 subscriberId, request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
         );
         commandGateway.sendAndWait(command);
@@ -56,10 +58,20 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> updateSubscriberAddress(@RequestBody UpdateSubscriberAddressRequest request,
                                                           @PathVariable("subscriberid") String subscriberId) {
-        UpdateSubscriberAddressCommand command = new UpdateSubscriberAddressCommand(
+        final UpdateSubscriberAddressCommand command = new UpdateSubscriberAddressCommand(
                 subscriberId, request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
                 request.getState(), request.getCountry(), request.getPinCode()
         );
+        commandGateway.sendAndWait(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping (method = RequestMethod.PUT, value = "addrewardpoins/{subscriberid}")
+    @Consumes ("application/json")
+    public ResponseEntity <Object> addRewardPoints (@RequestBody AddRewardPointsRequest request,
+                                                    @PathVariable ("subscriberid") String subscriberId) {
+
+        final AddRewardPointsCommand command = new AddRewardPointsCommand (subscriberId, request.getRewardPoints());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

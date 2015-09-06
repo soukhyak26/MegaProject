@@ -5,12 +5,15 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
+import com.affaince.subscription.subscriber.command.event.RewardPointsAddedEvent;
 import com.affaince.subscription.subscriber.command.event.SubscriberAddressUpdatedEvent;
 import com.affaince.subscription.subscriber.command.event.SubscriberContactDetailsUpdatedEvent;
 import com.affaince.subscription.subscriber.command.event.SubscriberCreatedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -24,6 +27,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private Address shippingAddress;
     private ContactDetails contactDetails;
     private NetWorthSubscriberStatus status;
+    private List<String> couponCodes;
+    private int rewardPoints;
 
     public Subscriber(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails) {
         apply(new SubscriberCreatedEvent(subscriberId, subscriberName, billingAddress, shippingAddress, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
@@ -66,6 +71,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         this.billingAddress = address;
     }
 
+    @EventSourcingHandler
+    public void on (RewardPointsAddedEvent event) {
+        this.rewardPoints = this.rewardPoints + event.getRewardPoints();
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
@@ -79,5 +89,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 command.getState(),
                 command.getCountry(),
                 command.getPinCode()));
+    }
+
+    public void addRewardPoints(int rewardPoints) {
+        apply(new RewardPointsAddedEvent(this.subscriberId, rewardPoints));
     }
 }

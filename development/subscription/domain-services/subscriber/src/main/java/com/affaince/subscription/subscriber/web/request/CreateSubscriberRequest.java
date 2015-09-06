@@ -34,7 +34,7 @@ public class CreateSubscriberRequest {
         return shippingAddress;
     }
 
-    public void setShippingAddress(Address shoppingAddress) {
+    public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
