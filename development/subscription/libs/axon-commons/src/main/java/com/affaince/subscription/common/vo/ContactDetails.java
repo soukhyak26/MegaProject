@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.command.domain;
+package com.affaince.subscription.common.vo;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -13,6 +13,9 @@ public class ContactDetails {
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.alternativeNumber = alternativeNumber;
+    }
+
+    public ContactDetails() {
     }
 
     public String getEmail() {

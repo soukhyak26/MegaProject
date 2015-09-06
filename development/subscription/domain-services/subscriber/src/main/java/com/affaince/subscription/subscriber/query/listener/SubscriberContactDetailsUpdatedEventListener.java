@@ -1,8 +1,8 @@
 package com.affaince.subscription.subscriber.query.listener;
 
+import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.subscriber.command.event.SubscriberContactDetailsUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
-import com.affaince.subscription.subscriber.query.view.ContactDetails;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class SubscriberContactDetailsUpdatedEventListener {
 
     @EventHandler
     public void on(SubscriberContactDetailsUpdatedEvent event) {
-        SubscriberView subscriberView = subscriberViewRepository.findOne(event.getSubscriberId());
-        ContactDetails contactDetails = new ContactDetails(
+        final SubscriberView subscriberView = subscriberViewRepository.findOne(event.getSubscriberId());
+        final ContactDetails contactDetails = new ContactDetails(
                 event.getEmail(),
                 event.getMobileNumber(),
                 event.getAlternativeNumber()

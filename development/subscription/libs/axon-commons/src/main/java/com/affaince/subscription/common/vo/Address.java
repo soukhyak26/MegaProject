@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.command.domain;
+package com.affaince.subscription.common.vo;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -19,6 +19,9 @@ public class Address {
         this.state = state;
         this.country = country;
         this.pinCode = pinCode;
+    }
+
+    public Address() {
     }
 
     public String getAddressLine1() {

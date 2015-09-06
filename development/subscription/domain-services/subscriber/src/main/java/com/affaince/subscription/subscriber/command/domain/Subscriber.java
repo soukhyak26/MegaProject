@@ -1,12 +1,17 @@
 package com.affaince.subscription.subscriber.command.domain;
 
+import com.affaince.subscription.common.type.NetWorthSubscriberStatus;
+import com.affaince.subscription.common.vo.Address;
+import com.affaince.subscription.common.vo.ContactDetails;
+import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
-import com.affaince.subscription.subscriber.command.event.SubscriberAddressUpdatedEvent;
-import com.affaince.subscription.subscriber.command.event.SubscriberContactDetailsUpdatedEvent;
-import com.affaince.subscription.subscriber.command.event.SubscriberCreatedEvent;
+import com.affaince.subscription.subscriber.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -16,19 +21,15 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
     private String subscriberId;
     private SubscriberName subscriberName;
-    private Address address;
+    private Address billingAddress;
+    private Address shippingAddress;
     private ContactDetails contactDetails;
+    private NetWorthSubscriberStatus status;
+    private List<String> couponCodes;
+    private int rewardPoints;
 
-    public Subscriber(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
-        this.subscriberId = subscriberId;
-        this.subscriberName = subscriberName;
-        this.address = address;
-        this.contactDetails = contactDetails;
-        apply(new SubscriberCreatedEvent(
-                subscriberId, subscriberName.getFirstName(), subscriberName.getMiddleName(), subscriberName.getLastName(),
-                address.getAddressLine1(), address.getAddressLine2(), address.getCity(), address.getState(), address.getCountry(), address.getPinCode(),
-                contactDetails.getEmail(), contactDetails.getMobileNumber(), contactDetails.getAlternativeNumber()
-        ));
+    public Subscriber(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails) {
+        apply(new SubscriberCreatedEvent(subscriberId, subscriberName, billingAddress, shippingAddress, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
     }
 
     public Subscriber() {
@@ -37,27 +38,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(SubscriberCreatedEvent event) {
         this.subscriberId = event.getSubscriberId();
-        SubscriberName subscriberName = new SubscriberName(
-                event.getFirstName(),
-                event.getMiddleName(),
-                event.getLastName()
-        );
-        this.subscriberName = subscriberName;
-        Address address = new Address(
-                event.getAddressLine1(),
-                event.getAddressLine2(),
-                event.getCity(),
-                event.getState(),
-                event.getCountry(),
-                event.getPinCode()
-        );
-        this.address = address;
-        ContactDetails contactDetails = new ContactDetails(
-                event.getEmail(),
-                event.getMobileNumber(),
-                event.getAlternativeNumber()
-        );
-        this.contactDetails = contactDetails;
+        this.subscriberName = event.getSubscriberName();
+        this.billingAddress = event.getBillingAddress();
+        this.shippingAddress = event.getShippingAddress();
+        this.contactDetails = event.getContactDetails();
+        this.status = NetWorthSubscriberStatus.valueOf(event.getSubscriberStatusCode());
     }
 
     @EventSourcingHandler
@@ -81,7 +66,20 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 event.getCountry(),
                 event.getPinCode()
         );
-        this.address = address;
+        this.billingAddress = address;
+    }
+
+    @EventSourcingHandler
+    public void on (RewardPointsAddedEvent event) {
+        this.rewardPoints = this.rewardPoints + event.getRewardPoints();
+    }
+
+    @EventSourcingHandler
+    public void on (CouponCodeAddedEvent event) {
+        if (this.couponCodes == null) {
+            this.couponCodes = new ArrayList<>();
+        }
+        this.couponCodes.add(event.getCouponCode());
     }
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
@@ -97,5 +95,13 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 command.getState(),
                 command.getCountry(),
                 command.getPinCode()));
+    }
+
+    public void addRewardPoints(int rewardPoints) {
+        apply(new RewardPointsAddedEvent(this.subscriberId, rewardPoints));
+    }
+
+    public void addCouponCode(String couponCode) {
+        apply(new CouponCodeAddedEvent(this.subscriberId, couponCode));
     }
 }

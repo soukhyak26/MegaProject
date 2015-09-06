@@ -23,6 +23,9 @@ public class SubscriberAddressUpdatedEvent {
         this.pinCode = pinCode;
     }
 
+    public SubscriberAddressUpdatedEvent() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }
