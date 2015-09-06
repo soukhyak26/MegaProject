@@ -12,7 +12,7 @@
         <module>libs/axon-commons</module>
         <module>domain-services/item-registration</module>
         <module>domain-services/subscriber</module>
-        <module>domain-services/consumer-basket</module>
+        <module>domain-services/basket-subscription</module>
         <module>tools/integration</module>
     </modules>
     <properties>
