@@ -12,11 +12,7 @@ public enum DiscountUnit {
         this.discountCode = discountCode;
     }
 
-    public int getDiscountCode() {
-        return discountCode;
-    }
-
-    public static DiscountUnit valueOf (int discountCode) {
+    public static DiscountUnit valueOf(int discountCode) {
         switch (discountCode) {
             case 0:
                 return CURRENCY;
@@ -27,5 +23,9 @@ public enum DiscountUnit {
             default:
                 return PERCENTAGE;
         }
+    }
+
+    public int getDiscountCode() {
+        return discountCode;
     }
 }

@@ -13,11 +13,7 @@ public enum PeriodUnit {
         this.periodCode = periodCode;
     }
 
-    public int getPeriodCode() {
-        return periodCode;
-    }
-
-    public static PeriodUnit valueOf (int periodCode) {
+    public static PeriodUnit valueOf(int periodCode) {
         switch (periodCode) {
             case 0:
                 return WEEK;
@@ -26,5 +22,9 @@ public enum PeriodUnit {
             default:
                 return MONTH;
         }
+    }
+
+    public int getPeriodCode() {
+        return periodCode;
     }
 }

@@ -14,6 +14,7 @@
         <module>domain-services/subscriber</module>
         <module>domain-services/basket-subscription</module>
         <module>tools/integration</module>
+        <module>tools/application-simulator</module>
     </modules>
     <properties>
         <axon.version>2.4.2</axon.version>

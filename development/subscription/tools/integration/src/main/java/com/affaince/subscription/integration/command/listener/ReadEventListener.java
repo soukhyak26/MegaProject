@@ -10,24 +10,24 @@ import java.util.Map;
 /**
  * Created by mandark on 19-07-2015.
  */
-public class ReadEventListener implements JobExecutionListener{
+public class ReadEventListener implements JobExecutionListener {
     private static final Log LOGGER = LogFactory.getLog(ReadEventListener.class);
 
     public void afterJob(JobExecution jobExecution) {
         StringBuilder readEvent = new StringBuilder();
         readEvent.append("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
         readEvent.append("   JOB NAME " + jobExecution.getJobInstance().getJobName() + " \n");
-        readEvent.append("   START_TIME     : "+ jobExecution.getStartTime()+"\n");
-        readEvent.append("   END_TIME    : "+ jobExecution.getEndTime()+"\n");
-        readEvent.append("   EXIT_CODE   : "+ jobExecution.getExitStatus().getExitCode()+"\n");
-        readEvent.append("   EXIT_DETAILS : "+ jobExecution.getExitStatus().getExitDescription()+"\n");
-        readEvent.append("   STATUS      : "+ jobExecution.getStatus()+"\n");
+        readEvent.append("   START_TIME     : " + jobExecution.getStartTime() + "\n");
+        readEvent.append("   END_TIME    : " + jobExecution.getEndTime() + "\n");
+        readEvent.append("   EXIT_CODE   : " + jobExecution.getExitStatus().getExitCode() + "\n");
+        readEvent.append("   EXIT_DETAILS : " + jobExecution.getExitStatus().getExitDescription() + "\n");
+        readEvent.append("   STATUS      : " + jobExecution.getStatus() + "\n");
         readEvent.append("+++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
 
         readEvent.append("Job-Parameter: \n");
         JobParameters jp = jobExecution.getJobParameters();
-        for (Iterator<Map.Entry<String,JobParameter>> iter = jp.getParameters().entrySet().iterator(); iter.hasNext();) {
-            Map.Entry<String,JobParameter> entry = iter.next();
+        for (Iterator<Map.Entry<String, JobParameter>> iter = jp.getParameters().entrySet().iterator(); iter.hasNext(); ) {
+            Map.Entry<String, JobParameter> entry = iter.next();
             readEvent.append("  " + entry.getKey() + "=" + entry.getValue() + "\n");
         }
         readEvent.append("+++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");

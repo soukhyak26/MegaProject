@@ -66,7 +66,7 @@ public class SubscriptionableItemController {
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{itemid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addProjecttionParameters(@RequestBody AddProjectionParametersRequest request,
-                                                           @PathVariable ("itemid") String itemId) {
+                                                           @PathVariable("itemid") String itemId) {
         AddProjectionParametersCommand command = new AddProjectionParametersCommand(
                 itemId,
                 request.getTargetConsumptionPeriod(),
@@ -86,7 +86,7 @@ public class SubscriptionableItemController {
     @RequestMapping(method = RequestMethod.PUT, value = "addsubscriptionableitemruleparameters/{itemid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathVariable("itemid") String itemId) {
-        System.out.println ("@@@@@@@@@@@@@@@@@@@" + itemId);
+        System.out.println("@@@@@@@@@@@@@@@@@@@" + itemId);
         AddSubscriptionableItemRuleParametersCommand command = new AddSubscriptionableItemRuleParametersCommand(
                 itemId,
                 request.getMinPermissibleDiscount(),

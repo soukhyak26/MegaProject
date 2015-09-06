@@ -20,19 +20,15 @@ public class SubscriptionableItemReceivedEvent {
 
     private LocalDate currentPriceDate = LocalDate.now();
 
+    public SubscriptionableItemReceivedEvent() {
+    }
+
     public String getItemId() {
         return this.itemId;
     }
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
-    }
-
-    public void setCurrentPriceDate(LocalDate currentPriceDate) {
-        this.currentPriceDate = currentPriceDate;
-    }
-
-    public SubscriptionableItemReceivedEvent() {
     }
 
     public String getSubCategoryId() {
@@ -51,64 +47,68 @@ public class SubscriptionableItemReceivedEvent {
         this.subCategoryName = subCategoryName;
     }
 
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
-
-    public void setCategoryId(String categroyId) {
-        this.categroyId = categroyId;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public void setCurrentPurchasePricePerUnit(double currentPurchasePricePerUnit) {
-        this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
-    }
-
-    public void setCurrentMRP(double currentMRP) {
-        this.currentMRP = currentMRP;
-    }
-
-    public void setCurrentStockInUnits(int currentStockInUnits) {
-        this.currentStockInUnits = currentStockInUnits;
-    }
-
     public String getBatchId() {
         return batchId;
+    }
+
+    public void setBatchId(String batchId) {
+        this.batchId = batchId;
     }
 
     public String getCategoryId() {
         return categroyId;
     }
 
+    public void setCategoryId(String categroyId) {
+        this.categroyId = categroyId;
+    }
+
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getProductId() {
         return productId;
     }
 
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
     public double getCurrentPurchasePricePerUnit() {
         return currentPurchasePricePerUnit;
+    }
+
+    public void setCurrentPurchasePricePerUnit(double currentPurchasePricePerUnit) {
+        this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
     }
 
     public double getCurrentMRP() {
         return currentMRP;
     }
 
+    public void setCurrentMRP(double currentMRP) {
+        this.currentMRP = currentMRP;
+    }
+
     public int getCurrentStockInUnits() {
         return currentStockInUnits;
     }
 
+    public void setCurrentStockInUnits(int currentStockInUnits) {
+        this.currentStockInUnits = currentStockInUnits;
+    }
+
     public LocalDate getCurrentPriceDate() {
         return this.currentPriceDate;
+    }
+
+    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+        this.currentPriceDate = currentPriceDate;
     }
 
     @Override

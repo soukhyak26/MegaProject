@@ -7,7 +7,6 @@ import com.affaince.subscription.common.vo.SubscriberName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class SubscriberView {
     private Address shippingAddress;
     private ContactDetails contactDetails;
     private NetWorthSubscriberStatus status;
-    private List <String> couponCodes;
+    private List<String> couponCodes;
     private int rewardPoints;
 
     public SubscriberView(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails, NetWorthSubscriberStatus status, List<String> couponCodes, int rewardPoints) {

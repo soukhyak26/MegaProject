@@ -14,19 +14,20 @@ import org.springframework.stereotype.Component;
 public class BasketDispatchedStatusListener {
 
     private final CommandGateway commandGateway;
+
     @Autowired
-    public BasketDispatchedStatusListener(CommandGateway gateway ) {
-        this.commandGateway=gateway;
+    public BasketDispatchedStatusListener(CommandGateway gateway) {
+        this.commandGateway = gateway;
     }
 
     @EventHandler
-    public void on (BasketDispatchedStatusEvent event) {
+    public void on(BasketDispatchedStatusEvent event) {
         System.out.println("@@@@@BasketDispatchStatusEvent ID: " + event.getBasketId());
         System.out.println("@@@@@@@BasketDispatchStatusEvent status code: " + event.getDispactchStatusCode());
         System.out.println("@@@@@@BasketDispatchStatusEvent dispatch date: " + event.getDispatchDate());
         System.out.println("@@@@@@@BasketDispatchStatusEvent reason code: " + event.getReasonCode());
 
-        UpdateBasketDispatchStatusCommand updateBasketDispatchStatusCommand= new UpdateBasketDispatchStatusCommand(event.getBasketId(),event.getDispatchDate(),event.getDispactchStatusCode(),event.getReasonCode());
+        UpdateBasketDispatchStatusCommand updateBasketDispatchStatusCommand = new UpdateBasketDispatchStatusCommand(event.getBasketId(), event.getDispatchDate(), event.getDispactchStatusCode(), event.getReasonCode());
         commandGateway.send(updateBasketDispatchStatusCommand);
     }
 }

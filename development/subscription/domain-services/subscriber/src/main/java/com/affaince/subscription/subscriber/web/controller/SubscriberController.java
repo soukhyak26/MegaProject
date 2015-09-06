@@ -59,20 +59,20 @@ public class SubscriberController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "addrewardpoins/{subscriberid}")
-    @Consumes ("application/json")
-    public ResponseEntity <Object> addRewardPoints (@RequestBody AddRewardPointsRequest request,
-                                                    @PathVariable ("subscriberid") String subscriberId) {
+    @RequestMapping(method = RequestMethod.PUT, value = "addrewardpoins/{subscriberid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> addRewardPoints(@RequestBody AddRewardPointsRequest request,
+                                                  @PathVariable("subscriberid") String subscriberId) {
 
-        final AddRewardPointsCommand command = new AddRewardPointsCommand (subscriberId, request.getRewardPoints());
+        final AddRewardPointsCommand command = new AddRewardPointsCommand(subscriberId, request.getRewardPoints());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "addcouponcode/{subscriberid}")
-    @Consumes ("application/json")
-    public ResponseEntity <Object> addRewardPoints (@RequestBody AddCoupanCodeRequest request,
-                                                    @PathVariable ("subscriberid") String subscriberId) {
+    @RequestMapping(method = RequestMethod.PUT, value = "addcouponcode/{subscriberid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> addRewardPoints(@RequestBody AddCoupanCodeRequest request,
+                                                  @PathVariable("subscriberid") String subscriberId) {
 
         final AddCouponCodeCommand command = new AddCouponCodeCommand(subscriberId, request.getCouponCode());
         commandGateway.sendAndWait(command);

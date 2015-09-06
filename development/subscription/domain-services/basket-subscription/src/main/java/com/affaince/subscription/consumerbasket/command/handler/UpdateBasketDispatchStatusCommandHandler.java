@@ -20,9 +20,9 @@ public class UpdateBasketDispatchStatusCommandHandler {
     }
 
     @CommandHandler
-    public void handle(UpdateBasketDispatchStatusCommand updateBasketDispatchStatusCommand){
+    public void handle(UpdateBasketDispatchStatusCommand updateBasketDispatchStatusCommand) {
         final ConsumerBasket consumerBasket = repository.load(updateBasketDispatchStatusCommand.getBasketId());
-        consumerBasket.updateBasketStatus(updateBasketDispatchStatusCommand.getDispactchStatusCode(),updateBasketDispatchStatusCommand.getReasonCode(),updateBasketDispatchStatusCommand.getDispatchDate());
+        consumerBasket.updateBasketStatus(updateBasketDispatchStatusCommand.getDispactchStatusCode(), updateBasketDispatchStatusCommand.getReasonCode(), updateBasketDispatchStatusCommand.getDispatchDate());
 
     }
 }

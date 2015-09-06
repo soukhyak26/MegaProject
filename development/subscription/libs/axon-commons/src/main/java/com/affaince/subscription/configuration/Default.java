@@ -18,7 +18,9 @@ import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandDispatchInterceptor;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.commandhandling.disruptor.DisruptorConfiguration;
-import org.axonframework.commandhandling.gateway.*;
+import org.axonframework.commandhandling.gateway.CommandGatewayFactoryBean;
+import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
+import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.axonframework.commandhandling.interceptors.BeanValidationInterceptor;
 import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.domain.MetaData;
@@ -207,7 +209,7 @@ public class Default {
     @Bean
     public DisruptorCommandBus localSegment(EventStore eventStore, EventBus eventBus) {
         DisruptorConfiguration configuration = new DisruptorConfiguration();
-        List<CommandDispatchInterceptor>  dispatchInterceptors = new ArrayList<>();
+        List<CommandDispatchInterceptor> dispatchInterceptors = new ArrayList<>();
         dispatchInterceptors.add(new BeanValidationInterceptor());
         configuration.setDispatchInterceptors(dispatchInterceptors);
         return new DisruptorCommandBus(eventStore, eventBus, configuration);
@@ -219,8 +221,8 @@ public class Default {
         CommandGatewayFactoryBean commandGatewayFactoryBean = new CommandGatewayFactoryBean();
         commandGatewayFactoryBean.setCommandBus(commandBus);
         commandGatewayFactoryBean.setRetryScheduler(retryScheduler);
-        commandGatewayFactoryBean.setCommandDispatchInterceptors( new CommandLoggingInterceptor("commandlogging"));
-    return commandGatewayFactoryBean ;
+        commandGatewayFactoryBean.setCommandDispatchInterceptors(new CommandLoggingInterceptor("commandlogging"));
+        return commandGatewayFactoryBean;
     }
 
     @Bean

@@ -70,12 +70,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on (RewardPointsAddedEvent event) {
+    public void on(RewardPointsAddedEvent event) {
         this.rewardPoints = this.rewardPoints + event.getRewardPoints();
     }
 
     @EventSourcingHandler
-    public void on (CouponCodeAddedEvent event) {
+    public void on(CouponCodeAddedEvent event) {
         if (this.couponCodes == null) {
             this.couponCodes = new ArrayList<>();
         }

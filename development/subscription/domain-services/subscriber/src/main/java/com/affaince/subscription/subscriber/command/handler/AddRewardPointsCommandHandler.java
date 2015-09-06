@@ -23,6 +23,6 @@ public class AddRewardPointsCommandHandler {
     @CommandHandler
     public void handle(AddRewardPointsCommand command) {
         Subscriber subscriber = repository.load(command.getSubscriberId());
-        subscriber.addRewardPoints (command.getRewardPoints());
+        subscriber.addRewardPoints(command.getRewardPoints());
     }
 }

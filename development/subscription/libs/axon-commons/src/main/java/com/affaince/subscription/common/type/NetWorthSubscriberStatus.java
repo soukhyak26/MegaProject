@@ -5,7 +5,7 @@ package com.affaince.subscription.common.type;
  */
 public enum NetWorthSubscriberStatus {
 
-    NORMAL (0), PREMIUM (1), GOLD (2);
+    NORMAL(0), PREMIUM(1), GOLD(2);
 
     private int subscriberSatusCode;
 
@@ -13,11 +13,7 @@ public enum NetWorthSubscriberStatus {
         this.subscriberSatusCode = subscriberSatusCode;
     }
 
-    public int getSubscriberStatusCode() {
-        return subscriberSatusCode;
-    }
-
-    public static NetWorthSubscriberStatus valueOf (int subscriberSatusCode) {
+    public static NetWorthSubscriberStatus valueOf(int subscriberSatusCode) {
         switch (subscriberSatusCode) {
             case 0:
                 return NORMAL;
@@ -28,5 +24,9 @@ public enum NetWorthSubscriberStatus {
             default:
                 return NORMAL;
         }
+    }
+
+    public int getSubscriberStatusCode() {
+        return subscriberSatusCode;
     }
 }

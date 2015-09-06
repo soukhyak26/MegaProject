@@ -11,7 +11,9 @@ public class BasketDispatchStatusUpdatedEvent {
     private int dispactchStatusCode;
     private int reasonCode;
 
-    public BasketDispatchStatusUpdatedEvent(){}
+    public BasketDispatchStatusUpdatedEvent() {
+    }
+
     public BasketDispatchStatusUpdatedEvent(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode) {
         this.basketId = basketId;
         this.dispatchDate = dispatchDate;

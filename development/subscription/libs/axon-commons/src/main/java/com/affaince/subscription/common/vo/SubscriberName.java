@@ -16,7 +16,7 @@ public class SubscriberName {
         this.lastName = lastName;
     }
 
-    public SubscriberName (){
+    public SubscriberName() {
 
     }
 

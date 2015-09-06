@@ -19,7 +19,7 @@ public class BasketDispatchStatusUpdatdEventListener {
     }
 
     @EventHandler
-    public void on(BasketDispatchStatusUpdatedEvent basketDispatchStatusUpdatedEvent){
+    public void on(BasketDispatchStatusUpdatedEvent basketDispatchStatusUpdatedEvent) {
         System.out.println("@@@@@BasketDispatchStatusUpdatdEventListener ID: " + basketDispatchStatusUpdatedEvent.getBasketId());
         System.out.println("@@@@@@@BasketDispatchStatusUpdatdEventListener status code: " + basketDispatchStatusUpdatedEvent.getDispactchStatusCode());
         System.out.println("@@@@@@BasketDispatchStatusUpdatdEventListener dispatch date: " + basketDispatchStatusUpdatedEvent.getDispatchDate());

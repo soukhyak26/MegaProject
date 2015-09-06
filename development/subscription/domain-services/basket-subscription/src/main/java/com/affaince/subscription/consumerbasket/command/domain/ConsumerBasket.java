@@ -119,11 +119,11 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
                 command.getItemMRP(), command.getItemDiscountedPrice()));
     }
 
-    public void updateBasketStatus(int statusCode,int reasonCode,Date dispatchDate){
+    public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {
         System.out.println("****@@@ConsumerBasket: basketId:" + this.basketId);
-        System.out.println("****@@@ConsumerBasket: status code:"+ statusCode);
-        System.out.println("****@@@ConsumerBasket: reason code:"+ reasonCode);
-        System.out.println("****@@@ConsumerBasket: dispatch date:"+ dispatchDate);
-        apply(new BasketDispatchStatusUpdatedEvent(basketId,dispatchDate,statusCode,reasonCode));
+        System.out.println("****@@@ConsumerBasket: status code:" + statusCode);
+        System.out.println("****@@@ConsumerBasket: reason code:" + reasonCode);
+        System.out.println("****@@@ConsumerBasket: dispatch date:" + dispatchDate);
+        apply(new BasketDispatchStatusUpdatedEvent(basketId, dispatchDate, statusCode, reasonCode));
     }
 }

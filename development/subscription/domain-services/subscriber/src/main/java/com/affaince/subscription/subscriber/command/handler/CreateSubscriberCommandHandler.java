@@ -1,10 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
-import com.affaince.subscription.common.vo.Address;
-import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.subscriber.command.CreateSubscriberCommand;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
-import com.affaince.subscription.common.vo.SubscriberName;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,5 @@
 package com.affaince.subscription.consumerbasket.command.event;
 
-import org.joda.time.LocalDate;
-
 import java.util.Date;
 
 /**

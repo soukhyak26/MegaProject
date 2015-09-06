@@ -14,7 +14,8 @@ public class UpdateBasketDispatchStatusCommand {
     private int dispactchStatusCode;
     private int reasonCode;
 
-    public UpdateBasketDispatchStatusCommand(){}
+    public UpdateBasketDispatchStatusCommand() {
+    }
 
     public UpdateBasketDispatchStatusCommand(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode) {
         this.basketId = basketId;

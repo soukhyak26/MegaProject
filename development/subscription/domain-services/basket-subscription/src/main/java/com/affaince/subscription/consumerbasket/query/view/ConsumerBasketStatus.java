@@ -5,7 +5,7 @@ package com.affaince.subscription.consumerbasket.query.view;
  */
 public enum ConsumerBasketStatus {
 
-    CREATED (0), CONFIRMED (1);
+    CREATED(0), CONFIRMED(1);
 
     private int statusCode;
 

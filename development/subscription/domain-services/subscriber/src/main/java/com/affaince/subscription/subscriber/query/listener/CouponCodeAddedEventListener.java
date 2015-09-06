@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.subscriber.command.event.CouponCodeAddedEvent;
-import com.affaince.subscription.subscriber.command.event.RewardPointsAddedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import org.axonframework.eventhandling.annotation.EventHandler;

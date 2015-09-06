@@ -42,8 +42,16 @@ public class CreateSubscriptionableItemEvent {
         return itemId;
     }
 
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
     public String getSubCategoryName() {
         return this.subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
     }
 
     public double getPurchasePricePerUnit() {
@@ -52,10 +60,6 @@ public class CreateSubscriptionableItemEvent {
 
     public void setPurchasePricePerUnit(double purchasePricePerUnit) {
         this.purchasePricePerUnit = purchasePricePerUnit;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
     }
 
     public String getBatchId() {
@@ -88,10 +92,6 @@ public class CreateSubscriptionableItemEvent {
 
     public void setSubCategoryId(String subCategoryId) {
         this.subCategoryId = subCategoryId;
-    }
-
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
     }
 
     public String getProductId() {

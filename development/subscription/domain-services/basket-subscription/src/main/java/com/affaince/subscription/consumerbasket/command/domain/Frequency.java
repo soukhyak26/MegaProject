@@ -4,12 +4,10 @@ package com.affaince.subscription.consumerbasket.command.domain;
  * Created by rbsavaliya on 23-08-2015.
  */
 public class Frequency {
-    enum FrequencyUnit {WEEK, MONTH}
+    private int frequency;
 
     ;
-    private int frequency;
     private FrequencyUnit frequencyUnit = FrequencyUnit.MONTH;
-
     public Frequency(int frequency, String unit) {
         this.frequency = frequency;
         if (unit != null) {
@@ -32,4 +30,6 @@ public class Frequency {
     public void setFrequencyUnit(FrequencyUnit frequencyUnit) {
         this.frequencyUnit = frequencyUnit;
     }
+
+    enum FrequencyUnit {WEEK, MONTH}
 }

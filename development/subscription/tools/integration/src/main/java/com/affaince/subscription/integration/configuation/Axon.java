@@ -1,8 +1,8 @@
 package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.integration.command.event.basketdispatch.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.GenericEventPublisher;
+import com.affaince.subscription.integration.command.event.basketdispatch.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -21,9 +21,9 @@ import org.springframework.context.annotation.Configuration;
 public class Axon extends Default {
 
 
+    public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
     @Autowired
     CamelContext camelContext;
-    public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
 
     @Bean
     public GenericEventPublisher publisher(EventTemplate template) {

@@ -43,9 +43,22 @@ import static org.springframework.util.ReflectionUtils.doWithMethods;
  */
 public class ListenerContainerFactory implements FactoryBean<DefaultMessageListenerContainer>, InitializingBean, EnvironmentAware, BeanFactoryAware {
 
+    public static final Function<Class, String> toClassName = new Function<Class, String>() {
+        public String apply(Class input) {
+            return input.getName();
+        }
+    };
+    public static final Function<BeanDefinition, Class> beanDefinitionToClass = new Function<BeanDefinition, Class>() {
+        public Class apply(BeanDefinition input) {
+            try {
+                return Class.forName(input.getBeanClassName());
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    };
     private BeanFactory beanFactory;
     private Environment environment;
-
     private DefaultMessageListenerContainer container;
     private String concurrency = "2-20";
     private int sessionAcknowledgeMode = AUTO_ACKNOWLEDGE;
@@ -54,8 +67,18 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
     private ErrorHandler errorHandler;
     private ConnectionFactory connectionFactory;
     private Map<String, String> consumedEventTypes;
-
     private Class<? extends Annotation> annotation;
+    public final Function<Class, Iterable<Class>> toEventTypes = new Function<Class, Iterable<Class>>() {
+        public Iterable<Class> apply(Class input) {
+            List<Class> result = new ArrayList<>();
+            doWithMethods(input, new MethodParameterTypeCollector(result), new AnnotationMethodFilter(annotation));
+            return result;
+        }
+    };
+
+    public static <K, V> Multimap<K, V> invertMap(Map<V, K> map) {
+        return Multimaps.invertFrom(Multimaps.forMap(map), ArrayListMultimap.<K, V>create());
+    }
 
     public void setConnectionFactory(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
@@ -88,7 +111,6 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
     public void setConsumedEventTypes(Map<String, String> consumedEventTypes) {
         this.consumedEventTypes = consumedEventTypes;
     }
-
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
@@ -161,37 +183,10 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
         return producedEventTypes;
     }
 
-    public static <K, V> Multimap<K, V> invertMap(Map<V, K> map) {
-        return Multimaps.invertFrom(Multimaps.forMap(map), ArrayListMultimap.<K, V>create());
-    }
-
     private Iterable<String> selectors(final String basePackage, ClassPathScanningCandidateComponentProvider localTypeScanner) {
         System.out.println("@@@base package:" + basePackage);
         return from(localTypeScanner.findCandidateComponents(basePackage)).transform(beanDefinitionToClass).transformAndConcat(toEventTypes).transformAndConcat(toSubTypes(basePackage)).transform(beanDefinitionToClass).transform(toClassName).toSet();
     }
-
-    public static final Function<Class, String> toClassName = new Function<Class, String>() {
-        public String apply(Class input) {
-            return input.getName();
-        }
-    };
-
-    public static final Function<BeanDefinition, Class> beanDefinitionToClass = new Function<BeanDefinition, Class>() {
-        public Class apply(BeanDefinition input) {
-            try {
-                return Class.forName(input.getBeanClassName());
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    };
-    public final Function<Class, Iterable<Class>> toEventTypes = new Function<Class, Iterable<Class>>() {
-        public Iterable<Class> apply(Class input) {
-            List<Class> result = new ArrayList<>();
-            doWithMethods(input, new MethodParameterTypeCollector(result), new AnnotationMethodFilter(annotation));
-            return result;
-        }
-    };
 
     private Function<String, Iterable<String>> toClassName(final ClassPathScanningCandidateComponentProvider localTypeScanner) {
         return new Function<String, Iterable<String>>() {

@@ -1,17 +1,9 @@
 package com.affaince.subscription.integration.command.event.basketdispatch;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
-import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
-import org.apache.camel.spi.DataFormat;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.springframework.format.datetime.DateFormatter;
 
 import java.util.Date;
 
@@ -24,8 +16,8 @@ public class BasketDispatchedStatusEvent {
     private String basketId;
 
 
-    @DataField(name = "DISPATCH_DATE", pos = 2, pattern= "mmddyyyy", trim = true)
-    @JsonDeserialize(using=LocalDateDeserializer.class)
+    @DataField(name = "DISPATCH_DATE", pos = 2, pattern = "mmddyyyy", trim = true)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private Date dispatchDate;
 
     @DataField(name = "DISPATCH_STATUS", pos = 3, trim = true)
