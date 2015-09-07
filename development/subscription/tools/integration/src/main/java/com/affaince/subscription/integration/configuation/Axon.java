@@ -4,6 +4,7 @@ import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.integration.command.event.GenericEventPublisher;
 import com.affaince.subscription.integration.command.event.basketdispatch.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
+import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ShoppingItemReceivedEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -47,25 +48,17 @@ public class Axon extends Default {
                         split().body().
                         to("bean:publisher");
 
-
-            }
-        };
-    }
-
-/*
-    @Bean
-    public RouteBuilder route2() {
-        return new RouteBuilder() {
-            public void configure() {
-                from("file:D://abc//BasketDispatchedStatus.in").
-                        unmarshal().bindy(BindyType.Csv, BasketDispatchedStatusEvent.class).
+                from("file:D://abc?fileName=ShoppingItemsForRegistration.in").
+                        unmarshal().bindy(BindyType.Csv, ShoppingItemReceivedEvent.class).
                         split().body().
                         to("bean:publisher");
 
+                from("bean:NotificationEvent").marshal("json").to("restlet:/notification?restletMethod=POST");
+
             }
         };
     }
-*/
+
 
     @Bean
     CamelContextConfiguration contextConfiguration() {
