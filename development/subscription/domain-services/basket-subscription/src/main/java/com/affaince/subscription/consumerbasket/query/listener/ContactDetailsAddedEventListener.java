@@ -1,9 +1,9 @@
 package com.affaince.subscription.consumerbasket.query.listener;
 
+import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.consumerbasket.command.event.ContactDetailsAddedEvent;
 import com.affaince.subscription.consumerbasket.query.repository.ConsumerBasketRepository;
 import com.affaince.subscription.consumerbasket.query.view.ConsumerBasketView;
-import com.affaince.subscription.consumerbasket.query.view.ContactDetails;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

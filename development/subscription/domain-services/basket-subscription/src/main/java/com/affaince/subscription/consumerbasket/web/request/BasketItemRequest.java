@@ -5,12 +5,10 @@ package com.affaince.subscription.consumerbasket.web.request;
  */
 public class BasketItemRequest {
     private String itemId;
-    private String productId;
     private int quantityPerBasket;
     private int frequency;
-    private String frequencyUnit;
-    private double itemMRP;
-    private double itemDiscountedPrice;
+    private int frequencyUnit;
+    private double discountedOfferedPrice;
 
     public String getItemId() {
         return itemId;
@@ -18,14 +16,6 @@ public class BasketItemRequest {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     public int getQuantityPerBasket() {
@@ -44,27 +34,20 @@ public class BasketItemRequest {
         this.frequency = frequency;
     }
 
-    public String getFrequencyUnit() {
+    public int getFrequencyUnit() {
         return frequencyUnit;
     }
 
-    public void setFrequencyUnit(String frequencyUnit) {
+    public void setFrequencyUnit(int frequencyUnit) {
         this.frequencyUnit = frequencyUnit;
     }
 
-    public double getItemMRP() {
-        return itemMRP;
+
+    public double getDiscountedOfferedPrice() {
+        return discountedOfferedPrice;
     }
 
-    public void setItemMRP(double itemMRP) {
-        this.itemMRP = itemMRP;
-    }
-
-    public double getItemDiscountedPrice() {
-        return itemDiscountedPrice;
-    }
-
-    public void setItemDiscountedPrice(double itemDiscountedPrice) {
-        this.itemDiscountedPrice = itemDiscountedPrice;
+    public void setDiscountedOfferedPrice(double discountedOfferedPrice) {
+        this.discountedOfferedPrice = discountedOfferedPrice;
     }
 }

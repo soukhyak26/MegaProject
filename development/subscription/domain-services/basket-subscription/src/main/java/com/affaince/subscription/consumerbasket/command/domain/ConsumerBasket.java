@@ -1,11 +1,18 @@
 package com.affaince.subscription.consumerbasket.command.domain;
 
+import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
+import com.affaince.subscription.common.type.Frequency;
+import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.common.vo.Address;
+import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.consumerbasket.command.AddAddressToConsumerBasketCommand;
 import com.affaince.subscription.consumerbasket.command.AddItemToConsumerBasketCommand;
 import com.affaince.subscription.consumerbasket.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,17 +25,19 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
 
     @AggregateIdentifier
     private String basketId;
-    private String userId;
-    private int consumerBasketStatus = ConsumerBasketStatus.CREATED.getStatusCode();
+    private String subscriberId;
+    private int consumerBasketStatus;
     private List<BasketItem> basketItems;
     private Address shippingAddress;
     private Address billingAddress;
     private ContactDetails contactDetails;
     private double totalAmount;
     private double totalAmountAfterDiscount;
+    private LocalDate basketCreatedDate;
+    private LocalDate basketExpiredDate;
 
-    public ConsumerBasket(String basketId, String userId) {
-        apply(new ConsumerBasketCreatedEvent(basketId, userId));
+    public ConsumerBasket(String basketId, String subscriberId) {
+        apply(new ConsumerBasketCreatedEvent(basketId, subscriberId, LocalDate.now(), null, ConsumerBasketActivationStatus.CREATED));
     }
 
     public ConsumerBasket() {
@@ -38,7 +47,10 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ConsumerBasketCreatedEvent event) {
         this.basketId = event.getBasketId();
-        this.userId = event.getUserId();
+        this.subscriberId = event.getSubscriberId();
+        this.basketCreatedDate = event.getBasketCreatedDate();
+        this.basketExpiredDate = event.getBasketExpiredDate();
+        this.consumerBasketStatus = event.getConsumerBasketStatus().getStatusCode();
     }
 
     @EventSourcingHandler
@@ -79,10 +91,10 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(ItemAddedToConsumerBasketEvent event) {
-        Frequency frequency = new Frequency(event.getFrequency(), event.getFrequencyUnit());
-        BasketItem basketItem = new BasketItem(event.getItemId(), event.getProductId(),
-                event.getQuantityPerBasket(), frequency, event.getItemMRP(),
-                event.getItemDiscountedPrice());
+        Frequency frequency = new Frequency(event.getQuantityPerBasket(), new Period(event.getFrequency(),
+                PeriodUnit.valueOf(event.getFrequencyUnit())));
+        BasketItem basketItem = new BasketItem(event.getItemId(),
+                frequency, event.getDiscountedOfferedPrice());
         if (basketItems == null) {
             basketItems = new ArrayList<>();
         }
@@ -115,8 +127,8 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
 
     public void addItemToBasket(AddItemToConsumerBasketCommand command) {
         apply(new ItemAddedToConsumerBasketEvent(this.basketId, command.getItemId(),
-                command.getProductId(), command.getQuantityPerBasket(), command.getFrequency(), command.getFrequencyUnit(),
-                command.getItemMRP(), command.getItemDiscountedPrice()));
+                command.getQuantityPerBasket(), command.getFrequency(), command.getFrequencyUnit(),
+                command.getDiscountedOfferedPrice()));
     }
 
     public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {

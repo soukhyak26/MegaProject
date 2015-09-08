@@ -6,22 +6,18 @@ package com.affaince.subscription.consumerbasket.command.event;
 public class ItemAddedToConsumerBasketEvent {
     private String basketId;
     private String itemId;
-    private String productId;
     private int quantityPerBasket;
     private int frequency;
-    private String frequencyUnit;
-    private double itemMRP;
-    private double itemDiscountedPrice;
+    private int frequencyUnit;
+    private double discountedOfferedPrice;
 
-    public ItemAddedToConsumerBasketEvent(String basketId, String itemId, String productId, int quantityPerBasket, int frequency, String frequencyUnit, double itemMRP, double itemDiscountedPrice) {
+    public ItemAddedToConsumerBasketEvent(String basketId, String itemId, int quantityPerBasket, int frequency, int frequencyUnit, double discountedOfferedPrice) {
         this.basketId = basketId;
         this.itemId = itemId;
-        this.productId = productId;
         this.quantityPerBasket = quantityPerBasket;
         this.frequency = frequency;
         this.frequencyUnit = frequencyUnit;
-        this.itemMRP = itemMRP;
-        this.itemDiscountedPrice = itemDiscountedPrice;
+        this.discountedOfferedPrice = discountedOfferedPrice;
     }
 
     public ItemAddedToConsumerBasketEvent() {
@@ -43,14 +39,6 @@ public class ItemAddedToConsumerBasketEvent {
         this.itemId = itemId;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
     public int getQuantityPerBasket() {
         return quantityPerBasket;
     }
@@ -67,27 +55,19 @@ public class ItemAddedToConsumerBasketEvent {
         this.frequency = frequency;
     }
 
-    public String getFrequencyUnit() {
+    public int getFrequencyUnit() {
         return frequencyUnit;
     }
 
-    public void setFrequencyUnit(String frequencyUnit) {
+    public void setFrequencyUnit(int frequencyUnit) {
         this.frequencyUnit = frequencyUnit;
     }
 
-    public double getItemMRP() {
-        return itemMRP;
+    public double getDiscountedOfferedPrice() {
+        return discountedOfferedPrice;
     }
 
-    public void setItemMRP(double itemMRP) {
-        this.itemMRP = itemMRP;
-    }
-
-    public double getItemDiscountedPrice() {
-        return itemDiscountedPrice;
-    }
-
-    public void setItemDiscountedPrice(double itemDiscountedPrice) {
-        this.itemDiscountedPrice = itemDiscountedPrice;
+    public void setDiscountedOfferedPrice(double discountedOfferedPrice) {
+        this.discountedOfferedPrice = discountedOfferedPrice;
     }
 }

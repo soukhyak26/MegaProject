@@ -1,5 +1,8 @@
 package com.affaince.subscription.consumerbasket.query.listener;
 
+import com.affaince.subscription.common.type.Frequency;
+import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.consumerbasket.command.event.ItemAddedToConsumerBasketEvent;
 import com.affaince.subscription.consumerbasket.query.repository.ConsumerBasketRepository;
 import com.affaince.subscription.consumerbasket.query.view.BasketItem;
@@ -26,9 +29,9 @@ public class ItemAddedToConsumerBasketEventListener {
 
     @EventHandler
     public void on(ItemAddedToConsumerBasketEvent event) {
-        BasketItem basketItem = new BasketItem(event.getItemId(), event.getProductId(),
-                event.getQuantityPerBasket(), event.getFrequency(), event.getFrequencyUnit(), event.getItemMRP(),
-                event.getItemDiscountedPrice());
+        final Frequency frequency = new Frequency(event.getQuantityPerBasket(),
+                new Period(event.getFrequency(), PeriodUnit.valueOf(event.getFrequencyUnit())));
+        BasketItem basketItem = new BasketItem(event.getItemId(), frequency, event.getDiscountedOfferedPrice());
         ConsumerBasketView consumerBasketView = repository.findOne(event.getBasketId());
         List<BasketItem> basketItems = consumerBasketView.getBasketItems();
         if (basketItems == null) {

@@ -1,8 +1,8 @@
 package com.affaince.subscription.consumerbasket.query.listener;
 
+import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.consumerbasket.command.event.BillingAddressAddedToConsumerBasketEvent;
 import com.affaince.subscription.consumerbasket.query.repository.ConsumerBasketRepository;
-import com.affaince.subscription.consumerbasket.query.view.Address;
 import com.affaince.subscription.consumerbasket.query.view.ConsumerBasketView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
