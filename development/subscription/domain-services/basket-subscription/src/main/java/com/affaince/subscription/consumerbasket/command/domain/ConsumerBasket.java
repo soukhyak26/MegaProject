@@ -101,6 +101,11 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
         basketItems.add(basketItem);
     }
 
+    @EventSourcingHandler
+    private void on(ItemRemovedEvent event) {
+        basketItems.removeIf(item -> item.getItemId().equals(event.getItemId()));
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new ContactDetailsAddedEvent(this.basketId, email, mobileNumber, alternativeNumber));
     }
@@ -137,5 +142,9 @@ public class ConsumerBasket extends AbstractAnnotatedAggregateRoot<String> {
         System.out.println("****@@@ConsumerBasket: reason code:" + reasonCode);
         System.out.println("****@@@ConsumerBasket: dispatch date:" + dispatchDate);
         apply(new BasketDispatchStatusUpdatedEvent(basketId, dispatchDate, statusCode, reasonCode));
+    }
+
+    public void deleteItem(String itemId) {
+        apply(new ItemRemovedEvent(this.basketId, itemId));
     }
 }

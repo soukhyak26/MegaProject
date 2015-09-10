@@ -1,9 +1,6 @@
 package com.affaince.subscription.consumerbasket.web.controller;
 
-import com.affaince.subscription.consumerbasket.command.AddAddressToConsumerBasketCommand;
-import com.affaince.subscription.consumerbasket.command.AddContactDetailsCommand;
-import com.affaince.subscription.consumerbasket.command.AddItemToConsumerBasketCommand;
-import com.affaince.subscription.consumerbasket.command.CreateConsumerBasketCommand;
+import com.affaince.subscription.consumerbasket.command.*;
 import com.affaince.subscription.consumerbasket.web.request.AddressRequest;
 import com.affaince.subscription.consumerbasket.web.request.BasketItemRequest;
 import com.affaince.subscription.consumerbasket.web.request.ConsumerBasketRequest;
@@ -84,6 +81,13 @@ public class ConsumerBasketController {
                 request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
         );
         commandGateway.sendAndWait(contactDetailsCommand);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "deleteitem/{basketId}/{itemId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteItem(@PathVariable String basketId, @PathVariable String itemId) {
+        final DeleteItemCommand command = new DeleteItemCommand(basketId, itemId);
+        commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }
