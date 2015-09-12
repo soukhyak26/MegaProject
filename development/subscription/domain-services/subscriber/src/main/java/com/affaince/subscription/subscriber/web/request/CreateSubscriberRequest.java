@@ -4,14 +4,19 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 
+import javax.validation.Valid;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class CreateSubscriberRequest {
-
+    @Valid
     private SubscriberName subscriberName;
+    @Valid
     private Address billingAddress;
+    @Valid
     private Address shippingAddress;
+    @Valid
     private ContactDetails contactDetails;
 
     public SubscriberName getSubscriberName() {
