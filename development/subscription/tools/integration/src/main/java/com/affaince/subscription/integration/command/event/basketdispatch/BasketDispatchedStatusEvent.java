@@ -16,8 +16,7 @@ public class BasketDispatchedStatusEvent {
     private String basketId;
 
 
-    @DataField(name = "DISPATCH_DATE", pos = 2, pattern = "mmddyyyy", trim = true)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @DataField(name = "DISPATCH_DATE", pos = 2, pattern = "yyyyddMM", trim = true)
     private Date dispatchDate;
 
     @DataField(name = "DISPATCH_STATUS", pos = 3, trim = true)
@@ -65,5 +64,15 @@ public class BasketDispatchedStatusEvent {
 
     public void setReasonCode(int reasonCode) {
         this.reasonCode = reasonCode;
+    }
+
+    @Override
+    public String toString() {
+        return "BasketDispatchedStatusEvent{" +
+                "basketId='" + basketId + '\'' +
+                ", dispatchDate=" + dispatchDate +
+                ", dispactchStatusCode=" + dispactchStatusCode +
+                ", reasonCode=" + reasonCode +
+                '}';
     }
 }

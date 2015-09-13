@@ -1,19 +1,17 @@
-package com.affaince.subscription.integration.command.event.shoppingitemreceipt;
+package com.affaince.subscription.integration.command.event.stockdemand;
 
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
 /**
- * Created by mandark on 07-09-2015.
+ * Created by mandark on 12-09-2015.
  */
-@CsvRecord(separator = ",", skipFirstLine = true)
-public class ShoppingItemReceivedEvent {
-    @DataField(name = "SHOPPING_ITEM_ID", pos = 1, trim = true)
-    private String shoppingItemId;
-
+@CsvRecord(separator = ",", skipFirstLine = true,generateHeaderColumns = true)
+public class SubscriptionableItemStockDemandGeneratedEvent {
+    @DataField(name = "ITEM_ID", pos = 1, trim = true)
+    private String itemId;
     @DataField(name = "CATEGORY_ID", pos = 2, trim = true)
-    private String categoryId;
-
+    private String categroyId;
     @DataField(name = "CATEGORY_NAME", pos = 3, trim = true)
     private String categoryName;
     @DataField(name = "SUBCATEGORY_ID", pos = 4, trim = true)
@@ -22,24 +20,26 @@ public class ShoppingItemReceivedEvent {
     private String subCategoryName;
     @DataField(name = "PRODUCT_ID", pos = 6, trim = true)
     private String productId;
+    @DataField(name = "CURRENT_STOCK_DEMAND", pos = 7, trim = true)
+    private int currentStockDemandInUnits;
 
-    public ShoppingItemReceivedEvent() {
+    public SubscriptionableItemStockDemandGeneratedEvent() {
     }
 
-    public String getShoppingItemId() {
-        return this.shoppingItemId;
+    public String getItemId() {
+        return this.itemId;
     }
 
-    public void setShoppingItemId(String shoppingItemId) {
-        this.shoppingItemId = shoppingItemId;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
-    public String getCategoryId() {
-        return this.categoryId;
+    public String getCategroyId() {
+        return this.categroyId;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategroyId(String categroyId) {
+        this.categroyId = categroyId;
     }
 
     public String getCategoryName() {
@@ -74,15 +74,11 @@ public class ShoppingItemReceivedEvent {
         this.productId = productId;
     }
 
-    @Override
-    public String toString() {
-        return "ShoppingItemReceivedEvent{" +
-                "shoppingItemId='" + shoppingItemId + '\'' +
-                ", categoryId='" + categoryId + '\'' +
-                ", categoryName='" + categoryName + '\'' +
-                ", subCategoryId='" + subCategoryId + '\'' +
-                ", subCategoryName='" + subCategoryName + '\'' +
-                ", productId='" + productId + '\'' +
-                '}';
+    public int getCurrentStockDemandInUnits() {
+        return this.currentStockDemandInUnits;
+    }
+
+    public void setCurrentStockDemandInUnits(int currentStockDemandInUnits) {
+        this.currentStockDemandInUnits = currentStockDemandInUnits;
     }
 }
