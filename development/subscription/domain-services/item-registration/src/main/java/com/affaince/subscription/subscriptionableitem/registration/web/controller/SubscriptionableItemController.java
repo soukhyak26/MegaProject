@@ -1,6 +1,9 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.controller;
 
 import com.affaince.subscription.subscriptionableitem.registration.command.*;
+import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
+import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
+import com.affaince.subscription.subscriptionableitem.registration.web.exception.SubscriptionableItemNotFoundException;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.joda.time.LocalDate;
@@ -10,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PathParam;
 import java.util.UUID;
 
 /**
@@ -23,16 +26,18 @@ import java.util.UUID;
 public class SubscriptionableItemController {
 
     private final CommandGateway commandGateway;
+    private final SubscriptionableItemRepository repository;
 
     @Autowired
-    public SubscriptionableItemController(CommandGateway commandGateway) {
+    public SubscriptionableItemController(CommandGateway commandGateway, SubscriptionableItemRepository repository) {
         this.commandGateway = commandGateway;
+        this.repository = repository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
-    public ResponseEntity<Object> createItem(@RequestBody CreateSubscriptionableItemRequest request) {
-        CreateSubscriptionableItemCommand createCommand = new CreateSubscriptionableItemCommand(
+    public ResponseEntity<Object> createItem(@RequestBody @Valid CreateSubscriptionableItemRequest request) {
+        final CreateSubscriptionableItemCommand createCommand = new CreateSubscriptionableItemCommand(
                 UUID.randomUUID().toString(),
                 request.getBatchId(),
                 request.getCategoryId(),
@@ -52,8 +57,12 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> updatePriceAndStockParameters(@RequestBody UpdatePriceAndStockParametersRequest request, @PathParam("itemid") String itemId) {
-        UpdatePriceAndStockParametersCommand command = new UpdatePriceAndStockParametersCommand(
+    public ResponseEntity<Object> updatePriceAndStockParameters(@RequestBody @Valid UpdatePriceAndStockParametersRequest request, @PathVariable("itemid") String itemId) throws SubscriptionableItemNotFoundException {
+        SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
+        if (subscriptionableItemView == null) {
+            throw SubscriptionableItemNotFoundException.build(itemId);
+        }
+        final UpdatePriceAndStockParametersCommand command = new UpdatePriceAndStockParametersCommand(
                 itemId,
                 request.getCurrentMRP(),
                 request.getCurrentStockInUnits(),
@@ -65,9 +74,13 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> addProjecttionParameters(@RequestBody AddProjectionParametersRequest request,
-                                                           @PathVariable("itemid") String itemId) {
-        AddProjectionParametersCommand command = new AddProjectionParametersCommand(
+    public ResponseEntity<Object> addProjecttionParameters(@RequestBody @Valid AddProjectionParametersRequest request,
+                                                           @PathVariable("itemid") String itemId) throws SubscriptionableItemNotFoundException {
+        SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
+        if (subscriptionableItemView == null) {
+            throw SubscriptionableItemNotFoundException.build(itemId);
+        }
+        final AddProjectionParametersCommand command = new AddProjectionParametersCommand(
                 itemId,
                 request.getTargetConsumptionPeriod(),
                 request.getTargetConsumptionPeriodUnit(),
@@ -85,9 +98,12 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addsubscriptionableitemruleparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody AddSubscriptionableItemRuleParametersRequest request, @PathVariable("itemid") String itemId) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@" + itemId);
-        AddSubscriptionableItemRuleParametersCommand command = new AddSubscriptionableItemRuleParametersCommand(
+    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody @Valid AddSubscriptionableItemRuleParametersRequest request, @PathVariable("itemid") String itemId) throws SubscriptionableItemNotFoundException {
+        SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
+        if (subscriptionableItemView == null) {
+            throw SubscriptionableItemNotFoundException.build(itemId);
+        }
+        final AddSubscriptionableItemRuleParametersCommand command = new AddSubscriptionableItemRuleParametersCommand(
                 itemId,
                 request.getMinPermissibleDiscount(),
                 request.getMaxPermissibleDiscount(),
@@ -102,8 +118,12 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable("itemid") String itemId, @RequestBody AddCurrentOfferedPriceRequest request) {
-        AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(itemId, request.getCurrentOfferedPrice());
+    public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable("itemid") String itemId, @RequestBody @Valid AddCurrentOfferedPriceRequest request) throws SubscriptionableItemNotFoundException {
+        SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
+        if (subscriptionableItemView == null) {
+            throw SubscriptionableItemNotFoundException.build(itemId);
+        }
+        final AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(itemId, request.getCurrentOfferedPrice());
         commandGateway.sendAndWait(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

@@ -21,6 +21,7 @@ public class CreateSubscriptionableItemCommand {
     private double currentOfferedPrice;
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
+
     public CreateSubscriptionableItemCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
         this.itemId = id;
         this.batchId = batchId;

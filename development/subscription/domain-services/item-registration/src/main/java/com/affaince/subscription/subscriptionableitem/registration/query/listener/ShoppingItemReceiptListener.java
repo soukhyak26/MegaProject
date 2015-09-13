@@ -20,8 +20,8 @@ public class ShoppingItemReceiptListener {
     }
 
     @EventHandler
-    public void on(ShoppingItemReceivedEvent shoppingItemReceivedEvent){
-        ShoppingItemView shoppingItemView= new ShoppingItemView();
+    public void on(ShoppingItemReceivedEvent shoppingItemReceivedEvent) {
+        ShoppingItemView shoppingItemView = new ShoppingItemView();
         shoppingItemView.setProductId(shoppingItemReceivedEvent.getProductId());
         shoppingItemView.setCategroyId(shoppingItemReceivedEvent.getCategroyId());
         shoppingItemView.setCategoryName(shoppingItemReceivedEvent.getCategoryName());

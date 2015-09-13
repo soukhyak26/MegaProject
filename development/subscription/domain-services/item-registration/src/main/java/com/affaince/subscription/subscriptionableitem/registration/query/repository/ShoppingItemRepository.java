@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by mandark on 07-09-2015.
  */
 public interface ShoppingItemRepository extends CrudRepository<ShoppingItemView, String> {
-    ShoppingItemView findOneByItemId(String itemId);
+    ShoppingItemView findOneByShoppingItemId(String itemId);
 }
