@@ -2,7 +2,9 @@ package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.integration.command.event.GenericEventPublisher;
-import com.affaince.subscription.integration.command.event.basketdispatch.BasketDispatchedStatusEvent;
+import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
+import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
+import com.affaince.subscription.integration.command.event.dailyquotes.SubscriptionableItemDailyQuoteGeneratedEvent;
 import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
 import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ShoppingItemReceivedEvent;
 import com.affaince.subscription.integration.command.event.stockdemand.SubscriptionableItemStockDemandGeneratedEvent;
@@ -44,6 +46,7 @@ public class Axon extends Default {
                         to("${subscriptionableitems.feed.destination}");
 
                 JacksonDataFormat df = new JacksonDataFormat(objectMapper(), BasketDispatchedStatusEvent.class);
+                //INT_05: update status of targetted dispatches every day
                 from("${basket.dispatch.status.source}").
                         unmarshal().bindy(BindyType.Csv, BasketDispatchedStatusEvent.class).
                         split(body().tokenize("\n")).streaming().
@@ -57,9 +60,17 @@ public class Axon extends Default {
 
                 //INT_03: generate stock demand based on available subscripttions
                 from("${stock.demand.source}").
-                        //unmarshal().bindy(BindyType.Csv, ShoppingItemReceivedEvent.class).
-                                marshal().bindy(BindyType.Csv,SubscriptionableItemStockDemandGeneratedEvent.class).
+                        marshal().bindy(BindyType.Csv, SubscriptionableItemStockDemandGeneratedEvent.class).
                         to("${stock.demand.destination}");
+                //INT_04: generate basket dispatch requests to main application
+                from("${dispatch.request.source}").
+                        marshal().bindy(BindyType.Csv, BasketDispatchRequestGeneratedEvent.class).
+                        to("${dispatch.request.destination}");
+
+                //INT_06: generate daly quote for each subscriptionable item to main application
+                from("${generate.quote.source}").
+                        marshal().bindy(BindyType.Csv, SubscriptionableItemDailyQuoteGeneratedEvent.class).
+                        to("${generate.qoute.destination}");
 
                 //from("bean:NotificationEvent").marshal("json").to("restlet:/notification?restletMethod=POST");
 

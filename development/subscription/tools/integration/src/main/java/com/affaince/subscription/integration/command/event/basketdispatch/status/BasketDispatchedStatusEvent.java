@@ -1,7 +1,5 @@
-package com.affaince.subscription.integration.command.event.basketdispatch;
+package com.affaince.subscription.integration.command.event.basketdispatch.status;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
