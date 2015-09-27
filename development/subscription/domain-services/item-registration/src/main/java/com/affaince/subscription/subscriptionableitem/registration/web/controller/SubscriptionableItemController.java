@@ -1,11 +1,11 @@
 package com.affaince.subscription.subscriptionableitem.registration.web.controller;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriptionableitem.registration.command.*;
 import com.affaince.subscription.subscriptionableitem.registration.query.repository.SubscriptionableItemRepository;
 import com.affaince.subscription.subscriptionableitem.registration.query.view.SubscriptionableItemView;
 import com.affaince.subscription.subscriptionableitem.registration.web.exception.SubscriptionableItemNotFoundException;
 import com.affaince.subscription.subscriptionableitem.registration.web.request.*;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,11 +25,11 @@ import java.util.UUID;
 @Component
 public class SubscriptionableItemController {
 
-    private final CommandGateway commandGateway;
+    private final SubscriptionCommandGateway commandGateway;
     private final SubscriptionableItemRepository repository;
 
     @Autowired
-    public SubscriptionableItemController(CommandGateway commandGateway, SubscriptionableItemRepository repository) {
+    public SubscriptionableItemController(SubscriptionCommandGateway commandGateway, SubscriptionableItemRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }
@@ -51,7 +51,7 @@ public class SubscriptionableItemController {
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
         );
-        commandGateway.sendAndWait(createCommand);
+        commandGateway.executeAsync(createCommand);
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
@@ -68,7 +68,7 @@ public class SubscriptionableItemController {
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
         );
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -92,7 +92,7 @@ public class SubscriptionableItemController {
                 request.getConsumptionFrequencyPeriod(),
                 request.getConsumptionFrequencyPeriodUnitCode()
         );
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -112,7 +112,7 @@ public class SubscriptionableItemController {
                 request.getMaxPermissibleSubscriptionPeriod(),
                 request.getMaxPermissibleSubscriptionPeriodUnitCode()
         );
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -124,7 +124,7 @@ public class SubscriptionableItemController {
             throw SubscriptionableItemNotFoundException.build(itemId);
         }
         final AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(itemId, request.getCurrentOfferedPrice());
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }
