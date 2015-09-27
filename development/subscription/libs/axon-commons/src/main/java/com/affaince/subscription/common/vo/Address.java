@@ -1,15 +1,21 @@
 package com.affaince.subscription.common.vo;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class Address {
-
+    @NotNull
     private String addressLine1;
     private String addressLine2;
+    @NotNull
     private String city;
+    @NotNull
     private String state;
+    @NotNull
     private String country;
+    @NotNull
     private String pinCode;
 
     public Address(String addressLine1, String addressLine2, String city, String state, String country, String pinCode) {

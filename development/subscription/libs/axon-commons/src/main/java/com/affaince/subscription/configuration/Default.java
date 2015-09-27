@@ -1,5 +1,6 @@
 package com.affaince.subscription.configuration;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
 import com.affaince.subscription.events.ListenerContainerFactory;
 import com.affaince.subscription.events.SubscriptionEventBusTerminal;
@@ -218,7 +219,8 @@ public class Default {
     @Bean
     public CommandGatewayFactoryBean commandGateway(CommandBus commandBus) {
         RetryScheduler retryScheduler = new IntervalRetryScheduler(newScheduledThreadPool(1), 100, 3);
-        CommandGatewayFactoryBean commandGatewayFactoryBean = new CommandGatewayFactoryBean();
+        CommandGatewayFactoryBean<SubscriptionCommandGateway> commandGatewayFactoryBean = new CommandGatewayFactoryBean<>();
+        commandGatewayFactoryBean.setGatewayInterface(SubscriptionCommandGateway.class);
         commandGatewayFactoryBean.setCommandBus(commandBus);
         commandGatewayFactoryBean.setRetryScheduler(retryScheduler);
         commandGatewayFactoryBean.setCommandDispatchInterceptors(new CommandLoggingInterceptor("commandlogging"));

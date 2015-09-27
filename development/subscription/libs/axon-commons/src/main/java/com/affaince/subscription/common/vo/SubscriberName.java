@@ -1,12 +1,17 @@
 package com.affaince.subscription.common.vo;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class SubscriberName {
+    @NotNull
     private String title;
+    @NotNull(message = "firstName cannot be null")
     private String firstName;
     private String middleName;
+    @NotNull
     private String lastName;
 
     public SubscriberName(String title, String firstName, String middleName, String lastName) {

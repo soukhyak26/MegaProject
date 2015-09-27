@@ -1,11 +1,13 @@
 package com.affaince.subscription.common.vo;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class ContactDetails {
-
     private String email;
+    @NotNull
     private String mobileNumber;
     private String alternativeNumber;
 

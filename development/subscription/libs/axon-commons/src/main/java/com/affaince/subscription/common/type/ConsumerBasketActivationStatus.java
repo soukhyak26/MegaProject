@@ -4,7 +4,7 @@ package com.affaince.subscription.common.type;
  * Created by rbsavaliya on 23-08-2015.
  */
 public enum ConsumerBasketActivationStatus {
-    CREATED (0), ACTIVATED (1), EXPIRED (2);
+    CREATED(0), ACTIVATED(1), EXPIRED(2);
 
     private int statusCode;
 
@@ -16,12 +16,16 @@ public enum ConsumerBasketActivationStatus {
         return statusCode;
     }
 
-    public static ConsumerBasketActivationStatus valueOf (int statusCode){
+    public static ConsumerBasketActivationStatus valueOf(int statusCode) {
         switch (statusCode) {
-            case 0: return CREATED;
-            case 1: return ACTIVATED;
-            case 2: return EXPIRED;
-            default: return CREATED;
+            case 0:
+                return CREATED;
+            case 1:
+                return ACTIVATED;
+            case 2:
+                return EXPIRED;
+            default:
+                return CREATED;
         }
     }
 }
