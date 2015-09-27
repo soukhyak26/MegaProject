@@ -1,5 +1,6 @@
 package com.affaince.subscription.consumerbasket.web.controller;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.consumerbasket.command.*;
 import com.affaince.subscription.consumerbasket.query.repository.ConsumerBasketRepository;
 import com.affaince.subscription.consumerbasket.query.view.ConsumerBasketView;
@@ -25,11 +26,11 @@ import java.util.UUID;
 @RequestMapping(value = "consumerbasket")
 public class ConsumerBasketController {
 
-    private final CommandGateway commandGateway;
+    private final SubscriptionCommandGateway commandGateway;
     private final ConsumerBasketRepository repository;
 
     @Autowired
-    public ConsumerBasketController(CommandGateway commandGateway, ConsumerBasketRepository repository) {
+    public ConsumerBasketController(SubscriptionCommandGateway commandGateway, ConsumerBasketRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }
@@ -39,7 +40,7 @@ public class ConsumerBasketController {
     public ResponseEntity<Object> createConsumerBasket(@RequestBody @Valid ConsumerBasketRequest request) {
         final String basketId = UUID.randomUUID().toString();
         final CreateConsumerBasketCommand command = new CreateConsumerBasketCommand(basketId, request.getUserId());
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
@@ -52,7 +53,7 @@ public class ConsumerBasketController {
                 request.getItemId(), request.getQuantityPerBasket(),
                 request.getFrequency(), request.getFrequencyUnit(),
                 request.getDiscountedOfferedPrice());
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -68,7 +69,7 @@ public class ConsumerBasketController {
                 basketId, "shipping", request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
                 request.getState(), request.getCountry(), request.getPinCode()
         );
-        commandGateway.sendAndWait(addShippingAddressCommand);
+        commandGateway.executeAsync(addShippingAddressCommand);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -84,7 +85,7 @@ public class ConsumerBasketController {
                 basketId, "billing", request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
                 request.getState(), request.getCountry(), request.getPinCode()
         );
-        commandGateway.sendAndWait(addBillingAddressCommand);
+        commandGateway.executeAsync(addBillingAddressCommand);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -99,7 +100,7 @@ public class ConsumerBasketController {
         final AddContactDetailsCommand contactDetailsCommand = new AddContactDetailsCommand(basketId,
                 request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
         );
-        commandGateway.sendAndWait(contactDetailsCommand);
+        commandGateway.executeAsync(contactDetailsCommand);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -110,7 +111,7 @@ public class ConsumerBasketController {
             throw ConsumerBasketNotFoundException.build(basketId);
         }
         final DeleteItemCommand command = new DeleteItemCommand(basketId, itemId);
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }
