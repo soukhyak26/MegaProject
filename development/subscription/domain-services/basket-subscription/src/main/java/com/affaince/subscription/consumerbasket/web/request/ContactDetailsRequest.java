@@ -1,10 +1,13 @@
 package com.affaince.subscription.consumerbasket.web.request;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class ContactDetailsRequest {
     private String email;
+    @NotNull
     private String mobileNumber;
     private String alternativeNumber;
 

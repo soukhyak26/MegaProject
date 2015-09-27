@@ -1,6 +1,7 @@
 package com.affaince.subscription.consumerbasket.configuration;
 
 import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.consumerbasket.command.domain.BasketRule;
 import com.affaince.subscription.consumerbasket.command.domain.ConsumerBasket;
 import com.affaince.subscription.consumerbasket.command.event.BasketDispatchedStatusEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -21,6 +22,12 @@ public class Axon extends Default {
     @Bean
     public Repository<ConsumerBasket> createRepository(DisruptorCommandBus commandBus) {
         Repository<ConsumerBasket> repository = commandBus.createRepository(new GenericAggregateFactory<>(ConsumerBasket.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<BasketRule> createBasketRuleRepository(DisruptorCommandBus commandBus) {
+        Repository<BasketRule> repository = commandBus.createRepository(new GenericAggregateFactory<>(BasketRule.class));
         return repository;
     }
 

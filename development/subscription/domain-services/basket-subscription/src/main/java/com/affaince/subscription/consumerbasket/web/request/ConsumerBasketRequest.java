@@ -1,12 +1,19 @@
 package com.affaince.subscription.consumerbasket.web.request;
 
+import com.affaince.subscription.common.vo.ContactDetails;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
 public class ConsumerBasketRequest {
 
+    @NotNull
     private String userId;
-    private ContactDetailsRequest contactDetails;
+    @Valid
+    private ContactDetails contactDetails;
     private double totalAmount;
     private double totalAmountAfterDiscount;
 
@@ -18,11 +25,11 @@ public class ConsumerBasketRequest {
         this.userId = userId;
     }
 
-    public ContactDetailsRequest getContactDetails() {
+    public ContactDetails getContactDetails() {
         return contactDetails;
     }
 
-    public void setContactDetails(ContactDetailsRequest contactDetails) {
+    public void setContactDetails(ContactDetails contactDetails) {
         this.contactDetails = contactDetails;
     }
 

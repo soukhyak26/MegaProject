@@ -1,11 +1,17 @@
 package com.affaince.subscription.consumerbasket.web.request;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
 public class BasketItemRequest {
+    @NotNull
     private String itemId;
+    @Min(1)
     private int quantityPerBasket;
+    @Min(1)
     private int frequency;
     private int frequencyUnit;
     private double discountedOfferedPrice;

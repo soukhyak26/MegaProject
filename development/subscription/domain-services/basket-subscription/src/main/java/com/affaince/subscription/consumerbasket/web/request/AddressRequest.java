@@ -1,15 +1,22 @@
 package com.affaince.subscription.consumerbasket.web.request;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class AddressRequest {
 
+    @NotNull
     private String addressLine1;
     private String addressLine2;
+    @NotNull
     private String city;
+    @NotNull
     private String state;
+    @NotNull
     private String country;
+    @NotNull
     private String pinCode;
 
     public String getAddressLine1() {
