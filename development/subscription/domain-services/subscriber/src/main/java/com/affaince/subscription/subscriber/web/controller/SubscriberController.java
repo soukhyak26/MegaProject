@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.web.controller;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
@@ -22,11 +23,11 @@ import java.util.UUID;
 @RequestMapping(value = "subscriber")
 public class SubscriberController {
 
-    private final CommandGateway commandGateway;
+    private final SubscriptionCommandGateway commandGateway;
     private final SubscriberViewRepository repository;
 
     @Autowired
-    public SubscriberController(CommandGateway commandGateway, SubscriberViewRepository repository) {
+    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }
@@ -38,7 +39,7 @@ public class SubscriberController {
                 request.getSubscriberName(), request.getBillingAddress(), request.getShippingAddress(),
                 request.getContactDetails()
         );
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
@@ -53,7 +54,7 @@ public class SubscriberController {
         final UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand(
                 subscriberId, request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
         );
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -69,7 +70,7 @@ public class SubscriberController {
                 subscriberId, request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
                 request.getState(), request.getCountry(), request.getPinCode()
         );
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -82,7 +83,7 @@ public class SubscriberController {
             throw SubscriberNotFoundException.build(subscriberId);
         }
         final AddRewardPointsCommand command = new AddRewardPointsCommand(subscriberId, request.getRewardPoints());
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -96,7 +97,7 @@ public class SubscriberController {
             throw SubscriberNotFoundException.build(subscriberId);
         }
         final AddCouponCodeCommand command = new AddCouponCodeCommand(subscriberId, request.getCouponCode());
-        commandGateway.sendAndWait(command);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }
