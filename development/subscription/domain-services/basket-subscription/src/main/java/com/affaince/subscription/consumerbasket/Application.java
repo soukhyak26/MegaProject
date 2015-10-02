@@ -8,9 +8,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
-/**
- * Created by NIKUNJ on 7/12/2015.
- */
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan("com.affaince")
