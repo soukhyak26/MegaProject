@@ -1,4 +1,4 @@
-package com.affaince.subscription.integration;
+package com.affaince.subscription.simulation;
 
 import org.axonframework.contextsupport.spring.AnnotationDriven;
 import org.springframework.boot.SpringApplication;

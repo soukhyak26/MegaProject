@@ -36,7 +36,7 @@ public class SubscriptionableItemController {
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
-    public ResponseEntity<Object> createItem(@RequestBody @Valid CreateSubscriptionableItemRequest request) {
+    public ResponseEntity<Object> createItem(@RequestBody @Valid CreateSubscriptionableItemRequest request) throws Exception {
         final CreateSubscriptionableItemCommand createCommand = new CreateSubscriptionableItemCommand(
                 UUID.randomUUID().toString(),
                 request.getBatchId(),
@@ -51,13 +51,17 @@ public class SubscriptionableItemController {
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
         );
-        commandGateway.executeAsync(createCommand);
+        try {
+            commandGateway.executeAsync(createCommand);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> updatePriceAndStockParameters(@RequestBody @Valid UpdatePriceAndStockParametersRequest request, @PathVariable("itemid") String itemId) throws SubscriptionableItemNotFoundException {
+    public ResponseEntity<Object> updatePriceAndStockParameters(@RequestBody @Valid UpdatePriceAndStockParametersRequest request, @PathVariable("itemid") String itemId) throws Exception {
         SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
         if (subscriptionableItemView == null) {
             throw SubscriptionableItemNotFoundException.build(itemId);
@@ -68,14 +72,18 @@ public class SubscriptionableItemController {
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
         );
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{itemid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addProjecttionParameters(@RequestBody @Valid AddProjectionParametersRequest request,
-                                                           @PathVariable("itemid") String itemId) throws SubscriptionableItemNotFoundException {
+                                                           @PathVariable("itemid") String itemId) throws Exception {
         SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
         if (subscriptionableItemView == null) {
             throw SubscriptionableItemNotFoundException.build(itemId);
@@ -92,13 +100,17 @@ public class SubscriptionableItemController {
                 request.getConsumptionFrequencyPeriod(),
                 request.getConsumptionFrequencyPeriodUnitCode()
         );
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "addsubscriptionableitemruleparameters/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody @Valid AddSubscriptionableItemRuleParametersRequest request, @PathVariable("itemid") String itemId) throws SubscriptionableItemNotFoundException {
+    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody @Valid AddSubscriptionableItemRuleParametersRequest request, @PathVariable("itemid") String itemId) throws Exception {
         SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
         if (subscriptionableItemView == null) {
             throw SubscriptionableItemNotFoundException.build(itemId);
@@ -112,19 +124,27 @@ public class SubscriptionableItemController {
                 request.getMaxPermissibleSubscriptionPeriod(),
                 request.getMaxPermissibleSubscriptionPeriodUnitCode()
         );
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{itemid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable("itemid") String itemId, @RequestBody @Valid AddCurrentOfferedPriceRequest request) throws SubscriptionableItemNotFoundException {
+    public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable("itemid") String itemId, @RequestBody @Valid AddCurrentOfferedPriceRequest request) throws Exception {
         SubscriptionableItemView subscriptionableItemView = repository.findOne(itemId);
         if (subscriptionableItemView == null) {
             throw SubscriptionableItemNotFoundException.build(itemId);
         }
         final AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(itemId, request.getCurrentOfferedPrice());
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

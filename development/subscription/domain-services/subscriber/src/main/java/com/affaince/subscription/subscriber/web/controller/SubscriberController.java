@@ -6,7 +6,6 @@ import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepos
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import com.affaince.subscription.subscriber.web.exception.SubscriberNotFoundException;
 import com.affaince.subscription.subscriber.web.request.*;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,19 +33,23 @@ public class SubscriberController {
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
-    public ResponseEntity<Object> createSubscriber(@RequestBody @Valid CreateSubscriberRequest request) {
+    public ResponseEntity<Object> createSubscriber(@RequestBody @Valid CreateSubscriberRequest request) throws Exception {
         final CreateSubscriberCommand command = new CreateSubscriberCommand(UUID.randomUUID().toString(),
                 request.getSubscriberName(), request.getBillingAddress(), request.getShippingAddress(),
                 request.getContactDetails()
         );
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updatecontactdetails/{subscriberid}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateSubscriberContactDetails(@RequestBody @Valid UpdateSubscriberContactDetailsRequest request,
-                                                                 @PathVariable("subscriberid") String subscriberId) throws SubscriberNotFoundException {
+                                                                 @PathVariable("subscriberid") String subscriberId) throws Exception {
         final SubscriberView subscriberView = repository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
@@ -54,14 +57,18 @@ public class SubscriberController {
         final UpdateSubscriberContactDetailsCommand command = new UpdateSubscriberContactDetailsCommand(
                 subscriberId, request.getEmail(), request.getMobileNumber(), request.getAlternativeNumber()
         );
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateaddress/{subscriberid}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateSubscriberAddress(@RequestBody @Valid UpdateSubscriberAddressRequest request,
-                                                          @PathVariable("subscriberid") String subscriberId) throws SubscriberNotFoundException {
+                                                          @PathVariable("subscriberid") String subscriberId) throws Exception {
         final SubscriberView subscriberView = repository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
@@ -70,34 +77,46 @@ public class SubscriberController {
                 subscriberId, request.getAddressLine1(), request.getAddressLine2(), request.getCity(),
                 request.getState(), request.getCountry(), request.getPinCode()
         );
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "addrewardpoins/{subscriberid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addRewardPoints(@RequestBody @Valid AddRewardPointsRequest request,
-                                                  @PathVariable("subscriberid") String subscriberId) throws SubscriberNotFoundException {
+                                                  @PathVariable("subscriberid") String subscriberId) throws Exception {
         final SubscriberView subscriberView = repository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
         final AddRewardPointsCommand command = new AddRewardPointsCommand(subscriberId, request.getRewardPoints());
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "addcouponcode/{subscriberid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addRewardPoints(@RequestBody @Valid AddCoupanCodeRequest request,
-                                                  @PathVariable("subscriberid") String subscriberId) throws SubscriberNotFoundException {
+                                                  @PathVariable("subscriberid") String subscriberId) throws Exception {
 
         final SubscriberView subscriberView = repository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
         final AddCouponCodeCommand command = new AddCouponCodeCommand(subscriberId, request.getCouponCode());
-        commandGateway.executeAsync(command);
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

@@ -7,5 +7,5 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
  */
 public interface SubscriptionCommandGateway extends CommandGateway {
 
-    void executeAsync(Object command);
+    void executeAsync(Object command) throws Exception;
 }
