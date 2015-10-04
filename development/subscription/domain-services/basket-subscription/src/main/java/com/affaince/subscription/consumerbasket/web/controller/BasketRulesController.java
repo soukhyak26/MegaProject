@@ -4,7 +4,6 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.consumerbasket.command.AddBasketRulesCommand;
 import com.affaince.subscription.consumerbasket.query.repository.ConsumerBasketRepository;
 import com.affaince.subscription.consumerbasket.web.request.BasketRulesRequest;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
