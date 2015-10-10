@@ -33,4 +33,20 @@ public class DeliveryItem {
     public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
         this.deliveryStatus = deliveryStatus;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DeliveryItem)) return false;
+
+        DeliveryItem that = (DeliveryItem) o;
+
+        return deliveryItemId.equals(that.deliveryItemId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return deliveryItemId.hashCode();
+    }
 }
