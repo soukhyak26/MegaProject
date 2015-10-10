@@ -5,6 +5,8 @@ import com.affaince.subscription.consumerbasket.command.CreateBasketCommand;
 import com.affaince.subscription.consumerbasket.command.ItemDispatchStatus;
 import com.affaince.subscription.consumerbasket.command.UpdateStatusAndDispatchDateCommand;
 import com.affaince.subscription.consumerbasket.query.repository.BasketRepository;
+import com.affaince.subscription.consumerbasket.query.view.BasketView;
+import com.affaince.subscription.consumerbasket.web.exception.BasketNotFoundException;
 import com.affaince.subscription.consumerbasket.web.request.BasketDispatchRequest;
 import com.affaince.subscription.consumerbasket.web.request.BasketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,10 @@ public class BasketController {
     public ResponseEntity<Object> updateStatusAndDispatchDate(@RequestBody BasketDispatchRequest request,
                                                               @PathVariable String basketId) throws Exception {
 
+        final BasketView basketView = repository.findOne(basketId);
+        if (basketView == null) {
+            throw BasketNotFoundException.build(basketId);
+        }
         final UpdateStatusAndDispatchDateCommand command = new UpdateStatusAndDispatchDateCommand(
                 basketId, request.getBasketDeliveryStatus(), request.getDispatchDate(),
                 Arrays.stream(request.getItemStatusRequest()).map(itemStatus -> new ItemDispatchStatus(itemStatus.getItemId(),

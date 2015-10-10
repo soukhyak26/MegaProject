@@ -1,5 +1,6 @@
 package com.affaince.subscription.consumerbasket.web.configuration;
 
+import com.affaince.subscription.consumerbasket.web.exception.BasketNotFoundException;
 import com.affaince.subscription.consumerbasket.web.exception.ConsumerBasketNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class RestControllerExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler({ConsumerBasketNotFoundException.class})
+    @ExceptionHandler({ConsumerBasketNotFoundException.class, BasketNotFoundException.class})
     protected Object handleResourceNotFoundException(Exception exception) {
         System.out.println("in handleResourceNotFoundException @@@@@@@");
         HttpStatus status = HttpStatus.NOT_FOUND;
