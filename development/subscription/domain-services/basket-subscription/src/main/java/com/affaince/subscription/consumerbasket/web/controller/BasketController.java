@@ -1,6 +1,7 @@
 package com.affaince.subscription.consumerbasket.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.consumerbasket.command.BasketDeletedCommand;
 import com.affaince.subscription.consumerbasket.command.CreateBasketCommand;
 import com.affaince.subscription.consumerbasket.command.ItemDispatchStatus;
 import com.affaince.subscription.consumerbasket.command.UpdateStatusAndDispatchDateCommand;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  * Created by rbsavaliya on 02-10-2015.
  */
 @RestController
-@RequestMapping (value = "basket")
+@RequestMapping(value = "basket")
 public class BasketController {
 
     private final SubscriptionCommandGateway commandGateway;
@@ -47,10 +48,9 @@ public class BasketController {
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
-    @RequestMapping (value = "updatestatusanddispatchdate/{basketId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "updatestatusanddispatchdate/{basketId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateStatusAndDispatchDate(@RequestBody BasketDispatchRequest request,
                                                               @PathVariable String basketId) throws Exception {
-
         final BasketView basketView = repository.findOne(basketId);
         if (basketView == null) {
             throw BasketNotFoundException.build(basketId);
@@ -60,6 +60,21 @@ public class BasketController {
                 Arrays.stream(request.getItemStatusRequest()).map(itemStatus -> new ItemDispatchStatus(itemStatus.getItemId(),
                         itemStatus.getItemDeliveryStatus())).collect(Collectors.toList())
         );
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "delete/{basketId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteBasket(@PathVariable String basketId) throws Exception {
+        final BasketView basketView = repository.findOne(basketId);
+        if (basketView == null) {
+            throw BasketNotFoundException.build(basketId);
+        }
+        final BasketDeletedCommand command = new BasketDeletedCommand(basketId);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

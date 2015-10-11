@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.consumerbasket.command.ItemDispatchStatus;
 import com.affaince.subscription.consumerbasket.command.UpdateStatusAndDispatchDateCommand;
 import com.affaince.subscription.consumerbasket.command.event.BasketCreatedEvent;
+import com.affaince.subscription.consumerbasket.command.event.BasketDeletedEvent;
 import com.affaince.subscription.consumerbasket.command.event.StatusAndDispatchDateUpdatedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -51,8 +52,18 @@ public class Basket extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
+    @EventSourcingHandler
+    public void on(BasketDeletedEvent event) {
+        this.basketId = event.getBasketId();
+        this.status = event.getDeliveryStatus();
+    }
+
     public void updateStatusAndDispatchDate(UpdateStatusAndDispatchDateCommand command) {
         apply(new StatusAndDispatchDateUpdatedEvent(this.basketId, command.getBasketDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses()));
+    }
+
+    public void deleteBasket() {
+        apply(new BasketDeletedEvent(this.basketId, DeliveryStatus.DELETED));
     }
 }
