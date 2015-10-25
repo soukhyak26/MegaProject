@@ -10,6 +10,7 @@
     <version>0.1-SNAPSHOT</version>
     <modules>
         <module>libs/axon-commons</module>
+        <module>tools/rules-compiler</module>
         <module>domain-services/item-registration</module>
         <module>domain-services/subscriber</module>
         <module>domain-services/basket-subscription</module>
@@ -378,6 +379,11 @@
                 <version>4.0.3.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-runtime</artifactId>
+                <version>4.5.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
