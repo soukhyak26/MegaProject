@@ -45,7 +45,16 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/domain-services/basket-subscription/pom.xml" />
+        <option value="$PROJECT_DIR$/domain-services/subscriber/pom.xml" />
+        <option value="$PROJECT_DIR$/libs/axon-commons/pom.xml" />
+        <option value="$PROJECT_DIR$/tools/integration/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/tools/application-simulator/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
