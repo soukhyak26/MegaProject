@@ -17,48 +17,16 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
-      <profile default="false" name="Annotation profile for item-registration" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="item-registration" />
       </profile>
-      <profile default="false" name="Annotation profile for basket-subscription" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="basket-subscription" />
-      </profile>
-      <profile default="false" name="Annotation profile for subscriber" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="subscriber" />
-      </profile>
-      <profile default="false" name="Annotation profile for axon-commons" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="axon-commons" />
-      </profile>
-      <profile default="false" name="Annotation profile for integration" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="integration" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="axon-commons" target="1.8" />
-      <module name="basket-subscription" target="1.8" />
-      <module name="integration" target="1.8" />
-      <module name="item-registration" target="1.8" />
-      <module name="subscriber" target="1.8" />
+      <module name="item-registration" target="1.5" />
       <module name="subscription" target="1.5" />
     </bytecodeTargetLevel>
   </component>
