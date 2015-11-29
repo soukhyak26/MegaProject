@@ -9,7 +9,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression;
 public class FindabUsingSimpleRegression {
     public static void main (String args[]) {
         double [][] data = {
-                {1,4}, {2,6}, {4,8}, {8,14}, {6,12}, {5,10}, {8,16}, {9,16}, {7,12}
+                {100,24}, {110,23}, {140,22}, {170,21}, {190,20}
         };
 
         SimpleRegression simpleRegression = new SimpleRegression();
@@ -20,7 +20,7 @@ public class FindabUsingSimpleRegression {
             System.out.print("Y: " + data[i][1] + ", ");
             System.out.print("a: " + results.getParameterEstimate(0) + ", ");
             System.out.print("a: " + results.getParameterEstimate(0) + ", ");
-            System.out.print("b: " + results.getParameterEstimate(1));
+            System.out.print("b: " + results.getParameterEstimate(1)+ ", ");
             System.out.print("Error a: " + results.getStdErrorOfEstimate(0) + ", ");
             System.out.print("Error b: " + results.getStdErrorOfEstimate(1));
             System.out.println();
