@@ -6,7 +6,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression;
 /**
  * Created by rbsavaliya on 29-11-2015.
  */
-public class FindabUsingSimpleRegression {
+public class FindRegressionParametersUsingSimpleRegression {
     public static void main (String args[]) {
         double [][] data = {
                 {100,24}, {110,23}, {140,22}, {170,21}, {190,20}
