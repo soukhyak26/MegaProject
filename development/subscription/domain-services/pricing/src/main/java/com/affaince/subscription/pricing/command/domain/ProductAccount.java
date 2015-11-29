@@ -20,6 +20,7 @@ public class ProductAccount {
         return this.productId;
     }
 
+
     public Map<String, ProductPerformanceTracker> getForecastPerUnitPeriod() {
         return this.forecastPerUnitPeriod;
     }
