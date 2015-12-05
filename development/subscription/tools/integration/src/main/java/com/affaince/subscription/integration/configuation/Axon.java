@@ -5,6 +5,7 @@ import com.affaince.subscription.integration.command.event.GenericEventPublisher
 import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.SubscriptionableItemDailyQuoteGeneratedEvent;
+import com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent;
 import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
 import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ShoppingItemReceivedEvent;
 import com.affaince.subscription.integration.command.event.stockdemand.SubscriptionableItemStockDemandGeneratedEvent;
@@ -46,6 +47,7 @@ public class Axon extends Default {
                         to("${subscriptionableitems.feed.destination}");
 
                 JacksonDataFormat df = new JacksonDataFormat(objectMapper(), BasketDispatchedStatusEvent.class);
+
                 //INT_05: update status of targetted dispatches every day
                 from("${basket.dispatch.status.source}").
                         unmarshal().bindy(BindyType.Csv, BasketDispatchedStatusEvent.class).
@@ -57,6 +59,12 @@ public class Axon extends Default {
                         unmarshal().bindy(BindyType.Csv, ShoppingItemReceivedEvent.class).
                         split(body().tokenize("\n")).streaming().
                         to("${shoppingitems.registration.destination}");
+
+                //INT_XX: retreive forecasts for every shopping item that has been registered
+                from("${shoppingitems.forecast.source}").
+                        unmarshal().bindy(BindyType.Csv, ShoppingItemForecastReceivedEvent.class).
+                        split(body().tokenize("\n")).streaming().
+                        to("${shoppingitems.forecast.destination}");
 
                 //INT_03: generate stock demand based on available subscripttions
                 from("${stock.demand.source}").

@@ -2,6 +2,7 @@ package com.affaince.subscription.product.registration.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.registration.command.domain.Product;
+import com.affaince.subscription.product.registration.command.event.ProductForecastReceivedEvent;
 import com.affaince.subscription.product.registration.command.event.ProductReceivedEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -31,6 +32,8 @@ public class Axon extends Default {
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.integration.command.event.ProductReceivedEvent", ProductReceivedEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent", ProductForecastReceivedEvent.class.getName());
+
         }};
     }
 }
