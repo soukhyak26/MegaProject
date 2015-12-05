@@ -9,25 +9,28 @@ import org.joda.time.LocalDate;
  */
 @CsvRecord(separator = ",", skipFirstLine = true)
 public class ShoppingItemForecastReceivedEvent {
-    @DataField(name = "FROM_DATE", pos = 1, trim = true)
+    @DataField(name = "PRODUCT_ID", pos = 1, trim = true)
+    private String productId;
+
+    @DataField(name = "FROM_DATE", pos = 2, trim = true)
     private LocalDate fromDate;
 
-    @DataField(name = "TO_DATE", pos = 2, trim = true)
+    @DataField(name = "TO_DATE", pos = 3, trim = true)
     private LocalDate toDate;
 
-    @DataField(name = "PURCHASE_PRICE_PER_UNIT", pos = 3, trim = true)
+    @DataField(name = "PURCHASE_PRICE_PER_UNIT", pos = 4, trim = true)
     private double purchasePricePerUnit;
 
-    @DataField(name = "SALE_PRICE_PER_UNIT", pos = 4, trim = true)
+    @DataField(name = "SALE_PRICE_PER_UNIT", pos = 5, trim = true)
     private double salePricePerUnit;
 
-    @DataField(name = "MRP", pos = 5, trim = true)
+    @DataField(name = "MRP", pos = 6, trim = true)
     private double MRP;
 
-    @DataField(name = "NO_OF_NEW_CUSTOMERS", pos = 6, trim = true)
+    @DataField(name = "NO_OF_NEW_CUSTOMERS", pos = 7, trim = true)
     private long numberOfNewCustomersAssociatedWithAPrice;
 
-    @DataField(name = "NO_OF_CHURNED_CUSTOMERS", pos = 7, trim = true)
+    @DataField(name = "NO_OF_CHURNED_CUSTOMERS", pos = 8, trim = true)
     private long numberOfChurnedCustomersAssociatedWithAPrice;
 
     public ShoppingItemForecastReceivedEvent(){}
