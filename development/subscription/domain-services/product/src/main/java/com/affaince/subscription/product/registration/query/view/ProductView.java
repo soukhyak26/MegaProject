@@ -10,36 +10,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductView {
 
     @Id
-    private String itemId;
+    private String productId;
     private String batchId;
     private String categoryId;
     private String categoryName;
     private String subCategoryId;
     private String subCategoryName;
-    private String shoppingSiteProductId;
     private PriceParameters priceParameters;
-    private ProjectionParameters projectionParameters;
-    private RuleParameters ruleParameters;
 
-    public ProductView(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String shoppingSiteProductId, PriceParameters priceParameters, ProjectionParameters projectionParameters, RuleParameters ruleParameters) {
-        this.itemId = itemId;
+    public ProductView(String productId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, PriceParameters priceParameters) {
+        this.productId = productId;
         this.batchId = batchId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
-        this.shoppingSiteProductId = shoppingSiteProductId;
         this.priceParameters = priceParameters;
-        this.projectionParameters = projectionParameters;
-        this.ruleParameters = ruleParameters;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getBatchId() {
@@ -82,35 +76,11 @@ public class ProductView {
         this.subCategoryName = subCategoryName;
     }
 
-    public String getShoppingSiteProductId() {
-        return shoppingSiteProductId;
-    }
-
-    public void setShoppingSiteProductId(String shoppingSiteProductId) {
-        this.shoppingSiteProductId = shoppingSiteProductId;
-    }
-
     public PriceParameters getPriceParameters() {
         return priceParameters;
     }
 
     public void setPriceParameters(PriceParameters priceParameters) {
         this.priceParameters = priceParameters;
-    }
-
-    public ProjectionParameters getProjectionParameters() {
-        return projectionParameters;
-    }
-
-    public void setProjectionParameters(ProjectionParameters projectionParameters) {
-        this.projectionParameters = projectionParameters;
-    }
-
-    public RuleParameters getRuleParameters() {
-        return ruleParameters;
-    }
-
-    public void setRuleParameters(RuleParameters ruleParameters) {
-        this.ruleParameters = ruleParameters;
     }
 }

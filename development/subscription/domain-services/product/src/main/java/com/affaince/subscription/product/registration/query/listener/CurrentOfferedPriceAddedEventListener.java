@@ -22,8 +22,8 @@ public class CurrentOfferedPriceAddedEventListener {
 
     @EventHandler
     public void on(CurrentOfferedPriceAddedEvent event) {
-        ProductView itemView = itemRepository.findOneByItemId(event.getItemId());
-        itemView.getPriceParameters().setCurrentOfferedPrice(event.getCurrentOfferedPrice());
-        itemRepository.save(itemView);
+        ProductView productView = itemRepository.findOne(event.getProductId());
+        productView.getPriceParameters().setCurrentOfferedPrice(event.getCurrentOfferedPrice());
+        itemRepository.save(productView);
     }
 }

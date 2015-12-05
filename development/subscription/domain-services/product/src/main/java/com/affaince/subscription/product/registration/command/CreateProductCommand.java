@@ -9,27 +9,25 @@ import org.joda.time.LocalDate;
 public class CreateProductCommand {
 
     @TargetAggregateIdentifier
-    private String itemId;
+    private String productId;
     private String batchId;
     private String categoryId;
     private String categoryName;
     private String subCategoryId;
     private String subCategoryName;
-    private String productId;
     private double currentPurchasePricePerUnit;
     private double currentMRP;
     private double currentOfferedPrice;
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public CreateProductCommand(String id, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryNmae, String productId, double currentPurchasePricePerUnit, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
-        this.itemId = id;
+    public CreateProductCommand(String productId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, double currentPurchasePricePerUnit, double currentMRP, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+        this.productId = productId;
         this.batchId = batchId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.subCategoryId = subCategoryId;
-        this.subCategoryName = subCategoryNmae;
-        this.productId = productId;
+        this.subCategoryName = subCategoryName;
         this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
         this.currentMRP = currentMRP;
         this.currentOfferedPrice = currentOfferedPrice;
@@ -43,14 +41,6 @@ public class CreateProductCommand {
 
     public void setCurrentPurchasePricePerUnit(double currentPurchasePricePerUnit) {
         this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
-    }
-
-    public String getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
     }
 
     public String getBatchId() {

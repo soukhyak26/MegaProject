@@ -31,16 +31,13 @@ public class ProductCreatedEventListener {
                 event.getCurrentPriceDate()
         );
         final ProductView productView = new ProductView(
-                event.getItemId(),
+                event.getProductId(),
                 event.getBatchId(),
                 event.getCategoryId(),
                 event.getCategoryName(),
                 event.getSubCategoryId(),
                 event.getSubCategoryName(),
-                event.getProductId(),
-                priceParameters,
-                null,
-                null
+                priceParameters
         );
         itemRepository.save(productView);
     }

@@ -8,24 +8,24 @@ import org.joda.time.LocalDate;
  */
 public class UpdatePriceAndStockParametersCommand {
     @TargetAggregateIdentifier
-    private String itemId;
+    private String productId;
     private double currentMRP;
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
 
-    public UpdatePriceAndStockParametersCommand(String itemId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
-        this.itemId = itemId;
+    public UpdatePriceAndStockParametersCommand(String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
+        this.productId = productId;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPrizeDate = currentPrizeDate;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public double getCurrentMRP() {

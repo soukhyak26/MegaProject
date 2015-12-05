@@ -5,23 +5,23 @@ package com.affaince.subscription.product.registration.command.event;
  */
 public class CurrentOfferedPriceAddedEvent {
 
-    private String itemId;
+    private String productId;
     private double currentOfferedPrice;
 
-    public CurrentOfferedPriceAddedEvent(String itemId, double currentOfferedPrice) {
-        this.itemId = itemId;
+    public CurrentOfferedPriceAddedEvent(String productId, double currentOfferedPrice) {
+        this.productId = productId;
         this.currentOfferedPrice = currentOfferedPrice;
     }
 
     public CurrentOfferedPriceAddedEvent() {
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public double getCurrentOfferedPrice() {

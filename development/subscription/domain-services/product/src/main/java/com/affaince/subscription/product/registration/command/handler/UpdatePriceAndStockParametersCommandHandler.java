@@ -22,7 +22,7 @@ public class UpdatePriceAndStockParametersCommandHandler {
 
     @CommandHandler
     public void handle(UpdatePriceAndStockParametersCommand command) {
-        Product item = repository.load(command.getItemId());
-        item.updatePriceAndStockParemeters(command);
+        Product product = repository.load(command.getProductId());
+        product.updatePriceAndStockParemeters(command);
     }
 }

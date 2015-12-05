@@ -1,23 +1,26 @@
 package com.affaince.subscription.product.registration.command;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+
 /**
  * Created by rbsavaliya on 07-08-2015.
  */
 public class AddCurrentOfferedPriceCommand {
-    private String itemId;
+    @TargetAggregateIdentifier
+    private String productId;
     private double currentOfferedPrice;
 
-    public AddCurrentOfferedPriceCommand(String itemId, double currentOfferedPrice) {
-        this.itemId = itemId;
+    public AddCurrentOfferedPriceCommand(String productId, double currentOfferedPrice) {
+        this.productId = productId;
         this.currentOfferedPrice = currentOfferedPrice;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public double getCurrentOfferedPrice() {

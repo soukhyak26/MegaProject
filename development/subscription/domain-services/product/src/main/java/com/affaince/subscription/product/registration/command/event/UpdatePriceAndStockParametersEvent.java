@@ -6,13 +6,13 @@ import org.joda.time.LocalDate;
  * Created by rbsavaliya on 25-07-2015.
  */
 public class UpdatePriceAndStockParametersEvent {
-    private String itemId;
+    private String productId;
     private double currentMRP;
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
 
-    public UpdatePriceAndStockParametersEvent(String itemId, double currentMRP, int currentStockInUnits, LocalDate currentPriceDate) {
-        this.itemId = itemId;
+    public UpdatePriceAndStockParametersEvent(String productId, double currentMRP, int currentStockInUnits, LocalDate currentPriceDate) {
+        this.productId = productId;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPrizeDate = currentPriceDate;
@@ -21,12 +21,12 @@ public class UpdatePriceAndStockParametersEvent {
     public UpdatePriceAndStockParametersEvent() {
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public double getCurrentMRP() {

@@ -7,27 +7,25 @@ import org.joda.time.LocalDate;
  */
 public class CreateProductEvent {
 
-    private String itemId;
+    private String productId;
     private String batchId;
     private String categoryId;
     private String categoryName;
     private String subCategoryId;
     private String subCategoryName;
-    private String productId;
     private double currentMRP;
     private double purchasePricePerUnit;
     private double currentOfferedPrice;
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public CreateProductEvent(String itemId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, String productId, double currentMRP, double purchasePricePerUnit, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
-        this.itemId = itemId;
+    public CreateProductEvent(String productId, String batchId, String categoryId, String categoryName, String subCategoryId, String subCategoryName, double currentMRP, double purchasePricePerUnit, double currentOfferedPrice, int currentStockInUnits, LocalDate currentPriceDate) {
+        this.productId = productId;
         this.batchId = batchId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
-        this.productId = productId;
         this.currentMRP = currentMRP;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.currentOfferedPrice = currentOfferedPrice;
@@ -38,12 +36,12 @@ public class CreateProductEvent {
     public CreateProductEvent() {
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getSubCategoryName() {
@@ -92,14 +90,6 @@ public class CreateProductEvent {
 
     public void setSubCategoryId(String subCategoryId) {
         this.subCategoryId = subCategoryId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     public double getCurrentMRP() {

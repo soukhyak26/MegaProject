@@ -1,12 +1,20 @@
 package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.product.registration.command.*;
+import com.affaince.subscription.product.registration.command.AddCurrentOfferedPriceCommand;
+import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
+import com.affaince.subscription.product.registration.command.CreateProductCommand;
+import com.affaince.subscription.product.registration.command.UpdatePriceAndStockParametersCommand;
 import com.affaince.subscription.product.registration.query.repository.ProductRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
-import com.affaince.subscription.product.registration.web.request.*;
+import com.affaince.subscription.product.registration.web.request.AddCurrentOfferedPriceRequest;
+import com.affaince.subscription.product.registration.web.request.AddForecastParametersRequest;
+import com.affaince.subscription.product.registration.web.request.CreateProductRequest;
+import com.affaince.subscription.product.registration.web.request.UpdatePriceAndStockParametersRequest;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import java.util.UUID;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -28,6 +35,8 @@ public class ProductController {
     private final SubscriptionCommandGateway commandGateway;
     private final ProductRepository repository;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     public ProductController(SubscriptionCommandGateway commandGateway, ProductRepository repository) {
         this.commandGateway = commandGateway;
@@ -38,13 +47,12 @@ public class ProductController {
     @Consumes("application/json")
     public ResponseEntity<Object> createItem(@RequestBody @Valid CreateProductRequest request) throws Exception {
         final CreateProductCommand createCommand = new CreateProductCommand(
-                UUID.randomUUID().toString(),
+                request.getProductId(),
                 request.getBatchId(),
                 request.getCategoryId(),
                 request.getCategoryName(),
                 request.getSubCategoryId(),
                 request.getSubCategoryName(),
-                request.getProductId(),
                 request.getCurrentPurchasePricePerUnit(),
                 request.getCurrentMRP(),
                 request.getCurrentOfferedPrice(),
@@ -56,6 +64,7 @@ public class ProductController {
         } catch (Exception e) {
             throw e;
         }
+        LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
@@ -82,48 +91,23 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{productId}")
     @Consumes("application/json")
-    public ResponseEntity<Object> addProjecttionParameters(@RequestBody @Valid AddProjectionParametersRequest request,
+    public ResponseEntity<Object> addProjectionParameters(@RequestBody @Valid AddForecastParametersRequest request,
                                                            @PathVariable String productId) throws Exception {
         ProductView productView = repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        final AddProjectionParametersCommand command = new AddProjectionParametersCommand(
-                productId,
-                request.getTargetConsumptionPeriod(),
-                request.getTargetConsumptionPeriodUnit(),
-                request.getTargetSalePerConsumptionPeriod(),
-                request.getMinimumProfitMargin(),
-                request.getMaximumProfitMargin(),
-                request.getDemandToSupplyRatio(),
-                request.getConsumptionFrequency(),
-                request.getConsumptionFrequencyPeriod(),
-                request.getConsumptionFrequencyPeriodUnitCode()
+        AddForecastParametersCommand command = new AddForecastParametersCommand(
+                request.getProductId(),
+                request.getFromDate(),
+                request.getToDate(),
+                request.getPurchasePricePerUnit(),
+                request.getSalePricePerUnit(),
+                request.getMRP(),
+                request.getNumberOfNewCustomersAssociatedWithAPrice(),
+                request.getNumberOfChurnedCustomersAssociatedWithAPrice()
         );
-        try {
-            commandGateway.executeAsync(command);
-        } catch (Exception e) {
-            throw e;
-        }
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, value = "ruleparameters/{productId}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> addSubscriptionableItemRuleParameters(@RequestBody @Valid AddRuleParametersRequest request, @PathVariable String productId) throws Exception {
-        ProductView productView = repository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.build(productId);
-        }
-        final AddProductRuleParametersCommand command = new AddProductRuleParametersCommand(
-                productId,
-                request.getMinPermissibleDiscount(),
-                request.getMaxPermissibleDiscount(),
-                request.getDiscountUnitCode(),
-                request.getMaxPermissibleUnits(),
-                request.getMaxPermissibleSubscriptionPeriod(),
-                request.getMaxPermissibleSubscriptionPeriodUnitCode()
-        );
+        commandGateway.executeAsync(command);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

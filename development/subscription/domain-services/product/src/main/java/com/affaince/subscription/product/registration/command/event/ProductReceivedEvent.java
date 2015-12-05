@@ -7,21 +7,20 @@ import org.joda.time.LocalDate;
  */
 
 public class ProductReceivedEvent {
-    private String itemId;
+    private String productId;
     private String batchId;
     private String categoryId;
     private String categoryName;
     private String subCategoryId;
     private String subCategoryName;
-    private String productId;
     private double currentPurchasePricePerUnit;
     private double currentMRP;
     private int currentStockInUnits;
 
     private LocalDate currentPriceDate = LocalDate.now();
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
     public String getSubCategoryId() {
@@ -64,14 +63,6 @@ public class ProductReceivedEvent {
         this.categoryName = categoryName;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
     public double getCurrentPurchasePricePerUnit() {
         return currentPurchasePricePerUnit;
     }
@@ -104,7 +95,7 @@ public class ProductReceivedEvent {
         this.currentPriceDate = currentPriceDate;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }
