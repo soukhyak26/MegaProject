@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateSubscriberContactDetailsCommandHandler {
 
-    Repository<Subscriber> repository;
+    private final Repository<Subscriber> repository;
 
     @Autowired
     public UpdateSubscriberContactDetailsCommandHandler(Repository<Subscriber> repository) {

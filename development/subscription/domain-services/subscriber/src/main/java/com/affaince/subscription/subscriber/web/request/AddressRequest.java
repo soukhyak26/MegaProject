@@ -1,37 +1,23 @@
-package com.affaince.subscription.subscriber.command;
+package com.affaince.subscription.subscriber.web.request;
 
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
-public class UpdateSubscriberAddressCommand {
-    @TargetAggregateIdentifier
-    private String subscriberId;
+public class AddressRequest {
+
+    @NotNull
     private String addressLine1;
     private String addressLine2;
+    @NotNull
     private String city;
+    @NotNull
     private String state;
+    @NotNull
     private String country;
+    @NotNull
     private String pinCode;
-
-    public UpdateSubscriberAddressCommand(String subscriberId, String addressLine1, String addressLine2, String city, String state, String country, String pinCode) {
-        this.subscriberId = subscriberId;
-        this.addressLine1 = addressLine1;
-        this.addressLine2 = addressLine2;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.pinCode = pinCode;
-    }
-
-    public String getSubscriberId() {
-        return subscriberId;
-    }
-
-    public void setSubscriberId(String subscriberId) {
-        this.subscriberId = subscriberId;
-    }
 
     public String getAddressLine1() {
         return addressLine1;

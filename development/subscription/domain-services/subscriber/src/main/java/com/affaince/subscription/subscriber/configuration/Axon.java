@@ -2,6 +2,9 @@ package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
+import com.affaince.subscription.subscriber.command.domain.Basket;
+import com.affaince.subscription.subscriber.command.domain.BasketRule;
+import com.affaince.subscription.subscriber.command.domain.Subscription;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -21,6 +24,25 @@ public class Axon extends Default {
     public Repository<Subscriber> createRepository(DisruptorCommandBus commandBus) {
 
         Repository<Subscriber> repository = commandBus.createRepository(new GenericAggregateFactory<>(Subscriber.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<Subscription> createSubscriptionRepository(DisruptorCommandBus commandBus) {
+
+        Repository<Subscription> repository = commandBus.createRepository(new GenericAggregateFactory<>(Subscription.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<BasketRule> createBasketRuleRepository(DisruptorCommandBus commandBus) {
+        Repository<BasketRule> repository = commandBus.createRepository(new GenericAggregateFactory<>(BasketRule.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<Basket> createBasketRepository(DisruptorCommandBus commandBus) {
+        Repository<Basket> repository = commandBus.createRepository(new GenericAggregateFactory<>(Basket.class));
         return repository;
     }
 
