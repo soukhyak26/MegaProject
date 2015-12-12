@@ -7,7 +7,7 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
  */
 public class AddAddressToSubscriptionCommand {
     @TargetAggregateIdentifier
-    private String basketId;
+    private String subscriptionId;
     private String addressType;
     private String addressLine1;
     private String addressLine2;
@@ -16,8 +16,8 @@ public class AddAddressToSubscriptionCommand {
     private String country;
     private String pinCode;
 
-    public AddAddressToSubscriptionCommand(String basketId, String addressType, String addressLine1, String addressLine2, String city, String state, String country, String pinCode) {
-        this.basketId = basketId;
+    public AddAddressToSubscriptionCommand(String subscriptionId, String addressType, String addressLine1, String addressLine2, String city, String state, String country, String pinCode) {
+        this.subscriptionId = subscriptionId;
         this.addressType = addressType;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
@@ -27,12 +27,12 @@ public class AddAddressToSubscriptionCommand {
         this.pinCode = pinCode;
     }
 
-    public String getBasketId() {
-        return basketId;
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public String getAddressType() {
