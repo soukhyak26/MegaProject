@@ -13,7 +13,6 @@
         <module>libs/axon-commons</module>
         <module>tools/rules-compiler</module>
         <module>domain-services/subscriber</module>
-        <module>domain-services/basket-subscription</module>
         <module>tools/integration</module>
         <module>tools/application-simulator</module>
         <module>domain-services/benefits</module>
