@@ -1,30 +1,30 @@
-package com.affaince.subscription.subscriber.command;
-
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+package com.affaince.subscription.subscriber.command.event;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
-public class UpdateSubscriberContactDetailsCommand {
-    @TargetAggregateIdentifier
-    private String subscriberId;
+public class ContactDetailsAddedEvent {
+    private String subscriptionId;
     private String email;
     private String mobileNumber;
     private String alternativeNumber;
 
-    public UpdateSubscriberContactDetailsCommand(String subscriberId, String email, String mobileNumber, String alternativeNumber) {
-        this.subscriberId = subscriberId;
+    public ContactDetailsAddedEvent(String subscriptionId, String email, String mobileNumber, String alternativeNumber) {
+        this.subscriptionId = subscriptionId;
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.alternativeNumber = alternativeNumber;
     }
 
-    public String getSubscriberId() {
-        return subscriberId;
+    public ContactDetailsAddedEvent() {
     }
 
-    public void setSubscriberId(String subscriberId) {
-        this.subscriberId = subscriberId;
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public String getEmail() {

@@ -1,13 +1,10 @@
-package com.affaince.subscription.subscriber.command;
-
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+package com.affaince.subscription.subscriber.command.event;
 
 /**
- * Created by rbsavaliya on 02-08-2015.
+ * Created by rbsavaliya on 10-08-2015.
  */
-public class UpdateSubscriberAddressCommand {
-    @TargetAggregateIdentifier
-    private String subscriberId;
+public class BillingAddressAddedToSubscriptionEvent {
+    private String subscriptionId;
     private String addressLine1;
     private String addressLine2;
     private String city;
@@ -15,8 +12,8 @@ public class UpdateSubscriberAddressCommand {
     private String country;
     private String pinCode;
 
-    public UpdateSubscriberAddressCommand(String subscriberId, String addressLine1, String addressLine2, String city, String state, String country, String pinCode) {
-        this.subscriberId = subscriberId;
+    public BillingAddressAddedToSubscriptionEvent(String subscriptionId, String addressLine1, String addressLine2, String city, String state, String country, String pinCode) {
+        this.subscriptionId = subscriptionId;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
@@ -25,12 +22,15 @@ public class UpdateSubscriberAddressCommand {
         this.pinCode = pinCode;
     }
 
-    public String getSubscriberId() {
-        return subscriberId;
+    public BillingAddressAddedToSubscriptionEvent() {
     }
 
-    public void setSubscriberId(String subscriberId) {
-        this.subscriberId = subscriberId;
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public String getAddressLine1() {
