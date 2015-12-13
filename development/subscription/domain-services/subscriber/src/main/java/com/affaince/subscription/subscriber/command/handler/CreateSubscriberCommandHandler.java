@@ -23,8 +23,7 @@ public class CreateSubscriberCommandHandler {
     @CommandHandler
     public void handle(CreateSubscriberCommand command) {
         Subscriber subscriber = new Subscriber(command.getSubscriberId(),
-                command.getSubscriberName(), command.getBillingAddress(), command.getShippingAddress(),
-                command.getContactDetails());
+                command.getSubscriberName(), command.getAddress(), command.getContactDetails());
         repository.add(subscriber);
     }
 }

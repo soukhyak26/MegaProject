@@ -14,13 +14,15 @@ import java.util.List;
 public class BasketView {
     @Id
     private String basketId;
+    private String subscriberId;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
     private DeliveryStatus status;
 
-    public BasketView(String basketId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
+    public BasketView(String basketId, String subscriberId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
         this.basketId = basketId;
+        this.subscriberId = subscriberId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.dispatchDate = dispatchDate;
@@ -33,6 +35,14 @@ public class BasketView {
 
     public void setBasketId(String basketId) {
         this.basketId = basketId;
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
+    }
+
+    public void setSubscriberId(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 
     public List<DeliveryItem> getDeliveryItems() {

@@ -21,6 +21,9 @@ public class AddBasketRulesCommand {
         this.maximumPermissibleDiscountUnit = maximumPermissibleDiscountUnit;
     }
 
+    public AddBasketRulesCommand() {
+    }
+
     public String getBasketRuleId() {
         return BasketRuleId;
     }

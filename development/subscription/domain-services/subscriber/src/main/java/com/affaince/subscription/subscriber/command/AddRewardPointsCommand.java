@@ -15,6 +15,9 @@ public class AddRewardPointsCommand {
         this.rewardPoints = rewardPoints;
     }
 
+    public AddRewardPointsCommand() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }

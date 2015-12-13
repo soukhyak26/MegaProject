@@ -9,47 +9,40 @@ import java.util.List;
  */
 public class UpdateStatusAndDispatchDateCommand {
     @TargetAggregateIdentifier
+    private String subscriberId;
     private String basketId;
     private int basketDeliveryStatus;
     private String dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
 
-    public UpdateStatusAndDispatchDateCommand(String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
+    public UpdateStatusAndDispatchDateCommand(String subscriberId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
+        this.subscriberId = subscriberId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
         this.dispatchDate = dispatchDate;
         this.itemDispatchStatuses = itemDispatchStatuses;
+    }
+
+    public UpdateStatusAndDispatchDateCommand() {
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getBasketId() {
         return basketId;
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
-    }
-
     public int getBasketDeliveryStatus() {
         return basketDeliveryStatus;
-    }
-
-    public void setBasketDeliveryStatus(int basketDeliveryStatus) {
-        this.basketDeliveryStatus = basketDeliveryStatus;
     }
 
     public String getDispatchDate() {
         return dispatchDate;
     }
 
-    public void setDispatchDate(String dispatchDate) {
-        this.dispatchDate = dispatchDate;
-    }
-
     public List<ItemDispatchStatus> getItemDispatchStatuses() {
         return itemDispatchStatuses;
-    }
-
-    public void setItemDispatchStatuses(List<ItemDispatchStatus> itemDispatchStatuses) {
-        this.itemDispatchStatuses = itemDispatchStatuses;
     }
 }

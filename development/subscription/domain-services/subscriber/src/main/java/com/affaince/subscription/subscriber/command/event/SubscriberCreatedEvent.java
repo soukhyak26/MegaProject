@@ -10,16 +10,14 @@ import com.affaince.subscription.common.vo.SubscriberName;
 public class SubscriberCreatedEvent {
     private String subscriberId;
     private SubscriberName subscriberName;
-    private Address billingAddress;
-    private Address shippingAddress;
+    private Address address;
     private ContactDetails contactDetails;
     private int subscriberStatusCode;
 
-    public SubscriberCreatedEvent(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails, int subscriberStatusCode) {
+    public SubscriberCreatedEvent(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails, int subscriberStatusCode) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
-        this.billingAddress = billingAddress;
-        this.shippingAddress = shippingAddress;
+        this.address = address;
         this.contactDetails = contactDetails;
         this.subscriberStatusCode = subscriberStatusCode;
     }
@@ -43,20 +41,12 @@ public class SubscriberCreatedEvent {
         this.subscriberName = subscriberName;
     }
 
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public ContactDetails getContactDetails() {

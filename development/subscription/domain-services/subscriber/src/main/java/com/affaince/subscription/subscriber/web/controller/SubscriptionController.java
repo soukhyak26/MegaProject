@@ -7,7 +7,7 @@ import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import com.affaince.subscription.subscriber.web.exception.ConsumerBasketNotFoundException;
 import com.affaince.subscription.subscriber.web.request.AddressRequest;
 import com.affaince.subscription.subscriber.web.request.BasketItemRequest;
-import com.affaince.subscription.subscriber.web.request.ConsumerBasketRequest;
+import com.affaince.subscription.subscriber.web.request.SubscriptionRequest;
 import com.affaince.subscription.subscriber.web.request.ContactDetailsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class SubscriptionController {
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
-    public ResponseEntity<Object> createConsumerBasket(@RequestBody @Valid ConsumerBasketRequest request) throws Exception {
+    public ResponseEntity<Object> createSubscription(@RequestBody @Valid SubscriptionRequest request) throws Exception {
         final String subscriptionId = UUID.randomUUID().toString();
         final CreateSubscriptionCommand command = new CreateSubscriptionCommand(subscriptionId, request.getUserId());
         try {
@@ -47,7 +47,7 @@ public class SubscriptionController {
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "additem/{basketid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "additem/{subscriptionId}", method = RequestMethod.PUT)
     @Consumes("application/json")
     public ResponseEntity<Object> addItemToConsumerBasket(@PathVariable String subscriptionId,
                                                           @RequestBody @Valid BasketItemRequest request) throws Exception {
@@ -64,7 +64,7 @@ public class SubscriptionController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "addshippingaddress/{basketid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "addshippingaddress/{subscriptionId}", method = RequestMethod.PUT)
     @Consumes("application/json")
     public ResponseEntity<Object> addShippingAddress(@PathVariable String subscriptionId,
                                                      @RequestBody @Valid AddressRequest request) throws Exception {
@@ -84,7 +84,7 @@ public class SubscriptionController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "addbillingaddress/{basketid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "addbillingaddress/{subscriptionId}", method = RequestMethod.PUT)
     @Consumes("application/json")
     public ResponseEntity<Object> addBillingAddress(@PathVariable String subscriptionId,
                                                     @RequestBody @Valid AddressRequest request) throws Exception {
@@ -104,7 +104,7 @@ public class SubscriptionController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "addcontactdetails/{basketid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "addcontactdetails/{subscriptionId}", method = RequestMethod.PUT)
     @Consumes("application/json")
     public ResponseEntity<Object> addContactDetails(@PathVariable String subscriptionId,
                                                     @RequestBody @Valid ContactDetailsRequest request) throws Exception {
@@ -123,7 +123,7 @@ public class SubscriptionController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "deleteitem/{basketId}/{itemId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "deleteitem/{subscriptionId}/{itemId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteItem(@PathVariable String basketId, @PathVariable String itemId) throws Exception {
         final SubscriptionView subscriptionView = repository.findOne(basketId);
         if (subscriptionView == null) {

@@ -23,6 +23,9 @@ public class AddItemToSubscriptionCommand {
         this.discountedOfferedPrice = discountedOfferedPrice;
     }
 
+    public AddItemToSubscriptionCommand() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }

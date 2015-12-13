@@ -35,8 +35,7 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscriber(@RequestBody @Valid CreateSubscriberRequest request) throws Exception {
         final CreateSubscriberCommand command = new CreateSubscriberCommand(UUID.randomUUID().toString(),
-                request.getSubscriberName(), request.getBillingAddress(), request.getShippingAddress(),
-                request.getContactDetails()
+                request.getSubscriberName(), request.getAddress(), request.getContactDetails()
         );
         try {
             commandGateway.executeAsync(command);

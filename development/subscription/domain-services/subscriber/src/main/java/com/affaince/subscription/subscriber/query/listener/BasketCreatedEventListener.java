@@ -30,7 +30,7 @@ public class BasketCreatedEventListener {
         deliveryItems.addAll(event.getDeliveryItems().stream()
                 .map(deliveryItem -> new DeliveryItem(deliveryItem.getDeliveryItemId(), deliveryItem.getDeliveryStatus()))
                 .collect(Collectors.toList()));
-        BasketView basketView = new BasketView(event.getBasketId(), deliveryItems,
+        BasketView basketView = new BasketView(event.getBasketId(), event.getSubscriberId(), deliveryItems,
                 event.getDeliveryDate(), event.getDispatchDate(), event.getStatus()
         );
         basketRepository.save(basketView);

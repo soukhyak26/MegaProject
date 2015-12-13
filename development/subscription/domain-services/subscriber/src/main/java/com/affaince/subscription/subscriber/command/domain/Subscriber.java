@@ -1,17 +1,24 @@
 package com.affaince.subscription.subscriber.command.domain;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.NetWorthSubscriberStatus;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
+import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
+import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
+import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -21,15 +28,16 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
     private String subscriberId;
     private SubscriberName subscriberName;
-    private Address billingAddress;
-    private Address shippingAddress;
+    private Address address;
     private ContactDetails contactDetails;
     private NetWorthSubscriberStatus status;
     private List<String> couponCodes;
     private int rewardPoints;
+    private Map<String, Basket> baskets;
 
-    public Subscriber(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails) {
-        apply(new SubscriberCreatedEvent(subscriberId, subscriberName, billingAddress, shippingAddress, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
+    public Subscriber(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
+        apply(new SubscriberCreatedEvent(subscriberId, subscriberName, address, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
+        baskets = new HashMap<>();
     }
 
     public Subscriber() {
@@ -39,8 +47,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void on(SubscriberCreatedEvent event) {
         this.subscriberId = event.getSubscriberId();
         this.subscriberName = event.getSubscriberName();
-        this.billingAddress = event.getBillingAddress();
-        this.shippingAddress = event.getShippingAddress();
+        this.address = event.getAddress();
         this.contactDetails = event.getContactDetails();
         this.status = NetWorthSubscriberStatus.valueOf(event.getSubscriberStatusCode());
     }
@@ -66,7 +73,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 event.getCountry(),
                 event.getPinCode()
         );
-        this.billingAddress = address;
+        this.address = address;
     }
 
     @EventSourcingHandler
@@ -80,6 +87,35 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             this.couponCodes = new ArrayList<>();
         }
         this.couponCodes.add(event.getCouponCode());
+    }
+
+    @EventSourcingHandler
+    public void on(BasketCreatedEvent event) {
+        this.subscriberId = event.getSubscriberId();
+        final Basket basket = new Basket(event.getBasketId(), event.getDeliveryItems(),
+                event.getDeliveryDate(), event.getDispatchDate(), event.getStatus());
+        this.baskets.put(event.getBasketId(), basket);
+    }
+
+    @EventSourcingHandler
+    public void on(StatusAndDispatchDateUpdatedEvent event) {
+        this.subscriberId = event.getSubscriptionId();
+        Basket basket = this.baskets.get (event.getBasketId());
+        basket.setDispatchDate(new LocalDate(event.getDispatchDate()));
+        basket.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
+        List <DeliveryItem> deliveryItems = basket.getDeliveryItems();
+        for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
+            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null);
+            deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
+            deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
+        }
+    }
+
+    @EventSourcingHandler
+    public void on(BasketDeletedEvent event) {
+        this.subscriberId = event.getSubscriptionId();
+        Basket basket = this.baskets.get(event.getBasketId());
+        basket.setStatus(DeliveryStatus.DELETED);
     }
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
@@ -103,5 +139,20 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void addCouponCode(String couponCode) {
         apply(new CouponCodeAddedEvent(this.subscriberId, couponCode));
+    }
+
+    public void addBasket (Basket basket) {
+        apply(new BasketCreatedEvent(
+                this.subscriberId, basket.getBasketId(), basket.getDeliveryItems(),
+                basket.getDeliveryDate(), basket.getDispatchDate(), basket.getStatus()));
+    }
+
+    public void updateStatusAndDispatchDate(UpdateStatusAndDispatchDateCommand command) {
+        apply(new StatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId (), command.getBasketDeliveryStatus(), command.getDispatchDate(),
+                command.getItemDispatchStatuses()));
+    }
+
+    public void deleteBasket(DeleteBasketCommand command) {
+        apply(new BasketDeletedEvent(this.subscriberId, command.getBasketId(), DeliveryStatus.DELETED));
     }
 }

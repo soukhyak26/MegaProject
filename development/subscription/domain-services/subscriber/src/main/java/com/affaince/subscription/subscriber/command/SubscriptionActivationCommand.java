@@ -13,6 +13,9 @@ public class SubscriptionActivationCommand {
         this.subscriptionId = subscriptionId;
     }
 
+    public SubscriptionActivationCommand() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }

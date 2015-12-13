@@ -17,18 +17,16 @@ public class SubscriberView {
     @Id
     private String subscriberId;
     private SubscriberName subscriberName;
-    private Address billingAddress;
-    private Address shippingAddress;
+    private Address address;
     private ContactDetails contactDetails;
     private NetWorthSubscriberStatus status;
     private List<String> couponCodes;
     private int rewardPoints;
 
-    public SubscriberView(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails, NetWorthSubscriberStatus status, List<String> couponCodes, int rewardPoints) {
+    public SubscriberView(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails, NetWorthSubscriberStatus status, List<String> couponCodes, int rewardPoints) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
-        this.billingAddress = billingAddress;
-        this.shippingAddress = shippingAddress;
+        this.address = address;
         this.contactDetails = contactDetails;
         this.status = status;
         this.couponCodes = couponCodes;
@@ -51,20 +49,12 @@ public class SubscriberView {
         this.subscriberName = subscriberName;
     }
 
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public ContactDetails getContactDetails() {

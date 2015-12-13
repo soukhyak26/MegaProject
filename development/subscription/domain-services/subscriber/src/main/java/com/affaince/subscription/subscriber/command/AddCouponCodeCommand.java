@@ -15,6 +15,9 @@ public class AddCouponCodeCommand {
         this.couponCode = couponCode;
     }
 
+    public AddCouponCodeCommand() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }

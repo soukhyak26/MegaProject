@@ -15,6 +15,9 @@ public class CreateSubscriptionCommand {
         this.userId = userId;
     }
 
+    public CreateSubscriptionCommand() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }

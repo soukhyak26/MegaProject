@@ -8,12 +8,14 @@ import java.util.List;
  * Created by rbsavaliya on 10-10-2015.
  */
 public class StatusAndDispatchDateUpdatedEvent {
+    private String subscriptionId;
     private String basketId;
     private int basketDeliveryStatus;
     private String dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
 
-    public StatusAndDispatchDateUpdatedEvent(String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
+    public StatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
+        this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
         this.dispatchDate = dispatchDate;
@@ -21,6 +23,14 @@ public class StatusAndDispatchDateUpdatedEvent {
     }
 
     public StatusAndDispatchDateUpdatedEvent() {
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public String getBasketId() {

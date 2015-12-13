@@ -19,6 +19,9 @@ public class UpdateSubscriberContactDetailsCommand {
         this.alternativeNumber = alternativeNumber;
     }
 
+    public UpdateSubscriberContactDetailsCommand() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }

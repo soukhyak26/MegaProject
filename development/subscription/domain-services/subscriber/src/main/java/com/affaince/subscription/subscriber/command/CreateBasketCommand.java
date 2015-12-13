@@ -9,37 +9,34 @@ import java.util.List;
  */
 public class CreateBasketCommand {
     @TargetAggregateIdentifier
+    private String subscriberId;
     private String basketId;
     private List<String> deliveryItems;
     private String deliveryDate;
 
-    public CreateBasketCommand(String basketId, List<String> deliveryItems, String deliveryDate) {
+    public CreateBasketCommand(String subscriberId, String basketId, List<String> deliveryItems, String deliveryDate) {
+        this.subscriberId = subscriberId;
         this.basketId = basketId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
+    }
+
+    public CreateBasketCommand() {
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getBasketId() {
         return basketId;
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
-    }
-
     public List<String> getDeliveryItems() {
         return deliveryItems;
     }
 
-    public void setDeliveryItems(List<String> deliveryItems) {
-        this.deliveryItems = deliveryItems;
-    }
-
     public String getDeliveryDate() {
         return deliveryDate;
-    }
-
-    public void setDeliveryDate(String deliveryDate) {
-        this.deliveryDate = deliveryDate;
     }
 }

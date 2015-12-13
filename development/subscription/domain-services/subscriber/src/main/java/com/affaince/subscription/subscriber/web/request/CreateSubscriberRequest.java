@@ -13,9 +13,7 @@ public class CreateSubscriberRequest {
     @Valid
     private SubscriberName subscriberName;
     @Valid
-    private Address billingAddress;
-    @Valid
-    private Address shippingAddress;
+    private Address address;
     @Valid
     private ContactDetails contactDetails;
 
@@ -27,20 +25,12 @@ public class CreateSubscriberRequest {
         this.subscriberName = subscriberName;
     }
 
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public ContactDetails getContactDetails() {

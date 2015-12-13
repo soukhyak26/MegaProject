@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
-public class ConsumerBasketRequest {
+public class SubscriptionRequest {
 
     @NotNull
     private String userId;

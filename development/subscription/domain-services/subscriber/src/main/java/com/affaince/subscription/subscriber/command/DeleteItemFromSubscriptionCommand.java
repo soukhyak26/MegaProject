@@ -15,6 +15,9 @@ public class DeleteItemFromSubscriptionCommand {
         this.itemId = itemId;
     }
 
+    public DeleteItemFromSubscriptionCommand() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }

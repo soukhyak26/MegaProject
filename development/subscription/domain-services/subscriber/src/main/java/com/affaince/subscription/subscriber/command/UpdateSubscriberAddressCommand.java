@@ -25,6 +25,9 @@ public class UpdateSubscriberAddressCommand {
         this.pinCode = pinCode;
     }
 
+    public UpdateSubscriberAddressCommand() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }

@@ -32,7 +32,7 @@ public class SubscriberAddressUpdatedEventListener {
                 event.getPinCode()
         );
         final SubscriberView subscriberView = subscriberViewRepository.findOne(event.getSubscriberId());
-        subscriberView.setBillingAddress(address);
+        subscriberView.setAddress(address);
         subscriberViewRepository.save(subscriberView);
     }
 }

@@ -27,6 +27,9 @@ public class AddAddressToSubscriptionCommand {
         this.pinCode = pinCode;
     }
 
+    public AddAddressToSubscriptionCommand() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }

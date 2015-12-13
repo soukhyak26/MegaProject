@@ -19,6 +19,9 @@ public class AddContactDetailsCommand {
         this.alternativeNumber = alternativeNumber;
     }
 
+    public AddContactDetailsCommand() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }

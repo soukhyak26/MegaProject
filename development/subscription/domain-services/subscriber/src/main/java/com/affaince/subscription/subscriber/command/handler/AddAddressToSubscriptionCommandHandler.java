@@ -22,7 +22,7 @@ public class AddAddressToSubscriptionCommandHandler {
 
     @CommandHandler
     public void handle(AddAddressToSubscriptionCommand command) {
-        Subscription subscription = repository.load(command.getBasketId());
+        Subscription subscription = repository.load(command.getSubscriptionId());
         subscription.addAddress(command);
     }
 }

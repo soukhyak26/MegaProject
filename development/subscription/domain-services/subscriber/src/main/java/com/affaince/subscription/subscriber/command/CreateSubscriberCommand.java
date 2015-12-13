@@ -3,23 +3,26 @@ package com.affaince.subscription.subscriber.command;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
  */
 public class CreateSubscriberCommand {
+    @TargetAggregateIdentifier
     private String subscriberId;
     private SubscriberName subscriberName;
-    private Address billingAddress;
-    private Address shippingAddress;
+    private Address address;
     private ContactDetails contactDetails;
 
-    public CreateSubscriberCommand(String subscriberId, SubscriberName subscriberName, Address billingAddress, Address shippingAddress, ContactDetails contactDetails) {
+    public CreateSubscriberCommand(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
         this.subscriberId = subscriberId;
         this.subscriberName = subscriberName;
-        this.billingAddress = billingAddress;
-        this.shippingAddress = shippingAddress;
+        this.address = address;
         this.contactDetails = contactDetails;
+    }
+
+    public CreateSubscriberCommand() {
     }
 
     public String getSubscriberId() {
@@ -38,20 +41,12 @@ public class CreateSubscriberCommand {
         this.subscriberName = subscriberName;
     }
 
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(Address shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public ContactDetails getContactDetails() {

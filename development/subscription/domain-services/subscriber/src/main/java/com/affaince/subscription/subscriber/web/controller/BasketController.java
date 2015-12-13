@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.subscriber.command.BasketDeletedCommand;
+import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.CreateBasketCommand;
 import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
 import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
@@ -35,9 +35,9 @@ public class BasketController {
         this.repository = repository;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> createBasket(@RequestBody BasketRequest request) throws Exception {
-        final CreateBasketCommand command = new CreateBasketCommand(UUID.randomUUID().toString(),
+    @RequestMapping(method = RequestMethod.POST, value = "{subscriberId}")
+    public ResponseEntity<Object> createBasket(@RequestBody BasketRequest request, @PathVariable String subscriberId) throws Exception {
+        final CreateBasketCommand command = new CreateBasketCommand(subscriberId, UUID.randomUUID().toString(),
                 Arrays.asList(request.getDeliveryItems()), request.getDeliveryDate()
         );
         try {
@@ -48,15 +48,16 @@ public class BasketController {
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "updatestatusanddispatchdate/{basketId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "updatestatusanddispatchdate/{subscriberId}/{basketId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateStatusAndDispatchDate(@RequestBody BasketDispatchRequest request,
-                                                              @PathVariable String basketId) throws Exception {
+                                                              @PathVariable String basketId,
+                                                              @PathVariable String subscriberId) throws Exception {
         final BasketView basketView = repository.findOne(basketId);
         if (basketView == null) {
             throw BasketNotFoundException.build(basketId);
         }
         final UpdateStatusAndDispatchDateCommand command = new UpdateStatusAndDispatchDateCommand(
-                basketId, request.getBasketDeliveryStatus(), request.getDispatchDate(),
+                subscriberId, basketId, request.getBasketDeliveryStatus(), request.getDispatchDate(),
                 Arrays.stream(request.getItemStatusRequest()).map(itemStatus -> new ItemDispatchStatus(itemStatus.getItemId(),
                         itemStatus.getItemDeliveryStatus())).collect(Collectors.toList())
         );
@@ -68,13 +69,13 @@ public class BasketController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "delete/{basketId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteBasket(@PathVariable String basketId) throws Exception {
+    @RequestMapping(value = "delete/{subscriberId}/{basketId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteBasket(@PathVariable String basketId, @PathVariable String subscriberId) throws Exception {
         final BasketView basketView = repository.findOne(basketId);
         if (basketView == null) {
             throw BasketNotFoundException.build(basketId);
         }
-        final BasketDeletedCommand command = new BasketDeletedCommand(basketId);
+        final DeleteBasketCommand command = new DeleteBasketCommand(subscriberId, basketId);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
