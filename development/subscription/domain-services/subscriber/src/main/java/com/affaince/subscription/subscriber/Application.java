@@ -7,12 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * Created by NIKUNJ on 7/12/2015.
  */
 @SpringBootApplication
 @EnableAutoConfiguration
+@EnableAspectJAutoProxy
 @ComponentScan("com.affaince")
 @AnnotationDriven
 public class Application extends SpringBootServletInitializer {
