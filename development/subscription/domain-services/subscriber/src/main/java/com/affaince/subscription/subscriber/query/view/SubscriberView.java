@@ -22,6 +22,7 @@ public class SubscriberView {
     private NetWorthSubscriberStatus status;
     private List<String> couponCodes;
     private int rewardPoints;
+    private String password;
 
     public SubscriberView(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails, NetWorthSubscriberStatus status, List<String> couponCodes, int rewardPoints) {
         this.subscriberId = subscriberId;
@@ -87,5 +88,13 @@ public class SubscriberView {
 
     public void setRewardPoints(int rewardPoints) {
         this.rewardPoints = rewardPoints;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

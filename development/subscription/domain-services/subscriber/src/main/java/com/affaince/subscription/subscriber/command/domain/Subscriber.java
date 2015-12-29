@@ -10,11 +10,15 @@ import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
 import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.event.*;
+import com.affaince.subscription.subscriber.services.Base64Encoder;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +38,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private List<String> couponCodes;
     private int rewardPoints;
     private Map<String, Basket> baskets;
+    private String password;
+
+    private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
     public Subscriber(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
         apply(new SubscriberCreatedEvent(subscriberId, subscriberName, address, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
@@ -118,6 +125,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         basket.setStatus(DeliveryStatus.DELETED);
     }
 
+    @EventSourcingHandler
+    public void on (SubscriberPasswordSetEvent event) {
+        this.subscriberId = event.getSubscriberId();
+        this.password = event.getPassword();
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
@@ -154,5 +167,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void deleteBasket(DeleteBasketCommand command) {
         apply(new BasketDeletedEvent(this.subscriberId, command.getBasketId(), DeliveryStatus.DELETED));
+    }
+
+    public void setPassword(String password) throws NoSuchAlgorithmException {
+        try {
+            apply(new SubscriberPasswordSetEvent (this.subscriberId, Base64Encoder.generateHash(password)));
+        } catch (NoSuchAlgorithmException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
     }
 }
