@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="659" measuredHeight="400">
+    <screen xsi:type="model:Screen" href="Benefis.screen#/"/>
+    <overrides>
+      <widgets ref="1" width="659"/>
+      <widgets ref="1/2" x="37" y="32" width="659"/>
+      <widgets ref="1/6" x="45" y="88" width="141"/>
+      <widgets ref="1/7" x="187" y="85"/>
+      <widgets ref="1/8" x="192" width="504"/>
+      <widgets ref="1/9" x="199">
+        <attributes key="selection" value="1"/>
+      </widgets>
+      <widgets ref="1">
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Button" id="20" x="495" y="382" width="86" text="Cancel">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Button" id="19" x="396" y="382" width="86" text="Reset">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Button" id="18" x="291" y="382" width="86" text="Save">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Combo" id="17" x="336" y="208" width="217" text="Item Level, Basket Level, Loyalty">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:TextArea" id="16" x="336" y="244" width="217" text="A *paragraph* of text&#xA;A _second_ row of text">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Label" id="14" x="212" y="208" text="Benefit Type">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:DateField" id="13" x="336" y="339" width="217" text="  /  /  "/>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Label" id="12" x="212" y="339" text="Expired Date">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:DateField" id="11" x="336" y="299" width="217" text="  /  /  "/>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Label" id="9" x="212" y="299" text="Activation Date">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Label" id="7" x="212" y="253" text="Equation">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:TextField" id="6" x="336" y="163" width="217" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Label" id="2" x="212" y="163" text="Benefit Identifier">
+            <font/>
+          </object>
+        </widgetChanges>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

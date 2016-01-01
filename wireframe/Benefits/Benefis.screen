@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="507" measuredHeight="399">
+    <screen xsi:type="model:Screen" href="../Main.screen#/"/>
+    <overrides>
+      <widgets ref="6">
+        <attributes key="selection" value="4"/>
+      </widgets>
+      <widgets ref="9" text="List of Benefits, Create Benefit,Update/Delete Benefit">
+        <items ref="@items.2" text="Create Benefit"/>
+        <items ref="@items.3" text="Update/Delete Benefit"/>
+        <itemChanges xsi:type="o:Insert" newIndex="2">
+          <object xsi:type="model:Item" text="List of Benefits"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Delete" ref="@items.1"/>
+        <itemChanges xsi:type="o:Delete" ref="@items.0"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

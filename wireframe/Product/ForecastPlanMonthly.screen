@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" width="659" height="430" measuredWidth="659" measuredHeight="430">
+    <screen xsi:type="model:Screen" href="../Main.screen#/"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:Table" id="14" x="213" y="289" width="506" height="152" text="Purcahse\nPrice,MRP,Average\nOffered\nPrice,Existing\nCustomers,New\nCustomers,Churned\nCustomers,Action&#xD;&#xA;70,100,72,3200,100,20&#xD;&#xA;80,115,82,4300,200,17,[Add]&#xD;&#xA;" alternative="#eeeeee">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:Label" id="13" x="213" y="267" width="97" text="Price Parameters">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:DateField" id="12" x="341" y="231" width="230" text="  /  /  "/>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:Label" id="11" x="213" y="231" width="97" text="To Date">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:DateField" id="10" x="341" y="199" width="230" text="  /  /  "/>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:Label" id="8" x="213" y="199" width="97" text="From Date">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:Combo" id="7" x="341" y="167" width="230" text="Combo">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="5">
+        <object xsi:type="model:Label" id="3" x="213" y="167" width="97" text="Product Name">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgets ref="2" width="691" height="428"/>
+      <widgets ref="6" y="97" width="141" height="363" text="Configuration&#xD;&#xA;-Application&#xD;&#xA;-Product&#xD;&#xA;-Subscriber&#xD;&#xA;-Benefis&#xD;&#xA;BAM">
+        <attributes key="selection" value="2"/>
+        <itemChanges xsi:type="o:Insert" newIndex="5">
+          <object xsi:type="model:Item" text="-Benefis"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Delete" ref="@items.4"/>
+      </widgets>
+      <widgets ref="7" x="186" y="97" height="373"/>
+      <widgets ref="8" x="191" y="142" width="538"/>
+      <widgets ref="9" x="227" y="108" text="Product Account, Monthly Forcast Plan">
+        <attributes key="selection" value="1"/>
+        <items ref="@items.2" text="Product Account"/>
+        <items ref="@items.3" text="Monthly Forcast Plan"/>
+        <itemChanges xsi:type="o:Delete" ref="@items.1"/>
+        <itemChanges xsi:type="o:Delete" ref="@items.0"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

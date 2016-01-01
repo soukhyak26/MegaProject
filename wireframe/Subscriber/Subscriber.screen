@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="555" measuredHeight="407">
+    <screen xsi:type="model:Screen" href="Main.screen#/"/>
+    <overrides>
+      <widgets ref="1/9">
+        <attributes key="selection" value="0"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

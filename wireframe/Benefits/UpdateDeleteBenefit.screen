@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="659" measuredHeight="400">
+    <screen xsi:type="model:Screen" href="CreateBenefit.screen#/"/>
+    <overrides>
+      <widgets ref="1/1/9">
+        <attributes key="selection" value="2"/>
+      </widgets>
+      <widgets ref="1/6">
+        <attributes key="state" value="disabled"/>
+      </widgets>
+      <widgets ref="1/18" text="Update"/>
+      <widgets ref="1/19" text="Delete"/>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

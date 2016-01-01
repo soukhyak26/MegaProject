@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Browser" id="2" x="38" y="42" width="507" height="399" text="Browser&#xA;http://www.affaince.com" measuredWidth="507" measuredHeight="399">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Tree" id="6" x="44" y="94" width="109" height="337" text="Configuration&#xD;&#xA;-Application&#xD;&#xA;-Product&#xD;&#xA;-Subscriber&#xD;&#xA;-Benefits&#xD;&#xA;BAM" measuredWidth="109" measuredHeight="337" border="false" selection="0">
+    <items x="0" y="5" width="109" height="21" text="Configuration"/>
+    <items x="0" y="26" width="109" height="21" text="-Application"/>
+    <items x="0" y="47" width="109" height="21" text="-Product"/>
+    <items x="0" y="68" width="109" height="21" text="-Subscriber"/>
+    <items x="0" y="89" width="109" height="21" text="-Benefits"/>
+    <items x="0" y="110" width="109" height="21" text="BAM"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:VLine" id="7" x="152" y="94" height="347" measuredWidth="6" measuredHeight="347"/>
+  <widgets xsi:type="model:HLine" id="8" x="157" y="136" width="388" measuredWidth="388" measuredHeight="6"/>
+  <widgets xsi:type="model:LinkBar" id="9" x="160" y="104" text="Home,Blog,Forum,About" measuredWidth="192" measuredHeight="23">
+    <font/>
+    <items x="0" y="0" width="36" height="23" text="Home"/>
+    <items x="54" y="0" width="27" height="23" text="Blog"/>
+    <items x="99" y="0" width="38" height="23" text="Forum"/>
+    <items x="155" y="0" width="36" height="23" text="About"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
