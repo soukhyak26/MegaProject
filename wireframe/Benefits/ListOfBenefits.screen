@@ -13,7 +13,7 @@
       </widgets>
       <widgets ref="1">
         <widgetChanges xsi:type="o:Insert" newIndex="5">
-          <object xsi:type="model:Table" id="2" x="184" y="160" width="537" height="177" text="Benefit Id, Benefit Type, Equation, (w:100). Activation Date, Expire Date, Actions&#xD;&#xA;1,Item Level, IF item='surf' and \nquantity=100 then \n10 per discount, 1/1/2016, 31/12/2016,[Edit] [View]" alternative="#eeeeee">
+          <object xsi:type="model:Table" id="2" x="184" y="160" width="537" height="177" text="Benefit Id, Equation, (w:100). Activation Date, Expire Date, Actions&#xD;&#xA;1, IF item='surf' and \nquantity=100 then \n10 per discount, 1/1/2016, 31/12/2016,[Edit] [View]" alternative="#eeeeee">
             <font/>
           </object>
         </widgetChanges>

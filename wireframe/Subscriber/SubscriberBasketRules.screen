@@ -4,18 +4,20 @@
     <screen xsi:type="model:Screen" href="../Main.screen#/"/>
     <overrides>
       <widgetChanges xsi:type="o:Insert" newIndex="5">
-        <object xsi:type="model:Combo" id="11" x="502" y="268" width="147" text="Percentage, Amount">
+        <object xsi:type="model:Button" id="27" x="415" y="278" width="69" text="Cancel">
           <font/>
         </object>
       </widgetChanges>
       <widgetChanges xsi:type="o:Insert" newIndex="5">
-        <object xsi:type="model:TextField" id="10" x="374" y="268" width="122" text="10">
+        <object xsi:type="model:Button" id="26" x="337" y="278" width="69" text="Reset">
           <font/>
         </object>
       </widgetChanges>
       <widgetChanges xsi:type="o:Insert" newIndex="5">
-        <object xsi:type="model:Label" id="9" x="170" y="265" width="187" text="Maximum Permissible Basket \nLevel Discount">
-          <font/>
+        <object xsi:type="model:WidgetGroup" id="28" x="252" y="278">
+          <widgets xsi:type="model:Button" id="29" width="69" text="Save">
+            <font/>
+          </widgets>
         </object>
       </widgetChanges>
       <widgetChanges xsi:type="o:Insert" newIndex="5">
@@ -53,7 +55,7 @@
         <attributes key="selection" value="3"/>
       </widgets>
       <widgets ref="7" x="162" y="98" height="374"/>
-      <widgets ref="8" x="167" y="143" width="473"/>
+      <widgets ref="8" x="167" y="143" width="490"/>
       <widgets ref="9" x="183" y="109" text="Subscriber, Subscription Basket Rules, Subscription">
         <attributes key="selection" value="1"/>
         <items ref="@items.3" text="Subscription Basket Rules"/>
@@ -68,15 +70,6 @@
         <itemChanges xsi:type="o:Delete" ref="@items.0"/>
       </widgets>
     </overrides>
-  </widgets>
-  <widgets xsi:type="model:Button" id="12" x="256" y="312" width="81" text="Save" measuredWidth="81" measuredHeight="25">
-    <font/>
-  </widgets>
-  <widgets xsi:type="model:Button" id="23" x="343" y="312" width="81" text="Reset" measuredWidth="81" measuredHeight="25">
-    <font/>
-  </widgets>
-  <widgets xsi:type="model:Button" id="24" x="428" y="312" width="81" text="Cancel" measuredWidth="81" measuredHeight="25">
-    <font/>
   </widgets>
   <hRuler/>
   <vRuler/>

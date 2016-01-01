@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
-  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="555" measuredHeight="407">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" width="587" measuredWidth="587" measuredHeight="407">
     <screen xsi:type="model:Screen" href="Main.screen#/"/>
     <overrides>
-      <widgets ref="1/9">
+      <widgets ref="1/9" x="175">
         <attributes key="selection" value="0"/>
       </widgets>
+      <widgets ref="1" width="587"/>
+      <widgets ref="1/2" width="587"/>
+      <widgets ref="1/6" width="115"/>
+      <widgets ref="1/7" x="158"/>
+      <widgets ref="1/8" x="163" width="461"/>
     </overrides>
+  </widgets>
+  <widgets xsi:type="model:Label" id="2" x="176" y="152" width="145" text="Allowed Payment Modes" measuredWidth="145" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Table" id="3" x="176" y="182" width="439" text="Mode Id,Mode,Payment Span,Pyment\nPercent, Payment Cycle, Action&#xD;&#xA;1, Full Advance,Subscription\nperiod,100,Advance&#xD;&#xA;2,Partial Advance,Subscription\nPeriod,30,Advance&#xD;&#xA;3, EMI,Subscription\ncycle,100,Advance,[Add]&#xD;&#xA;" measuredWidth="439" measuredHeight="148" alternative="#eeeeee">
+    <font/>
   </widgets>
   <hRuler/>
   <vRuler/>

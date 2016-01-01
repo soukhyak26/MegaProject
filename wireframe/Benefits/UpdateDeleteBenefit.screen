@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
   <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="659" measuredHeight="400">
     <screen xsi:type="model:Screen" href="CreateBenefit.screen#/"/>
     <overrides>
       <widgets ref="1/1/9">
         <attributes key="selection" value="2"/>
       </widgets>
-      <widgets ref="1/6">
-        <attributes key="state" value="disabled"/>
+      <widgets ref="1/1">
+        <widgetChanges xsi:type="o:Insert" newIndex="16">
+          <object xsi:type="model:Button" id="27" x="391" y="337" width="86" text="Delete">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.14"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.12"/>
       </widgets>
-      <widgets ref="1/18" text="Update"/>
-      <widgets ref="1/19" text="Delete"/>
     </overrides>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="39" x="337" y="211" width="217" text="A *paragraph* of text&#xA;A _second_ row of text" measuredWidth="217" measuredHeight="38">
+    <font/>
   </widgets>
   <hRuler/>
   <vRuler/>
