@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
@@ -24,16 +25,20 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private String productName;
     private String categoryId;
     private String subCategoryId;
+    private long quantity;
+    private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+    private double demandDensity;
+    private double averageDemandPerYearPerSubscriber;
     private ProductAccount productAccount = new ProductAccount();
 
     public Product() {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId) {
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId));
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit) {
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, quantity, quantityUnit));
     }
 
     public String getProductId() {
@@ -64,11 +69,25 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         return productAccount.getLatestActualPriceBucket();
     }
 
+    public String getProductName() {
+        return this.productName;
+    }
+
+    public long getQuantity() {
+        return this.quantity;
+    }
+
+    public QuantityUnit getQuantityUnit() {
+        return this.quantityUnit;
+    }
+
     @EventSourcingHandler
     public void on(ProductRegisteredEvent event) {
         this.productId = event.getProductId();
         this.categoryId = event.getCategoryId();
         this.subCategoryId = event.getSubCategoryId();
+        this.quantity = event.getQuantity();
+        this.quantityUnit = event.getQuantityUnit();
         productAccount = new ProductAccount();
     }
 

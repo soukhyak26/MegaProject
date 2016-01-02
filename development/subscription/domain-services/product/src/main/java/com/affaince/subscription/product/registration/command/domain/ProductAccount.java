@@ -16,6 +16,7 @@ public class ProductAccount {
     private Map<LocalDate, ProductPerformanceTracker> actualsPerUnitPeriod;
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;
+    private double creditPoints;
 
     public ProductAccount() {
         forecastPerUnitPeriod = new TreeMap<>();
@@ -144,4 +145,11 @@ public class ProductAccount {
         return activeActualPriceBuckets.get(max);
     }
 
+    public double getCreditPoints() {
+        return this.creditPoints;
+    }
+
+    public void setCreditPoints(double creditPoints) {
+        this.creditPoints = creditPoints;
+    }
 }

@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.registration.command.event;
 
+import com.affaince.subscription.common.type.QuantityUnit;
+
 /**
  * Created by rbsavaliya on 19-07-2015.
  */
@@ -10,12 +12,16 @@ public class ProductRegisteredEvent {
     private String productName;
     private String categoryId;
     private String subCategoryId;
+    private long quantity;
+    private QuantityUnit quantityUnit;
 
-    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId) {
+    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit unit) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
+        this.quantity = quantity;
+        this.quantityUnit = unit;
     }
 
     public ProductRegisteredEvent() {
@@ -52,5 +58,21 @@ public class ProductRegisteredEvent {
 
     public void setSubCategoryId(String subCategoryId) {
         this.subCategoryId = subCategoryId;
+    }
+
+    public long getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public QuantityUnit getQuantityUnit() {
+        return this.quantityUnit;
+    }
+
+    public void setQuantityUnit(QuantityUnit quantityUnit) {
+        this.quantityUnit = quantityUnit;
     }
 }

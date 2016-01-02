@@ -50,7 +50,9 @@ public class ProductController {
                 request.getProductId(),
                 request.getProductName(),
                 request.getCategoryId(),
-                request.getSubCategoryId()
+                request.getSubCategoryId(),
+                request.getQuantity(),
+                request.getQuantityUnit()
         );
         try {
             commandGateway.executeAsync(createCommand);

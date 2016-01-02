@@ -24,8 +24,11 @@ public class ProductRegisteredEventListener {
     public void on(ProductRegisteredEvent event) {
         final ProductView productView = new ProductView(
                 event.getProductId(),
+                event.getProductName(),
                 event.getCategoryId(),
-                event.getSubCategoryId()
+                event.getSubCategoryId(),
+                event.getQuantity(),
+                event.getQuantityUnit()
         );
         itemRepository.save(productView);
     }

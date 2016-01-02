@@ -1,4 +1,4 @@
-package com.affaince.subscription.integration.command.event;
+package com.affaince.subscription.simulation.command.event;
 
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

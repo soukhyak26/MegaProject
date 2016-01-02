@@ -1,6 +1,8 @@
 package com.affaince.subscription.product.registration.web.request;
 
 
+import com.affaince.subscription.common.type.QuantityUnit;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -9,14 +11,19 @@ import javax.validation.constraints.NotNull;
 public class RegisterProductRequest {
 
     @NotNull
-    private String categoryId;
-    @NotNull
-    private String subCategoryId;
-    @NotNull
     private String productId;
 
     @NotNull
     private String productName;
+
+    @NotNull
+    private String categoryId;
+    @NotNull
+    private String subCategoryId;
+    @NotNull
+    private long quantity;
+    @NotNull
+    private QuantityUnit quantityUnit;
 
     public String getCategoryId() {
         return categoryId;
@@ -50,5 +57,20 @@ public class RegisterProductRequest {
         this.productName = productName;
     }
 
+    public long getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public QuantityUnit getQuantityUnit() {
+        return this.quantityUnit;
+    }
+
+    public void setQuantityUnit(QuantityUnit quantityUnit) {
+        this.quantityUnit = quantityUnit;
+    }
 
 }

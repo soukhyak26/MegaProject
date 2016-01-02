@@ -1,13 +1,12 @@
 package com.affaince.subscription.simulation.configuation;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.integration.command.event.GenericEventPublisher;
+import com.affaince.subscription.simulation.command.event.GenericEventPublisher;
 import com.affaince.subscription.simulation.command.event.basketdispatch.BasketDispatchedStatusEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
-import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

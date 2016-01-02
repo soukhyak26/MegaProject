@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class RegsisterProductCommandHandler {
+public class RegisterProductCommandHandler {
 
     private Repository<Product> repository;
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegsisterProductCommandHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterProductCommandHandler.class);
 
     @Autowired
-    public RegsisterProductCommandHandler(Repository<Product> repository) {
+    public RegisterProductCommandHandler(Repository<Product> repository) {
         this.repository = repository;
     }
 
@@ -30,7 +30,9 @@ public class RegsisterProductCommandHandler {
                 command.getProductId(),
                 command.getProductName(),
                 command.getCategoryId(),
-                command.getSubCategoryId()
+                command.getSubCategoryId(),
+                command.getQuantity(),
+                command.getQuantityUnit()
         );
         repository.add(product);
         LOGGER.info("Product added to write repository with id: " + command.getProductId());
