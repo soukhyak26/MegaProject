@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e906047-0970-40b5-8287-575b76d79714" name="Default" comment="Product related code refactoring and major structural changes.Also some changes in integration domain so as to match incoming events to product events.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/AggregationPerformanceTracker.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/InstantaneousPerformanceTracker.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/axon-commons/src/main/java/com/affaince/subscription/common/type/QuantityUnit.java" />
-      <change type="DELETED" beforePath="D:\Applications\affaince\development\subscription\domain-services\product\src\main\java\com\affaince\subscription\product\registration\command\event\ProductReceivedEvent.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Applications\affaince\development\subscription\domain-services\product\src\main\java\com\affaince\subscription\product\registration\query\listener\ProductReceivedListener.java" afterPath="" />
+    <list default="true" id="1e906047-0970-40b5-8287-575b76d79714" name="Default" comment="changed the repository names to depict them as view repository, moved the db host name and port name out of default.java and injected from application.properties">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/operatingexpenses/DefaultOperatingExpensesDeterminator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/operatingexpenses/OperatingExpensesDeterminator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../documentation/requirements/SubscriptionRequirements_v0.003.xlsx" afterPath="$PROJECT_DIR$/../../documentation/requirements/SubscriptionRequirements_v0.003.xlsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/benefits/src/main/resources/Application.properties" afterPath="$PROJECT_DIR$/domain-services/benefits/src/main/resources/Application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/resources/Application.properties" afterPath="$PROJECT_DIR$/domain-services/product/src/main/resources/Application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/resources/Application.properties" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/resources/Application.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/configuration/Axon.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/configuration/Axon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/application-simulator/src/main/java/com/affaince/subscription/simulation/configuation/Axon.java" afterPath="$PROJECT_DIR$/tools/application-simulator/src/main/java/com/affaince/subscription/simulation/configuation/Axon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/application-simulator/src/main/java/com/affaince/subscription/simulation/command/event/GenericEventPublisher.java" afterPath="$PROJECT_DIR$/tools/application-simulator/src/main/java/com/affaince/subscription/simulation/command/event/GenericEventPublisher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/Product.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/Product.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/ProductAccount.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/ProductAccount.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/web/controller/BasketController.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/web/controller/BasketController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketCreatedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketCreatedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketDeletedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketDeletedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketDispatchStatusUpdatedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketDispatchStatusUpdatedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketRuleAddedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BasketRuleAddedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/web/controller/BasketRulesController.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/web/controller/BasketRulesController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BillingAddressAddedToSubscriptionEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/BillingAddressAddedToSubscriptionEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ContactDetailsAddedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ContactDetailsAddedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/CurrentOfferedPriceAddedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/CurrentOfferedPriceAddedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/axon-commons/src/main/java/com/affaince/subscription/configuration/Default.java" afterPath="$PROJECT_DIR$/libs/axon-commons/src/main/java/com/affaince/subscription/configuration/Default.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ItemAddedToSubscriptionEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ItemAddedToSubscriptionEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ItemRemovedFromSubscriptionEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ItemRemovedFromSubscriptionEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/PaymentConfirmedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/PaymentConfirmedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/PriceAndStockParametersUpdatedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/PriceAndStockParametersUpdatedEventListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/controller/ProductController.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/controller/ProductController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/ProductPerformanceTracker.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/ProductPerformanceTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/event/ProductRegisteredEvent.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/event/ProductRegisteredEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ProductForecastReceivedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ProductForecastReceivedEventListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ProductRegisteredEventListener.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ProductRegisteredEventListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/view/ProductView.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/view/ProductView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/RegisterProductCommand.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/RegisterProductCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/request/RegisterProductRequest.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/request/RegisterProductRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/application-simulator/src/main/java/com/affaince/subscription/simulation/command/event/productstatus/SubscriptionableItemReceivedEvent.java" afterPath="$PROJECT_DIR$/tools/application-simulator/src/main/java/com/affaince/subscription/simulation/command/event/productstatus/SubscriptionableItemReceivedEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ShippingAddressAddedToSubscriptionEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/ShippingAddressAddedToSubscriptionEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ShoppingItemReceiptListener.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ShoppingItemReceiptListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/StatusAndDispatchDateUpdatedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/StatusAndDispatchDateUpdatedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/Subscription.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/Subscription.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/SubscriptionActivatedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/SubscriptionActivatedEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/web/controller/SubscriptionController.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/web/controller/SubscriptionController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/SubscriptionCreatedEventListener.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/listener/SubscriptionCreatedEventListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\Applications\affaince\development\subscription\domain-services\product\src\main\java\com\affaince\subscription\product\registration\command\handler\RegsisterProductCommandHandler.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/handler/RegisterProductCommandHandler.java" />
+      <change type="MOVED" beforePath="D:\Applications\affaince\development\subscription\domain-services\product\src\main\java\com\affaince\subscription\product\registration\query\repository\ProductRepository.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/repository/ProductViewRepository.java" />
+      <change type="MOVED" beforePath="D:\Applications\affaince\development\subscription\domain-services\product\src\main\java\com\affaince\subscription\product\registration\query\repository\ShoppingItemRepository.java" afterPath="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/repository/ShoppingItemViewRepository.java" />
+      <change type="MOVED" beforePath="D:\Applications\affaince\development\subscription\domain-services\subscriber\src\main\java\com\affaince\subscription\subscriber\query\repository\BasketRepository.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/repository/BasketViewRepository.java" />
+      <change type="MOVED" beforePath="D:\Applications\affaince\development\subscription\domain-services\subscriber\src\main\java\com\affaince\subscription\subscriber\query\repository\BasketRuleRepository.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/repository/BasketRuleViewRepository.java" />
+      <change type="MOVED" beforePath="D:\Applications\affaince\development\subscription\domain-services\subscriber\src\main\java\com\affaince\subscription\subscriber\query\repository\SubscriptionRepository.java" afterPath="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/repository/SubscriptionViewRepository.java" />
     </list>
     <ignored path="subscription.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,6 +76,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -75,15 +92,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/CreateProductCommand.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/handler/CreateProductCommandHandler.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/request/CreateProductRequest.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/request/UpdateProductStatusRequest.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/request/ForecastedPriceParameter.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/web/request/AddForecastParametersRequest.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/event/ForecastParametersAddedEvent.java" />
-        <option value="$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/mapper/SubscriptionableItemReceivedEventFieldSetMapper.java" />
-        <option value="$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/shoppingitemreceipt/ProductReceivedForRegistrationEvent.java" />
         <option value="$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/stockdemand/SubscriptionableItemStockDemandGeneratedEvent.java" />
         <option value="$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/basketdispatch/request/BasketDispatchRequestGeneratedEvent.java" />
         <option value="$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/dailyquotes/SubscriptionableItemDailyQuoteGeneratedEvent.java" />
@@ -124,8 +132,17 @@
         <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/DailyPerformanceTracker.java" />
         <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/MonthlyPerformanceTracker.java" />
         <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/InstantaneousPerformanceTracker.java" />
-        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/configuration/Axon.java" />
         <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/ProductPerformanceTracker.java" />
+        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/operatingexpenses/OperatingExpensesDeterminator.java" />
+        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/operatingexpenses/DefaultOperatingExpensesDeterminator.java" />
+        <option value="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/Subscription.java" />
+        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/configuration/Axon.java" />
+        <option value="$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/repository/SubscriptionViewRepository.java" />
+        <option value="$PROJECT_DIR$/domain-services/subscriber/src/main/resources/Application.properties" />
+        <option value="$PROJECT_DIR$/libs/axon-commons/src/main/java/com/affaince/subscription/configuration/Default.java" />
+        <option value="$PROJECT_DIR$/domain-services/product/src/main/resources/Application.properties" />
+        <option value="$PROJECT_DIR$/domain-services/benefits/src/main/resources/Application.properties" />
+        <option value="$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/repository/ProductViewRepository.java" />
       </list>
     </option>
   </component>
@@ -148,8 +165,14 @@
           <option name="myItemId" value="" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
+      </PATH>
+      <PATH>
         <PATH_ELEMENT>
-          <option name="myItemId" value="subscription" />
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="subscriber" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -159,18 +182,30 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="subscription" />
+          <option name="myItemId" value="subscriber" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Lifecycle" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
+          <option name="myItemId" value="Plugins" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
           <option name="myItemId" value="" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="subscriber" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Plugins" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="spring-boot" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginNode" />
         </PATH_ELEMENT>
       </PATH>
     </treeState>
@@ -479,7 +514,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451717595263</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Split product performance tracker into InstantaneousTracker and AggregationTracker.Also completed user story for registering a product with revised attributes.">
+      <created>1451727921000</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1451727921000</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -488,7 +529,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32798165" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963374" sideWeight="0.50625" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -551,7 +592,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Product related code refactoring and major structural changes.Also some changes in integration domain so as to match incoming events to product events." />
-    <option name="LAST_COMMIT_MESSAGE" value="Product related code refactoring and major structural changes.Also some changes in integration domain so as to match incoming events to product events." />
+    <MESSAGE value="Split product performance tracker into InstantaneousTracker and AggregationTracker.Also completed user story for registering a product with revised attributes." />
+    <MESSAGE value="changed the repository names to depict them as view repository, moved the db host name and port name out of default.java and injected from application.properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed the repository names to depict them as view repository, moved the db host name and port name out of default.java and injected from application.properties" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -566,147 +609,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/stockdemand/SubscriptionableItemStockDemandGeneratedEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/basketdispatch/request/BasketDispatchRequestGeneratedEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding>
-            <element signature="e#1702#1703#0" expanded="false" />
-            <element signature="e#1742#1743#0" expanded="false" />
-            <element signature="e#1798#1799#0" expanded="false" />
-            <element signature="e#1846#1847#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/dailyquotes/SubscriptionableItemDailyQuoteGeneratedEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.19257951">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/command/event/shoppingitemreceipt/ProductReceivedForRegistrationEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.044169612">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/test/java/configuration/BasketDispatchRequestsTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5742049">
-          <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/test/java/configuration/ShoppingItemReceiptTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/test/java/configuration/BasketDispatchStatusTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/test/java/configuration/SubscriptionableItemDailyQuoteGenerationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/test/java/configuration/SubscriptionableItemReceiptTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/test/java/configuration/SubscriptionableItemStockDemandGenerationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55300355">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/processs/BasePriceDeterminator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.795053">
-          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/domain/ProductPricingCategory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/integration/src/main/java/com/affaince/subscription/integration/configuation/Axon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="83" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/event/CurrentOfferedPriceAddedEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/CurrentOfferedPriceAddedEventListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7067138">
-          <caret line="28" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/handler/UpdatePriceAndStockParametersCommandHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.795053">
-          <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/command/UpdateProductStatusCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17667845">
-          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ProductForecastReceivedEventListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.57319224">
@@ -877,8 +779,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="49" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
           <folding>
-            <element signature="e#248#249#0" expanded="true" />
-            <element signature="e#282#283#0" expanded="true" />
+            <element signature="e#253#254#0" expanded="false" />
+            <element signature="e#289#290#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -914,13 +816,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="31" selection-start-line="62" selection-start-column="31" selection-end-line="62" selection-end-column="31" />
           <folding>
-            <element signature="e#1588#1589#0" expanded="true" />
-            <element signature="e#1634#1635#0" expanded="true" />
-            <element signature="e#1674#1675#0" expanded="true" />
-            <element signature="e#1719#1720#0" expanded="true" />
-            <element signature="e#1759#1760#0" expanded="true" />
-            <element signature="e#1821#1822#0" expanded="true" />
-            <element signature="e#1869#1870#0" expanded="true" />
+            <element signature="e#1594#1595#0" expanded="false" />
+            <element signature="e#1640#1641#0" expanded="false" />
+            <element signature="e#1680#1681#0" expanded="false" />
+            <element signature="e#1725#1726#0" expanded="false" />
+            <element signature="e#1765#1766#0" expanded="false" />
+            <element signature="e#1827#1828#0" expanded="false" />
+            <element signature="e#1875#1876#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -954,15 +856,15 @@
         <state vertical-scroll-proportion="0.22155689">
           <caret line="10" column="35" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="35" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1672#1673#0" expanded="true" />
-            <element signature="e#1708#1709#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1632#1633#0" expanded="true" />
+            <element signature="e#1668#1669#0" expanded="true" />
+            <element signature="e#1714#1715#0" expanded="true" />
             <element signature="e#1754#1755#0" expanded="true" />
-            <element signature="e#1794#1795#0" expanded="true" />
+            <element signature="e#1799#1800#0" expanded="true" />
             <element signature="e#1839#1840#0" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1941#1942#0" expanded="true" />
-            <element signature="e#1989#1990#0" expanded="true" />
+            <element signature="e#1901#1902#0" expanded="true" />
+            <element signature="e#1949#1950#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -979,22 +881,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/listener/ProductReceivedListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2793296">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/configuration/Axon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42335767">
-          <caret line="37" column="77" selection-start-line="37" selection-start-column="77" selection-end-line="37" selection-end-column="77" />
           <folding />
         </state>
       </provider>
@@ -1054,6 +940,174 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/pricing/BasePriceDeterminator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45620438">
+          <caret line="18" column="43" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/operatingexpenses/OperatingExpensesDeterminator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/process/operatingexpenses/DefaultOperatingExpensesDeterminator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9210525">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <folding>
+            <element signature="e#378#379#0" expanded="false" />
+            <element signature="e#404#405#0" expanded="false" />
+            <element signature="e#499#500#0" expanded="false" />
+            <element signature="e#525#526#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/BasketRule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/Basket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/BasketItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/event/SubscriptionCreatedEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45255473">
+          <caret line="59" column="41" selection-start-line="59" selection-start-column="11" selection-end-line="59" selection-end-column="41" />
+          <folding>
+            <element signature="e#1837#1838#0" expanded="false" />
+            <element signature="e#1880#1881#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/axon-commons/src/main/java/com/affaince/subscription/common/type/ConsumerBasketActivationStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22810219">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/Subscription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6806569">
+          <caret line="109" column="66" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/configuration/Axon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/query/repository/SubscriptionViewRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31934306">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/axon-commons/src/main/java/com/affaince/subscription/configuration/Default.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5930657">
+          <caret line="96" column="42" selection-start-line="96" selection-start-column="42" selection-end-line="96" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/configuration/Axon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3649635">
+          <caret line="19" column="33" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/Subscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31934306">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/java/com/affaince/subscription/subscriber/command/domain/DeliveryItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31934306">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/benefits/src/main/resources/Application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54744524">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/resources/Application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54744524">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/repository/ProductViewRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32588455">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/product/src/main/java/com/affaince/subscription/product/registration/query/repository/ShoppingItemViewRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32588455">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain-services/subscriber/src/main/resources/Application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6052142">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

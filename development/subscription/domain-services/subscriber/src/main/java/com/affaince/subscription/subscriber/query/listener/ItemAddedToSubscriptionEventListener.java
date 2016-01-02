@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.Frequency;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.subscriber.command.event.ItemAddedToSubscriptionEvent;
-import com.affaince.subscription.subscriber.query.repository.SubscriptionRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.query.view.BasketItem;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -20,10 +20,10 @@ import java.util.List;
 @Component
 public class ItemAddedToSubscriptionEventListener {
 
-    private final SubscriptionRepository repository;
+    private final SubscriptionViewRepository repository;
 
     @Autowired
-    public ItemAddedToSubscriptionEventListener(SubscriptionRepository repository) {
+    public ItemAddedToSubscriptionEventListener(SubscriptionViewRepository repository) {
         this.repository = repository;
     }
 

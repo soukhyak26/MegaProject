@@ -3,7 +3,7 @@ package com.affaince.subscription.product.registration.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
 import com.affaince.subscription.product.registration.command.event.ProductForecastReceivedEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductForecastReceivedEventListener {
 
-    private final ProductRepository itemRepository;
+    private final ProductViewRepository itemRepository;
     @Autowired
     private SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public ProductForecastReceivedEventListener(ProductRepository itemRepository) {
+    public ProductForecastReceivedEventListener(ProductViewRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
 

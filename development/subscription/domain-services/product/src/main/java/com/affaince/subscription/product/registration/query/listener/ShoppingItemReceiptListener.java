@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.product.registration.command.event.ShoppingItemReceivedEvent;
-import com.affaince.subscription.product.registration.query.repository.ShoppingItemRepository;
+import com.affaince.subscription.product.registration.query.repository.ShoppingItemViewRepository;
 import com.affaince.subscription.product.registration.query.view.ShoppingItemView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ShoppingItemReceiptListener {
-    private final ShoppingItemRepository shoppingItemRepository;
+    private final ShoppingItemViewRepository shoppingItemViewRepository;
 
     @Autowired
-    public ShoppingItemReceiptListener(ShoppingItemRepository shoppingItemRepository) {
-        this.shoppingItemRepository = shoppingItemRepository;
+    public ShoppingItemReceiptListener(ShoppingItemViewRepository shoppingItemViewRepository) {
+        this.shoppingItemViewRepository = shoppingItemViewRepository;
     }
 
     @EventHandler

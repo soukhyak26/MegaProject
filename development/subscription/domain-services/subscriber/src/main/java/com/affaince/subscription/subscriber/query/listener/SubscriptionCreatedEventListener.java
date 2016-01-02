@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.subscriber.command.event.SubscriptionCreatedEvent;
-import com.affaince.subscription.subscriber.query.repository.SubscriptionRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubscriptionCreatedEventListener {
 
-    private final SubscriptionRepository basketRepository;
+    private final SubscriptionViewRepository basketRepository;
 
     @Autowired
-    public SubscriptionCreatedEventListener(SubscriptionRepository basketRepository) {
+    public SubscriptionCreatedEventListener(SubscriptionViewRepository basketRepository) {
         this.basketRepository = basketRepository;
     }
 

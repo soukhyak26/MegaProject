@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.product.registration.command.event.OfferedPriceUpdatedEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class PriceAndStockParametersUpdatedEventListener {
 
-    private final ProductRepository productRepository;
+    private final ProductViewRepository productViewRepository;
 
     @Autowired
-    public PriceAndStockParametersUpdatedEventListener(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public PriceAndStockParametersUpdatedEventListener(ProductViewRepository productViewRepository) {
+        this.productViewRepository = productViewRepository;
     }
 
     @EventHandler
     public void on(OfferedPriceUpdatedEvent event) {
-        ProductView productView = productRepository.findOne(event.getProductId());
+        ProductView productView = productViewRepository.findOne(event.getProductId());
 /*
         PriceParameters priceParameters = productView.getPriceParameters();
         priceParameters.setCurrentMRP(event.getCurrentMRP());
@@ -28,6 +28,6 @@ public class PriceAndStockParametersUpdatedEventListener {
         priceParameters.setCurrentPriceDate(event.getCurrentPrizeDate());
         productView.setPriceParameters(priceParameters);
 */
-        productRepository.save(productView);
+        productViewRepository.save(productView);
     }
 }

@@ -2,7 +2,7 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.*;
-import com.affaince.subscription.subscriber.query.repository.SubscriptionRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import com.affaince.subscription.subscriber.web.exception.ConsumerBasketNotFoundException;
 import com.affaince.subscription.subscriber.web.request.AddressRequest;
@@ -26,10 +26,10 @@ import java.util.UUID;
 public class SubscriptionController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final SubscriptionRepository repository;
+    private final SubscriptionViewRepository repository;
 
     @Autowired
-    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionRepository repository) {
+    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }
