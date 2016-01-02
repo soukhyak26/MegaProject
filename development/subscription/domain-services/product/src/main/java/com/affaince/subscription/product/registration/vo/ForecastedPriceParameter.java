@@ -1,61 +1,23 @@
-package com.affaince.subscription.product.registration.command.event;
-
-import org.joda.time.LocalDate;
+package com.affaince.subscription.product.registration.vo;
 
 /**
- * Created by mandark on 05-12-2015.
+ * Created by mandark on 01-01-2016.
  */
-public class ProductForecastReceivedEvent {
-    private String productId;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+public class ForecastedPriceParameter {
     private double purchasePricePerUnit;
-    private double offeredPricePerUnit;
+    private double averageOfferedPricePerUnit;
     private double MRP;
-
-
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
-
-
     private long numberOfExistingCustomersAssociatedWithAPrice;
 
-    public ProductForecastReceivedEvent(){}
-
-    public ProductForecastReceivedEvent(String productId, LocalDate fromDate, LocalDate toDate, double purchasePricePerUnit, double offeredPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, long numberOfExistingCustomersAssociatedWithAPrice) {
-        this.productId = productId;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+    public ForecastedPriceParameter(double purchasePricePerUnit, double averageOfferedPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, long numberOfExistingCustomersAssociatedWithAPrice) {
         this.purchasePricePerUnit = purchasePricePerUnit;
-        this.offeredPricePerUnit = offeredPricePerUnit;
+        this.averageOfferedPricePerUnit = averageOfferedPricePerUnit;
         this.MRP = MRP;
         this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
         this.numberOfExistingCustomersAssociatedWithAPrice = numberOfExistingCustomersAssociatedWithAPrice;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public LocalDate getFromDate() {
-        return this.fromDate;
-    }
-
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return this.toDate;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
     }
 
     public double getPurchasePricePerUnit() {
@@ -66,12 +28,12 @@ public class ProductForecastReceivedEvent {
         this.purchasePricePerUnit = purchasePricePerUnit;
     }
 
-    public double getOfferedPricePerUnit() {
-        return this.offeredPricePerUnit;
+    public double getAverageOfferedPricePerUnit() {
+        return this.averageOfferedPricePerUnit;
     }
 
-    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
-        this.offeredPricePerUnit = offeredPricePerUnit;
+    public void setAverageOfferedPricePerUnit(double averageOfferedPricePerUnit) {
+        this.averageOfferedPricePerUnit = averageOfferedPricePerUnit;
     }
 
     public double getMRP() {
@@ -105,5 +67,4 @@ public class ProductForecastReceivedEvent {
     public void setNumberOfExistingCustomersAssociatedWithAPrice(long numberOfExistingCustomersAssociatedWithAPrice) {
         this.numberOfExistingCustomersAssociatedWithAPrice = numberOfExistingCustomersAssociatedWithAPrice;
     }
-
 }

@@ -24,9 +24,73 @@
         <processorPath useClasspath="true" />
         <module name="item-registration" />
       </profile>
+      <profile default="false" name="Annotation profile for subscriber" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="subscriber" />
+      </profile>
+      <profile default="false" name="Annotation profile for rules-compiler" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="rules-compiler" />
+      </profile>
+      <profile default="false" name="Annotation profile for application-simulator" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="application-simulator" />
+      </profile>
+      <profile default="false" name="Annotation profile for benefits" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="benefits" />
+      </profile>
+      <profile default="false" name="Annotation profile for product" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="product" />
+      </profile>
+      <profile default="false" name="Annotation profile for integration" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="integration" />
+      </profile>
+      <profile default="false" name="Annotation profile for axon-commons" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="axon-commons" />
+      </profile>
+      <profile default="false" name="Annotation profile for logback-commons" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="logback-commons" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="application-simulator" target="1.8" />
+      <module name="axon-commons" target="1.8" />
+      <module name="benefits" target="1.8" />
+      <module name="integration" target="1.8" />
       <module name="item-registration" target="1.5" />
+      <module name="logback-commons" target="1.8" />
+      <module name="product" target="1.8" />
+      <module name="rules-compiler" target="1.8" />
+      <module name="subscriber" target="1.8" />
       <module name="subscription" target="1.5" />
     </bytecodeTargetLevel>
   </component>

@@ -6,15 +6,17 @@ import org.joda.time.LocalDate;
 /**
  * Created by rbsavaliya on 25-07-2015.
  */
-public class UpdatePriceAndStockParametersCommand {
+public class UpdateProductStatusCommand {
     @TargetAggregateIdentifier
     private String productId;
+    private double currentPurchasePrice;
     private double currentMRP;
     private int currentStockInUnits;
     private LocalDate currentPrizeDate;
 
-    public UpdatePriceAndStockParametersCommand(String productId, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
+    public UpdateProductStatusCommand(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
         this.productId = productId;
+        this.currentPurchasePrice = currentPurchasePrice;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPrizeDate = currentPrizeDate;
@@ -26,6 +28,14 @@ public class UpdatePriceAndStockParametersCommand {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public double getCurrentPurchasePrice() {
+        return this.currentPurchasePrice;
+    }
+
+    public void setCurrentPurchasePrice(double currentPurchasePrice) {
+        this.currentPurchasePrice = currentPurchasePrice;
     }
 
     public double getCurrentMRP() {

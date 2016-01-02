@@ -1,9 +1,8 @@
 package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.subscriber.command.domain.Basket;
-import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.BasketRule;
+import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;

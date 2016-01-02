@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
  * Created by mandark on 05-12-2015.
  */
 @CsvRecord(separator = ",", skipFirstLine = true)
-public class ShoppingItemForecastReceivedEvent {
+public class ProductForecastReceivedEvent {
     @DataField(name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
 
@@ -33,7 +33,11 @@ public class ShoppingItemForecastReceivedEvent {
     @DataField(name = "NO_OF_CHURNED_CUSTOMERS", pos = 8, trim = true)
     private long numberOfChurnedCustomersAssociatedWithAPrice;
 
-    public ShoppingItemForecastReceivedEvent(){}
+    @DataField(name = "NO_OF_EXISTING_CUSTOMERS", pos = 9, trim = true)
+    private long numberOfExistingCustomersAssociatedWithAPrice;
+
+    public ProductForecastReceivedEvent() {
+    }
 
     public LocalDate getFromDate() {
         return this.fromDate;
@@ -90,4 +94,22 @@ public class ShoppingItemForecastReceivedEvent {
     public void setNumberOfChurnedCustomersAssociatedWithAPrice(long numberOfChurnedCustomersAssociatedWithAPrice) {
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
     }
+
+    public long getNumberOfExistingCustomersAssociatedWithAPrice() {
+        return this.numberOfExistingCustomersAssociatedWithAPrice;
+    }
+
+    public void setNumberOfExistingCustomersAssociatedWithAPrice(long numberOfExistingCustomersAssociatedWithAPrice) {
+        this.numberOfExistingCustomersAssociatedWithAPrice = numberOfExistingCustomersAssociatedWithAPrice;
+    }
+
+    public String getProductId() {
+        return this.productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+
 }

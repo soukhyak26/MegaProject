@@ -3,8 +3,10 @@ package com.affaince.subscription.product.registration.web.request;
 /**
  * Created by rbsavaliya on 25-07-2015.
  */
-public class UpdatePriceAndStockParametersRequest {
+public class UpdateProductStatusRequest {
 
+    private double productId;
+    private double currentPurchasePrice;
     private double currentMRP;
     private int currentStockInUnits;
 
@@ -23,4 +25,21 @@ public class UpdatePriceAndStockParametersRequest {
     public void setCurrentStockInUnits(int currentStockInUnits) {
         this.currentStockInUnits = currentStockInUnits;
     }
+
+    public double getProductId() {
+        return this.productId;
+    }
+
+    public void setProductId(double productId) {
+        this.productId = productId;
+    }
+
+    public double getCurrentPurchasePrice() {
+        return this.currentPurchasePrice;
+    }
+
+    public void setCurrentPurchasePrice(double currentPurchasePrice) {
+        this.currentPurchasePrice = currentPurchasePrice;
+    }
+
 }

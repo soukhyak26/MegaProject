@@ -10,6 +10,7 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.MockEndpoints;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ import java.text.SimpleDateFormat;
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
-
+@Ignore
 public class BasketDispatchStatusTest {
     @EndpointInject(uri = "mock:queue.csv")
     protected MockEndpoint mock;

@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.registration.command.handler;
 
-import com.affaince.subscription.product.registration.command.UpdatePriceAndStockParametersCommand;
+import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.domain.Product;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -21,8 +21,8 @@ public class UpdatePriceAndStockParametersCommandHandler {
     }
 
     @CommandHandler
-    public void handle(UpdatePriceAndStockParametersCommand command) {
+    public void handle(UpdateProductStatusCommand command) {
         Product product = repository.load(command.getProductId());
-        product.updatePriceAndStockParemeters(command);
+        product.updateProductStatus(command);
     }
 }

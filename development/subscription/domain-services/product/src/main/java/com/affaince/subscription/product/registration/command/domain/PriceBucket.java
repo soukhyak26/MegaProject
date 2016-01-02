@@ -3,14 +3,17 @@ package com.affaince.subscription.product.registration.command.domain;
 import org.joda.time.LocalDate;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Created by mandark on 28-11-2015.
  */
 public class PriceBucket {
-    private double purchasePricePerUnit;
-    private double salePricePerUnit;
-    private double MRP;
+    private Map<LocalDate, Double> purchasePricePerUnitVersions;
+    private double offeredPricePerUnit;
+
+    private Map<LocalDate, Double> MRPVersions;
     private LocalDate fromDate;
     private LocalDate toDate;
     private long numberOfNewCustomersAssociatedWithAPrice;
@@ -18,42 +21,74 @@ public class PriceBucket {
     private long numberOfExistingCustomersAssociatedWithAPrice;
 
     public PriceBucket() {
+        purchasePricePerUnitVersions = new TreeMap<>();
+        MRPVersions = new TreeMap<>();
     }
 
-    public PriceBucket(double purchasePricePerUnit, double salePricePerUnit, double MRP, LocalDate fromDate, LocalDate toDate, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice) {
-        this.purchasePricePerUnit = purchasePricePerUnit;
-        this.salePricePerUnit = salePricePerUnit;
-        this.MRP = MRP;
+    public PriceBucket(double purchasePricePerUnit, double offeredPricePerUnit, double MRP, LocalDate fromDate, LocalDate toDate, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice) {
+        this.purchasePricePerUnitVersions = new TreeMap<>();
+        this.MRPVersions = new TreeMap<>();
+
+        this.purchasePricePerUnitVersions.put(fromDate, purchasePricePerUnit);
+        this.offeredPricePerUnit = offeredPricePerUnit;
+        this.MRPVersions.put(fromDate, MRP);
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
     }
 
-    public double getPurchasePricePerUnit() {
-        return purchasePricePerUnit;
+    public PriceBucket(PriceBucket priceBucket) {
+        this.purchasePricePerUnitVersions = priceBucket.getPurchasePricePerUnitVersions();
+        this.offeredPricePerUnit = priceBucket.getOfferedPricePerUnit();
+        this.MRPVersions = priceBucket.getMRPVersions();
+        this.fromDate = LocalDate.now();
+        //TO BE CORRECTED IT SHOULD BE END OF CURRENT YEAR
+        this.toDate = LocalDate.now();
+        this.numberOfNewCustomersAssociatedWithAPrice = 0;
+        this.numberOfChurnedCustomersAssociatedWithAPrice = 0;
+
     }
 
-    public void setPurchasePricePerUnit(double purchasePricePerUnit) {
-        this.purchasePricePerUnit = purchasePricePerUnit;
+    public Map<LocalDate, Double> getPurchasePricePerUnitVersions() {
+        return purchasePricePerUnitVersions;
     }
 
-    public double getSalePricePerUnit() {
-        return salePricePerUnit;
+    public void setPurchasePricePerUnitVersions(Map<LocalDate, Double> purchasePricePerUnitVersions) {
+        this.purchasePricePerUnitVersions = purchasePricePerUnitVersions;
     }
 
-    public void setSalePricePerUnit(double salePricePerUnit) {
-        this.salePricePerUnit = salePricePerUnit;
+    public void addPurchasePricePerUnitVersion(LocalDate fromDate, double newPurchasePrice) {
+        if (null != purchasePricePerUnitVersions) {
+            purchasePricePerUnitVersions.put(fromDate, newPurchasePrice);
+        } else {
+            //RAISE EXCEPTION
+        }
     }
 
-    public double getMRP() {
-        return MRP;
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
     }
 
-    public void setMRP(double MRP) {
-        this.MRP = MRP;
+    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
+        this.offeredPricePerUnit = offeredPricePerUnit;
     }
 
+    public Map<LocalDate, Double> getMRPVersions() {
+        return MRPVersions;
+    }
+
+    public void setMRPVersions(Map<LocalDate, Double> MRPVersions) {
+        this.MRPVersions = MRPVersions;
+    }
+
+    public void addMRPVersion(LocalDate fromDate, double newMRP) {
+        if (null != MRPVersions) {
+            MRPVersions.put(fromDate, newMRP);
+        } else {
+            //RAISE EXCEPTION
+        }
+    }
     public LocalDate getFromDate() {
         return fromDate;
     }
@@ -93,4 +128,29 @@ public class PriceBucket {
     public void setNumberOfExistingCustomersAssociatedWithAPrice(long numberOfExistingCustomersAssociatedWithAPrice) {
         this.numberOfExistingCustomersAssociatedWithAPrice = numberOfExistingCustomersAssociatedWithAPrice;
     }
+
+    public double getLatestPurchasePricePerUnitVersion() {
+        Set<LocalDate> keySet = purchasePricePerUnitVersions.keySet();
+        LocalDate maxDate = null;
+        //CHECK OF COMPARISION SYNTAX IS CORRECT
+        for (LocalDate date : keySet) {
+            if (date.compareTo(maxDate) > 1) {
+                maxDate = date;
+            }
+        }
+        return purchasePricePerUnitVersions.get(maxDate);
+    }
+
+    public double getLatestMRPVersion() {
+        Set<LocalDate> keySet = MRPVersions.keySet();
+        LocalDate maxDate = null;
+        //CHECK OF COMPARISION SYNTAX IS CORRECT
+        for (LocalDate date : keySet) {
+            if (date.compareTo(maxDate) > 1) {
+                maxDate = date;
+            }
+        }
+        return MRPVersions.get(maxDate);
+    }
+
 }

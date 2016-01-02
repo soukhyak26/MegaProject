@@ -31,12 +31,8 @@ public class ProductReceivedListener {
         );
         ProductView productView = new ProductView(
                 event.getProductId(),
-                event.getBatchId(),
                 event.getCategoryId(),
-                event.getCategoryName(),
-                event.getSubCategoryId(),
-                event.getSubCategoryName(),
-                priceParameters
+                event.getSubCategoryId()
         );
         itemRepository.save(productView);
         System.out.println("@@@@Item saved successfully");

@@ -1,8 +1,7 @@
 package com.affaince.subscription.product.registration.query.listener;
 
-import com.affaince.subscription.product.registration.command.event.UpdatePriceAndStockParametersEvent;
+import com.affaince.subscription.product.registration.command.event.OfferedPriceUpdatedEvent;
 import com.affaince.subscription.product.registration.query.repository.ProductRepository;
-import com.affaince.subscription.product.registration.query.view.PriceParameters;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,15 @@ public class PriceAndStockParametersUpdatedEventListener {
     }
 
     @EventHandler
-    public void on(UpdatePriceAndStockParametersEvent event) {
+    public void on(OfferedPriceUpdatedEvent event) {
         ProductView productView = productRepository.findOne(event.getProductId());
+/*
         PriceParameters priceParameters = productView.getPriceParameters();
         priceParameters.setCurrentMRP(event.getCurrentMRP());
         priceParameters.setCurrentStockInUnits(event.getCurrentStockInUnits());
         priceParameters.setCurrentPriceDate(event.getCurrentPrizeDate());
         productView.setPriceParameters(priceParameters);
+*/
         productRepository.save(productView);
     }
 }

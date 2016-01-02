@@ -3,15 +3,15 @@ package com.affaince.subscription.product.registration.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.registration.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
-import com.affaince.subscription.product.registration.command.CreateProductCommand;
-import com.affaince.subscription.product.registration.command.UpdatePriceAndStockParametersCommand;
+import com.affaince.subscription.product.registration.command.RegisterProductCommand;
+import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.query.repository.ProductRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.registration.web.request.AddCurrentOfferedPriceRequest;
 import com.affaince.subscription.product.registration.web.request.AddForecastParametersRequest;
-import com.affaince.subscription.product.registration.web.request.CreateProductRequest;
-import com.affaince.subscription.product.registration.web.request.UpdatePriceAndStockParametersRequest;
+import com.affaince.subscription.product.registration.web.request.RegisterProductRequest;
+import com.affaince.subscription.product.registration.web.request.UpdateProductStatusRequest;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,19 +45,12 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
-    public ResponseEntity<Object> createItem(@RequestBody @Valid CreateProductRequest request) throws Exception {
-        final CreateProductCommand createCommand = new CreateProductCommand(
+    public ResponseEntity<Object> registerProduct(@RequestBody @Valid RegisterProductRequest request) throws Exception {
+        final RegisterProductCommand createCommand = new RegisterProductCommand(
                 request.getProductId(),
-                request.getBatchId(),
+                request.getProductName(),
                 request.getCategoryId(),
-                request.getCategoryName(),
-                request.getSubCategoryId(),
-                request.getSubCategoryName(),
-                request.getCurrentPurchasePricePerUnit(),
-                request.getCurrentMRP(),
-                request.getCurrentOfferedPrice(),
-                request.getCurrentStockInUnits(),
-                LocalDate.now()
+                request.getSubCategoryId()
         );
         try {
             commandGateway.executeAsync(createCommand);
@@ -70,13 +63,14 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
     @Consumes("application/json")
-    public ResponseEntity<Object> updatePriceAndStockParameters(@RequestBody @Valid UpdatePriceAndStockParametersRequest request, @PathVariable String productId) throws Exception {
+    public ResponseEntity<Object> updateProductStatus(@RequestBody @Valid UpdateProductStatusRequest request, @PathVariable String productId) throws Exception {
         ProductView productView = repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        final UpdatePriceAndStockParametersCommand command = new UpdatePriceAndStockParametersCommand(
+        final UpdateProductStatusCommand command = new UpdateProductStatusCommand(
                 productId,
+                request.getCurrentPurchasePrice(),
                 request.getCurrentMRP(),
                 request.getCurrentStockInUnits(),
                 LocalDate.now()
@@ -101,11 +95,7 @@ public class ProductController {
                 request.getProductId(),
                 request.getFromDate(),
                 request.getToDate(),
-                request.getPurchasePricePerUnit(),
-                request.getSalePricePerUnit(),
-                request.getMRP(),
-                request.getNumberOfNewCustomersAssociatedWithAPrice(),
-                request.getNumberOfChurnedCustomersAssociatedWithAPrice()
+                request.getForecastedPriceParameters()
         );
         commandGateway.executeAsync(command);
         try {

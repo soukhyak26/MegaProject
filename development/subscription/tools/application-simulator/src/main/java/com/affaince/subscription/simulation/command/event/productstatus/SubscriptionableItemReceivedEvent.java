@@ -1,4 +1,4 @@
-package com.affaince.subscription.integration.command.event.itemreceipt;
+package com.affaince.subscription.integration.command.event.productstatus;
 
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
@@ -9,27 +9,18 @@ import org.joda.time.LocalDate;
  */
 @CsvRecord(separator = ",", skipFirstLine = true)
 public class SubscriptionableItemReceivedEvent {
-
-    @DataField(name = "ITEM_ID", pos = 1, trim = true)
-    private String itemId;
-
-    @DataField(name = "BATCH_ID", pos = 2, trim = true)
-    private String batchId;
-    @DataField(name = "CATEGORY_ID", pos = 3, trim = true)
-    private String categroyId;
-    @DataField(name = "CATEGORY_NAME", pos = 4, trim = true)
-    private String categoryName;
-    @DataField(name = "SUBCATEGORY_ID", pos = 5, trim = true)
-    private String subCategoryId;
-    @DataField(name = "SUBCATEGORY_NAME", pos = 6, trim = true)
-    private String subCategoryName;
-    @DataField(name = "PRODUCT_ID", pos = 7, trim = true)
+    @DataField(name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
-    @DataField(name = "CURRENT_PURCHASE_PRICE_PER_UNIT", pos = 8, trim = true)
+
+    @DataField(name = "CATEGORY_ID", pos = 2, trim = true)
+    private String categroyId;
+    @DataField(name = "SUBCATEGORY_ID", pos = 3, trim = true)
+    private String subCategoryId;
+    @DataField(name = "CURRENT_PURCHASE_PRICE_PER_UNIT", pos = 4, trim = true)
     private double currentPurchasePricePerUnit;
-    @DataField(name = "CURRENT_MRP", pos = 9, trim = true)
+    @DataField(name = "CURRENT_MRP", pos = 5, trim = true)
     private double currentMRP;
-    @DataField(name = "CURRENT_STOCK", pos = 10, trim = true)
+    @DataField(name = "CURRENT_STOCK", pos = 6, trim = true)
     private int currentStockInUnits;
 
     private LocalDate currentPriceDate = LocalDate.now();
@@ -45,21 +36,6 @@ public class SubscriptionableItemReceivedEvent {
         this.subCategoryId = subCategoryId;
     }
 
-    public String getSubCategoryName() {
-        return this.subCategoryName;
-    }
-
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
-    }
-
-    public String getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
 
     public String getCategoryId() {
         return categroyId;
@@ -69,13 +45,6 @@ public class SubscriptionableItemReceivedEvent {
         this.categroyId = categroyId;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
 
     public String getProductId() {
         return productId;
@@ -117,23 +86,12 @@ public class SubscriptionableItemReceivedEvent {
         this.currentPriceDate = currentPriceDate;
     }
 
-    public String getItemId() {
-        return this.itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
-    }
 
     @Override
     public String toString() {
         return "SubscriptionableItemReceivedEvent{" +
-                "itemId='" + itemId + '\'' +
-                ", batchId='" + batchId + '\'' +
                 ", categroyId='" + categroyId + '\'' +
-                ", categoryName='" + categoryName + '\'' +
                 ", subCategoryId='" + subCategoryId + '\'' +
-                ", subCategoryName='" + subCategoryName + '\'' +
                 ", productId='" + productId + '\'' +
                 ", currentPurchasePricePerUnit=" + currentPurchasePricePerUnit +
                 ", currentMRP=" + currentMRP +

@@ -1,14 +1,6 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
-import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
-import com.affaince.subscription.subscriber.command.event.BasketCreatedEvent;
-import com.affaince.subscription.subscriber.command.event.BasketDeletedEvent;
-import com.affaince.subscription.subscriber.command.event.StatusAndDispatchDateUpdatedEvent;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
 import java.util.List;

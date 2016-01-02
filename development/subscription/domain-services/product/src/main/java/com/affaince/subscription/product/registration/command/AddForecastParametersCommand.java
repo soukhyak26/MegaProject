@@ -1,34 +1,46 @@
 package com.affaince.subscription.product.registration.command;
 
+import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.joda.time.LocalDate;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 05-12-2015.
  */
 public class AddForecastParametersCommand {
+
     @TargetAggregateIdentifier
     private String productId;
     private LocalDate fromDate;
     private LocalDate toDate;
-    private double purchasePricePerUnit;
-    private double salePricePerUnit;
-    private double MRP;
-    private long numberOfNewCustomersAssociatedWithAPrice;
-    private long numberOfChurnedCustomersAssociatedWithAPrice;
+    private List<ForecastedPriceParameter> forecastedPriceParamters;
 
-    public AddForecastParametersCommand(String productId, LocalDate fromDate, LocalDate toDate, double purchasePricePerUnit, double salePricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice) {
+    public AddForecastParametersCommand(String productId, LocalDate fromDate, LocalDate toDate, List<ForecastedPriceParameter> priceForecastList) {
         this.productId = productId;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.purchasePricePerUnit = purchasePricePerUnit;
-        this.salePricePerUnit = salePricePerUnit;
-        this.MRP = MRP;
-        this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
-        this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
+        this.forecastedPriceParamters = priceForecastList;
     }
 
     public AddForecastParametersCommand() {
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    public void setForecastedPriceParamters(List<ForecastedPriceParameter> forecastedPriceParamters) {
+        this.forecastedPriceParamters = forecastedPriceParamters;
     }
 
     public String getProductId() {
@@ -43,23 +55,11 @@ public class AddForecastParametersCommand {
         return toDate;
     }
 
-    public double getPurchasePricePerUnit() {
-        return purchasePricePerUnit;
+    public List<ForecastedPriceParameter> getForecastedPriceParamters() {
+        return this.forecastedPriceParamters;
     }
 
-    public double getSalePricePerUnit() {
-        return salePricePerUnit;
-    }
-
-    public double getMRP() {
-        return MRP;
-    }
-
-    public long getNumberOfNewCustomersAssociatedWithAPrice() {
-        return numberOfNewCustomersAssociatedWithAPrice;
-    }
-
-    public long getNumberOfChurnedCustomersAssociatedWithAPrice() {
-        return numberOfChurnedCustomersAssociatedWithAPrice;
+    public void addForecastedPriceParameter(ForecastedPriceParameter priceParameter) {
+        this.forecastedPriceParamters.add(priceParameter);
     }
 }

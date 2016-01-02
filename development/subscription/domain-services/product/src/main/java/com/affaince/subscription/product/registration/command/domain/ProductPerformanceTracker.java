@@ -2,6 +2,7 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,7 +11,6 @@ import java.util.Map;
 public class ProductPerformanceTracker {
     private LocalDate fromDate;
     private LocalDate toDate;
-    private Map<String,PriceBucket> timeWisePriceBuckets;
     private long netNewCustomers;
     private long totalNumberOfChurnedCustomers;
     private long totalNumberOfExistingCustomers;
@@ -51,18 +51,6 @@ public class ProductPerformanceTracker {
 
     public void setToDate(LocalDate toDate) {
         this.toDate = toDate;
-    }
-
-    public Map<String, PriceBucket> getTimeWisePriceBuckets() {
-        return timeWisePriceBuckets;
-    }
-
-    public PriceBucket findPriceBucketByDateIdentifier (String dateIdentifier) {
-        return this.timeWisePriceBuckets.get(dateIdentifier);
-    }
-
-    public void addTimeWisePriceBuckets(PriceBucket priceBucket, String dateIdentifier) {
-        this.timeWisePriceBuckets.put(dateIdentifier, priceBucket);
     }
 
     public long getNetNewCustomers() {
@@ -263,5 +251,36 @@ public class ProductPerformanceTracker {
 
     public void setSalesAndMarketingExpenses(double salesAndMarketingExpenses) {
         this.salesAndMarketingExpenses = salesAndMarketingExpenses;
+    }
+
+
+    public void calculateSubscriptionMetrics(List<PriceBucket> priceBucket) {
+/*
+        this.netNewCustomers =
+        this.totalNumberOfChurnedCustomers
+        this.totalNumberOfExistingCustomers
+        this.percentageCustomerChurn
+        this.startingMRR
+        this.newMRRPerPriceBucket
+        this.chrunedMRRPerPriceBucket
+        this.totalChurnedMRR
+        this.percentageMRRChurn
+        this.endingMRR
+        this.netNewMRR
+        this.averageRevenuePerNewSubscriber
+        this.averageRevenuePerSubscriber
+        this.costOfGoodsSold
+        this.grossMargin
+        this.percentageGrossMargin
+        this.totalOperationalExpenses
+        this.peratingProfit
+        this.percentageOperatingProfit
+        this.subscriberLIfetimeValue
+        this.subscriberLifetimePeriod
+        this.costOfAcquiringASubscriber
+        this.SLVToCASRatio
+        this.monthsToRecoverCAS
+        this.salesAndMarketingExpenses
+*/
     }
 }

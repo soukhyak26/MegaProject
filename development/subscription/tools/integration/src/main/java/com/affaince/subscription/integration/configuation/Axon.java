@@ -5,9 +5,9 @@ import com.affaince.subscription.integration.command.event.GenericEventPublisher
 import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.SubscriptionableItemDailyQuoteGeneratedEvent;
-import com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent;
-import com.affaince.subscription.integration.command.event.itemreceipt.SubscriptionableItemReceivedEvent;
-import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ShoppingItemReceivedEvent;
+import com.affaince.subscription.integration.command.event.forecast.ProductForecastReceivedEvent;
+import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
+import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
 import com.affaince.subscription.integration.command.event.stockdemand.SubscriptionableItemStockDemandGeneratedEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -42,7 +42,7 @@ public class Axon extends Default {
             public void configure() {
                 //INT_02: retreive subscriptioable items details from main application
                 from("${subscriptionableitems.feed.source}").
-                        unmarshal().bindy(BindyType.Csv, SubscriptionableItemReceivedEvent.class).
+                        unmarshal().bindy(BindyType.Csv, ProductStatusReceivedEvent.class).
                         split(body().tokenize("\n")).streaming().
                         to("${subscriptionableitems.feed.destination}");
 
@@ -56,13 +56,13 @@ public class Axon extends Default {
 
                 //INT_01: retreive shopping items for registration
                 from("${shoppingitems.registration.source}").
-                        unmarshal().bindy(BindyType.Csv, ShoppingItemReceivedEvent.class).
+                        unmarshal().bindy(BindyType.Csv, ProductReceivedForRegistrationEvent.class).
                         split(body().tokenize("\n")).streaming().
                         to("${shoppingitems.registration.destination}");
 
                 //INT_XX: retreive forecasts for every shopping item that has been registered
                 from("${shoppingitems.forecast.source}").
-                        unmarshal().bindy(BindyType.Csv, ShoppingItemForecastReceivedEvent.class).
+                        unmarshal().bindy(BindyType.Csv, ProductForecastReceivedEvent.class).
                         split(body().tokenize("\n")).streaming().
                         to("${shoppingitems.forecast.destination}");
 

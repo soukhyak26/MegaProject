@@ -1,6 +1,9 @@
 package com.affaince.subscription.product.registration.web.request;
 
+import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.joda.time.LocalDate;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 05-12-2015.
@@ -9,14 +12,32 @@ public class AddForecastParametersRequest {
     private String productId;
     private LocalDate fromDate;
     private LocalDate toDate;
-    private double purchasePricePerUnit;
-    private double salePricePerUnit;
-    private double MRP;
-    private long numberOfNewCustomersAssociatedWithAPrice;
-    private long numberOfChurnedCustomersAssociatedWithAPrice;
+    private List<ForecastedPriceParameter> forecastedPriceParameters;
+
 
     public AddForecastParametersRequest() {
     }
+
+    public List<ForecastedPriceParameter> getForecastedPriceParameters() {
+        return this.forecastedPriceParameters;
+    }
+
+    public void setForecastedPriceParameters(List<ForecastedPriceParameter> forecastedPriceParameters) {
+        this.forecastedPriceParameters = forecastedPriceParameters;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
 
     public String getProductId() {
         return productId;
@@ -30,23 +51,4 @@ public class AddForecastParametersRequest {
         return toDate;
     }
 
-    public double getPurchasePricePerUnit() {
-        return purchasePricePerUnit;
-    }
-
-    public double getSalePricePerUnit() {
-        return salePricePerUnit;
-    }
-
-    public double getMRP() {
-        return MRP;
-    }
-
-    public long getNumberOfNewCustomersAssociatedWithAPrice() {
-        return numberOfNewCustomersAssociatedWithAPrice;
-    }
-
-    public long getNumberOfChurnedCustomersAssociatedWithAPrice() {
-        return numberOfChurnedCustomersAssociatedWithAPrice;
-    }
 }

@@ -1,11 +1,7 @@
 package com.affaince.subscription.product.registration.command.event;
 
-import com.affaince.subscription.common.type.Frequency;
-import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.product.registration.command.domain.PriceBucket;
 import org.joda.time.LocalDate;
-
-import java.util.Map;
 
 /**
  * Created by rbsavaliya on 26-07-2015.
@@ -38,7 +34,7 @@ public class ForecastParametersAddedEvent {
         return toDate;
     }
 
-    public PriceBucket getPriceBucket() {
+    public PriceBucket getPriceBuckets() {
         return priceBucket;
     }
 }

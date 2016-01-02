@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.registration.command.handler;
 
-import com.affaince.subscription.product.registration.command.CreateProductCommand;
+import com.affaince.subscription.product.registration.command.RegisterProductCommand;
 import com.affaince.subscription.product.registration.command.domain.Product;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -14,30 +14,23 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class CreateProductCommandHandler {
+public class RegsisterProductCommandHandler {
 
     private Repository<Product> repository;
-    private static final Logger LOGGER = LoggerFactory.getLogger(CreateProductCommandHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegsisterProductCommandHandler.class);
 
     @Autowired
-    public CreateProductCommandHandler(Repository<Product> repository) {
+    public RegsisterProductCommandHandler(Repository<Product> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle(CreateProductCommand command) {
+    public void handle(RegisterProductCommand command) {
         Product product = new Product(
                 command.getProductId(),
-                command.getBatchId(),
+                command.getProductName(),
                 command.getCategoryId(),
-                command.getCategoryName(),
-                command.getSubCategoryId(),
-                command.getGetSubCategoryNmae(),
-                command.getCurrentPurchasePricePerUnit(),
-                command.getCurrentMRP(),
-                command.getCurrentOfferedPrice(),
-                command.getCurrentStockInUnits(),
-                command.getCurrentPriceDate()
+                command.getSubCategoryId()
         );
         repository.add(product);
         LOGGER.info("Product added to write repository with id: " + command.getProductId());

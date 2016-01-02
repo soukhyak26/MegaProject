@@ -8,8 +8,8 @@ import org.apache.camel.dataformat.bindy.annotation.DataField;
  */
 @CsvRecord(separator = ",", skipFirstLine = true,generateHeaderColumns = true,crlf = "UNIX")
 public class SubscriptionableItemStockDemandGeneratedEvent {
-    @DataField(columnName="ITEM_ID",name = "ITEM_ID", pos = 1, trim = true)
-    private String itemId;
+    @DataField(columnName = "PRODUCT_ID", name = "PRODUCT_ID", pos = 1, trim = true)
+    private String productId;
     @DataField(columnName="CATEGORY_ID",name = "CATEGORY_ID", pos = 2, trim = true)
     private String categoryId;
     @DataField(columnName="CATEGORY_NAME",name = "CATEGORY_NAME", pos = 3, trim = true)
@@ -18,21 +18,12 @@ public class SubscriptionableItemStockDemandGeneratedEvent {
     private String subCategoryId;
     @DataField(columnName="SUBCATEGORY_NAME",name = "SUBCATEGORY_NAME", pos = 5, trim = true)
     private String subCategoryName;
-    @DataField(columnName="PRODUCT_ID",name = "PRODUCT_ID", pos = 6, trim = true)
-    private String productId;
-    @DataField(columnName="CURRENT_STOCK_DEMAND",name = "CURRENT_STOCK_DEMAND", pos = 7, trim = true)
+    @DataField(columnName = "CURRENT_STOCK_DEMAND", name = "CURRENT_STOCK_DEMAND", pos = 6, trim = true)
     private int currentStockDemandInUnits;
 
     public SubscriptionableItemStockDemandGeneratedEvent() {
     }
 
-    public String getItemId() {
-        return this.itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
-    }
 
     public String getCategoryId() {
         return this.categoryId;
