@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="875" measuredHeight="431">
+    <screen xsi:type="model:Screen" href="Product.screen#/"/>
+    <overrides>
+      <widgets ref="1/2" x="44" y="48" height="543"/>
+      <widgets ref="1/6" x="50" y="105" width="173">
+        <attributes key="selection" value="3"/>
+        <font size="12px"/>
+      </widgets>
+      <widgets ref="1/7" x="224" y="93" height="476"/>
+      <widgets ref="1/8" x="226" width="693"/>
+      <widgets ref="12" x="598" y="174" text="Category"/>
+      <widgets ref="13" x="690" y="174" width="169" text="Cosmetics"/>
+      <widgets ref="1">
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Link" id="103" x="247" y="308" text="Tooth Brush">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Link" id="102" x="247" y="290" text="Bath Soap">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Link" id="101" x="247" y="268" text="Toothpaste" state="disabled">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.16"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.15"/>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:LinkBar" id="89" x="233" y="148" text="New, Edit" selection="1">
+            <font/>
+            <items text="New"/>
+            <items text="Edit"/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:List" id="88" x="508" y="358" width="155" height="145" text="Pepsodent Toothpaste&#xD;&#xA;Pepsodent Toothbrush&#xD;&#xA;Pepsodent - Mouthwash">
+            <font/>
+            <items text="Pepsodent Toothpaste"/>
+            <items text="Pepsodent Toothbrush"/>
+            <items text="Pepsodent - Mouthwash"/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:Button" id="87" x="455" y="418" text=">>">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:List" id="85" x="279" y="358" width="155" height="145" text="Colgate Toothpaste&#xD;&#xA;Colgate Toothbrush&#xD;&#xA;Colgate - Mouthwash&#xD;&#xA;">
+            <font/>
+            <items text="Colgate Toothpaste"/>
+            <items text="Colgate Toothbrush"/>
+            <items text="Colgate - Mouthwash"/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:TextField" id="84" x="405" y="174" width="169" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:SearchField" id="46" x="243" y="228" text="Search">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:TextField" id="45" x="405" y="206" width="169">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:Label" id="44" x="243" y="206" width="126" text="Sub Category">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:Label" id="42" x="243" y="174" text="Complementary Group Name">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:Button" id="31" x="543" y="518" width="78" text="Cancel">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:Button" id="28" x="397" y="518" text="Update Complements">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="13">
+          <object xsi:type="model:LinkBar" id="17" x="243" y="112" text="Register Product, Substitutes, Compliments" selection="2">
+            <font/>
+            <items text="Register Product"/>
+            <items text="Substitutes"/>
+            <items text="Compliments"/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.12"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.11"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.10"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.9"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.8"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.7"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.6"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.5"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.4"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

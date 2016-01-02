@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="38" y="42" measuredWidth="795" measuredHeight="431">
+    <screen xsi:type="model:Screen" href="Product.screen#/"/>
+    <overrides>
+      <widgets ref="1/2" width="795" height="527"/>
+      <widgets ref="1/6" width="173">
+        <attributes key="selection" value="4"/>
+        <font size="12px"/>
+      </widgets>
+      <widgets ref="1/7" x="224" y="93" height="476"/>
+      <widgets ref="1/8" x="226" width="607"/>
+      <widgets ref="1">
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Button" id="31" x="480" y="528" width="78" text="Cancel">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Button" id="30" x="384" y="528" width="78" text="Reset">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Button" id="28" x="292" y="528" width="78" text="Save">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="27" x="397" y="485" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="26" x="243" y="485" width="127" text="Offered Price">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="25" x="397" y="459" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="24" x="243" y="459" width="127" text="MRP">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="23" x="397" y="427" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="22" x="243" y="427" width="127" text="Breakeven Price">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="21" x="397" y="363" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="20" x="243" y="356" width="127" text="Expected\nMerchant's Profit (%)">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="19" x="397" y="299" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="18" x="243" y="284" width="127" text="Percentage Change\nin Revenue against the\nTarget for Triggering\nthe Price Change">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:LinkBar" id="17" x="243" y="112" text="Monthly Forecast Plan, Prices Calculation Parameters" selection="1">
+            <font/>
+            <items text="Monthly Forecast Plan"/>
+            <items text="Prices Calculation Parameters"/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="12" x="397" y="247" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="11" x="243" y="232" width="127" text="Average Demand\nper Year\nper Subscriber ">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="10" x="397" y="203" width="213" text="Text field" state="disabled">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:TextField" id="9" x="397" y="395" width="213" text="Text field">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="7" x="243" y="395" width="127" text="Purchase Price">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="5" x="243" y="203" width="127" text="Demand Density">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Combo" id="4" x="397" y="160" width="213" text="Combo">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Insert" newIndex="17">
+          <object xsi:type="model:Label" id="2" x="243" y="160" width="127" text="Product Identifier">
+            <font/>
+          </object>
+        </widgetChanges>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.16"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.15"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.14"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.13"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.12"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.11"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.10"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.9"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.8"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.7"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.6"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.5"/>
+        <widgetChanges xsi:type="o:Delete" ref="/@widgets.4"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

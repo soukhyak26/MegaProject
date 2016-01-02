@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:WidgetGroup" id="65" x="38" y="42" measuredWidth="875" measuredHeight="431">
+    <widgets xsi:type="model:Master" id="1" measuredWidth="875" measuredHeight="431">
+      <screen xsi:type="model:Screen" href="Product.screen#/"/>
+      <overrides>
+        <widgets ref="1/2" height="527"/>
+        <widgets ref="1/6" width="173">
+          <attributes key="selection" value="3"/>
+          <font size="12px"/>
+        </widgets>
+        <widgets ref="1/7" x="224" y="93" height="476"/>
+        <widgets ref="1/8" x="226" width="687"/>
+        <widgets ref="12" x="243" y="200"/>
+        <widgets ref="13" x="368" y="200" width="169"/>
+        <widgets ref="1">
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.16"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.15"/>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:LinkBar" id="70" x="787" y="403" text="1, 2, 3, ..." selection="0">
+              <font/>
+              <items text="1"/>
+              <items text="2"/>
+              <items text="3"/>
+              <items text="..."/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:LinkBar" id="69" x="787" y="239" text="1, 2, 3, ..." selection="0">
+              <font/>
+              <items text="1"/>
+              <items text="2"/>
+              <items text="3"/>
+              <items text="..."/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:SearchField" id="46" x="243" y="232" text="Search">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:TextField" id="45" x="640" y="168" width="169" text="Text field">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:Label" id="44" x="563" y="168" width="78" text="Category">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:TextField" id="43" x="368" y="168" width="169" text="Text field">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:Label" id="42" x="243" y="168" width="126" text="Product Name">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:Table" id="41" x="236" y="261" text="Product\nIdentifier,Category,Pricing\nCategory,Quantity,Demand\nDensity,Average\nDemand\nper\nYear\nper\nSubscriber,Purchase\nPrice,MRP,Select, &#xA;COLGATE100G,Cosmetics,Discount Committed,100 gm,0.20,20,50,80,[x],[Register]&#xA;&#xA;" alternative="#eeeeee">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:Button" id="31" x="600" y="437" width="78" text="Cancel">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:Button" id="30" x="504" y="437" width="78" text="Reset">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:Button" id="28" x="388" y="437" text="Register Seleced">
+              <font/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Insert" newIndex="13">
+            <object xsi:type="model:LinkBar" id="17" x="243" y="112" text="Register Product, Supliments, Compliments" selection="0">
+              <font/>
+              <items text="Register Product"/>
+              <items text="Supliments"/>
+              <items text="Compliments"/>
+            </object>
+          </widgetChanges>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.12"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.11"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.10"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.9"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.8"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.7"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.6"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.5"/>
+          <widgetChanges xsi:type="o:Delete" ref="/@widgets.4"/>
+        </widgets>
+      </overrides>
+    </widgets>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
