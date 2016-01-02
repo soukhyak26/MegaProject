@@ -12,12 +12,8 @@ public class ProductForecastReceivedEvent {
     private double purchasePricePerUnit;
     private double offeredPricePerUnit;
     private double MRP;
-
-
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
-
-
     private long numberOfExistingCustomersAssociatedWithAPrice;
 
     public ProductForecastReceivedEvent(){}
