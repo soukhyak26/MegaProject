@@ -111,5 +111,18 @@ public class ProductForecastReceivedEvent {
         this.productId = productId;
     }
 
-
+    @Override
+    public String toString() {
+        return "ProductForecastReceivedEvent{" +
+                "productId='" + productId + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", purchasePricePerUnit=" + purchasePricePerUnit +
+                ", salePricePerUnit=" + salePricePerUnit +
+                ", MRP=" + MRP +
+                ", numberOfNewCustomersAssociatedWithAPrice=" + numberOfNewCustomersAssociatedWithAPrice +
+                ", numberOfChurnedCustomersAssociatedWithAPrice=" + numberOfChurnedCustomersAssociatedWithAPrice +
+                ", numberOfExistingCustomersAssociatedWithAPrice=" + numberOfExistingCustomersAssociatedWithAPrice +
+                '}';
+    }
 }

@@ -12,7 +12,6 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.MockEndpoints;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +31,6 @@ import java.text.SimpleDateFormat;
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
-@Ignore
 public class BasketDispatchRequestsTest {
 
     @EndpointInject(uri = "mock:queue.csv")
@@ -71,7 +69,7 @@ public class BasketDispatchRequestsTest {
         event.setDeliveryDate(new SimpleDateFormat("yyyyddMM").parse("20151612"));
 
         mock.expectedMessageCount(1);
-        mock.expectedBodiesReceived("SUBSCRIBER_ID,ITEM_ID,CATEGORY_ID,SUBCATEGORY_ID,PRODUCT_ID,QUOTED_PRICE,DELIVERY_DATE\nSUB_0234,ITEM_0123,CAT_0234,SUBCAT_0345,PROD_0345,34.0,20151612\n");
+        mock.expectedBodiesReceived("SUBSCRIBER_ID,PRODUCT_ID,CATEGORY_ID,SUBCATEGORY_ID,QUOTED_PRICE,DELIVERY_DATE\nSUB_0234,PROD_0345,CAT_0234,SUBCAT_0345,34.0,20151612\n");
         template.sendBody(event);
         mock.assertIsSatisfied();
 

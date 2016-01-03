@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by mandark on 17-09-2015.
  */
 @CsvRecord(separator = ",", skipFirstLine = true,generateHeaderColumns = true,crlf = "UNIX")
-public class SubscriptionableItemDailyQuoteGeneratedEvent {
+public class ProductDailyQuoteGeneratedEvent {
     @DataField(columnName = "PRODUCT_ID", name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
     @DataField(columnName="CATEGORY_ID",name = "CATEGORY_ID", pos = 2, trim = true)
@@ -21,10 +21,10 @@ public class SubscriptionableItemDailyQuoteGeneratedEvent {
     @DataField(columnName = "QUOTE_DATE", name = "DELIVERY_DATE", pos = 5, pattern = "yyyyddMM", trim = true)
     private Date quoteDate;
 
-    public SubscriptionableItemDailyQuoteGeneratedEvent() {
+    public ProductDailyQuoteGeneratedEvent() {
     }
 
-    public SubscriptionableItemDailyQuoteGeneratedEvent(String categoryId, String subCategoryId, String productId, double quotedPrice, Date quoteDate) {
+    public ProductDailyQuoteGeneratedEvent(String categoryId, String subCategoryId, String productId, double quotedPrice, Date quoteDate) {
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
         this.productId = productId;

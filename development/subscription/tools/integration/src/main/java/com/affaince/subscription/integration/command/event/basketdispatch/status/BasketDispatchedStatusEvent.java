@@ -13,7 +13,6 @@ public class BasketDispatchedStatusEvent {
     @DataField(name = "BASKET_ID", pos = 1, trim = true)
     private String basketId;
 
-
     @DataField(name = "DISPATCH_DATE", pos = 2, pattern = "yyyyddMM", trim = true)
     private Date dispatchDate;
 
