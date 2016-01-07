@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.subscriber.command.event.BasketCreatedEvent;
-import com.affaince.subscription.subscriber.query.repository.BasketRepository;
+import com.affaince.subscription.subscriber.query.repository.BasketViewRepository;
 import com.affaince.subscription.subscriber.query.view.BasketView;
 import com.affaince.subscription.subscriber.query.view.DeliveryItem;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
  */
 @Component
 public class BasketCreatedEventListener {
-    private final BasketRepository basketRepository;
+    private final BasketViewRepository basketViewRepository;
 
     @Autowired
-    public BasketCreatedEventListener(BasketRepository basketRepository) {
-        this.basketRepository = basketRepository;
+    public BasketCreatedEventListener(BasketViewRepository basketViewRepository) {
+        this.basketViewRepository = basketViewRepository;
     }
 
     @EventHandler
@@ -33,6 +33,6 @@ public class BasketCreatedEventListener {
         BasketView basketView = new BasketView(event.getBasketId(), event.getSubscriberId(), deliveryItems,
                 event.getDeliveryDate(), event.getDispatchDate(), event.getStatus()
         );
-        basketRepository.save(basketView);
+        basketViewRepository.save(basketView);
     }
 }

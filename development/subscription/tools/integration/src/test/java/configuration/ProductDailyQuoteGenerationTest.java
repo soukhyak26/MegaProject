@@ -1,7 +1,9 @@
 package configuration;
 
-import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
+import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
 import org.apache.camel.EndpointInject;
+import org.apache.camel.Produce;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.model.dataformat.BindyType;
@@ -10,7 +12,6 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.MockEndpoints;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -19,50 +20,54 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.text.SimpleDateFormat;
 
 /**
- * Created by mandark on 12-09-2015.
+ * Created by mandark on 17-09-2015.
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
-@ContextConfiguration( classes = {ShoppingItemReceiptTest.ContextConfig.class},
+@ContextConfiguration( classes = {ProductDailyQuoteGenerationTest.ContextConfig.class},
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
-@Ignore
-public class ShoppingItemReceiptTest {
+public class ProductDailyQuoteGenerationTest {
     @EndpointInject(uri = "mock:queue.csv")
     protected MockEndpoint mock;
+    @Produce(uri = "direct:start")
+    protected ProducerTemplate template;
 
     @Configuration
-    public static class ContextConfig extends SingleRouteCamelConfiguration  {
+    public static class ContextConfig extends SingleRouteCamelConfiguration {
         @Bean
         @Override
-        public RouteBuilder route(){
+        public RouteBuilder route() {
             return new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {
-                    from("file://src/test/resources?noop=true&fileName=ShoppingItemsForRegistration.in").
-                            unmarshal().bindy(BindyType.Csv, ProductReceivedForRegistrationEvent.class).
-                            split(body().tokenize("\n")).streaming()
-                            .to("mock:queue.csv");
+                    from("direct:start").
+                            marshal().bindy(BindyType.Csv, ProductDailyQuoteGeneratedEvent.class).
+                            to("mock:queue.csv");
                 }
             };
         }
     }
-
     @DirtiesContext
     @Test
     public void testPositive() throws Exception {
-        ProductReceivedForRegistrationEvent event = new ProductReceivedForRegistrationEvent();
-        event.setProductId("31");
-        event.setCategoryId("1111");
-        event.setSubCategoryId("23");
-        event.setProductId("TOOTHPSTCOLGT");
+
+        ProductDailyQuoteGeneratedEvent event = new ProductDailyQuoteGeneratedEvent();
+        event.setProductId("PROD_0345");
+        event.setCategoryId("CAT_0234");
+        event.setSubCategoryId("SUBCAT_0345");
+        event.setQuotedPrice(34.00);
+        event.setQuoteDate(new SimpleDateFormat("yyyyddMM").parse("20151612"));
 
         mock.expectedMessageCount(1);
-        mock.expectedBodiesReceived(event.toString());
+        mock.expectedBodiesReceived("PRODUCT_ID,CATEGORY_ID,SUBCATEGORY_ID,QUOTED_PRICE,QUOTE_DATE\nPROD_0345,CAT_0234,SUBCAT_0345,34.0,20151612\n");
+        template.sendBody(event);
         mock.assertIsSatisfied();
+
     }
 
 }

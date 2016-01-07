@@ -5,7 +5,7 @@ import com.affaince.subscription.subscriber.command.CreateBasketCommand;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
 import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
-import com.affaince.subscription.subscriber.query.repository.BasketRepository;
+import com.affaince.subscription.subscriber.query.repository.BasketViewRepository;
 import com.affaince.subscription.subscriber.query.view.BasketView;
 import com.affaince.subscription.subscriber.web.exception.BasketNotFoundException;
 import com.affaince.subscription.subscriber.web.request.BasketDispatchRequest;
@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 public class BasketController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final BasketRepository repository;
+    private final BasketViewRepository repository;
 
     @Autowired
-    public BasketController(SubscriptionCommandGateway commandGateway, BasketRepository repository) {
+    public BasketController(SubscriptionCommandGateway commandGateway, BasketViewRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }

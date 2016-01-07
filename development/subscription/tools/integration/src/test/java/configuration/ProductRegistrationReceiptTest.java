@@ -1,6 +1,6 @@
 package configuration;
 
-import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
+import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -10,8 +10,6 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.MockEndpoints;
-import org.joda.time.LocalDate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -20,17 +18,17 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.ContextConfiguration;
 
+
 /**
  * Created by mandark on 12-09-2015.
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
-@ContextConfiguration( classes = {SubscriptionableItemReceiptTest.ContextConfig.class},
+@ContextConfiguration( classes = {ProductRegistrationReceiptTest.ContextConfig.class},
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
-@Ignore
-public class SubscriptionableItemReceiptTest {
+public class ProductRegistrationReceiptTest {
     @EndpointInject(uri = "mock:queue.csv")
     protected MockEndpoint mock;
 
@@ -42,8 +40,8 @@ public class SubscriptionableItemReceiptTest {
             return new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {
-                    from("file://src/test/resources?noop=true&fileName=subscriptionableItemsFeed.in").
-                            unmarshal().bindy(BindyType.Csv, ProductStatusReceivedEvent.class).
+                    from("file://src/test/resources?noop=true&fileName=ProductsForRegistration.in").
+                            unmarshal().bindy(BindyType.Csv, ProductReceivedForRegistrationEvent.class).
                             split(body().tokenize("\n")).streaming()
                             .to("mock:queue.csv");
                 }
@@ -54,15 +52,11 @@ public class SubscriptionableItemReceiptTest {
     @DirtiesContext
     @Test
     public void testPositive() throws Exception {
-        ProductStatusReceivedEvent event = new ProductStatusReceivedEvent();
-        event.setProductId("32");
+        ProductReceivedForRegistrationEvent event = new ProductReceivedForRegistrationEvent();
         event.setCategoryId("1111");
         event.setSubCategoryId("23");
         event.setProductId("TOOTHPSTCOLGT");
-        event.setCurrentPurchasePricePerUnit(47.00);
-        event.setCurrentMRP(74.50);
-        event.setCurrentStockInUnits(23456);
-        event.setCurrentPriceDate(LocalDate.now());
+        event.setProductName("TOOTHPSTCOLGT");
         mock.expectedMessageCount(1);
         mock.expectedBodiesReceived(event.toString());
         mock.assertIsSatisfied();

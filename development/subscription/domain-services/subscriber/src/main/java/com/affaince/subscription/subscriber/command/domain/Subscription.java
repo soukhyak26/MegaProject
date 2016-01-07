@@ -26,7 +26,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
     private String subscriptionId;
     private String subscriberId;
-    private int consumerBasketStatus;
+    private ConsumerBasketActivationStatus consumerBasketStatus;
     private List<BasketItem> basketItems;
     private Address shippingAddress;
     private Address billingAddress;
@@ -50,7 +50,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
         this.subscriberId = event.getSubscriberId();
         this.basketCreatedDate = event.getBasketCreatedDate();
         this.basketExpiredDate = event.getBasketExpiredDate();
-        this.consumerBasketStatus = event.getConsumerBasketStatus().getStatusCode();
+        this.consumerBasketStatus = event.getConsumerBasketStatus();
     }
 
     @EventSourcingHandler
@@ -107,7 +107,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void on(SubscriptionActivatedEvent event) {
-        this.consumerBasketStatus = ConsumerBasketActivationStatus.ACTIVATED.getStatusCode();
+        this.consumerBasketStatus = ConsumerBasketActivationStatus.ACTIVATED;
     }
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {

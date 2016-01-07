@@ -37,8 +37,6 @@ public class ProductReceivedForRegistrationEvent {
         this.categoryId = categoryId;
     }
 
-
-
     public String getSubCategoryId() {
         return this.subCategoryId;
     }

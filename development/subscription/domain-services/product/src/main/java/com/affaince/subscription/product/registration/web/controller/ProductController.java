@@ -5,7 +5,7 @@ import com.affaince.subscription.product.registration.command.AddCurrentOfferedP
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
 import com.affaince.subscription.product.registration.command.RegisterProductCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
-import com.affaince.subscription.product.registration.query.repository.ProductRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.registration.web.request.AddCurrentOfferedPriceRequest;
@@ -33,12 +33,12 @@ import javax.ws.rs.Consumes;
 public class ProductController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final ProductRepository repository;
+    private final ProductViewRepository repository;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
-    public ProductController(SubscriptionCommandGateway commandGateway, ProductRepository repository) {
+    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }

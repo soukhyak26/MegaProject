@@ -1,6 +1,6 @@
 package configuration;
 
-import com.affaince.subscription.integration.command.event.dailyquotes.SubscriptionableItemDailyQuoteGeneratedEvent;
+import com.affaince.subscription.integration.command.event.stockdemand.ProductStockDemandGeneratedEvent;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
@@ -12,7 +12,6 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.MockEndpoints;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -21,19 +20,16 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.text.SimpleDateFormat;
-
 /**
  * Created by mandark on 17-09-2015.
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
-@ContextConfiguration( classes = {SubscriptionableItemDailyQuoteGenerationTest.ContextConfig.class},
+@ContextConfiguration(classes = {ProductStockDemandGenerationTest.ContextConfig.class},
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
-@Ignore
-public class SubscriptionableItemDailyQuoteGenerationTest {
+public class ProductStockDemandGenerationTest {
     @EndpointInject(uri = "mock:queue.csv")
     protected MockEndpoint mock;
     @Produce(uri = "direct:start")
@@ -48,25 +44,24 @@ public class SubscriptionableItemDailyQuoteGenerationTest {
                 @Override
                 public void configure() throws Exception {
                     from("direct:start").
-                            marshal().bindy(BindyType.Csv, SubscriptionableItemDailyQuoteGeneratedEvent.class).
+                            marshal().bindy(BindyType.Csv, ProductStockDemandGeneratedEvent.class).
                             to("mock:queue.csv");
                 }
             };
         }
     }
+
     @DirtiesContext
     @Test
     public void testPositive() throws Exception {
-
-        SubscriptionableItemDailyQuoteGeneratedEvent event = new SubscriptionableItemDailyQuoteGeneratedEvent();
+        ProductStockDemandGeneratedEvent event = new ProductStockDemandGeneratedEvent();
         event.setProductId("PROD_0345");
         event.setCategoryId("CAT_0234");
         event.setSubCategoryId("SUBCAT_0345");
-        event.setQuotedPrice(34.00);
-        event.setQuoteDate(new SimpleDateFormat("yyyyddMM").parse("20151612"));
+        event.setCurrentStockDemandInUnits(2375);
 
         mock.expectedMessageCount(1);
-        mock.expectedBodiesReceived("ITEM_ID,CATEGORY_ID,SUBCATEGORY_ID,PRODUCT_ID,QUOTED_PRICE,QUOTE_DATE\nITEM_0123,CAT_0234,SUBCAT_0345,PROD_0345,34.0,20151612\n");
+        mock.expectedBodiesReceived("PRODUCT_ID,CATEGORY_ID,SUBCATEGORY_ID,CURRENT_STOCK_DEMAND\nPROD_0345,CAT_0234,SUBCAT_0345,2375\n");
         template.sendBody(event);
         mock.assertIsSatisfied();
 

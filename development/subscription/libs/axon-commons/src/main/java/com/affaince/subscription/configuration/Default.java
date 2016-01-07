@@ -85,15 +85,15 @@ public class Default {
     }
 
     @Bean(name = "axonmongo")
-    public MongoTemplate mongoTemplate(Mongo mongo) {
-        MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongo, "items", "domainevents", "snapshotevents", null, null);
+    public MongoTemplate mongoTemplate(Mongo mongo, @Value("${view.db.name}") String dbName) {
+        MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongo, dbName, "domainevents", "snapshotevents", null, null);
         return mongoTemplate;
     }
 
     @Bean
-    public Mongo mongo() {
+    public Mongo mongo(@Value("${view.db.host}") String host, @Value("${view.db.port}") int port) {
         try {
-            return new Mongo("localhost", 27017);
+            return new Mongo(host, port);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

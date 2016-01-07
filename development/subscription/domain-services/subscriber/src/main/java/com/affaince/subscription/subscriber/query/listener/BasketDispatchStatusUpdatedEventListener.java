@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.subscriber.command.event.BasketDispatchStatusUpdatedEvent;
-import com.affaince.subscription.subscriber.query.repository.SubscriptionRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BasketDispatchStatusUpdatedEventListener {
-    private final SubscriptionRepository basketRepository;
+    private final SubscriptionViewRepository basketRepository;
 
     @Autowired
-    public BasketDispatchStatusUpdatedEventListener(SubscriptionRepository basketRepository) {
+    public BasketDispatchStatusUpdatedEventListener(SubscriptionViewRepository basketRepository) {
         this.basketRepository = basketRepository;
     }
 

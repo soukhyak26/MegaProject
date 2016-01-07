@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.subscriber.command.event.BasketRuleAddedEvent;
-import com.affaince.subscription.subscriber.query.repository.BasketRuleRepository;
+import com.affaince.subscription.subscriber.query.repository.BasketRuleViewRepository;
 import com.affaince.subscription.subscriber.query.view.BasketRuleView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class BasketRuleAddedEventListener {
 
-    private final BasketRuleRepository basketRuleRepository;
+    private final BasketRuleViewRepository basketRuleViewRepository;
 
     @Autowired
-    public BasketRuleAddedEventListener(BasketRuleRepository basketRuleRepository) {
-        this.basketRuleRepository = basketRuleRepository;
+    public BasketRuleAddedEventListener(BasketRuleViewRepository basketRuleViewRepository) {
+        this.basketRuleViewRepository = basketRuleViewRepository;
     }
 
     @EventHandler
@@ -25,6 +25,6 @@ public class BasketRuleAddedEventListener {
         BasketRuleView basketRuleView = new BasketRuleView(event.getBasketRuleId(),
                 event.getMaximumPermissibleAmount(), event.getMinimumAmountForDiscountEligibility(),
                 event.getMaximumPermissibleDiscount());
-        basketRuleRepository.save(basketRuleView);
+        basketRuleViewRepository.save(basketRuleView);
     }
 }

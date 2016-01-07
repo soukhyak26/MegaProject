@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by rbsavaliya on 27-09-2015.
  */
-public interface BasketRuleRepository extends CrudRepository<BasketRuleView, String> {
+public interface BasketRuleViewRepository extends CrudRepository<BasketRuleView, String> {
 }

@@ -29,6 +29,7 @@ public class Axon extends Default {
         return repository;
     }
 
+
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{

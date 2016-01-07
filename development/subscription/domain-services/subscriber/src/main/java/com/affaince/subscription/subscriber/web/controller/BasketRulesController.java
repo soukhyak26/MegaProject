@@ -2,7 +2,7 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.AddBasketRulesCommand;
-import com.affaince.subscription.subscriber.query.repository.SubscriptionRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.web.request.BasketRulesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +19,10 @@ import java.util.UUID;
 public class BasketRulesController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final SubscriptionRepository repository;
+    private final SubscriptionViewRepository repository;
 
     @Autowired
-    public BasketRulesController(SubscriptionCommandGateway commandGateway, SubscriptionRepository repository) {
+    public BasketRulesController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
     }
