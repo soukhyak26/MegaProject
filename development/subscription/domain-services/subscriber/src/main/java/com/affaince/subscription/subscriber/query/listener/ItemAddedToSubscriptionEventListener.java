@@ -31,7 +31,7 @@ public class ItemAddedToSubscriptionEventListener {
     public void on(ItemAddedToSubscriptionEvent event) {
         final Frequency frequency = new Frequency(event.getQuantityPerBasket(),
                 new Period(event.getFrequency(), PeriodUnit.valueOf(event.getFrequencyUnit())));
-        BasketItem basketItem = new BasketItem(event.getItemId(), frequency, event.getDiscountedOfferedPrice());
+        BasketItem basketItem = new BasketItem(event.getItemId(), frequency, event.getDiscountedOfferedPrice(), event.getNoOfCycle());
         SubscriptionView subscriptionView = repository.findOne(event.getSubscriptionId());
         List<BasketItem> basketItems = subscriptionView.getBasketItems();
         if (basketItems == null) {

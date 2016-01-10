@@ -17,6 +17,7 @@ public class ProductView {
     private String subCategoryId;
     private long quantity;
     private QuantityUnit quantityUnit;
+    private long SubscribedProductCount;
 
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit) {
         this.productId = productId;
@@ -53,4 +54,35 @@ public class ProductView {
         this.subCategoryId = subCategoryId;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public QuantityUnit getQuantityUnit() {
+        return quantityUnit;
+    }
+
+    public void setQuantityUnit(QuantityUnit quantityUnit) {
+        this.quantityUnit = quantityUnit;
+    }
+
+    public long getSubscribedProductCount() {
+        return SubscribedProductCount;
+    }
+
+    public void setSubscribedProductCount(long subscribedProductCount) {
+        SubscribedProductCount = subscribedProductCount;
+    }
 }

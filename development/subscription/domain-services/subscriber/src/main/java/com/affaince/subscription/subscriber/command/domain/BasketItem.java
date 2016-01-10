@@ -9,11 +9,13 @@ public class BasketItem {
     private String itemId;
     private Frequency frequency;
     private double discountedOfferedPrice;
+    private int noOfCycle;
 
-    public BasketItem(String itemId, Frequency frequency, double discountedOfferedPrice) {
+    public BasketItem(String itemId, Frequency frequency, double discountedOfferedPrice, int noOfCycle) {
         this.itemId = itemId;
         this.frequency = frequency;
         this.discountedOfferedPrice = discountedOfferedPrice;
+        this.noOfCycle = noOfCycle;
     }
 
     public String getItemId() {
@@ -38,5 +40,13 @@ public class BasketItem {
 
     public void setDiscountedOfferedPrice(double discountedOfferedPrice) {
         this.discountedOfferedPrice = discountedOfferedPrice;
+    }
+
+    public int getNoOfCycle() {
+        return noOfCycle;
+    }
+
+    public void setNoOfCycle(int noOfCycle) {
+        this.noOfCycle = noOfCycle;
     }
 }

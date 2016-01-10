@@ -55,7 +55,7 @@ public class SubscriptionController {
         final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriptionId,
                 request.getItemId(), request.getQuantityPerBasket(),
                 request.getFrequency(), request.getFrequencyUnit(),
-                request.getDiscountedOfferedPrice());
+                request.getDiscountedOfferedPrice(), request.getNoOfCycle());
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

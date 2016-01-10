@@ -15,6 +15,8 @@ public class BasketItemRequest {
     private int frequency;
     private int frequencyUnit;
     private double discountedOfferedPrice;
+    @Min(1)
+    private int noOfCycle;
 
     public String getItemId() {
         return itemId;
@@ -55,5 +57,13 @@ public class BasketItemRequest {
 
     public void setDiscountedOfferedPrice(double discountedOfferedPrice) {
         this.discountedOfferedPrice = discountedOfferedPrice;
+    }
+
+    public int getNoOfCycle() {
+        return noOfCycle;
+    }
+
+    public void setNoOfCycle(int noOfCycle) {
+        this.noOfCycle = noOfCycle;
     }
 }

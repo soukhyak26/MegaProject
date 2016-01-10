@@ -14,9 +14,7 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by rbsavaliya on 09-08-2015.
@@ -94,7 +92,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
         final Frequency frequency = new Frequency(event.getQuantityPerBasket(), new Period(event.getFrequency(),
                 PeriodUnit.valueOf(event.getFrequencyUnit())));
         final BasketItem basketItem = new BasketItem(event.getItemId(),
-                frequency, event.getDiscountedOfferedPrice());
+                frequency, event.getDiscountedOfferedPrice(), event.getNoOfCycle());
         if (basketItems == null) {
             basketItems = new ArrayList<>();
         }
@@ -137,7 +135,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     public void addItemToBasket(AddItemToSubscriptionCommand command) {
         apply(new ItemAddedToSubscriptionEvent(this.subscriptionId, command.getItemId(),
                 command.getQuantityPerBasket(), command.getFrequency(), command.getFrequencyUnit(),
-                command.getDiscountedOfferedPrice()));
+                command.getDiscountedOfferedPrice(), command.getNoOfCycle()));
     }
 
     public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {
@@ -154,5 +152,11 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public void activateSubscription() {
         apply(new SubscriptionActivatedEvent(this.subscriptionId));
+        Map <String, Integer> subscribedProductUpdateCount = new HashMap<>(basketItems.size());
+        for (BasketItem basketItem: basketItems) {
+            Frequency frequency = basketItem.getFrequency();
+            subscribedProductUpdateCount.put(basketItem.getItemId(), basketItem.getNoOfCycle()*frequency.getValue());
+        }
+        apply(new SubscribedProductCountUpdatedEvent(subscribedProductUpdateCount));
     }
 }

@@ -13,14 +13,16 @@ public class AddItemToSubscriptionCommand {
     private int frequency;
     private int frequencyUnit;
     private double discountedOfferedPrice;
+    private int noOfCycle;
 
-    public AddItemToSubscriptionCommand(String subscriptionId, String itemId, int quantityPerBasket, int frequency, int frequencyUnit, double discountedOfferedPrice) {
+    public AddItemToSubscriptionCommand(String subscriptionId, String itemId, int quantityPerBasket, int frequency, int frequencyUnit, double discountedOfferedPrice, int noOfCycle) {
         this.subscriptionId = subscriptionId;
         this.itemId = itemId;
         this.quantityPerBasket = quantityPerBasket;
         this.frequency = frequency;
         this.frequencyUnit = frequencyUnit;
         this.discountedOfferedPrice = discountedOfferedPrice;
+        this.noOfCycle = noOfCycle;
     }
 
     public AddItemToSubscriptionCommand() {
@@ -30,47 +32,27 @@ public class AddItemToSubscriptionCommand {
         return subscriptionId;
     }
 
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }
-
     public String getItemId() {
         return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
     }
 
     public int getQuantityPerBasket() {
         return quantityPerBasket;
     }
 
-    public void setQuantityPerBasket(int quantityPerBasket) {
-        this.quantityPerBasket = quantityPerBasket;
-    }
-
     public int getFrequency() {
         return frequency;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
     }
 
     public int getFrequencyUnit() {
         return frequencyUnit;
     }
 
-    public void setFrequencyUnit(int frequencyUnit) {
-        this.frequencyUnit = frequencyUnit;
-    }
-
     public double getDiscountedOfferedPrice() {
         return discountedOfferedPrice;
     }
 
-    public void setDiscountedOfferedPrice(double discountedOfferedPrice) {
-        this.discountedOfferedPrice = discountedOfferedPrice;
+    public int getNoOfCycle() {
+        return noOfCycle;
     }
 }
