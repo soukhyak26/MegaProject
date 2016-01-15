@@ -24,7 +24,6 @@ public class ProductConfigurationSetEventListener {
         productConfigurationView.setProductId(event.getProductId());
         productConfigurationView.setDemandCurvePeriod(event.getDemandCurvePeriod());
         productConfigurationView.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
-        productConfigurationView.setMerchantExpectedProfitPercent(event.getMerchantExpectedProfitPercent());
         productConfigurationView.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
 

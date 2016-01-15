@@ -11,15 +11,13 @@ public class SetProductConfigurationCommand {
     private String productId;
     private Period demandCurvePeriod;
     private short revenueChangeThresholdForPriceChange;
-    private double merchantExpectedProfitPercent;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
 
-    public SetProductConfigurationCommand(String productId, Period demandCurvePeriod, short revenueChangeThresholdForPriceChange, double merchantExpectedProfitPercent, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
+    public SetProductConfigurationCommand(String productId, Period demandCurvePeriod, short revenueChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
         this.productId = productId;
         this.demandCurvePeriod = demandCurvePeriod;
         this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
-        this.merchantExpectedProfitPercent = merchantExpectedProfitPercent;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
     }
@@ -39,9 +37,6 @@ public class SetProductConfigurationCommand {
         return revenueChangeThresholdForPriceChange;
     }
 
-    public double getMerchantExpectedProfitPercent() {
-        return merchantExpectedProfitPercent;
-    }
 
     public boolean isCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;

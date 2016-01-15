@@ -45,20 +45,20 @@ public class SubscriberController {
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
-    @RequestMapping (value = "password/{subscriberId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "password/{subscriberId}", method = RequestMethod.PUT)
     @Consumes("application/json")
-    public ResponseEntity <Object> createPassword (@PathVariable String subscriberId, @RequestBody String password) throws Exception {
+    public ResponseEntity<Object> createPassword(@PathVariable String subscriberId, @RequestBody String password) throws Exception {
         final SubscriberView subscriberView = repository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
-        final SetSubscriberPasswordCommand command = new SetSubscriberPasswordCommand (subscriberId, password);
+        final SetSubscriberPasswordCommand command = new SetSubscriberPasswordCommand(subscriberId, password);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
         }
-        return  new ResponseEntity<Object>(HttpStatus.CREATED);
+        return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updatecontactdetails/{subscriberid}")

@@ -1,8 +1,8 @@
 package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.product.registration.command.event.SubscribedProductCountUpdatedEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductView;
+import com.affaince.subscription.product.registration.query.repository.ProductsStatisticsViewRepository;
+import com.affaince.subscription.product.registration.query.view.ProductsStatisticsView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,20 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubscribedProductCountUpdatedEventListener {
 
-    private final ProductViewRepository productViewRepository;
+    private final ProductsStatisticsViewRepository statsViewRepository;
 
     @Autowired
-    public SubscribedProductCountUpdatedEventListener(ProductViewRepository productViewRepository) {
-        this.productViewRepository = productViewRepository;
+    public SubscribedProductCountUpdatedEventListener(ProductsStatisticsViewRepository productStatsViewRepository) {
+        this.statsViewRepository = productStatsViewRepository;
     }
 
     @EventHandler
     public void on(SubscribedProductCountUpdatedEvent event) {
         for (String productId : event.getSubscribedProductUpdateCount().keySet()) {
-            final ProductView productView = productViewRepository.findOne(productId);
-            long subscribedProductCount = productView.getSubscribedProductCount();
-            productView.setSubscribedProductCount(subscribedProductCount + event.getSubscribedProductUpdateCount().get(productId));
-            productViewRepository.save(productView);
+            final ProductsStatisticsView productStatsView = statsViewRepository.findOne(productId);
+            long subscribedProductCount = productStatsView.getProductSubscriptionCount();
+            productStatsView.setProductSubscriptionCount(subscribedProductCount + event.getSubscribedProductUpdateCount().get(productId));
+            statsViewRepository.save(productStatsView);
         }
     }
 }

@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
-@ContextConfiguration( classes = {ProductDailyQuoteGenerationTest.ContextConfig.class},
+@ContextConfiguration(classes = {ProductDailyQuoteGenerationTest.ContextConfig.class},
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
@@ -52,6 +52,7 @@ public class ProductDailyQuoteGenerationTest {
             };
         }
     }
+
     @DirtiesContext
     @Test
     public void testPositive() throws Exception {

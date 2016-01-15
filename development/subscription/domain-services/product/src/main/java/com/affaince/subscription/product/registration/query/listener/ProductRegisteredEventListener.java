@@ -28,7 +28,9 @@ public class ProductRegisteredEventListener {
                 event.getCategoryId(),
                 event.getSubCategoryId(),
                 event.getQuantity(),
-                event.getQuantityUnit()
+                event.getQuantityUnit(),
+                event.getSubstitutes(),
+                event.getComplements()
         );
         itemRepository.save(productView);
     }

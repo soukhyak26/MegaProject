@@ -8,13 +8,13 @@ import java.util.Date;
 /**
  * Created by mandark on 17-09-2015.
  */
-@CsvRecord(separator = ",", skipFirstLine = true,generateHeaderColumns = true,crlf = "UNIX")
+@CsvRecord(separator = ",", skipFirstLine = true, generateHeaderColumns = true, crlf = "UNIX")
 public class ProductDailyQuoteGeneratedEvent {
     @DataField(columnName = "PRODUCT_ID", name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
-    @DataField(columnName="CATEGORY_ID",name = "CATEGORY_ID", pos = 2, trim = true)
+    @DataField(columnName = "CATEGORY_ID", name = "CATEGORY_ID", pos = 2, trim = true)
     private String categoryId;
-    @DataField(columnName="SUBCATEGORY_ID",name = "SUBCATEGORY_ID", pos = 3, trim = true)
+    @DataField(columnName = "SUBCATEGORY_ID", name = "SUBCATEGORY_ID", pos = 3, trim = true)
     private String subCategoryId;
     @DataField(columnName = "QUOTED_PRICE", name = "QUOTED_PRICE", pos = 4, pattern = "##.###", trim = true)
     private double quotedPrice;

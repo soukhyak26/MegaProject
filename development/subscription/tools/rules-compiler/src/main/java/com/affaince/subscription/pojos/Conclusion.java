@@ -12,13 +12,15 @@ public class Conclusion implements RuleSetPojo {
         this.benefitValue = value;
     }
 
-    @JsonProperty ("unit")
+    @JsonProperty("unit")
     public String getUnit() {
         return unit;
     }
 
-    @JsonProperty ("benefitValue")
-    public double getBenefitValue() {return benefitValue;}
+    @JsonProperty("benefitValue")
+    public double getBenefitValue() {
+        return benefitValue;
+    }
 
     @Override
     public boolean equals(Object o) {

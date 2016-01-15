@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
-@ContextConfiguration( classes = {BasketDispatchRequestsTest.ContextConfig.class},
+@ContextConfiguration(classes = {BasketDispatchRequestsTest.ContextConfig.class},
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
@@ -49,7 +49,7 @@ public class BasketDispatchRequestsTest {
                 public void configure() throws Exception {
                     //from("bean:BasketDispatchRequestGeneratedEvent").
                     from("direct:start").
-                    marshal().bindy(BindyType.Csv, BasketDispatchRequestGeneratedEvent.class).
+                            marshal().bindy(BindyType.Csv, BasketDispatchRequestGeneratedEvent.class).
                             to("mock:queue.csv");
                 }
             };

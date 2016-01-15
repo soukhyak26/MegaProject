@@ -71,7 +71,7 @@ public class TreeBuilder extends RuleSetGrammarBaseListener {
         decimalFormat.setParseBigDecimal(true);
         BigDecimal value;
         try {
-            value = (BigDecimal)decimalFormat.parse(ctx.getText());
+            value = (BigDecimal) decimalFormat.parse(ctx.getText());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

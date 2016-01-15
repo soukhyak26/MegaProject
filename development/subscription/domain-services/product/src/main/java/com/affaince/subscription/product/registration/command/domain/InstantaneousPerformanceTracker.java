@@ -8,7 +8,9 @@ import org.joda.time.LocalDate;
 public class InstantaneousPerformanceTracker {
     private LocalDate fromDate;
     private LocalDate toDate;
-    private double costOfGoodsSold;
+    private double purchasePrice;
+    private double MRP;
+    private double expectedMerchantProfitPercentage;
     private double grossMargin;
     private double percentageGrossMargin;
     private double totalOperationalExpenses;
@@ -31,12 +33,12 @@ public class InstantaneousPerformanceTracker {
         this.toDate = toDate;
     }
 
-    public double getCostOfGoodsSold() {
-        return costOfGoodsSold;
+    public double getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setCostOfGoodsSold(double costOfGoodsSold) {
-        this.costOfGoodsSold = costOfGoodsSold;
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public double getGrossMargin() {
@@ -79,4 +81,23 @@ public class InstantaneousPerformanceTracker {
         this.percentageOperatingProfit = percentageOperatingProfit;
     }
 
+    public double getMRP() {
+        return MRP;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
+    }
+
+    public void setOperatingProfit(double operatingProfit) {
+        this.operatingProfit = operatingProfit;
+    }
+
+    public double getExpectedMerchantProfitPercentage() {
+        return expectedMerchantProfitPercentage;
+    }
+
+    public void setExpectedMerchantProfitPercentage(double expectedMerchantProfitPercentage) {
+        this.expectedMerchantProfitPercentage = expectedMerchantProfitPercentage;
+    }
 }

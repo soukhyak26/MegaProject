@@ -31,7 +31,8 @@ public class ProductForecastReceivedEventListener {
                 event.getMRP(),
                 event.getNumberOfNewCustomersAssociatedWithAPrice(),
                 event.getNumberOfChurnedCustomersAssociatedWithAPrice(),
-                event.getNumberOfExistingCustomersAssociatedWithAPrice()
+                event.getFromDate(),
+                event.getToDate()
         );
 /*
         AddForecastParametersCommand command = new AddForecastParametersCommand(
@@ -43,8 +44,6 @@ public class ProductForecastReceivedEventListener {
 */
         AddForecastParametersCommand command = new AddForecastParametersCommand();
         command.setProductId(event.getProductId());
-        command.setFromDate(event.getFromDate());
-        command.setToDate(event.getToDate());
         command.addForecastedPriceParameter(forecastedPriceParameter);
         commandGateway.executeAsync(command);
     }

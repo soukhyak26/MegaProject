@@ -21,9 +21,9 @@ public class SubscriberPasswordSetEventListener {
     }
 
     @EventHandler
-    public void on (SubscriberPasswordSetEvent event) {
+    public void on(SubscriberPasswordSetEvent event) {
         final SubscriberView subscriberView = subscriberViewRepository.findOne(event.getSubscriberId());
-        subscriberView.setPassword (event.getPassword());
+        subscriberView.setPassword(event.getPassword());
         subscriberViewRepository.save(subscriberView);
     }
 }

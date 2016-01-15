@@ -16,7 +16,8 @@ public class ProductForecastReceivedEvent {
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
 
-    public ProductForecastReceivedEvent(){}
+    public ProductForecastReceivedEvent() {
+    }
 
     public ProductForecastReceivedEvent(String productId, LocalDate fromDate, LocalDate toDate, double purchasePricePerUnit, double offeredPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, long numberOfExistingCustomersAssociatedWithAPrice) {
         this.productId = productId;

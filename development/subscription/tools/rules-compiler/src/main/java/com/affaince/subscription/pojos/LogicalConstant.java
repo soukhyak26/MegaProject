@@ -16,11 +16,11 @@ public class LogicalConstant extends LogicalExpression {
         return value;
     }
 
-    public static LogicalConstant getTrue(){
+    public static LogicalConstant getTrue() {
         return new LogicalConstant(true);
     }
 
-    public static LogicalConstant getFalse(){
+    public static LogicalConstant getFalse() {
         return new LogicalConstant(false);
     }
 

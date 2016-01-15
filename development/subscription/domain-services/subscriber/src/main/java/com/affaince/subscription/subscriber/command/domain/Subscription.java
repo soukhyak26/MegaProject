@@ -152,10 +152,10 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public void activateSubscription() {
         apply(new SubscriptionActivatedEvent(this.subscriptionId));
-        Map <String, Integer> subscribedProductUpdateCount = new HashMap<>(basketItems.size());
-        for (BasketItem basketItem: basketItems) {
+        Map<String, Integer> subscribedProductUpdateCount = new HashMap<>(basketItems.size());
+        for (BasketItem basketItem : basketItems) {
             Frequency frequency = basketItem.getFrequency();
-            subscribedProductUpdateCount.put(basketItem.getItemId(), basketItem.getNoOfCycle()*frequency.getValue());
+            subscribedProductUpdateCount.put(basketItem.getItemId(), basketItem.getNoOfCycle() * frequency.getValue());
         }
         apply(new SubscribedProductCountUpdatedEvent(subscribedProductUpdateCount));
     }

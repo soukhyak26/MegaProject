@@ -14,7 +14,9 @@ public class RealArithmeticExpression implements ArithmeticExpression {
     }
 
     @JsonProperty("t")
-    public String getType() { return "arith"; }
+    public String getType() {
+        return "arith";
+    }
 
     @JsonProperty("op")
     public String getOperator() {

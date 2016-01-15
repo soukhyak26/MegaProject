@@ -27,26 +27,26 @@ import java.util.concurrent.TimeoutException;
 public class RabbitMQConfiguration extends Default {
 
     @Bean
-    public RabbitAdmin rabbitAdmin (CachingConnectionFactory connectionFactory) {
+    public RabbitAdmin rabbitAdmin(CachingConnectionFactory connectionFactory) {
         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
         rabbitAdmin.setAutoStartup(true);
         return rabbitAdmin;
     }
 
     @Bean
-    public Queue queue (@Value("${subscription.rabbitmq.queue}") String queueName) {
-        return new Queue (queueName);
+    public Queue queue(@Value("${subscription.rabbitmq.queue}") String queueName) {
+        return new Queue(queueName);
     }
 
     @Bean
-    public CachingConnectionFactory connectionFactory () {
+    public CachingConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
     }
 
     @Bean
-    public String exchange (@Value("${axon.eventBus.exchangeName}") String exchangeName,
-                            @Value("${subscription.rabbitmq.exchange.host}") String host,
-                            @Value("${subscription.rabbitmq.queue}") String queueName) throws IOException, TimeoutException {
+    public String exchange(@Value("${axon.eventBus.exchangeName}") String exchangeName,
+                           @Value("${subscription.rabbitmq.exchange.host}") String host,
+                           @Value("${subscription.rabbitmq.queue}") String queueName) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost(host);
         Connection connection = connectionFactory.newConnection();
@@ -54,21 +54,21 @@ public class RabbitMQConfiguration extends Default {
 
         channel.exchangeDeclare(exchangeName, "topic", true);
         channel.queueDeclare(queueName, true, false, false, null);
-        for (String bindingKey: types().keySet()) {
+        for (String bindingKey : types().keySet()) {
             channel.queueBind(queueName, exchangeName, bindingKey);
         }
         return exchangeName;
     }
 
     @Bean
-    public RoutingKeyResolver routingKeyResolver () {
-        return new EventTypeRoutingKeyResolver ();
+    public RoutingKeyResolver routingKeyResolver() {
+        return new EventTypeRoutingKeyResolver();
     }
 
     @Bean
-    public EventBusTerminal eventBusTerminal (String exchange, ListenerContainerLifecycleManager listenerContainerLifecycleManager,
-                                              Serializer serializer, CachingConnectionFactory connectionFactory,
-                                              RoutingKeyResolver routingKeyResolver, AMQPMessageConverter messageConverter) {
+    public EventBusTerminal eventBusTerminal(String exchange, ListenerContainerLifecycleManager listenerContainerLifecycleManager,
+                                             Serializer serializer, CachingConnectionFactory connectionFactory,
+                                             RoutingKeyResolver routingKeyResolver, AMQPMessageConverter messageConverter) {
         SpringAMQPTerminal springAMQPTerminal = new SpringAMQPTerminal();
         springAMQPTerminal.setExchangeName(exchange);
         springAMQPTerminal.setListenerContainerLifecycleManager(listenerContainerLifecycleManager);
@@ -80,13 +80,13 @@ public class RabbitMQConfiguration extends Default {
     }
 
     @Bean
-    public AMQPMessageConverter messageConverter (Serializer serializer, RoutingKeyResolver routingKeyResolver) {
+    public AMQPMessageConverter messageConverter(Serializer serializer, RoutingKeyResolver routingKeyResolver) {
         return new DefaultAMQPMessageConverter(serializer, routingKeyResolver, true);
     }
 
     @Bean
-    public ListenerContainerLifecycleManager listenerContainerLifecycleManager (CachingConnectionFactory connectionFactory) {
-        ListenerContainerLifecycleManager listenerContainerLifecycleManager =  new ListenerContainerLifecycleManager();
+    public ListenerContainerLifecycleManager listenerContainerLifecycleManager(CachingConnectionFactory connectionFactory) {
+        ListenerContainerLifecycleManager listenerContainerLifecycleManager = new ListenerContainerLifecycleManager();
         listenerContainerLifecycleManager.setConnectionFactory(connectionFactory);
         return listenerContainerLifecycleManager;
     }

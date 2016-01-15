@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class BasketDispatchedStatusService {
 
-    List<BasketDispatchedStatusEvent> getDispatchedBaskets(){
-        List<BasketDispatchedStatusEvent> basketDispatchedStatusEvents= new ArrayList();
-        BasketDispatchedStatusEvent event1= new BasketDispatchedStatusEvent("basket01", new Date(),3,4);
-        BasketDispatchedStatusEvent event2= new BasketDispatchedStatusEvent("basket02", new Date(),3,4);
-        BasketDispatchedStatusEvent event3= new BasketDispatchedStatusEvent("basket03", new Date(),3,4);
+    List<BasketDispatchedStatusEvent> getDispatchedBaskets() {
+        List<BasketDispatchedStatusEvent> basketDispatchedStatusEvents = new ArrayList();
+        BasketDispatchedStatusEvent event1 = new BasketDispatchedStatusEvent("basket01", new Date(), 3, 4);
+        BasketDispatchedStatusEvent event2 = new BasketDispatchedStatusEvent("basket02", new Date(), 3, 4);
+        BasketDispatchedStatusEvent event3 = new BasketDispatchedStatusEvent("basket03", new Date(), 3, 4);
         return basketDispatchedStatusEvents;
     }
 }

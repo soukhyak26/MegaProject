@@ -46,7 +46,9 @@ public class ProductController {
                 request.getCategoryId(),
                 request.getSubCategoryId(),
                 request.getQuantity(),
-                request.getQuantityUnit()
+                request.getQuantityUnit(),
+                request.getSubstitutes(),
+                request.getComplements()
         );
         try {
             commandGateway.executeAsync(createCommand);
@@ -89,8 +91,6 @@ public class ProductController {
         }
         AddForecastParametersCommand command = new AddForecastParametersCommand(
                 request.getProductId(),
-                request.getFromDate(),
-                request.getToDate(),
                 request.getForecastedPriceParameters()
         );
         commandGateway.executeAsync(command);
@@ -127,8 +127,7 @@ public class ProductController {
         }
 
         final SetProductConfigurationCommand command = new SetProductConfigurationCommand(
-                productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(), request.getMerchantExpectedProfitPercent(),
-                request.isCrossPriceElasticityConsidered(), request.isCrossPriceElasticityConsidered()
+                productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered()
         );
         try {
             commandGateway.executeAsync(command);

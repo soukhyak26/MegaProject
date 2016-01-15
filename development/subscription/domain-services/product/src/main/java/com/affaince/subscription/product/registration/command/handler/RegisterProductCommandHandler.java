@@ -32,7 +32,9 @@ public class RegisterProductCommandHandler {
                 command.getCategoryId(),
                 command.getSubCategoryId(),
                 command.getQuantity(),
-                command.getQuantityUnit()
+                command.getQuantityUnit(),
+                command.getSubstitutes(),
+                command.getComplements()
         );
         repository.add(product);
         LOGGER.info("Product added to write repository with id: " + command.getProductId());

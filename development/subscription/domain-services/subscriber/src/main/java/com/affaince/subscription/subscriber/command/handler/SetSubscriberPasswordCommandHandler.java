@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class SetSubscriberPasswordCommandHandler {
 
-    private final Repository <Subscriber> repository;
+    private final Repository<Subscriber> repository;
 
     @Autowired
     public SetSubscriberPasswordCommandHandler(Repository<Subscriber> repository) {
@@ -23,8 +23,8 @@ public class SetSubscriberPasswordCommandHandler {
     }
 
     @CommandHandler
-    public void handle (SetSubscriberPasswordCommand command) throws NoSuchAlgorithmException {
+    public void handle(SetSubscriberPasswordCommand command) throws NoSuchAlgorithmException {
         final Subscriber subscriber = repository.load(command.getSubscriberId());
-        subscriber.setPassword (command.getPassword());
+        subscriber.setPassword(command.getPassword());
     }
 }

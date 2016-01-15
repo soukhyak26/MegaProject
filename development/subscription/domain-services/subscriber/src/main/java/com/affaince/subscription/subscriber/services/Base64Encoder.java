@@ -14,7 +14,7 @@ public class Base64Encoder {
     @Value("${java.security.algorithm}")
     private static String algorithm;
 
-    public static String generateHash (String text) throws NoSuchAlgorithmException {
+    public static String generateHash(String text) throws NoSuchAlgorithmException {
         if (algorithm == null) {
             algorithm = "SHA-256";
         }

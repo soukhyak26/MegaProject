@@ -89,6 +89,7 @@ public class PriceBucket {
             //RAISE EXCEPTION
         }
     }
+
     public LocalDate getFromDate() {
         return fromDate;
     }

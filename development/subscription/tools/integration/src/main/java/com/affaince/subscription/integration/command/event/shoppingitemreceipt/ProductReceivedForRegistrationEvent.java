@@ -46,7 +46,6 @@ public class ProductReceivedForRegistrationEvent {
     }
 
 
-
     public String getProductId() {
         return this.productId;
     }

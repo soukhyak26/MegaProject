@@ -5,7 +5,6 @@ import com.affaince.subscription.product.registration.command.AddForecastParamet
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
-import com.affaince.subscription.product.registration.services.UtilityService;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -39,8 +38,8 @@ public class Product extends AbstractAnnotatedAggregateRoot {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit) {
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, quantity, quantityUnit));
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, quantity, quantityUnit, substitutes, complements));
     }
 
     public String getProductId() {
@@ -90,6 +89,8 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.subCategoryId = event.getSubCategoryId();
         this.quantity = event.getQuantity();
         this.quantityUnit = event.getQuantityUnit();
+        this.substitutes = event.getSubstitutes();
+        this.complements = event.getComplements();
         productAccount = new ProductAccount();
     }
 
@@ -98,19 +99,37 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.productId = event.getProductId();
         PriceBucket lastPriceBucket = this.getLatestActualPriceBucket();
         PriceBucket newPriceBucket = new PriceBucket(lastPriceBucket);
+        newPriceBucket.setFromDate(event.getCurrentPriceDate());
+        newPriceBucket.setOfferedPricePerUnit(event.getOfferedPrice());
         lastPriceBucket.setToDate(LocalDate.now());
+        this.getProductAccount().addNewActualPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
     }
 
     @EventSourcingHandler
     public void on(ForecastParametersAddedEvent event) {
         this.productId = event.getProductId();
-        String forecastDate = UtilityService.getFromToDateString(event.getFromDate(), event.getToDate());
+        List<ForecastedPriceParameter> forecastedPriceParameters = event.getForecastedPriceParamters();
 
-        ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
-        productPerformanceTracker.setFromDate(event.getFromDate());
-        productPerformanceTracker.setToDate(event.getToDate());
-        productAccount.addNewForecastedPriceBucket(event.getFromDate(), event.getPriceBuckets());
-        productAccount.addPerformanceTrackerToForecast(event.getFromDate(), productPerformanceTracker);
+        Map<LocalDate, ProductPerformanceTracker> forecastPerUnitPeriod = getProductAccount().getForecastPerUnitPeriod();
+
+        ProductAccount productAccount = getProductAccount();
+
+        for (ForecastedPriceParameter priceParameter : forecastedPriceParameters) {
+            ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
+            productPerformanceTracker.setFromDate(priceParameter.getFromDate());
+            productPerformanceTracker.setToDate(priceParameter.getToDate());
+            PriceBucket priceBucket = new PriceBucket(
+                    priceParameter.getPurchasePricePerUnit(),
+                    priceParameter.getAverageOfferedPricePerUnit(),
+                    priceParameter.getMRP(),
+                    priceParameter.getFromDate(),
+                    priceParameter.getToDate(),
+                    priceParameter.getNumberOfNewCustomersAssociatedWithAPrice(),
+                    priceParameter.getNumberOfChurnedCustomersAssociatedWithAPrice()
+            );
+            productAccount.addPerformanceTrackerToForecast(priceParameter.getFromDate(), productPerformanceTracker);
+            productAccount.addNewForecastedPriceBucket(priceParameter.getFromDate(), priceBucket);
+        }
     }
 
 
@@ -139,7 +158,6 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         final ProductConfiguration productConfiguration = new ProductConfiguration();
         productConfiguration.setDemandCurvePeriod(event.getDemandCurvePeriod());
         productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
-        productConfiguration.setMerchantExpectedProfitPercent(event.getMerchantExpectedProfitPercent());
         productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
         this.productConfiguration = productConfiguration;
@@ -150,34 +168,10 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     public void addForecastParameters(AddForecastParametersCommand command) {
-        List<ForecastedPriceParameter> forecastedPriceParameters = command.getForecastedPriceParamters();
+        apply(new ForecastParametersAddedEvent(
+                this.productId, command.getForecastedPriceParamters()
+        ));
 
-        Map<LocalDate, ProductPerformanceTracker> forecastPerUnitPeriod = getProductAccount().getForecastPerUnitPeriod();
-        ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
-        productPerformanceTracker.setFromDate(command.getFromDate());
-        productPerformanceTracker.setToDate(command.getToDate());
-        ProductAccount productAccount = getProductAccount();
-
-        for (ForecastedPriceParameter priceParameter : forecastedPriceParameters) {
-            PriceBucket priceBucket = new PriceBucket(
-                    priceParameter.getPurchasePricePerUnit(),
-                    priceParameter.getAverageOfferedPricePerUnit(),
-                    priceParameter.getMRP(),
-                    command.getFromDate(),
-                    command.getToDate(),
-                    priceParameter.getNumberOfNewCustomersAssociatedWithAPrice(),
-                    priceParameter.getNumberOfChurnedCustomersAssociatedWithAPrice()
-            );
-            productAccount.addNewForecastedPriceBucket(command.getFromDate(), priceBucket);
-            apply(new ForecastParametersAddedEvent(
-                    this.productId,
-                    command.getFromDate(),
-                    command.getToDate(),
-                    priceBucket
-            ));
-
-        }
-        productAccount.addPerformanceTrackerToForecast(command.getToDate(), productPerformanceTracker);
     }
 
     public void addCurrentOfferedPrice(double currentOfferedPrice) {
@@ -192,15 +186,38 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         return getProductAccount().getLatestActualPriceBucket();
     }
 
-    public double getLatestOperatingExpensesPerUnit() {
+    public double getLatestOperatingExpensesPerUnitActuals() {
         return getProductAccount().getLatestActuals().getTotalOperationalExpenses();
+    }
+
+    public double getLatestOperatingExpensesPerUnitForecast() {
+        return getProductAccount().getLatestForecast().getTotalOperationalExpenses();
+    }
+
+    public double getLatestMRPForecast() {
+        return getProductAccount().getLatestForecast().getLatestMRP();
+    }
+
+    public double getLatestMRPActuals() {
+        return getProductAccount().getLatestActuals().getLatestMRP();
     }
 
     public void setProductConfiguration(SetProductConfigurationCommand command) {
         apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
                 command.getRevenueChangeThresholdForPriceChange(),
-                command.getMerchantExpectedProfitPercent(),
                 command.isCrossPriceElasticityConsidered(),
                 command.isAdvertisingExpensesConsidered()));
+    }
+
+    public double getLatestPurchasePriceActuals() {
+        return getProductAccount().getLatestActuals().getLatestPurchasePrice();
+    }
+
+    public double getLatestPurchasePriceForecast() {
+        return getProductAccount().getLatestForecast().getLatestPurchasePrice();
+    }
+
+    public double getLatestMerchantProfitActuals() {
+        return getProductAccount().getLatestActuals().getExpectedMerchantProfitPercentage();
     }
 }

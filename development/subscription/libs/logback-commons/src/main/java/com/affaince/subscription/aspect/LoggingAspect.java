@@ -1,18 +1,12 @@
 package com.affaince.subscription.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Pointcut;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
-
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 /**
  * Created by rbsavaliya on 19-12-2015.
@@ -25,7 +19,7 @@ public class LoggingAspect {
 
     //@Before("within (com.affaince.subscription.subscriber.query.listener.*)")
     @Around("@annotation (org.axonframework.eventhandling.annotation.EventHandler) || @annotation (org.axonframework.commandhandling.annotation.CommandHandler)")
-    public void haandlerAdvice (ProceedingJoinPoint joinPoint) throws Throwable {
+    public void haandlerAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
         AspectLoggingObject aspectLoggingObject = new AspectLoggingObject(
                 joinPoint.getTarget().getClass().getCanonicalName(),
                 joinPoint.getArgs()[0].getClass().getCanonicalName(),
@@ -33,7 +27,7 @@ public class LoggingAspect {
         );
         ObjectMapper objectMapper = new ObjectMapper();
         logger.info(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(aspectLoggingObject));
-        joinPoint.proceed ();
+        joinPoint.proceed();
     }
 
     private class AspectLoggingObject {

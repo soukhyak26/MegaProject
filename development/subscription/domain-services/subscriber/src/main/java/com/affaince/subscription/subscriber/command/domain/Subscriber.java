@@ -107,10 +107,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(StatusAndDispatchDateUpdatedEvent event) {
         this.subscriberId = event.getSubscriptionId();
-        Basket basket = this.baskets.get (event.getBasketId());
+        Basket basket = this.baskets.get(event.getBasketId());
         basket.setDispatchDate(new LocalDate(event.getDispatchDate()));
         basket.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
-        List <DeliveryItem> deliveryItems = basket.getDeliveryItems();
+        List<DeliveryItem> deliveryItems = basket.getDeliveryItems();
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
             DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null);
             deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
@@ -126,7 +126,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on (SubscriberPasswordSetEvent event) {
+    public void on(SubscriberPasswordSetEvent event) {
         this.subscriberId = event.getSubscriberId();
         this.password = event.getPassword();
     }
@@ -154,14 +154,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         apply(new CouponCodeAddedEvent(this.subscriberId, couponCode));
     }
 
-    public void addBasket (Basket basket) {
+    public void addBasket(Basket basket) {
         apply(new BasketCreatedEvent(
                 this.subscriberId, basket.getBasketId(), basket.getDeliveryItems(),
                 basket.getDeliveryDate(), basket.getDispatchDate(), basket.getStatus()));
     }
 
     public void updateStatusAndDispatchDate(UpdateStatusAndDispatchDateCommand command) {
-        apply(new StatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId (), command.getBasketDeliveryStatus(), command.getDispatchDate(),
+        apply(new StatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId(), command.getBasketDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses()));
     }
 
@@ -171,7 +171,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void setPassword(String password) throws NoSuchAlgorithmException {
         try {
-            apply(new SubscriberPasswordSetEvent (this.subscriberId, Base64Encoder.generateHash(password)));
+            apply(new SubscriberPasswordSetEvent(this.subscriberId, Base64Encoder.generateHash(password)));
         } catch (NoSuchAlgorithmException e) {
             logger.error(e.getMessage());
             throw e;

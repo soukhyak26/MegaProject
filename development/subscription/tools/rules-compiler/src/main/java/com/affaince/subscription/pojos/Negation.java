@@ -10,7 +10,9 @@ public class Negation implements ArithmeticExpression {
     }
 
     @JsonProperty("t")
-    public String getType() { return "neg"; }
+    public String getType() {
+        return "neg";
+    }
 
     @JsonProperty("expr")
     public ArithmeticExpression getExpression() {

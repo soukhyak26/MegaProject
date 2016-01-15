@@ -24,7 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @BootstrapWith(CamelTestContextBootstrapper.class)
-@ContextConfiguration( classes = {ProductStatusFeedTest.ContextConfig.class},
+@ContextConfiguration(classes = {ProductStatusFeedTest.ContextConfig.class},
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @MockEndpoints()
@@ -33,10 +33,10 @@ public class ProductStatusFeedTest {
     protected MockEndpoint mock;
 
     @Configuration
-    public static class ContextConfig extends SingleRouteCamelConfiguration  {
+    public static class ContextConfig extends SingleRouteCamelConfiguration {
         @Bean
         @Override
-        public RouteBuilder route(){
+        public RouteBuilder route() {
             return new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {

@@ -4,6 +4,7 @@ package com.affaince.subscription.product.registration.web.request;
 import com.affaince.subscription.common.type.QuantityUnit;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -24,6 +25,8 @@ public class RegisterProductRequest {
     private long quantity;
     @NotNull
     private QuantityUnit quantityUnit;
+    private List<String> substitutes;
+    private List<String> complements;
 
     public String getCategoryId() {
         return categoryId;
@@ -73,4 +76,19 @@ public class RegisterProductRequest {
         this.quantityUnit = quantityUnit;
     }
 
+    public List<String> getSubstitutes() {
+        return substitutes;
+    }
+
+    public void setSubstitutes(List<String> substitutes) {
+        this.substitutes = substitutes;
+    }
+
+    public List<String> getComplements() {
+        return complements;
+    }
+
+    public void setComplements(List<String> complements) {
+        this.complements = complements;
+    }
 }

@@ -8,7 +8,6 @@ import com.affaince.subscription.common.type.Period;
 public class ProductConfiguration {
     private Period demandCurvePeriod;
     private short revenueChangeThresholdForPriceChange;
-    private double merchantExpectedProfitPercent;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
 
@@ -20,9 +19,6 @@ public class ProductConfiguration {
         this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
     }
 
-    public void setMerchantExpectedProfitPercent(double merchantExpectedProfitPercent) {
-        this.merchantExpectedProfitPercent = merchantExpectedProfitPercent;
-    }
 
     public void setCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
         isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;

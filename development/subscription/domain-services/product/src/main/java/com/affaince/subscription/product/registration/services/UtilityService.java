@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
  */
 public class UtilityService {
 
-    public static String getFromToDateString (LocalDate fromDate, LocalDate toDate) {
+    public static String getFromToDateString(LocalDate fromDate, LocalDate toDate) {
         return fromDate.toString() + "_" + toDate.toString();
     }
 }

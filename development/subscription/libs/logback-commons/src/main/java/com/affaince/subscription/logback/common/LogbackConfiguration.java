@@ -29,19 +29,19 @@ public class LogbackConfiguration {
     }
 
     public List<String> getLoggerList(LoggerContext loggerContext) {
-        List <String> strList = new ArrayList<>();
-        for (Logger logger:loggerContext.getLoggerList()) {
+        List<String> strList = new ArrayList<>();
+        for (Logger logger : loggerContext.getLoggerList()) {
             strList.add(logger.getName());
         }
         return strList;
     }
 
     @Bean
-    public DiagnosticInformation logbackDiagnosticInformation () {
+    public DiagnosticInformation logbackDiagnosticInformation() {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-        List <String> loggerList = getLoggerList(loggerContext);
-        Multimap <String, String> loggersByLevel = ArrayListMultimap.create();
-        for (String logger: loggerList) {
+        List<String> loggerList = getLoggerList(loggerContext);
+        Multimap<String, String> loggersByLevel = ArrayListMultimap.create();
+        for (String logger : loggerList) {
             loggersByLevel.put(getLoggerLevel(logger, loggerContext), logger);
         }
         return new DiagnosticInformation() {

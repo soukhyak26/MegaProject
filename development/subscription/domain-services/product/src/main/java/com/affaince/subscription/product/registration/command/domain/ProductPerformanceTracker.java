@@ -71,6 +71,7 @@ public class ProductPerformanceTracker {
     public double getTotalOperationalExpenses() {
         return getLatestInstantaneousPerformanceTracker().getTotalOperationalExpenses();
     }
+
     public void calculateSubscriptionMetrics(List<PriceBucket> priceBucket) {
 /*
         this.netNewCustomers =
@@ -99,5 +100,20 @@ public class ProductPerformanceTracker {
         this.monthsToRecoverCAS
         this.salesAndMarketingExpenses
 */
+    }
+
+    public double getLatestPurchasePrice() {
+        InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
+        return performanceTracker.getPurchasePrice();
+    }
+
+    public double getLatestMRP() {
+        InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
+        return performanceTracker.getMRP();
+    }
+
+    public double getExpectedMerchantProfitPercentage() {
+        InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
+        return performanceTracker.getExpectedMerchantProfitPercentage();
     }
 }

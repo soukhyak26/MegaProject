@@ -42,7 +42,7 @@ public class Axon extends Default {
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
-            put("com.affaince.subscription.subscriber.command.event.*","");
+            put("com.affaince.subscription.subscriber.command.event.*", "");
         }};
     }
 }

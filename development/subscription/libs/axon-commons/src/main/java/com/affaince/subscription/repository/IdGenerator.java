@@ -6,5 +6,5 @@ package com.affaince.subscription.repository;
 public interface IdGenerator {
     String generator();
 
-    String generator (String paarameterString);
+    String generator(String paarameterString);
 }

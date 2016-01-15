@@ -6,5 +6,5 @@ import java.util.Map;
  * Created by rbsavaliya on 28-11-2015.
  */
 public interface DiagnosticInformation {
-    Map <? extends String, ?> getInformation ();
+    Map<? extends String, ?> getInformation();
 }
