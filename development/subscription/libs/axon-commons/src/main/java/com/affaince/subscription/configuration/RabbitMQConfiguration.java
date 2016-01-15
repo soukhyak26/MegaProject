@@ -10,14 +10,11 @@ import org.axonframework.eventhandling.amqp.RoutingKeyResolver;
 import org.axonframework.eventhandling.amqp.spring.ListenerContainerLifecycleManager;
 import org.axonframework.eventhandling.amqp.spring.SpringAMQPTerminal;
 import org.axonframework.serializer.Serializer;
-import org.springframework.amqp.core.AnonymousQueue;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -26,6 +23,7 @@ import java.util.concurrent.TimeoutException;
  * Created by rsavaliya on 10/1/16.
  */
 //@Configuration
+//@EnableAutoConfiguration
 public class RabbitMQConfiguration extends Default {
 
     @Bean
@@ -37,7 +35,7 @@ public class RabbitMQConfiguration extends Default {
 
     @Bean
     public Queue queue (@Value("${subscription.rabbitmq.queue}") String queueName) {
-        return new AnonymousQueue();
+        return new Queue (queueName);
     }
 
     @Bean
@@ -54,10 +52,11 @@ public class RabbitMQConfiguration extends Default {
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare(exchangeName, "direct");
-       // for (String bindingKey: ().keySet()) {
-            channel.queueBind(queueName, exchangeName, "com.affaince.subscription.subscriber.command.event.*");
-        //}
+        channel.exchangeDeclare(exchangeName, "topic", true);
+        channel.queueDeclare(queueName, true, false, false, null);
+        for (String bindingKey: types().keySet()) {
+            channel.queueBind(queueName, exchangeName, bindingKey);
+        }
         return exchangeName;
     }
 
