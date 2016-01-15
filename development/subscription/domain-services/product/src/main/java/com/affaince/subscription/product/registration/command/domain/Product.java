@@ -2,6 +2,7 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
+import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
 import com.affaince.subscription.product.registration.services.UtilityService;
@@ -31,6 +32,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private List<String> complements;
     private double demandDensity;
     private double averageDemandPerYearPerSubscriber;
+    private ProductConfiguration productConfiguration;
     private ProductAccount productAccount = new ProductAccount();
 
     public Product() {
@@ -131,6 +133,18 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
 
+    @EventSourcingHandler
+    public void on(ProductConfigurationSetEvent event) {
+        this.productId = event.getProductId();
+        final ProductConfiguration productConfiguration = new ProductConfiguration();
+        productConfiguration.setDemandCurvePeriod(event.getDemandCurvePeriod());
+        productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
+        productConfiguration.setMerchantExpectedProfitPercent(event.getMerchantExpectedProfitPercent());
+        productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
+        productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
+        this.productConfiguration = productConfiguration;
+    }
+
     public void updateProductStatus(UpdateProductStatusCommand command) {
         apply(new ProductStatusReceivedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
@@ -180,5 +194,13 @@ public class Product extends AbstractAnnotatedAggregateRoot {
 
     public double getLatestOperatingExpensesPerUnit() {
         return getProductAccount().getLatestActuals().getTotalOperationalExpenses();
+    }
+
+    public void setProductConfiguration(SetProductConfigurationCommand command) {
+        apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
+                command.getRevenueChangeThresholdForPriceChange(),
+                command.getMerchantExpectedProfitPercent(),
+                command.isCrossPriceElasticityConsidered(),
+                command.isAdvertisingExpensesConsidered()));
     }
 }

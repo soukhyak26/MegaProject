@@ -1,17 +1,11 @@
 package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.product.registration.command.AddCurrentOfferedPriceCommand;
-import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
-import com.affaince.subscription.product.registration.command.RegisterProductCommand;
-import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
+import com.affaince.subscription.product.registration.command.*;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
-import com.affaince.subscription.product.registration.web.request.AddCurrentOfferedPriceRequest;
-import com.affaince.subscription.product.registration.web.request.AddForecastParametersRequest;
-import com.affaince.subscription.product.registration.web.request.RegisterProductRequest;
-import com.affaince.subscription.product.registration.web.request.UpdateProductStatusRequest;
+import com.affaince.subscription.product.registration.web.request.*;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +82,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> addProjectionParameters(@RequestBody @Valid AddForecastParametersRequest request,
-                                                           @PathVariable String productId) throws Exception {
+                                                          @PathVariable String productId) throws Exception {
         ProductView productView = repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
@@ -123,4 +117,25 @@ public class ProductController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/setproductconfig/{productId}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setProductConfiguration(@PathVariable String productId, @RequestBody @Valid ProductConfigurationRequest request) throws Exception {
+        ProductView productView = repository.findOne(productId);
+        if (productView == null) {
+            throw ProductNotFoundException.build(productId);
+        }
+
+        final SetProductConfigurationCommand command = new SetProductConfigurationCommand(
+                productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(), request.getMerchantExpectedProfitPercent(),
+                request.isCrossPriceElasticityConsidered(), request.isCrossPriceElasticityConsidered()
+        );
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
 }

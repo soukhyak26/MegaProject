@@ -21,8 +21,8 @@ public class SubscribedProductCountUpdatedEventListener {
     }
 
     @EventHandler
-    public void on (SubscribedProductCountUpdatedEvent event) {
-        for (String productId: event.getSubscribedProductUpdateCount().keySet()) {
+    public void on(SubscribedProductCountUpdatedEvent event) {
+        for (String productId : event.getSubscribedProductUpdateCount().keySet()) {
             final ProductView productView = productViewRepository.findOne(productId);
             long subscribedProductCount = productView.getSubscribedProductCount();
             productView.setSubscribedProductCount(subscribedProductCount + event.getSubscribedProductUpdateCount().get(productId));
