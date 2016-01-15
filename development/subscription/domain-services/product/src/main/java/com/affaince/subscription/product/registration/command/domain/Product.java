@@ -5,6 +5,7 @@ import com.affaince.subscription.product.registration.command.AddForecastParamet
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
+import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -29,10 +30,10 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
-    private double demandDensity;
-    private double averageDemandPerYearPerSubscriber;
     private ProductConfiguration productConfiguration;
     private ProductAccount productAccount = new ProductAccount();
+    private double offeredPrice;
+    private double latestOfferedPriceActuals;
 
     public Product() {
 
@@ -160,6 +161,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
         productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
+        productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
         this.productConfiguration = productConfiguration;
     }
 
@@ -206,7 +208,8 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
                 command.getRevenueChangeThresholdForPriceChange(),
                 command.isCrossPriceElasticityConsidered(),
-                command.isAdvertisingExpensesConsidered()));
+                command.isAdvertisingExpensesConsidered(),
+                command.getDemandWiseProfitSharingRules()));
     }
 
     public double getLatestPurchasePriceActuals() {
@@ -219,5 +222,25 @@ public class Product extends AbstractAnnotatedAggregateRoot {
 
     public double getLatestMerchantProfitActuals() {
         return getProductAccount().getLatestActuals().getExpectedMerchantProfitPercentage();
+    }
+
+    public ProductConfiguration getProductConfiguration() {
+        return productConfiguration;
+    }
+
+    public DemandWiseProfitSharingRule findProfitSharingRuleByDemandDensity(double demandDensityPercentage) {
+        return getProductConfiguration().findDemandWiseProfitSharingRuleByDemandDensity(demandDensityPercentage);
+    }
+
+    public double getLatestDemandDensityActuals() {
+        return getProductAccount().getLatestDemandDensityActuals();
+    }
+
+    public double getLatestDemandDensityForecast() {
+        return getProductAccount().getLatestDemandDensityForecast();
+    }
+
+    public void setLatestOfferedPriceActuals(double latestOfferedPriceActuals) {
+        this.getProductAccount().getLatestActuals().getLatestInstantaneousPerformanceTracker().setOfferedPrice(latestOfferedPriceActuals);
     }
 }

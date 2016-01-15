@@ -1,8 +1,11 @@
 package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
@@ -15,6 +18,7 @@ public class ProductConfigurationView {
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
     public String getProductId() {
         return productId;
@@ -55,5 +59,13 @@ public class ProductConfigurationView {
 
     public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    }
+
+    public List<DemandWiseProfitSharingRule> getDemandWiseProfitSharingRules() {
+        return demandWiseProfitSharingRules;
+    }
+
+    public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
+        this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
     }
 }

@@ -127,7 +127,9 @@ public class ProductController {
         }
 
         final SetProductConfigurationCommand command = new SetProductConfigurationCommand(
-                productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered()
+                productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(),
+                request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(),
+                request.getDemandWiseProfitSharingRules()
         );
         try {
             commandGateway.executeAsync(command);

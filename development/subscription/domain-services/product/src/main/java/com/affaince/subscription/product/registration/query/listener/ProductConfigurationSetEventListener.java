@@ -26,7 +26,7 @@ public class ProductConfigurationSetEventListener {
         productConfigurationView.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
         productConfigurationView.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
-
+        productConfigurationView.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
         productConfigurationViewRepository.save(productConfigurationView);
     }
 }

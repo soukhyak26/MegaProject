@@ -13,6 +13,8 @@ import java.util.TreeMap;
 public class ProductPerformanceTracker {
     private LocalDate fromDate;
     private LocalDate toDate;
+    private double demandDensity;
+    private double averageDemandPerSubscriber;
 
     Map<LocalDate, InstantaneousPerformanceTracker> instantaneousPerformanceTrackers;
     AggregationPerformanceTracker aggregationPerformanceTracker;
@@ -115,5 +117,21 @@ public class ProductPerformanceTracker {
     public double getExpectedMerchantProfitPercentage() {
         InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
         return performanceTracker.getExpectedMerchantProfitPercentage();
+    }
+
+    public double getDemandDensity() {
+        return demandDensity;
+    }
+
+    public void setDemandDensity(double demandDensity) {
+        this.demandDensity = demandDensity;
+    }
+
+    public double getAverageDemandPerSubscriber() {
+        return averageDemandPerSubscriber;
+    }
+
+    public void setAverageDemandPerSubscriber(double averageDemandPerSubscriber) {
+        this.averageDemandPerSubscriber = averageDemandPerSubscriber;
     }
 }

@@ -1,6 +1,9 @@
 package com.affaince.subscription.product.registration.web.request;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
@@ -10,6 +13,7 @@ public class ProductConfigurationRequest {
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
     public Period getDemandCurvePeriod() {
         return demandCurvePeriod;
@@ -27,7 +31,6 @@ public class ProductConfigurationRequest {
         this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
     }
 
-
     public boolean isCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;
     }
@@ -42,5 +45,13 @@ public class ProductConfigurationRequest {
 
     public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    }
+
+    public List<DemandWiseProfitSharingRule> getDemandWiseProfitSharingRules() {
+        return demandWiseProfitSharingRules;
+    }
+
+    public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
+        this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
     }
 }

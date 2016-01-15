@@ -1,7 +1,10 @@
 package com.affaince.subscription.product.registration.command;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
@@ -13,13 +16,15 @@ public class SetProductConfigurationCommand {
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
-    public SetProductConfigurationCommand(String productId, Period demandCurvePeriod, short revenueChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
+    public SetProductConfigurationCommand(String productId, Period demandCurvePeriod, short revenueChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
         this.productId = productId;
         this.demandCurvePeriod = demandCurvePeriod;
         this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
+        this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
     }
 
     public SetProductConfigurationCommand() {
@@ -44,5 +49,9 @@ public class SetProductConfigurationCommand {
 
     public boolean isAdvertisingExpensesConsidered() {
         return isAdvertisingExpensesConsidered;
+    }
+
+    public List<DemandWiseProfitSharingRule> getDemandWiseProfitSharingRules() {
+        return demandWiseProfitSharingRules;
     }
 }

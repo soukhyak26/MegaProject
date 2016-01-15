@@ -152,4 +152,12 @@ public class ProductAccount {
     public void setCreditPoints(double creditPoints) {
         this.creditPoints = creditPoints;
     }
+
+    public double getLatestDemandDensityActuals() {
+        return getLatestActuals().getDemandDensity();
+    }
+
+    public double getLatestDemandDensityForecast() {
+        return getLatestForecast().getDemandDensity();
+    }
 }

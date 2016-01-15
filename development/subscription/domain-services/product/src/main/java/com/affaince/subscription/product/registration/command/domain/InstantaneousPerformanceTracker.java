@@ -16,6 +16,7 @@ public class InstantaneousPerformanceTracker {
     private double totalOperationalExpenses;
     private double operatingProfit;
     private double percentageOperatingProfit;
+    private double offeredPrice;
 
     public LocalDate getFromDate() {
         return fromDate;
@@ -99,5 +100,13 @@ public class InstantaneousPerformanceTracker {
 
     public void setExpectedMerchantProfitPercentage(double expectedMerchantProfitPercentage) {
         this.expectedMerchantProfitPercentage = expectedMerchantProfitPercentage;
+    }
+
+    public void setOfferedPrice(double offeredPrice) {
+        this.offeredPrice = offeredPrice;
+    }
+
+    public double getOfferedPrice() {
+        return offeredPrice;
     }
 }

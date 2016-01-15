@@ -42,7 +42,7 @@ public class Axon extends Default {
 
                 rest("/basketdispatchstatus").description("Basket Dispatch Status").outTypeList(BasketDispatchedStatusEvent.class).to("bean:basketDispatchStatusService?method=getDispatchedBaskets()");
 
-               from("bean:basketDispatchStatusService?method=getDispatchedBaskets()").marshal(bindy).to("file://abc//BasketDispatchedStatus.out");
+                from("bean:basketDispatchStatusService?method=getDispatchedBaskets()").marshal(bindy).to("file://abc//BasketDispatchedStatus.out");
             }
         };
     }
