@@ -46,10 +46,7 @@ import org.springframework.util.ErrorHandler;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadFactory;
 
 import static java.util.concurrent.Executors.defaultThreadFactory;
@@ -229,5 +226,16 @@ public class Default {
     @Bean
     public IdGenerator generator() {
         return new DefaultIdGenerator();
+    }
+
+    @Bean
+    public Locale locale(@Value("${subscription.language}") String language,
+                         @Value("${subscription.country}") String country) {
+        return new Locale(language, country);
+    }
+
+    @Bean
+    public Currency currency(Locale locale) {
+        return Currency.getInstance(locale);
     }
 }

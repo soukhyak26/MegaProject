@@ -8,7 +8,8 @@ import com.affaince.subscription.product.registration.command.domain.Product;
 public class DefaultOperatingExpensesDeterminator implements OperatingExpensesDeterminator {
 
     @Override
-    public double calculateOperatingExpensesPerProduct(Product product, OperatingExpensesDeterminator operatingExpensesDeterminator) {
+    public double calculateOperatingExpensesPerProduct(Product product) {
+
         return 0;
     }
 }
