@@ -16,7 +16,7 @@ import java.util.List;
 public class SubscriptionView {
 
     @Id
-    private String basketId;
+    private String subscriptionId;
     private String subscriberId;
     private ConsumerBasketActivationStatus consumerBasketStatus;
     private List<BasketItem> basketItems;
@@ -27,8 +27,8 @@ public class SubscriptionView {
     private LocalDate basketCreatedDate;
     private LocalDate basketExpiredDate;
 
-    public SubscriptionView(String basketId, String subscriberId, ConsumerBasketActivationStatus consumerBasketStatus, List<BasketItem> basketItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
-        this.basketId = basketId;
+    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketStatus, List<BasketItem> basketItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
+        this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
         this.consumerBasketStatus = consumerBasketStatus;
         this.basketItems = basketItems;
@@ -40,12 +40,12 @@ public class SubscriptionView {
         this.basketExpiredDate = basketExpiredDate;
     }
 
-    public String getBasketId() {
-        return basketId;
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public String getSubscriberId() {

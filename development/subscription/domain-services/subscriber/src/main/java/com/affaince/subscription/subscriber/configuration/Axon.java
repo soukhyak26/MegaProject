@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriber.command.domain.*;
+import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -53,6 +54,7 @@ public class Axon extends Default {
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.subscriber.command.event.*", "");
+            put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedFromSourceEvent.class.getName());
         }};
     }
 }

@@ -8,6 +8,7 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.subscriber.command.AddAddressToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.AddItemToSubscriptionCommand;
+import com.affaince.subscription.subscriber.command.PaymentReceivedFromSourceCommand;
 import com.affaince.subscription.subscriber.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -29,8 +30,9 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     private Address shippingAddress;
     private Address billingAddress;
     private ContactDetails contactDetails;
-    private double totalAmount;
-    private double totalAmountAfterDiscount;
+    private double totalSubscriptionAmount;
+    private double totalSubscriptionAmountAfterDiscount;
+    private double totalPaymentReceived;
     private LocalDate basketCreatedDate;
     private LocalDate basketExpiredDate;
 
@@ -104,8 +106,15 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
         basketItems.removeIf(item -> item.getItemId().equals(event.getItemId()));
     }
 
+    @EventSourcingHandler
     public void on(SubscriptionActivatedEvent event) {
         this.consumerBasketStatus = ConsumerBasketActivationStatus.ACTIVATED;
+    }
+
+    @EventSourcingHandler
+    public void on(PaymentProcessedEvent event) {
+        this.subscriptionId = event.getSubscriptionId();
+        this.totalPaymentReceived = this.totalPaymentReceived - event.getPaymentAmount();
     }
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
@@ -158,5 +167,13 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
             subscribedProductUpdateCount.put(basketItem.getItemId(), basketItem.getNoOfCycle() * frequency.getValue());
         }
         apply(new SubscribedProductCountUpdatedEvent(subscribedProductUpdateCount));
+    }
+
+    public ConsumerBasketActivationStatus getConsumerBasketStatus() {
+        return consumerBasketStatus;
+    }
+
+    public void addReceivedPayment(PaymentReceivedFromSourceCommand command) {
+        apply(new PaymentProcessedEvent(this.subscriptionId, command.getSubscriberId(), command.getPaymentAmount(), command.getPaymentDate()));
     }
 }

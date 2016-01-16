@@ -6,6 +6,7 @@ import com.affaince.subscription.integration.command.event.basketdispatch.reques
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
 import com.affaince.subscription.integration.command.event.forecast.ProductForecastReceivedEvent;
+import com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
 import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
 import com.affaince.subscription.integration.command.event.stockdemand.ProductStockDemandGeneratedEvent;
@@ -54,7 +55,7 @@ public class Axon extends Default {
                         split(body().tokenize("\n")).streaming().
                         to("${basket.dispatch.status.destination}");
 
-                //INT_01: retreive shopping items for registration
+                //INT_01: retreive products for registration
                 from("${product.registration.source}").
                         unmarshal().bindy(BindyType.Csv, ProductReceivedForRegistrationEvent.class).
                         split(body().tokenize("\n")).streaming().
@@ -79,6 +80,11 @@ public class Axon extends Default {
                 from("${product.generate.quote.source}").
                         marshal().bindy(BindyType.Csv, ProductDailyQuoteGeneratedEvent.class).
                         to("${product.generate.qoute.destination}");
+
+                //INT_07: Receive payment receipt intimation from mail application
+                from("${payment.receipt.info.source}").
+                        marshal().bindy(BindyType.Csv, PaymentReceivedEvent.class).
+                        to("${payment.receipt.info.destination}");
 
                 //from("bean:NotificationEvent").marshal("json").to("restlet:/notification?restletMethod=POST");
 

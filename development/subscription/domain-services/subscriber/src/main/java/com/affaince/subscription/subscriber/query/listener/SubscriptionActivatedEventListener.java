@@ -1,6 +1,5 @@
 package com.affaince.subscription.subscriber.query.listener;
 
-import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.subscriber.command.event.SubscriptionActivatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 public class SubscriptionActivatedEventListener {
 
     private final SubscriptionViewRepository subscriptionViewRepository;
-    private SubscriptionCommandGateway commandGateway;
 
     @Autowired
     public SubscriptionActivatedEventListener(SubscriptionViewRepository subscriptionViewRepository) {
@@ -25,8 +23,7 @@ public class SubscriptionActivatedEventListener {
 
     @EventHandler
     public void on(SubscriptionActivatedEvent event) {
-        SubscriptionView subscriptionView = subscriptionViewRepository.findOne(event.getBasketId());
+        SubscriptionView subscriptionView = subscriptionViewRepository.findOne(event.getSubscriptionId());
         subscriptionView.setConsumerBasketStatus(ConsumerBasketActivationStatus.ACTIVATED);
-
     }
 }
