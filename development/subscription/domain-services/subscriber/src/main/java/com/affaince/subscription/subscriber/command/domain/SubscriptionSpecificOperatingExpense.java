@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 16-01-2016.
  */
+
 public class SubscriptionSpecificOperatingExpense extends AbstractAnnotatedAggregateRoot<String> {
 
     @AggregateIdentifier
