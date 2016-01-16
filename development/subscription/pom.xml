@@ -17,6 +17,7 @@
         <module>tools/application-simulator</module>
         <module>domain-services/benefits</module>
         <module>domain-services/product</module>
+        <module>tools/notifications</module>
     </modules>
     <properties>
         <axon.version>2.4.2</axon.version>
