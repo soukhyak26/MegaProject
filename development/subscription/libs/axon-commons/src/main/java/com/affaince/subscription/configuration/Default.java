@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandDispatchInterceptor;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -35,18 +34,18 @@ import org.axonframework.saga.spring.SpringResourceInjector;
 import org.axonframework.serializer.SerializedType;
 import org.axonframework.serializer.Serializer;
 import org.axonframework.serializer.json.JacksonSerializer;
-import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.handler.LoggingHandler;
-import org.springframework.messaging.SubscribableChannel;
 import org.springframework.util.ErrorHandler;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
 import static java.util.concurrent.Executors.defaultThreadFactory;
@@ -84,7 +83,7 @@ public class Default {
     @Bean
     public Mongo mongo(@Value("${view.db.host}") String host, @Value("${view.db.port}") int port) {
         try {
-            return new MongoClient(host, port);
+            return new Mongo(host, port);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -96,22 +95,6 @@ public class Default {
         return new EventTemplate(eventBus);
     }
 
-    /*@Bean
-    public JmsTemplate jmsTemplate(@Value("${axon.eventBus.topicName}") String topicName, ConnectionFactory connectionFactory) {
-        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory);
-        jmsTemplate.setDefaultDestinationName(topicName);
-        jmsTemplate.setPubSubDomain(true);
-        jmsTemplate.setPubSubNoLocal(false);
-        jmsTemplate.setMessageConverter(new MessagingMessageConverter());
-        return jmsTemplate;
-    }
-
-    @Bean
-    public ConnectionFactory connectionFactory(@Value("${spring.activemq.broker-url}") String brokerURL) {
-        return new ActiveMQConnectionFactory(brokerURL);
-        //return new CachingConnectionFactory(new ActiveMQConnectionFactory(brokerURL));
-    }*/
-
     @Bean
     public ErrorHandler errorHandler() {
         return new ErrorHandler() {
@@ -122,38 +105,10 @@ public class Default {
             }
         };
     }
-/*
-    @Bean
-    public ListenerContainerFactory listenerContainerFactory(@Value("${axon.eventBus.queueName}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
-        System.out.println("@@Queue Name:" + queueName);
-        ListenerContainerFactory containerFactory = new ListenerContainerFactory();
-        containerFactory.setDestinationName(queueName);
-        containerFactory.setConnectionFactory(connectionFactory);
-        containerFactory.setErrorHandler(errorHandler);
-        containerFactory.setConcurrency("2-20");
-        containerFactory.setIdleConsumerLimit(10);
-        containerFactory.setAnnotation(EventHandler.class);
-        containerFactory.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
-        containerFactory.setConsumedEventTypes(types());
-        return containerFactory;
-
-    }*/
 
     @Bean
-    public SubscribableChannel eventChannel() throws Exception {
-
-        //SubscribableChannel channel = new SubscribableJmsChannel(listenerContainerFactory.getObject(), jmsTemplate);
-        return new DirectChannel();
-    }
-/*
-    @Bean
-    public EventBusTerminal subscriptionEventBusTerminal(Cluster asyncCluster, Serializer serializer, @Qualifier("eventChannel") final SubscribableChannel subscribableChannel) {
-        return new SubscriptionEventBusTerminal(serializer, subscribableChannel, asyncCluster);
-    }*/
-
-    @Bean
-    public ClusterSelector selector(Queue queue) {
-        return new DefaultClusterSelector(new SimpleCluster(queue.getName()));
+    public ClusterSelector selector(@Qualifier("asyncCluster") Cluster cluster) {
+        return new DefaultClusterSelector(cluster);
         //return new AnnotationClusterSelector(EventHandler.class,cluster);
     }
 
@@ -166,7 +121,7 @@ public class Default {
     }
 
     @Bean
-    public EventBus eventBus(EventBusTerminal subscriptionEventBusTerminal, ClusterSelector selector) {
+    public EventBus eventBus(ClusterSelector selector, EventBusTerminal subscriptionEventBusTerminal) {
         return new ClusteringEventBus(selector, subscriptionEventBusTerminal);
     }
 
@@ -226,16 +181,5 @@ public class Default {
     @Bean
     public IdGenerator generator() {
         return new DefaultIdGenerator();
-    }
-
-    @Bean
-    public Locale locale(@Value("${subscription.language}") String language,
-                         @Value("${subscription.country}") String country) {
-        return new Locale(language, country);
-    }
-
-    @Bean
-    public Currency currency(Locale locale) {
-        return Currency.getInstance(locale);
     }
 }

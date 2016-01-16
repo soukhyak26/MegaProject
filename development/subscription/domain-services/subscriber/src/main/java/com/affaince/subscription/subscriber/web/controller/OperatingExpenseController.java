@@ -2,8 +2,10 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.AddCommonOperatingExpenseCommand;
+import com.affaince.subscription.subscriber.command.SetDeliveryChargesRulesCommand;
 import com.affaince.subscription.subscriber.vo.OperatingExpense;
 import com.affaince.subscription.subscriber.web.request.CommonOperatingExpensesRequest;
+import com.affaince.subscription.subscriber.web.request.DeliveryChargesRulesRequest;
 import org.jgroups.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class OperatingExpenseController {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "common")
     @Consumes("application/json")
     public ResponseEntity<Object> setOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
         for (OperatingExpense expense : request.getExpenses()) {
@@ -44,4 +46,18 @@ public class OperatingExpenseController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "deliverychargerules")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setDeliveryChargesRules(@RequestBody @Valid DeliveryChargesRulesRequest request) throws Exception {
+        final SetDeliveryChargesRulesCommand command = new SetDeliveryChargesRulesCommand(new UUID().randomUUID().toString(), request.getExpenseHeader(),
+                request.getDeliveryChargesRules());
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
 }
