@@ -1,7 +1,7 @@
-package com.affaince.subscription.subscriber.command.domain;
+package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.subscriber.command.event.CommonOperatingExpenseAddedEvent;
+import com.affaince.subscription.product.registration.command.event.CommonOperatingExpenseAddedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;

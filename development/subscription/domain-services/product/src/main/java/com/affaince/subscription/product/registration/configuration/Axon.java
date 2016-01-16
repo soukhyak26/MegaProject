@@ -1,7 +1,9 @@
 package com.affaince.subscription.product.registration.configuration;
 
 import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.product.registration.command.domain.CommonOperatingExpense;
 import com.affaince.subscription.product.registration.command.domain.Product;
+import com.affaince.subscription.product.registration.command.domain.SubscriptionSpecificOperatingExpense;
 import com.affaince.subscription.product.registration.command.event.ProductForecastReceivedEvent;
 import com.affaince.subscription.product.registration.command.event.ProductRegisteredEvent;
 import com.affaince.subscription.product.registration.command.event.ProductStatusReceivedEvent;
@@ -26,6 +28,18 @@ public class Axon extends Default {
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {
 
         Repository<Product> repository = commandBus.createRepository(new GenericAggregateFactory<>(Product.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<CommonOperatingExpense> createCommonOperatingExpenseRepository(DisruptorCommandBus commandBus) {
+        Repository<CommonOperatingExpense> repository = commandBus.createRepository(new GenericAggregateFactory<>(CommonOperatingExpense.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<SubscriptionSpecificOperatingExpense> createSubscriptionSpecificOperatingExpenseRepository(DisruptorCommandBus commandBus) {
+        Repository<SubscriptionSpecificOperatingExpense> repository = commandBus.createRepository(new GenericAggregateFactory<>(SubscriptionSpecificOperatingExpense.class));
         return repository;
     }
 

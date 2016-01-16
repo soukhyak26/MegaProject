@@ -1,8 +1,8 @@
-package com.affaince.subscription.subscriber.query.listener;
+package com.affaince.subscription.product.registration.query.listener;
 
-import com.affaince.subscription.subscriber.command.event.CommonOperatingExpenseAddedEvent;
-import com.affaince.subscription.subscriber.query.repository.CommonOperatingExpenseViewRepository;
-import com.affaince.subscription.subscriber.query.view.CommonOperatingExpenseView;
+import com.affaince.subscription.product.registration.command.event.CommonOperatingExpenseAddedEvent;
+import com.affaince.subscription.product.registration.query.repository.CommonOperatingExpenseViewRepository;
+import com.affaince.subscription.product.registration.query.view.CommonOperatingExpenseView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

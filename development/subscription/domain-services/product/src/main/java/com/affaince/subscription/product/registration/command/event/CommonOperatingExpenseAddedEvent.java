@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.command.event;
+package com.affaince.subscription.product.registration.command.event;
 
 import com.affaince.subscription.common.type.Period;
 

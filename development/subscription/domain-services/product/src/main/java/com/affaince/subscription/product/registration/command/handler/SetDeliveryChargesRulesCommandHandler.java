@@ -1,8 +1,8 @@
-package com.affaince.subscription.subscriber.command.handler;
+package com.affaince.subscription.product.registration.command.handler;
 
-import com.affaince.subscription.subscriber.command.SetDeliveryChargesRulesCommand;
-import com.affaince.subscription.subscriber.command.domain.SubscriptionSpecificOperatingExpense;
-import com.affaince.subscription.subscriber.vo.RangeRule;
+import com.affaince.subscription.product.registration.command.SetDeliveryChargesRulesCommand;
+import com.affaince.subscription.product.registration.command.domain.SubscriptionSpecificOperatingExpense;
+import com.affaince.subscription.product.registration.vo.RangeRule;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

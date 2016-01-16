@@ -1,11 +1,11 @@
-package com.affaince.subscription.subscriber.web.controller;
+package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.subscriber.command.AddCommonOperatingExpenseCommand;
-import com.affaince.subscription.subscriber.command.SetDeliveryChargesRulesCommand;
-import com.affaince.subscription.subscriber.vo.OperatingExpense;
-import com.affaince.subscription.subscriber.web.request.CommonOperatingExpensesRequest;
-import com.affaince.subscription.subscriber.web.request.DeliveryChargesRulesRequest;
+import com.affaince.subscription.product.registration.command.AddCommonOperatingExpenseCommand;
+import com.affaince.subscription.product.registration.command.SetDeliveryChargesRulesCommand;
+import com.affaince.subscription.product.registration.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.web.request.CommonOperatingExpensesRequest;
+import com.affaince.subscription.product.registration.web.request.DeliveryChargesRulesRequest;
 import org.jgroups.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

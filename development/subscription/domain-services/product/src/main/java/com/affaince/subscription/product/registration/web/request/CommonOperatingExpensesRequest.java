@@ -1,7 +1,7 @@
-package com.affaince.subscription.subscriber.web.request;
+package com.affaince.subscription.product.registration.web.request;
 
 
-import com.affaince.subscription.subscriber.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.vo.OperatingExpense;
 
 import java.util.List;
 

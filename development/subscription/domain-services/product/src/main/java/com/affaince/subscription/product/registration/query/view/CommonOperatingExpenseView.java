@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.query.view;
+package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.common.type.Period;
 import org.springframework.data.annotation.Id;

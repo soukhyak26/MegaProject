@@ -1,8 +1,8 @@
-package com.affaince.subscription.subscriber.query.listener;
+package com.affaince.subscription.product.registration.query.listener;
 
-import com.affaince.subscription.subscriber.command.event.SubscriptionSpecificExpenseAddedEvent;
-import com.affaince.subscription.subscriber.query.repository.SubscriptionSpecificOperatingExpenseViewRepository;
-import com.affaince.subscription.subscriber.query.view.SubscriptionSpecificOperatingExpenseView;
+import com.affaince.subscription.product.registration.command.event.SubscriptionSpecificExpenseAddedEvent;
+import com.affaince.subscription.product.registration.query.repository.SubscriptionSpecificOperatingExpenseViewRepository;
+import com.affaince.subscription.product.registration.query.view.SubscriptionSpecificOperatingExpenseView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

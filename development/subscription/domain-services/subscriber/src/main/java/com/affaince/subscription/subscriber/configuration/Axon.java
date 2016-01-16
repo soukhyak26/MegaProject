@@ -1,7 +1,9 @@
 package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.subscriber.command.domain.*;
+import com.affaince.subscription.subscriber.command.domain.BasketRule;
+import com.affaince.subscription.subscriber.command.domain.Subscriber;
+import com.affaince.subscription.subscriber.command.domain.Subscription;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -35,18 +37,6 @@ public class Axon extends Default {
     @Bean
     public Repository<BasketRule> createBasketRuleRepository(DisruptorCommandBus commandBus) {
         Repository<BasketRule> repository = commandBus.createRepository(new GenericAggregateFactory<>(BasketRule.class));
-        return repository;
-    }
-
-    @Bean
-    public Repository<CommonOperatingExpense> createCommonOperatingExpenseRepository(DisruptorCommandBus commandBus) {
-        Repository<CommonOperatingExpense> repository = commandBus.createRepository(new GenericAggregateFactory<>(CommonOperatingExpense.class));
-        return repository;
-    }
-
-    @Bean
-    public Repository<SubscriptionSpecificOperatingExpense> createSubscriptionSpecificOperatingExpenseRepository(DisruptorCommandBus commandBus) {
-        Repository<SubscriptionSpecificOperatingExpense> repository = commandBus.createRepository(new GenericAggregateFactory<>(SubscriptionSpecificOperatingExpense.class));
         return repository;
     }
 

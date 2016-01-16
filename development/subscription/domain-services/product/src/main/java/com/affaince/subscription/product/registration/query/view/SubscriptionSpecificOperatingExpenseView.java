@@ -1,6 +1,6 @@
-package com.affaince.subscription.subscriber.query.view;
+package com.affaince.subscription.product.registration.query.view;
 
-import com.affaince.subscription.subscriber.vo.RangeRule;
+import com.affaince.subscription.product.registration.vo.RangeRule;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

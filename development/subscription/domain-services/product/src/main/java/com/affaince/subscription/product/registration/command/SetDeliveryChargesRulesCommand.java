@@ -1,6 +1,6 @@
-package com.affaince.subscription.subscriber.command;
+package com.affaince.subscription.product.registration.command;
 
-import com.affaince.subscription.subscriber.vo.RangeRule;
+import com.affaince.subscription.product.registration.vo.RangeRule;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.vo;
+package com.affaince.subscription.product.registration.vo;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.affaince.subscription.subscriber.command;
+package com.affaince.subscription.product.registration.command;
 
-import com.affaince.subscription.subscriber.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.vo.OperatingExpense;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**

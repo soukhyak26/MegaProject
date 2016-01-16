@@ -1,6 +1,6 @@
-package com.affaince.subscription.subscriber.query.repository;
+package com.affaince.subscription.product.registration.query.repository;
 
-import com.affaince.subscription.subscriber.query.view.SubscriptionSpecificOperatingExpenseView;
+import com.affaince.subscription.product.registration.query.view.SubscriptionSpecificOperatingExpenseView;
 import org.springframework.data.repository.CrudRepository;
 
 /**

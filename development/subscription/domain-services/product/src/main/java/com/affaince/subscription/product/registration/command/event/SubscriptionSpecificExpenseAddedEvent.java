@@ -1,6 +1,7 @@
-package com.affaince.subscription.subscriber.command.event;
+package com.affaince.subscription.product.registration.command.event;
 
-import com.affaince.subscription.subscriber.vo.RangeRule;
+
+import com.affaince.subscription.product.registration.vo.RangeRule;
 
 import java.util.List;
 

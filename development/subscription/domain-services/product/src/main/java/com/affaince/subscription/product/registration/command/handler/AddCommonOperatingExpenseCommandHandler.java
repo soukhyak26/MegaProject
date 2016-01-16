@@ -1,8 +1,8 @@
-package com.affaince.subscription.subscriber.command.handler;
+package com.affaince.subscription.product.registration.command.handler;
 
-import com.affaince.subscription.subscriber.command.AddCommonOperatingExpenseCommand;
-import com.affaince.subscription.subscriber.command.domain.CommonOperatingExpense;
-import com.affaince.subscription.subscriber.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.command.AddCommonOperatingExpenseCommand;
+import com.affaince.subscription.product.registration.command.domain.CommonOperatingExpense;
+import com.affaince.subscription.product.registration.vo.OperatingExpense;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
