@@ -43,8 +43,8 @@ public class ProductForecastReceivedEventListener {
         );
 */
         AddForecastParametersCommand command = new AddForecastParametersCommand();
-        command.setProductId(event.getProductId());
-        command.addForecastedPriceParameter(forecastedPriceParameter);
+        // command.setProductId(event.getProductId());
+        //command.addForecastedPriceParameter(forecastedPriceParameter);
         commandGateway.executeAsync(command);
     }
 }

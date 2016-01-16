@@ -16,12 +16,17 @@ public class BasketRule extends AbstractAnnotatedAggregateRoot<String> {
     private double maximumPermissibleAmount;
     private double minimumAmountForDiscountEligibility;
     private Discount maximumPermissibleDiscount;
+    private int minimumAmountEligibleForFreeShipping;
 
     public BasketRule() {
     }
 
+    public BasketRule(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping) {
+        apply(new BasketRuleAddedEvent(basketRuleId, maximumPermissibleAmount, minimumAmountForDiscountEligibility, maximumPermissibleDiscount, minimumAmountEligibleForFreeShipping));
+
+    }
+
     public BasketRule(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount) {
-        apply(new BasketRuleAddedEvent(basketRuleId, maximumPermissibleAmount, minimumAmountForDiscountEligibility, maximumPermissibleDiscount));
     }
 
     @EventSourcingHandler

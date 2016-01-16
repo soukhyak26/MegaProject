@@ -14,12 +14,14 @@ public class BasketRuleView {
     private double maximumPermissibleAmount;
     private double minimumAmountForDiscountEligibility;
     private Discount maximumPermissibleDiscount;
+    private int minimumAmountEligibleForFreeShipping;
 
-    public BasketRuleView(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount) {
+    public BasketRuleView(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping) {
         this.basketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
         this.maximumPermissibleDiscount = maximumPermissibleDiscount;
+        this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
     }
 
     public String getBasketRuleId() {
@@ -52,5 +54,13 @@ public class BasketRuleView {
 
     public void setMaximumPermissibleDiscount(Discount maximumPermissibleDiscount) {
         this.maximumPermissibleDiscount = maximumPermissibleDiscount;
+    }
+
+    public int getMinimumAmountEligibleForFreeShipping() {
+        return minimumAmountEligibleForFreeShipping;
+    }
+
+    public void setMinimumAmountEligibleForFreeShipping(int minimumAmountEligibleForFreeShipping) {
+        this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
     }
 }

@@ -25,7 +25,7 @@ public class PriceBucket {
         MRPVersions = new TreeMap<>();
     }
 
-    public PriceBucket(double purchasePricePerUnit, double offeredPricePerUnit, double MRP, LocalDate fromDate, LocalDate toDate, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice) {
+    public PriceBucket(double purchasePricePerUnit, double MRP, LocalDate fromDate, LocalDate toDate, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice) {
         this.purchasePricePerUnitVersions = new TreeMap<>();
         this.MRPVersions = new TreeMap<>();
 

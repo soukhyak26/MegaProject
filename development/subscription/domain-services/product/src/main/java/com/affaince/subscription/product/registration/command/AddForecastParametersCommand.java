@@ -3,8 +3,6 @@ package com.affaince.subscription.product.registration.command;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
-import java.util.List;
-
 /**
  * Created by rbsavaliya on 05-12-2015.
  */
@@ -12,33 +10,45 @@ public class AddForecastParametersCommand {
 
     @TargetAggregateIdentifier
     private String productId;
-    private List<ForecastedPriceParameter> forecastedPriceParamters;
+    private ForecastedPriceParameter forecastedPriceParameter;
+    private double demandDensity;
+    private double averageDemandPerSubscriber;
+    private long totalDeliveriesPerPeriod;
+    private double averageWeightPerDelivery;
 
-    public AddForecastParametersCommand(String productId, List<ForecastedPriceParameter> priceForecastList) {
+    public AddForecastParametersCommand(String productId, ForecastedPriceParameter forecastedPriceParameter, double demandDensity, double averageDemandPerSubscriber, long totalDeliveriesPerPeriod, double averageWeightPerDelivery) {
         this.productId = productId;
-        this.forecastedPriceParamters = priceForecastList;
+        this.forecastedPriceParameter = forecastedPriceParameter;
+        this.demandDensity = demandDensity;
+        this.averageDemandPerSubscriber = averageDemandPerSubscriber;
+        this.totalDeliveriesPerPeriod = totalDeliveriesPerPeriod;
+        this.averageWeightPerDelivery = averageWeightPerDelivery;
     }
 
     public AddForecastParametersCommand() {
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public void setForecastedPriceParamters(List<ForecastedPriceParameter> forecastedPriceParamters) {
-        this.forecastedPriceParamters = forecastedPriceParamters;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public List<ForecastedPriceParameter> getForecastedPriceParamters() {
-        return this.forecastedPriceParamters;
+    public ForecastedPriceParameter getForecastedPriceParameter() {
+        return forecastedPriceParameter;
     }
 
-    public void addForecastedPriceParameter(ForecastedPriceParameter priceParameter) {
-        this.forecastedPriceParamters.add(priceParameter);
+    public double getDemandDensity() {
+        return demandDensity;
+    }
+
+    public double getAverageDemandPerSubscriber() {
+        return averageDemandPerSubscriber;
+    }
+
+    public long getTotalDeliveriesPerPeriod() {
+        return totalDeliveriesPerPeriod;
+    }
+
+    public double getAverageWeightPerDelivery() {
+        return averageWeightPerDelivery;
     }
 }

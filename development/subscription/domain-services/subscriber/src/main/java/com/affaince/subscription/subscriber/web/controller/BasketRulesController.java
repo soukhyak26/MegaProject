@@ -29,9 +29,10 @@ public class BasketRulesController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> addBasketRules(@RequestBody BasketRulesRequest request) throws Exception {
-        AddBasketRulesCommand command = new AddBasketRulesCommand(UUID.randomUUID().toString(),
+        final AddBasketRulesCommand command = new AddBasketRulesCommand(UUID.randomUUID().toString(),
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
-                request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit());
+                request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
+                request.getMinimumAmountEligibleForFreeShipping());
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
@@ -43,9 +44,10 @@ public class BasketRulesController {
     @RequestMapping(method = RequestMethod.PUT, value = "update/{basketRuleId}")
     public ResponseEntity<Object> updateBasketRules(@RequestBody BasketRulesRequest request,
                                                     @PathVariable String basketRuleId) throws Exception {
-        AddBasketRulesCommand command = new AddBasketRulesCommand(basketRuleId,
+        final AddBasketRulesCommand command = new AddBasketRulesCommand(basketRuleId,
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
-                request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit());
+                request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
+                request.getMinimumAmountEligibleForFreeShipping());
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

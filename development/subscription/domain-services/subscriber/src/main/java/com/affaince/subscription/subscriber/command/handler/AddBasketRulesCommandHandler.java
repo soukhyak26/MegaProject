@@ -24,9 +24,9 @@ public class AddBasketRulesCommandHandler {
 
     @CommandHandler
     public void handle(AddBasketRulesCommand command) {
-        Discount discount = new Discount(command.getMaximumPermissibleDiscount(),
+        final Discount discount = new Discount(command.getMaximumPermissibleDiscount(),
                 DiscountUnit.valueOf(command.getMaximumPermissibleDiscountUnit()));
-        BasketRule basketRule = new BasketRule(command.getBasketRuleId(), command.getMaximumPermissibleAmount(),
+        final BasketRule basketRule = new BasketRule(command.getBasketRuleId(), command.getMaximumPermissibleAmount(),
                 command.getMinimumAmountForDiscountEligibility(), discount);
         basketRuleRepository.add(basketRule);
     }

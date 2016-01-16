@@ -85,13 +85,17 @@ public class ProductController {
     @Consumes("application/json")
     public ResponseEntity<Object> addProjectionParameters(@RequestBody @Valid AddForecastParametersRequest request,
                                                           @PathVariable String productId) throws Exception {
-        ProductView productView = repository.findOne(productId);
+        final ProductView productView = repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
         AddForecastParametersCommand command = new AddForecastParametersCommand(
                 request.getProductId(),
-                request.getForecastedPriceParameters()
+                request.getForecastedPriceParameter(),
+                request.getDemandDensity(),
+                request.getAverageDemandPerSubscriber(),
+                request.getTotalDeliveriesPerPeriod(),
+                request.getAverageWeightPerDelivery()
         );
         commandGateway.executeAsync(command);
         try {

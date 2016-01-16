@@ -7,7 +7,6 @@ import org.joda.time.LocalDate;
  */
 public class ForecastedPriceParameter {
     private double purchasePricePerUnit;
-    private double averageOfferedPricePerUnit;
     private double MRP;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
@@ -17,7 +16,6 @@ public class ForecastedPriceParameter {
 
     public ForecastedPriceParameter(double purchasePricePerUnit, double averageOfferedPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, LocalDate fromDate, LocalDate toDate) {
         this.purchasePricePerUnit = purchasePricePerUnit;
-        this.averageOfferedPricePerUnit = averageOfferedPricePerUnit;
         this.MRP = MRP;
         this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
@@ -31,14 +29,6 @@ public class ForecastedPriceParameter {
 
     public void setPurchasePricePerUnit(double purchasePricePerUnit) {
         this.purchasePricePerUnit = purchasePricePerUnit;
-    }
-
-    public double getAverageOfferedPricePerUnit() {
-        return this.averageOfferedPricePerUnit;
-    }
-
-    public void setAverageOfferedPricePerUnit(double averageOfferedPricePerUnit) {
-        this.averageOfferedPricePerUnit = averageOfferedPricePerUnit;
     }
 
     public double getMRP() {

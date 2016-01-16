@@ -12,13 +12,15 @@ public class AddBasketRulesCommand {
     private double minimumAmountForDiscountEligibility;
     private float maximumPermissibleDiscount;
     private int maximumPermissibleDiscountUnit;
+    private int minimumAmountEligibleForFreeShipping;
 
-    public AddBasketRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit) {
+    public AddBasketRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping) {
         BasketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
         this.maximumPermissibleDiscount = maximumPermissibleDiscount;
         this.maximumPermissibleDiscountUnit = maximumPermissibleDiscountUnit;
+        this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
     }
 
     public AddBasketRulesCommand() {
@@ -28,39 +30,23 @@ public class AddBasketRulesCommand {
         return BasketRuleId;
     }
 
-    public void setBasketRuleId(String basketRuleId) {
-        BasketRuleId = basketRuleId;
-    }
-
     public double getMaximumPermissibleAmount() {
         return maximumPermissibleAmount;
-    }
-
-    public void setMaximumPermissibleAmount(double maximumPermissibleAmount) {
-        this.maximumPermissibleAmount = maximumPermissibleAmount;
     }
 
     public double getMinimumAmountForDiscountEligibility() {
         return minimumAmountForDiscountEligibility;
     }
 
-    public void setMinimumAmountForDiscountEligibility(double minimumAmountForDiscountEligibility) {
-        this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
-    }
-
     public float getMaximumPermissibleDiscount() {
         return maximumPermissibleDiscount;
-    }
-
-    public void setMaximumPermissibleDiscount(float maximumPermissibleDiscount) {
-        this.maximumPermissibleDiscount = maximumPermissibleDiscount;
     }
 
     public int getMaximumPermissibleDiscountUnit() {
         return maximumPermissibleDiscountUnit;
     }
 
-    public void setMaximumPermissibleDiscountUnit(int maximumPermissibleDiscountUnit) {
-        this.maximumPermissibleDiscountUnit = maximumPermissibleDiscountUnit;
+    public int getMinimumAmountEligibleForFreeShipping() {
+        return minimumAmountEligibleForFreeShipping;
     }
 }

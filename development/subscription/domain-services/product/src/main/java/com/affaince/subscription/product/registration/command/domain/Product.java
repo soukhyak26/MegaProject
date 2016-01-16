@@ -109,28 +109,24 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void on(ForecastParametersAddedEvent event) {
         this.productId = event.getProductId();
-        List<ForecastedPriceParameter> forecastedPriceParameters = event.getForecastedPriceParamters();
+        final ForecastedPriceParameter priceParameter = event.getForecastedPriceParamter();
+        PriceBucket priceBucket = new PriceBucket(
+                priceParameter.getPurchasePricePerUnit(),
+                priceParameter.getMRP(),
+                priceParameter.getFromDate(),
+                priceParameter.getToDate(),
+                priceParameter.getNumberOfNewCustomersAssociatedWithAPrice(),
+                priceParameter.getNumberOfChurnedCustomersAssociatedWithAPrice()
+        );
+        this.productAccount.addNewForecastedPriceBucket(priceParameter.getFromDate(), priceBucket);
 
-        Map<LocalDate, ProductPerformanceTracker> forecastPerUnitPeriod = getProductAccount().getForecastPerUnitPeriod();
-
-        ProductAccount productAccount = getProductAccount();
-
-        for (ForecastedPriceParameter priceParameter : forecastedPriceParameters) {
-            ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
-            productPerformanceTracker.setFromDate(priceParameter.getFromDate());
-            productPerformanceTracker.setToDate(priceParameter.getToDate());
-            PriceBucket priceBucket = new PriceBucket(
-                    priceParameter.getPurchasePricePerUnit(),
-                    priceParameter.getAverageOfferedPricePerUnit(),
-                    priceParameter.getMRP(),
-                    priceParameter.getFromDate(),
-                    priceParameter.getToDate(),
-                    priceParameter.getNumberOfNewCustomersAssociatedWithAPrice(),
-                    priceParameter.getNumberOfChurnedCustomersAssociatedWithAPrice()
-            );
-            productAccount.addPerformanceTrackerToForecast(priceParameter.getFromDate(), productPerformanceTracker);
-            productAccount.addNewForecastedPriceBucket(priceParameter.getFromDate(), priceBucket);
-        }
+        ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
+        productPerformanceTracker.setFromDate(priceParameter.getFromDate());
+        productPerformanceTracker.setToDate(priceParameter.getToDate());
+        productPerformanceTracker.setDemandDensity(event.getDemandDensity());
+        productPerformanceTracker.setTotalDeliveriesPerPeriod(event.getTotalDeliveriesPerPeriod());
+        productPerformanceTracker.setAverageWeightPerDelivery(event.getAverageWeightPerDelivery());
+        this.productAccount.addPerformanceTrackerToForecast(priceParameter.getFromDate(), productPerformanceTracker);
     }
 
 
@@ -171,7 +167,9 @@ public class Product extends AbstractAnnotatedAggregateRoot {
 
     public void addForecastParameters(AddForecastParametersCommand command) {
         apply(new ForecastParametersAddedEvent(
-                this.productId, command.getForecastedPriceParamters()
+                this.productId, command.getForecastedPriceParameter(), command.getDemandDensity(),
+                command.getAverageDemandPerSubscriber(), command.getTotalDeliveriesPerPeriod(),
+                command.getAverageWeightPerDelivery()
         ));
 
     }

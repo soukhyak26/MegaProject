@@ -9,6 +9,7 @@ public class BasketRulesRequest {
     private double minimumAmountForDiscountEligibility;
     private float maximumPermissibleDiscount;
     private int maximumPermissibleDiscountUnit;
+    private int minimumAmountEligibleForFreeShipping;
 
     public double getMaximumPermissibleAmount() {
         return maximumPermissibleAmount;
@@ -40,5 +41,13 @@ public class BasketRulesRequest {
 
     public void setMaximumPermissibleDiscountUnit(int maximumPermissibleDiscountUnit) {
         this.maximumPermissibleDiscountUnit = maximumPermissibleDiscountUnit;
+    }
+
+    public int getMinimumAmountEligibleForFreeShipping() {
+        return minimumAmountEligibleForFreeShipping;
+    }
+
+    public void setMinimumAmountEligibleForFreeShipping(int minimumAmountEligibleForFreeShipping) {
+        this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
     }
 }

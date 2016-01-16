@@ -15,6 +15,8 @@ public class ProductPerformanceTracker {
     private LocalDate toDate;
     private double demandDensity;
     private double averageDemandPerSubscriber;
+    private long totalDeliveriesPerPeriod;
+    private double averageWeightPerDelivery;
 
     Map<LocalDate, InstantaneousPerformanceTracker> instantaneousPerformanceTrackers;
     AggregationPerformanceTracker aggregationPerformanceTracker;
@@ -133,5 +135,21 @@ public class ProductPerformanceTracker {
 
     public void setAverageDemandPerSubscriber(double averageDemandPerSubscriber) {
         this.averageDemandPerSubscriber = averageDemandPerSubscriber;
+    }
+
+    public long getTotalDeliveriesPerPeriod() {
+        return totalDeliveriesPerPeriod;
+    }
+
+    public void setTotalDeliveriesPerPeriod(long totalDeliveriesPerPeriod) {
+        this.totalDeliveriesPerPeriod = totalDeliveriesPerPeriod;
+    }
+
+    public double getAverageWeightPerDelivery() {
+        return averageWeightPerDelivery;
+    }
+
+    public void setAverageWeightPerDelivery(double averageWeightPerDelivery) {
+        this.averageWeightPerDelivery = averageWeightPerDelivery;
     }
 }

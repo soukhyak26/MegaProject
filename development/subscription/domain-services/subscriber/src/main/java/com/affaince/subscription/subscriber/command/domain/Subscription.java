@@ -31,6 +31,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     private Address billingAddress;
     private ContactDetails contactDetails;
     private double totalSubscriptionAmount;
+    private double totalProfit;
     private double totalSubscriptionAmountAfterDiscount;
     private double totalPaymentReceived;
     private LocalDate basketCreatedDate;
@@ -148,10 +149,6 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {
-        System.out.println("****@@@ConsumerBasket: subscriptionId:" + this.subscriptionId);
-        System.out.println("****@@@ConsumerBasket: status code:" + statusCode);
-        System.out.println("****@@@ConsumerBasket: reason code:" + reasonCode);
-        System.out.println("****@@@ConsumerBasket: dispatch date:" + dispatchDate);
         apply(new BasketDispatchStatusUpdatedEvent(subscriptionId, dispatchDate, statusCode, reasonCode));
     }
 

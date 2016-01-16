@@ -24,7 +24,7 @@ public class BasketRuleAddedEventListener {
     public void on(BasketRuleAddedEvent event) {
         BasketRuleView basketRuleView = new BasketRuleView(event.getBasketRuleId(),
                 event.getMaximumPermissibleAmount(), event.getMinimumAmountForDiscountEligibility(),
-                event.getMaximumPermissibleDiscount());
+                event.getMaximumPermissibleDiscount(), event.getMinimumAmountEligibleForFreeShipping());
         basketRuleViewRepository.save(basketRuleView);
     }
 }
