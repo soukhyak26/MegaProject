@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.NetWorthSubscriberStatus;
+import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
@@ -19,10 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -37,14 +35,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private NetWorthSubscriberStatus status;
     private List<String> couponCodes;
     private int rewardPoints;
-    private Map<String, Basket> baskets;
+    private Map<Integer, Delivery> deliveries;
     private String password;
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
     public Subscriber(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
         apply(new SubscriberCreatedEvent(subscriberId, subscriberName, address, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
-        baskets = new HashMap<>();
+        deliveries = new HashMap<>();
     }
 
     public Subscriber() {
@@ -97,20 +95,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on(BasketCreatedEvent event) {
-        this.subscriberId = event.getSubscriberId();
-        final Basket basket = new Basket(event.getBasketId(), event.getDeliveryItems(),
-                event.getDeliveryDate(), event.getDispatchDate(), event.getStatus());
-        this.baskets.put(event.getBasketId(), basket);
-    }
-
-    @EventSourcingHandler
     public void on(StatusAndDispatchDateUpdatedEvent event) {
         this.subscriberId = event.getSubscriptionId();
-        Basket basket = this.baskets.get(event.getBasketId());
-        basket.setDispatchDate(new LocalDate(event.getDispatchDate()));
-        basket.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
-        List<DeliveryItem> deliveryItems = basket.getDeliveryItems();
+        Delivery delivery = this.deliveries.get(event.getBasketId());
+        delivery.setDispatchDate(new LocalDate(event.getDispatchDate()));
+        delivery.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
+        List<DeliveryItem> deliveryItems = delivery.getDeliveryItems();
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
             DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null);
             deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
@@ -121,8 +111,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(BasketDeletedEvent event) {
         this.subscriberId = event.getSubscriptionId();
-        Basket basket = this.baskets.get(event.getBasketId());
-        basket.setStatus(DeliveryStatus.DELETED);
+        Delivery delivery = this.deliveries.get(event.getBasketId());
+        delivery.setStatus(DeliveryStatus.DELETED);
     }
 
     @EventSourcingHandler
@@ -154,12 +144,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         apply(new CouponCodeAddedEvent(this.subscriberId, couponCode));
     }
 
-    public void addBasket(Basket basket) {
-        apply(new BasketCreatedEvent(
-                this.subscriberId, basket.getBasketId(), basket.getDeliveryItems(),
-                basket.getDeliveryDate(), basket.getDispatchDate(), basket.getStatus()));
-    }
-
     public void updateStatusAndDispatchDate(UpdateStatusAndDispatchDateCommand command) {
         apply(new StatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId(), command.getBasketDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses()));
@@ -175,6 +159,41 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         } catch (NoSuchAlgorithmException e) {
             logger.error(e.getMessage());
             throw e;
+        }
+    }
+
+    public void makeDeliveriesReady(Subscription subscription) {
+        final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
+        int weekOfYear = LocalDate.now().getWeekOfWeekyear();
+        for (SubscriptionItem subscriptionItem : subscriptionItems) {
+            int nextDeliveryWeek = weekOfYear;
+            for (int i = 0; i < subscriptionItem.getNoOfCycles(); i++) {
+                if (subscriptionItem.getPeriod().getUnit() == PeriodUnit.MONTH) {
+                    nextDeliveryWeek = nextDeliveryWeek + subscriptionItem.getPeriod().getValue()*4;
+                } else {
+                    nextDeliveryWeek = nextDeliveryWeek + subscriptionItem.getPeriod().getValue();
+                }
+                Delivery weeklyDelivery = deliveries.get(nextDeliveryWeek);
+                if (weeklyDelivery == null) {
+                    weeklyDelivery = new Delivery();
+                    weeklyDelivery.setDeliveryId(nextDeliveryWeek + LocalDate.now().getYear() + "");
+                    weeklyDelivery.setDeliveryDate(LocalDate.now().plusWeeks (nextDeliveryWeek-weekOfYear));
+                    weeklyDelivery.setStatus(DeliveryStatus.CREATED);
+                    deliveries.put(nextDeliveryWeek, weeklyDelivery);
+                }
+                DeliveryItem deliveryItem = new DeliveryItem();
+                deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
+                deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
+                weeklyDelivery.getDeliveryItems().add(deliveryItem);
+            }
+        }
+    }
+
+    public void confirmSubscription(Subscription subscription) {
+        makeDeliveriesReady(subscription);
+        for (Delivery delivery: deliveries.values()) {
+            apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), subscription.getSubscriberId(), subscription.getSubscriptionId(),
+                    delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus()));
         }
     }
 }

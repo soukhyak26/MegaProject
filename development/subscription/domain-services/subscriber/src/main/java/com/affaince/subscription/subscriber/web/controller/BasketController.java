@@ -1,12 +1,11 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.subscriber.command.CreateBasketCommand;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
 import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
-import com.affaince.subscription.subscriber.query.repository.BasketViewRepository;
-import com.affaince.subscription.subscriber.query.view.BasketView;
+import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
+import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import com.affaince.subscription.subscriber.web.exception.BasketNotFoundException;
 import com.affaince.subscription.subscriber.web.request.BasketDispatchRequest;
 import com.affaince.subscription.subscriber.web.request.BasketRequest;
@@ -27,33 +26,20 @@ import java.util.stream.Collectors;
 public class BasketController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final BasketViewRepository repository;
+    private final DeliveryViewRepository repository;
 
     @Autowired
-    public BasketController(SubscriptionCommandGateway commandGateway, BasketViewRepository repository) {
+    public BasketController(SubscriptionCommandGateway commandGateway, DeliveryViewRepository repository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "{subscriberId}")
-    public ResponseEntity<Object> createBasket(@RequestBody BasketRequest request, @PathVariable String subscriberId) throws Exception {
-        final CreateBasketCommand command = new CreateBasketCommand(subscriberId, UUID.randomUUID().toString(),
-                Arrays.asList(request.getDeliveryItems()), request.getDeliveryDate()
-        );
-        try {
-            commandGateway.executeAsync(command);
-        } catch (Exception e) {
-            throw e;
-        }
-        return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "updatestatusanddispatchdate/{subscriberId}/{basketId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateStatusAndDispatchDate(@RequestBody BasketDispatchRequest request,
                                                               @PathVariable String basketId,
                                                               @PathVariable String subscriberId) throws Exception {
-        final BasketView basketView = repository.findOne(basketId);
-        if (basketView == null) {
+        final DeliveryView deliveryView = repository.findOne(basketId);
+        if (deliveryView == null) {
             throw BasketNotFoundException.build(basketId);
         }
         final UpdateStatusAndDispatchDateCommand command = new UpdateStatusAndDispatchDateCommand(
@@ -71,8 +57,8 @@ public class BasketController {
 
     @RequestMapping(value = "delete/{subscriberId}/{basketId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteBasket(@PathVariable String basketId, @PathVariable String subscriberId) throws Exception {
-        final BasketView basketView = repository.findOne(basketId);
-        if (basketView == null) {
+        final DeliveryView deliveryView = repository.findOne(basketId);
+        if (deliveryView == null) {
             throw BasketNotFoundException.build(basketId);
         }
         final DeleteBasketCommand command = new DeleteBasketCommand(subscriberId, basketId);

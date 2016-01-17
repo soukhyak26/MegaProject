@@ -1,48 +1,37 @@
-package com.affaince.subscription.subscriber.query.view;
+package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 import org.joda.time.LocalDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 /**
  * Created by rbsavaliya on 02-10-2015.
  */
-@Document(collection = "BasketView")
-public class BasketView {
-    @Id
-    private String basketId;
-    private String subscriberId;
+public class Delivery {
+    private String deliveryId;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
     private DeliveryStatus status;
 
-    public BasketView(String basketId, String subscriberId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
-        this.basketId = basketId;
-        this.subscriberId = subscriberId;
+    public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
+        this.deliveryId = deliveryId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.dispatchDate = dispatchDate;
         this.status = status;
     }
 
-    public String getBasketId() {
-        return basketId;
+    public Delivery() {
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
+    public String getDeliveryId() {
+        return deliveryId;
     }
 
-    public String getSubscriberId() {
-        return subscriberId;
-    }
-
-    public void setSubscriberId(String subscriberId) {
-        this.subscriberId = subscriberId;
+    public void setDeliveryId(String deliveryId) {
+        this.deliveryId = deliveryId;
     }
 
     public List<DeliveryItem> getDeliveryItems() {

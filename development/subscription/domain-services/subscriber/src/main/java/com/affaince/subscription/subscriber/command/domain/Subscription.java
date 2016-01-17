@@ -1,9 +1,6 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
-import com.affaince.subscription.common.type.Frequency;
-import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.ProductStatistics;
@@ -27,7 +24,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     private String subscriptionId;
     private String subscriberId;
     private ConsumerBasketActivationStatus consumerBasketStatus;
-    private List<BasketItem> basketItems;
+    private List<SubscriptionItem> subscriptionItems;
     private Address shippingAddress;
     private Address billingAddress;
     private ContactDetails contactDetails;
@@ -93,19 +90,18 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(ItemAddedToSubscriptionEvent event) {
-        final Frequency frequency = new Frequency(event.getQuantityPerBasket(), new Period(event.getFrequency(),
-                PeriodUnit.valueOf(event.getFrequencyUnit())));
-        final BasketItem basketItem = new BasketItem(event.getItemId(),
-                frequency, event.getDiscountedOfferedPrice(), event.getNoOfCycle());
-        if (basketItems == null) {
-            basketItems = new ArrayList<>();
+        final SubscriptionItem subscriptionItem = new SubscriptionItem(event.getItemId(),
+                event.getCountPerPeriod(),event.getPeriod(), event.getDiscountedOfferedPrice(),
+                event.getOfferedPriceWithBasketLevelDiscount(),event.getNoOfCycles());
+        if (subscriptionItems == null) {
+            subscriptionItems = new ArrayList<>();
         }
-        basketItems.add(basketItem);
+        subscriptionItems.add(subscriptionItem);
     }
 
     @EventSourcingHandler
     public void on(ItemRemovedFromSubscriptionEvent event) {
-        basketItems.removeIf(item -> item.getProductId().equals(event.getItemId()));
+        subscriptionItems.removeIf(item -> item.getProductId().equals(event.getItemId()));
     }
 
     @EventSourcingHandler
@@ -145,8 +141,8 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public void addItemToBasket(AddItemToSubscriptionCommand command) {
         apply(new ItemAddedToSubscriptionEvent(this.subscriptionId, command.getItemId(),
-                command.getQuantityPerBasket(), command.getFrequency(), command.getFrequencyUnit(),
-                command.getDiscountedOfferedPrice(), command.getNoOfCycle()));
+                command.getCountPerPeriod(), command.getPeriod(), command.getDiscountedOfferedPrice(),
+                command.getOfferedPriceWithBasketLevelDiscount(), command.getNoOfCycles()));
     }
 
     public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {
@@ -160,13 +156,12 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     public void activateSubscription() {
         apply(new SubscriptionActivatedEvent(this.subscriptionId));
         List <ProductStatistics> productsStatistics = new ArrayList<>();
-        for (BasketItem basketItem : basketItems) {
+        for (SubscriptionItem subscriptionItem : subscriptionItems) {
             ProductStatistics productStatistics = new ProductStatistics();
-            productStatistics.setProductId(basketItem.getProductId());
-            Frequency frequency = basketItem.getFrequency();
-            productStatistics.setProductSubscriptionCount(basketItem.getNoOfCycle() * frequency.getValue());
+            productStatistics.setProductId(subscriptionItem.getProductId());
+            productStatistics.setProductSubscriptionCount(subscriptionItem.getNoOfCycles() * subscriptionItem.getCountPerPeriod());
             productStatistics.getSubscribedProductNetProfit();
-            productStatistics.setSubscribedProductRevenue(basketItem.getOfferedPriceWithBasketLevelDiscount());
+            productStatistics.setSubscribedProductRevenue(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
             productsStatistics.add(productStatistics);
         }
         apply(new ProductsStatisticsCalculatedEvent(productsStatistics));
@@ -178,5 +173,17 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public void addReceivedPayment(PaymentReceivedFromSourceCommand command) {
         apply(new PaymentProcessedEvent(this.subscriptionId, command.getSubscriberId(), command.getPaymentAmount(), command.getPaymentDate()));
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
+    }
+
+    public List<SubscriptionItem> getSubscriptionItems() {
+        return subscriptionItems;
     }
 }

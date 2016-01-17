@@ -9,32 +9,38 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 02-10-2015.
  */
-public class BasketCreatedEvent {
+public class DeliveryCreatedEvent {
+    public String deliveryId;
     private String subscriberId;
-    private String basketId;
+    private String subscriptionId;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
     private DeliveryStatus status;
 
-    public BasketCreatedEvent(String subscriberId, String basketId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
+    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
+        this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
-        this.basketId = basketId;
+        this.subscriptionId = subscriptionId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.dispatchDate = dispatchDate;
         this.status = status;
     }
 
-    public BasketCreatedEvent() {
+    public DeliveryCreatedEvent() {
+    }
+
+    public String getDeliveryId() {
+        return deliveryId;
     }
 
     public String getSubscriberId() {
         return subscriberId;
     }
 
-    public String getBasketId() {
-        return basketId;
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 
     public List<DeliveryItem> getDeliveryItems() {

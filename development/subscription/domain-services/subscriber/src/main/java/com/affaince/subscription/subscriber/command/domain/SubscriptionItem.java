@@ -1,28 +1,35 @@
-package com.affaince.subscription.subscriber.web.request;
+package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.Period;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import com.affaince.subscription.common.type.PeriodUnit;
 
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
-public class BasketItemRequest {
-    @NotNull
-    private String itemId;
+public class SubscriptionItem {
+    private String productId;
     private int countPerPeriod;
     private Period period;
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
+    private double subscriptionItemCountPerMonth;
 
-    public String getItemId() {
-        return itemId;
+    public SubscriptionItem(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
+        this.productId = productId;
+        this.countPerPeriod = countPerPeriod;
+        this.period = period;
+        this.discountedOfferedPrice = discountedOfferedPrice;
+        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+        this.noOfCycles = noOfCycles;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public int getCountPerPeriod() {
@@ -63,5 +70,13 @@ public class BasketItemRequest {
 
     public void setNoOfCycles(int noOfCycles) {
         this.noOfCycles = noOfCycles;
+    }
+
+    public void calculateMonthlyBasketItemCount(){
+        if(this.getPeriod().getUnit()== PeriodUnit.WEEK){
+            subscriptionItemCountPerMonth =(this.getCountPerPeriod()/this.getPeriod().getValue())*4;
+        }else if(this.getPeriod().getUnit()== PeriodUnit.MONTH){
+            subscriptionItemCountPerMonth =this.getCountPerPeriod()/ this.period.getValue();
+        }
     }
 }

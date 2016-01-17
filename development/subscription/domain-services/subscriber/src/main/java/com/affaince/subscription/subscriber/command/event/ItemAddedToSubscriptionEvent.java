@@ -1,25 +1,27 @@
 package com.affaince.subscription.subscriber.command.event;
 
+import com.affaince.subscription.common.type.Period;
+
 /**
  * Created by rbsavaliya on 23-08-2015.
  */
 public class ItemAddedToSubscriptionEvent {
     private String subscriptionId;
     private String itemId;
-    private int quantityPerBasket;
-    private int frequency;
-    private int frequencyUnit;
+    private int countPerPeriod;
+    private Period period;
     private double discountedOfferedPrice;
-    private int noOfCycle;
+    private double offeredPriceWithBasketLevelDiscount;
+    private int noOfCycles;
 
-    public ItemAddedToSubscriptionEvent(String subscriptionId, String itemId, int quantityPerBasket, int frequency, int frequencyUnit, double discountedOfferedPrice, int noOfCycle) {
+    public ItemAddedToSubscriptionEvent(String subscriptionId, String itemId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
         this.subscriptionId = subscriptionId;
         this.itemId = itemId;
-        this.quantityPerBasket = quantityPerBasket;
-        this.frequency = frequency;
-        this.frequencyUnit = frequencyUnit;
+        this.countPerPeriod = countPerPeriod;
+        this.period = period;
         this.discountedOfferedPrice = discountedOfferedPrice;
-        this.noOfCycle = noOfCycle;
+        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+        this.noOfCycles = noOfCycles;
     }
 
     public ItemAddedToSubscriptionEvent() {
@@ -33,23 +35,23 @@ public class ItemAddedToSubscriptionEvent {
         return itemId;
     }
 
-    public int getQuantityPerBasket() {
-        return quantityPerBasket;
+    public int getCountPerPeriod() {
+        return countPerPeriod;
     }
 
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public int getFrequencyUnit() {
-        return frequencyUnit;
+    public Period getPeriod() {
+        return period;
     }
 
     public double getDiscountedOfferedPrice() {
         return discountedOfferedPrice;
     }
 
-    public int getNoOfCycle() {
-        return noOfCycle;
+    public double getOfferedPriceWithBasketLevelDiscount() {
+        return offeredPriceWithBasketLevelDiscount;
+    }
+
+    public int getNoOfCycles() {
+        return noOfCycles;
     }
 }

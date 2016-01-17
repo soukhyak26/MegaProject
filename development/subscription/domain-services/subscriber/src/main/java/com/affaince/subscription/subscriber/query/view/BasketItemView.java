@@ -1,28 +1,33 @@
-package com.affaince.subscription.subscriber.web.request;
+package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.Period;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
-public class BasketItemRequest {
-    @NotNull
-    private String itemId;
+public class BasketItemView {
+    private String productId;
     private int countPerPeriod;
     private Period period;
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
 
-    public String getItemId() {
-        return itemId;
+    public BasketItemView(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
+        this.productId = productId;
+        this.countPerPeriod = countPerPeriod;
+        this.period = period;
+        this.discountedOfferedPrice = discountedOfferedPrice;
+        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+        this.noOfCycles = noOfCycles;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public int getCountPerPeriod() {

@@ -12,7 +12,7 @@ public class ConsumerBasketNotFoundException extends Exception {
     }
 
     public static ConsumerBasketNotFoundException build(String basketId) {
-        return new ConsumerBasketNotFoundException(String.format("Consumer Basket does not found with id: %s", basketId));
+        return new ConsumerBasketNotFoundException(String.format("Consumer Delivery does not found with id: %s", basketId));
     }
 
     @Override

@@ -53,9 +53,8 @@ public class SubscriptionController {
                                                           @RequestBody @Valid BasketItemRequest request) throws Exception {
         final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
         final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriptionId,
-                request.getItemId(), request.getQuantityPerBasket(),
-                request.getFrequency(), request.getFrequencyUnit(),
-                request.getDiscountedOfferedPrice(), request.getNoOfCycle());
+                request.getItemId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
+                request.getOfferedPriceWithBasketLevelDiscount(), request.getNoOfCycles());
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
@@ -124,17 +123,32 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "deleteitem/{subscriptionId}/{itemId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteItem(@PathVariable String basketId, @PathVariable String itemId) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(basketId);
+    public ResponseEntity<Object> deleteItem(@PathVariable String subscriptionId, @PathVariable String itemId) throws Exception {
+        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
         if (subscriptionView == null) {
-            throw ConsumerBasketNotFoundException.build(basketId);
+            throw ConsumerBasketNotFoundException.build(subscriptionId);
         }
-        final DeleteItemFromSubscriptionCommand command = new DeleteItemFromSubscriptionCommand(basketId, itemId);
+        final DeleteItemFromSubscriptionCommand command = new DeleteItemFromSubscriptionCommand(subscriptionId, itemId);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+    @RequestMapping(value = "confirmsubscription/{subscriptionId}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> confirmSubscription(@PathVariable String subscriptionId) throws Exception {
+        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        if (subscriptionView == null) {
+            throw ConsumerBasketNotFoundException.build(subscriptionId);
+        }
+        final ConfirmSubscriptionCommand confirmSubscriptionCommand= new ConfirmSubscriptionCommand(subscriptionId);
+        try {
+            commandGateway.executeAsync(confirmSubscriptionCommand);
+        } catch (Exception e) {
+            throw e;
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
     }
 }

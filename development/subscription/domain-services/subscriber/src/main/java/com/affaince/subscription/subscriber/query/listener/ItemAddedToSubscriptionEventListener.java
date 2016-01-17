@@ -1,11 +1,10 @@
 package com.affaince.subscription.subscriber.query.listener;
 
-import com.affaince.subscription.common.type.Frequency;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.subscriber.command.event.ItemAddedToSubscriptionEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
-import com.affaince.subscription.subscriber.query.view.BasketItem;
+import com.affaince.subscription.subscriber.query.view.BasketItemView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,16 @@ public class ItemAddedToSubscriptionEventListener {
 
     @EventHandler
     public void on(ItemAddedToSubscriptionEvent event) {
-        final Frequency frequency = new Frequency(event.getQuantityPerBasket(),
-                new Period(event.getFrequency(), PeriodUnit.valueOf(event.getFrequencyUnit())));
-        BasketItem basketItem = new BasketItem(event.getItemId(), frequency, event.getDiscountedOfferedPrice(), event.getNoOfCycle());
+        BasketItemView basketItemView = new BasketItemView(event.getItemId(),
+                event.getCountPerPeriod(),event.getPeriod(), event.getDiscountedOfferedPrice(),
+                event.getOfferedPriceWithBasketLevelDiscount(), event.getNoOfCycles());
         SubscriptionView subscriptionView = repository.findOne(event.getSubscriptionId());
-        List<BasketItem> basketItems = subscriptionView.getBasketItems();
-        if (basketItems == null) {
-            basketItems = new ArrayList<>();
+        List<BasketItemView> basketItemViews = subscriptionView.getBasketItemViews();
+        if (basketItemViews == null) {
+            basketItemViews = new ArrayList<>();
         }
-        basketItems.add(basketItem);
-        subscriptionView.setBasketItems(basketItems);
+        basketItemViews.add(basketItemView);
+        subscriptionView.setBasketItemViews(basketItemViews);
         repository.save(subscriptionView);
     }
 }

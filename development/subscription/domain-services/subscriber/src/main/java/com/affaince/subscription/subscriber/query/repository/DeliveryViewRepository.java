@@ -1,10 +1,10 @@
 package com.affaince.subscription.subscriber.query.repository;
 
-import com.affaince.subscription.subscriber.query.view.BasketView;
+import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by rbsavaliya on 02-10-2015.
  */
-public interface BasketViewRepository extends CrudRepository<BasketView, String> {
+public interface DeliveryViewRepository extends CrudRepository<DeliveryView, String> {
 }
