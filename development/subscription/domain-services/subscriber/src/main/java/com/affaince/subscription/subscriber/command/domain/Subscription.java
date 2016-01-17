@@ -6,6 +6,7 @@ import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
+import com.affaince.subscription.common.vo.ProductStatistics;
 import com.affaince.subscription.subscriber.command.AddAddressToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.AddItemToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.PaymentReceivedFromSourceCommand;
@@ -104,7 +105,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(ItemRemovedFromSubscriptionEvent event) {
-        basketItems.removeIf(item -> item.getItemId().equals(event.getItemId()));
+        basketItems.removeIf(item -> item.getProductId().equals(event.getItemId()));
     }
 
     @EventSourcingHandler
@@ -158,12 +159,17 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public void activateSubscription() {
         apply(new SubscriptionActivatedEvent(this.subscriptionId));
-        Map<String, Integer> subscribedProductUpdateCount = new HashMap<>(basketItems.size());
+        List <ProductStatistics> productsStatistics = new ArrayList<>();
         for (BasketItem basketItem : basketItems) {
+            ProductStatistics productStatistics = new ProductStatistics();
+            productStatistics.setProductId(basketItem.getProductId());
             Frequency frequency = basketItem.getFrequency();
-            subscribedProductUpdateCount.put(basketItem.getItemId(), basketItem.getNoOfCycle() * frequency.getValue());
+            productStatistics.setProductSubscriptionCount(basketItem.getNoOfCycle() * frequency.getValue());
+            productStatistics.getSubscribedProductNetProfit();
+            productStatistics.setSubscribedProductRevenue(basketItem.getOfferedPriceWithBasketLevelDiscount());
+            productsStatistics.add(productStatistics);
         }
-        apply(new SubscribedProductCountUpdatedEvent(subscribedProductUpdateCount));
+        apply(new ProductsStatisticsCalculatedEvent(productsStatistics));
     }
 
     public ConsumerBasketActivationStatus getConsumerBasketStatus() {

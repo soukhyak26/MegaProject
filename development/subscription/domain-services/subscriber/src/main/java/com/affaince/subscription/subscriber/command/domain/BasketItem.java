@@ -6,24 +6,25 @@ import com.affaince.subscription.common.type.Frequency;
  * Created by rbsavaliya on 09-08-2015.
  */
 public class BasketItem {
-    private String itemId;
+    private String productId;
     private Frequency frequency;
     private double discountedOfferedPrice;
+    private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycle;
 
-    public BasketItem(String itemId, Frequency frequency, double discountedOfferedPrice, int noOfCycle) {
-        this.itemId = itemId;
+    public BasketItem(String productId, Frequency frequency, double discountedOfferedPrice, int noOfCycle) {
+        this.productId = productId;
         this.frequency = frequency;
         this.discountedOfferedPrice = discountedOfferedPrice;
         this.noOfCycle = noOfCycle;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public Frequency getFrequency() {
@@ -40,6 +41,14 @@ public class BasketItem {
 
     public void setDiscountedOfferedPrice(double discountedOfferedPrice) {
         this.discountedOfferedPrice = discountedOfferedPrice;
+    }
+
+    public double getOfferedPriceWithBasketLevelDiscount() {
+        return offeredPriceWithBasketLevelDiscount;
+    }
+
+    public void setOfferedPriceWithBasketLevelDiscount(double offeredPriceWithBasketLevelDiscount) {
+        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
     }
 
     public int getNoOfCycle() {
