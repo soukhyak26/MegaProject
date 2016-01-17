@@ -14,7 +14,9 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -22,8 +24,8 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created by rsavaliya on 10/1/16.
  */
-//@Configuration
-//@EnableAutoConfiguration
+/*@Configuration
+@EnableAutoConfiguration*/
 public class RabbitMQConfiguration extends Default {
 
     @Bean
@@ -54,9 +56,13 @@ public class RabbitMQConfiguration extends Default {
 
         channel.exchangeDeclare(exchangeName, "topic", true);
         channel.queueDeclare(queueName, true, false, false, null);
+        System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
+                + "@@@@@@Types: " + types()
+                + "\n\t\t\t\t******************************\n");
         for (String bindingKey : types().keySet()) {
             channel.queueBind(queueName, exchangeName, bindingKey);
         }
+        //channel.queueBind(queueName, exchangeName, "com.affaince.notification.events.PaymentProcessedEvent");
         return exchangeName;
     }
 

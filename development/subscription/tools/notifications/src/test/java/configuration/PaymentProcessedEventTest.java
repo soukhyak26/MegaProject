@@ -1,5 +1,7 @@
 package configuration;
 
+//import com.affaince.notification.events.PaymentProcessedEvent;
+
 import com.affaince.notification.events.PaymentProcessedEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.Produce;
@@ -10,8 +12,6 @@ import org.apache.camel.spring.javaconfig.SingleRouteCamelConfiguration;
 import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
-import org.joda.time.LocalDate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
         loader = CamelSpringDelegatingTestContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 //@MockEndpoints()
-@Ignore
+//@Ignore
 public class PaymentProcessedEventTest {
 
     /*@EndpointInject(uri = "mock:queue.csv")
@@ -55,7 +55,9 @@ public class PaymentProcessedEventTest {
                             marshal().json(JsonLibrary.Jackson).
                             //to("jms:notification.queue");
                             //to("jms:notification.queue");
-                            to("activemq:topic:VirtualTopic.EventBus");
+                            //to("activemq:topic:VirtualTopic.EventBus");
+                            to("rabbitmq://localhost/notification.exchange?routingKey=com.affaince.notification.events.PaymentProcessedEvent&durable=true&declare=false");
+                                    //to("rabbitmq://localhost/notification.exchange?durable=true&declare=false");
                 }
             };
         }
@@ -73,6 +75,7 @@ public class PaymentProcessedEventTest {
         event.setCurrentStockInUnits(23456);
         event.setCurrentPriceDate(LocalDate.now());
         mock.expectedMessageCount(1);*/
+        //PaymentProcessedEvent event = new PaymentProcessedEvent("111", "007", 1000, null);
         PaymentProcessedEvent event = new PaymentProcessedEvent();
         event.setPaymentAmount(1000);
         //event.setPaymentDate(new LocalDate());

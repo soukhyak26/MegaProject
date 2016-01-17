@@ -1,10 +1,12 @@
 package com.affaince.notification.events;
 
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by rbsavaliya on 16-01-2016.
  */
+
 public class PaymentProcessedEvent {
     private String subscriptionId;
     private String subscriberId;
@@ -18,7 +20,17 @@ public class PaymentProcessedEvent {
         this.paymentDate = paymentDate;
     }
 
+    @Autowired
     public PaymentProcessedEvent() {
+        System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
+                + "PaymentProcessedEvent Constructor Called"
+                + "\n\t\t\t\t******************************\n");
+    }
+
+    public void sampleMethod() {
+        System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
+                + "SampleMethod Called"
+                + "\n\t\t\t\t******************************\n");
     }
 
     public String getSubscriptionId() {
