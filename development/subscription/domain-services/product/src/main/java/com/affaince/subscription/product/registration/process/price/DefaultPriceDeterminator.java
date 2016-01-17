@@ -15,15 +15,15 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
 
     @Override
     public void calculateOfferedPrice(Product product) {
-        final double purchasePrice = product.getLatestPurchasePriceActuals();
-        final double operatingExpensesPerProductPerUnit = product.getLatestOperatingExpensesPerUnitActuals();
-        final double MRP = product.getLatestMRPActuals();
-        final double expectedMerchantProfit = product.getLatestMerchantProfitActuals();
+        final double purchasePrice = product.getLatestPurchasePrice();
+        final double operatingExpensesPerProductPerUnit = product.getLatestOperatingExpensesPerUnit();
+        final double MRP = product.getLatestMRP();
+        final double expectedMerchantProfit = product.getLatestMerchantProfit();
         final double breakevenPrice = purchasePrice + operatingExpensesPerProductPerUnit;
         final double netProfit = MRP - breakevenPrice;
         final double priceAfterMerchantProfit = MRP - (netProfit - expectedMerchantProfit * breakevenPrice);
         //Offered price without basket discount= Price after merchant profit +(1-(percetnage margin to be given*product demand density))
-        final double latestDemandDensityActuals = product.getLatestDemandDensityActuals();
+        final double latestDemandDensityActuals = product.getLatestDemandDensity();
         final double profitSharingPercentageAtZeroDemand = product.findProfitSharingRuleByDemandDensity(0.0).getSharedProfitPercentage();
         final double profitSharingPercentageForADemand = product.findProfitSharingRuleByDemandDensity(latestDemandDensityActuals)
                 .getSharedProfitPercentage();
@@ -31,7 +31,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
                 / profitSharingPercentageForADemand;
         final double defaultOfferedPrice = priceAfterMerchantProfit + (1 - (profitSharingPercentageAtZeroDemand - latestDemandDensityActuals)
                 / slopeOfProfitShareForADemand) * netProfit;
-        product.setLatestOfferedPriceActuals(defaultOfferedPrice);
+        product.setLatestOfferedPrice(defaultOfferedPrice);
         if (null != priceDeterminator) {
             priceDeterminator.calculateOfferedPrice(product);
         }
