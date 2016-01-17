@@ -3,7 +3,7 @@ package com.affaince.subscription.product.registration.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.registration.command.AddCommonOperatingExpenseCommand;
 import com.affaince.subscription.product.registration.command.SetDeliveryChargesRulesCommand;
-import com.affaince.subscription.product.registration.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.vo.OperatingExpenseVO;
 import com.affaince.subscription.product.registration.web.request.CommonOperatingExpensesRequest;
 import com.affaince.subscription.product.registration.web.request.DeliveryChargesRulesRequest;
 import org.jgroups.util.UUID;
@@ -35,7 +35,7 @@ public class OperatingExpenseController {
     @RequestMapping(method = RequestMethod.POST, value = "common")
     @Consumes("application/json")
     public ResponseEntity<Object> setOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
-        for (OperatingExpense expense : request.getExpenses()) {
+        for (OperatingExpenseVO expense : request.getExpenses()) {
             final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(new UUID().randomUUID().toString(),
                     expense);
             try {

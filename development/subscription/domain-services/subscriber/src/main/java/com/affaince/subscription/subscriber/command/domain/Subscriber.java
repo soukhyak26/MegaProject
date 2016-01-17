@@ -102,7 +102,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         delivery.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
         List<DeliveryItem> deliveryItems = delivery.getDeliveryItems();
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
-            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null);
+            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null, 0);
             deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
             deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
         }
@@ -183,6 +183,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 }
                 DeliveryItem deliveryItem = new DeliveryItem();
                 deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
+                deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
                 deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
                 weeklyDelivery.getDeliveryItems().add(deliveryItem);
             }

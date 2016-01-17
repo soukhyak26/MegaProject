@@ -2,7 +2,7 @@ package com.affaince.subscription.product.registration.command.handler;
 
 import com.affaince.subscription.product.registration.command.AddCommonOperatingExpenseCommand;
 import com.affaince.subscription.product.registration.command.domain.CommonOperatingExpense;
-import com.affaince.subscription.product.registration.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.vo.OperatingExpenseVO;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class AddCommonOperatingExpenseCommandHandler {
 
     @CommandHandler
     public void handle(AddCommonOperatingExpenseCommand command) {
-        final OperatingExpense operatingExpense = command.getExpense();
+        final OperatingExpenseVO operatingExpenseVO = command.getExpense();
         final CommonOperatingExpense commonOperatingExpense = new CommonOperatingExpense(command.getId(),
-                operatingExpense.getExpenseHeader(), operatingExpense.getAmount(), operatingExpense.getPeriod());
+                operatingExpenseVO.getExpenseHeader(), operatingExpenseVO.getAmount(), operatingExpenseVO.getPeriod());
         repository.add(commonOperatingExpense);
     }
 }

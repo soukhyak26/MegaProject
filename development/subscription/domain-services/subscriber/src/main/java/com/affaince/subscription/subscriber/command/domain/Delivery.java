@@ -65,4 +65,12 @@ public class Delivery {
     public void setStatus(DeliveryStatus status) {
         this.status = status;
     }
+
+    public double calculateTotalWeightInGrams () {
+        double totalWeight=0;
+        for (DeliveryItem deliveryItem: this.deliveryItems) {
+            totalWeight= totalWeight + deliveryItem.getWeightInGrms();
+        }
+        return totalWeight;
+    }
 }

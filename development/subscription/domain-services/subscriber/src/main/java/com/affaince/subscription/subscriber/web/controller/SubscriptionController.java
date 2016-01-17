@@ -1,8 +1,11 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
+import com.affaince.subscription.subscriber.query.view.ProductView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import com.affaince.subscription.subscriber.web.exception.ConsumerBasketNotFoundException;
 import com.affaince.subscription.subscriber.web.request.AddressRequest;
@@ -26,13 +29,17 @@ import java.util.UUID;
 public class SubscriptionController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final SubscriptionViewRepository repository;
+    private final SubscriptionViewRepository subscriptionViewRepository;
+    private final ProductViewRepository productViewRepository;
+
+    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository subscriptionViewRepository, ProductViewRepository productViewRepository) {
+        this.commandGateway = commandGateway;
+        this.subscriptionViewRepository = subscriptionViewRepository;
+        this.productViewRepository = productViewRepository;
+    }
 
     @Autowired
-    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository repository) {
-        this.commandGateway = commandGateway;
-        this.repository = repository;
-    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
@@ -51,10 +58,19 @@ public class SubscriptionController {
     @Consumes("application/json")
     public ResponseEntity<Object> addItemToConsumerBasket(@PathVariable String subscriptionId,
                                                           @RequestBody @Valid BasketItemRequest request) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
+        final ProductView productView = productViewRepository.findOne(request.getProductId());
+        final long productQuantity = productView.getNetQuantity();
+        final QuantityUnit productQuantityUnit = productView.getQuantityUnit();
+        double productQuantityInGrms = productQuantity;
+        if (productQuantityUnit == QuantityUnit.KG || productQuantityUnit == QuantityUnit.LT) {
+            productQuantityInGrms = productQuantity*1000;
+        } else if (productQuantityUnit == QuantityUnit.ml) {
+            productQuantityInGrms = productQuantity/1000;
+        }
         final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriptionId,
-                request.getItemId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
-                request.getOfferedPriceWithBasketLevelDiscount(), request.getNoOfCycles());
+                request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
+                request.getOfferedPriceWithBasketLevelDiscount(), request.getNoOfCycles(), productQuantityInGrms);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
@@ -67,7 +83,7 @@ public class SubscriptionController {
     @Consumes("application/json")
     public ResponseEntity<Object> addShippingAddress(@PathVariable String subscriptionId,
                                                      @RequestBody @Valid AddressRequest request) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriptionId);
         }
@@ -87,7 +103,7 @@ public class SubscriptionController {
     @Consumes("application/json")
     public ResponseEntity<Object> addBillingAddress(@PathVariable String subscriptionId,
                                                     @RequestBody @Valid AddressRequest request) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriptionId);
         }
@@ -107,7 +123,7 @@ public class SubscriptionController {
     @Consumes("application/json")
     public ResponseEntity<Object> addContactDetails(@PathVariable String subscriptionId,
                                                     @RequestBody @Valid ContactDetailsRequest request) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriptionId);
         }
@@ -124,7 +140,7 @@ public class SubscriptionController {
 
     @RequestMapping(value = "deleteitem/{subscriptionId}/{itemId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteItem(@PathVariable String subscriptionId, @PathVariable String itemId) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriptionId);
         }
@@ -138,7 +154,7 @@ public class SubscriptionController {
     }
     @RequestMapping(value = "confirmsubscription/{subscriptionId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> confirmSubscription(@PathVariable String subscriptionId) throws Exception {
-        final SubscriptionView subscriptionView = repository.findOne(subscriptionId);
+        final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriptionId);
         }

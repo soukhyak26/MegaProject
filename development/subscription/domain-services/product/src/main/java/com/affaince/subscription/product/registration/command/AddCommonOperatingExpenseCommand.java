@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.registration.command;
 
-import com.affaince.subscription.product.registration.vo.OperatingExpense;
+import com.affaince.subscription.product.registration.vo.OperatingExpenseVO;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**
@@ -9,9 +9,9 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 public class AddCommonOperatingExpenseCommand {
     @TargetAggregateIdentifier
     private final String id;
-    private final OperatingExpense expense;
+    private final OperatingExpenseVO expense;
 
-    public AddCommonOperatingExpenseCommand(String id, OperatingExpense expense) {
+    public AddCommonOperatingExpenseCommand(String id, OperatingExpenseVO expense) {
         this.id = id;
         this.expense = expense;
     }
@@ -20,7 +20,7 @@ public class AddCommonOperatingExpenseCommand {
         return id;
     }
 
-    public OperatingExpense getExpense() {
+    public OperatingExpenseVO getExpense() {
         return expense;
     }
 }

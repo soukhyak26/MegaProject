@@ -19,7 +19,7 @@ public class SubscriptionView {
     private String subscriptionId;
     private String subscriberId;
     private ConsumerBasketActivationStatus consumerBasketStatus;
-    private List<BasketItemView> basketItemViews;
+    private List<SubscriptionItemView> subscriptionItemViews;
     private Address shippingAddress;
     private Address billingAddress;
     private ContactDetails contactDetails;
@@ -27,11 +27,11 @@ public class SubscriptionView {
     private LocalDate basketCreatedDate;
     private LocalDate basketExpiredDate;
 
-    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketStatus, List<BasketItemView> basketItemViews, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
+    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketStatus, List<SubscriptionItemView> subscriptionItemViews, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
         this.consumerBasketStatus = consumerBasketStatus;
-        this.basketItemViews = basketItemViews;
+        this.subscriptionItemViews = subscriptionItemViews;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
         this.contactDetails = contactDetails;
@@ -64,12 +64,12 @@ public class SubscriptionView {
         this.consumerBasketStatus = consumerBasketStatus;
     }
 
-    public List<BasketItemView> getBasketItemViews() {
-        return basketItemViews;
+    public List<SubscriptionItemView> getSubscriptionItemViews() {
+        return subscriptionItemViews;
     }
 
-    public void setBasketItemViews(List<BasketItemView> basketItemViews) {
-        this.basketItemViews = basketItemViews;
+    public void setSubscriptionItemViews(List<SubscriptionItemView> subscriptionItemViews) {
+        this.subscriptionItemViews = subscriptionItemViews;
     }
 
     public Address getShippingAddress() {

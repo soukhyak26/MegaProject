@@ -32,8 +32,8 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     private double totalProfit;
     private double totalSubscriptionAmountAfterDiscount;
     private double totalPaymentReceived;
-    private LocalDate basketCreatedDate;
-    private LocalDate basketExpiredDate;
+    private LocalDate subscriptionCreatedDate;
+    private LocalDate subscriptionExpiredDate;
 
     public Subscription(String subscriptionId, String subscriberId) {
         apply(new SubscriptionCreatedEvent(subscriptionId, subscriberId, LocalDate.now(), null, ConsumerBasketActivationStatus.CREATED));
@@ -47,8 +47,8 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     public void on(SubscriptionCreatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();
         this.subscriberId = event.getSubscriberId();
-        this.basketCreatedDate = event.getBasketCreatedDate();
-        this.basketExpiredDate = event.getBasketExpiredDate();
+        this.subscriptionCreatedDate = event.getBasketCreatedDate();
+        this.subscriptionExpiredDate = event.getBasketExpiredDate();
         this.consumerBasketStatus = event.getConsumerBasketStatus();
     }
 
@@ -91,7 +91,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ItemAddedToSubscriptionEvent event) {
         final SubscriptionItem subscriptionItem = new SubscriptionItem(event.getItemId(),
-                event.getCountPerPeriod(),event.getPeriod(), event.getDiscountedOfferedPrice(),
+                event.getWeightInGrms(), event.getCountPerPeriod(),event.getPeriod(), event.getDiscountedOfferedPrice(),
                 event.getOfferedPriceWithBasketLevelDiscount(),event.getNoOfCycles());
         if (subscriptionItems == null) {
             subscriptionItems = new ArrayList<>();
@@ -140,9 +140,9 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void addItemToBasket(AddItemToSubscriptionCommand command) {
-        apply(new ItemAddedToSubscriptionEvent(this.subscriptionId, command.getItemId(),
+        apply(new ItemAddedToSubscriptionEvent(this.subscriptionId, command.getProductId(),
                 command.getCountPerPeriod(), command.getPeriod(), command.getDiscountedOfferedPrice(),
-                command.getOfferedPriceWithBasketLevelDiscount(), command.getNoOfCycles()));
+                command.getOfferedPriceWithBasketLevelDiscount(), command.getNoOfCycles(), command.getWeightInGrms()));
     }
 
     public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {

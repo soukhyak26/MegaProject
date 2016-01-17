@@ -2,7 +2,6 @@ package com.affaince.subscription.subscriber.web.request;
 
 import com.affaince.subscription.common.type.Period;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -10,19 +9,19 @@ import javax.validation.constraints.NotNull;
  */
 public class BasketItemRequest {
     @NotNull
-    private String itemId;
+    private String productId;
     private int countPerPeriod;
     private Period period;
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public int getCountPerPeriod() {

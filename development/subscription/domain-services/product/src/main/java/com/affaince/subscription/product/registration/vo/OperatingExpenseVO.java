@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 15-01-2016.
  */
-public class OperatingExpense {
+public class OperatingExpenseVO {
     private String expenseHeader;
     private double amount;
     private Period period;

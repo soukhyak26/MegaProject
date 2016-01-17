@@ -50,7 +50,7 @@ single_rule : IF condition THEN conclusion SEMI ;
 condition : logical_expr ;
 conclusion : value unit ;
 value: DECIMAL ;
-unit: 'percent' | 'basket' | 'currency' | 'cashback' | 'coupan' ;
+unit: 'percent' | 'delivery' | 'currency' | 'cashback' | 'coupan' ;
 
 logical_expr
  : logical_expr AND logical_expr # LogicalExpressionAnd

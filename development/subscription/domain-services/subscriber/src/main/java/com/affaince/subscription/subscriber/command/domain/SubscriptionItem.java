@@ -8,15 +8,16 @@ import com.affaince.subscription.common.type.PeriodUnit;
  */
 public class SubscriptionItem {
     private String productId;
+    private double weightInGrms;
     private int countPerPeriod;
     private Period period;
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
-    private double subscriptionItemCountPerMonth;
 
-    public SubscriptionItem(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
+    public SubscriptionItem(String productId, double weightInGrms, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
         this.productId = productId;
+        this.weightInGrms = weightInGrms;
         this.countPerPeriod = countPerPeriod;
         this.period = period;
         this.discountedOfferedPrice = discountedOfferedPrice;
@@ -31,6 +32,16 @@ public class SubscriptionItem {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
+    public double getWeightInGrms() {
+        return weightInGrms;
+    }
+
+    public void setWeightInGrms(double weightInGrms) {
+        this.weightInGrms = weightInGrms;
+    }
+
+
 
     public int getCountPerPeriod() {
         return countPerPeriod;
@@ -70,13 +81,5 @@ public class SubscriptionItem {
 
     public void setNoOfCycles(int noOfCycles) {
         this.noOfCycles = noOfCycles;
-    }
-
-    public void calculateMonthlyBasketItemCount(){
-        if(this.getPeriod().getUnit()== PeriodUnit.WEEK){
-            subscriptionItemCountPerMonth =(this.getCountPerPeriod()/this.getPeriod().getValue())*4;
-        }else if(this.getPeriod().getUnit()== PeriodUnit.MONTH){
-            subscriptionItemCountPerMonth =this.getCountPerPeriod()/ this.period.getValue();
-        }
     }
 }

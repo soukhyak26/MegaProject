@@ -13,8 +13,9 @@ public class ItemAddedToSubscriptionEvent {
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
+    private double weightInGrms;
 
-    public ItemAddedToSubscriptionEvent(String subscriptionId, String itemId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
+    public ItemAddedToSubscriptionEvent(String subscriptionId, String itemId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
         this.subscriptionId = subscriptionId;
         this.itemId = itemId;
         this.countPerPeriod = countPerPeriod;
@@ -22,6 +23,7 @@ public class ItemAddedToSubscriptionEvent {
         this.discountedOfferedPrice = discountedOfferedPrice;
         this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
         this.noOfCycles = noOfCycles;
+        this.weightInGrms = weightInGrms;
     }
 
     public ItemAddedToSubscriptionEvent() {
@@ -53,5 +55,9 @@ public class ItemAddedToSubscriptionEvent {
 
     public int getNoOfCycles() {
         return noOfCycles;
+    }
+
+    public double getWeightInGrms() {
+        return weightInGrms;
     }
 }

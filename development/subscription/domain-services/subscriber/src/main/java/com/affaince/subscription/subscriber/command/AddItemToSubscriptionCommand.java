@@ -9,21 +9,23 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 public class AddItemToSubscriptionCommand {
     @TargetAggregateIdentifier
     private String subscriptionId;
-    private String itemId;
+    private String productId;
     private int countPerPeriod;
     private Period period;
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
+    private double weightInGrms;
 
-    public AddItemToSubscriptionCommand(String subscriptionId, String itemId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
+    public AddItemToSubscriptionCommand(String subscriptionId, String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
         this.subscriptionId = subscriptionId;
-        this.itemId = itemId;
+        this.productId = productId;
         this.countPerPeriod = countPerPeriod;
         this.period = period;
         this.discountedOfferedPrice = discountedOfferedPrice;
         this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
         this.noOfCycles = noOfCycles;
+        this.weightInGrms = weightInGrms;
     }
 
     public AddItemToSubscriptionCommand() {
@@ -33,8 +35,8 @@ public class AddItemToSubscriptionCommand {
         return subscriptionId;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getProductId() {
+        return productId;
     }
 
     public int getCountPerPeriod() {
@@ -55,5 +57,9 @@ public class AddItemToSubscriptionCommand {
 
     public int getNoOfCycles() {
         return noOfCycles;
+    }
+
+    public double getWeightInGrms() {
+        return weightInGrms;
     }
 }

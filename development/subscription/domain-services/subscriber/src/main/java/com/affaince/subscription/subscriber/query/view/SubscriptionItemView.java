@@ -5,21 +5,23 @@ import com.affaince.subscription.common.type.Period;
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
-public class BasketItemView {
+public class SubscriptionItemView {
     private String productId;
     private int countPerPeriod;
     private Period period;
     private double discountedOfferedPrice;
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
+    private double weightInGrms;
 
-    public BasketItemView(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles) {
+    public SubscriptionItemView(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
         this.productId = productId;
         this.countPerPeriod = countPerPeriod;
         this.period = period;
         this.discountedOfferedPrice = discountedOfferedPrice;
         this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
         this.noOfCycles = noOfCycles;
+        this.weightInGrms = weightInGrms;
     }
 
     public String getProductId() {
@@ -68,5 +70,13 @@ public class BasketItemView {
 
     public void setNoOfCycles(int noOfCycles) {
         this.noOfCycles = noOfCycles;
+    }
+
+    public double getWeightInGrms() {
+        return weightInGrms;
+    }
+
+    public void setWeightInGrms(double weightInGrms) {
+        this.weightInGrms = weightInGrms;
     }
 }
