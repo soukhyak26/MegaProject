@@ -32,10 +32,10 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private List<String> complements;
     private ProductConfiguration productConfiguration;
     private ProductAccount forecastedProductAccount = new ProductAccount();
-    private ProductAccount actualProdctAccount= new ProductAccount();
+    private ProductAccount actualProdctAccount = new ProductAccount();
     private double offeredPrice;
     private double latestOfferedPriceActuals;
-    private transient CalculationBasis calculationBasis=CalculationBasis.ACTUAL;
+    private transient CalculationBasis calculationBasis = CalculationBasis.ACTUAL;
 
     public Product() {
 
@@ -66,14 +66,14 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     public ProductAccount getProductAccount() {
-        if(this.calculationBasis== CalculationBasis.FORECAST)
-        return this.forecastedProductAccount;
+        if (this.calculationBasis == CalculationBasis.FORECAST)
+            return this.forecastedProductAccount;
         else
-        return this.actualProdctAccount;
+            return this.actualProdctAccount;
     }
 
     public PriceBucket getLatestPriceBucket() {
-        if(this.calculationBasis== CalculationBasis.FORECAST)
+        if (this.calculationBasis == CalculationBasis.FORECAST)
             return forecastedProductAccount.getLatestPriceBucket();
         else
             return actualProdctAccount.getLatestPriceBucket();
@@ -107,7 +107,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void on(OfferedPriceUpdatedEvent event) {
         this.productId = event.getProductId();
-        this.calculationBasis=CalculationBasis.ACTUAL;
+        this.calculationBasis = CalculationBasis.ACTUAL;
         PriceBucket lastPriceBucket = this.getLatestPriceBucket();
         PriceBucket newPriceBucket = new PriceBucket(lastPriceBucket);
         newPriceBucket.setFromDate(event.getCurrentPriceDate());
@@ -120,7 +120,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void on(ForecastParametersAddedEvent event) {
         this.productId = event.getProductId();
-        this.calculationBasis=CalculationBasis.FORECAST;
+        this.calculationBasis = CalculationBasis.FORECAST;
         final ForecastedPriceParameter priceParameter = event.getForecastedPriceParamter();
         PriceBucket priceBucket = new PriceBucket(
                 priceParameter.getPurchasePricePerUnit(),
@@ -141,11 +141,11 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         getProductAccount().addPerformanceTracker(priceParameter.getFromDate(), productPerformanceTracker);
     }
 
-//Only for actuals
+    //Only for actuals
     @EventSourcingHandler
     public void on(ProductStatusReceivedEvent event) {
         this.productId = event.getProductId();
-        this.calculationBasis=CalculationBasis.ACTUAL;
+        this.calculationBasis = CalculationBasis.ACTUAL;
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
         if (latestPriceBucket.getLatestPurchasePricePerUnitVersion() != event.getCurrentPurchasePrice()) {
             Map<LocalDate, PriceBucket> activeActualPriceBuckets = this.actualProdctAccount.getActivePriceBuckets();

@@ -2,14 +2,10 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.product.registration.command.event.SubscriptionSpecificExpenseAddedEvent;
 import com.affaince.subscription.product.registration.vo.RangeRule;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by rbsavaliya on 16-01-2016.
@@ -54,8 +50,8 @@ public class SubscriptionSpecificOperatingExpense {
         }
     */
 /*
-    public double calculateMonthlySubscriptionSpecificExepnses(SubscriptionInfo subscriptionInfo) {
-        Map<Integer, DeliveryInfo> deliveriesPerWeek = subscriptionInfo.getDeliveriesPerWeek();
+    public double calculateMonthlySubscriptionSpecificExepnses(SubscriptionInfoView subscriptionInfo) {
+        Map<Integer, DeliveryInfoView> deliveriesPerWeek = subscriptionInfo.getDeliveriesPerWeek();
         int subscriptionStartMonth = subscriptionCreatedDate.getMonthOfYear();
         int subscriptionStartYear = subscriptionCreatedDate.getYear();
         int subscriptionStartWeek=subscriptionCreatedDate.getWeekOfWeekyear();
@@ -73,7 +69,7 @@ public class SubscriptionSpecificOperatingExpense {
             }
         }
         for(int i=subscriptionStartWeek;i<)
-        for (DeliveryInfo delivery : deliveriesPerWeek) {
+        for (DeliveryInfoView delivery : deliveriesPerWeek) {
         }
         return 0;
     }

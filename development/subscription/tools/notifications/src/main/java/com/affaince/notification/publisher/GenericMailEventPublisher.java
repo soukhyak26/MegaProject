@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class GenericMailEventPublisher {
     @Autowired
-    public GenericMailEventPublisher(){}
+    public GenericMailEventPublisher() {
+    }
 
-    public void getNotificationEvent(Object event){
+    public void getNotificationEvent(Object event) {
         System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
                 + event.getClass() + "\t" + event
                 + "\n\t\t\t\t******************************\n");

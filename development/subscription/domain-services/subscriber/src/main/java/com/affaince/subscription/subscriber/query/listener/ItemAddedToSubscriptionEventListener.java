@@ -27,7 +27,7 @@ public class ItemAddedToSubscriptionEventListener {
     @EventHandler
     public void on(ItemAddedToSubscriptionEvent event) {
         final SubscriptionItemView subscriptionItemView = new SubscriptionItemView(event.getItemId(),
-                event.getCountPerPeriod(),event.getPeriod(), event.getDiscountedOfferedPrice(),
+                event.getCountPerPeriod(), event.getPeriod(), event.getDiscountedOfferedPrice(),
                 event.getOfferedPriceWithBasketLevelDiscount(), event.getNoOfCycles(), event.getWeightInGrms());
         SubscriptionView subscriptionView = repository.findOne(event.getSubscriptionId());
         List<SubscriptionItemView> subscriptionItemViews = subscriptionView.getSubscriptionItemViews();

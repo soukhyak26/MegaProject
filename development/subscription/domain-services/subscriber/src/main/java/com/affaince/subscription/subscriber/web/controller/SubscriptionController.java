@@ -32,14 +32,12 @@ public class SubscriptionController {
     private final SubscriptionViewRepository subscriptionViewRepository;
     private final ProductViewRepository productViewRepository;
 
+    @Autowired
     public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository subscriptionViewRepository, ProductViewRepository productViewRepository) {
         this.commandGateway = commandGateway;
         this.subscriptionViewRepository = subscriptionViewRepository;
         this.productViewRepository = productViewRepository;
     }
-
-    @Autowired
-
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
@@ -64,9 +62,9 @@ public class SubscriptionController {
         final QuantityUnit productQuantityUnit = productView.getQuantityUnit();
         double productQuantityInGrms = productQuantity;
         if (productQuantityUnit == QuantityUnit.KG || productQuantityUnit == QuantityUnit.LT) {
-            productQuantityInGrms = productQuantity*1000;
+            productQuantityInGrms = productQuantity * 1000;
         } else if (productQuantityUnit == QuantityUnit.ml) {
-            productQuantityInGrms = productQuantity/1000;
+            productQuantityInGrms = productQuantity / 1000;
         }
         final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriptionId,
                 request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
@@ -152,13 +150,14 @@ public class SubscriptionController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
     @RequestMapping(value = "confirmsubscription/{subscriptionId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> confirmSubscription(@PathVariable String subscriptionId) throws Exception {
         final SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriptionId);
         }
-        final ConfirmSubscriptionCommand confirmSubscriptionCommand= new ConfirmSubscriptionCommand(subscriptionId);
+        final ConfirmSubscriptionCommand confirmSubscriptionCommand = new ConfirmSubscriptionCommand(subscriptionId);
         try {
             commandGateway.executeAsync(confirmSubscriptionCommand);
         } catch (Exception e) {

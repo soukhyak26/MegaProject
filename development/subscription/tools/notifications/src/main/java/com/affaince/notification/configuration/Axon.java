@@ -27,7 +27,7 @@ public class Axon extends RabbitMQConfiguration {
 
 
     @Bean
-    public GenericMailEventPublisher GenericMailEventPublisher(){
+    public GenericMailEventPublisher GenericMailEventPublisher() {
         return new GenericMailEventPublisher();
     }
 
@@ -48,14 +48,14 @@ public class Axon extends RabbitMQConfiguration {
                 //from("${notification.event.feed.source}").
                 //from("activemq:queue:Consumer.Notification.VirtualTopic.EventBus").
                 from("rabbitmq://localhost/notification.exchange?queue=notification.queue&durable=true&declare=false").
-                //from("rabbitmq://localhost/notification.exchange?routingKey=com.affaince.notification.events.PaymentProcessedEvent&durable=true&declare=false").
+                        //from("rabbitmq://localhost/notification.exchange?routingKey=com.affaince.notification.events.PaymentProcessedEvent&durable=true&declare=false").
                         //unmarshal().json(JsonLibrary.Jackson)/
-                        unmarshal(df).
+                                unmarshal(df).
                         //to("${notification.event.feed.destination}").
-                                //to("bean:PaymentProcessedEvent"). //TODO: CHECK WHY THIS IS NOT WORKING
-                                                                    //stack trace at end of file
-                                                                    //Fixed after using JacksonDataFormat
-                                //bean(paymentProcessedEvent.getClass()).
+                        //to("bean:PaymentProcessedEvent"). //TODO: CHECK WHY THIS IS NOT WORKING
+                        //stack trace at end of file
+                        //Fixed after using JacksonDataFormat
+                        //bean(paymentProcessedEvent.getClass()).
                         //to("${event.publisher}");
                                 to("bean:GenericMailEventPublisher");
             }

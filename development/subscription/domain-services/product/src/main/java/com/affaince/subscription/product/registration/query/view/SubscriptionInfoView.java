@@ -1,7 +1,5 @@
-package com.affaince.subscription.subscriber.query.view;
+package com.affaince.subscription.product.registration.query.view;
 
-import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.subscriber.command.domain.DeliveryItem;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,26 +7,29 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 /**
- * Created by rbsavaliya on 02-10-2015.
+ * Created by rsavaliya on 17/1/16.
  */
-@Document(collection = "DeliveryView")
-public class DeliveryView {
+@Document(collection = "SubscriptionInfoView")
+public class SubscriptionInfoView {
     @Id
-    private String deliveryId;
+    public String deliveryId;
     private String subscriberId;
     private String subscriptionId;
-    private List<DeliveryItem> deliveryItems;
+    private List<DeliveryItemInfoView> deliveryItems;
     private LocalDate deliveryDate;
-    private LocalDate dispatchDate;
-    private DeliveryStatus status;
+    private double deliveryWeightInGrms;
 
-    public DeliveryView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status) {
+
+    public SubscriptionInfoView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItemInfoView> deliveryItems, LocalDate deliveryDate, double deliveryWeightInGrms) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
-        this.status = status;
+        this.deliveryWeightInGrms = deliveryWeightInGrms;
+    }
+
+    public SubscriptionInfoView() {
     }
 
     public String getDeliveryId() {
@@ -55,11 +56,11 @@ public class DeliveryView {
         this.subscriptionId = subscriptionId;
     }
 
-    public List<DeliveryItem> getDeliveryItems() {
+    public List<DeliveryItemInfoView> getDeliveryItems() {
         return deliveryItems;
     }
 
-    public void setDeliveryItems(List<DeliveryItem> deliveryItems) {
+    public void setDeliveryItems(List<DeliveryItemInfoView> deliveryItems) {
         this.deliveryItems = deliveryItems;
     }
 
@@ -71,19 +72,11 @@ public class DeliveryView {
         this.deliveryDate = deliveryDate;
     }
 
-    public LocalDate getDispatchDate() {
-        return dispatchDate;
+    public double getDeliveryWeightInGrms() {
+        return deliveryWeightInGrms;
     }
 
-    public void setDispatchDate(LocalDate dispatchDate) {
-        this.dispatchDate = dispatchDate;
-    }
-
-    public DeliveryStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(DeliveryStatus status) {
-        this.status = status;
+    public void setDeliveryWeightInGrms(double deliveryWeightInGrms) {
+        this.deliveryWeightInGrms = deliveryWeightInGrms;
     }
 }

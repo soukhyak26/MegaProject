@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by rsavaliya on 17/1/16.
  */
-@Document (collection = "ProductView")
+@Document(collection = "ProductView")
 public class ProductView {
     @Id
     private String productId;

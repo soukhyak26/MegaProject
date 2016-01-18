@@ -13,7 +13,9 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 09-08-2015.
@@ -91,8 +93,8 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ItemAddedToSubscriptionEvent event) {
         final SubscriptionItem subscriptionItem = new SubscriptionItem(event.getItemId(),
-                event.getWeightInGrms(), event.getCountPerPeriod(),event.getPeriod(), event.getDiscountedOfferedPrice(),
-                event.getOfferedPriceWithBasketLevelDiscount(),event.getNoOfCycles());
+                event.getWeightInGrms(), event.getCountPerPeriod(), event.getPeriod(), event.getDiscountedOfferedPrice(),
+                event.getOfferedPriceWithBasketLevelDiscount(), event.getNoOfCycles());
         if (subscriptionItems == null) {
             subscriptionItems = new ArrayList<>();
         }
@@ -155,7 +157,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public void activateSubscription() {
         apply(new SubscriptionActivatedEvent(this.subscriptionId));
-        List <ProductStatistics> productsStatistics = new ArrayList<>();
+        List<ProductStatistics> productsStatistics = new ArrayList<>();
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             ProductStatistics productStatistics = new ProductStatistics();
             productStatistics.setProductId(subscriptionItem.getProductId());

@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.common.type.PeriodUnit;
 
 /**
  * Created by rsavaliya on 17/1/16.

@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by rsavaliya on 9/1/16.
  */
-@Document (collection = "SubscriptionSummaryView")
+@Document(collection = "SubscriptionSummaryView")
 public class SubscriptionSummaryView {
 
     @Id

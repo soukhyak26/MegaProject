@@ -23,10 +23,10 @@ public class ConfirmSubscriptionCommandHandler {
     }
 
     @CommandHandler
-    public void handler(ConfirmSubscriptionCommand command){
-        Subscription subscription =subscriptionRepository.load(command.getSubscriptionId());
+    public void handler(ConfirmSubscriptionCommand command) {
+        Subscription subscription = subscriptionRepository.load(command.getSubscriptionId());
         Subscriber subscriber = subscriberRepository.load(subscription.getSubscriberId());
 
-        subscriber.confirmSubscription (subscription);
+        subscriber.confirmSubscription(subscription);
     }
 }

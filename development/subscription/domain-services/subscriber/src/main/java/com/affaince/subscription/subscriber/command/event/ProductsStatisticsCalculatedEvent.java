@@ -3,7 +3,6 @@ package com.affaince.subscription.subscriber.command.event;
 import com.affaince.subscription.common.vo.ProductStatistics;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by rbsavaliya on 10-01-2016.

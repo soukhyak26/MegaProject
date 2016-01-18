@@ -8,14 +8,12 @@ import com.affaince.subscription.subscriber.query.repository.DeliveryViewReposit
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import com.affaince.subscription.subscriber.web.exception.BasketNotFoundException;
 import com.affaince.subscription.subscriber.web.request.BasketDispatchRequest;
-import com.affaince.subscription.subscriber.web.request.BasketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**

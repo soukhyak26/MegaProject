@@ -57,8 +57,8 @@ public class PaymentProcessedEventTest {
                             //to("jms:notification.queue");
                             //to("jms:notification.queue");
                             //to("activemq:topic:VirtualTopic.EventBus");
-                            to("rabbitmq://localhost/notification.exchange?routingKey=com.affaince.notification.events.PaymentProcessedEvent&durable=true&declare=false");
-                                    //to("rabbitmq://localhost/notification.exchange?durable=true&declare=false");
+                                    to("rabbitmq://localhost/notification.exchange?routingKey=com.affaince.notification.events.PaymentProcessedEvent&durable=true&declare=false");
+                    //to("rabbitmq://localhost/notification.exchange?durable=true&declare=false");
                 }
             };
         }

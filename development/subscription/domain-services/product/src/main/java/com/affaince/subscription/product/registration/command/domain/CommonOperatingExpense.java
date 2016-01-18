@@ -3,8 +3,6 @@ package com.affaince.subscription.product.registration.command.domain;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.product.registration.command.event.CommonOperatingExpenseAddedEvent;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 /**
@@ -34,12 +32,12 @@ public class CommonOperatingExpense {
         this.period = event.getPeriod();
     }
 
-    public double transalateExpenseAmountToMonthlyExpense(){
-            if(this.period.getUnit()== PeriodUnit.WEEK){
-                return (this.amount/period.getValue())*4;
-            }else if(this.period.getUnit()== PeriodUnit.YEAR){
-                    return this.amount/(period.getValue()*12);
-            }
-            return this.amount;
+    public double transalateExpenseAmountToMonthlyExpense() {
+        if (this.period.getUnit() == PeriodUnit.WEEK) {
+            return (this.amount / period.getValue()) * 4;
+        } else if (this.period.getUnit() == PeriodUnit.YEAR) {
+            return this.amount / (period.getValue() * 12);
+        }
+        return this.amount;
     }
 }

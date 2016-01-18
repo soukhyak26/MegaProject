@@ -9,8 +9,7 @@ import java.util.Set;
  */
 public class TranslationService {
 
-    public static Integer[] getWeeksOfMonth(int month, int year)
-    {
+    public static Integer[] getWeeksOfMonth(int month, int year) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month);
@@ -18,8 +17,7 @@ public class TranslationService {
 
         Set<Integer> weeks = new HashSet<Integer>();
         int ndays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        for (int i = 0; i < ndays; i++)
-        {
+        for (int i = 0; i < ndays; i++) {
             weeks.add(cal.get(Calendar.WEEK_OF_YEAR));
             cal.add(Calendar.DATE, 1);
         }
@@ -27,9 +25,9 @@ public class TranslationService {
         return weeks.toArray(new Integer[0]);
     }
 
-    public static void main(String[] args){
-         Integer[] weeksOfMonth =TranslationService.getWeeksOfMonth(10,2015);
-        for( int week: weeksOfMonth){
+    public static void main(String[] args) {
+        Integer[] weeksOfMonth = TranslationService.getWeeksOfMonth(10, 2015);
+        for (int week : weeksOfMonth) {
             System.out.println("###Week: " + week);
         }
 

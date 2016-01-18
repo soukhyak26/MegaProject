@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.common.type.PeriodUnit;
 
 /**
  * Created by rbsavaliya on 09-08-2015.
@@ -40,7 +39,6 @@ public class SubscriptionItem {
     public void setWeightInGrms(double weightInGrms) {
         this.weightInGrms = weightInGrms;
     }
-
 
 
     public int getCountPerPeriod() {

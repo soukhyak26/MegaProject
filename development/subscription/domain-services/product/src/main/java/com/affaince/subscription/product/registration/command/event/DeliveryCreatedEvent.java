@@ -1,7 +1,7 @@
-package com.affaince.subscription.subscriber.command.event;
+package com.affaince.subscription.product.registration.command.event;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.subscriber.command.domain.DeliveryItem;
+import com.affaince.subscription.product.registration.query.view.DeliveryItemInfoView;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -13,13 +13,13 @@ public class DeliveryCreatedEvent {
     public String deliveryId;
     private String subscriberId;
     private String subscriptionId;
-    private List<DeliveryItem> deliveryItems;
+    private List<DeliveryItemInfoView> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
     private DeliveryStatus status;
     private double deliveryWeightInGrms;
 
-    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms) {
+    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItemInfoView> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
@@ -45,7 +45,7 @@ public class DeliveryCreatedEvent {
         return subscriptionId;
     }
 
-    public List<DeliveryItem> getDeliveryItems() {
+    public List<DeliveryItemInfoView> getDeliveryItems() {
         return deliveryItems;
     }
 

@@ -2,10 +2,10 @@ package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
+import com.affaince.subscription.subscriber.command.domain.DeliveryItem;
 import com.affaince.subscription.subscriber.command.event.StatusAndDispatchDateUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
-import com.affaince.subscription.subscriber.command.domain.DeliveryItem;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;

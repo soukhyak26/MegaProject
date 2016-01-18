@@ -20,7 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -169,7 +172,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             int nextDeliveryWeek = weekOfYear;
             for (int i = 0; i < subscriptionItem.getNoOfCycles(); i++) {
                 if (subscriptionItem.getPeriod().getUnit() == PeriodUnit.MONTH) {
-                    nextDeliveryWeek = nextDeliveryWeek + subscriptionItem.getPeriod().getValue()*4;
+                    nextDeliveryWeek = nextDeliveryWeek + subscriptionItem.getPeriod().getValue() * 4;
                 } else {
                     nextDeliveryWeek = nextDeliveryWeek + subscriptionItem.getPeriod().getValue();
                 }
@@ -177,7 +180,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 if (weeklyDelivery == null) {
                     weeklyDelivery = new Delivery();
                     weeklyDelivery.setDeliveryId(nextDeliveryWeek + LocalDate.now().getYear() + "");
-                    weeklyDelivery.setDeliveryDate(LocalDate.now().plusWeeks (nextDeliveryWeek-weekOfYear));
+                    weeklyDelivery.setDeliveryDate(LocalDate.now().plusWeeks(nextDeliveryWeek - weekOfYear));
                     weeklyDelivery.setStatus(DeliveryStatus.CREATED);
                     deliveries.put(nextDeliveryWeek, weeklyDelivery);
                 }
@@ -191,10 +194,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void confirmSubscription(Subscription subscription) {
-        makeDeliveriesReady(subscription);
-        for (Delivery delivery: deliveries.values()) {
+        for (Delivery delivery : deliveries.values()) {
             apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), subscription.getSubscriberId(), subscription.getSubscriptionId(),
-                    delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus()));
+                    delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
+                    delivery.calculateTotalWeightInGrams()));
         }
     }
 }
+

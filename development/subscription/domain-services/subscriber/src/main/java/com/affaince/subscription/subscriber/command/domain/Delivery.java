@@ -66,10 +66,10 @@ public class Delivery {
         this.status = status;
     }
 
-    public double calculateTotalWeightInGrams () {
-        double totalWeight=0;
-        for (DeliveryItem deliveryItem: this.deliveryItems) {
-            totalWeight= totalWeight + deliveryItem.getWeightInGrms();
+    public double calculateTotalWeightInGrams() {
+        double totalWeight = 0;
+        for (DeliveryItem deliveryItem : this.deliveryItems) {
+            totalWeight = totalWeight + deliveryItem.getWeightInGrms();
         }
         return totalWeight;
     }
