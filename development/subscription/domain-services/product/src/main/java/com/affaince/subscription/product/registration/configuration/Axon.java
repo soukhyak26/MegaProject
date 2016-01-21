@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.registration.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.product.registration.command.domain.OperatingExpense;
+import com.affaince.subscription.product.registration.command.domain.OperatingExpenseAccount;
 import com.affaince.subscription.product.registration.command.domain.Product;
 import com.affaince.subscription.product.registration.command.event.*;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -29,8 +29,8 @@ public class Axon extends Default {
     }
 
     @Bean
-    public Repository<OperatingExpense> createCommonOperatingExpenseRepository(DisruptorCommandBus commandBus) {
-        Repository<OperatingExpense> repository = commandBus.createRepository(new GenericAggregateFactory<>(OperatingExpense.class));
+    public Repository<OperatingExpenseAccount> createCommonOperatingExpenseRepository(DisruptorCommandBus commandBus) {
+        Repository<OperatingExpenseAccount> repository = commandBus.createRepository(new GenericAggregateFactory<>(OperatingExpenseAccount.class));
         return repository;
     }
 
@@ -44,6 +44,7 @@ public class Axon extends Default {
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.ProductsStatisticsCalculatedEvent", ProductsStatisticsCalculatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent", OperatingExpenseReceivedEvent.class.getName());
         }};
     }
 }

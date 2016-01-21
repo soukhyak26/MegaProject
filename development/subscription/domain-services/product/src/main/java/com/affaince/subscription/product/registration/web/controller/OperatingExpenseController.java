@@ -2,8 +2,10 @@ package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.registration.command.AddCommonOperatingExpenseCommand;
-import com.affaince.subscription.product.registration.command.SetDeliveryChargesRulesCommand;
+import com.affaince.subscription.product.registration.query.repository.DeliveryChargesRuleViewRepository;
+import com.affaince.subscription.product.registration.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.product.registration.vo.OperatingExpenseVO;
+import com.affaince.subscription.product.registration.vo.RangeRule;
 import com.affaince.subscription.product.registration.web.request.CommonOperatingExpensesRequest;
 import com.affaince.subscription.product.registration.web.request.DeliveryChargesRulesRequest;
 import org.jgroups.util.UUID;
@@ -26,10 +28,12 @@ import javax.ws.rs.Consumes;
 public class OperatingExpenseController {
 
     private final SubscriptionCommandGateway commandGateway;
+    private final DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository;
 
     @Autowired
-    public OperatingExpenseController(SubscriptionCommandGateway commandGateway) {
+    public OperatingExpenseController(SubscriptionCommandGateway commandGateway, DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository) {
         this.commandGateway = commandGateway;
+        this.deliveryChargesRuleViewRepository = deliveryChargesRuleViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "common")
@@ -50,12 +54,12 @@ public class OperatingExpenseController {
     @RequestMapping(method = RequestMethod.POST, value = "deliverychargerules")
     @Consumes("application/json")
     public ResponseEntity<Object> setDeliveryChargesRules(@RequestBody @Valid DeliveryChargesRulesRequest request) throws Exception {
-        final SetDeliveryChargesRulesCommand command = new SetDeliveryChargesRulesCommand(new UUID().randomUUID().toString(), request.getExpenseHeader(),
-                request.getDeliveryChargesRules());
-        try {
-            commandGateway.executeAsync(command);
-        } catch (Exception e) {
-            throw e;
+
+        for (RangeRule rangeRule : request.getDeliveryChargesRules()) {
+            final DeliveryChargesRuleView deliveryChargesRuleView = new DeliveryChargesRuleView(java.util.UUID.randomUUID().toString(),
+                    rangeRule.getRuleHeader(), rangeRule.getRuleMinimum(), rangeRule.getRuleMaximum(),
+                    rangeRule.getRuleUnit(), rangeRule.getApplicableValue());
+            deliveryChargesRuleViewRepository.save(deliveryChargesRuleView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

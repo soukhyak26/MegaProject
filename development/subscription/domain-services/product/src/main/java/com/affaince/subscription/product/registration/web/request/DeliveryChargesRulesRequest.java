@@ -9,16 +9,7 @@ import java.util.List;
  * Created by rbsavaliya on 16-01-2016.
  */
 public class DeliveryChargesRulesRequest {
-    private String expenseHeader;
     private List<RangeRule> deliveryChargesRules;
-
-    public String getExpenseHeader() {
-        return expenseHeader;
-    }
-
-    public void setExpenseHeader(String expenseHeader) {
-        this.expenseHeader = expenseHeader;
-    }
 
     public List<RangeRule> getDeliveryChargesRules() {
         return deliveryChargesRules;

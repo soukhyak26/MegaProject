@@ -6,6 +6,7 @@ import com.affaince.subscription.integration.command.event.basketdispatch.reques
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
 import com.affaince.subscription.integration.command.event.forecast.ProductForecastReceivedEvent;
+import com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent;
 import com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
 import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
@@ -87,6 +88,11 @@ public class Axon extends Default {
                         to("${payment.receipt.info.destination}");
 
                 //from("bean:NotificationEvent").marshal("json").to("restlet:/notification?restletMethod=POST");
+
+                //INT_07: Receive payment receipt intimation from mail application
+                from("${operatingexpense.info.source}").
+                        marshal().bindy(BindyType.Csv, OperatingExpenseReceivedEvent.class).
+                        to("${operatingexpense.info.destination}");
 
             }
         };
