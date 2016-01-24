@@ -9,7 +9,7 @@ import org.axonframework.eventhandling.amqp.RoutingKeyResolver;
 public class EventTypeRoutingKeyResolver implements RoutingKeyResolver {
     @Override
     public String resolveRoutingKey(EventMessage eventMessage) {
-        System.out.println(eventMessage.getPayloadType().getName());
+        System.out.println("ROUTING KEY *******************"+eventMessage.getPayloadType().getName());
         return eventMessage.getPayloadType().getName();
     }
 }

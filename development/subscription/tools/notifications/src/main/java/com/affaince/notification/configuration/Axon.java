@@ -2,7 +2,6 @@ package com.affaince.notification.configuration;
 
 import com.affaince.notification.events.PaymentProcessedEvent;
 import com.affaince.notification.publisher.GenericMailEventPublisher;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;

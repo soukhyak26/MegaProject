@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/domain-services/benefits/benefits.iml" filepath="$PROJECT_DIR$/domain-services/benefits/benefits.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/integration/integration.iml" filepath="$PROJECT_DIR$/tools/integration/integration.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/logback-commons/logback-commons.iml" filepath="$PROJECT_DIR$/libs/logback-commons/logback-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/notifications/notifications.iml" filepath="$PROJECT_DIR$/tools/notifications/notifications.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain-services/product/product.iml" filepath="$PROJECT_DIR$/domain-services/product/product.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/rules-compiler/rules-compiler.iml" filepath="$PROJECT_DIR$/tools/rules-compiler/rules-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain-services/subscriber/subscriber.iml" filepath="$PROJECT_DIR$/domain-services/subscriber/subscriber.iml" />

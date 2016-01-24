@@ -1,6 +1,5 @@
 package com.affaince.subscription.subscriber.configuration;
 
-import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriber.command.domain.BasketRule;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
@@ -18,7 +17,7 @@ import java.util.Map;
  * Created by rbsavaliya on 19-07-2015.
  */
 @Configuration
-public class Axon extends Default {
+public class Axon extends RabbitMQConfiguration {
 
     @Bean
     public Repository<Subscriber> createRepository(DisruptorCommandBus commandBus) {
