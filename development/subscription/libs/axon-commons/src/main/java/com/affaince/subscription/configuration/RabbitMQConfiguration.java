@@ -61,7 +61,7 @@ public class RabbitMQConfiguration extends Default {
                 + "\n\t\t\t\t******************************\n");
         for (String bindingKey : types().keySet()) {
             channel.queueBind(queueName, exchangeName, bindingKey);
-            channel.queueBind("asyncCluster", exchangeName, bindingKey);
+            //channel.queueBind("asyncCluster", exchangeName, bindingKey);
         }
         return exchangeName;
     }

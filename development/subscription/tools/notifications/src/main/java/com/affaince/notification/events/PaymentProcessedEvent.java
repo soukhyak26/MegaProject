@@ -64,4 +64,14 @@ public class PaymentProcessedEvent {
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentProcessedEvent{" +
+                "subscriptionId='" + subscriptionId + '\'' +
+                ", subscriberId='" + subscriberId + '\'' +
+                ", paymentAmount=" + paymentAmount +
+                ", paymentDate=" + paymentDate +
+                '}';
+    }
 }
