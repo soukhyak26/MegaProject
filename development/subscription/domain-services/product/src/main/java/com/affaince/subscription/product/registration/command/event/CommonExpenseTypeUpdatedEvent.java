@@ -4,13 +4,16 @@ import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.Period;
 
 /**
- * Created by rsavaliya on 21/1/16.
+ * Created by mandark on 24-01-2016.
  */
-public class OperatingExpenseReceivedEvent {
+public class CommonExpenseTypeUpdatedEvent {
+    private String commonOperatingExpenseId;
     private ExpenseType expenseType;
     private String expenseHeader;
     private double expenseAmount;
     private Period period;
+    private int forMonth;
+    private int forYear;
 
     public ExpenseType getExpenseType() {
         return expenseType;
@@ -44,13 +47,39 @@ public class OperatingExpenseReceivedEvent {
         this.period = period;
     }
 
+    public int getForMonth() {
+        return this.forMonth;
+    }
+
+    public void setForMonth(int forMonth) {
+        this.forMonth = forMonth;
+    }
+
+    public int getForYear() {
+        return this.forYear;
+    }
+
+    public void setForYear(int forYear) {
+        this.forYear = forYear;
+    }
+
     @Override
     public String toString() {
-        return "OperatingExpenseReceivedEvent{" +
+        return "CommonExpenseTypeUpdatedEvent{" +
                 "expenseType=" + expenseType +
                 ", expenseHeader='" + expenseHeader + '\'' +
                 ", expenseAmount=" + expenseAmount +
                 ", period=" + period +
+                ", forMonth=" + forMonth +
+                ", forYear=" + forYear +
                 '}';
+    }
+
+    public String getCommonOperatingExpenseId() {
+        return this.commonOperatingExpenseId;
+    }
+
+    public void setCommonOperatingExpenseId(String commonOperatingExpenseId) {
+        this.commonOperatingExpenseId = commonOperatingExpenseId;
     }
 }

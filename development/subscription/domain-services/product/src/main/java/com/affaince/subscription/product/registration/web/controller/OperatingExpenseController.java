@@ -2,13 +2,13 @@ package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.registration.command.AddCommonOperatingExpenseCommand;
+import com.affaince.subscription.product.registration.query.repository.CommonOperatingExpenseViewRepository;
 import com.affaince.subscription.product.registration.query.repository.DeliveryChargesRuleViewRepository;
 import com.affaince.subscription.product.registration.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.product.registration.vo.OperatingExpenseVO;
 import com.affaince.subscription.product.registration.vo.RangeRule;
 import com.affaince.subscription.product.registration.web.request.CommonOperatingExpensesRequest;
 import com.affaince.subscription.product.registration.web.request.DeliveryChargesRulesRequest;
-import org.jgroups.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +29,22 @@ public class OperatingExpenseController {
 
     private final SubscriptionCommandGateway commandGateway;
     private final DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository;
+    private final CommonOperatingExpenseViewRepository commonOperatingExpenseViewRepository;
 
     @Autowired
-    public OperatingExpenseController(SubscriptionCommandGateway commandGateway, DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository) {
+    public OperatingExpenseController(SubscriptionCommandGateway commandGateway, DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository, CommonOperatingExpenseViewRepository commonOperatingExpenseViewRepository) {
         this.commandGateway = commandGateway;
         this.deliveryChargesRuleViewRepository = deliveryChargesRuleViewRepository;
+        this.commonOperatingExpenseViewRepository = commonOperatingExpenseViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "common")
     @Consumes("application/json")
     public ResponseEntity<Object> setOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
+        //String commonExpenseId=new UUID().randomUUID().toString();
+        String commonExpenseId = "COMMON_EXPENSE_ID";
         for (OperatingExpenseVO expense : request.getExpenses()) {
-            final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(new UUID().randomUUID().toString(),
+            final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(commonExpenseId,
                     expense);
             try {
                 commandGateway.executeAsync(command);

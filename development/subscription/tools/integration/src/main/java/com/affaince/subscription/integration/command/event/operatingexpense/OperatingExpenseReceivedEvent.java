@@ -12,12 +12,19 @@ import org.apache.camel.dataformat.bindy.annotation.DataField;
 public class OperatingExpenseReceivedEvent {
     @DataField(name = "EXPENSE_TYPE", pos = 1, trim = true)
     private ExpenseType expenseType;
-    @DataField(name = "EXPENSE_NAME", pos = 2, trim = true)
+    @DataField(name = "EXPENSE_TYPE_ID", pos = 2, trim = true)
+    private String expenseId;
+    @DataField(name = "EXPENSE_NAME", pos = 3, trim = true)
     private String expenseHeader;
-    @DataField(name = "EXPENSE_AMOUNT", pos = 3, trim = true)
+    @DataField(name = "EXPENSE_AMOUNT", pos = 4, trim = true)
     private double expenseAmount;
-    @DataField(name = "EXPENSE_PERIOD", pos = 4, trim = true)
+    @DataField(name = "EXPENSE_PERIOD", pos = 5, trim = true)
     private Period period;
+    @DataField(name = "FOR_MONTH", pos = 6, trim = true)
+    private int forMonth;
+    @DataField(name = "FOR_YEAR", pos = 7, trim = true)
+    private int forYear;
+
 
     public ExpenseType getExpenseType() {
         return expenseType;
@@ -51,6 +58,22 @@ public class OperatingExpenseReceivedEvent {
         this.period = period;
     }
 
+    public int getForMonth() {
+        return this.forMonth;
+    }
+
+    public void setForMonth(int forMonth) {
+        this.forMonth = forMonth;
+    }
+
+    public int getForYear() {
+        return this.forYear;
+    }
+
+    public void setForYear(int forYear) {
+        this.forYear = forYear;
+    }
+
     @Override
     public String toString() {
         return "OperatingExpenseReceivedEvent{" +
@@ -58,6 +81,16 @@ public class OperatingExpenseReceivedEvent {
                 ", expenseHeader='" + expenseHeader + '\'' +
                 ", expenseAmount=" + expenseAmount +
                 ", period=" + period +
+                ", forMonth=" + forMonth +
+                ", forYear=" + forYear +
                 '}';
+    }
+
+    public String getExpenseId() {
+        if(expenseType == ExpenseType.COMMON_EXPENSE) {
+            return "COMMON_EXPENSE_ID";
+        }else{
+            return "SUBSCRIPTION_SPECIFIC_EXPENSE_ID";
+        }
     }
 }
