@@ -1,11 +1,13 @@
 package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.integration.command.event.GenericEventPublisher;
 import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
 import com.affaince.subscription.integration.command.event.forecast.ProductForecastReceivedEvent;
+import com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent;
 import com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
 import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
@@ -24,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by mandark on 19-07-2015.
  */
 @Configuration
-public class Axon extends Default {
+public class Axon extends RabbitMQConfiguration {
 
 
     public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
@@ -87,6 +89,11 @@ public class Axon extends Default {
                         to("${payment.receipt.info.destination}");
 
                 //from("bean:NotificationEvent").marshal("json").to("restlet:/notification?restletMethod=POST");
+
+                //INT_07: Receive payment receipt intimation from mail application
+                from("${operatingexpense.info.source}").
+                        marshal().bindy(BindyType.Csv, OperatingExpenseReceivedEvent.class).
+                        to("${operatingexpense.info.destination}");
 
             }
         };

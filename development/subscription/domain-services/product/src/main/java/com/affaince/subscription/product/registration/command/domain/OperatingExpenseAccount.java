@@ -3,27 +3,25 @@ package com.affaince.subscription.product.registration.command.domain;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by rsavaliya on 17/1/16.
  */
-public class OperatingExpense extends AbstractAnnotatedAggregateRoot<String> {
+public class OperatingExpenseAccount extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
     private String id;
-    List<CommonOperatingExpense> commonExpenses;
-    List<SubscriptionSpecificOperatingExpense> subscriptionSpecificOperatingExpenses;
+    private double yearlyCommonOperationExpenses;
+    private double yearlySubscriptionSpecificOperatingExpenses;
 
-    public OperatingExpense() {
+    public OperatingExpenseAccount() {
     }
 
-    public OperatingExpense(String expenseId) {
-        commonExpenses = new ArrayList<>();
-        subscriptionSpecificOperatingExpenses = new ArrayList<>();
+    public OperatingExpenseAccount(String id, double yearlyCommonOperationExpenses, double yearlySubscriptionSpecificOperatingExpenses) {
+        this.id = id;
+        this.yearlyCommonOperationExpenses = yearlyCommonOperationExpenses;
+        this.yearlySubscriptionSpecificOperatingExpenses = yearlySubscriptionSpecificOperatingExpenses;
     }
 
-    public void addCommonExpense(CommonOperatingExpense expense) {
+    /*public void addCommonExpense(CommonOperatingExpense expense) {
         commonExpenses.add(expense);
     }
 
@@ -38,7 +36,7 @@ public class OperatingExpense extends AbstractAnnotatedAggregateRoot<String> {
         }
         return totalCommonExpenses;
 
-    }
+    }*/
 
     public double calculateTotalMonthlySubscriptionSpecificExpenses() {
         return 0;

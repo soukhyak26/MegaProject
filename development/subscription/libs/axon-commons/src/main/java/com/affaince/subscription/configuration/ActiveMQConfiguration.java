@@ -24,8 +24,8 @@ import javax.jms.Session;
 /**
  * Created by rsavaliya on 9/1/16.
  */
-@EnableAutoConfiguration
-@Configuration
+/*@EnableAutoConfiguration
+@Configuration*/
 public class ActiveMQConfiguration extends Default {
 
     @Bean
