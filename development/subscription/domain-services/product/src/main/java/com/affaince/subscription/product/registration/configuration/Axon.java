@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.registration.configuration;
 
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.registration.command.domain.OperatingExpenseAccount;
 import com.affaince.subscription.product.registration.command.domain.Product;
 import com.affaince.subscription.product.registration.command.event.*;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
     @Bean
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {

@@ -80,13 +80,6 @@
         <processorPath useClasspath="true" />
         <module name="logback-commons" />
       </profile>
-      <profile default="false" name="Annotation profile for notifications" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="notifications" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="application-simulator" target="1.8" />
@@ -95,7 +88,6 @@
       <module name="integration" target="1.8" />
       <module name="item-registration" target="1.5" />
       <module name="logback-commons" target="1.8" />
-      <module name="notifications" target="1.8" />
       <module name="product" target="1.8" />
       <module name="rules-compiler" target="1.8" />
       <module name="subscriber" target="1.8" />

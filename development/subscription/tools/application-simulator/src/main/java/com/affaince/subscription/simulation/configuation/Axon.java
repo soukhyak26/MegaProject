@@ -1,5 +1,6 @@
 package com.affaince.subscription.simulation.configuation;
 
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.simulation.command.event.GenericEventPublisher;
 import com.affaince.subscription.simulation.command.event.basketdispatch.BasketDispatchedStatusEvent;
 import org.apache.camel.CamelContext;
