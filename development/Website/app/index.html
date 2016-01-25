@@ -38,6 +38,20 @@
             <h1>Hi {{ctrl.user.email}}</h1>
         </md-toolbar>
 
+        <md-list>
+            <md-list-item ng-repeat="config in ctrl.configurations">
+                <md-button >
+                    {{config.name}}
+                </md-button>
+            </md-list-item>
+        </md-list>
+        <md-list>
+            <md-list-item>
+                <md-button ng-click="ctrl.logout()">
+                    Logout
+                </md-button>
+            </md-list-item>
+        </md-list>
     </md-sidenav>
 
 
@@ -49,9 +63,7 @@
             </md-button>
 
             <h1>Affiance System</h1>
-            <div flex-offset-xs ng-if="ctrl.isLoggedIn">
-                <md-button ng-click="ctrl.logout()" class="md-raised" flex="50" flex-sm="100">Logout</md-button>
-            </div>
+
         </md-toolbar>
 
         <md-content flex id="content" ng-if="!ctrl.isLoggedIn">
