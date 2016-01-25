@@ -35,12 +35,8 @@
     <md-sidenav ng-if="ctrl.isLoggedIn" class="site-sidenav md-sidenav-left md-whiteframe-z4" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
         <md-toolbar class="md-whiteframe-z1">
-            <h1>Configuration</h1>
+            <h1>Hi {{ctrl.user.email}}</h1>
         </md-toolbar>
-
-        <md-list>
-
-        </md-list>
 
     </md-sidenav>
 
@@ -122,7 +118,7 @@
                       .icon("phone"      , "./assets/svg/phone.svg"       , 512);
 
                       $mdThemingProvider.theme('default')
-                          .primaryPalette('brown')
+                          .primaryPalette('blue')
                           .accentPalette('red');
 
               });

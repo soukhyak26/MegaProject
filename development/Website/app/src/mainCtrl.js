@@ -4,11 +4,12 @@ mainApp.controller('MainCtrl', function (userService, $mdSidenav, $mdBottomSheet
 
     var self = this;
     self.isLoggedIn = false;
-    self.user = { email: "user", password: "user" };
+    self.user = { email: "Balram", password: "Balram" };
 
     self.login = login;
     self.logout = logout;
     self.toggleList = toggleList;
+
 
     function logout() {
         self.isLoggedIn = false;
