@@ -7,12 +7,18 @@ mainApp.controller('MainCtrl', function (userService, $mdSidenav, $mdBottomSheet
     self.user = { email: "user", password: "user" };
 
     self.login = login;
-    self.toggleList = toggleUsersList;
+    self.logout = logout;
+    self.toggleList = toggleList;
+
+    function logout() {
+        self.isLoggedIn = false;
+    }
+
     function login() {
         self.isLoggedIn = true;
     }
 
-    function toggleUsersList() {
+    function toggleList() {
         $mdSidenav('left').toggle();
     }
 

@@ -51,7 +51,11 @@
             <md-button class="menu" hide-gt-sm ng-click="ctrl.toggleList()" aria-label="Show User List">
                 <md-icon md-svg-icon="menu"></md-icon>
             </md-button>
+
             <h1>Affiance System</h1>
+            <div flex-offset-xs ng-if="ctrl.isLoggedIn">
+                <md-button ng-click="ctrl.logout()" class="md-raised" flex="50" flex-sm="100">Logout</md-button>
+            </div>
         </md-toolbar>
 
         <md-content flex id="content" ng-if="!ctrl.isLoggedIn">
@@ -79,9 +83,9 @@
                         </md-card-title>
                         <md-card-actions layout="row" layout-align="end center">
                             <div layout="row" layout-sm="column" layout-margin>
-									<md-button ng-click="ctrl.login()" class="md-raised" flex="50" flex-sm="100">Login</md-button>
-									<md-button class="md-raised md-primary" flex="50" flex-sm="100">Register</md-button>
-								</div>
+                                <md-button ng-click="ctrl.login()" class="md-raised" flex="50" flex-sm="100">Login</md-button>
+                                <md-button class="md-raised md-primary" flex="50" flex-sm="100">Register</md-button>
+                            </div>
                         </md-card-actions>
                     </md-card>
                 </div>
