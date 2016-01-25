@@ -54,7 +54,7 @@
             <h1>Affiance System</h1>
         </md-toolbar>
 
-        <md-content flex id="content">
+        <md-content flex id="content" ng-if="!ctrl.isLoggedIn">
             <md-content class="md-padding" layout-xs="column" layout="row">
                 <div flex-xs flex-gt-xs="50" layout="column">
                 </div>
@@ -66,11 +66,11 @@
                                 <br>
                                 <md-input-container>
                                     <label>Email</label>
-                                    <input ng-model="user.email">
+                                    <input ng-model="ctrl.user.email">
                                 </md-input-container>
                                 <md-input-container>
                                     <label>Password</label>
-                                    <input ng-model="user.password" type="password">
+                                    <input ng-model="ctrl.user.password" type="password">
                                 </md-input-container>
                             </md-card-title-text>
                             <md-card-title-media>
@@ -79,11 +79,9 @@
                         </md-card-title>
                         <md-card-actions layout="row" layout-align="end center">
                             <div layout="row" layout-sm="column" layout-margin>
-									<md-button class="md-raised" flex="50" flex-sm="100">Login</md-button>
+									<md-button ng-click="ctrl.login()" class="md-raised" flex="50" flex-sm="100">Login</md-button>
 									<md-button class="md-raised md-primary" flex="50" flex-sm="100">Register</md-button>
 								</div>
-                            <!--<md-button>Action 1</md-button>
-                            <md-button>Action 2</md-button>-->
                         </md-card-actions>
                     </md-card>
                 </div>
