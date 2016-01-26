@@ -8,10 +8,8 @@ import org.axonframework.eventhandling.amqp.AMQPMessageConverter;
 import org.axonframework.eventhandling.amqp.DefaultAMQPMessageConverter;
 import org.axonframework.eventhandling.amqp.RoutingKeyResolver;
 import org.axonframework.eventhandling.amqp.spring.ListenerContainerLifecycleManager;
-import org.axonframework.eventhandling.amqp.spring.SpringAMQPConsumerConfiguration;
 import org.axonframework.eventhandling.amqp.spring.SpringAMQPTerminal;
 import org.axonframework.serializer.Serializer;
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +21,6 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created by rsavaliya on 10/1/16.
  */
-/*@Configuration
-@EnableAutoConfiguration*/
 public class RabbitMQConfiguration extends Default {
 
     @Bean

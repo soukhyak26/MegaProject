@@ -17,6 +17,7 @@
         <module>tools/application-simulator</module>
         <module>domain-services/benefits</module>
         <module>domain-services/product</module>
+        <module>domain-services/business</module>
         <module>tools/notifications</module>
     </modules>
     <properties>
