@@ -21,6 +21,7 @@ public class ProductView {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+    private double currentOperatingExpensePerUnit;
 
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
         this.productId = productId;
@@ -95,5 +96,13 @@ public class ProductView {
 
     public void setComplements(List<String> complements) {
         this.complements = complements;
+    }
+
+    public double getCurrentOperatingExpensePerUnit() {
+        return this.currentOperatingExpensePerUnit;
+    }
+
+    public void setCurrentOperatingExpensePerUnit(double currentOperatingExpensePerUnit) {
+        this.currentOperatingExpensePerUnit = currentOperatingExpensePerUnit;
     }
 }

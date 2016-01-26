@@ -6,16 +6,22 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 /**
  * Created by rsavaliya on 17/1/16.
  */
-public class OperatingExpenseAccount extends AbstractAnnotatedAggregateRoot<String> {
+public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
     private String id;
     private double yearlyCommonOperationExpenses;
     private double yearlySubscriptionSpecificOperatingExpenses;
+    private double yearlySalesAndMarketingExpenses;
+    private double yearlyGoodsPurchaseCost;
+    private double yearlyNetProfitRegistered;
+    private double yearlyTotalRevenueRegistered;
+    private double yearlyTotalSubscriptionsRegistered;
 
-    public OperatingExpenseAccount() {
+
+    public BusinessAccount() {
     }
 
-    public OperatingExpenseAccount(String id, double yearlyCommonOperationExpenses, double yearlySubscriptionSpecificOperatingExpenses) {
+    public BusinessAccount(String id, double yearlyCommonOperationExpenses, double yearlySubscriptionSpecificOperatingExpenses) {
         this.id = id;
         this.yearlyCommonOperationExpenses = yearlyCommonOperationExpenses;
         this.yearlySubscriptionSpecificOperatingExpenses = yearlySubscriptionSpecificOperatingExpenses;

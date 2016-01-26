@@ -26,6 +26,22 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
         apply(new CommonExpenseCreatedEvent(id, expenseHeader, amount, sensitivityCharacteristic, YearMonth.now()));
     }
 
+    public String getId() {
+        return this.id;
+    }
+
+    public String getExpenseHeader() {
+        return this.expenseHeader;
+    }
+
+    public Map<YearMonth, Double> getRollingExpenseForecast() {
+        return this.rollingExpenseForecast;
+    }
+
+    public SensitivityCharacteristic getSensitivityCharacteristic() {
+        return this.sensitivityCharacteristic;
+    }
+
     @EventSourcingHandler
     public void on(CommonExpenseCreatedEvent event) {
         this.id = event.getCommonOperatingExpenseId();
