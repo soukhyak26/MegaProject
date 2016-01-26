@@ -34,7 +34,7 @@ public class RegisterProductCommandHandler {
                 command.getQuantity(),
                 command.getQuantityUnit(),
                 command.getSubstitutes(),
-                command.getComplements()
+                command.getComplements(), command.getSensitiveTo()
         );
         repository.add(product);
         LOGGER.info("Product added to write repository with id: " + command.getProductId());

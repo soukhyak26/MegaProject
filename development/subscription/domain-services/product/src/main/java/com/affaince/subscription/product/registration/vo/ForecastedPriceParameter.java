@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.registration.vo;
 
-import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 /**
  * Created by mandark on 01-01-2016.
@@ -10,17 +10,14 @@ public class ForecastedPriceParameter {
     private double MRP;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private YearMonth monthOfYear;
 
-
-    public ForecastedPriceParameter(double purchasePricePerUnit, double averageOfferedPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, LocalDate fromDate, LocalDate toDate) {
+    public ForecastedPriceParameter(double purchasePricePerUnit, double averageOfferedPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, YearMonth monthOfYear) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        this.monthOfYear = monthOfYear;
     }
 
     public double getPurchasePricePerUnit() {
@@ -55,20 +52,11 @@ public class ForecastedPriceParameter {
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
     }
 
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
+    public YearMonth getMonthOfYear() {
+        return this.monthOfYear;
     }
 
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
+    public void setMonthOfYear(YearMonth monthOfYear) {
+        this.monthOfYear = monthOfYear;
     }
-
-    public LocalDate getFromDate() {
-        return fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return toDate;
-    }
-
 }

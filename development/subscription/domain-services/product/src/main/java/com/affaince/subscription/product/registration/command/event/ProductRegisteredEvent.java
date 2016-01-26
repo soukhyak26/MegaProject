@@ -1,8 +1,10 @@
 package com.affaince.subscription.product.registration.command.event;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -17,8 +19,9 @@ public class ProductRegisteredEvent {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+    private Map<SensitivityCharacteristic,Double> sensitiveTo;
 
-    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
+    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic,Double> sensitiveTo) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -27,6 +30,7 @@ public class ProductRegisteredEvent {
         this.quantityUnit = quantityUnit;
         this.substitutes = substitutes;
         this.complements = complements;
+        this.sensitiveTo=sensitiveTo;
     }
 
     public ProductRegisteredEvent() {
@@ -62,5 +66,9 @@ public class ProductRegisteredEvent {
 
     public List<String> getComplements() {
         return complements;
+    }
+
+    public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
+        return this.sensitiveTo;
     }
 }

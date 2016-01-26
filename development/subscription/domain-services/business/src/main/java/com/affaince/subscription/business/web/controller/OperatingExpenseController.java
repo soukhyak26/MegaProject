@@ -54,7 +54,7 @@ public class OperatingExpenseController {
                 amount = expense.getAmount() / (expense.getPeriod().getValue() * 12);
             }
 
-            final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(commonExpenseId, expense.getExpenseHeader(), amount);
+            final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(commonExpenseId, expense.getExpenseHeader(), amount, expense.getSensitivityCharacteristic());
             try {
                 commandGateway.executeAsync(command);
             } catch (Exception e) {

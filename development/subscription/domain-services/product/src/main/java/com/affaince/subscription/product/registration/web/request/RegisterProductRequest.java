@@ -2,9 +2,11 @@ package com.affaince.subscription.product.registration.web.request;
 
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -27,6 +29,7 @@ public class RegisterProductRequest {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+    private Map<SensitivityCharacteristic, Double> sensitiveTo;
 
     public String getCategoryId() {
         return categoryId;
@@ -90,5 +93,13 @@ public class RegisterProductRequest {
 
     public void setComplements(List<String> complements) {
         this.complements = complements;
+    }
+
+    public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
+        return this.sensitiveTo;
+    }
+
+    public void setSensitiveTo(Map<SensitivityCharacteristic, Double> sensitiveTo) {
+        this.sensitiveTo = sensitiveTo;
     }
 }

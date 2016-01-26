@@ -4,7 +4,7 @@ import com.affaince.subscription.business.command.event.CommonExpenseCreatedEven
 import com.affaince.subscription.business.command.event.CommonExpenseTypeUpdatedEvent;
 import com.affaince.subscription.business.command.event.PastCommonExpenseTypesRemovedEvent;
 import com.affaince.subscription.common.type.ExpenseType;
-import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -20,23 +20,18 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
     private String id;
     private String expenseHeader;
     private Map<YearMonth, Double> rollingExpenseForecast;
-    //private double amount;
-    private Period period;
-    //private YearMonth monthOfYear;
+    private SensitivityCharacteristic sensitivityCharacteristic;
 
-    //private Set<CommonExpenseType> monthlyCommonExpenses;
-
-
-    public CommonOperatingExpense(String id, String expenseHeader, double amount) {
-        apply(new CommonExpenseCreatedEvent(id, expenseHeader, amount, YearMonth.now()));
+    public CommonOperatingExpense(String id, String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
+        apply(new CommonExpenseCreatedEvent(id, expenseHeader, amount, sensitivityCharacteristic, YearMonth.now()));
     }
 
     @EventSourcingHandler
     public void on(CommonExpenseCreatedEvent event) {
         this.id = event.getCommonOperatingExpenseId();
-        this.expenseHeader = expenseHeader;
-        this.period = period;
+        this.expenseHeader = event.getExpenseHeader();
         YearMonth monthOfYear = event.getMonthOfYear();
+        this.sensitivityCharacteristic = event.getSensitivityCharacteristic();
         for (int i = 0; i <= 11; i++) {
             monthOfYear = monthOfYear.plusMonths(i);
             rollingExpenseForecast.put(monthOfYear, event.getAmount());

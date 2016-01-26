@@ -2,6 +2,7 @@ package com.affaince.subscription.business.vo;
 
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
@@ -10,6 +11,7 @@ public class OperatingExpenseVO {
     private String expenseHeader;
     private double amount;
     private Period period;
+    private SensitivityCharacteristic sensitivityCharacteristic;
     private ExpenseType expenseType;
 
 
@@ -43,5 +45,13 @@ public class OperatingExpenseVO {
 
     public void setExpenseType(ExpenseType expenseType) {
         this.expenseType = expenseType;
+    }
+
+    public SensitivityCharacteristic getSensitivityCharacteristic() {
+        return this.sensitivityCharacteristic;
+    }
+
+    public void setSensitivityCharacteristic(SensitivityCharacteristic sensitivityCharacteristic) {
+        this.sensitivityCharacteristic = sensitivityCharacteristic;
     }
 }

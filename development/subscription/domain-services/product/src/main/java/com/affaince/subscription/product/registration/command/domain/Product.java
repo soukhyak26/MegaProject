@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
@@ -10,6 +11,7 @@ import com.affaince.subscription.product.registration.vo.ForecastedPriceParamete
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -35,14 +37,15 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private ProductAccount actualProdctAccount = new ProductAccount();
     private double offeredPrice;
     private double latestOfferedPriceActuals;
+    private Map<SensitivityCharacteristic, Double> sensitiveTo;
     private transient CalculationBasis calculationBasis = CalculationBasis.ACTUAL;
 
     public Product() {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements));
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo) {
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo));
     }
 
     public String getProductId() {
@@ -100,6 +103,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.quantityUnit = event.getQuantityUnit();
         this.substitutes = event.getSubstitutes();
         this.complements = event.getComplements();
+        this.sensitiveTo = event.getSensitiveTo();
         forecastedProductAccount = new ProductAccount();
     }
 
@@ -122,23 +126,25 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.productId = event.getProductId();
         this.calculationBasis = CalculationBasis.FORECAST;
         final ForecastedPriceParameter priceParameter = event.getForecastedPriceParamter();
+        final LocalDate fromDate = new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1);
+        final LocalDate toDate = new LocalDate(fromDate.getYear(), fromDate.getMonthOfYear(), fromDate.dayOfMonth().getMaximumValue());
+
         PriceBucket priceBucket = new PriceBucket(
                 priceParameter.getPurchasePricePerUnit(),
                 priceParameter.getMRP(),
-                priceParameter.getFromDate(),
-                priceParameter.getToDate(),
+                fromDate,
+                toDate,
                 priceParameter.getNumberOfNewCustomersAssociatedWithAPrice(),
                 priceParameter.getNumberOfChurnedCustomersAssociatedWithAPrice()
         );
-        getProductAccount().addNewPriceBucket(priceParameter.getFromDate(), priceBucket);
+        getProductAccount().addNewPriceBucket(new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1), priceBucket);
 
         ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
-        productPerformanceTracker.setFromDate(priceParameter.getFromDate());
-        productPerformanceTracker.setToDate(priceParameter.getToDate());
+        productPerformanceTracker.setMonthOfYear(priceParameter.getMonthOfYear());
         productPerformanceTracker.setDemandDensity(event.getDemandDensity());
         productPerformanceTracker.setTotalDeliveriesPerPeriod(event.getTotalDeliveriesPerPeriod());
         productPerformanceTracker.setAverageWeightPerDelivery(event.getAverageWeightPerDelivery());
-        getProductAccount().addPerformanceTracker(priceParameter.getFromDate(), productPerformanceTracker);
+        getProductAccount().addPerformanceTracker(priceParameter.getMonthOfYear(), productPerformanceTracker);
     }
 
     //Only for actuals

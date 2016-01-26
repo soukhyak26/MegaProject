@@ -1,14 +1,13 @@
 package com.affaince.subscription.product.registration.command.event;
 
-import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 /**
  * Created by mandark on 05-12-2015.
  */
 public class ProductForecastReceivedEvent {
     private String productId;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private YearMonth monthOfYear;
     private double purchasePricePerUnit;
     private double offeredPricePerUnit;
     private double MRP;
@@ -19,10 +18,9 @@ public class ProductForecastReceivedEvent {
     public ProductForecastReceivedEvent() {
     }
 
-    public ProductForecastReceivedEvent(String productId, LocalDate fromDate, LocalDate toDate, double purchasePricePerUnit, double offeredPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, long numberOfExistingCustomersAssociatedWithAPrice) {
+    public ProductForecastReceivedEvent(String productId, YearMonth monthOfYear, double purchasePricePerUnit, double offeredPricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice, long numberOfExistingCustomersAssociatedWithAPrice) {
         this.productId = productId;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        this.monthOfYear = monthOfYear;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.offeredPricePerUnit = offeredPricePerUnit;
         this.MRP = MRP;
@@ -39,20 +37,12 @@ public class ProductForecastReceivedEvent {
         this.productId = productId;
     }
 
-    public LocalDate getFromDate() {
-        return this.fromDate;
+    public YearMonth getMonthOfYear() {
+        return this.monthOfYear;
     }
 
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return this.toDate;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
+    public void setMonthOfYear(YearMonth monthOfYear) {
+        this.monthOfYear = monthOfYear;
     }
 
     public double getPurchasePricePerUnit() {

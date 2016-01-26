@@ -31,8 +31,7 @@ public class ProductForecastReceivedEventListener {
                 event.getMRP(),
                 event.getNumberOfNewCustomersAssociatedWithAPrice(),
                 event.getNumberOfChurnedCustomersAssociatedWithAPrice(),
-                event.getFromDate(),
-                event.getToDate()
+                event.getMonthOfYear()
         );
 /*
         AddForecastParametersCommand command = new AddForecastParametersCommand(

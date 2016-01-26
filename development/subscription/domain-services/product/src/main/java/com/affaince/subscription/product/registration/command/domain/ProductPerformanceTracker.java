@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.command.domain;
 
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,7 @@ import java.util.TreeMap;
  * Created by mandark on 28-11-2015.
  */
 public class ProductPerformanceTracker {
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private YearMonth monthOfYear;
     private double demandDensity;
     private double averageDemandPerSubscriber;
     private long totalDeliveriesPerPeriod;
@@ -24,24 +24,6 @@ public class ProductPerformanceTracker {
     public ProductPerformanceTracker() {
         instantaneousPerformanceTrackers = new TreeMap<>();
         aggregationPerformanceTracker = new AggregationPerformanceTracker();
-    }
-
-    public LocalDate getFromDate() {
-        return this.fromDate;
-    }
-
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-        this.aggregationPerformanceTracker.setFromDate(fromDate);
-    }
-
-    public LocalDate getToDate() {
-        return this.toDate;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
-        this.aggregationPerformanceTracker.setToDate(toDate);
     }
 
     public Map<LocalDate, InstantaneousPerformanceTracker> getInstantaneousPerformanceTrackers() {
@@ -151,5 +133,13 @@ public class ProductPerformanceTracker {
 
     public void setAverageWeightPerDelivery(double averageWeightPerDelivery) {
         this.averageWeightPerDelivery = averageWeightPerDelivery;
+    }
+
+    public YearMonth getMonthOfYear() {
+        return this.monthOfYear;
+    }
+
+    public void setMonthOfYear(YearMonth monthOfYear) {
+        this.monthOfYear = monthOfYear;
     }
 }

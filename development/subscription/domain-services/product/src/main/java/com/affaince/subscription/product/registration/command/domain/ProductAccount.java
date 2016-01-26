@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.command.domain;
 
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.TreeMap;
  */
 public class ProductAccount {
     private Map<LocalDate, PriceBucket> activePriceBuckets;
-    private Map<LocalDate, ProductPerformanceTracker> performanceTracker;
+    private Map<YearMonth, ProductPerformanceTracker> performanceTracker;
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;
     private double creditPoints;
@@ -21,7 +22,7 @@ public class ProductAccount {
         activePriceBuckets = new TreeMap<>();
     }
 
-    public void setPerformanceTracker(Map<LocalDate, ProductPerformanceTracker> performanceTracker) {
+    public void setPerformanceTracker(Map<YearMonth, ProductPerformanceTracker> performanceTracker) {
         this.performanceTracker = performanceTracker;
     }
 
@@ -34,7 +35,7 @@ public class ProductAccount {
         this.productPricingCategory = productPricingCategory;
     }
 
-    public Map<LocalDate, ProductPerformanceTracker> getPerformanceTracker() {
+    public Map<YearMonth, ProductPerformanceTracker> getPerformanceTracker() {
         return this.performanceTracker;
     }
 
@@ -46,17 +47,17 @@ public class ProductAccount {
         return this.productPricingCategory;
     }
 
-    public void addPerformanceTracker(LocalDate date, ProductPerformanceTracker tracker) {
-        this.performanceTracker.put(date, tracker);
+    public void addPerformanceTracker(YearMonth monthOfYear, ProductPerformanceTracker tracker) {
+        this.performanceTracker.put(monthOfYear, tracker);
     }
 
 
     public ProductPerformanceTracker getLatestPerformanceTracker() {
-        Set<LocalDate> timeBasedKeys = performanceTracker.keySet();
-        LocalDate max = null;
-        for (LocalDate time : timeBasedKeys) {
-            if (time.compareTo(max) > 0) {
-                max = time;
+        Set<YearMonth> monthBasedKeys = performanceTracker.keySet();
+        YearMonth max = null;
+        for (YearMonth month : monthBasedKeys) {
+            if (month.isAfter(max)) {
+                max = month;
             }
         }
         return performanceTracker.get(max);

@@ -1,5 +1,6 @@
 package com.affaince.subscription.business.query.view;
 
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,12 +14,28 @@ public class ProductView {
     private double purchasePrice;
     private double MRP;
     private double offeredPrice;
+    private SensitivityCharacteristic sensitiveTo;
 
-    public ProductView(String productId, double purchasePrice, double MRP, double offeredPrice) {
+    public ProductView(String productId, double purchasePrice, double MRP, double offeredPrice, int sensitiveTo) {
         this.productId = productId;
         this.purchasePrice = purchasePrice;
         this.MRP = MRP;
         this.offeredPrice = offeredPrice;
+        switch (sensitiveTo) {
+            case 0:
+                this.sensitiveTo = SensitivityCharacteristic.NONE;
+                break;
+            case 1:
+                this.sensitiveTo = SensitivityCharacteristic.ELECTRICITY_CONSUMPTION;
+                break;
+            case 2:
+                this.sensitiveTo = SensitivityCharacteristic.STORAGE_SPACE_CONSUMPTION;
+                break;
+            default:
+                this.sensitiveTo = SensitivityCharacteristic.NONE;
+                break;
+
+        }
     }
 
     public String getProductId() {
@@ -51,5 +68,13 @@ public class ProductView {
 
     public void setOfferedPrice(double offeredPrice) {
         this.offeredPrice = offeredPrice;
+    }
+
+    public SensitivityCharacteristic getSensitiveTo() {
+        return this.sensitiveTo;
+    }
+
+    public void setSensitiveTo(SensitivityCharacteristic sensitiveTo) {
+        this.sensitiveTo = sensitiveTo;
     }
 }

@@ -23,7 +23,7 @@ public class AddCommonOperatingExpenseCommandHandler {
     @CommandHandler
     public void handle(AddCommonOperatingExpenseCommand command) {
         //final OperatingExpenseVO operatingExpenseVO = command.getExpense();
-        CommonOperatingExpense commonOperatingExpense = new CommonOperatingExpense(command.getId(), command.getExpenseHeader(), command.getAmount());
+        CommonOperatingExpense commonOperatingExpense = new CommonOperatingExpense(command.getId(), command.getExpenseHeader(), command.getAmount(), command.getSensitivityCharacteristic());
         repository.add(commonOperatingExpense);
     }
 }

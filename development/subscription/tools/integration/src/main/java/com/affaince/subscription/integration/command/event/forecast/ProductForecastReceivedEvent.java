@@ -2,7 +2,7 @@ package com.affaince.subscription.integration.command.event.forecast;
 
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
-import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 /**
  * Created by mandark on 05-12-2015.
@@ -12,47 +12,36 @@ public class ProductForecastReceivedEvent {
     @DataField(name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
 
-    @DataField(name = "FROM_DATE", pos = 2, trim = true)
-    private LocalDate fromDate;
+    @DataField(name = "MONTH", pos = 2, trim = true)
+    private YearMonth monthOfYear;
 
-    @DataField(name = "TO_DATE", pos = 3, trim = true)
-    private LocalDate toDate;
-
-    @DataField(name = "PURCHASE_PRICE_PER_UNIT", pos = 4, trim = true)
+    @DataField(name = "PURCHASE_PRICE_PER_UNIT", pos = 3, trim = true)
     private double purchasePricePerUnit;
 
-    @DataField(name = "SALE_PRICE_PER_UNIT", pos = 5, trim = true)
+    @DataField(name = "SALE_PRICE_PER_UNIT", pos = 4, trim = true)
     private double salePricePerUnit;
 
-    @DataField(name = "MRP", pos = 6, trim = true)
+    @DataField(name = "MRP", pos = 5, trim = true)
     private double MRP;
 
-    @DataField(name = "NO_OF_NEW_CUSTOMERS", pos = 7, trim = true)
+    @DataField(name = "NO_OF_NEW_CUSTOMERS", pos = 6, trim = true)
     private long numberOfNewCustomersAssociatedWithAPrice;
 
-    @DataField(name = "NO_OF_CHURNED_CUSTOMERS", pos = 8, trim = true)
+    @DataField(name = "NO_OF_CHURNED_CUSTOMERS", pos = 7, trim = true)
     private long numberOfChurnedCustomersAssociatedWithAPrice;
 
-    @DataField(name = "NO_OF_EXISTING_CUSTOMERS", pos = 9, trim = true)
+    @DataField(name = "NO_OF_EXISTING_CUSTOMERS", pos = 8, trim = true)
     private long numberOfExistingCustomersAssociatedWithAPrice;
 
     public ProductForecastReceivedEvent() {
     }
 
-    public LocalDate getFromDate() {
-        return this.fromDate;
+    public YearMonth getMonthOfYear() {
+        return this.monthOfYear;
     }
 
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return this.toDate;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
+    public void setMonthOfYear(YearMonth monthOfYear) {
+        this.monthOfYear = monthOfYear;
     }
 
     public double getPurchasePricePerUnit() {
@@ -115,8 +104,7 @@ public class ProductForecastReceivedEvent {
     public String toString() {
         return "ProductForecastReceivedEvent{" +
                 "productId='" + productId + '\'' +
-                ", fromDate=" + fromDate +
-                ", toDate=" + toDate +
+                ", monthOfYear=" + monthOfYear.getMonthOfYear() + ":" + monthOfYear.getYear() +
                 ", purchasePricePerUnit=" + purchasePricePerUnit +
                 ", salePricePerUnit=" + salePricePerUnit +
                 ", MRP=" + MRP +

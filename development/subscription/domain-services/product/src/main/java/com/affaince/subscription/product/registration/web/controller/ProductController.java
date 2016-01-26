@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.product.registration.command.*;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -40,6 +43,11 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> registerProduct(@RequestBody @Valid RegisterProductRequest request) throws Exception {
+        Map<SensitivityCharacteristic, Double> receivedSensitivityCharactersistic = request.getSensitiveTo();
+        if (null == receivedSensitivityCharactersistic) {
+            receivedSensitivityCharactersistic = new HashMap<>();
+            receivedSensitivityCharactersistic.put(SensitivityCharacteristic.NONE, 1.0);
+        }
         final RegisterProductCommand createCommand = new RegisterProductCommand(
                 request.getProductId(),
                 request.getProductName(),
@@ -48,7 +56,8 @@ public class ProductController {
                 request.getQuantity(),
                 request.getQuantityUnit(),
                 request.getSubstitutes(),
-                request.getComplements()
+                request.getComplements(),
+                receivedSensitivityCharactersistic
         );
         try {
             commandGateway.executeAsync(createCommand);
