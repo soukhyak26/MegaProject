@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.registration.command.domain;
 
-import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 import java.util.Map;
 
@@ -8,8 +8,13 @@ import java.util.Map;
  * Created by mandark on 02-01-2016.
  */
 public class AggregationPerformanceTracker {
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private YearMonth monthOfYear;
+    private double expectedMerchantProfitPercentage;
+    private double grossMargin;
+    private double percentageGrossMargin;
+    private double totalOperationalExpenses;
+    private double operatingProfit;
+    private double percentageOperatingProfit;
     private long netNewCustomers;
     private long totalNumberOfChurnedCustomers;
     private long totalNumberOfExistingCustomers;
@@ -23,28 +28,13 @@ public class AggregationPerformanceTracker {
     private double netNewMRR;
     private double averageRevenuePerNewSubscriber;
     private double averageRevenuePerSubscriber;
-    private double subscriberLIfetimeValue;
+    private double subscriberLifetimeValue;
     private double subscriberLifetimePeriod;
     private double costOfAcquiringASubscriber;
     private double SLVToCASRatio;
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public LocalDate getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public LocalDate getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(LocalDate toDate) {
-        this.toDate = toDate;
-    }
 
     public long getNetNewCustomers() {
         return netNewCustomers;
@@ -150,12 +140,12 @@ public class AggregationPerformanceTracker {
         this.averageRevenuePerSubscriber = averageRevenuePerSubscriber;
     }
 
-    public double getSubscriberLIfetimeValue() {
-        return subscriberLIfetimeValue;
+    public double getSubscriberLifetimeValue() {
+        return subscriberLifetimeValue;
     }
 
-    public void setSubscriberLIfetimeValue(double subscriberLIfetimeValue) {
-        this.subscriberLIfetimeValue = subscriberLIfetimeValue;
+    public void setSubscriberLifetimeValue(double subscriberLifetimeValue) {
+        this.subscriberLifetimeValue = subscriberLifetimeValue;
     }
 
     public double getSubscriberLifetimePeriod() {
@@ -196,6 +186,10 @@ public class AggregationPerformanceTracker {
 
     public void setSalesAndMarketingExpenses(double salesAndMarketingExpenses) {
         this.salesAndMarketingExpenses = salesAndMarketingExpenses;
+    }
+
+    public double getTotalOperationalExpenses() {
+        return totalOperationalExpenses;
     }
 
 }

@@ -12,7 +12,8 @@ import java.util.TreeMap;
  */
 public class ProductAccount {
     private Map<LocalDate, PriceBucket> activePriceBuckets;
-    private Map<YearMonth, ProductPerformanceTracker> performanceTracker;
+    private Map<LocalDate, ProductPerformanceTracker> performanceTracker;
+    private Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics;
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;
     private double creditPoints;
@@ -22,50 +23,45 @@ public class ProductAccount {
         activePriceBuckets = new TreeMap<>();
     }
 
-    public void setPerformanceTracker(Map<YearMonth, ProductPerformanceTracker> performanceTracker) {
-        this.performanceTracker = performanceTracker;
-    }
-
-
-    public void setCurrentStockInUnits(long currentStockInUnits) {
-        this.currentStockInUnits = currentStockInUnits;
-    }
-
-    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
-        this.productPricingCategory = productPricingCategory;
-    }
-
-    public Map<YearMonth, ProductPerformanceTracker> getPerformanceTracker() {
+    public Map<LocalDate, ProductPerformanceTracker> getPerformanceTracker() {
         return this.performanceTracker;
+    }
+
+    public void setPerformanceTracker(Map<LocalDate, ProductPerformanceTracker> performanceTracker) {
+        this.performanceTracker = performanceTracker;
     }
 
     public long getCurrentStockInUnits() {
         return this.currentStockInUnits;
     }
 
+    public void setCurrentStockInUnits(long currentStockInUnits) {
+        this.currentStockInUnits = currentStockInUnits;
+    }
+
     public ProductPricingCategory getProductPricingCategory() {
         return this.productPricingCategory;
     }
 
-    public void addPerformanceTracker(YearMonth monthOfYear, ProductPerformanceTracker tracker) {
-        this.performanceTracker.put(monthOfYear, tracker);
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
+    }
+
+    public void addPerformanceTracker(LocalDate date, ProductPerformanceTracker tracker) {
+        this.performanceTracker.put(date, tracker);
     }
 
 
     public ProductPerformanceTracker getLatestPerformanceTracker() {
-        Set<YearMonth> monthBasedKeys = performanceTracker.keySet();
-        YearMonth max = null;
-        for (YearMonth month : monthBasedKeys) {
-            if (month.isAfter(max)) {
-                max = month;
+        Set<LocalDate> dateKeys = performanceTracker.keySet();
+        LocalDate max = null;
+        for (LocalDate date : dateKeys) {
+            if (date.isAfter(max)) {
+                max = date;
             }
         }
         return performanceTracker.get(max);
 
-    }
-
-    public void setActivePriceBuckets(Map<LocalDate, PriceBucket> activePriceBuckets) {
-        this.activePriceBuckets = activePriceBuckets;
     }
 
     public PriceBucket findActivePriceBucketByDate(LocalDate dateIdentifier) {
@@ -74,6 +70,10 @@ public class ProductAccount {
 
     public Map<LocalDate, PriceBucket> getActivePriceBuckets() {
         return activePriceBuckets;
+    }
+
+    public void setActivePriceBuckets(Map<LocalDate, PriceBucket> activePriceBuckets) {
+        this.activePriceBuckets = activePriceBuckets;
     }
 
     public void addNewPriceBucket(LocalDate date, PriceBucket forecastedPriceBucket) {
@@ -100,8 +100,4 @@ public class ProductAccount {
         this.creditPoints = creditPoints;
     }
 
-
-    public double getLatestDemandDensity() {
-        return getLatestPerformanceTracker().getDemandDensity();
-    }
 }

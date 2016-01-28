@@ -5,5 +5,11 @@ package com.affaince.subscription.product.registration.command.domain;
  */
 public enum ProductPricingCategory {
 
-    PRICE_COMMITMENT, DISCOUNT_COMMITMENT, NO_COMMITMENT;
+    NO_COMMITMENT(0), PRICE_COMMITMENT(1), DISCOUNT_COMMITMENT(2);
+
+    private int index;
+
+    ProductPricingCategory(int index) {
+        this.index = index;
+    }
 }

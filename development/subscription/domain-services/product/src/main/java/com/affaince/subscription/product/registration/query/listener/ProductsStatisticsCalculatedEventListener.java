@@ -3,7 +3,7 @@ package com.affaince.subscription.product.registration.query.listener;
 import com.affaince.subscription.common.vo.ProductStatistics;
 import com.affaince.subscription.product.registration.command.event.ProductsStatisticsCalculatedEvent;
 import com.affaince.subscription.product.registration.query.repository.ProductsStatisticsViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductsStatisticsView;
+import com.affaince.subscription.product.registration.query.view.ProductStatisticsView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class ProductsStatisticsCalculatedEventListener {
     @EventHandler
     public void on(ProductsStatisticsCalculatedEvent event) {
         for (ProductStatistics productStatistics : event.getProductsStatistics()) {
-            final ProductsStatisticsView productStatsView = statsViewRepository.findOne(productStatistics.getProductId());
+            final ProductStatisticsView productStatsView = statsViewRepository.findOne(productStatistics.getProductId());
             long subscribedProductCount = productStatsView.getProductSubscriptionCount();
             double subscribedProductRevenue = productStatsView.getSubscribedProductRevenue();
             double subscribedProductNetProfit = productStatsView.getSubscribedProductNetProfit();

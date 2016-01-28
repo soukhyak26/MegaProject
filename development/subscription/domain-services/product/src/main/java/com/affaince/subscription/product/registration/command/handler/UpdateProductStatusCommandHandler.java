@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
  * Created by rbsavaliya on 25-07-2015.
  */
 @Component
-public class UpdatePriceAndStockParametersCommandHandler {
+public class UpdateProductStatusCommandHandler {
 
     private final Repository<Product> repository;
 
     @Autowired
-    public UpdatePriceAndStockParametersCommandHandler(Repository<Product> repository) {
+    public UpdateProductStatusCommandHandler(Repository<Product> repository) {
         this.repository = repository;
     }
 

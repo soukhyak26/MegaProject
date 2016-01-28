@@ -1,110 +1,42 @@
 package com.affaince.subscription.product.registration.command.domain;
 
 import org.joda.time.LocalDate;
-import org.joda.time.YearMonth;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * Created by mandark on 28-11-2015.
  */
 public class ProductPerformanceTracker {
-    private YearMonth monthOfYear;
+    private LocalDate fromDate;
+    private LocalDate toDate;
+    private double expectedMerchantProfitPercentage;
     private double demandDensity;
     private double averageDemandPerSubscriber;
-    private long totalDeliveriesPerPeriod;
-    private double averageWeightPerDelivery;
 
-    Map<LocalDate, InstantaneousPerformanceTracker> instantaneousPerformanceTrackers;
-    AggregationPerformanceTracker aggregationPerformanceTracker;
+    private double grossMargin;
+    private double percentageGrossMargin;
+    private double totalOperationalExpenses;
+    private double operatingProfit;
+    private double percentageOperatingProfit;
+    private double revenuePerPeriod;
 
-    public ProductPerformanceTracker() {
-        instantaneousPerformanceTrackers = new TreeMap<>();
-        aggregationPerformanceTracker = new AggregationPerformanceTracker();
+    public LocalDate getFromDate() {
+        return fromDate;
     }
 
-    public Map<LocalDate, InstantaneousPerformanceTracker> getInstantaneousPerformanceTrackers() {
-        return this.instantaneousPerformanceTrackers;
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public void setInstantaneousPerformanceTrackers(Map<LocalDate, InstantaneousPerformanceTracker> instantaneousPerformanceTrackers) {
-        this.instantaneousPerformanceTrackers = instantaneousPerformanceTrackers;
+    public LocalDate getToDate() {
+        return toDate;
     }
 
-    public AggregationPerformanceTracker getAggregationPerformanceTracker() {
-        return this.aggregationPerformanceTracker;
-    }
-
-    public void setAggregationPerformanceTracker(AggregationPerformanceTracker aggregationPerformanceTracker) {
-        this.aggregationPerformanceTracker = aggregationPerformanceTracker;
-    }
-
-    public InstantaneousPerformanceTracker getLatestInstantaneousPerformanceTracker() {
-        Set<LocalDate> timeBasedKeys = instantaneousPerformanceTrackers.keySet();
-        LocalDate max = null;
-        for (LocalDate time : timeBasedKeys) {
-            if (time.compareTo(max) > 0) {
-                max = time;
-            }
-        }
-        return instantaneousPerformanceTrackers.get(max);
-
-    }
-
-    public double getTotalOperationalExpenses() {
-        return getLatestInstantaneousPerformanceTracker().getTotalOperationalExpenses();
-    }
-
-    public void calculateSubscriptionMetrics(List<PriceBucket> priceBucket) {
-/*
-        this.netNewCustomers =
-        this.totalNumberOfChurnedCustomers
-        this.totalNumberOfExistingCustomers
-        this.percentageCustomerChurn
-        this.startingMRR
-        this.newMRRPerPriceBucket
-        this.chrunedMRRPerPriceBucket
-        this.totalChurnedMRR
-        this.percentageMRRChurn
-        this.endingMRR
-        this.netNewMRR
-        this.averageRevenuePerNewSubscriber
-        this.averageRevenuePerSubscriber
-        this.costOfGoodsSold
-        this.grossMargin
-        this.percentageGrossMargin
-        this.totalOperationalExpenses
-        this.peratingProfit
-        this.percentageOperatingProfit
-        this.subscriberLIfetimeValue
-        this.subscriberLifetimePeriod
-        this.costOfAcquiringASubscriber
-        this.SLVToCASRatio
-        this.monthsToRecoverCAS
-        this.salesAndMarketingExpenses
-*/
-    }
-
-    public double getLatestPurchasePrice() {
-        InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
-        return performanceTracker.getPurchasePrice();
-    }
-
-    public double getLatestMRP() {
-        InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
-        return performanceTracker.getMRP();
-    }
-
-    public double getExpectedMerchantProfitPercentage() {
-        InstantaneousPerformanceTracker performanceTracker = getLatestInstantaneousPerformanceTracker();
-        return performanceTracker.getExpectedMerchantProfitPercentage();
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
     }
 
     public double getDemandDensity() {
-        return demandDensity;
+        return this.demandDensity;
     }
 
     public void setDemandDensity(double demandDensity) {
@@ -112,34 +44,66 @@ public class ProductPerformanceTracker {
     }
 
     public double getAverageDemandPerSubscriber() {
-        return averageDemandPerSubscriber;
+        return this.averageDemandPerSubscriber;
     }
 
     public void setAverageDemandPerSubscriber(double averageDemandPerSubscriber) {
         this.averageDemandPerSubscriber = averageDemandPerSubscriber;
     }
 
-    public long getTotalDeliveriesPerPeriod() {
-        return totalDeliveriesPerPeriod;
+    public double getGrossMargin() {
+        return this.grossMargin;
     }
 
-    public void setTotalDeliveriesPerPeriod(long totalDeliveriesPerPeriod) {
-        this.totalDeliveriesPerPeriod = totalDeliveriesPerPeriod;
+    public void setGrossMargin(double grossMargin) {
+        this.grossMargin = grossMargin;
     }
 
-    public double getAverageWeightPerDelivery() {
-        return averageWeightPerDelivery;
+    public double getPercentageGrossMargin() {
+        return this.percentageGrossMargin;
     }
 
-    public void setAverageWeightPerDelivery(double averageWeightPerDelivery) {
-        this.averageWeightPerDelivery = averageWeightPerDelivery;
+    public void setPercentageGrossMargin(double percentageGrossMargin) {
+        this.percentageGrossMargin = percentageGrossMargin;
     }
 
-    public YearMonth getMonthOfYear() {
-        return this.monthOfYear;
+    public double getOperatingProfit() {
+        return this.operatingProfit;
     }
 
-    public void setMonthOfYear(YearMonth monthOfYear) {
-        this.monthOfYear = monthOfYear;
+    public void setOperatingProfit(double operatingProfit) {
+        this.operatingProfit = operatingProfit;
+    }
+
+    public double getPercentageOperatingProfit() {
+        return this.percentageOperatingProfit;
+    }
+
+    public void setPercentageOperatingProfit(double percentageOperatingProfit) {
+        this.percentageOperatingProfit = percentageOperatingProfit;
+    }
+
+    public double getRevenuePerPeriod() {
+        return this.revenuePerPeriod;
+    }
+
+    public void setRevenuePerPeriod(double revenuePerPeriod) {
+        this.revenuePerPeriod = revenuePerPeriod;
+    }
+
+    public double getExpectedMerchantProfitPercentage() {
+        return expectedMerchantProfitPercentage;
+    }
+
+    public void setExpectedMerchantProfitPercentage(double expectedMerchantProfitPercentage) {
+        this.expectedMerchantProfitPercentage = expectedMerchantProfitPercentage;
+    }
+
+    public double getTotalOperationalExpenses() {
+        return this.totalOperationalExpenses;
+    }
+
+    public void setTotalOperationalExpenses(double totalOperationalExpenses) {
+        this.totalOperationalExpenses = totalOperationalExpenses;
     }
 }

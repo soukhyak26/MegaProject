@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by rbsavaliya on 15-01-2016.
  */
-@Document(collection = "ProductsStatisticsView")
-public class ProductsStatisticsView {
+@Document(collection = "ProductStatisticsView")
+public class ProductStatisticsView {
     @Id
     private String productId;
     private long productSubscriptionCount;
@@ -15,10 +15,10 @@ public class ProductsStatisticsView {
     private double subscribedProductNetProfit;
 
 
-    public ProductsStatisticsView() {
+    public ProductStatisticsView() {
     }
 
-    public ProductsStatisticsView(String productId, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit) {
+    public ProductStatisticsView(String productId, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit) {
         this.productId = productId;
         this.productSubscriptionCount = productSubscriptionCount;
         this.subscribedProductRevenue = subscribedProductRevenue;

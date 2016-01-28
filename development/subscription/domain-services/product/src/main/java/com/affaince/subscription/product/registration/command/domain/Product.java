@@ -6,8 +6,11 @@ import com.affaince.subscription.product.registration.command.AddForecastParamet
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
+import com.affaince.subscription.product.registration.process.price.DefaultPriceDeterminator;
+import com.affaince.subscription.product.registration.process.price.PriceDeterminator;
 import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -16,7 +19,6 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -32,11 +34,10 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+
     private ProductConfiguration productConfiguration;
     private ProductAccount forecastedProductAccount = new ProductAccount();
     private ProductAccount actualProdctAccount = new ProductAccount();
-    private double offeredPrice;
-    private double latestOfferedPriceActuals;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
     private transient CalculationBasis calculationBasis = CalculationBasis.ACTUAL;
 
@@ -94,6 +95,42 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         return this.quantityUnit;
     }
 
+    public double getLatestPurchasePrice() {
+        return getProductAccount().getLatestPriceBucket().getPurchasePricePerUnit();
+    }
+
+    public double getLatestMerchantProfit() {
+        return getProductAccount().getLatestPerformanceTracker().getExpectedMerchantProfitPercentage();
+    }
+
+    public ProductConfiguration getProductConfiguration() {
+        return productConfiguration;
+    }
+
+    public void setProductConfiguration(SetProductConfigurationCommand command) {
+        apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
+                command.getRevenueChangeThresholdForPriceChange(),
+                command.isCrossPriceElasticityConsidered(),
+                command.isAdvertisingExpensesConsidered(),
+                command.getDemandWiseProfitSharingRules()));
+    }
+
+    public DemandWiseProfitSharingRule findProfitSharingRuleByDemandDensity(double demandDensityPercentage) {
+        return getProductConfiguration().findDemandWiseProfitSharingRuleByDemandDensity(demandDensityPercentage);
+    }
+
+    public double getLatestDemandDensity() {
+        return getProductAccount().getLatestPerformanceTracker().getDemandDensity();
+    }
+
+    public CalculationBasis getCalculationBasis() {
+        return calculationBasis;
+    }
+
+    public void setCalculationBasis(CalculationBasis calculationBasis) {
+        this.calculationBasis = calculationBasis;
+    }
+
     @EventSourcingHandler
     public void on(ProductRegisteredEvent event) {
         this.productId = event.getProductId();
@@ -140,11 +177,13 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         getProductAccount().addNewPriceBucket(new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1), priceBucket);
 
         ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
-        productPerformanceTracker.setMonthOfYear(priceParameter.getMonthOfYear());
+        productPerformanceTracker.setFromDate(fromDate);
         productPerformanceTracker.setDemandDensity(event.getDemandDensity());
+/*
         productPerformanceTracker.setTotalDeliveriesPerPeriod(event.getTotalDeliveriesPerPeriod());
         productPerformanceTracker.setAverageWeightPerDelivery(event.getAverageWeightPerDelivery());
-        getProductAccount().addPerformanceTracker(priceParameter.getMonthOfYear(), productPerformanceTracker);
+*/
+        getProductAccount().addPerformanceTracker(fromDate, productPerformanceTracker);
     }
 
     //Only for actuals
@@ -153,19 +192,36 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.productId = event.getProductId();
         this.calculationBasis = CalculationBasis.ACTUAL;
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
-        if (latestPriceBucket.getLatestPurchasePricePerUnitVersion() != event.getCurrentPurchasePrice()) {
-            Map<LocalDate, PriceBucket> activeActualPriceBuckets = this.actualProdctAccount.getActivePriceBuckets();
-            Set<LocalDate> keySet = activeActualPriceBuckets.keySet();
-            for (LocalDate date : keySet) {
-                PriceBucket priceBucket = activeActualPriceBuckets.get(date);
-                priceBucket.addPurchasePricePerUnitVersion(event.getCurrentPriceDate(), event.getCurrentPurchasePrice());
-                //I AM MAKING AN ASSUMPTION THAT WHEN PURCHASE PRICE CHANGES ADD A NEW VERSION OF MRP TOO<EVEN IF IT IS NOT CHANGED
-                priceBucket.addMRPVersion(event.getCurrentPriceDate(), event.getCurrentMRP());
-            }
-
-
+        if (latestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            PriceBucket newPriceBucket = new PriceBucket();
+            newPriceBucket.setFromDate(event.getCurrentPriceDate());
+            newPriceBucket.setToDate(new LocalDate(9999, 12, 31));
+            newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
+            newPriceBucket.setMRP(event.getCurrentMRP());
+            this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
+            PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
+            priceDeterminator.calculateOfferedPrice(this);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
+    }
+
+    @EventHandler
+    public void on(ProductStatusUpdatedEvent event) {
+        this.productId = event.getProductId();
+        this.calculationBasis = CalculationBasis.ACTUAL;
+        PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
+        if (latestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            PriceBucket newPriceBucket = new PriceBucket();
+            newPriceBucket.setFromDate(event.getCurrentPriceDate());
+            newPriceBucket.setToDate(new LocalDate(9999, 12, 31));
+            newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
+            newPriceBucket.setMRP(event.getCurrentMRP());
+            this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
+            PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
+            priceDeterminator.calculateOfferedPrice(this);
+        }
+        this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
+
     }
 
     @EventSourcingHandler
@@ -181,7 +237,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     public void updateProductStatus(UpdateProductStatusCommand command) {
-        apply(new ProductStatusReceivedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
+        apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
 
     public void addForecastParameters(AddForecastParametersCommand command) {
@@ -197,54 +253,17 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         apply(new CurrentOfferedPriceAddedEvent(this.productId, currentOfferedPrice));
     }
 
-
     public double getLatestOperatingExpensesPerUnit() {
         return getProductAccount().getLatestPerformanceTracker().getTotalOperationalExpenses();
     }
 
     public double getLatestMRP() {
-        return getProductAccount().getLatestPerformanceTracker().getLatestMRP();
+        return getProductAccount().getLatestPriceBucket().getMRP();
+    }
+
+    public void setLatestOfferedPrice(double offeredPrice) {
+        getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
     }
 
 
-    public void setProductConfiguration(SetProductConfigurationCommand command) {
-        apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
-                command.getRevenueChangeThresholdForPriceChange(),
-                command.isCrossPriceElasticityConsidered(),
-                command.isAdvertisingExpensesConsidered(),
-                command.getDemandWiseProfitSharingRules()));
-    }
-
-
-    public double getLatestPurchasePrice() {
-        return getProductAccount().getLatestPerformanceTracker().getLatestPurchasePrice();
-    }
-
-    public double getLatestMerchantProfit() {
-        return getProductAccount().getLatestPerformanceTracker().getExpectedMerchantProfitPercentage();
-    }
-
-    public ProductConfiguration getProductConfiguration() {
-        return productConfiguration;
-    }
-
-    public DemandWiseProfitSharingRule findProfitSharingRuleByDemandDensity(double demandDensityPercentage) {
-        return getProductConfiguration().findDemandWiseProfitSharingRuleByDemandDensity(demandDensityPercentage);
-    }
-
-    public double getLatestDemandDensity() {
-        return getProductAccount().getLatestDemandDensity();
-    }
-
-    public void setLatestOfferedPrice(double latestOfferedPriceActuals) {
-        this.getProductAccount().getLatestPerformanceTracker().getLatestInstantaneousPerformanceTracker().setOfferedPrice(latestOfferedPriceActuals);
-    }
-
-    public CalculationBasis getCalculationBasis() {
-        return calculationBasis;
-    }
-
-    public void setCalculationBasis(CalculationBasis calculationBasis) {
-        this.calculationBasis = calculationBasis;
-    }
 }

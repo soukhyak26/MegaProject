@@ -22,6 +22,10 @@ public class ProductView {
     private List<String> substitutes;
     private List<String> complements;
     private double currentOperatingExpensePerUnit;
+    private long currentStockInUnits;
+    private int productPricingCategory;
+    private int creditPoints;
+
 
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
         this.productId = productId;
@@ -104,5 +108,29 @@ public class ProductView {
 
     public void setCurrentOperatingExpensePerUnit(double currentOperatingExpensePerUnit) {
         this.currentOperatingExpensePerUnit = currentOperatingExpensePerUnit;
+    }
+
+    public long getCurrentStockInUnits() {
+        return this.currentStockInUnits;
+    }
+
+    public void setCurrentStockInUnits(long currentStockInUnits) {
+        this.currentStockInUnits = currentStockInUnits;
+    }
+
+    public int getProductPricingCategory() {
+        return this.productPricingCategory;
+    }
+
+    public void setProductPricingCategory(int productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
+    }
+
+    public int getCreditPoints() {
+        return this.creditPoints;
+    }
+
+    public void setCreditPoints(int creditPoints) {
+        this.creditPoints = creditPoints;
     }
 }
