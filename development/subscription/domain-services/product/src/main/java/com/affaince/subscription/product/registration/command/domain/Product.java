@@ -70,17 +70,17 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     public ProductAccount getProductAccount() {
-        if (this.calculationBasis == CalculationBasis.FORECAST)
-            return this.forecastedProductAccount;
-        else
-            return this.actualProdctAccount;
+        return getCurrentProductAccount();
     }
 
     public PriceBucket getLatestPriceBucket() {
-        if (this.calculationBasis == CalculationBasis.FORECAST)
-            return forecastedProductAccount.getLatestPriceBucket();
-        else
-            return actualProdctAccount.getLatestPriceBucket();
+        return getCurrentProductAccount().getLatestPriceBucket();
+    }
+
+    private ProductAccount getCurrentProductAccount() {
+        return this.calculationBasis == CalculationBasis.FORECAST ?
+                this.forecastedProductAccount :
+                this.actualProdctAccount;
     }
 
     public String getProductName() {
@@ -157,7 +157,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
     }
 
-    //Currently assuming it to be for foreast
+    //Currently assuming it to be for forcast
     @EventSourcingHandler
     public void on(ForecastParametersAddedEvent event) {
         this.productId = event.getProductId();

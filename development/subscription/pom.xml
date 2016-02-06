@@ -25,6 +25,7 @@
         <springboot.version>1.2.5.RELEASE</springboot.version>
         <jackson.verson>2.4.4</jackson.verson>
         <camel.version>2.15.2</camel.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
         <defaultGoal>clean install</defaultGoal>
@@ -102,7 +103,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.17</version>
                     <configuration>
-                        <argLine>-Xms2024m -XX:MaxPermSize=256m</argLine>
+                        <argLine>-Xms2024m</argLine>
                         <includes>
                             <include>**/*Test.java</include>
                         </includes>

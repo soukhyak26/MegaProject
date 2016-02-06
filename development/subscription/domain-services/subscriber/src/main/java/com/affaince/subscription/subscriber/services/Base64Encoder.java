@@ -1,10 +1,10 @@
 package com.affaince.subscription.subscriber.services;
 
 import org.springframework.beans.factory.annotation.Value;
-import sun.misc.BASE64Encoder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 /**
  * Created by rbsavaliya on 29-12-2015.
@@ -20,6 +20,6 @@ public class Base64Encoder {
         }
         MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
         messageDigest.update(text.getBytes());
-        return new BASE64Encoder().encode(messageDigest.digest());
+        return Base64.getEncoder().encodeToString(messageDigest.digest());
     }
 }
