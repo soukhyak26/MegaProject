@@ -2,7 +2,7 @@ package com.affaince.subscription.business.query.listener;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.business.command.RemovePastCommonExpenseTypesCommand;
-import com.affaince.subscription.business.command.event.CommonExpenseTypeUpdatedEvent;
+import com.affaince.subscription.business.command.event.OperatingExpenseUpdatedEvent;
 import com.affaince.subscription.business.query.repository.CommonOperatingExpenseViewRepository;
 import com.affaince.subscription.business.query.view.CommonOperatingExpenseView;
 import com.affaince.subscription.common.type.ExpenseType;
@@ -15,18 +15,18 @@ import java.util.List;
 /**
  * Created by mandark on 24-01-2016.
  */
-public class CommonExpenseTypeUpdatedEventListener {
+public class OperatingExpenseUpdatedEventListener {
+    private final CommonOperatingExpenseViewRepository operatingExpenseViewRepository;
     @Autowired
     private SubscriptionCommandGateway commandGateway;
-    private final CommonOperatingExpenseViewRepository operatingExpenseViewRepository;
 
     @Autowired
-    public CommonExpenseTypeUpdatedEventListener(CommonOperatingExpenseViewRepository operatingExpenseViewRepository) {
+    public OperatingExpenseUpdatedEventListener(CommonOperatingExpenseViewRepository operatingExpenseViewRepository) {
         this.operatingExpenseViewRepository = operatingExpenseViewRepository;
     }
 
     @EventHandler
-    public void on(CommonExpenseTypeUpdatedEvent event) throws Exception {
+    public void on(OperatingExpenseUpdatedEvent event) throws Exception {
         if (event.getExpenseType() == ExpenseType.COMMON_EXPENSE) {
             final List<CommonOperatingExpenseView> commonOperatingExpenseViews = operatingExpenseViewRepository.findByExpenseHeaderAndMonthOfYear(event.getExpenseHeader(), new YearMonth(event.getForYear(), event.getForMonth())
             );

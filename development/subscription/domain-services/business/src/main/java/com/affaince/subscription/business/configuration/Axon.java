@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.configuration;
 
 import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
-import com.affaince.subscription.business.command.event.CommonExpenseTypeUpdatedEvent;
+import com.affaince.subscription.business.command.event.OperatingExpenseUpdatedEvent;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -31,7 +31,7 @@ public class Axon extends RabbitMQConfiguration {
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
-            put("com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent", CommonExpenseTypeUpdatedEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent", OperatingExpenseUpdatedEvent.class.getName());
         }};
     }
 }

@@ -1,10 +1,8 @@
 package com.affaince.subscription.business.query.view;
 
-import com.affaince.subscription.business.vo.RangeRule;
+import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 /**
  * Created by rbsavaliya on 16-01-2016.
@@ -14,12 +12,14 @@ public class SubscriptionSpecificOperatingExpenseView {
     @Id
     private String id;
     private String expenseHeader;
-    private List<RangeRule> deliveryChargesRules;
+    private double monthlyExpenseAmount;
+    private YearMonth monthOfYear;
 
-    public SubscriptionSpecificOperatingExpenseView(String id, String expenseHeader, List<RangeRule> deliveryChargesRules) {
+    public SubscriptionSpecificOperatingExpenseView(String id, String expenseHeader, double monthlyExpenseAmount, YearMonth monthOfYear) {
         this.id = id;
         this.expenseHeader = expenseHeader;
-        this.deliveryChargesRules = deliveryChargesRules;
+        this.monthlyExpenseAmount = monthlyExpenseAmount;
+        this.monthOfYear = monthOfYear;
     }
 
     public SubscriptionSpecificOperatingExpenseView() {
@@ -41,11 +41,19 @@ public class SubscriptionSpecificOperatingExpenseView {
         this.expenseHeader = expenseHeader;
     }
 
-    public List<RangeRule> getDeliveryChargesRules() {
-        return deliveryChargesRules;
+    public double getMonthlyExpenseAmount() {
+        return this.monthlyExpenseAmount;
     }
 
-    public void setDeliveryChargesRules(List<RangeRule> deliveryChargesRules) {
-        this.deliveryChargesRules = deliveryChargesRules;
+    public void setMonthlyExpenseAmount(double monthlyExpenseAmount) {
+        this.monthlyExpenseAmount = monthlyExpenseAmount;
+    }
+
+    public YearMonth getMonthOfYear() {
+        return this.monthOfYear;
+    }
+
+    public void setMonthOfYear(YearMonth monthOfYear) {
+        this.monthOfYear = monthOfYear;
     }
 }

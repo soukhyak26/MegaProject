@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.command.event.CommonExpenseCreatedEvent;
-import com.affaince.subscription.business.command.event.CommonExpenseTypeUpdatedEvent;
+import com.affaince.subscription.business.command.event.OperatingExpenseUpdatedEvent;
 import com.affaince.subscription.business.command.event.PastCommonExpenseTypesRemovedEvent;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
@@ -56,7 +56,7 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
 
 
     @EventSourcingHandler
-    public void on(CommonExpenseTypeUpdatedEvent event) {
+    public void on(OperatingExpenseUpdatedEvent event) {
         YearMonth monthOfYear = new YearMonth(event.getForYear(), event.getForMonth());
         if (event.getExpenseType() == ExpenseType.COMMON_EXPENSE) {
             for (int i = 0; i <= 11; i++) {

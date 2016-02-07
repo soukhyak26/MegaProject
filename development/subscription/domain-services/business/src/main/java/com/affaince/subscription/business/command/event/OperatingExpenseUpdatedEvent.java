@@ -5,7 +5,7 @@ import com.affaince.subscription.common.type.ExpenseType;
 /**
  * Created by mandark on 24-01-2016.
  */
-public class CommonExpenseTypeUpdatedEvent {
+public class OperatingExpenseUpdatedEvent {
     private String commonOperatingExpenseId;
     private ExpenseType expenseType;
     private String expenseHeader;
@@ -56,7 +56,7 @@ public class CommonExpenseTypeUpdatedEvent {
 
     @Override
     public String toString() {
-        return "CommonExpenseTypeUpdatedEvent{" +
+        return "OperatingExpenseUpdatedEvent{" +
                 "expenseType=" + expenseType +
                 ", expenseHeader='" + expenseHeader + '\'' +
                 ", expenseAmount=" + expenseAmount +
