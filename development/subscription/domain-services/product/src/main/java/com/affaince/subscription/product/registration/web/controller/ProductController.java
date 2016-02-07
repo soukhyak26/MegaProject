@@ -29,10 +29,9 @@ import java.util.Map;
 @Component
 public class ProductController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository repository;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository repository) {
@@ -48,7 +47,7 @@ public class ProductController {
             receivedSensitivityCharactersistic = new HashMap<>();
             receivedSensitivityCharactersistic.put(SensitivityCharacteristic.NONE, 1.0);
         }
-        final RegisterProductCommand createCommand = new RegisterProductCommand(
+        RegisterProductCommand createCommand = new RegisterProductCommand(
                 request.getProductId(),
                 request.getProductName(),
                 request.getCategoryId(),
@@ -60,22 +59,22 @@ public class ProductController {
                 receivedSensitivityCharactersistic
         );
         try {
-            commandGateway.executeAsync(createCommand);
+            this.commandGateway.executeAsync(createCommand);
         } catch (Exception e) {
             throw e;
         }
-        LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
+        ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
         return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateProductStatus(@RequestBody @Valid UpdateProductStatusRequest request, @PathVariable String productId) throws Exception {
-        ProductView productView = repository.findOne(productId);
+        ProductView productView = this.repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        final UpdateProductStatusCommand command = new UpdateProductStatusCommand(
+        UpdateProductStatusCommand command = new UpdateProductStatusCommand(
                 productId,
                 request.getCurrentPurchasePrice(),
                 request.getCurrentMRP(),
@@ -83,7 +82,7 @@ public class ProductController {
                 LocalDate.now()
         );
         try {
-            commandGateway.executeAsync(command);
+            this.commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
         }
@@ -94,7 +93,7 @@ public class ProductController {
     @Consumes("application/json")
     public ResponseEntity<Object> addProjectionParameters(@RequestBody @Valid AddForecastParametersRequest request,
                                                           @PathVariable String productId) throws Exception {
-        final ProductView productView = repository.findOne(productId);
+        ProductView productView = this.repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
@@ -106,9 +105,9 @@ public class ProductController {
                 request.getTotalDeliveriesPerPeriod(),
                 request.getAverageWeightPerDelivery()
         );
-        commandGateway.executeAsync(command);
+        //commandGateway.executeAsync(command);
         try {
-            commandGateway.executeAsync(command);
+            this.commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
         }
@@ -118,13 +117,13 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable String productId, @RequestBody @Valid AddCurrentOfferedPriceRequest request) throws Exception {
-        ProductView productView = repository.findOne(productId);
+        ProductView productView = this.repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        final AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(productId, request.getCurrentOfferedPrice());
+        AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(productId, request.getCurrentOfferedPrice());
         try {
-            commandGateway.executeAsync(command);
+            this.commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
         }
@@ -134,18 +133,18 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.PUT, value = "/setproductconfig/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> setProductConfiguration(@PathVariable String productId, @RequestBody @Valid ProductConfigurationRequest request) throws Exception {
-        ProductView productView = repository.findOne(productId);
+        ProductView productView = this.repository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
 
-        final SetProductConfigurationCommand command = new SetProductConfigurationCommand(
+        SetProductConfigurationCommand command = new SetProductConfigurationCommand(
                 productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(),
                 request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(),
                 request.getDemandWiseProfitSharingRules()
         );
         try {
-            commandGateway.executeAsync(command);
+            this.commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
         }
