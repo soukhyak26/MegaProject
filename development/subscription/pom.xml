@@ -19,6 +19,7 @@
         <module>domain-services/product</module>
         <module>domain-services/business</module>
         <module>tools/notifications</module>
+        <module>tools/ExpenseDistributionBatch</module>
     </modules>
     <properties>
         <axon.version>2.4.2</axon.version>
