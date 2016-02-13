@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.registration.web.configuration;
 
+import com.affaince.subscription.product.registration.web.exception.InvalidProductStatusException;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,13 @@ public class RestControllerExceptionHandler {
         }
         map.addAttribute("errors", mapList);
         return new ResponseEntity<Map<String, Object>>(map, status);
+    }
+
+    @ResponseBody
+    @ExceptionHandler({InvalidProductStatusException.class})
+    protected Object handleInvalidProductStatusException(InvalidProductStatusException exception) {
+        return new ResponseEntity<Map<String, Object>>(buildErrorAttributes(exception.getMessage()),
+                HttpStatus.BAD_REQUEST);
     }
 
     private Map<String, Object> buildErrorAttributes(String message) {
