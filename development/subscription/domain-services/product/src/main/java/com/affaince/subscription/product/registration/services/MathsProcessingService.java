@@ -1,11 +1,18 @@
 package com.affaince.subscription.product.registration.services;
 
+import net.sourceforge.openforecast.DataPoint;
+import net.sourceforge.openforecast.DataSet;
+import net.sourceforge.openforecast.ForecastingModel;
+import net.sourceforge.openforecast.Observation;
+import net.sourceforge.openforecast.models.TripleExponentialSmoothingModel;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.stat.regression.AbstractMultipleLinearRegression;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 import org.apache.commons.math3.stat.regression.RegressionResults;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+
+import java.util.Iterator;
 
 /**
  * Created by mandark on 28-11-2015.
@@ -40,37 +47,46 @@ public class MathsProcessingService {
         return results;
     }
 
-    public CustomRegressionResults processMultipleLinearRegression(int numberOfVariables, int numberOfObservations, double[] dataToBeRegressed) {
+    public double[] processMultipleLinearRegression(double[] dataToBeRegressed, int numberOfRecords, int numberOfVariables) {
         AbstractMultipleLinearRegression regression = new OLSMultipleLinearRegression();
-        regression.newSampleData(dataToBeRegressed, 9, numberOfVariables);
-        double[] regrssionParameters = regression.estimateRegressionParameters();
-        double[] regressionParamtersStandardErrors = regression.estimateRegressionParametersStandardErrors();
-        double estimatedErrorVariance = regression.estimateErrorVariance();
-        CustomRegressionResults regressionResults = new CustomRegressionResults(regrssionParameters, regressionParamtersStandardErrors, estimatedErrorVariance);
-        return regressionResults;
+        regression.newSampleData(dataToBeRegressed, numberOfRecords, numberOfVariables);
+        return regression.estimateRegressionParameters();
     }
 
-    public class CustomRegressionResults {
-        private final double[] regressionParamters;
-        private final double[] regressionParamtersStandardErrors;
-        private final double estimatedErrorVariance;
-
-        public CustomRegressionResults(double[] regressionParams, double[] stdErrors, double estimatedErrorVariance) {
-            this.regressionParamters = regressionParams;
-            this.estimatedErrorVariance = estimatedErrorVariance;
-            this.regressionParamtersStandardErrors = stdErrors;
+    public double[] processForecastUsingTripleExponentialTimeSeries(double[] observations, int periodPerYear) {
+        DataSet observedData = new DataSet();
+        DataPoint dp;
+        for (int t = 0; t < observations.length; t++) {
+            dp = new Observation(observations[t]);
+            dp.setIndependentValue("t", t);
+            observedData.add(dp);
         }
+        observedData.setPeriodsPerYear(periodPerYear);
 
-        public double[] getRegressionParamters() {
-            return this.regressionParamters;
-        }
+        ForecastingModel model
+                = new TripleExponentialSmoothingModel(0.5, 0.4, 0.6);
+        model.init(observedData);
 
-        public double[] getRegressionParamtersStandardErrors() {
-            return this.regressionParamtersStandardErrors;
-        }
+        int n = observations.length;
+        DataSet requiredDataPoints = new DataSet();
+        DataPoint requiredDatePoint;
 
-        public double getEstimatedErrorVariance() {
-            return this.estimatedErrorVariance;
+        for (int count = 0; count < n; count++) {
+            dp = new Observation(0.0);
+            dp.setIndependentValue("x", count);
+            requiredDataPoints.add(dp);
         }
+        DataSet results = model.forecast(requiredDataPoints);
+
+        Iterator<DataPoint> it = results.iterator();
+        int i = 0;
+        double[] resultsArray = new double[results.size()];
+
+        while (it.hasNext()) {
+            DataPoint pnt = it.next();
+            resultsArray[i] = pnt.getDependentValue();
+            i++;
+        }
+        return resultsArray;
     }
 }
