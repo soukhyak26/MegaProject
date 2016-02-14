@@ -14,7 +14,8 @@ public class ProductPerformanceTracker {
     private double quantityPerPeriod;
     private double grossMargin;
     private double percentageGrossMargin;
-    private double totalOperationalExpenses;
+    private double fixedOperatingExpensePerUnit;
+    private double variableOperatingExpensePerUnit;
     private double operatingProfit;
     private double percentageOperatingProfit;
     private double revenuePerPeriod;
@@ -99,12 +100,20 @@ public class ProductPerformanceTracker {
         this.expectedMerchantProfitPercentage = expectedMerchantProfitPercentage;
     }
 
-    public double getTotalOperationalExpenses() {
-        return this.totalOperationalExpenses;
+    public double getFixedOperatingExpensePerUnit() {
+        return this.fixedOperatingExpensePerUnit;
     }
 
-    public void setTotalOperationalExpenses(double totalOperationalExpenses) {
-        this.totalOperationalExpenses = totalOperationalExpenses;
+    public void setFixedOperatingExpensePerUnit(double fixedOperatingExpensePerUnit) {
+        this.fixedOperatingExpensePerUnit = fixedOperatingExpensePerUnit;
+    }
+
+    public double getVariableOperatingExpensePerUnit() {
+        return this.variableOperatingExpensePerUnit;
+    }
+
+    public void setVariableOperatingExpensePerUnit(double variableOperatingExpensePerUnit) {
+        this.variableOperatingExpensePerUnit = variableOperatingExpensePerUnit;
     }
 
     public double getQuantityPerPeriod() {

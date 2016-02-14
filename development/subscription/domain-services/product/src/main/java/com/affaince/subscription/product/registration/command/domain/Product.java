@@ -253,10 +253,6 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         apply(new CurrentOfferedPriceAddedEvent(this.productId, currentOfferedPrice));
     }
 
-    public double getLatestOperatingExpensesPerUnit() {
-        return getProductAccount().getLatestPerformanceTracker().getTotalOperationalExpenses();
-    }
-
     public double getLatestMRP() {
         return getProductAccount().getLatestPriceBucket().getMRP();
     }

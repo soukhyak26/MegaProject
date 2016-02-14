@@ -16,7 +16,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     @Override
     public void calculateOfferedPrice(Product product) {
         final double purchasePrice = product.getLatestPurchasePrice();
-        final double operatingExpensesPerProductPerUnit = product.getLatestOperatingExpensesPerUnit();
+        final double operatingExpensesPerProductPerUnit = product.getProductAccount().getLatestPerformanceTracker().getFixedOperatingExpensePerUnit()+ product.getProductAccount().getLatestPerformanceTracker().getVariableOperatingExpensePerUnit();
         final double MRP = product.getLatestMRP();
         final double expectedMerchantProfit = product.getLatestMerchantProfit();
         final double breakevenPrice = purchasePrice + operatingExpensesPerProductPerUnit;
