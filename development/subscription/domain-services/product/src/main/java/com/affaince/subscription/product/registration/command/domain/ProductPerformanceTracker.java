@@ -11,7 +11,7 @@ public class ProductPerformanceTracker {
     private double expectedMerchantProfitPercentage;
     private double demandDensity;
     private double averageDemandPerSubscriber;
-
+    private double quantityPerPeriod;
     private double grossMargin;
     private double percentageGrossMargin;
     private double totalOperationalExpenses;
@@ -105,5 +105,13 @@ public class ProductPerformanceTracker {
 
     public void setTotalOperationalExpenses(double totalOperationalExpenses) {
         this.totalOperationalExpenses = totalOperationalExpenses;
+    }
+
+    public double getQuantityPerPeriod() {
+        return this.quantityPerPeriod;
+    }
+
+    public void setQuantityPerPeriod(double quantityPerPeriod) {
+        this.quantityPerPeriod = quantityPerPeriod;
     }
 }

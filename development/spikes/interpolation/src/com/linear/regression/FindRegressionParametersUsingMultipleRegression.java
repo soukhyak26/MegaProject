@@ -18,7 +18,7 @@ public class FindRegressionParametersUsingMultipleRegression {
 
         AbstractMultipleLinearRegression regression = new OLSMultipleLinearRegression();
         regression.newSampleData(data, 9, 2);
-        double [] coe = regression.estimateRegressionParameters();
+            double [] coe = regression.estimateRegressionParameters();
         for (int i=0;i<data.length;i=i+3){
             System.out.print("Y: " + data[0 + i] + ", ");
             System.out.print("X1: " + data[1 + i] + ", ");

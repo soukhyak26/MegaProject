@@ -10,7 +10,7 @@ public class PriceBucket {
     //private Map<LocalDate, Double> purchasePricePerUnitVersions;
     private double purchasePricePerUnit;
     private double offeredPricePerUnit;
-
+    private long totalQuantitySusbcribed;
     //no need to maintain MPR versions in each basket
     //private Map<LocalDate, Double> MRPVersions;
     private double MRP;
@@ -108,5 +108,13 @@ public class PriceBucket {
 
     public void setPurchasePricePerUnit(double purchasePricePerUnit) {
         this.purchasePricePerUnit = purchasePricePerUnit;
+    }
+
+    public long getTotalQuantitySusbcribed() {
+        return this.totalQuantitySusbcribed;
+    }
+
+    public void setTotalQuantitySusbcribed(long totalQuantitySusbcribed) {
+        this.totalQuantitySusbcribed = totalQuantitySusbcribed;
     }
 }

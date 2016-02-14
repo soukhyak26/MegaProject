@@ -103,14 +103,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>logback-commons</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.lbordowitz.openforecast</groupId>
-            <artifactId>openforecast</artifactId>
-        </dependency>
 
     </dependencies>
 </project>

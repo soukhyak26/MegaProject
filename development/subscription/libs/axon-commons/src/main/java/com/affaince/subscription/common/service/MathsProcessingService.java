@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.registration.services;
+package com.affaince.subscription.common.service;
 
 import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;
