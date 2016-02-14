@@ -4,6 +4,7 @@ import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.ForecastingModel;
 import net.sourceforge.openforecast.Observation;
+import net.sourceforge.openforecast.models.MultipleLinearRegressionModel;
 import net.sourceforge.openforecast.models.TripleExponentialSmoothingModel;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
@@ -58,13 +59,14 @@ public class MathsProcessingService {
         DataPoint dp;
         for (int t = 0; t < observations.length; t++) {
             dp = new Observation(observations[t]);
-            dp.setIndependentValue("t", t);
+            dp.setIndependentValue("t", t+1);
             observedData.add(dp);
         }
+        observedData.setTimeVariable("t");
         observedData.setPeriodsPerYear(periodPerYear);
 
         ForecastingModel model
-                = new TripleExponentialSmoothingModel(0.5, 0.4, 0.6);
+                = new MultipleLinearRegressionModel();
         model.init(observedData);
 
         int n = observations.length;
@@ -73,7 +75,7 @@ public class MathsProcessingService {
 
         for (int count = 0; count < n; count++) {
             dp = new Observation(0.0);
-            dp.setIndependentValue("x", count);
+            dp.setIndependentValue("t", count);
             requiredDataPoints.add(dp);
         }
         DataSet results = model.forecast(requiredDataPoints);
