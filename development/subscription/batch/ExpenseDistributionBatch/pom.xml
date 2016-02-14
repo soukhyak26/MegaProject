@@ -12,5 +12,10 @@
 
     <artifactId>ExpenseDistributionBatch</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>axon-commons</artifactId>
+        </dependency>
+    </dependencies>
 </project>
