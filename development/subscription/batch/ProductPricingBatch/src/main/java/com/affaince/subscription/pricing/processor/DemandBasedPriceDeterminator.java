@@ -1,8 +1,8 @@
-package com.affaince.subscription.product.registration.process.price;
+package com.affaince.subscription.pricing.processor;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
-import com.affaince.subscription.product.registration.command.domain.PriceBucket;
-import com.affaince.subscription.product.registration.command.domain.Product;
+import com.affaince.subscription.pricing.vo.PriceBucket;
+import com.affaince.subscription.pricing.vo.Product;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.Map;
 public class DemandBasedPriceDeterminator implements PriceDeterminator {
     public void calculateOfferedPrice(Product product) {
 
-        //demand function: Q=Intercept -(1/price elasticity of Demand)*P
         //cost function= Cost=intercept+variable*quantity
         //Retrieve the price buckets whose purchase price is same.
         //retreive the qunatity to be sold in coming month with extrapolation
@@ -25,31 +24,43 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         //take that price as the new offered price
         //extraploate quantity so as to understand how much is the target according to trend
         List<PriceBucket> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(product);
-        //List<Double> quantitySubscribedPerPriceWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucket -> priceBucket.getPurchasePricePerUnit()).collect(Collectors.toList());
+/*
         List<Double> quantitySubscribedPerPriceWithSamePurchasePrice = new ArrayList<>();
         bucketsWithSamePurchasePrice.forEach(priceBucket -> quantitySubscribedPerPriceWithSamePurchasePrice.add(priceBucket.getPurchasePricePerUnit()));
-        double newlyDemandedQuantity = extrapolateDemand(quantitySubscribedPerPriceWithSamePurchasePrice, bucketsWithSamePurchasePrice.size());
+*/
+        //Is this correct/required?
+        //double newlyDemandedQuantity = extrapolateDemand(quantitySubscribedPerPriceWithSamePurchasePrice, bucketsWithSamePurchasePrice.size());
         //Find the demand function using regression
         double[] regressionParameters = proccessPriceDataRegression(bucketsWithSamePurchasePrice);
-        double intercept = regressionParameters[0];
-        double slope = regressionParameters[1];
+        double demandFunctionIntercept = regressionParameters[0];
+        double demandFunctionSlope = regressionParameters[1];
+//        double costFunctonSlope=product.getProductAccount().getVariableExpenseSlope();
+  //      double demandedQuantity=demandFunctionIntercept/(2+(demandFunctionSlope*costFunctonSlope));
+        /**Explaintation of below formula****************
+        costOfAProduct=fixdCost + CostFunctionSlope*VariableCost
+
+
+        *************************************************/
         //find price elasticity for the desired quantity
         //price elasiticty of demand = (-1/slope)*(intercept -slope*quantity/qunatity);
         //for profit making price elasticity has to be <-1
+/*
         double priceElasticity= (-1/slope)*((intercept-(slope*newlyDemandedQuantity))/newlyDemandedQuantity);
         double marginalRevenue=intercept - 2*slope*newlyDemandedQuantity;
         double newPrice=marginalRevenue/(1+(1/priceElasticity));
+*/
 
         //find the cost function
         //total cost of a product for a quantity(to merchant)= (purchase price for that quantity + (fixed operating expense for that quantity) + (deivery charge per unit)*quantity
 /*
         double totalCostOfProduct=bucketsWithSamePurchasePrice.get(0).getPurchasePricePerUnit()+product.getProductAccount().getLatestPerformanceTracker().getFixedOperatingExpensePerUnit() + costFunctionSlope*product.getProductAccount().getLatestPerformanceTracker().getFixedOperatingExpensePerUnit();
 */
+
     }
 
     private List<PriceBucket> findBucketsWithSamePurchasePrice(Product product) {
         PriceBucket latestPriceBucket = product.getLatestPriceBucket();
-        Map<LocalDate, PriceBucket> activePriceBuckets = product.getProductAccount().getActivePriceBuckets();
+        Map<LocalDate, PriceBucket> activePriceBuckets = product.getActivePriceBuckets();
         List<PriceBucket> bucketsWithSamePurchasePrice = new ArrayList<PriceBucket>();
 
         for (Map.Entry<LocalDate, PriceBucket> entry : activePriceBuckets.entrySet()) {

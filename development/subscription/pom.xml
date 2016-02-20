@@ -20,6 +20,7 @@
         <module>domain-services/business</module>
         <module>tools/notifications</module>
         <module>batch/ExpenseDistributionBatch</module>
+        <module>batch/ProductPricingBatch</module>
     </modules>
     <properties>
         <axon.version>2.4.2</axon.version>

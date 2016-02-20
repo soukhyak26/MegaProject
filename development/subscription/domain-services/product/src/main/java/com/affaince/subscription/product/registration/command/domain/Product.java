@@ -6,8 +6,6 @@ import com.affaince.subscription.product.registration.command.AddForecastParamet
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
-import com.affaince.subscription.product.registration.process.price.DefaultPriceDeterminator;
-import com.affaince.subscription.product.registration.process.price.PriceDeterminator;
 import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -199,8 +197,8 @@ public class Product extends AbstractAnnotatedAggregateRoot {
             newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
             newPriceBucket.setMRP(event.getCurrentMRP());
             this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
-            PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
-            priceDeterminator.calculateOfferedPrice(this);
+            //PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
+            //priceDeterminator.calculateOfferedPrice(this);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
@@ -217,8 +215,8 @@ public class Product extends AbstractAnnotatedAggregateRoot {
             newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
             newPriceBucket.setMRP(event.getCurrentMRP());
             this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
-            PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
-            priceDeterminator.calculateOfferedPrice(this);
+            //PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
+            //priceDeterminator.calculateOfferedPrice(this);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
 

@@ -1,10 +1,8 @@
-package com.affaince.subscription.product.registration.process.price;
+package com.affaince.subscription.pricing.processor;
 
-import com.affaince.subscription.product.registration.command.domain.Product;
 
-/**
- * Created by rbsavaliya on 15-01-2016.
- */
+import com.affaince.subscription.pricing.vo.Product;
+
 public class DefaultPriceDeterminator implements PriceDeterminator {
 
     private final PriceDeterminator priceDeterminator;
@@ -16,14 +14,14 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     @Override
     public void calculateOfferedPrice(Product product) {
         final double purchasePrice = product.getLatestPurchasePrice();
-        final double operatingExpensesPerProductPerUnit = product.getProductAccount().getLatestPerformanceTracker().getFixedOperatingExpensePerUnit()+ product.getProductAccount().getLatestPerformanceTracker().getVariableOperatingExpensePerUnit();
+        final double operatingExpensesPerProductPerUnit = product.getFixedOperatingExpensePerUnit()+ product.getVariableOperatingExpensePerUnit();
         final double MRP = product.getLatestMRP();
-        final double expectedMerchantProfit = product.getLatestMerchantProfit();
+        final double expectedMerchantProfit = product.getLatestMerchantProfitExpectation();
         final double breakevenPrice = purchasePrice + operatingExpensesPerProductPerUnit;
         final double netProfit = MRP - breakevenPrice;
         final double priceAfterMerchantProfit = MRP - (netProfit - expectedMerchantProfit * breakevenPrice);
         //Offered price without basket discount= Price after merchant profit +(1-(percetnage margin to be given*product demand density))
-        final double latestDemandDensityActuals = product.getLatestDemandDensity();
+        final double latestDemandDensityActuals = product.getDemandDensity();
         final double profitSharingPercentageAtZeroDemand = product.findProfitSharingRuleByDemandDensity(0.0).getSharedProfitPercentage();
         final double profitSharingPercentageForADemand = product.findProfitSharingRuleByDemandDensity(latestDemandDensityActuals)
                 .getSharedProfitPercentage();
@@ -31,7 +29,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
                 / profitSharingPercentageForADemand;
         final double defaultOfferedPrice = priceAfterMerchantProfit + (1 - (profitSharingPercentageAtZeroDemand - latestDemandDensityActuals)
                 / slopeOfProfitShareForADemand) * netProfit;
-        product.setLatestOfferedPrice(defaultOfferedPrice);
+        product.setOfferedPrice(defaultOfferedPrice);
         if (null != priceDeterminator) {
             priceDeterminator.calculateOfferedPrice(product);
         }

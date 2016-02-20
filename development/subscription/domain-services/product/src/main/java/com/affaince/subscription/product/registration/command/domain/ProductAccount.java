@@ -17,6 +17,7 @@ public class ProductAccount {
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;
     private double creditPoints;
+    private double variableExpenseSlope;
 
     public ProductAccount() {
         performanceTracker = new TreeMap<>();
@@ -100,4 +101,19 @@ public class ProductAccount {
         this.creditPoints = creditPoints;
     }
 
+    public Map<YearMonth, AggregationPerformanceTracker> getMonthlyPerformanceMetrics() {
+        return this.monthlyPerformanceMetrics;
+    }
+
+    public void setMonthlyPerformanceMetrics(Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics) {
+        this.monthlyPerformanceMetrics = monthlyPerformanceMetrics;
+    }
+
+    public double getVariableExpenseSlope() {
+        return this.variableExpenseSlope;
+    }
+
+    public void setVariableExpenseSlope(double variableExpenseSlope) {
+        this.variableExpenseSlope = variableExpenseSlope;
+    }
 }
