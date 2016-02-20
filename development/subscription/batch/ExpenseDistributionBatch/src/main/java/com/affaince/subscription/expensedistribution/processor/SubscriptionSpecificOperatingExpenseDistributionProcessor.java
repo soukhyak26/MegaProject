@@ -1,58 +1,58 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent;
-import com.affaince.subscription.expensedistribution.vo.Delivery;
-import com.affaince.subscription.expensedistribution.vo.DeliveryChargesRule;
-import com.affaince.subscription.expensedistribution.vo.Product;
+import com.affaince.subscription.expensedistribution.vo.InputDataToCalculatePerProductOpEx;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * Created by rsavaliya on 13/2/16.
  */
 public class SubscriptionSpecificOperatingExpenseDistributionProcessor {
-    private List <Delivery> deliveryItems;
-    private List <DeliveryChargesRule> deliveryChargesRules;
-    private Set<Product> deliveredProducts;
-    public void distribute () {
-        createDeliveredProductListFromDelivery ();
-        final double totalDeliveryChargesOfAllBaskets = calculateTotalDeliveryChargesOfAllBaskets();
-        final double totalPurchasePriceOfAllProducts = calculateTotalPurchasePriceOfAllProducts();
-        distributeToProduct (totalDeliveryChargesOfAllBaskets, totalPurchasePriceOfAllProducts);
+    public void distribute (InputDataToCalculatePerProductOpEx inputDataToCalculatePerProductOpEx) {
+        final double totalDeliveryChargesOfAllBaskets = calculateTotalDeliveryChargesOfAllBaskets(
+                inputDataToCalculatePerProductOpEx.getTotalDeliveriesPerWeightCategory(),
+                inputDataToCalculatePerProductOpEx.getDeliveryChargesPerWeightRange()
+        );
+        final double totalPurchasePriceOfAllProducts = calculateTotalPurchasePriceOfAllProducts(
+                inputDataToCalculatePerProductOpEx.getTotalProductsSubscriptions(),
+                inputDataToCalculatePerProductOpEx.getProductsPurchasePrice()
+        );
+        distributeToProduct (totalDeliveryChargesOfAllBaskets, totalPurchasePriceOfAllProducts,
+                inputDataToCalculatePerProductOpEx.getProductsPurchasePrice());
     }
 
-    private void distributeToProduct(double totalDeliveryChargesOfAllBaskets, double totalPurchasePriceOfAllProducts) {
-        for (Product product: deliveredProducts) {
-            double operatingExpensePerUnit = (totalDeliveryChargesOfAllBaskets*product.getPurchasePrice())
-                    /totalPurchasePriceOfAllProducts;
-            SubscriptionSpecificOperatingExpenseCalculatedEvent expenseCalculatedEvent =
-                    new SubscriptionSpecificOperatingExpenseCalculatedEvent(product.getProductId(), operatingExpensePerUnit);
-        }
-    }
+    private double calculateTotalPurchasePriceOfAllProducts(
+            Map<String, Integer> totalProductsSubscriptions,
+            Map<String, Double> productsPurchasePrice) {
 
-
-    private void createDeliveredProductListFromDelivery() {
-        for (Delivery delivery: deliveryItems) {
-            deliveredProducts.addAll(delivery.getProducts());
-        }
-    }
-
-    private double calculateTotalPurchasePriceOfAllProducts() {
         double totalPurchasePrice = 0;
-        for (Delivery delivery: deliveryItems) {
-            for (Product product: delivery.getProducts()) {
-                totalPurchasePrice = totalPurchasePrice + product.getPurchasePrice();
-            }
+        for (String productId: totalProductsSubscriptions.keySet()) {
+            totalPurchasePrice = totalPurchasePrice +
+                    totalProductsSubscriptions.get(productId)*productsPurchasePrice.get(productId);
         }
         return totalPurchasePrice;
     }
 
-    private double calculateTotalDeliveryChargesOfAllBaskets() {
+    private double calculateTotalDeliveryChargesOfAllBaskets(
+            Map<Integer, Integer> totalDeliveriesPerWeightCategory,
+            Map<Integer, Integer> deliveryChargesPerWeightRange) {
+
         double totalDeliveryCharges = 0;
-        for (Delivery delivery: deliveryItems) {
-            totalDeliveryCharges = totalDeliveryCharges + delivery.getBasketDeliveryCharges();
+        for (Integer weightRange : totalDeliveriesPerWeightCategory.keySet()) {
+            totalDeliveryCharges = totalDeliveryCharges +
+                    totalDeliveriesPerWeightCategory.get(weightRange)*deliveryChargesPerWeightRange.get(weightRange);
         }
         return totalDeliveryCharges;
+    }
+
+    private void distributeToProduct(double totalDeliveryChargesOfAllBaskets, double totalPurchasePriceOfAllProducts,
+                                     Map <String, Double> productsPurchasePrice ) {
+        for (String productId: productsPurchasePrice.keySet()) {
+            double operatingExpensePerUnit = (totalDeliveryChargesOfAllBaskets*productsPurchasePrice.get(productId))
+                    /totalPurchasePriceOfAllProducts;
+            SubscriptionSpecificOperatingExpenseCalculatedEvent expenseCalculatedEvent =
+                    new SubscriptionSpecificOperatingExpenseCalculatedEvent(productId, operatingExpensePerUnit);
+        }
     }
 }
