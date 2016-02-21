@@ -14,7 +14,7 @@ import java.util.Map;
  * Created by mandark on 13-02-2016.
  */
 public class DemandBasedPriceDeterminator implements PriceDeterminator {
-    public void calculateOfferedPrice(Product product) {
+    public double calculateOfferedPrice(Product product) {
 
         //cost function= Cost=intercept+variable*quantity
         //Retrieve the price buckets whose purchase price is same.
@@ -56,7 +56,7 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
 /*
         double totalCostOfProduct=bucketsWithSamePurchasePrice.get(0).getPurchasePricePerUnit()+product.getProductAccount().getLatestPerformanceTracker().getFixedOperatingExpensePerUnit() + costFunctionSlope*product.getProductAccount().getLatestPerformanceTracker().getFixedOperatingExpensePerUnit();
 */
-
+    return 0.0;
     }
 
     private List<PriceBucket> findBucketsWithSamePurchasePrice(Product product) {

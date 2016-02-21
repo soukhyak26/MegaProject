@@ -9,7 +9,7 @@ import org.springframework.batch.item.ItemStream;
 /**
  * Created by mandark on 21-02-2016.
  */
-public class CompositeItemReader<T> implements ItemReader<T>, ItemStream {
+public abstract class CompositeItemReader<T> implements ItemReader<T>, ItemStream {
     private ItemReader[] delegates;
     private int delegateIndex;
     private ItemReader<T> currentDelegate;
@@ -73,4 +73,5 @@ public class CompositeItemReader<T> implements ItemReader<T>, ItemStream {
         }
     }
 
+    public abstract T mapToMasterEntity(T item);
 }

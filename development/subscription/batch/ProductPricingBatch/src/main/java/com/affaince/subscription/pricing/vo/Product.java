@@ -18,7 +18,6 @@ public class Product {
     private double variableOperatingExpensePerUnit;
     private double demandDensity;
     private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
-    private double offeredPrice;
 
     public double getLatestPurchasePrice() {
         return this.latestPurchasePrice;
@@ -76,13 +75,6 @@ public class Product {
         this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
     }
 
-    public double getOfferedPrice() {
-        return this.offeredPrice;
-    }
-
-    public void setOfferedPrice(double offeredPrice) {
-        this.offeredPrice = offeredPrice;
-    }
 
     public Map<LocalDate, PriceBucket> getActivePriceBuckets() {
         return this.activePriceBuckets;

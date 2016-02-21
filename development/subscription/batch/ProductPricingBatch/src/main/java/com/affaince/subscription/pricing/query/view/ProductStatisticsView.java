@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.registration.query.view;
+package com.affaince.subscription.pricing.query.view;
 
 import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
@@ -18,11 +18,11 @@ public class ProductStatisticsView {
     private double variableOperatingExpense;
 
 
-    public ProductStatisticsView(String productId,YearMonth monthOfYear) {
+    public ProductStatisticsView(String productId, YearMonth monthOfYear) {
         this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
     }
 
-    public ProductStatisticsView(String productId,YearMonth monthOfYear, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit,double fixedOperatingExpense,double variableOperatingExpense) {
+    public ProductStatisticsView(String productId, YearMonth monthOfYear, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit, double fixedOperatingExpense, double variableOperatingExpense) {
         this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
         this.productSubscriptionCount = productSubscriptionCount;
         this.subscribedProductRevenue = subscribedProductRevenue;
@@ -81,5 +81,21 @@ public class ProductStatisticsView {
 
     public void setVariableOperatingExpense(double variableOperatingExpense) {
         this.variableOperatingExpense = variableOperatingExpense;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        ProductStatisticsView that = (ProductStatisticsView) o;
+
+        return this.getProductMonthlyVersionId().equals(that.getProductMonthlyVersionId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getProductMonthlyVersionId().hashCode();
     }
 }

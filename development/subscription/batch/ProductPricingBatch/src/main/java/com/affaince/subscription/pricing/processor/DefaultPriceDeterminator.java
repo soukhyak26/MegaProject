@@ -12,7 +12,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     }
 
     @Override
-    public void calculateOfferedPrice(Product product) {
+    public double calculateOfferedPrice(Product product) {
         final double purchasePrice = product.getLatestPurchasePrice();
         final double operatingExpensesPerProductPerUnit = product.getFixedOperatingExpensePerUnit()+ product.getVariableOperatingExpensePerUnit();
         final double MRP = product.getLatestMRP();
@@ -29,10 +29,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
                 / profitSharingPercentageForADemand;
         final double defaultOfferedPrice = priceAfterMerchantProfit + (1 - (profitSharingPercentageAtZeroDemand - latestDemandDensityActuals)
                 / slopeOfProfitShareForADemand) * netProfit;
-        product.setOfferedPrice(defaultOfferedPrice);
-        if (null != priceDeterminator) {
-            priceDeterminator.calculateOfferedPrice(product);
-        }
+        return defaultOfferedPrice;
     }
 
    /* public static void main (String [] args) {
