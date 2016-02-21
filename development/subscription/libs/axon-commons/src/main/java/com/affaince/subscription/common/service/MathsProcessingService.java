@@ -1,5 +1,6 @@
 package com.affaince.subscription.common.service;
 
+import com.affaince.subscription.common.vo.RegressionResult;
 import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.ForecastingModel;
@@ -14,13 +15,15 @@ import org.apache.commons.math3.stat.regression.RegressionResults;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by mandark on 28-11-2015.
  */
 public class MathsProcessingService {
 
-    public double[] cubicSplineInterpolate(double[] x, double[] y) {
+    public static double[] cubicSplineInterpolate(double[] x, double[] y) {
         double[] interpolationResult = new double[365];
         SplineInterpolator interpol = new SplineInterpolator();
         PolynomialSplineFunction f = interpol.interpolate(x, y);
@@ -41,20 +44,53 @@ public class MathsProcessingService {
         return interpolationResult;
     }
 
-    public RegressionResults processSimpleLinearRegression(double[][] dataToBeRegressed) {
+    public static RegressionResults processSimpleLinearRegression(double[][] dataToBeRegressed) {
         SimpleRegression simpleRegression = new SimpleRegression();
         simpleRegression.addData(dataToBeRegressed);
         RegressionResults results = simpleRegression.regress();
         return results;
     }
 
-    public double[] processMultipleLinearRegression(double[] dataToBeRegressed, int numberOfRecords, int numberOfVariables) {
-        AbstractMultipleLinearRegression regression = new OLSMultipleLinearRegression();
+    public static RegressionResult processMultipleLinearRegression(double[] dataToBeRegressed, int numberOfRecords, int numberOfVariables) {
+        OLSMultipleLinearRegression regression = new OLSMultipleLinearRegression();
         regression.newSampleData(dataToBeRegressed, numberOfRecords, numberOfVariables);
-        return regression.estimateRegressionParameters();
+
+        return new RegressionResult(regression.estimateRegressionParameters(),regression.calculateAdjustedRSquared());
     }
 
-    public double[] processForecastUsingTripleExponentialTimeSeries(double[] observations, int periodPerYear) {
+/*
+    public String getMultipleLinearRegressionEquation(double[] observations, int periodPerYear) {
+        DataSet observedData = new DataSet();
+        DataPoint dp;
+        for (int t = 0; t < observations.length; t++) {
+            dp = new Observation(observations[t]);
+            dp.setIndependentValue("t", t+1);
+            observedData.add(dp);
+        }
+        observedData.setTimeVariable("t");
+        observedData.setPeriodsPerYear(periodPerYear);
+
+        MultipleLinearRegressionModel model
+                = new MultipleLinearRegressionModel();
+        model.init(observedData);
+
+        Set coeffSet = model.getCoefficients().entrySet();
+        Iterator it = coeffSet.iterator();
+        String equation="" + model.getIntercept();
+        while(it.hasNext()) {
+            Map.Entry entry = (Map.Entry)it.next();
+            double coeff = ((Double)entry.getValue()).doubleValue();
+            if(coeff < -1.0E-8D) {
+                equation = equation + coeff + "*" + (String)entry.getKey();
+            } else if(coeff > 1.0E-8D) {
+                equation = equation + "+" + coeff + "*" + (String)entry.getKey();
+            }
+        }
+        return equation;
+    }
+*/
+
+    public static double[] processForecastUsingTripleExponentialTimeSeries(double[] observations, int periodPerYear) {
         DataSet observedData = new DataSet();
         DataPoint dp;
         for (int t = 0; t < observations.length; t++) {

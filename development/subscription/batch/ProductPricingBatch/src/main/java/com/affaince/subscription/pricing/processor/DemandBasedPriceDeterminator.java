@@ -1,6 +1,7 @@
 package com.affaince.subscription.pricing.processor;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
+import com.affaince.subscription.common.vo.RegressionResult;
 import com.affaince.subscription.pricing.vo.PriceBucket;
 import com.affaince.subscription.pricing.vo.Product;
 import org.joda.time.LocalDate;
@@ -31,9 +32,9 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         //Is this correct/required?
         //double newlyDemandedQuantity = extrapolateDemand(quantitySubscribedPerPriceWithSamePurchasePrice, bucketsWithSamePurchasePrice.size());
         //Find the demand function using regression
-        double[] regressionParameters = proccessPriceDataRegression(bucketsWithSamePurchasePrice);
-        double demandFunctionIntercept = regressionParameters[0];
-        double demandFunctionSlope = regressionParameters[1];
+        RegressionResult regressionResult = proccessPriceDataRegression(bucketsWithSamePurchasePrice);
+        double demandFunctionIntercept = regressionResult.getRegressionParameters()[0];
+        double demandFunctionSlope = regressionResult.getRegressionParameters()[1];
 //        double costFunctonSlope=product.getProductAccount().getVariableExpenseSlope();
   //      double demandedQuantity=demandFunctionIntercept/(2+(demandFunctionSlope*costFunctonSlope));
         /**Explaintation of below formula****************
@@ -79,7 +80,7 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         return forecastedQuantities[0];
     }
 
-    private double[] proccessPriceDataRegression(List<PriceBucket> activePriceBuckets) {
+    private RegressionResult proccessPriceDataRegression(List<PriceBucket> activePriceBuckets) {
         double[] priceVsQuantityArray = new double[activePriceBuckets.size() * 2];
         int i = 0;
         for (PriceBucket activePriceBucket : activePriceBuckets) {
@@ -87,6 +88,6 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
             priceVsQuantityArray[i++] = activePriceBucket.getTotalQuantitySusbcribed();
         }
         MathsProcessingService mathService = new MathsProcessingService();
-        return mathService.processMultipleLinearRegression(priceVsQuantityArray, priceVsQuantityArray.length / 2, 1);
+        return MathsProcessingService.processMultipleLinearRegression(priceVsQuantityArray, priceVsQuantityArray.length / 2, 1);
     }
 }
