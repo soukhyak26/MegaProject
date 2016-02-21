@@ -1,8 +1,7 @@
 package com.affaince.subscription.integration.configuation;
 
-import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
-import com.affaince.subscription.integration.command.event.GenericEventPublisher;
+import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
