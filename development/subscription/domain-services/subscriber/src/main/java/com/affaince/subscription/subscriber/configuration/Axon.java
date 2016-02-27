@@ -3,6 +3,7 @@ package com.affaince.subscription.subscriber.configuration;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.subscriber.command.domain.BasketRule;
+import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
@@ -38,6 +39,12 @@ public class Axon extends RabbitMQConfiguration {
     @Bean
     public Repository<BasketRule> createBasketRuleRepository(DisruptorCommandBus commandBus) {
         Repository<BasketRule> repository = commandBus.createRepository(new GenericAggregateFactory<>(BasketRule.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<DeliveryChargesRule> createDeliveryChargesRuleRepository(DisruptorCommandBus commandBus) {
+        Repository<DeliveryChargesRule> repository = commandBus.createRepository(new GenericAggregateFactory<>(DeliveryChargesRule.class));
         return repository;
     }
 
