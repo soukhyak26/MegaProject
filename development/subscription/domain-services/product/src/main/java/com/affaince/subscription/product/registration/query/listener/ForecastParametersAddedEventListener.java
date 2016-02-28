@@ -24,11 +24,20 @@ public class ForecastParametersAddedEventListener {
 
     @EventHandler
     public void on(ForecastParametersAddedEvent event) throws ProductNotFoundException, InvalidProductStatusException {
-        final ProductStatusView productStatusView = productStatusViewRepository.findOne(event.getProductId());
+        final ProductStatusView productStatusView = productStatusViewRepository.findByProductId(event.getProductId());
         if(productStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        productStatusView.addProductStatus(ProductStatus.PRODUCT_FORCASTED);
+        /*ProductStatus latestStatus = */
+        boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
+        /*if(latestStatus.getStatusCode() >= ProductStatus.PRODUCT_COMPLETED.getStatusCode()) {
+            //TODO: make use of lastestStatus for firing further event(s) if required
+        }*/
+        if(result) {
+
+        } else {
+
+        }
         productStatusViewRepository.save(productStatusView);
     }
 }

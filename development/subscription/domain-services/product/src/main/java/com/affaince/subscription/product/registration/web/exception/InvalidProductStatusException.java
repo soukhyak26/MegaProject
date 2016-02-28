@@ -19,4 +19,5 @@ public class InvalidProductStatusException extends Exception {
                                                       ProductStatus expectedStatus) {
         return new InvalidProductStatusException(String.format(message, productId, actualStatus, expectedStatus));
     }
+
 }

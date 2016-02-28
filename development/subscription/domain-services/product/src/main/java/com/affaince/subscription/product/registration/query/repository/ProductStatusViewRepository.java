@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by anayonkar on 13/2/16.
  */
 public interface ProductStatusViewRepository extends CrudRepository<ProductStatusView, String>{
+    public ProductStatusView findByProductId(String productId);
 }

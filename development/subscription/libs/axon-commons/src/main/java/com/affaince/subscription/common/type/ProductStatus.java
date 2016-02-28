@@ -14,20 +14,26 @@ public enum ProductStatus {
     PRODUCT_CONFIGURED(2),
 
     //dependent upon registration
-    PRODUCT_FORCASTED(3),
+    PRODUCT_FORECASTED(3),
 
     //completed only after registered + configured + forcasted
-    PRODUCT_COMPLETED(4),
+    //PRODUCT_COMPLETED(4),
 
     //must be completed before sending to expense distribution batch
     //dependent upon completion
-    PRODUCT_EXPENSES_DISTRIBUTED(5),
+    PRODUCT_EXPENSES_DISTRIBUTED(4),
 
     //must be expense_distributed before sending to pricing batch
     //dependent upon expense distribution
-    PRODUCT_ACTIVATED(6);
+    PRODUCT_ACTIVATED(5);
+
     private int statusCode;
+
     ProductStatus(int statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
     }
 }

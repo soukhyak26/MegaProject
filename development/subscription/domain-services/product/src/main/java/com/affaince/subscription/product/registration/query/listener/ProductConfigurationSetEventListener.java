@@ -38,11 +38,20 @@ public class ProductConfigurationSetEventListener {
         productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
         productConfigurationView.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
         productConfigurationViewRepository.save(productConfigurationView);
-        final ProductStatusView productStatusView = productStatusViewRepository.findOne(event.getProductId());
+        final ProductStatusView productStatusView = productStatusViewRepository.findByProductId(event.getProductId());
         if(productStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
+        /*ProductStatus latestStatus =*/
+        boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
+        /*if(latestStatus.getStatusCode() >= ProductStatus.PRODUCT_COMPLETED.getStatusCode()) {
+            //TODO: make use of lastestStatus for firing further event(s) if required
+        }*/
+        if(result) {
+
+        } else {
+
+        }
         productStatusViewRepository.save(productStatusView);
     }
 }
