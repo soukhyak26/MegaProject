@@ -7,10 +7,17 @@ import java.util.Map;
  * Created by rsavaliya on 14/2/16.
  */
 public class InputDataToCalculatePerProductOpEx {
-    private Map <String, Integer> totalProductsSubscriptions = new HashMap<>();
+    private Map <String, Integer> totalProductsSubscriptions;
     private Map <String, Double> productsPurchasePrice;
     private Map <Integer, Integer> totalDeliveriesPerWeightCategory;
     private Map <Integer, Integer> deliveryChargesPerWeightRange;
+
+    {
+        totalProductsSubscriptions = new HashMap<>();
+        productsPurchasePrice = new HashMap<>();
+        totalDeliveriesPerWeightCategory = new HashMap<>();
+        deliveryChargesPerWeightRange = new HashMap<>();
+    }
 
     public void addProductSubscription (String productId, int totalNumOfSubscriptions) {
         totalProductsSubscriptions.put(productId, totalNumOfSubscriptions);

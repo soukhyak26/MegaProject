@@ -26,4 +26,8 @@ public class DeliveryChargesRule extends AbstractAnnotatedAggregateRoot <Integer
         this.ruleId = event.getRuleId().getDeliveryChargesRuleTypeCode();
         this.deliveryChargesRules = event.getDeliveryChargesRules();
     }
+
+    public List<RangeRule> getDeliveryChargesRules() {
+        return deliveryChargesRules;
+    }
 }

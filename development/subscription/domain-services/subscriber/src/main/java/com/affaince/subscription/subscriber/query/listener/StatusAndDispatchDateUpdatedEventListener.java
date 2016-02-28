@@ -28,7 +28,7 @@ public class StatusAndDispatchDateUpdatedEventListener {
     public void on(StatusAndDispatchDateUpdatedEvent event) {
         DeliveryView deliveryView = deliveryViewRepository.findOne(event.getBasketId());
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
-            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null, 0);
+            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId());
             deliveryItem = deliveryView.getDeliveryItems().get(deliveryView.getDeliveryItems().indexOf(deliveryItem));
             deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
         }

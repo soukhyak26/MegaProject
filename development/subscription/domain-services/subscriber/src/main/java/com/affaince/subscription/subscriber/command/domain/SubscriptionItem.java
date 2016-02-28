@@ -40,7 +40,6 @@ public class SubscriptionItem {
         this.weightInGrms = weightInGrms;
     }
 
-
     public int getCountPerPeriod() {
         return countPerPeriod;
     }

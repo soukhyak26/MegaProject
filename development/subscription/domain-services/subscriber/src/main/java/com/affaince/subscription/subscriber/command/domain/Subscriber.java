@@ -105,7 +105,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         delivery.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
         List<DeliveryItem> deliveryItems = delivery.getDeliveryItems();
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
-            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId(), null, 0);
+            DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId());
             deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
             deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
         }
@@ -187,17 +187,21 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 DeliveryItem deliveryItem = new DeliveryItem();
                 deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
                 deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
+                deliveryItem.setOfferedPriceWithBasketLevelDiscount(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
                 deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
                 weeklyDelivery.getDeliveryItems().add(deliveryItem);
             }
         }
     }
 
-    public void confirmSubscription(Subscription subscription) {
+    public void confirmSubscription(Subscription subscription, DeliveryChargesRule deliveryChargesRule) {
+        makeDeliveriesReady(subscription);
         for (Delivery delivery : deliveries.values()) {
+            delivery.calculateTotalWeightInGrams();
+            delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
             apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), subscription.getSubscriberId(), subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
-                    delivery.calculateTotalWeightInGrams()));
+                    delivery.getTotalWeight()));
         }
     }
 }

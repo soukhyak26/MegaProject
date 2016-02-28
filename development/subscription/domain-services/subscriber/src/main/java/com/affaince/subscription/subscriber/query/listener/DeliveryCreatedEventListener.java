@@ -23,5 +23,6 @@ public class DeliveryCreatedEventListener {
     public void on(DeliveryCreatedEvent event) {
         final DeliveryView deliveryView = new DeliveryView(event.getDeliveryId(), event.getSubscriberId(),
                 event.getSubscriptionId(), event.getDeliveryItems(), event.getDeliveryDate(), event.getStatus());
+        deliveryViewRepository.save(deliveryView);
     }
 }

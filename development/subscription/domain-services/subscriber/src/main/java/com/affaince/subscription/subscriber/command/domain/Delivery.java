@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.subscriber.vo.RangeRule;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public class Delivery {
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
     private DeliveryStatus status;
+    private double deliveryCharges;
+    private double totalWeight;
+    private double totalDeliveryPrice;
 
     public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
         this.deliveryId = deliveryId;
@@ -66,11 +70,48 @@ public class Delivery {
         this.status = status;
     }
 
-    public double calculateTotalWeightInGrams() {
-        double totalWeight = 0;
+    public double getDeliveryCharges() {
+        return deliveryCharges;
+    }
+
+    public void setDeliveryCharges(double deliveryCharges) {
+        this.deliveryCharges = deliveryCharges;
+    }
+
+    public double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
+    public double getTotalDeliveryPrice() {
+        return totalDeliveryPrice;
+    }
+
+    public void setTotalDeliveryPrice(double totalDeliveryPrice) {
+        this.totalDeliveryPrice = totalDeliveryPrice;
+    }
+
+    public void calculateTotalWeightInGrams() {
+        totalWeight = 0;
         for (DeliveryItem deliveryItem : this.deliveryItems) {
             totalWeight = totalWeight + deliveryItem.getWeightInGrms();
         }
-        return totalWeight;
+    }
+
+    public void calculateItemLevelDeliveryCharges(DeliveryChargesRule deliveryChargesRule) {
+        List<RangeRule> rangeRules = deliveryChargesRule.getDeliveryChargesRules();
+        for (RangeRule rangeRule:rangeRules) {
+            if (totalWeight > rangeRule.getRuleMinimum() && totalWeight < rangeRule.getRuleMaximum()) {
+                deliveryCharges = rangeRule.getApplicableValue();
+                break;
+            }
+        }
+        for (DeliveryItem item: deliveryItems) {
+            totalDeliveryPrice = totalDeliveryPrice + item.getOfferedPriceWithBasketLevelDiscount() ;
+            item.setDeliveryCharges((item.getOfferedPriceWithBasketLevelDiscount()*deliveryCharges)/totalDeliveryPrice);
+        }
     }
 }

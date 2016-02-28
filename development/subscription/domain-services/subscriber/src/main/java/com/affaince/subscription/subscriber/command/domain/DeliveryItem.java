@@ -10,14 +10,21 @@ public class DeliveryItem {
     private String deliveryItemId;
     private DeliveryStatus deliveryStatus;
     private double weightInGrms;
+    private double deliveryCharges;
+    private double offeredPriceWithBasketLevelDiscount;
 
-    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms) {
+    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double offeredPriceWithBasketLevelDiscount) {
         this.deliveryItemId = deliveryItemId;
         this.deliveryStatus = deliveryStatus;
         this.weightInGrms = weightInGrms;
+        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
     }
 
     public DeliveryItem() {
+    }
+
+    public DeliveryItem(String deliveryItemId) {
+        this.deliveryItemId = deliveryItemId;
     }
 
     public String getDeliveryItemId() {
@@ -42,6 +49,22 @@ public class DeliveryItem {
 
     public void setWeightInGrms(double weightInGrms) {
         this.weightInGrms = weightInGrms;
+    }
+
+    public double getDeliveryCharges() {
+        return deliveryCharges;
+    }
+
+    public void setDeliveryCharges(double deliveryCharges) {
+        this.deliveryCharges = deliveryCharges;
+    }
+
+    public double getOfferedPriceWithBasketLevelDiscount() {
+        return offeredPriceWithBasketLevelDiscount;
+    }
+
+    public void setOfferedPriceWithBasketLevelDiscount(double offeredPriceWithBasketLevelDiscount) {
+        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
     }
 
     @Override
