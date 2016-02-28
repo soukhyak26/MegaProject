@@ -2,28 +2,17 @@ package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
-import com.affaince.subscription.pricing.batchprocessor.ProductStatisticsItemReader;
-import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
-import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
-import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
-import com.affaince.subscription.pricing.query.repository.ProductViewRepository;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
-import com.affaince.subscription.pricing.query.view.ProductVersionId;
-import com.mongodb.MongoClient;
+import com.affaince.subscription.pricing.processor.camel.CoefficientAggregationStrategy;
+import com.affaince.subscription.pricing.processor.camel.CostFunctionCamelProcessor;
+import com.affaince.subscription.pricing.processor.camel.DemandFunctionCamelProcessor;
+import com.affaince.subscription.pricing.processor.camel.PriceDeterminationCamelProcessor;
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.axonframework.eventhandling.EventTemplate;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.authentication.UserCredentials;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -31,71 +20,37 @@ import java.util.List;
 @Configuration
 public class Axon extends RabbitMQConfiguration {
 
-
-    public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
+    @Autowired
+    CamelContext camelContext;
 
     @Bean
     public GenericEventPublisher publisher(EventTemplate template) {
         return new GenericEventPublisher(template);
     }
 
-    @Bean
-    public MongoDbFactory mongoDbFactory() throws Exception {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        UserCredentials userCredentials = new UserCredentials("", "");
-        return new SimpleMongoDbFactory(mongoClient, "concretepage", userCredentials);
-    }
 
     @Bean
-    public MongoTemplate mongoTemplate() throws Exception {
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-        return mongoTemplate;
-    }
+    public RouteBuilder routes() {
+        return new RouteBuilder() {
+            public void configure() {
+                //INT_02: retreive subscriptioable items details from main application
+                from("bean:productViewRepository?method=findAll()").multicast().parallelProcessing().to("direct:costFunction", "direct:demandFunction").aggregationStrategy(new CoefficientAggregationStrategy()).onCompletion().process(new PriceDeterminationCamelProcessor());
 
-    @Autowired
-    ProductViewRepository productViewRepository;
-    @Autowired
-    ProductConfigurationViewRepository productConfigurationViewRepository;
-    @Autowired
-    PriceBucketViewRepository priceBucketViewRepository;
-    @Autowired
-    ProductStatisticsViewRepository productStatisticsViewRepository;
 
-    @Bean(name = "productStatisticsViewReader")
-    public RepositoryItemReader ProductStatisticsViewItemReader(ProductStatisticsViewRepository productStatisticsViewRepository) {
-        RepositoryItemReader itemReader = new RepositoryItemReader();
-        itemReader.setRepository(productStatisticsViewRepository);
-        itemReader.setMethodName("findAll");
-        return itemReader;
+                from("direct:costFunction").process(new CostFunctionCamelProcessor());
+                from("direct:demandFunction").process(new DemandFunctionCamelProcessor());
+            }
+        };
     }
 
     @Bean
-    ItemReader ProductStatisticsItemReader(@Qualifier("productStatisticsViewReader") RepositoryItemReader ProductStatisticsViewItemReader){
-        return new ProductStatisticsItemReader(ProductStatisticsViewItemReader);
-    }
-
-    @Bean(name = "productViewReader")
-    public RepositoryItemReader ProductViewItemReader(ProductViewRepository productViewRepository) {
-        RepositoryItemReader itemReader = new RepositoryItemReader();
-        itemReader.setRepository(productViewRepository);
-        itemReader.setMethodName("findById");
-        return itemReader;
-    }
-
-    @Bean(name = "productConfigurationViewReader")
-    public RepositoryItemReader ProductConfigurationViewItemReader(ProductConfigurationViewRepository productConfigurationViewRepository) {
-        RepositoryItemReader itemReader = new RepositoryItemReader();
-        itemReader.setRepository(productConfigurationViewRepository);
-        itemReader.setMethodName("findAll");
-        return itemReader;
-    }
-
-    @Bean(name = "priceBucketViewReader")
-    public RepositoryItemReader PriceBucketViewItemReader(PriceBucketViewRepository priceBucketViewRepository) {
-        RepositoryItemReader itemReader = new RepositoryItemReader();
-        itemReader.setRepository(priceBucketViewRepository);
-        itemReader.setMethodName("findAll");
-        return itemReader;
+    CamelContextConfiguration contextConfiguration() {
+        return new CamelContextConfiguration() {
+            @Override
+            public void beforeApplicationStart(CamelContext context) {
+                System.out.println("@@@@@@@@@@@Hey Camel Started@@@@@@@@@@@");
+            }
+        };
     }
 
 

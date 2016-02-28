@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

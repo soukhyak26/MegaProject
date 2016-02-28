@@ -7,4 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * Created by rbsavaliya on 19-07-2015.
  */
 public interface ProductViewRepository extends PagingAndSortingRepository<ProductView, String> {
+
 }

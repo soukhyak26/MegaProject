@@ -2,6 +2,9 @@ package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
+import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.transformation.MetadataDeserializer;
@@ -37,6 +40,8 @@ import org.axonframework.serializer.json.JacksonSerializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.util.ErrorHandler;
 
@@ -182,4 +187,21 @@ public class Default {
     public IdGenerator generator() {
         return new DefaultIdGenerator();
     }
+
+    @Bean(name="customConversionsForProductVersionId")
+    public CustomConversions customConversionsForProductVersionId() {
+        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new ProductVersionIdReaderConverter());
+        converters.add(new ProductVersionIdWriterConverter());
+        return new CustomConversions(converters);
+    }
+
+    @Bean(name="customConversionsForProductMonthlyVersionId")
+    public CustomConversions customConversionsForProductMonthlyVersionId() {
+        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new ProductMonthlyVersionIdReaderConverter());
+        converters.add(new ProductMonthlyVersionIdReaderConverter());
+        return new CustomConversions(converters);
+    }
+
 }

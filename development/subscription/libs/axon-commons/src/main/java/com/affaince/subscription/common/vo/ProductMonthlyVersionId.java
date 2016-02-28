@@ -1,4 +1,4 @@
-package com.affaince.subscription.pricing.query.view;
+package com.affaince.subscription.common.vo;
 
 import org.joda.time.YearMonth;
 

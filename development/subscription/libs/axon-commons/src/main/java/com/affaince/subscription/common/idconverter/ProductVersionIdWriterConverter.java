@@ -1,6 +1,6 @@
-package com.affaince.subscription.product.registration.services;
+package com.affaince.subscription.common.idconverter;
 
-import com.affaince.subscription.product.registration.query.view.ProductVersionId;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.springframework.core.convert.converter.Converter;

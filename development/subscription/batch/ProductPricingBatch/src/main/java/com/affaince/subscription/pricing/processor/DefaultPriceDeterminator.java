@@ -32,6 +32,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         return defaultOfferedPrice;
     }
 
+
    /* public static void main (String [] args) {
         final double purchasePrice = 18;
         final double operatingExpensesPerProductPerUnit = 3;

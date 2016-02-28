@@ -1,5 +1,6 @@
 package com.affaince.subscription.pricing.query.view;
 
+import com.affaince.subscription.common.vo.ProductMonthlyVersionId;
 import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductStatisticsView {
     @Id
     private final ProductMonthlyVersionId productMonthlyVersionId;
+    private double purchasePrice;
+    private double MRP;
     private long productSubscriptionCount;
     private double subscribedProductRevenue;
     private double subscribedProductNetProfit;
@@ -22,21 +25,15 @@ public class ProductStatisticsView {
         this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
     }
 
-    public ProductStatisticsView(String productId, YearMonth monthOfYear, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit, double fixedOperatingExpense, double variableOperatingExpense) {
-        this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
-        this.productSubscriptionCount = productSubscriptionCount;
-        this.subscribedProductRevenue = subscribedProductRevenue;
-        this.subscribedProductNetProfit = subscribedProductNetProfit;
-        this.fixedOperatingExpense= fixedOperatingExpense;
-        this.variableOperatingExpense=variableOperatingExpense;
-
-    }
-
-    public ProductStatisticsView(ProductMonthlyVersionId productMonthlyVersionId, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit) {
+    public ProductStatisticsView(ProductMonthlyVersionId productMonthlyVersionId, double purchasePrice, double MRP, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit, double fixedOperatingExpense, double variableOperatingExpense) {
         this.productMonthlyVersionId = productMonthlyVersionId;
+        this.purchasePrice = purchasePrice;
+        this.MRP = MRP;
         this.productSubscriptionCount = productSubscriptionCount;
         this.subscribedProductRevenue = subscribedProductRevenue;
         this.subscribedProductNetProfit = subscribedProductNetProfit;
+        this.fixedOperatingExpense = fixedOperatingExpense;
+        this.variableOperatingExpense = variableOperatingExpense;
     }
 
     public long getProductSubscriptionCount() {
@@ -81,6 +78,22 @@ public class ProductStatisticsView {
 
     public void setVariableOperatingExpense(double variableOperatingExpense) {
         this.variableOperatingExpense = variableOperatingExpense;
+    }
+
+    public double getPurchasePrice() {
+        return this.purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getMRP() {
+        return this.MRP;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
     }
 
     @Override

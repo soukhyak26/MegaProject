@@ -3,8 +3,8 @@ package com.affaince.subscription.product.registration.configuration;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.product.registration.command.domain.Product;
 import com.affaince.subscription.product.registration.command.event.*;
-import com.affaince.subscription.product.registration.services.ProductVersionIdReaderConverter;
-import com.affaince.subscription.product.registration.services.ProductVersionIdWriterConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -47,20 +47,13 @@ public class Axon extends RabbitMQConfiguration {
         return new SimpleMongoDbFactory(mongo, dbName);
     }
 
-    @Bean
-    public CustomConversions customConversions() {
-        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
-        converters.add(new ProductVersionIdReaderConverter());
-        converters.add(new ProductVersionIdWriterConverter());
-        return new CustomConversions(converters);
-    }
 
     @Bean
     public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
-        converter.setCustomConversions(customConversions());
+        converter.setCustomConversions(customConversionsForProductVersionId());
         return converter;
     }
 

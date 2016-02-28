@@ -1,6 +1,7 @@
 package com.affaince.subscription.pricing.query.view;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document
-public class PriceBucketView {
+public class PriceBucketView implements Comparable <PriceBucketView> {
     @Id
     private ProductVersionId productVersionId;
     private LocalDate toDate;
@@ -108,5 +109,10 @@ public class PriceBucketView {
 
     public void setEntityStatus(EntityStatus entityStatus) {
         this.entityStatus = entityStatus;
+    }
+
+    @Override
+    public int compareTo(PriceBucketView o) {
+        return this.getFromDate().compareTo(o.getFromDate());
     }
 }

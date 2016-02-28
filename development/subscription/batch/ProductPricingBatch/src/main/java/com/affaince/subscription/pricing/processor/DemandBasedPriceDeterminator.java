@@ -4,11 +4,8 @@ import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.vo.RegressionResult;
 import com.affaince.subscription.pricing.vo.PriceBucket;
 import com.affaince.subscription.pricing.vo.Product;
-import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mandark on 13-02-2016.
@@ -24,17 +21,17 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         //profit is max where mp=mc
         //take that price as the new offered price
         //extraploate quantity so as to understand how much is the target according to trend
-        List<PriceBucket> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(product);
-/*
+        /*List<PriceBucket> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(product);
+*//*
         List<Double> quantitySubscribedPerPriceWithSamePurchasePrice = new ArrayList<>();
         bucketsWithSamePurchasePrice.forEach(priceBucket -> quantitySubscribedPerPriceWithSamePurchasePrice.add(priceBucket.getPurchasePricePerUnit()));
-*/
+*//*
         //Is this correct/required?
         //double newlyDemandedQuantity = extrapolateDemand(quantitySubscribedPerPriceWithSamePurchasePrice, bucketsWithSamePurchasePrice.size());
         //Find the demand function using regression
         RegressionResult regressionResult = proccessPriceDataRegression(bucketsWithSamePurchasePrice);
         double demandFunctionIntercept = regressionResult.getRegressionParameters()[0];
-        double demandFunctionSlope = regressionResult.getRegressionParameters()[1];
+        double demandFunctionSlope = regressionResult.getRegressionParameters()[1];*/
 //        double costFunctonSlope=product.getProductAccount().getVariableExpenseSlope();
   //      double demandedQuantity=demandFunctionIntercept/(2+(demandFunctionSlope*costFunctonSlope));
         /**Explaintation of below formula****************
@@ -59,20 +56,6 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
     return 0.0;
     }
 
-    private List<PriceBucket> findBucketsWithSamePurchasePrice(Product product) {
-        PriceBucket latestPriceBucket = product.getLatestPriceBucket();
-        Map<LocalDate, PriceBucket> activePriceBuckets = product.getActivePriceBuckets();
-        List<PriceBucket> bucketsWithSamePurchasePrice = new ArrayList<PriceBucket>();
-
-        for (Map.Entry<LocalDate, PriceBucket> entry : activePriceBuckets.entrySet()) {
-            PriceBucket activeBucket = entry.getValue();
-            if (activeBucket.getPurchasePricePerUnit() == latestPriceBucket.getPurchasePricePerUnit()) {
-                bucketsWithSamePurchasePrice.add(activeBucket);
-                //totalQuantitySubscribedWithSamePurchasePrice.add((double) activeBucket.getTotalQuantitySusbcribed());
-            }
-        }
-        return bucketsWithSamePurchasePrice;
-    }
 
     private double extrapolateDemand(List<Double> totalQuantitySubscribedWithSamePurchasePrice, int periodPerYear) {
         MathsProcessingService mathService = new MathsProcessingService();
