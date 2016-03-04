@@ -6,6 +6,9 @@ import com.affaince.subscription.pricing.processor.camel.CoefficientAggregationS
 import com.affaince.subscription.pricing.processor.camel.CostFunctionCamelProcessor;
 import com.affaince.subscription.pricing.processor.camel.DemandFunctionCamelProcessor;
 import com.affaince.subscription.pricing.processor.camel.PriceDeterminationCamelProcessor;
+import com.affaince.subscription.pricing.processor.exception.PricingStrategyDeterminator;
+import com.affaince.subscription.pricing.query.repository.ProductViewRepository;
+import com.affaince.subscription.pricing.query.view.ProductView;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
@@ -22,19 +25,28 @@ public class Axon extends RabbitMQConfiguration {
 
     @Autowired
     CamelContext camelContext;
+    @Autowired
+    ProductViewRepository productViewRepository;
 
     @Bean
     public GenericEventPublisher publisher(EventTemplate template) {
         return new GenericEventPublisher(template);
     }
 
+    @Bean
+    public PricingStrategyDeterminator pricingStrategyDeterminator() {
+        return new PricingStrategyDeterminator();
+    }
 
     @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() {
                 //INT_02: retreive subscriptioable items details from main application
-                from("bean:productViewRepository?method=findAll()").multicast().parallelProcessing().to("direct:costFunction", "direct:demandFunction").aggregationStrategy(new CoefficientAggregationStrategy()).onCompletion().process(new PriceDeterminationCamelProcessor());
+                from("bean:productViewRepository?method=findAll()").split(body(ProductView.class)).
+                        choice().when().simple("&{pricingStrategyDeterminator.decideProductPricingStrategy}==com.affaince.subscription.pricing.vo.PricingStrategyType.DEFAULT_PRICING_STRATEGY").to("bean:defaultPriceDeterminator").to("bean:publisher")
+                        .when().simple("&{pricingStrategyDeterminator.decideProductPricingStrategy}==com.affaince.subscription.pricing.vo.PricingStrategyType.DEMAND_AND_COST_BASED_PRICING_STRATEGY")
+                        .multicast().to("direct:costFunction", "direct:demandFunction").aggregationStrategy(new CoefficientAggregationStrategy()).onCompletion().process(new PriceDeterminationCamelProcessor()).to("bean:publisher");
 
 
                 from("direct:costFunction").process(new CostFunctionCamelProcessor());

@@ -13,9 +13,9 @@ import java.util.*;
 /**
  * Created by mandark on 28-02-2016.
  */
-public class DemandFunctionProcessor implements FunctionProcessor<PriceBucketView> {
+public class DemandFunctionProcessor implements FunctionProcessor<String, PriceBucketView> {
     @Override
-    public FunctionCoefficients processFunction(List<PriceBucketView> priceBucketStats) {
+    public FunctionCoefficients processFunction(String productId, List<PriceBucketView> priceBucketStats) {
         final List<PriceBucketView> priceBucketsWithSamePurchasePrice=findBucketsWithSamePurchasePrice(priceBucketStats);
         Collections.sort(priceBucketsWithSamePurchasePrice);
         final PriceBucketView priceBucketJustBeforePurchasePriceChange = getPriceBucketJustBeforePurchasePriceChange(priceBucketStats, priceBucketsWithSamePurchasePrice.get(0));

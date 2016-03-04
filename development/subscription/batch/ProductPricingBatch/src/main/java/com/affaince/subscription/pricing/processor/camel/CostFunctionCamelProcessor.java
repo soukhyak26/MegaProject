@@ -10,7 +10,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +24,7 @@ public class CostFunctionCamelProcessor implements Processor {
 
         List<ProductStatisticsView> productStats =productStatisticsViewRepository.findByProductMonthlyVersionId_ProductId(productView.getProductId());
         FunctionProcessor processor = new RegressionBasedCostFunctionProcessor();
-        FunctionCoefficients coefficients = processor.processFunction(productStats);
+        FunctionCoefficients coefficients = processor.processFunction(productView.getProductId(), productStats);
+        exchange.getIn().setBody(coefficients);
     }
 }

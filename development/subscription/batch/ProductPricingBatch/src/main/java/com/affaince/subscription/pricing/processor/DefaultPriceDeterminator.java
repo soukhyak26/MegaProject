@@ -1,18 +1,19 @@
 package com.affaince.subscription.pricing.processor;
 
 
-import com.affaince.subscription.pricing.vo.Product;
+import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;
 
 public class DefaultPriceDeterminator implements PriceDeterminator {
 
-    private final PriceDeterminator priceDeterminator;
 
-    public DefaultPriceDeterminator(PriceDeterminator priceDeterminator) {
-        this.priceDeterminator = priceDeterminator;
+    public DefaultPriceDeterminator() {
+
     }
 
     @Override
-    public double calculateOfferedPrice(Product product) {
+    public double calculateOfferedPrice(PriceDeterminationCriteria priceDeterminationCriteria) {
+        //temporirily commenting until Product is resolved into different repositories;
+/*
         final double purchasePrice = product.getLatestPurchasePrice();
         final double operatingExpensesPerProductPerUnit = product.getFixedOperatingExpensePerUnit()+ product.getVariableOperatingExpensePerUnit();
         final double MRP = product.getLatestMRP();
@@ -30,6 +31,8 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         final double defaultOfferedPrice = priceAfterMerchantProfit + (1 - (profitSharingPercentageAtZeroDemand - latestDemandDensityActuals)
                 / slopeOfProfitShareForADemand) * netProfit;
         return defaultOfferedPrice;
+*/
+        return 0.0;
     }
 
 

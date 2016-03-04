@@ -24,6 +24,7 @@ public class DemandFunctionCamelProcessor implements Processor {
         ProductView productView = exchange.getIn().getBody(ProductView.class);
         List<PriceBucketView> priceBucketStats = priceBucketViewRepository.findByProductVersionId_ProductId(productView.getProductId());
         FunctionProcessor processor = new DemandFunctionProcessor();
-        FunctionCoefficients coefficients = processor.processFunction(priceBucketStats);
+        FunctionCoefficients coefficients = processor.processFunction(productView.getProductId(), priceBucketStats);
+        exchange.getIn().setBody(coefficients);
     }
 }

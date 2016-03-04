@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Created by mandark on 21-02-2016.
  */
-public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<ProductStatisticsView> {
+public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<String, ProductStatisticsView> {
     @Override
-    public FunctionCoefficients processFunction(List<ProductStatisticsView> productStatistics) {
+    public FunctionCoefficients processFunction(String productId, List<ProductStatisticsView> productStatistics) {
         //Cost of a product depends on
         //purchase price(fixed cost)
         //fixed operating expense per Product(rent,electiricty bill etc) as a fixed cost
@@ -34,7 +34,7 @@ public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<P
         RegressionResult result = MathsProcessingService.processMultipleLinearRegression(parametersList.stream().mapToDouble(Double::doubleValue).toArray(), parametersList.size() / 2, 1);
         if (result.getAdjustedRSquaredValue() < 0.5) {
             double[] regressionParamters = result.getRegressionParameters();
-            FunctionCoefficients functionCoefficients = new FunctionCoefficients(regressionParamters[0], regressionParamters[1], CoefficientsType.COST_FUNCTON_COEFFICIENT);
+            FunctionCoefficients functionCoefficients = new FunctionCoefficients(regressionParamters[0], regressionParamters[1], CoefficientsType.COST_FUNCTION_COEFFICIENT);
             return functionCoefficients;
         } else {
             throw new InaccurateRegressionException();
