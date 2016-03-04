@@ -15,7 +15,6 @@ public final class ProductConfigurationValidator {
         boolean registered = false;
         boolean configured = false;
         boolean forecasted = false;
-        //boolean completed = false;
         boolean expenseDistributed = false;
         boolean activated = false;
         ProductStatus nextProductStatus = null;
@@ -42,15 +41,6 @@ public final class ProductConfigurationValidator {
                                 ProductStatus.PRODUCT_REGISTERED);
                     }
                     break;
-                /*case PRODUCT_COMPLETED:
-                    if(configured && forecasted) {
-                        completed = true;
-                    } else {
-                        throw InvalidProductStatusException.build(productStatusView.getProductId(),
-                                productStatus,
-                                ProductStatus.PRODUCT_REGISTERED);
-                    }
-                    break;*/
                 case PRODUCT_EXPENSES_DISTRIBUTED:
                     if(configured && forecasted) {
                         expenseDistributed = true;

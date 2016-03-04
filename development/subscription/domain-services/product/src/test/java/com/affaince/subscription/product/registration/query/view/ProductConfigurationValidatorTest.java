@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ProductConfigurationValidatorTest {
     @Test
     public void positiveConfigTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED));
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED));
         Assert.assertEquals("message", productStatusView.getLatestProductStatus(), ProductStatus.PRODUCT_CONFIGURED);
@@ -20,14 +20,14 @@ public class ProductConfigurationValidatorTest {
 
     @Test
     public void negativeConfigTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertFalse(productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED));
         Assert.assertFalse(productStatusView.getProductStatuses().contains(ProductStatus.PRODUCT_CONFIGURED));
     }
 
     @Test
     public void positiveForecastTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED));
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED));
         Assert.assertEquals("message", productStatusView.getLatestProductStatus(), ProductStatus.PRODUCT_FORECASTED);
@@ -35,14 +35,14 @@ public class ProductConfigurationValidatorTest {
 
     @Test
     public void negativeForecastTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertFalse(productStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED));
         Assert.assertFalse(productStatusView.getProductStatuses().contains(ProductStatus.PRODUCT_FORECASTED));
     }
 
     @Test
     public void positiveExpenseDistributeTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED));
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED));
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED));
@@ -52,14 +52,14 @@ public class ProductConfigurationValidatorTest {
 
     @Test
     public void negativeExpenseDistributeTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertFalse(productStatusView.addProductStatus(ProductStatus.PRODUCT_EXPENSES_DISTRIBUTED));
         Assert.assertFalse(productStatusView.getProductStatuses().contains(ProductStatus.PRODUCT_EXPENSES_DISTRIBUTED));
     }
 
     @Test
     public void positiveActiveTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED));
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED));
         Assert.assertTrue(productStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED));
@@ -70,7 +70,7 @@ public class ProductConfigurationValidatorTest {
 
     @Test
     public void negativeActiveTest() {
-        ProductStatusView productStatusView = new ProductStatusView("111");
+        ProductStatusView productStatusView = new ProductStatusView("111", new ArrayList<>());
         Assert.assertFalse(productStatusView.addProductStatus(ProductStatus.PRODUCT_ACTIVATED));
         Assert.assertFalse(productStatusView.getProductStatuses().contains(ProductStatus.PRODUCT_ACTIVATED));
     }

@@ -18,24 +18,22 @@ import java.util.TreeSet;
 @Document(collection = "ProductStatusView")
 public class ProductStatusView {
 
-    //TODO: check if constructor is proper (i.e. default and/or with both parameters is required)
-    
     @Id
-    private final String productId;
-    private final List<ProductStatus> productStatuses;
-    {
-        productStatuses = new ArrayList<>();
-        productStatuses.add(ProductStatus.PRODUCT_NEW);
+    private String productId;
+    private List<ProductStatus> productStatuses;
+
+    public ProductStatusView() {
+
     }
 
-    public ProductStatusView(String productId) {
+    public ProductStatusView(String productId, List<ProductStatus> productStatuses) {
         this.productId = productId;
+        if(productStatuses == null) {
+            this.productStatuses = new ArrayList<>();
+        } else {
+            this.productStatuses = productStatuses;
+        }
     }
-
-    /*public ProductStatusView(String productId, List<ProductStatus> productStatuses) {
-        this.productId = productId;
-        this.productStatuses = productStatuses;
-    }*/
 
     public String getProductId() {
         return productId;
@@ -51,44 +49,9 @@ public class ProductStatusView {
 
     public void flushProductStatuses() {
         productStatuses.clear();
-        productStatuses.add(ProductStatus.PRODUCT_NEW);
     }
 
-    //TODO: move this logic to ProductConfigurationValidator
-    public /*ProductStatus*/ boolean addProductStatus(ProductStatus productStatus) /*throws InvalidProductStatusException*/ {
-        /*switch (productStatus) {
-            case PRODUCT_REGISTERED:
-                productStatuses.add(productStatus);
-                break;
-            case PRODUCT_CONFIGURED:
-                validateProductStatus(productStatus, ProductStatus.PRODUCT_REGISTERED);
-                productStatuses.add(productStatus);
-                if(productStatuses.contains(ProductStatus.PRODUCT_FORECASTED)) {
-                    productStatuses.add(ProductStatus.PRODUCT_COMPLETED);
-                }
-                break;
-            case PRODUCT_FORECASTED:
-                validateProductStatus(productStatus, ProductStatus.PRODUCT_REGISTERED);
-                productStatuses.add(productStatus);
-                if(productStatuses.contains(ProductStatus.PRODUCT_CONFIGURED)) {
-                    productStatuses.add(ProductStatus.PRODUCT_COMPLETED);
-                }
-                break;
-            case PRODUCT_COMPLETED:
-                validateProductStatus(productStatus, ProductStatus.PRODUCT_CONFIGURED);
-                validateProductStatus(productStatus, ProductStatus.PRODUCT_FORECASTED);
-                productStatuses.add(productStatus);
-                break;
-            case PRODUCT_EXPENSES_DISTRIBUTED:
-                validateProductStatus(productStatus, ProductStatus.PRODUCT_COMPLETED);
-                productStatuses.add(productStatus);
-                break;
-            case PRODUCT_ACTIVATED:
-                validateProductStatus(productStatus, ProductStatus.PRODUCT_EXPENSES_DISTRIBUTED);
-                productStatuses.add(productStatus);
-                break;
-        }
-        return productStatuses.get(productStatuses.size() - 1);*/
+    public boolean addProductStatus(ProductStatus productStatus) {
         try {
             productStatuses.add(productStatus);
             ProductConfigurationValidator.validateProductConfiguration(this);
@@ -99,11 +62,4 @@ public class ProductStatusView {
         }
     }
 
-    /*private void validateProductStatus(ProductStatus actualStatus, ProductStatus expectedStatus) throws InvalidProductStatusException {
-        if (!productStatuses.contains(expectedStatus)) {
-            throw InvalidProductStatusException.build(productId,
-                    actualStatus,
-                    expectedStatus);
-        }
-    }*/
 }

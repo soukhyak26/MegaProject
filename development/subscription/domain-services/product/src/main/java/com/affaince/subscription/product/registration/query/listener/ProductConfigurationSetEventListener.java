@@ -42,16 +42,7 @@ public class ProductConfigurationSetEventListener {
         if(productStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        /*ProductStatus latestStatus =*/
         boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
-        /*if(latestStatus.getStatusCode() >= ProductStatus.PRODUCT_COMPLETED.getStatusCode()) {
-            //TODO: make use of lastestStatus for firing further event(s) if required
-        }*/
-        if(result) {
-
-        } else {
-
-        }
         productStatusViewRepository.save(productStatusView);
     }
 }

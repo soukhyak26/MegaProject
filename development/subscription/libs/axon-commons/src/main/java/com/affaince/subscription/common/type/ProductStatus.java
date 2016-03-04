@@ -4,8 +4,6 @@ package com.affaince.subscription.common.type;
  * Created by anayonkar on 13/2/16.
  */
 public enum ProductStatus {
-    //unused
-    PRODUCT_NEW(0),
 
     //after product registration
     PRODUCT_REGISTERED(1),
@@ -15,9 +13,6 @@ public enum ProductStatus {
 
     //dependent upon registration
     PRODUCT_FORECASTED(3),
-
-    //completed only after registered + configured + forcasted
-    //PRODUCT_COMPLETED(4),
 
     //must be completed before sending to expense distribution batch
     //dependent upon completion

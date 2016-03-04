@@ -43,17 +43,8 @@ public class ProductRegisteredEventListener {
                 event.getComplements()
         );
         itemRepository.save(productView);
-        final ProductStatusView productStatusView = new ProductStatusView(event.getProductId());
-        /*ProductStatus latestStatus =*/
+        final ProductStatusView productStatusView = new ProductStatusView(event.getProductId(), new ArrayList<>());
         boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
-        /*if(latestStatus.getStatusCode() >= ProductStatus.PRODUCT_COMPLETED.getStatusCode()) {
-            //TODO: make use of lastestStatus for firing further event(s) if required
-        }*/
-        if(result) {
-
-        } else {
-
-        }
         productStatusViewRepository.save(productStatusView);
     }
 }
