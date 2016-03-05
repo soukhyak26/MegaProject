@@ -66,9 +66,6 @@
                 <groupId>io.gatling</groupId>
                 <artifactId>gatling-maven-plugin</artifactId>
                 <version>2.0.0</version>
-                <configuration>
-                    <simulationClass>Subscriber</simulationClass>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

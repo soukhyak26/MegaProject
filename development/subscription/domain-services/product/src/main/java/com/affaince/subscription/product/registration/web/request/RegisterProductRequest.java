@@ -27,8 +27,8 @@ public class RegisterProductRequest {
     private long quantity;
     @NotNull
     private QuantityUnit quantityUnit;
-    private List<String> substitutes;
-    private List<String> complements;
+    private String [] substitutes;
+    private String [] complements;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
 
     public String getCategoryId() {
@@ -79,19 +79,19 @@ public class RegisterProductRequest {
         this.quantityUnit = quantityUnit;
     }
 
-    public List<String> getSubstitutes() {
+    public String[] getSubstitutes() {
         return substitutes;
     }
 
-    public void setSubstitutes(List<String> substitutes) {
+    public void setSubstitutes(String[] substitutes) {
         this.substitutes = substitutes;
     }
 
-    public List<String> getComplements() {
+    public String[] getComplements() {
         return complements;
     }
 
-    public void setComplements(List<String> complements) {
+    public void setComplements(String[] complements) {
         this.complements = complements;
     }
 

@@ -7,6 +7,7 @@ import com.affaince.subscription.product.registration.query.repository.ProductVi
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.registration.web.request.*;
+import com.google.common.collect.ImmutableMap;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +56,8 @@ public class ProductController {
                 request.getSubCategoryId(),
                 request.getQuantity(),
                 request.getQuantityUnit(),
-                request.getSubstitutes(),
-                request.getComplements(),
+                Arrays.asList(request.getSubstitutes()),
+                Arrays.asList(request.getComplements()),
                 receivedSensitivityCharactersistic
         );
         try {
@@ -64,7 +66,7 @@ public class ProductController {
             throw e;
         }
         ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
-        return new ResponseEntity<Object>(HttpStatus.CREATED);
+        return new ResponseEntity<Object>(ImmutableMap.of("id",request.getProductId()), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
