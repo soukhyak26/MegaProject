@@ -6,6 +6,7 @@ import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepos
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import com.affaince.subscription.subscriber.web.exception.SubscriberNotFoundException;
 import com.affaince.subscription.subscriber.web.request.*;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,8 @@ public class SubscriberController {
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscriber(@RequestBody @Valid CreateSubscriberRequest request) throws Exception {
-        final CreateSubscriberCommand command = new CreateSubscriberCommand(UUID.randomUUID().toString(),
+        final String subscriberId = UUID.randomUUID().toString();
+        final CreateSubscriberCommand command = new CreateSubscriberCommand(subscriberId,
                 request.getSubscriberName(), request.getAddress(), request.getContactDetails()
         );
         try {
@@ -42,7 +44,7 @@ public class SubscriberController {
         } catch (Exception e) {
             throw e;
         }
-        return new ResponseEntity<Object>(HttpStatus.CREATED);
+        return new ResponseEntity<Object>(ImmutableMap.of("id", subscriberId), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "password/{subscriberId}", method = RequestMethod.PUT)

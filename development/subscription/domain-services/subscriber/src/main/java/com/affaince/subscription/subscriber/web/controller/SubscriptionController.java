@@ -12,6 +12,7 @@ import com.affaince.subscription.subscriber.web.request.AddressRequest;
 import com.affaince.subscription.subscriber.web.request.BasketItemRequest;
 import com.affaince.subscription.subscriber.web.request.ContactDetailsRequest;
 import com.affaince.subscription.subscriber.web.request.SubscriptionRequest;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class SubscriptionController {
         } catch (Exception e) {
             throw e;
         }
-        return new ResponseEntity<Object>(HttpStatus.CREATED);
+        return new ResponseEntity<Object>(ImmutableMap.of("id",subscriptionId),HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "additem/{subscriptionId}", method = RequestMethod.PUT)

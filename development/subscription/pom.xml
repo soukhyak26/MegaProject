@@ -21,6 +21,7 @@
         <module>tools/notifications</module>
         <module>batch/ExpenseDistributionBatch</module>
         <module>batch/ProductPricingBatch</module>
+        <module>tools/user-journey</module>
     </modules>
     <properties>
         <axon.version>2.4.2</axon.version>

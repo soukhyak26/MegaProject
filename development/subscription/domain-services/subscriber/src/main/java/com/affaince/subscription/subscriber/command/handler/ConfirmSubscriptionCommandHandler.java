@@ -7,6 +7,7 @@ import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +19,7 @@ public class ConfirmSubscriptionCommandHandler {
     private final Repository<Subscriber> subscriberRepository;
     private final Repository<DeliveryChargesRule> deliveryChargesRuleRepository;
 
+    @Autowired
     public ConfirmSubscriptionCommandHandler(Repository<Subscription> subscriptionRepository, Repository<Subscriber> subscriberRepository, Repository<DeliveryChargesRule> deliveryChargesRuleRepository) {
         this.subscriptionRepository = subscriptionRepository;
         this.subscriberRepository = subscriberRepository;
