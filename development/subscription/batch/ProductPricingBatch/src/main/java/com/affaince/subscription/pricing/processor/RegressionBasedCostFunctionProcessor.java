@@ -34,7 +34,7 @@ public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<S
         RegressionResult result = MathsProcessingService.processMultipleLinearRegression(parametersList.stream().mapToDouble(Double::doubleValue).toArray(), parametersList.size() / 2, 1);
         if (result.getAdjustedRSquaredValue() < 0.5) {
             double[] regressionParamters = result.getRegressionParameters();
-            FunctionCoefficients functionCoefficients = new FunctionCoefficients(regressionParamters[0], regressionParamters[1], CoefficientsType.COST_FUNCTION_COEFFICIENT);
+            FunctionCoefficients functionCoefficients = new FunctionCoefficients(productId, regressionParamters[0], regressionParamters[1], CoefficientsType.COST_FUNCTION_COEFFICIENT);
             return functionCoefficients;
         } else {
             throw new InaccurateRegressionException();

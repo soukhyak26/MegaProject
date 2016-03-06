@@ -9,13 +9,15 @@ public class QuantityBasedProductFinancialResult {
     private final double costAtQuantity;
     private final double revenueAtQuantity;
     private final double profitAtQuantity;
+    private final double priceElasticityOfDemand;
 
-    public QuantityBasedProductFinancialResult(long quantity, double priceAtQuantity, double costAtQuantity, double revenueAtQuantity, double profitAtQuantity) {
+    public QuantityBasedProductFinancialResult(long quantity, double priceAtQuantity, double costAtQuantity, double revenueAtQuantity, double profitAtQuantity, double priceElasticityOfDemand) {
         this.quantity = quantity;
         this.priceAtQuantity = priceAtQuantity;
         this.costAtQuantity = costAtQuantity;
         this.revenueAtQuantity = revenueAtQuantity;
         this.profitAtQuantity = profitAtQuantity;
+        this.priceElasticityOfDemand = priceElasticityOfDemand;
     }
 
     public long getQuantity() {
@@ -36,5 +38,9 @@ public class QuantityBasedProductFinancialResult {
 
     public double getProfitAtQuantity() {
         return this.profitAtQuantity;
+    }
+
+    public double getPriceElasticityOfDemand() {
+        return this.priceElasticityOfDemand;
     }
 }
