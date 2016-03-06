@@ -100,7 +100,7 @@ public class ProductController {
             throw ProductNotFoundException.build(productId);
         }
         AddForecastParametersCommand command = new AddForecastParametersCommand(
-                request.getProductId(),
+                productId,
                 request.getForecastedPriceParameter(),
                 request.getDemandDensity(),
                 request.getAverageDemandPerSubscriber(),
@@ -143,7 +143,7 @@ public class ProductController {
         SetProductConfigurationCommand command = new SetProductConfigurationCommand(
                 productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(),
                 request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(),
-                request.getDemandWiseProfitSharingRules()
+                Arrays.asList(request.getDemandWiseProfitSharingRules())
         );
         try {
             this.commandGateway.executeAsync(command);

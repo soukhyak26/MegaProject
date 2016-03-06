@@ -60,6 +60,7 @@ public class Axon extends RabbitMQConfiguration {
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
+            put("com.affaince.subscription.product.registration.command.event.*", "");
             put("com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent", ProductRegisteredEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent", ProductForecastReceivedEvent.class.getName());

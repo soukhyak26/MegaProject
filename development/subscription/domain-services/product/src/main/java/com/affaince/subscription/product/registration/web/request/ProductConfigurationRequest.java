@@ -13,7 +13,7 @@ public class ProductConfigurationRequest {
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
-    private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
+    private DemandWiseProfitSharingRule[] demandWiseProfitSharingRules;
 
     public Period getDemandCurvePeriod() {
         return demandCurvePeriod;
@@ -47,11 +47,11 @@ public class ProductConfigurationRequest {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
     }
 
-    public List<DemandWiseProfitSharingRule> getDemandWiseProfitSharingRules() {
+    public DemandWiseProfitSharingRule[] getDemandWiseProfitSharingRules() {
         return demandWiseProfitSharingRules;
     }
 
-    public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
+    public void setDemandWiseProfitSharingRules(DemandWiseProfitSharingRule[] demandWiseProfitSharingRules) {
         this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
     }
 }

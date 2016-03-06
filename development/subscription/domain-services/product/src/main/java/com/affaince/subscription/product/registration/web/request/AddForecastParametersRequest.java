@@ -6,7 +6,6 @@ import com.affaince.subscription.product.registration.vo.ForecastedPriceParamete
  * Created by rbsavaliya on 05-12-2015.
  */
 public class AddForecastParametersRequest {
-    private String productId;
     private ForecastedPriceParameter forecastedPriceParameter;
     private double demandDensity;
     private double averageDemandPerSubscriber;
@@ -14,14 +13,6 @@ public class AddForecastParametersRequest {
     private double averageWeightPerDelivery;
 
     public AddForecastParametersRequest() {
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     public ForecastedPriceParameter getForecastedPriceParameter() {
