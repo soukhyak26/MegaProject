@@ -51,10 +51,20 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         final double maximumProfit = quantityBasedResults.get(keyForMaxProfit).getProfitAtQuantity();
         final long quantityAtMaximumProfit = quantityBasedResults.get(keyForMaxProfit).getQuantity();
         final double priceAtMaximumProfit = quantityBasedResults.get(keyForMaxProfit).getPriceAtQuantity();
+        final long immediateForecastedDemand = forecastedDemands.get(0).longValue();
+        if (currentDemand <= immediateForecastedDemand) {// forecasted demand is more than current demand : product is doing good
+            if (immediateForecastedDemand < quantityAtMaximumProfit) { //here demand should be price elastic ..return price for this forecasted qunatity from quantityBasedResults map
+                QuantityBasedProductFinancialResult resultForForecastedQuantity = quantityBasedResults.get(immediateForecastedDemand);
+                if (resultForForecastedQuantity.getPriceElasticityOfDemand() < -1) {//is demand price elastic?
+                    return resultForForecastedQuantity.getPriceAtQuantity();
+                }
 
-        if (currentDemand <= forecastedDemands.get(0).longValue()) {// forecasted demand is more than current demand : product is doing good
+            } else if (immediateForecastedDemand == quantityAtMaximumProfit) {//demand unitary elastic
+                return priceAtMaximumProfit;
+            } else if (immediateForecastedDemand > quantityAtMaximumProfit) {//demand is price elastic??
 
-        } else if (currentDemand > forecastedDemands.get(0).longValue()) { //forecast is lesser than current demand:may need to reduce price
+            }
+        } else if (currentDemand > immediateForecastedDemand) { //forecast is lesser than current demand:may need to reduce price
 
         }
         return 0.0;
@@ -65,24 +75,22 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         final long quantityAtZeroPrice = Math.round(demandFunctionCoefficients.getIntercept() / (demandFunctionCoefficients.getSlope()));
         //iterate from 0 quantity to quantityAtZeroPrice and find price,cost,revenue ,profit
         Map<Long, QuantityBasedProductFinancialResult> quantityBasedResults = new TreeMap<Long, QuantityBasedProductFinancialResult>();
-        long previousQuantity = 0;
-        double previousPrice = 0.0;
         for (long tempQuantity = 0; tempQuantity <= quantityAtZeroPrice; tempQuantity++) {
             double priceAtQuantity = demandFunctionCoefficients.getIntercept() + (demandFunctionCoefficients.getSlope() * tempQuantity);
-            double priceElasticityOfDemand = findPriceElasticityOfDemand(tempQuantity, previousQuantity, priceAtQuantity, previousPrice);
+            double priceElasticityOfDemand = findPriceElasticityOfDemand(demandFunctionCoefficients, tempQuantity);
             double costAtQuantity = costFunctionCoefficients.getIntercept() + (costFunctionCoefficients.getSlope() * tempQuantity);
             double revenueAtQuantity = priceAtQuantity * tempQuantity;
             double profitAtQuantity = revenueAtQuantity - costAtQuantity;
             QuantityBasedProductFinancialResult result = new QuantityBasedProductFinancialResult(tempQuantity, priceAtQuantity, costAtQuantity, revenueAtQuantity, profitAtQuantity, priceElasticityOfDemand);
-            previousQuantity = tempQuantity;
-            previousPrice = priceAtQuantity;
             quantityBasedResults.put(tempQuantity, result);
         }
         return quantityBasedResults;
     }
 
-    private double findPriceElasticityOfDemand(long changedQuantity, long originalQuantity, double changedPrice, double originalPrice) {
-        final double priceElasticityOfDemand = -((changedQuantity - originalQuantity) / (changedPrice - originalPrice)) * (originalPrice / originalQuantity);
+    private double findPriceElasticityOfDemand(FunctionCoefficients demandFunctionCoeffiecients, long quantity) {
+        final double intercept = demandFunctionCoeffiecients.getIntercept();
+        final double slope = demandFunctionCoeffiecients.getSlope();
+        final double priceElasticityOfDemand = (-1 / slope) * ((intercept - (slope * quantity)) / quantity);
         return priceElasticityOfDemand;
     }
 
