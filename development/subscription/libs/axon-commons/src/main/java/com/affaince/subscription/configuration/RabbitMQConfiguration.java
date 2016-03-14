@@ -30,11 +30,6 @@ public class RabbitMQConfiguration extends Default {
         return rabbitAdmin;
     }
 
-   /* @Bean
-    public Queue queue(@Value("${subscription.rabbitmq.queue}") String queueName) {
-        return new Queue(queueName);
-    }
-*/
     @Bean
     public CachingConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
@@ -51,13 +46,13 @@ public class RabbitMQConfiguration extends Default {
 
         channel.exchangeDeclare(exchangeName, "topic", true);
         channel.queueDeclare(queueName, true, false, false, null);
-        channel.queueDeclare("asyncCluster", true, false, false, null);
+        //channel.queueDeclare("asyncCluster"+queueName, true, false, false, null);
         System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
                 + "@@@@@@Types: " + types()
                 + "\n\t\t\t\t******************************\n");
         for (String bindingKey : types().keySet()) {
             channel.queueBind(queueName, exchangeName, bindingKey);
-            //channel.queueBind("asyncCluster", exchangeName, bindingKey);
+            channel.queueBind("asyncCluster", exchangeName, bindingKey);
         }
         return exchangeName;
     }

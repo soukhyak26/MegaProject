@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * Created by NIKUNJ on 7/12/2015.
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ComponentScan("com.affaince")
 @AnnotationDriven
 @EnableAspectJAutoProxy
+@PropertySource({"classpath:Application.properties"})
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

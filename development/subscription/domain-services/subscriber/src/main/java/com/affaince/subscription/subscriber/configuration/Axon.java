@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by rbsavaliya on 19-07-2015.
  */
 @Configuration
-public class Axon extends ActiveMQConfiguration {
+public class Axon extends RabbitMQConfiguration {
 
     @Bean
     public Repository<Subscriber> createRepository(DisruptorCommandBus commandBus) {
