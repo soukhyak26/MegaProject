@@ -38,7 +38,8 @@ public class RabbitMQConfiguration extends Default {
     @Bean
     public String exchange(@Value("${axon.eventBus.exchangeName}") String exchangeName,
                            @Value("${subscription.rabbitmq.exchange.host}") String host,
-                           @Value("${subscription.rabbitmq.queue}") String queueName) throws IOException, TimeoutException {
+                           @Value("${subscription.rabbitmq.queue}") String queueName,
+                           @Value("${asyncCluster.identifier}") String asyncClusterIdentifier) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost(host);
         Connection connection = connectionFactory.newConnection();
@@ -46,13 +47,13 @@ public class RabbitMQConfiguration extends Default {
 
         channel.exchangeDeclare(exchangeName, "topic", true);
         channel.queueDeclare(queueName, true, false, false, null);
-        //channel.queueDeclare("asyncCluster"+queueName, true, false, false, null);
+        channel.queueDeclare(asyncClusterIdentifier, true, false, false, null);
         System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
                 + "@@@@@@Types: " + types()
                 + "\n\t\t\t\t******************************\n");
         for (String bindingKey : types().keySet()) {
             channel.queueBind(queueName, exchangeName, bindingKey);
-            channel.queueBind("asyncCluster", exchangeName, bindingKey);
+            channel.queueBind(asyncClusterIdentifier, exchangeName, bindingKey);
         }
         return exchangeName;
     }

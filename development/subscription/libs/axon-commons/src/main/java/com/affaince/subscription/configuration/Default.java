@@ -118,10 +118,11 @@ public class Default {
     }
 
     @Bean(name = "asyncCluster")
-    public Cluster asyncCluster(@Value("${asyncCluster.pool.size:20}") int maximumPoolSize) {
+    public Cluster asyncCluster(@Value("${asyncCluster.pool.size:20}") int maximumPoolSize,
+                                @Value("${asyncCluster.identifier}") String asyncClusterIdentifier) {
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
                 .setNameFormat("asyncCluster-%d").build();
-        return new AsynchronousCluster("asyncCluster",
+        return new AsynchronousCluster(asyncClusterIdentifier,
                 newScheduledThreadPool(maximumPoolSize, threadFactory), new SequentialPerAggregatePolicy());
     }
 
