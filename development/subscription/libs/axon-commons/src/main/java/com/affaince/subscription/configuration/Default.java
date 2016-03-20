@@ -5,6 +5,7 @@ import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
 import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
+import com.affaince.subscription.monitoring.TrackingAsynchronousCluster;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.transformation.MetadataDeserializer;
@@ -122,7 +123,7 @@ public class Default {
                                 @Value("${asyncCluster.identifier}") String asyncClusterIdentifier) {
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
                 .setNameFormat("asyncCluster-%d").build();
-        return new AsynchronousCluster(asyncClusterIdentifier,
+        return new TrackingAsynchronousCluster(asyncClusterIdentifier,
                 newScheduledThreadPool(maximumPoolSize, threadFactory), new SequentialPerAggregatePolicy());
     }
 
