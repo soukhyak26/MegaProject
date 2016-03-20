@@ -14,6 +14,7 @@ public class ProductStatisticsView {
     private final ProductMonthlyVersionId productMonthlyVersionId;
     private double purchasePrice;
     private double MRP;
+    private double forecastedProductSubscriptionCount;
     private long productSubscriptionCount;
     private double subscribedProductRevenue;
     private double subscribedProductNetProfit;
@@ -25,10 +26,11 @@ public class ProductStatisticsView {
         this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
     }
 
-    public ProductStatisticsView(ProductMonthlyVersionId productMonthlyVersionId, double purchasePrice, double MRP, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit, double fixedOperatingExpense, double variableOperatingExpense) {
+    public ProductStatisticsView(ProductMonthlyVersionId productMonthlyVersionId, double purchasePrice, double MRP, double forecastedProductSubscriptionCount, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit, double fixedOperatingExpense, double variableOperatingExpense) {
         this.productMonthlyVersionId = productMonthlyVersionId;
         this.purchasePrice = purchasePrice;
         this.MRP = MRP;
+        this.forecastedProductSubscriptionCount = forecastedProductSubscriptionCount;
         this.productSubscriptionCount = productSubscriptionCount;
         this.subscribedProductRevenue = subscribedProductRevenue;
         this.subscribedProductNetProfit = subscribedProductNetProfit;
@@ -94,6 +96,14 @@ public class ProductStatisticsView {
 
     public void setMRP(double MRP) {
         this.MRP = MRP;
+    }
+
+    public double getForecastedProductSubscriptionCount() {
+        return this.forecastedProductSubscriptionCount;
+    }
+
+    public void setForecastedProductSubscriptionCount(double forecastedProductSubscriptionCount) {
+        this.forecastedProductSubscriptionCount = forecastedProductSubscriptionCount;
     }
 
     @Override
