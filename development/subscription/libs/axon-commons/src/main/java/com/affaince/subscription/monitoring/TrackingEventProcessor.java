@@ -1,5 +1,6 @@
 package com.affaince.subscription.monitoring;
 
+import org.axonframework.correlation.CorrelationDataHolder;
 import org.axonframework.domain.EventMessage;
 import org.axonframework.eventhandling.EventListener;
 import org.axonframework.eventhandling.MultiplexingEventProcessingMonitor;
@@ -25,9 +26,11 @@ public class TrackingEventProcessor extends EventProcessor {
     protected ProcessingResult doHandle(EventMessage<?> event) {
         try {
             //need to copy metadata from event to CorrelationDataHolder again here
+            CorrelationDataHolder.setCorrelationData(event.getMetaData());
             return super.doHandle(event);
         } finally {
             //clear metadata from thread local
+            CorrelationDataHolder.clear();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.affaince.subscription.events;
 
+import com.affaince.subscription.metadata.MetadataFilter;
 import org.axonframework.domain.EventMessage;
 import org.axonframework.eventhandling.Cluster;
 import org.axonframework.eventhandling.EventBusTerminal;
@@ -16,6 +17,7 @@ import org.springframework.messaging.support.GenericMessage;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.springframework.integration.jms.JmsHeaders.TYPE;
 
@@ -43,6 +45,8 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
                 Map<String, String> metadataMap = new HashMap<>();
                 System.out.println("@@@@Inside EventMessageTerminal payload type metadata" + event.getPayloadType().getName());
                 metadataMap.put(TYPE, event.getPayloadType().getName());
+                metadataMap.put(MetadataFilter.FLOW_ID, UUID.randomUUID().toString());
+                metadataMap.put(MetadataFilter.TIMESTAMP, event.getTimestamp().toString());
                 event = event.andMetaData(metadataMap);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 EventMessageWriter out = new EventMessageWriter(new DataOutputStream(outputStream), serializer);
@@ -66,9 +70,7 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
                     EventMessageReader reader = new EventMessageReader(new DataInputStream(new ByteArrayInputStream(
                             (byte[]) message.getPayload())), serializer);
                     cluster.publish(reader.readEventMessage());
-                } catch (UnknownSerializedTypeException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
+                } catch (UnknownSerializedTypeException | IOException ex) {
                     ex.printStackTrace();
                 }
             }
