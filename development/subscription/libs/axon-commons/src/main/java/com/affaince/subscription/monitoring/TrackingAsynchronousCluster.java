@@ -3,12 +3,8 @@ package com.affaince.subscription.monitoring;
 import org.axonframework.domain.EventMessage;
 import org.axonframework.eventhandling.EventListener;
 import org.axonframework.eventhandling.MultiplexingEventProcessingMonitor;
-import org.axonframework.eventhandling.async.AsynchronousCluster;
-import org.axonframework.eventhandling.async.ErrorHandler;
-import org.axonframework.eventhandling.async.EventProcessor;
-import org.axonframework.eventhandling.async.SequencingPolicy;
+import org.axonframework.eventhandling.async.*;
 import org.axonframework.unitofwork.DefaultUnitOfWorkFactory;
-import org.axonframework.unitofwork.UnitOfWorkFactory;
 
 import java.util.Set;
 import java.util.concurrent.Executor;
@@ -18,13 +14,11 @@ import java.util.concurrent.Executor;
  */
 public class TrackingAsynchronousCluster extends AsynchronousCluster {
     private Executor executor;
-    private ErrorHandler errorHandler;
 
     public TrackingAsynchronousCluster(String name, Executor executor,
                                        SequencingPolicy<? super EventMessage<?>> sequencingPolicy) {
         super(name, executor, sequencingPolicy);
         this.executor = executor;
-        this.errorHandler = errorHandler;
     }
 
     @Override
@@ -34,7 +28,7 @@ public class TrackingAsynchronousCluster extends AsynchronousCluster {
 
         return new TrackingEventProcessor(executor,
                 shutDownCallback,
-                errorHandler,
+                new DefaultErrorHandler(RetryPolicy.proceed()),
                 new DefaultUnitOfWorkFactory(),
                 eventListeners,
                 eventProcessingMonitor);
