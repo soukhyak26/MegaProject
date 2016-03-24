@@ -10,12 +10,12 @@ public class ProductWiseDeliveryStats {
     private long totalUnitsSold;
     private double totalOfferedPrice;
 
-    public String getProductId() {
-        return productId;
+    public ProductWiseDeliveryStats(String productId) {
+        this.productId = productId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public String getProductId() {
+        return productId;
     }
 
     public double getTotalDeliveryExpense() {
@@ -40,5 +40,21 @@ public class ProductWiseDeliveryStats {
 
     public void addOfferedPrice(double offeredPrice) {
         this.totalOfferedPrice += offeredPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductWiseDeliveryStats)) return false;
+
+        ProductWiseDeliveryStats that = (ProductWiseDeliveryStats) o;
+
+        return getProductId().equals(that.getProductId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getProductId().hashCode();
     }
 }

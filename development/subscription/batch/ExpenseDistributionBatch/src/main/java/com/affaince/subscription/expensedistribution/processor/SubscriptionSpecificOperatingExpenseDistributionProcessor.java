@@ -2,14 +2,19 @@ package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent;
 import com.affaince.subscription.expensedistribution.vo.InputDataToCalculatePerProductOpEx;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 
 import java.util.Map;
 
 /**
  * Created by rsavaliya on 13/2/16.
  */
-public class SubscriptionSpecificOperatingExpenseDistributionProcessor {
-    public void distribute (InputDataToCalculatePerProductOpEx inputDataToCalculatePerProductOpEx) {
+public class SubscriptionSpecificOperatingExpenseDistributionProcessor implements Processor{
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        InputDataToCalculatePerProductOpEx inputDataToCalculatePerProductOpEx
+                = exchange.getIn().getBody(InputDataToCalculatePerProductOpEx.class);
         final double totalDeliveryChargesOfAllBaskets = calculateTotalDeliveryChargesOfAllBaskets(
                 inputDataToCalculatePerProductOpEx.getTotalDeliveriesPerWeightCategory(),
                 inputDataToCalculatePerProductOpEx.getDeliveryChargesPerWeightRange()

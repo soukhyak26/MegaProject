@@ -3,10 +3,8 @@ package com.affaince.subscription.expensedistribution.Configuration;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
-import com.affaince.subscription.expensedistribution.processor.DeliveryExpenseProcessor;
-import com.affaince.subscription.expensedistribution.processor.ProductWiseExpenseDistributionProcessor;
-import com.affaince.subscription.expensedistribution.processor.ProductWiseTotalDeliveryExpenseStrategy;
-import com.affaince.subscription.expensedistribution.query.DeliveryView;
+import com.affaince.subscription.expensedistribution.processor.SubscriptionSpecificOperatingExpenseDistributionPreprocessor;
+import com.affaince.subscription.expensedistribution.processor.SubscriptionSpecificOperatingExpenseDistributionProcessor;
 import com.affaince.subscription.expensedistribution.query.DeliveryViewRepository;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -42,14 +40,20 @@ public class Axon extends RabbitMQConfiguration {
         return new RouteBuilder() {
             public void configure() {
                 //INT_02: retreive subscriptioable items details from main application
-                from("bean:deliveryViewRepository?method=findAll()").split(body(DeliveryView.class)).
-                        choice().when().simple("&{operatingExpenseStrategyDeterminator.decideOperatingExpenseStrategy}==com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.DEFAULT_STRATEGY").to("bean:defaultPriceDeterminator").to("bean:publisher")
+                /*from("bean:deliveryViewRepository?method=findAll()").
+                        choice().when().simple("&{operatingExpenseStrategyDeterminator.decideOperatingExpenseStrategy}==com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.DEFAULT_STRATEGY")
+                        .to("bean:defaultPriceDeterminator").to("bean:publisher")
                         .when().simple("&{operatingExpenseStrategyDeterminator.decideOperatingExpenseStrategy}==com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.FORECAST_BASED_STRATEGY")
                         .multicast().to("direct:deliveryExpense").aggregationStrategy(new ProductWiseTotalDeliveryExpenseStrategy())
-                        .onCompletion().process(new ProductWiseExpenseDistributionProcessor()).to("bean:publisher");
+                        .onCompletion().process(new ProductWiseExpenseDistributionProcessor()).to("bean:publisher");*/
 
-
-                from("direct:deliveryExpense").process(new DeliveryExpenseProcessor());
+                from("bean:deliveryViewRepository?method=findAll()").choice()
+                        .when().simple("&{operatingExpenseStrategyDeterminator.decideOperatingExpenseStrategy}==com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.DEFAULT_STRATEGY")
+                        .to("bean:defaultOperatingExpenseDistributionDeterminator").to("bean:publisher")
+                        .when().simple("&{operatingExpenseStrategyDeterminator.decideOperatingExpenseStrategy}==com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.FORECAST_BASED_STRATEGY")
+                        .process(new SubscriptionSpecificOperatingExpenseDistributionPreprocessor())
+                        .process(new SubscriptionSpecificOperatingExpenseDistributionProcessor()).to("bean:publisher");
+                //from("direct:deliveryExpense").process(new DeliveryExpenseProcessor());
                 //from("direct:demandFunction").process(new DemandFunctionCamelProcessor());
             }
         };

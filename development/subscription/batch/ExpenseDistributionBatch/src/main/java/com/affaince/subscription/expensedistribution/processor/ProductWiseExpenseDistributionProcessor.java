@@ -12,6 +12,7 @@ import java.util.List;
 public class ProductWiseExpenseDistributionProcessor implements org.apache.camel.Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
-        List<ProductWiseDeliveryStats> productWiseDeliveryStats = exchange.getIn().getBody(ArrayList.class);
+        final List<ProductWiseDeliveryStats> productWiseDeliveryStats = exchange.getIn().getBody(ArrayList.class);
+        //final double totalDeliveryExpenses = exchange.getIn().getBody(Double.class);
     }
 }

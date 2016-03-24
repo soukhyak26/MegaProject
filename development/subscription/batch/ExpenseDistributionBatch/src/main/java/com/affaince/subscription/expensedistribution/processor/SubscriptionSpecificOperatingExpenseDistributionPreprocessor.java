@@ -3,6 +3,8 @@ package com.affaince.subscription.expensedistribution.processor;
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.expensedistribution.vo.InputDataToCalculatePerProductOpEx;
 import com.affaince.subscription.expensedistribution.vo.ProductStats;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.Map;
 /**
  * Created by rsavaliya on 14/2/16.
  */
-public class SubscriptionSpecificOperatingExpenseDistributionPreprocessor {
+public class SubscriptionSpecificOperatingExpenseDistributionPreprocessor implements Processor {
     private List<ProductStats> productsStats = new ArrayList<>();
     // Map of <weight, map of <month, no of basket delivered>>
     private Map<Integer, Map<Integer, Integer>> monthlyDeliveriesCountPerWeightCategory;
@@ -31,9 +33,11 @@ public class SubscriptionSpecificOperatingExpenseDistributionPreprocessor {
         generateDataToCalculateSubscriptionSpecificOperationExpensePerProduct();
     }*/
 
-    public void generateDataToCalculateSubscriptionSpecificOperationExpensePerProduct () {
+    @Override
+    public void process(Exchange exchange) throws Exception {
         extraPolateProductSubscription();
         extraPolateDeliveries ();
+        exchange.getIn().setBody(inputDataToCalculatePerProductOpEx, inputDataToCalculatePerProductOpEx.getClass());
     }
 
     private void extraPolateDeliveries() {
