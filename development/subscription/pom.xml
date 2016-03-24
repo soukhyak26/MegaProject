@@ -28,6 +28,7 @@
         <springboot.version>1.2.5.RELEASE</springboot.version>
         <jackson.verson>2.4.4</jackson.verson>
         <camel.version>2.15.2</camel.version>
+        <aspectj.version>1.8.8</aspectj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>

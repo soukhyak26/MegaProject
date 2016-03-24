@@ -27,6 +27,9 @@ public class TrackingEventProcessor extends EventProcessor {
         try {
             //need to copy metadata from event to CorrelationDataHolder again here
             CorrelationDataHolder.setCorrelationData(event.getMetaData());
+            //TODO: Save metadata to common read view (CommonViewRepository)
+            //QUESTION: How to identify if specific UUID is abasent?
+            //i.e. -> if UUID is absent or if it has not reached yet
             return super.doHandle(event);
         } finally {
             //clear metadata from thread local
