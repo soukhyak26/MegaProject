@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by rsavaliya on 24/3/16.
  */
-public class DefaultOperatingExpenseDistributionDeterminator {
+public class DefaultOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
 
     @Autowired
     private DeliveryViewRepository deliveryViewRepository;
