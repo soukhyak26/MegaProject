@@ -3,7 +3,9 @@ package com.affaince.subscription.subscriber.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionTemplateViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
+import com.affaince.subscription.subscriber.query.view.SubscriptionTemplateView;
 import com.affaince.subscription.subscriber.web.exception.SubscriberNotFoundException;
 import com.affaince.subscription.subscriber.web.request.*;
 import com.google.common.collect.ImmutableMap;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -24,12 +27,14 @@ import java.util.UUID;
 public class SubscriberController {
 
     private final SubscriptionCommandGateway commandGateway;
-    private final SubscriberViewRepository repository;
+    private final SubscriberViewRepository subscriberViewRepository;
+    private final SubscriptionTemplateViewRepository subscriptionTemplateViewRepository;
 
     @Autowired
-    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository repository) {
+    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository subscriberViewRepository, SubscriptionTemplateViewRepository subscriptionTemplateViewRepository) {
         this.commandGateway = commandGateway;
-        this.repository = repository;
+        this.subscriberViewRepository = subscriberViewRepository;
+        this.subscriptionTemplateViewRepository = subscriptionTemplateViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -50,7 +55,7 @@ public class SubscriberController {
     @RequestMapping(value = "password/{subscriberId}", method = RequestMethod.PUT)
     @Consumes("application/json")
     public ResponseEntity<Object> createPassword(@PathVariable String subscriberId, @RequestBody String password) throws Exception {
-        final SubscriberView subscriberView = repository.findOne(subscriberId);
+        final SubscriberView subscriberView = subscriberViewRepository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
@@ -67,7 +72,7 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> updateSubscriberContactDetails(@RequestBody @Valid UpdateSubscriberContactDetailsRequest request,
                                                                  @PathVariable("subscriberid") String subscriberId) throws Exception {
-        final SubscriberView subscriberView = repository.findOne(subscriberId);
+        final SubscriberView subscriberView = subscriberViewRepository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
@@ -86,7 +91,7 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> updateSubscriberAddress(@RequestBody @Valid UpdateSubscriberAddressRequest request,
                                                           @PathVariable("subscriberid") String subscriberId) throws Exception {
-        final SubscriberView subscriberView = repository.findOne(subscriberId);
+        final SubscriberView subscriberView = subscriberViewRepository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
@@ -106,7 +111,7 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> addRewardPoints(@RequestBody @Valid AddRewardPointsRequest request,
                                                   @PathVariable("subscriberid") String subscriberId) throws Exception {
-        final SubscriberView subscriberView = repository.findOne(subscriberId);
+        final SubscriberView subscriberView = subscriberViewRepository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
@@ -124,7 +129,7 @@ public class SubscriberController {
     public ResponseEntity<Object> addRewardPoints(@RequestBody @Valid AddCoupanCodeRequest request,
                                                   @PathVariable("subscriberid") String subscriberId) throws Exception {
 
-        final SubscriberView subscriberView = repository.findOne(subscriberId);
+        final SubscriberView subscriberView = subscriberViewRepository.findOne(subscriberId);
         if (subscriberView == null) {
             throw SubscriberNotFoundException.build(subscriberId);
         }
@@ -135,5 +140,16 @@ public class SubscriberController {
             throw e;
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "template")
+    @Consumes("application/json")
+    public ResponseEntity <Object> addSubscriptionTemplate (@RequestBody AddSubscriptionTemplateRequest request) {
+        final SubscriptionTemplateView subscriptionTemplateView = new SubscriptionTemplateView(
+                UUID.randomUUID().toString(),
+                Arrays.asList(request.getSubscriptionRequirementOfOneFamily())
+        );
+        subscriptionTemplateViewRepository.save(subscriptionTemplateView);
+        return new ResponseEntity<Object>(subscriptionTemplateView, HttpStatus.OK);
     }
 }
