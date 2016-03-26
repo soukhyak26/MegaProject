@@ -1,5 +1,6 @@
 package com.affaince.subscription.events;
 
+import com.affaince.subscription.metadata.ExecutionFlow;
 import com.affaince.subscription.metadata.MetadataFilter;
 import org.axonframework.domain.EventMessage;
 import org.axonframework.eventhandling.Cluster;
@@ -42,11 +43,16 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
         for (EventMessage event : eventMessages) {
             try {
                 System.out.println("@@@@Inside EventMessageTerminal publish" + event);
-                Map<String, String> metadataMap = new HashMap<>();
+                //Map<String, String> metadataMap = new HashMap<>();
                 System.out.println("@@@@Inside EventMessageTerminal payload type metadata" + event.getPayloadType().getName());
-                metadataMap.put(TYPE, event.getPayloadType().getName());
+                /*metadataMap.put(TYPE, event.getPayloadType().getName());
                 metadataMap.put(MetadataFilter.FLOW_ID, UUID.randomUUID().toString());
-                metadataMap.put(MetadataFilter.TIMESTAMP, event.getTimestamp().toString());
+                metadataMap.put(MetadataFilter.TIMESTAMP, event.getTimestamp().toString());*/
+                //TODO: Verify if this is proper place to create metadata and flows. I think it should be at first command creation.
+                MetadataFilter metadataFilter = new MetadataFilter(UUID.randomUUID().toString(), new ExecutionFlow("someFlowName"));
+                metadataFilter.getMetadataValues().put(TYPE, event.getPayloadType().getName());
+                Map<String, MetadataFilter> metadataMap = new HashMap<>();
+                metadataMap.put(MetadataFilter.METADATA, metadataFilter);
                 event = event.andMetaData(metadataMap);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 EventMessageWriter out = new EventMessageWriter(new DataOutputStream(outputStream), serializer);
