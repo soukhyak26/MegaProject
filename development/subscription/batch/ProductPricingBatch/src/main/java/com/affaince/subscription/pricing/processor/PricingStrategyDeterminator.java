@@ -1,4 +1,4 @@
-package com.affaince.subscription.pricing.processor.exception;
+package com.affaince.subscription.pricing.processor;
 
 import com.affaince.subscription.pricing.query.view.ProductView;
 import com.affaince.subscription.pricing.vo.PricingStrategyType;

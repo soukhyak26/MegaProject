@@ -2,11 +2,12 @@ package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.pricing.processor.DefaultPriceDeterminator;
+import com.affaince.subscription.pricing.processor.PricingStrategyDeterminator;
 import com.affaince.subscription.pricing.processor.camel.CoefficientAggregationStrategy;
 import com.affaince.subscription.pricing.processor.camel.CostFunctionCamelProcessor;
 import com.affaince.subscription.pricing.processor.camel.DemandFunctionCamelProcessor;
 import com.affaince.subscription.pricing.processor.camel.PriceDeterminationCamelProcessor;
-import com.affaince.subscription.pricing.processor.exception.PricingStrategyDeterminator;
 import com.affaince.subscription.pricing.query.repository.ProductViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductView;
 import org.apache.camel.CamelContext;
@@ -36,6 +37,11 @@ public class Axon extends RabbitMQConfiguration {
     @Bean
     public PricingStrategyDeterminator pricingStrategyDeterminator() {
         return new PricingStrategyDeterminator();
+    }
+
+    @Bean
+    public DefaultPriceDeterminator defaultPriceDeterminator() {
+        return new DefaultPriceDeterminator();
     }
 
     @Bean

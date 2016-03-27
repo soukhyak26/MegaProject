@@ -19,6 +19,7 @@ public class PriceBucket {
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
+    private double slope;
 
     public PriceBucket() {
     }
@@ -116,5 +117,13 @@ public class PriceBucket {
 
     public void setTotalQuantitySusbcribed(long totalQuantitySusbcribed) {
         this.totalQuantitySusbcribed = totalQuantitySusbcribed;
+    }
+
+    public double getSlope() {
+        return this.slope;
+    }
+
+    public void setSlope(double slope) {
+        this.slope = slope;
     }
 }

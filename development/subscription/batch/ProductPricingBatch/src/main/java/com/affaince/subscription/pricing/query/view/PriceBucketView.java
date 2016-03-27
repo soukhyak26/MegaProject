@@ -22,6 +22,7 @@ public class PriceBucketView implements Comparable <PriceBucketView> {
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
     private EntityStatus entityStatus;
+    private double slope;
 
     public String getProductId() {
         return productVersionId.getProductId();
@@ -114,5 +115,13 @@ public class PriceBucketView implements Comparable <PriceBucketView> {
     @Override
     public int compareTo(PriceBucketView o) {
         return this.getFromDate().compareTo(o.getFromDate());
+    }
+
+    public double getSlope() {
+        return this.slope;
+    }
+
+    public void setSlope(double slope) {
+        this.slope = slope;
     }
 }

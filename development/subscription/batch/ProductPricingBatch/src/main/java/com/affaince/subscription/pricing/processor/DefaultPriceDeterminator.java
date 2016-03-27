@@ -29,6 +29,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
 
     @Override
     public double calculateOfferedPrice(PriceDeterminationCriteria priceDeterminationCriteria) {
+
         List<CrudRepository> repositories = priceDeterminationCriteria.getDataRepositories();
         List<FunctionCoefficients> demandAndCostFunctionCoefficients = priceDeterminationCriteria.getListOfCriteriaElements();
 
@@ -37,22 +38,34 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
 
         FunctionCoefficients demandFunctionCoeffiecients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.DEMAND_FUNCTION_COEFFICIENT)).findFirst().get();
         final String productId = demandFunctionCoeffiecients.getProductId();
-        List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
-        ProductStatisticsView productStatisticsView = productStatisticsViewRepository.findOne(new ProductMonthlyVersionId(productId, YearMonth.now()));
-        PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
 
+        List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
+        PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
         final double MRP = latestPriceBucket.getMRP();
+
+        ProductStatisticsView productStatisticsView = productStatisticsViewRepository.findOne(new ProductMonthlyVersionId(productId, YearMonth.now()));
+
+
         final double breakEvenPrice = calculateBreakEvenPrice(latestPriceBucket.getPurchasePricePerUnit(), productStatisticsView.getFixedOperatingExpense(), productStatisticsView.getVariableOperatingExpense());
 
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
+
         List<Double> totalQuantitySubscribedWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucketView -> new Long(priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice()).doubleValue()).collect(Collectors.toList());
-        //if price is entered by merchant but there is no subscripton yet as the product is not active yet...
+
+        //if price is entered by merchant but there is no subscription yet as the product is not active yet...
         if (activePriceBuckets.size() == 1 && totalQuantitySubscribedWithSamePurchasePrice.size() == 0) {
             return latestPriceBucket.getOfferedPricePerUnit();
-        } else if ((activePriceBuckets.size() == 1 && totalQuantitySubscribedWithSamePurchasePrice.size() == 1 && totalQuantitySubscribedWithSamePurchasePrice.get(0) == activePriceBuckets.get(0).getNumberOfExistingCustomersAssociatedWithAPrice()) || (activePriceBuckets.size() > 1 && activePriceBuckets.size() <= 5 && totalQuantitySubscribedWithSamePurchasePrice.size() == activePriceBuckets.size())) {
+
+        } else if ((activePriceBuckets.size() == 1 && totalQuantitySubscribedWithSamePurchasePrice.size() == 1 && totalQuantitySubscribedWithSamePurchasePrice.get(0) == activePriceBuckets.get(0).getNumberOfExistingCustomersAssociatedWithAPrice()) || (activePriceBuckets.size() > 1 && totalQuantitySubscribedWithSamePurchasePrice.size() == activePriceBuckets.size())) {
             //subscription to single price,nothing to extrapolate so far
             //here I assume that forecast subscription count will give close to reality figure as the forecast has once been corrected based on first set of subscription
-            final double expectedDemand = productStatisticsView.getForecastedProductSubscriptionCount();
+            double expectedDemand = 0;
+            if (activePriceBuckets.size() <= 5) {
+                expectedDemand = productStatisticsView.getForecastedProductSubscriptionCount();
+            } else {
+                List<Double> extrapolatedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
+                expectedDemand = extrapolatedDemands.get(0);
+            }
             final double intercept = MRP;
             double earlierPrice = 0;
             double demandAssociatedWithEarlierPrice = 0;
@@ -60,25 +73,18 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
                 earlierPrice = MRP;
                 demandAssociatedWithEarlierPrice = 0;
             } else {
-                final PriceBucketView earlierPriceBucket = findEarlierPriceBucketTo(latestPriceBucket, activePriceBuckets);
+                final PriceBucketView earlierPriceBucket = findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
                 earlierPrice = earlierPriceBucket.getOfferedPricePerUnit();
                 demandAssociatedWithEarlierPrice = earlierPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice();
             }
-            final double slope = calculateSlopeOfDemandCurve(latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), demandAssociatedWithEarlierPrice, latestPriceBucket.getOfferedPricePerUnit(), earlierPrice);
-            final double newOfferedPrice = calculatePriceBasedOnSlopeAndIntercept(slope, intercept, expectedDemand);
-            return newOfferedPrice;
-        } else {
-            List<Double> extrapolatedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
-            final double intercept = MRP;
-            final double expectedDemand = extrapolatedDemands.get(0);
-            //One known defect-while searching earlier price bucket,it should be having same purchase price-to be fixed
-            final PriceBucketView earlierPriceBucket = findEarlierPriceBucketTo(latestPriceBucket, activePriceBuckets);
-            final double earlierPrice = earlierPriceBucket.getOfferedPricePerUnit();
-            final double demandAssociatedWithEarlierPrice = earlierPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice();
-            final double slope = calculateSlopeOfDemandCurve(latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), demandAssociatedWithEarlierPrice, latestPriceBucket.getOfferedPricePerUnit(), earlierPrice);
-            final double newOfferedPrice = calculatePriceBasedOnSlopeAndIntercept(slope, intercept, expectedDemand);
+            if (0.0 == latestPriceBucket.getSlope()) {
+                latestPriceBucket.setSlope(calculateSlopeOfDemandCurve(latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), demandAssociatedWithEarlierPrice, latestPriceBucket.getOfferedPricePerUnit(), earlierPrice));
+            }
+
+            final double newOfferedPrice = calculatePriceBasedOnSlopeAndIntercept(latestPriceBucket.getSlope(), intercept, expectedDemand);
             return newOfferedPrice;
         }
+        return 0.0;
     }
 
     private double calculateBreakEvenPrice(double purchasePrice, double fixedOperatingExpensePerUnit, double variableExpensePerUnit) {
@@ -134,10 +140,9 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     }
 
     private PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
-        PriceBucketView latestPriceBucketView = null;
-        LocalDate max = activePriceBuckets.get(0).getFromDate();
+        PriceBucketView latestPriceBucketView = activePriceBuckets.get(0);
         for (PriceBucketView priceBucketView : activePriceBuckets) {
-            if (priceBucketView.getFromDate().compareTo(max) > 0) {
+            if (priceBucketView.getFromDate().compareTo(latestPriceBucketView.getFromDate()) > 0) {
                 latestPriceBucketView = priceBucketView;
             }
         }
