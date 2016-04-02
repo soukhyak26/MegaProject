@@ -1,7 +1,7 @@
 package com.affaince.subscription.integration.configuation;
 
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
+import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
@@ -82,14 +82,14 @@ public class Axon extends RabbitMQConfiguration {
                         marshal().bindy(BindyType.Csv, ProductDailyQuoteGeneratedEvent.class).
                         to("${product.generate.qoute.destination}");
 
-                //INT_07: Receive payment receipt intimation from mail application
+                //INT_07: Receive payment receipt intimation from main application
                 from("${payment.receipt.info.source}").
                         marshal().bindy(BindyType.Csv, PaymentReceivedEvent.class).
                         to("${payment.receipt.info.destination}");
 
                 //from("bean:NotificationEvent").marshal("json").to("restlet:/notification?restletMethod=POST");
 
-                //INT_07: Receive payment receipt intimation from mail application
+                //INT_07: Receive operating expense intimation from main application
                 from("${operatingexpense.info.source}").
                         marshal().bindy(BindyType.Csv, OperatingExpenseReceivedEvent.class).
                         to("${operatingexpense.info.destination}");

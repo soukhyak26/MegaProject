@@ -30,15 +30,19 @@ public class ProductStatusUpdatedEventListener {
         ProductView productView = productViewRepository.findOne(event.getProductId());
         productView.setCurrentStockInUnits(event.getCurrentStockInUnits());
         Sort sort = new Sort(Sort.Direction.DESC, "fromDate");
-        PriceBucketView currentLatestPriceBucket = priceBucketViewRepository.findOne(sort);
-        currentLatestPriceBucket.setToDate(LocalDate.now());
 
-        PriceBucketView priceBucketView = new PriceBucketView();
-        priceBucketView.setFromDate(event.getCurrentPriceDate());
-        priceBucketView.setMRP(event.getCurrentMRP());
-        priceBucketView.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
-        priceBucketView.setEntityStatus(EntityStatus.ACTIVE);
-        //productViewRepository.save(productView);
-        priceBucketViewRepository.save(priceBucketView);
+        PriceBucketView currentLatestPriceBucket = priceBucketViewRepository.findOne(sort);
+        //if purchase price in incoming event and that of latest price bucket are same do nothig,as there is no change;Else create new price bucket and set new purchase price/MRP in it.
+        if (currentLatestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            currentLatestPriceBucket.setToDate(LocalDate.now());
+            currentLatestPriceBucket.setEntityStatus(EntityStatus.EXPIRED);
+            PriceBucketView priceBucketView = new PriceBucketView();
+            priceBucketView.setFromDate(event.getCurrentPriceDate());
+            priceBucketView.setMRP(event.getCurrentMRP());
+            priceBucketView.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
+            priceBucketView.setEntityStatus(EntityStatus.ACTIVE);
+            //productViewRepository.save(productView);
+            priceBucketViewRepository.save(priceBucketView);
+        }
     }
 }
