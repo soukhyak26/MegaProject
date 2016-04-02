@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.product.registration.command.event.ProductStatusReceivedEvent;
+import com.affaince.subscription.product.registration.command.event.ProductStatusUpdatedEvent;
 import com.affaince.subscription.product.registration.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.query.view.PriceBucketView;
@@ -26,7 +26,7 @@ public class ProductStatusUpdatedEventListener {
     }
 
     @EventHandler
-    public void on(ProductStatusReceivedEvent event) {
+    public void on(ProductStatusUpdatedEvent event) {
         ProductView productView = productViewRepository.findOne(event.getProductId());
         productView.setCurrentStockInUnits(event.getCurrentStockInUnits());
         Sort sort = new Sort(Sort.Direction.DESC, "fromDate");
@@ -34,14 +34,12 @@ public class ProductStatusUpdatedEventListener {
         PriceBucketView currentLatestPriceBucket = priceBucketViewRepository.findOne(sort);
         //if purchase price in incoming event and that of latest price bucket are same do nothig,as there is no change;Else create new price bucket and set new purchase price/MRP in it.
         if (currentLatestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            currentLatestPriceBucket.setToDate(LocalDate.now());
-            currentLatestPriceBucket.setEntityStatus(EntityStatus.EXPIRED);
             PriceBucketView priceBucketView = new PriceBucketView();
             priceBucketView.setFromDate(event.getCurrentPriceDate());
             priceBucketView.setMRP(event.getCurrentMRP());
             priceBucketView.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
+            priceBucketView.setToDate(new LocalDate(9999, 12, 31));
             priceBucketView.setEntityStatus(EntityStatus.ACTIVE);
-            //productViewRepository.save(productView);
             priceBucketViewRepository.save(priceBucketView);
         }
     }

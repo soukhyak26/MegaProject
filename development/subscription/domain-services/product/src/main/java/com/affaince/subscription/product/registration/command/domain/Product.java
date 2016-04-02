@@ -3,6 +3,7 @@ package com.affaince.subscription.product.registration.command.domain;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
+import com.affaince.subscription.product.registration.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.registration.command.event.*;
@@ -235,6 +236,11 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     public void updateProductStatus(UpdateProductStatusCommand command) {
+        apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
+    }
+
+    //for receipt from main application thru integration
+    public void receiveProductStatus(ReceiveProductStatusCommand command) {
         apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
 
