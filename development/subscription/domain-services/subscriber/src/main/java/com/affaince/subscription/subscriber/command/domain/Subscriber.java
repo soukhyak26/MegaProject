@@ -38,7 +38,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private NetWorthSubscriberStatus status;
     private List<String> couponCodes;
     private int rewardPoints;
-    private Map<Integer, Delivery> deliveries;
+    private Map<String, Delivery> deliveries;
     private String password;
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
@@ -124,6 +124,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         this.password = event.getPassword();
     }
 
+    @EventSourcingHandler
+    public void on (DeliveryCreatedEvent event) {
+        deliveries.put(event.getDeliveryId(), new Delivery(event.getDeliveryId(), event.getDeliveryItems(), event.getDeliveryDate(), event.getDispatchDate(),
+                event.getStatus()));
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
@@ -165,8 +171,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public void makeDeliveriesReady(Subscription subscription) {
+    public Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription) {
         final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
+        final Map<Integer, Delivery> deliveries = new HashMap<>();
         int weekOfYear = LocalDate.now().getWeekOfWeekyear();
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             int nextDeliveryWeek = weekOfYear;
@@ -192,10 +199,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 weeklyDelivery.getDeliveryItems().add(deliveryItem);
             }
         }
+        return deliveries;
     }
 
     public void confirmSubscription(Subscription subscription, DeliveryChargesRule deliveryChargesRule) {
-        makeDeliveriesReady(subscription);
+        final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
