@@ -41,10 +41,18 @@ public final class ExecutionFlowConfiguration {
     public Map<String, ExecutionFlow> getFlowConfiguration() {
         return flowConfiguration;
     }
-
     private final Map<String, ExecutionFlow> flowConfiguration;
     private ExecutionFlowConfiguration() {
         flowConfiguration = new HashMap<>();
+        try {
+            initConfiguration();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private static class ExecutionFlowConfigurationHolder {
         private static final ExecutionFlowConfiguration INSTANCE = new ExecutionFlowConfiguration();

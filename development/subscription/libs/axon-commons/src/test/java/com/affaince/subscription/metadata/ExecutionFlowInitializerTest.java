@@ -1,5 +1,7 @@
 package com.affaince.subscription.metadata;
 
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
@@ -15,6 +17,8 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by anayonkar on 3/4/16.
@@ -98,6 +102,36 @@ public class ExecutionFlowInitializerTest {
             System.out.println("Done");
         } catch(Exception e) {
             System.out.println(e);
+        }
+    }
+
+    @Test
+    public void initConfigTest() {
+        try {
+            String errorMessage = "message";
+            Map<String, ExecutionFlow> flowConfiguration = ExecutionFlowConfiguration.getInstance().getFlowConfiguration();
+            Assert.assertNotNull(errorMessage, flowConfiguration);
+            Assert.assertTrue(errorMessage, flowConfiguration.size() == 2);
+            ExecutionFlow sampleFlow_1 = flowConfiguration.get("SampleFlow_1");
+            Assert.assertNotNull(errorMessage, sampleFlow_1);
+            List<ExecutionFlowNode> flowNodeList_1 = sampleFlow_1.getCurrentFlow();
+            Assert.assertTrue(errorMessage, flowNodeList_1.size() == 5);
+            Assert.assertTrue(errorMessage, flowNodeList_1.get(0).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(0).getFlowNodeName().equals("SampleStep_11"));
+            Assert.assertTrue(errorMessage, flowNodeList_1.get(1).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(1).getFlowNodeName().equals("SampleStep_12"));
+            Assert.assertTrue(errorMessage, flowNodeList_1.get(2).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(2).getFlowNodeName().equals("SampleStep_13"));
+            Assert.assertTrue(errorMessage, flowNodeList_1.get(3).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(3).getFlowNodeName().equals("SampleStep_14"));
+            Assert.assertTrue(errorMessage, flowNodeList_1.get(4).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(4).getFlowNodeName().equals("SampleStep_15"));
+            ExecutionFlow sampleFlow_2 = flowConfiguration.get("SampleFlow_2");
+            Assert.assertNotNull(errorMessage, sampleFlow_2);
+            List<ExecutionFlowNode> flowNodeList_2 = sampleFlow_2.getCurrentFlow();
+            Assert.assertTrue(errorMessage, flowNodeList_2.size() == 5);
+            Assert.assertTrue(errorMessage, flowNodeList_2.get(0).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(0).getFlowNodeName().equals("SampleStep_21"));
+            Assert.assertTrue(errorMessage, flowNodeList_2.get(1).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(1).getFlowNodeName().equals("SampleStep_22"));
+            Assert.assertTrue(errorMessage, flowNodeList_2.get(2).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(2).getFlowNodeName().equals("SampleStep_23"));
+            Assert.assertTrue(errorMessage, flowNodeList_2.get(3).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(3).getFlowNodeName().equals("SampleStep_24"));
+            Assert.assertTrue(errorMessage, flowNodeList_2.get(4).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(4).getFlowNodeName().equals("SampleStep_25"));
+        } catch (Exception e) {
+            Assert.assertTrue(false);
         }
     }
 }
