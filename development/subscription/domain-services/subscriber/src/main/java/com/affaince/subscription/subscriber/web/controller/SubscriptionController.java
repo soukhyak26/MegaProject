@@ -65,7 +65,7 @@ public class SubscriptionController {
         if (productQuantityUnit == QuantityUnit.KG || productQuantityUnit == QuantityUnit.LT) {
             productQuantityInGrms = productQuantity * 1000;
         } else if (productQuantityUnit == QuantityUnit.ml) {
-            productQuantityInGrms = productQuantity / 1000;
+            productQuantityInGrms = productQuantity;
         }
         final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriptionId,
                 request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
