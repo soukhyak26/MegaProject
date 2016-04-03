@@ -3,7 +3,7 @@ package com.affaince.subscription.expensedistribution.Configuration;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
-import com.affaince.subscription.expensedistribution.query.DeliveryViewRepository;
+import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
@@ -46,7 +46,7 @@ public class Axon extends RabbitMQConfiguration {
                         .to("bean:extraPolationBasedOperatingExpenseDistributionDeterminator").to("bean:publisher")
                         .when().simple("&{operatingExpenseStrategyDeterminator.decideOperatingExpenseStrategy}" +
                             "==com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.FORECAST_BASED_STRATEGY")
-                        .to("bean:extraPolationBasedOperatingExpenseDistributionDeterminator").to("bean:publisher");
+                        .to("bean:forecastBasedOperatingExpenseDistributionDeterminator").to("bean:publisher");
             }
         };
     }

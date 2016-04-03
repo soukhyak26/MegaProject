@@ -1,9 +1,9 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
-import com.affaince.subscription.expensedistribution.query.DeliveryItem;
-import com.affaince.subscription.expensedistribution.query.DeliveryView;
-import com.affaince.subscription.expensedistribution.query.DeliveryViewRepository;
+import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
+import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
+import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -80,7 +80,7 @@ public class ExtraPolationBasedOperatingExpenseDistributionDeterminator implemen
                 }
                 productWiseDeliveryStats.addDeliveryExpense(deliveryItem.getDeliveryCharges());
                 productWiseDeliveryStats.addUnitSold(1);
-                productWiseDeliveryStats.addOfferedPrice(deliveryItem.getOfferedPriceWithBasketLevelDiscount());
+                productWiseDeliveryStats.addMRP(deliveryItem.getOfferedPriceWithBasketLevelDiscount());
                 productWiseMonthlyDeliveriesMap.put(deliveryMonth, productWiseDeliveryStats);
                 productWiseDeliveryStatsMap.put(deliveryItem.getDeliveryItemId(), productWiseMonthlyDeliveriesMap);
             }

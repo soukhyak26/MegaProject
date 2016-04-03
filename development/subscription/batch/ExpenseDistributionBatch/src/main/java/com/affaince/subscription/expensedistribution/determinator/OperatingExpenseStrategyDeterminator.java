@@ -1,6 +1,6 @@
 package com.affaince.subscription.expensedistribution.determinator;
 
-import com.affaince.subscription.expensedistribution.query.DeliveryView;
+import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType;
 
 /**

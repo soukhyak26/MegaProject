@@ -1,4 +1,4 @@
-package com.affaince.subscription.expensedistribution.query;
+package com.affaince.subscription.expensedistribution.query.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 

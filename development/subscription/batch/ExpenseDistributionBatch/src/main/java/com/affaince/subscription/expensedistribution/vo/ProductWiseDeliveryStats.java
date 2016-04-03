@@ -8,7 +8,7 @@ public class ProductWiseDeliveryStats {
     private String productId;
     private double totalDeliveryExpense;
     private long totalUnitsSold;
-    private double totalOfferedPrice;
+    private double totalMRP;
 
     public ProductWiseDeliveryStats(String productId) {
         this.productId = productId;
@@ -34,12 +34,12 @@ public class ProductWiseDeliveryStats {
         this.totalUnitsSold += unitSold;
     }
 
-    public double getTotalOfferedPrice() {
-        return totalOfferedPrice;
+    public double getTotalMRP() {
+        return totalMRP;
     }
 
-    public void addOfferedPrice(double offeredPrice) {
-        this.totalOfferedPrice += offeredPrice;
+    public void addMRP(double mrp) {
+        this.totalMRP += mrp;
     }
 
     @Override

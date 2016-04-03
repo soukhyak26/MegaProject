@@ -1,4 +1,4 @@
-package com.affaince.subscription.expensedistribution.query;
+package com.affaince.subscription.expensedistribution.query.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 import org.joda.time.LocalDate;
@@ -21,6 +21,9 @@ public class DeliveryView {
     private LocalDate dispatchDate;
     private DeliveryStatus status;
 
+    public DeliveryView() {
+    }
+
     public DeliveryView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
@@ -28,7 +31,9 @@ public class DeliveryView {
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.status = status;
+
     }
+
 
     public String getDeliveryId() {
         return deliveryId;

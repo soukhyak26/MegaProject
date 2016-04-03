@@ -1,6 +1,6 @@
 package com.affaince.subscription.expensedistribution.processor;
 
-import com.affaince.subscription.expensedistribution.query.DeliveryView;
+import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import org.apache.camel.Exchange;
 
 /**
