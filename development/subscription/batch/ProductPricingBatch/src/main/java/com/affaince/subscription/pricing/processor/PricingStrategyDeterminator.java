@@ -14,7 +14,7 @@ import java.util.List;
 public class PricingStrategyDeterminator {
     @Autowired
     PriceBucketViewRepository priceBucketViewRepository;
-    public PricingStrategyType decideProductPricingStrategy(ProductView productView) {
+    public ProductView decideProductPricingStrategy(ProductView productView) {
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productView.getProductId());
         PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
         //collect all the historical price buckets with same purchase price(active and inactive)
@@ -23,10 +23,12 @@ public class PricingStrategyDeterminator {
         //check if you have enough number of history records so as to decide of default pricing/demand funation based pricing needs to be applied.
         //What will happen when purchase price changes.
         if (priceBucketsWithSamePurchasePrice.size() > 10) {
-            return PricingStrategyType.DEMAND_AND_COST_BASED_PRICING_STRATEGY;
+            productView.setPricingStrategyType(PricingStrategyType.DEMAND_AND_COST_BASED_PRICING_STRATEGY);
+            //return PricingStrategyType.DEMAND_AND_COST_BASED_PRICING_STRATEGY;
         } else {
-            return PricingStrategyType.DEFAULT_PRICING_STRATEGY;
+            productView.setPricingStrategyType(PricingStrategyType.DEFAULT_PRICING_STRATEGY);
         }
+        return productView;
     }
 
     protected PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {

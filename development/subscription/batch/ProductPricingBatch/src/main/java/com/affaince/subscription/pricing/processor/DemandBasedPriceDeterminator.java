@@ -10,6 +10,7 @@ import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;
 import com.affaince.subscription.pricing.vo.QuantityBasedProductFinancialResult;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.*;
@@ -19,15 +20,22 @@ import java.util.stream.Collectors;
  * Created by mandark on 13-02-2016.
  */
 public class DemandBasedPriceDeterminator implements PriceDeterminator {
+    @Autowired
+    PriceBucketViewRepository priceBucketViewRepository;
+    @Autowired
+    ProductStatisticsViewRepository productStatisticsViewRepository;
+
     public double calculateOfferedPrice(PriceDeterminationCriteria criteria) {
         //cost function: cost=yInterceptCost+slopeCost*Quantity
         //demand function: subscriptionCount=yInterceptDemand + slopeDemand*quantity
         //price=(yInterceptDemand-subscriptionCount)/(slopeDemand)
-        List<CrudRepository> repositories = criteria.getDataRepositories();
+        //List<CrudRepository> repositories = criteria.getDataRepositories();
         List<FunctionCoefficients> demandAndCostFunctionCoefficients = criteria.getListOfCriteriaElements();
 
+/*
         PriceBucketViewRepository priceBucketViewRepository = (PriceBucketViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(PriceBucketViewRepository.class)).findFirst().get();
         ProductStatisticsViewRepository productStatisticsViewRepository = (ProductStatisticsViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(ProductStatisticsViewRepository.class)).findFirst().get();
+*/
 
         FunctionCoefficients demandFunctionCoeffiecients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.DEMAND_FUNCTION_COEFFICIENT)).findFirst().get();
         FunctionCoefficients costFunctionCoefficients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.COST_FUNCTION_COEFFICIENT)).findFirst().get();

@@ -13,12 +13,16 @@ import com.affaince.subscription.pricing.vo.CoefficientsType;
 import com.affaince.subscription.pricing.vo.FunctionCoefficients;
 import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;
 import org.joda.time.YearMonth;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 public class DefaultPriceDeterminator implements PriceDeterminator {
-
+    @Autowired
+    PriceBucketViewRepository priceBucketViewRepository;
+    @Autowired
+    ProductStatisticsViewRepository productStatisticsViewRepository;
 
     public DefaultPriceDeterminator() {
 
@@ -27,12 +31,14 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     @Override
     public double calculateOfferedPrice(PriceDeterminationCriteria priceDeterminationCriteria) {
 
-        List<CrudRepository> repositories = priceDeterminationCriteria.getDataRepositories();
+      //  List<CrudRepository> repositories = priceDeterminationCriteria.getDataRepositories();
         List<FunctionCoefficients> demandAndCostFunctionCoefficients = priceDeterminationCriteria.getListOfCriteriaElements();
 
+/*
         PriceBucketViewRepository priceBucketViewRepository = (PriceBucketViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(PriceBucketViewRepository.class)).findFirst().get();
         ProductStatisticsViewRepository productStatisticsViewRepository = (ProductStatisticsViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(ProductStatisticsViewRepository.class)).findFirst().get();
-
+*/
+        //who will set demand function coeeficient
         FunctionCoefficients demandFunctionCoeffiecients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.DEMAND_FUNCTION_COEFFICIENT)).findFirst().get();
         final String productId = demandFunctionCoeffiecients.getProductId();
 

@@ -1,6 +1,7 @@
 package com.affaince.subscription.pricing.query.view;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.pricing.vo.PricingStrategyType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,6 +26,7 @@ public class ProductView {
     private long currentStockInUnits;
     private int productPricingCategory;
     private int creditPoints;
+    private PricingStrategyType pricingStrategyType;
 
 
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
@@ -132,5 +134,13 @@ public class ProductView {
 
     public void setCreditPoints(int creditPoints) {
         this.creditPoints = creditPoints;
+    }
+
+    public PricingStrategyType getPricingStrategyType() {
+        return this.pricingStrategyType;
+    }
+
+    public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
+        this.pricingStrategyType = pricingStrategyType;
     }
 }

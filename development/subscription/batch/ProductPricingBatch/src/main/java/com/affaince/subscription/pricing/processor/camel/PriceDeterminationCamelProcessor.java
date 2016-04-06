@@ -25,11 +25,13 @@ public class PriceDeterminationCamelProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         List<FunctionCoefficients> demandAndCosstFunctionCoefficients = exchange.getIn().getBody(ArrayList.class);
+/*
         List<CrudRepository> crudRepositories = new ArrayList<CrudRepository>();
         crudRepositories.add(priceBucketViewRepository);
         crudRepositories.add(productStatisticsViewRepository);
+*/
         PriceDeterminator priceDeterminator = new DemandBasedPriceDeterminator();
-        PriceDeterminationCriteria criteria = new PriceDeterminationCriteria(crudRepositories, demandAndCosstFunctionCoefficients);
+        PriceDeterminationCriteria criteria = new PriceDeterminationCriteria( demandAndCosstFunctionCoefficients);
         priceDeterminator.calculateOfferedPrice(criteria);
     }
 }

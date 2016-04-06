@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * Created by mandark on 28-02-2016.
  */
-public class DemandFunctionProcessor implements FunctionProcessor<String, PriceBucketView> {
+public class RegressionBasedDemandFunctionProcessor implements FunctionProcessor<String, PriceBucketView> {
     @Override
     public FunctionCoefficients processFunction(String productId, List<PriceBucketView> priceBucketStats) {
         final List<PriceBucketView> priceBucketsWithSamePurchasePrice=findBucketsWithSamePurchasePrice(priceBucketStats);

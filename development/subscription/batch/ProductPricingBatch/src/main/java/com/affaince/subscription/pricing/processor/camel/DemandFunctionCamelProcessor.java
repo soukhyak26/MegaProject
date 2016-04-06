@@ -1,6 +1,6 @@
 package com.affaince.subscription.pricing.processor.camel;
 
-import com.affaince.subscription.pricing.processor.DemandFunctionProcessor;
+import com.affaince.subscription.pricing.processor.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.pricing.processor.FunctionProcessor;
 import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
@@ -23,7 +23,7 @@ public class DemandFunctionCamelProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         ProductView productView = exchange.getIn().getBody(ProductView.class);
         List<PriceBucketView> priceBucketStats = priceBucketViewRepository.findByProductVersionId_ProductId(productView.getProductId());
-        FunctionProcessor processor = new DemandFunctionProcessor();
+        FunctionProcessor processor = new RegressionBasedDemandFunctionProcessor();
         FunctionCoefficients coefficients = processor.processFunction(productView.getProductId(), priceBucketStats);
         exchange.getIn().setBody(coefficients);
     }

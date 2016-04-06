@@ -1,11 +1,14 @@
 package com.spike.camel.objectrouting.bean;
 
+import com.spike.camel.objectrouting.determine.ProcessorType;
+
 /**
  * Created by mandark on 03-04-2016.
  */
 public class MyBean {
     private String beanId;
     private double beanValue;
+    private ProcessorType processorType;
 
     public MyBean(String beanId, double beanValue) {
         this.beanId = beanId;
@@ -26,5 +29,13 @@ public class MyBean {
 
     public double getBeanValue() {
         return this.beanValue;
+    }
+
+    public ProcessorType getProcessorType() {
+        return this.processorType;
+    }
+
+    public void setProcessorType(ProcessorType processorType) {
+        this.processorType = processorType;
     }
 }
