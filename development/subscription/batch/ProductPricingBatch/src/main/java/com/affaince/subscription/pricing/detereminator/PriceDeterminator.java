@@ -1,4 +1,4 @@
-package com.affaince.subscription.pricing.processor;
+package com.affaince.subscription.pricing.detereminator;
 
 
 import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;

@@ -1,6 +1,7 @@
-package com.affaince.subscription.pricing.processor;
+package com.affaince.subscription.pricing.detereminator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
+import com.affaince.subscription.pricing.detereminator.PriceDeterminator;
 import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
@@ -11,7 +12,6 @@ import com.affaince.subscription.pricing.vo.QuantityBasedProductFinancialResult;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;

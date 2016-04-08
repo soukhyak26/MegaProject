@@ -1,7 +1,8 @@
-package com.affaince.subscription.pricing.processor;
+package com.affaince.subscription.pricing.detereminator;
 
 
 import com.affaince.subscription.common.vo.ProductMonthlyVersionId;
+import com.affaince.subscription.pricing.detereminator.PriceDeterminator;
 import com.affaince.subscription.pricing.processor.calculator.CalculatorChain;
 import com.affaince.subscription.pricing.processor.calculator.DemandCurveBasedPriceCalculator;
 import com.affaince.subscription.pricing.processor.calculator.OpeningPriceCalculator;
@@ -14,7 +15,6 @@ import com.affaince.subscription.pricing.vo.FunctionCoefficients;
 import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;
 import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 

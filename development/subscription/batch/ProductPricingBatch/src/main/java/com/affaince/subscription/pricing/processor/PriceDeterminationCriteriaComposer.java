@@ -1,5 +1,8 @@
 package com.affaince.subscription.pricing.processor;
 
+import com.affaince.subscription.pricing.processor.function.FunctionProcessor;
+import com.affaince.subscription.pricing.processor.function.RegressionBasedCostFunctionProcessor;
+import com.affaince.subscription.pricing.processor.function.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
@@ -18,10 +21,6 @@ import java.util.List;
  * Created by mandark on 06-04-2016.
  */
 public class PriceDeterminationCriteriaComposer {
-    @Autowired
-    PriceBucketViewRepository priceBucketViewRepository;
-    @Autowired
-    ProductStatisticsViewRepository productStatisticsViewRepository;
 
 
     public PriceDeterminationCriteria buildPriceDeterminationCriteria(ProductView productView){
@@ -43,16 +42,14 @@ public class PriceDeterminationCriteriaComposer {
     }
 
     private FunctionCoefficients processCostFunction(ProductView productView){
-        List<ProductStatisticsView> productStats =productStatisticsViewRepository.findByProductMonthlyVersionId_ProductId(productView.getProductId());
         FunctionProcessor processor = new RegressionBasedCostFunctionProcessor();
-        FunctionCoefficients coefficients = processor.processFunction(productView.getProductId(), productStats);
+        FunctionCoefficients coefficients = processor.processFunction(productView);
         return coefficients;
     }
 
     private FunctionCoefficients processDemandFunction(ProductView productView){
-        List<PriceBucketView> priceBucketStats = priceBucketViewRepository.findByProductVersionId_ProductId(productView.getProductId());
         FunctionProcessor processor = new RegressionBasedDemandFunctionProcessor();
-        FunctionCoefficients coefficients = processor.processFunction(productView.getProductId(), priceBucketStats);
+        FunctionCoefficients coefficients = processor.processFunction(productView);
         return coefficients;
     }
 

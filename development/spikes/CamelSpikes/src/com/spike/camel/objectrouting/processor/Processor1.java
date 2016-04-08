@@ -9,6 +9,7 @@ public class Processor1 {
 
     public MyBean receiveBean(MyBean myBean){
         System.out.println("$$$$$$$$$$$$$$$$$$$$My Bean received in processor1:"+ myBean);
+        myBean.addToProcessorTokens("####processor1###");
         return myBean;
     }
 }

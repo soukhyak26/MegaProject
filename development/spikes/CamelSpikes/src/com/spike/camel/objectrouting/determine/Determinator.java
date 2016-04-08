@@ -7,7 +7,11 @@ import com.spike.camel.objectrouting.bean.MyBean;
  */
 public class Determinator {
     public MyBean determineType(MyBean myBean) {
-        myBean.setProcessorType(ProcessorType.PROCESSOR1);
+        if(myBean.getBeanId().equals("bean1")||myBean.getBeanId().equals("bean3") || myBean.getBeanId().equals("bean5")) {
+            myBean.setProcessorType(ProcessorType.PROCESSOR1);
+        }else{
+            myBean.setProcessorType(ProcessorType.PROCESSOR2);
+        }
         return myBean;
     }
 }
