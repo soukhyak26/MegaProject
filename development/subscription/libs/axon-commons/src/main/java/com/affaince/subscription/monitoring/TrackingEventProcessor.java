@@ -2,7 +2,7 @@ package com.affaince.subscription.monitoring;
 
 import com.affaince.subscription.metadata.ExecutionFlowConfiguration;
 import com.affaince.subscription.metadata.ExecutionFlowNode;
-import com.affaince.subscription.query.view.CommonView;
+import com.affaince.subscription.metadata.MetadataFilter;
 import com.affaince.subscription.repository.CommonViewRepository;
 import org.axonframework.correlation.CorrelationDataHolder;
 import org.axonframework.domain.EventMessage;
@@ -50,15 +50,15 @@ public class TrackingEventProcessor extends EventProcessor {
             //i.e. -> if UUID is absent or if it has not reached yet
             MetaData metadata = event.getMetaData();
             //String uuid = (String)metadata.get(MetadataFilter.FLOW_ID);
-            CommonView commonViewMetadata = (CommonView)metadata.get(CommonView.METADATA);
-            String uuid = commonViewMetadata.getUuid();
-            CommonView commonView = commonViewRepository.findOne(uuid);
-            if(commonView == null) {
-                commonView = commonViewMetadata;
+            MetadataFilter metadataFilter = (MetadataFilter)metadata.get(MetadataFilter.METADATA);
+            String uuid = metadataFilter.getUuid();
+            MetadataFilter metadataFromRepo = commonViewRepository.findOne(uuid);
+            if(metadataFromRepo != null) {
+                metadataFilter = metadataFromRepo;
             }
             //TODO: Ideally, input to construct ExecutionFlowNode should come from configuration (ExecutionFlowConfiguration)
-            commonView.getExecutionFlow().getCurrentFlow().add(new ExecutionFlowNode("nodeName", "flowName"));
-            commonViewRepository.save(commonView);
+            metadataFilter.getExecutionFlow().getCurrentFlow().add(new ExecutionFlowNode("nodeName", "flowName"));
+            commonViewRepository.save(metadataFilter);
             return super.doHandle(event);
         } finally {
             //clear metadata from thread local
