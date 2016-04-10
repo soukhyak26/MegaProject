@@ -1,10 +1,12 @@
 package com.spike.camel.objectrouting.config;
 
+/*
 import com.spike.camel.objectrouting.aggregate.MyAggregationStrategy2;
+*/
 import com.spike.camel.objectrouting.determine.Determinator;
 import com.spike.camel.objectrouting.processor.Processor1;
-import com.spike.camel.objectrouting.processor.Processor2;
-import com.spike.camel.objectrouting.processor.Processor3;
+/*import com.spike.camel.objectrouting.processor.Processor2;
+import com.spike.camel.objectrouting.processor.Processor3;*/
 import com.spike.camel.objectrouting.processor.Publisher;
 import com.spike.camel.objectrouting.repo.BeanRepository;
 import org.apache.camel.builder.RouteBuilder;
@@ -21,7 +23,7 @@ public class Configuration {
         return new BeanRepository();
     }
 
-    @Bean
+    /*@Bean
     Processor3 processor3() {
         return new Processor3();
     }
@@ -29,7 +31,7 @@ public class Configuration {
     @Bean
     Processor2 processor2() {
         return new Processor2();
-    }
+    }*/
 
     @Bean
     Processor1 processor1() {
@@ -58,8 +60,8 @@ public class Configuration {
                         .to("bean:processor1")
                         .to("bean:publisher")
                         .when(simple("${body.processorType}== ${type:com.spike.camel.objectrouting.determine.ProcessorType.PROCESSOR2}"))
-                        .multicast(AggregationStrategies.bean(MyAggregationStrategy2.class))
-                        .parallelProcessing()
+                        /*.multicast(AggregationStrategies.bean(MyAggregationStrategy2.class))
+                        .parallelProcessing()*/
                         //.aggregate(constant(true), AggregationStrategies.bean(MyAggregationStrategy2.class))
                         .to("bean:processor2", "bean:processor3")
                         .end()
