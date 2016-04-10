@@ -1,8 +1,8 @@
 package com.affaince.subscription.events;
 
-import com.affaince.subscription.metadata.ExecutionFlow;
-import com.affaince.subscription.metadata.MetadataFilter;
+import com.affaince.subscription.query.view.CommonView;
 import org.axonframework.domain.EventMessage;
+import org.axonframework.domain.MetaData;
 import org.axonframework.eventhandling.Cluster;
 import org.axonframework.eventhandling.EventBusTerminal;
 import org.axonframework.eventhandling.io.EventMessageReader;
@@ -17,7 +17,6 @@ import org.springframework.messaging.support.GenericMessage;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static org.springframework.integration.jms.JmsHeaders.TYPE;
@@ -49,11 +48,11 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
                 metadataMap.put(MetadataFilter.FLOW_ID, UUID.randomUUID().toString());
                 metadataMap.put(MetadataFilter.TIMESTAMP, event.getTimestamp().toString());*/
                 //TODO: Verify if this is proper place to create metadata and flows. I think it should be at first command creation.
-                MetadataFilter metadataFilter = new MetadataFilter(UUID.randomUUID().toString(), new ExecutionFlow("someFlowName"));
-                metadataFilter.getMetadataValues().put(TYPE, event.getPayloadType().getName());
-                Map<String, MetadataFilter> metadataMap = new HashMap<>();
-                metadataMap.put(MetadataFilter.METADATA, metadataFilter);
-                event = event.andMetaData(metadataMap);
+                CommonView commonView = new CommonView(UUID.randomUUID().toString(), "someFlowName");
+                MetaData metadata = new MetaData(new HashMap<String, Object>());
+                metadata.put(TYPE, event.getPayloadType().getName());
+                metadata.put(CommonView.METADATA, commonView);
+                event = event.andMetaData(metadata);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 EventMessageWriter out = new EventMessageWriter(new DataOutputStream(outputStream), serializer);
                 out.writeEventMessage(event);
