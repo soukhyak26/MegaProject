@@ -55,25 +55,22 @@ public class DoublyLinkedList<E> implements Iterable<E> {
         public E next() {
             if (!hasNext()) throw new NoSuchElementException();
             lastAccessed = current;
-            E item = current.item;
+            if (index == 0) {
+                index++;
+                return current.item;
+            }
             current = current.next;
+            E item = current.item;
             index++;
             return item;
         }
 
         public E previous() {
             if (!hasPrevious()) throw new NoSuchElementException();
-            if(null== current){
-                return null;
-            }
             current = current.prev;
             index--;
             lastAccessed = current;
-            if(null==current || null==current.prev){
-                return null;
-            }else {
-                return current.prev.item;
-            }
+            return current.item;
         }
 
         // replace the item of the element that was last accessed by next() or previous()
