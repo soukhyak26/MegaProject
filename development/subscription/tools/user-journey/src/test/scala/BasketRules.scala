@@ -12,7 +12,7 @@ class BasketRules extends BaseSimulator {
 
 object CreateBasketRules {
 
-  val createBasketRulesUrl = "http://localhost:8082/basketrules"
+  val createBasketRulesUrl = "http://localhost:8081/basketrules"
 
   val createBasketRules = exec(
     http("Create Basket Rules")
@@ -21,15 +21,15 @@ object CreateBasketRules {
         StringBody(
           """
             |{
-            |   "ruleId":"1",
-            |   "deliveryChargesRules":"[{"ruleHeader":"1KG",
-            |   "ruleMinimum":"0",
-            |   "ruleMaximum":"1",
-            |   "ruleUnit":"GM",
-            |   "applicableValue":""}]"
+            |   "maximumPermissibleAmount":"10000",
+            |   "minimumAmountForDiscountEligibility":"2000",
+            |   "maximumPermissibleDiscount":"10",
+            |   "maximumPermissibleDiscountUnit":"1",
+            |   "minimumAmountEligibleForFreeShipping":"1000"
             |}
           """.stripMargin
         )
       ).asJSON
+      .check(jsonPath("$.id").saveAs("basketRulesId"))
   )
 }

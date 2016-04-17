@@ -26,9 +26,6 @@ public class BasketRule extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public BasketRule(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount) {
-    }
-
     @EventSourcingHandler
     public void on(BasketRuleAddedEvent event) {
         this.basketRuleId = event.getBasketRuleId();

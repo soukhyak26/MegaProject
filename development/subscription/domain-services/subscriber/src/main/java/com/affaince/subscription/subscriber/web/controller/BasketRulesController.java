@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.AddBasketRulesCommand;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.web.request.BasketRulesRequest;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,8 @@ public class BasketRulesController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> addBasketRules(@RequestBody BasketRulesRequest request) throws Exception {
-        final AddBasketRulesCommand command = new AddBasketRulesCommand(UUID.randomUUID().toString(),
+        final String basketRulesId = UUID.randomUUID().toString();
+        final AddBasketRulesCommand command = new AddBasketRulesCommand(basketRulesId,
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
                 request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
                 request.getMinimumAmountEligibleForFreeShipping());
@@ -38,7 +40,7 @@ public class BasketRulesController {
         } catch (Exception e) {
             throw e;
         }
-        return new ResponseEntity<Object>(HttpStatus.OK);
+        return new ResponseEntity<Object>(ImmutableMap.of("id",basketRulesId),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "update/{basketRuleId}")

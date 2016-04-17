@@ -10,11 +10,7 @@ import java.util.List;
  */
 public class DeliveryChargesRulesRequest {
     private int ruleId;
-    private List<RangeRule> deliveryChargesRules;
-
-    public List<RangeRule> getDeliveryChargesRules() {
-        return deliveryChargesRules;
-    }
+    private RangeRule[] deliveryChargesRules;
 
     public int getRuleId() {
         return ruleId;
@@ -24,7 +20,11 @@ public class DeliveryChargesRulesRequest {
         this.ruleId = ruleId;
     }
 
-    public void setDeliveryChargesRules(List<RangeRule> deliveryChargesRules) {
+    public RangeRule[] getDeliveryChargesRules() {
+        return deliveryChargesRules;
+    }
+
+    public void setDeliveryChargesRules(RangeRule[] deliveryChargesRules) {
         this.deliveryChargesRules = deliveryChargesRules;
     }
 }
