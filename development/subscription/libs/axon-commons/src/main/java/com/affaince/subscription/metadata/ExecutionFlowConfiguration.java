@@ -41,9 +41,10 @@ public final class ExecutionFlowConfiguration {
     public Map<String, ExecutionFlow> getFlowConfiguration() {
         return flowConfiguration;
     }
-    private final Map<String, ExecutionFlow> flowConfiguration;
+    private final Map<String, ExecutionFlow> flowConfiguration = new HashMap<>();
+    private boolean isInit = false;
     private ExecutionFlowConfiguration() {
-        flowConfiguration = new HashMap<>();
+        if(isInit) return;
         try {
             initConfiguration();
         } catch (SAXException e) {
@@ -62,6 +63,7 @@ public final class ExecutionFlowConfiguration {
     }
     //TODO: Can we use JAXB and generated classes for more sophisticated parsing?
     public void initConfiguration() throws SAXException, ParserConfigurationException, IOException {
+        if(isInit) return;
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(false);
         factory.setNamespaceAware(true);
@@ -87,5 +89,6 @@ public final class ExecutionFlowConfiguration {
                 }
             }
         });
+        isInit = true;
     }
 }
