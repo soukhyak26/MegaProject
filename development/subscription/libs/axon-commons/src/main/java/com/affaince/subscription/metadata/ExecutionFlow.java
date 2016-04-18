@@ -11,19 +11,19 @@ import java.util.Set;
 public final class ExecutionFlow {
     private final String flowName;
     //private final Set<ExecutionFlowNode> defaultFlow;
-    private final List<ExecutionFlowNode> currentFlow;
+    private final List<ExecutionFlowNode> flowNodes;
     public ExecutionFlow(String flowName) {
         this.flowName = flowName;
         //TODO: This should come from configuration
-        this.currentFlow = new LinkedList<>();
+        this.flowNodes = new LinkedList<>();
     }
 
     public String getFlowName() {
         return flowName;
     }
 
-    public List<ExecutionFlowNode> getCurrentFlow() {
-        return currentFlow;
+    public List<ExecutionFlowNode> getFlowNodes() {
+        return flowNodes;
     }
 
     @Override
@@ -34,16 +34,16 @@ public final class ExecutionFlow {
         ExecutionFlow that = (ExecutionFlow) o;
 
         if (flowName != null ? !flowName.equals(that.flowName) : that.flowName != null) return false;
-        return currentFlow != null ?
-                currentFlow.equals(that.currentFlow) /*&& ExecutionFlow.equateFlows(currentFlow, that.currentFlow)*/ :
-                that.currentFlow == null;
+        return flowNodes != null ?
+                flowNodes.equals(that.flowNodes) /*&& ExecutionFlow.equateFlows(currentFlow, that.currentFlow)*/ :
+                that.flowNodes == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = flowName != null ? flowName.hashCode() : 0;
-        result = 31 * result + (currentFlow != null ? currentFlow.hashCode() : 0);
+        result = 31 * result + (flowNodes != null ? flowNodes.hashCode() : 0);
         return result;
     }
 

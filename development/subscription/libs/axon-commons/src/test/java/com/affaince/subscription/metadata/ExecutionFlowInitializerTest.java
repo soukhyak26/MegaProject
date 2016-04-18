@@ -73,7 +73,7 @@ public class ExecutionFlowInitializerTest {
                             return;
                         case "ExecutionStep":
                             System.out.println(attributes.getValue("name") + " belongs to " + currentFlow);
-                            ExecutionFlowConfiguration.getInstance().getFlowConfiguration().get(currentFlow).getCurrentFlow().add(new ExecutionFlowNode(attributes.getValue("name"), currentFlow));
+                            ExecutionFlowConfiguration.getInstance().getFlowConfiguration().get(currentFlow).getFlowNodes().add(new ExecutionFlowNode(attributes.getValue("name"), currentFlow));
                             return;
                     }
                     //System.out.println("startElement : " + qName);
@@ -114,7 +114,7 @@ public class ExecutionFlowInitializerTest {
             Assert.assertTrue(errorMessage, flowConfiguration.size() == 2);
             ExecutionFlow sampleFlow_1 = flowConfiguration.get("SampleFlow_1");
             Assert.assertNotNull(errorMessage, sampleFlow_1);
-            List<ExecutionFlowNode> flowNodeList_1 = sampleFlow_1.getCurrentFlow();
+            List<ExecutionFlowNode> flowNodeList_1 = sampleFlow_1.getFlowNodes();
             Assert.assertTrue(errorMessage, flowNodeList_1.size() == 5);
             Assert.assertTrue(errorMessage, flowNodeList_1.get(0).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(0).getFlowNodeName().equals("SampleStep_11"));
             Assert.assertTrue(errorMessage, flowNodeList_1.get(1).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(1).getFlowNodeName().equals("SampleStep_12"));
@@ -123,7 +123,7 @@ public class ExecutionFlowInitializerTest {
             Assert.assertTrue(errorMessage, flowNodeList_1.get(4).getFlowName().equals("SampleFlow_1") && flowNodeList_1.get(4).getFlowNodeName().equals("SampleStep_15"));
             ExecutionFlow sampleFlow_2 = flowConfiguration.get("SampleFlow_2");
             Assert.assertNotNull(errorMessage, sampleFlow_2);
-            List<ExecutionFlowNode> flowNodeList_2 = sampleFlow_2.getCurrentFlow();
+            List<ExecutionFlowNode> flowNodeList_2 = sampleFlow_2.getFlowNodes();
             Assert.assertTrue(errorMessage, flowNodeList_2.size() == 5);
             Assert.assertTrue(errorMessage, flowNodeList_2.get(0).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(0).getFlowNodeName().equals("SampleStep_21"));
             Assert.assertTrue(errorMessage, flowNodeList_2.get(1).getFlowName().equals("SampleFlow_2") && flowNodeList_2.get(1).getFlowNodeName().equals("SampleStep_22"));

@@ -43,10 +43,10 @@ public class ExecutionFlowAspect {
         String flowName = pjp.getTarget().getClass().getName();
         if(commonView == null) {
             ExecutionFlow executionFlow = new ExecutionFlow(flowName);
-            executionFlow.getCurrentFlow().add(new ExecutionFlowNode(flowName, flowName));
+            executionFlow.getFlowNodes().add(new ExecutionFlowNode(flowName, flowName));
             commonView = new CommonView(UUID.randomUUID().toString(), flowName);
         } else {
-            commonView.getExecutionFlow().getCurrentFlow().add(new ExecutionFlowNode(flowName, flowName));
+            commonView.getExecutionFlow().getFlowNodes().add(new ExecutionFlowNode(flowName, flowName));
         }
         commonViewRepository.save(commonView);
         metadata.put(CommonView.METADATA, commonView);

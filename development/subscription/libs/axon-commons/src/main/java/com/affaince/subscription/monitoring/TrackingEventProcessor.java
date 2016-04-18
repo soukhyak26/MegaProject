@@ -57,7 +57,7 @@ public class TrackingEventProcessor extends EventProcessor {
                 commonView = commonViewMetadata;
             }
             //TODO: Ideally, input to construct ExecutionFlowNode should come from configuration (ExecutionFlowConfiguration)
-            commonView.getExecutionFlow().getCurrentFlow().add(new ExecutionFlowNode("nodeName", "flowName"));
+            commonView.getExecutionFlow().getFlowNodes().add(new ExecutionFlowNode("nodeName", "flowName"));
             commonViewRepository.save(commonView);
             return super.doHandle(event);
         } finally {

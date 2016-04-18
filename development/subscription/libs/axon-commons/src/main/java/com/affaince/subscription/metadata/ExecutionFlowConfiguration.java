@@ -82,7 +82,7 @@ public final class ExecutionFlowConfiguration {
                         flowConfiguration.put(currentFlow, new ExecutionFlow(currentFlow));
                         return;
                     case EXECUTIONSTEP_TAG:
-                        flowConfiguration.get(currentFlow).getCurrentFlow().add(new ExecutionFlowNode(attributes.getValue(NAME_ATTRIBUTE), currentFlow));
+                        flowConfiguration.get(currentFlow).getFlowNodes().add(new ExecutionFlowNode(attributes.getValue(NAME_ATTRIBUTE), currentFlow));
                         return;
                     default:
                         //TODO: Handle error
