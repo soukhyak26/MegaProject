@@ -46,20 +46,20 @@ public class ExecutionFlowParameterizedTest {
                 {0,2,true},
                 {0,3,true},
                 {0,4,true},
-                {0,5,false},
+                {0,5,false},//negative
                 {1,0,true},
                 {1,1,true},
                 {1,2,true},
                 {1,3,true},
                 {1,4,true},
-                {1,5,false},
-                {2,0,false},
-                {2,1,false},
-                {3,0,false},
-                {3,1,false},
-                {4,-4,false},
-                {-5,5,false},
-                {-6,-6,false}
+                {1,5,false},//negative
+                {2,0,false},//negative
+                {2,1,false},//negative
+                {3,0,false},//negative
+                {3,1,false},//negative
+                {4,-4,false},//negative
+                {-5,5,false},//negative
+                {-6,-6,false}//negative
         });
     }
 
@@ -70,11 +70,8 @@ public class ExecutionFlowParameterizedTest {
             return;
         }
         String flowName = FLOW_PREFIX.concat(Integer.valueOf(flowIndex + 1).toString());
-        String nodeName = NODE_PREFIX.concat(Integer.valueOf(flowIndex + 1).toString()).concat(Integer.valueOf(nodeIndex + 1).toString());
-        /*System.out.println(flowName);
-        System.out.println(flowIndex);
-        System.out.println(nodeName);
-        System.out.println(nodeIndex);*/
+        String nodeName = NODE_PREFIX.concat(Integer.valueOf(flowIndex + 1).toString())
+                            .concat(Integer.valueOf(nodeIndex + 1).toString());
         System.out.println("Execution test with flowName = "
                 + flowName
                 + " ; flowIndex = "

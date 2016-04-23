@@ -6,14 +6,10 @@ package com.affaince.subscription.metadata;
 public final class ExecutionFlowNode {
     private final String flowNodeName;
     private final String flowName;
-    /*private final ExecutionFlowNode before;
-    private final ExecutionFlowNode after;*/
 
-    public ExecutionFlowNode(String flowNodeName, String flowName/*, ExecutionFlowNode before, ExecutionFlowNode after*/) {
+    public ExecutionFlowNode(String flowNodeName, String flowName) {
         this.flowNodeName = flowNodeName;
         this.flowName = flowName;
-        /*this.before = before;
-        this.after = after;*/
     }
 
     public String getFlowNodeName() {
@@ -23,14 +19,6 @@ public final class ExecutionFlowNode {
     public String getFlowName() {
         return flowName;
     }
-
-    /*public ExecutionFlowNode getBefore() {
-        return before;
-    }
-
-    public ExecutionFlowNode getAfter() {
-        return after;
-    }*/
 
     @Override
     public boolean equals(Object o) {

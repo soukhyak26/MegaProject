@@ -20,14 +20,14 @@ import java.util.Map;
  * Created by anayonkar on 26/3/16.
  */
 public final class ExecutionFlowConfiguration {
-    private static final String XSD_PATH = "src"
+    public static final String XSD_PATH = "src"
             + File.separator
             + "main"
             + File.separator
             + "resources"
             + File.separator
             + "ExecutionFlow.xsd";
-    private static final String XML_PATH = "src"
+    public static final String XML_PATH = "src"
             + File.separator
             + "main"
             + File.separator
@@ -47,11 +47,7 @@ public final class ExecutionFlowConfiguration {
         if(isInit) return;
         try {
             initConfiguration();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | ParserConfigurationException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -73,7 +69,8 @@ public final class ExecutionFlowConfiguration {
         parser.parse(XML_PATH, new DefaultHandler() {
             private String currentFlow;
             @Override
-            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String qName, Attributes attributes)
+                    throws SAXException {
                 switch (qName) {
                     case EXECUTIONFLOWS_TAG:
                         return;
@@ -82,10 +79,13 @@ public final class ExecutionFlowConfiguration {
                         flowConfiguration.put(currentFlow, new ExecutionFlow(currentFlow));
                         return;
                     case EXECUTIONSTEP_TAG:
-                        flowConfiguration.get(currentFlow).getFlowNodes().add(new ExecutionFlowNode(attributes.getValue(NAME_ATTRIBUTE), currentFlow));
+                        flowConfiguration.get(currentFlow)
+                                .addExecutionFlowNode(
+                                        new ExecutionFlowNode(attributes.getValue(NAME_ATTRIBUTE), currentFlow)
+                                );
                         return;
                     default:
-                        //TODO: Handle error
+                        throw new RuntimeException("Invalid Tag : " + qName);
                 }
             }
         });

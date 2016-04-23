@@ -10,11 +10,9 @@ import java.util.Set;
  */
 public final class ExecutionFlow {
     private final String flowName;
-    //private final Set<ExecutionFlowNode> defaultFlow;
     private final List<ExecutionFlowNode> flowNodes;
     public ExecutionFlow(String flowName) {
         this.flowName = flowName;
-        //TODO: This should come from configuration
         this.flowNodes = new LinkedList<>();
     }
 
@@ -26,6 +24,10 @@ public final class ExecutionFlow {
         return flowNodes;
     }
 
+    public boolean addExecutionFlowNode(ExecutionFlowNode executionFlowNode) {
+        return this.flowNodes.add(executionFlowNode);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,7 +37,7 @@ public final class ExecutionFlow {
 
         if (flowName != null ? !flowName.equals(that.flowName) : that.flowName != null) return false;
         return flowNodes != null ?
-                flowNodes.equals(that.flowNodes) /*&& ExecutionFlow.equateFlows(currentFlow, that.currentFlow)*/ :
+                flowNodes.equals(that.flowNodes) :
                 that.flowNodes == null;
 
     }
@@ -54,7 +56,8 @@ public final class ExecutionFlow {
      * @return true only if both sets are equal AND elements are in exact same order
      * (equals method of Set implementations does not check for ordering)
      */
-    private static boolean equateFlows(Set<ExecutionFlowNode> firstFlow, Set<ExecutionFlowNode> secondFlow) {
+    //not required as LinkedList is used instead of Set
+    /*private static boolean equateFlows(Set<ExecutionFlowNode> firstFlow, Set<ExecutionFlowNode> secondFlow) {
         if(firstFlow == null || secondFlow == null) return false;
         if(firstFlow.size() != secondFlow.size()) return false;
         if(!firstFlow.equals(secondFlow)) return false;
@@ -65,5 +68,5 @@ public final class ExecutionFlow {
             result &= firstIterator.next().equals(secondIterator.next());
         }
         return result;
-    }
+    }*/
 }
