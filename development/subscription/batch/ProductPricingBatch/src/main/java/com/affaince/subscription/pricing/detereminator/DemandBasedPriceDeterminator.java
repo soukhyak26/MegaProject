@@ -1,6 +1,8 @@
 package com.affaince.subscription.pricing.detereminator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
+import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.detereminator.PriceDeterminator;
 import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
@@ -25,7 +27,7 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
     @Autowired
     ProductStatisticsViewRepository productStatisticsViewRepository;
 
-    public double calculateOfferedPrice(PriceDeterminationCriteria criteria) {
+    public PriceBucketView calculateOfferedPrice(PriceDeterminationCriteria criteria) {
         //cost function: cost=yInterceptCost+slopeCost*Quantity
         //demand function: subscriptionCount=yInterceptDemand + slopeDemand*quantity
         //price=(yInterceptDemand-subscriptionCount)/(slopeDemand)
@@ -48,7 +50,16 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
         List<Double> totalQuantitySubscribedWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucketView -> new Long(priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice()).doubleValue()).collect(Collectors.toList());
         //first and foremost : find if the demand is going up or it is going down for a product using extrapolation
         List<Double> forecastedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
-        return determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), forecastedDemands);
+        double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), forecastedDemands);
+        PriceBucketView newPriceBucket= new PriceBucketView();
+        newPriceBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(),LocalDate.now()));
+        newPriceBucket.setPurchasePricePerUnit(latestPriceBucket.getPurchasePricePerUnit());
+        newPriceBucket.setSlope(0.0);//slope to be calculated WIP
+        newPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
+        newPriceBucket.setMRP(latestPriceBucket.getMRP());
+        newPriceBucket.setOfferedPricePerUnit(offeredPrice);
+        return newPriceBucket;
+
     }
 
 

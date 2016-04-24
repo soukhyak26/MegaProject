@@ -34,9 +34,6 @@ public abstract class AbstractPriceCalculator {
         return ((latestPrice - earlierPrice) / (latestDemand - demandAssociatedWithEarlierPrice));
     }
 
-    protected double calculatePriceBasedOnSlopeAndIntercept(double slope, double intercept, double expectedDemand) {
-        return (intercept + (slope * expectedDemand));
-    }
 
     protected PriceBucketView findEarlierPriceBucketTo(PriceBucketView priceBucket, List<PriceBucketView> activePriceBuckets) {
         PriceBucketView earlierPriceBucket = null;
@@ -86,6 +83,10 @@ public abstract class AbstractPriceCalculator {
         return latestPriceBucketView;
     }
 
-    public abstract double calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView);
+    protected double calculateOfferedPrice(double intercept, double slope, double quantity) {
+        return intercept + (slope * quantity);
+    }
+
+    public abstract PriceBucketView calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView);
 
 }
