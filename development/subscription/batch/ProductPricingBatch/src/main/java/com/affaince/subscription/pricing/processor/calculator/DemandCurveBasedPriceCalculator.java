@@ -1,7 +1,10 @@
 package com.affaince.subscription.pricing.processor.calculator;
 
+import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
 import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +13,7 @@ import java.util.stream.Collectors;
  * Created by mandark on 27-03-2016.
  */
 public class DemandCurveBasedPriceCalculator extends AbstractPriceCalculator {
-    public double calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
+    public PriceBucketView calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         List<Double> totalQuantitySubscribedWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucketView -> new Long(priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice()).doubleValue()).collect(Collectors.toList());
 
@@ -43,11 +46,20 @@ public class DemandCurveBasedPriceCalculator extends AbstractPriceCalculator {
                 latestPriceBucket.setSlope(calculateSlopeOfDemandCurve(latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), demandAssociatedWithEarlierPrice, latestPriceBucket.getOfferedPricePerUnit(), earlierPrice));
             }
 
-            final double newOfferedPrice = calculatePriceBasedOnSlopeAndIntercept(latestPriceBucket.getSlope(), intercept, expectedDemand);
-            return newOfferedPrice;
+            final double newOfferedPrice = calculateOfferedPrice(latestPriceBucket.getSlope(), intercept, expectedDemand);
+            //return newOfferedPrice;
+            PriceBucketView newPrieBucket = new PriceBucketView();
+            newPrieBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDate.now()));
+            newPrieBucket.setPurchasePricePerUnit(latestPriceBucket.getPurchasePricePerUnit());
+            newPrieBucket.setSlope(0.0);//slope to be calculated.
+            newPrieBucket.setEntityStatus(EntityStatus.ACTIVE);
+            newPrieBucket.setMRP(latestPriceBucket.getMRP());
+            newPrieBucket.setOfferedPricePerUnit(newOfferedPrice);
+            return newPrieBucket;
+
 
         }
         ////TO BE CHANGED AFTER WRITING NEXT CALCUALATOR!!!!!!
-        return 0.0;
+        return null;
     }
 }
