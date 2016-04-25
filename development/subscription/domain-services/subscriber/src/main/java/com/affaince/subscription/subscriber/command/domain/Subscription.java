@@ -156,7 +156,8 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void activateSubscription() {
-        apply(new SubscriptionActivatedEvent(this.subscriptionId));
+        apply(new SubscriptionActivatedEvent(this.subscriptionId, this.totalSubscriptionAmountAfterDiscount,
+                this.totalSubscriptionAmount-this.totalSubscriptionAmountAfterDiscount));
         List<ProductStatistics> productsStatistics = new ArrayList<>();
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             ProductStatistics productStatistics = new ProductStatistics();
