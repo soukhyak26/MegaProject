@@ -11,7 +11,11 @@ public class BenefitCompilerApplication {
     public static void main(String[] args) {
         BenefitCompiler compiler = new BenefitCompiler();
         //RuleSet ruleSet = compiler.compile("if -(A + 2) > 0.5 then ;");
-        compiler.compile("given money_convert is 1000 currency = 1 point and period_convert is 1 month = 1 point configure as total_revenue/money_convert + total_period/period_convert offer 1 point = 10 currency discount apply when payment mode = 100 percent advance payment deposit with each delivery;");
+        compiler.compile("given money_convert is 1000 currency = 1 point and period_convert is 1 month = 1 point " +
+                "configure as total_revenue/money_convert + total_period/period_convert " +
+                "offer 1 point = 10 currency discount " +
+                "apply when payment mode = 100 percent advance payment deposit " +
+                "with each delivery;");
         // JSON serialization
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
