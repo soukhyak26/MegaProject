@@ -26,13 +26,14 @@ public class ProductForecastReceivedEventListener {
 
     @EventHandler
     public void on(ProductForecastReceivedEvent event) throws Exception {
+/*
         ForecastedPriceParameter forecastedPriceParameter = new ForecastedPriceParameter(event.getPurchasePricePerUnit(),
-                event.getOfferedPricePerUnit(),
                 event.getMRP(),
                 event.getNumberOfNewCustomersAssociatedWithAPrice(),
                 event.getNumberOfChurnedCustomersAssociatedWithAPrice(),
                 event.getMonthOfYear()
         );
+*/
 /*
         AddForecastParametersCommand command = new AddForecastParametersCommand(
                 event.getProductId(),

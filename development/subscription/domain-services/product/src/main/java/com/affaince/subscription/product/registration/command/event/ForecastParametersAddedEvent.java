@@ -7,19 +7,11 @@ import com.affaince.subscription.product.registration.vo.ForecastedPriceParamete
  */
 public class ForecastParametersAddedEvent {
     private String productId;
-    private ForecastedPriceParameter forecastedPriceParamter;
-    private double demandDensity;
-    private double averageDemandPerSubscriber;
-    private long totalDeliveriesPerPeriod;
-    private double averageWeightPerDelivery;
+    private ForecastedPriceParameter forecastedPriceParameter;
 
-    public ForecastParametersAddedEvent(String productId, ForecastedPriceParameter forecastedPriceParamter, double demandDensity, double averageDemandPerSubscriber, long totalDeliveriesPerPeriod, double averageWeightPerDelivery) {
+    public ForecastParametersAddedEvent(String productId, ForecastedPriceParameter forecastedPriceParameter) {
         this.productId = productId;
-        this.forecastedPriceParamter = forecastedPriceParamter;
-        this.demandDensity = demandDensity;
-        this.averageDemandPerSubscriber = averageDemandPerSubscriber;
-        this.totalDeliveriesPerPeriod = totalDeliveriesPerPeriod;
-        this.averageWeightPerDelivery = averageWeightPerDelivery;
+        this.forecastedPriceParameter = forecastedPriceParameter;
     }
 
     public ForecastParametersAddedEvent() {
@@ -29,23 +21,8 @@ public class ForecastParametersAddedEvent {
         return productId;
     }
 
-    public ForecastedPriceParameter getForecastedPriceParamter() {
-        return forecastedPriceParamter;
+    public ForecastedPriceParameter getForecastedPriceParameter() {
+        return forecastedPriceParameter;
     }
 
-    public double getDemandDensity() {
-        return demandDensity;
-    }
-
-    public double getAverageDemandPerSubscriber() {
-        return averageDemandPerSubscriber;
-    }
-
-    public long getTotalDeliveriesPerPeriod() {
-        return totalDeliveriesPerPeriod;
-    }
-
-    public double getAverageWeightPerDelivery() {
-        return averageWeightPerDelivery;
-    }
 }

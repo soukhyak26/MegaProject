@@ -82,6 +82,18 @@ public class Product extends AbstractAnnotatedAggregateRoot {
                 this.actualProdctAccount;
     }
 
+    private ProductAccount getForecastedProductAccount() {
+        return this.forecastedProductAccount;
+    }
+
+    private ProductAccount getActualProdctAccount() {
+        return this.actualProdctAccount;
+    }
+
+    public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
+        return this.sensitiveTo;
+    }
+
     public String getProductName() {
         return this.productName;
     }
@@ -156,12 +168,12 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
     }
 
-    //Currently assuming it to be for forcast
+    //Currently assuming it to be for forecast
     @EventSourcingHandler
     public void on(ForecastParametersAddedEvent event) {
         this.productId = event.getProductId();
         this.calculationBasis = CalculationBasis.FORECAST;
-        final ForecastedPriceParameter priceParameter = event.getForecastedPriceParamter();
+        final ForecastedPriceParameter priceParameter = event.getForecastedPriceParameter();
         final LocalDate fromDate = new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1);
         final LocalDate toDate = new LocalDate(fromDate.getYear(), fromDate.getMonthOfYear(), fromDate.dayOfMonth().getMaximumValue());
 
@@ -170,18 +182,14 @@ public class Product extends AbstractAnnotatedAggregateRoot {
                 priceParameter.getMRP(),
                 fromDate,
                 toDate,
-                priceParameter.getNumberOfNewCustomersAssociatedWithAPrice(),
-                priceParameter.getNumberOfChurnedCustomersAssociatedWithAPrice()
+                priceParameter.getNumberofNewSubscriptions(),
+                priceParameter.getNumberOfChurnedSubscritptions()
         );
         getProductAccount().addNewPriceBucket(new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1), priceBucket);
 
         ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
         productPerformanceTracker.setFromDate(fromDate);
-        productPerformanceTracker.setDemandDensity(event.getDemandDensity());
-/*
-        productPerformanceTracker.setTotalDeliveriesPerPeriod(event.getTotalDeliveriesPerPeriod());
-        productPerformanceTracker.setAverageWeightPerDelivery(event.getAverageWeightPerDelivery());
-*/
+        productPerformanceTracker.setDemandDensity(priceParameter.getDemandDensity());
         getProductAccount().addPerformanceTracker(fromDate, productPerformanceTracker);
     }
 
@@ -216,8 +224,6 @@ public class Product extends AbstractAnnotatedAggregateRoot {
             newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
             newPriceBucket.setMRP(event.getCurrentMRP());
             this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
-            //PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
-            //priceDeterminator.calculateOfferedPrice(this);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
 
@@ -246,10 +252,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
 
     public void addForecastParameters(AddForecastParametersCommand command) {
         apply(new ForecastParametersAddedEvent(
-                this.productId, command.getForecastedPriceParameter(), command.getDemandDensity(),
-                command.getAverageDemandPerSubscriber(), command.getTotalDeliveriesPerPeriod(),
-                command.getAverageWeightPerDelivery()
-        ));
+                this.productId, command.getForecastedPriceParameter()));
 
     }
 
@@ -266,4 +269,9 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
 
+    public void updateForecastFromActuals() {
+        ProductAccount actualAccount=this.getActualProdctAccount();
+
+
+    }
 }

@@ -6,52 +6,12 @@ import com.affaince.subscription.product.registration.vo.ForecastedPriceParamete
  * Created by rbsavaliya on 05-12-2015.
  */
 public class AddForecastParametersRequest {
-    private ForecastedPriceParameter forecastedPriceParameter;
-    private double demandDensity;
-    private double averageDemandPerSubscriber;
-    private long totalDeliveriesPerPeriod;
-    private double averageWeightPerDelivery;
+    private ForecastedPriceParameter [] forecastedPriceParameters;
 
     public AddForecastParametersRequest() {
     }
 
-    public ForecastedPriceParameter getForecastedPriceParameter() {
-        return forecastedPriceParameter;
-    }
-
-    public void setForecastedPriceParameter(ForecastedPriceParameter forecastedPriceParameter) {
-        this.forecastedPriceParameter = forecastedPriceParameter;
-    }
-
-    public double getDemandDensity() {
-        return demandDensity;
-    }
-
-    public void setDemandDensity(double demandDensity) {
-        this.demandDensity = demandDensity;
-    }
-
-    public double getAverageDemandPerSubscriber() {
-        return averageDemandPerSubscriber;
-    }
-
-    public void setAverageDemandPerSubscriber(double averageDemandPerSubscriber) {
-        this.averageDemandPerSubscriber = averageDemandPerSubscriber;
-    }
-
-    public long getTotalDeliveriesPerPeriod() {
-        return totalDeliveriesPerPeriod;
-    }
-
-    public void setTotalDeliveriesPerPeriod(long totalDeliveriesPerPeriod) {
-        this.totalDeliveriesPerPeriod = totalDeliveriesPerPeriod;
-    }
-
-    public double getAverageWeightPerDelivery() {
-        return averageWeightPerDelivery;
-    }
-
-    public void setAverageWeightPerDelivery(double averageWeightPerDelivery) {
-        this.averageWeightPerDelivery = averageWeightPerDelivery;
+    public ForecastedPriceParameter[] getForecastedPriceParameters() {
+        return this.forecastedPriceParameters;
     }
 }

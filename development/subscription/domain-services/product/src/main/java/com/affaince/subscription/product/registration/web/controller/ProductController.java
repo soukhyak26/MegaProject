@@ -5,6 +5,7 @@ import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.product.registration.command.*;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.registration.query.view.ProductView;
+import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.registration.web.request.*;
 import com.google.common.collect.ImmutableMap;
@@ -66,7 +67,7 @@ public class ProductController {
             throw e;
         }
         ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
-        return new ResponseEntity<Object>(ImmutableMap.of("id",request.getProductId()), HttpStatus.CREATED);
+        return new ResponseEntity<Object>(ImmutableMap.of("id", request.getProductId()), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
@@ -99,19 +100,15 @@ public class ProductController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        AddForecastParametersCommand command = new AddForecastParametersCommand(
-                productId,
-                request.getForecastedPriceParameter(),
-                request.getDemandDensity(),
-                request.getAverageDemandPerSubscriber(),
-                request.getTotalDeliveriesPerPeriod(),
-                request.getAverageWeightPerDelivery()
-        );
-        //commandGateway.executeAsync(command);
-        try {
-            this.commandGateway.executeAsync(command);
-        } catch (Exception e) {
-            throw e;
+        ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
+        for (ForecastedPriceParameter parameter : forecastParameters) {
+            AddForecastParametersCommand command = new AddForecastParametersCommand(productId, parameter);
+
+            try {
+                this.commandGateway.executeAsync(command);
+            } catch (Exception e) {
+                throw e;
+            }
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
