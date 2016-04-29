@@ -20,20 +20,22 @@ import java.util.Map;
  * Created by anayonkar on 26/3/16.
  */
 public final class ExecutionFlowConfiguration {
-    public static final String XSD_PATH = "src"
+    public static final String XSD_NAME = "ExecutionFlow.xsd";
+    public static final String XSD_PATH = File.separator + "src"
             + File.separator
             + "main"
             + File.separator
             + "resources"
             + File.separator
-            + "ExecutionFlow.xsd";
-    public static final String XML_PATH = "src"
+            + XSD_NAME;
+    public static final String XML_NAME = "ExecutionFlow.xml";
+    public static final String XML_PATH = File.separator + "src"
             + File.separator
             + "main"
             + File.separator
             + "resources"
             + File.separator
-            + "ExecutionFlow.xml";
+            + XML_NAME;
     private static final String EXECUTIONFLOWS_TAG = "ExecutionFlows";
     private static final String EXECUTIONFLOW_TAG = "ExecutionFlow";
     private static final String EXECUTIONSTEP_TAG = "ExecutionStep";
@@ -64,9 +66,9 @@ public final class ExecutionFlowConfiguration {
         factory.setValidating(false);
         factory.setNamespaceAware(true);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        factory.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(XSD_PATH)}));
+        factory.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(XSD_NAME)}));
         SAXParser parser = factory.newSAXParser();
-        parser.parse(XML_PATH, new DefaultHandler() {
+        parser.parse(XML_NAME, new DefaultHandler() {
             private String currentFlow;
             @Override
             public void startElement(String uri, String localName, String qName, Attributes attributes)

@@ -26,6 +26,7 @@ import java.util.Map;
     //http://www.journaldev.com/895/how-to-validate-xml-against-xsd-in-java
     //http://www.rgagnon.com/javadetails/java-0669.html
     //http://www.mkyong.com/java/how-to-read-xml-file-in-java-sax-parser/
+    @Ignore
 public class ExecutionFlowInitializerTest {
     @Test
     public void initTest() {

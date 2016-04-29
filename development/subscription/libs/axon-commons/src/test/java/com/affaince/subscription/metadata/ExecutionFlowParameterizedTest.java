@@ -3,6 +3,7 @@ package com.affaince.subscription.metadata;
 import groovy.transform.ASTTest;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 //https://web.archive.org/web/20140220002834/http://isagoksu.com/2009/development/agile-development/test-driven-development/using-junit-parameterized-annotation/
 //http://www.mkyong.com/unittest/junit-4-tutorial-6-parameterized-test/
+    @Ignore
 @RunWith(Parameterized.class)
 public class ExecutionFlowParameterizedTest {
     private static final String FLOW_PREFIX = "SampleFlow_";

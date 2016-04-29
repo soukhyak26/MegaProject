@@ -1,7 +1,9 @@
 package com.affaince.subscription.business.configuration;
 
+import com.affaince.subscription.business.command.domain.BusinessAccount;
 import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
 import com.affaince.subscription.business.command.event.OperatingExpenseUpdatedEvent;
+import com.affaince.subscription.business.command.event.ProductStatusReceivedEvent;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -27,11 +29,19 @@ public class Axon extends RabbitMQConfiguration {
         return repository;
     }
 
+    @Bean
+    public Repository<BusinessAccount> createBusinessAccountRepository(DisruptorCommandBus commandBus) {
+        Repository<BusinessAccount> repository = commandBus.createRepository(new GenericAggregateFactory<>(BusinessAccount.class));
+        return repository;
+    }
+
 
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent", OperatingExpenseUpdatedEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.*","");
         }};
     }
 }

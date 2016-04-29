@@ -22,6 +22,10 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
     private Map<YearMonth, Double> rollingExpenseForecast;
     private SensitivityCharacteristic sensitivityCharacteristic;
 
+    public CommonOperatingExpense() {
+
+    }
+
     public CommonOperatingExpense(String id, String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
         apply(new CommonExpenseCreatedEvent(id, expenseHeader, amount, sensitivityCharacteristic, YearMonth.now()));
     }

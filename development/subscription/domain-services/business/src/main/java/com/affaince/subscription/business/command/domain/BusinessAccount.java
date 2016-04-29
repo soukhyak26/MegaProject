@@ -1,15 +1,20 @@
 package com.affaince.subscription.business.command.domain;
 
+import com.affaince.subscription.business.accounting.Account;
+import com.affaince.subscription.business.command.event.CreateProvisionEvent;
+import com.affaince.subscription.business.command.event.ProductStatusReceivedEvent;
 import com.affaince.subscription.common.type.TimeBoundMoney;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 
 /**
  * Created by rsavaliya on 17/1/16.
  */
 public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
-    private final String id;
+    private String id;
     private TimeBoundMoney commonOperationExpensesDemand;
     private TimeBoundMoney subscriptionSpecificOperatingExpensesDemand;
     private TimeBoundMoney salesAndMarketingExpensesDemand;
@@ -24,9 +29,55 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     private TimeBoundMoney totalRevenueRegistered;
     private long totalSubscriptionsRegistered;
 
+    private Account purchaseCostAccount = new Account(0);
 
-    public BusinessAccount(String id) {
-        this.id = id;
+    private Account provisionalPurchaseCostAccount;
+
+    private LocalDate dateForProvision;
+
+    public BusinessAccount() {
+
+    }
+
+    public BusinessAccount(String id, double provisionForPurchaseCost, LocalDate provisionDate) {
+        /*this.id = id;
+        this.provisionalPurchaseCostAccount = new Account(provisionForPurchaseCost);
+        this.dateForProvision = provisionDate;*/
+        apply(new CreateProvisionEvent(id, provisionForPurchaseCost, provisionDate));
+    }
+
+   /* public void createProvisionForPurchaseCost(String businessAccountId, double provisionForPurchaseCost, LocalDate provisionDate) {
+        apply(new CreateProvisionEvent(businessAccountId, provisionForPurchaseCost, provisionDate));
+    }*/
+
+    @EventSourcingHandler
+    public void on(ProductStatusReceivedEvent event) {
+        double currentPurchasePrice = event.getCurrentPurchasePrice();
+        purchaseCostAccount.credit(currentPurchasePrice);
+        provisionalPurchaseCostAccount.debit(currentPurchasePrice);
+    }
+
+    @EventSourcingHandler
+    public void on(CreateProvisionEvent event) {
+        this.id = event.getBusinessAccountId();
+        this.provisionalPurchaseCostAccount = new Account(event.getProvisionForPurchaseCost());
+        this.dateForProvision = event.getProvisionDate();
+    }
+
+    public Account getPurchaseCostAccount() {
+        return purchaseCostAccount;
+    }
+
+    public void setPurchaseCostAccount(Account purchaseCostAccount) {
+        this.purchaseCostAccount = purchaseCostAccount;
+    }
+
+    public Account getProvisionalPurchaseCostAccount() {
+        return provisionalPurchaseCostAccount;
+    }
+
+    public void setProvisionalPurchaseCostAccount(Account provisionalPurchaseCostAccount) {
+        this.provisionalPurchaseCostAccount = provisionalPurchaseCostAccount;
     }
 
     public TimeBoundMoney getCommonOperationExpensesReserve() {

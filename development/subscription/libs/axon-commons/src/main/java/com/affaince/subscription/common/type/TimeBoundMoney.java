@@ -32,4 +32,8 @@ public class TimeBoundMoney {
         this.amount += amount;
         toDate.plusDays(periodInDays);
     }
+
+    public void debitFromTimeBoundMoney(double amount) {
+        this.amount -= amount;
+    }
 }
