@@ -18,6 +18,8 @@ public class PriceBucketView implements Comparable <PriceBucketView> {
     private double purchasePricePerUnit;
     private double offeredPricePerUnit;
     private double MRP;
+    private double fixedOperatingExpPerUnit;
+    private double variableOperatingExpPerUnit;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
@@ -123,5 +125,25 @@ public class PriceBucketView implements Comparable <PriceBucketView> {
 
     public void setSlope(double slope) {
         this.slope = slope;
+    }
+
+    public double getFixedOperatingExpPerUnit() {
+        return this.fixedOperatingExpPerUnit;
+    }
+
+    public void setFixedOperatingExpPerUnit(double fixedOperatingExpPerUnit) {
+        this.fixedOperatingExpPerUnit = fixedOperatingExpPerUnit;
+    }
+
+    public double getVariableOperatingExpPerUnit() {
+        return this.variableOperatingExpPerUnit;
+    }
+
+    public void setVariableOperatingExpPerUnit(double variableOperatingExpPerUnit) {
+        this.variableOperatingExpPerUnit = variableOperatingExpPerUnit;
+    }
+
+    public double calculateProfitPerBucket(){
+        return (this.numberOfExistingCustomersAssociatedWithAPrice*this.offeredPricePerUnit)-(this.numberOfExistingCustomersAssociatedWithAPrice*(this.purchasePricePerUnit+this.fixedOperatingExpPerUnit+this.variableOperatingExpPerUnit));
     }
 }

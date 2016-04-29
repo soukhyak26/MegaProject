@@ -9,9 +9,9 @@ import org.joda.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by mandark on 24-04-2016.
+ * Created by mandark on 29-04-2016.
  */
-public class SecondPriceCalculator extends AbstractPriceCalculator {
+public class DemandCutProfitGrowPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
         String productId = productStatisticsView.getProductMonthlyVersionId().getProductId();
@@ -21,16 +21,19 @@ public class SecondPriceCalculator extends AbstractPriceCalculator {
         final PriceBucketView minusOnePriceBucket=findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
 
         final PriceBucketView minusTwoPriceBucket=findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
-        if(null != latestPriceBucket && latestPriceBucket.getEntityStatus()== EntityStatus.ACTIVE && null ==minusOnePriceBucket && null == minusTwoPriceBucket){
 
-            double y2 = latestPriceBucket.getOfferedPricePerUnit();
-            double y1 = latestPriceBucket.getMRP();
-            double x2 = latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice();
-            double x1 = 0;
-            double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1);
+        if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
+                minusOnePriceBucket.calculateProfitPerBucket() > minusTwoPriceBucket.calculateProfitPerBucket() &&
+                minusOnePriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice() < minusTwoPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice() &&
+                minusOnePriceBucket.getOfferedPricePerUnit() > minusTwoPriceBucket.getOfferedPricePerUnit()){
+            double y2 = minusOnePriceBucket.getOfferedPricePerUnit();
+            double y1 = latestPriceBucket.getMRP();//markPrice.getOfferedPrice();
+            double x2 = minusOnePriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice();
+            double x1 = 0;//markPrice.getQuantity();
+
             double intercept = latestPriceBucket.getMRP();
-            //BIG QUESTION MARK HOW TO EXTRAPOLATE?
-            double expectedDemandedQuantity=0.0;
+            double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1 );
+            double expectedDemandedQuantity=productStatisticsView.getForecastedProductSubscriptionCount();
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemandedQuantity);
             PriceBucketView newPrieBucket=new PriceBucketView();
             newPrieBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDate.now()));
@@ -44,6 +47,5 @@ public class SecondPriceCalculator extends AbstractPriceCalculator {
             return getNextCalculator().calculatePrice(activePriceBuckets, productStatisticsView);
 
         }
-
     }
 }

@@ -41,6 +41,7 @@ public class PriceCalculator {
                 }
             }
             if (null == minusOneInput && null == minusTwoInput && tempInput.getOfferedPrice() < markPrice.getOfferedPrice()) {
+                //OPENING PRICE
                 double revenue = calculateRevenue(tempInput.getOfferedPrice(), tempInput.getQuantity());
                 double cost = calculateCost(tempInput.getBreakEvenPrice(), tempInput.getQuantity());
                 double profit = calculateProfit(revenue, cost);
@@ -48,24 +49,6 @@ public class PriceCalculator {
                 tempInput.setProfit(profit);
                 tempInput.setRevenue(revenue);
                 tempInput.setWeightedAverage(tempInput.getOfferedPrice());
-            } else if (null != minusOneInput && null != minusTwoInput && minusOneInput.getProfit() > minusTwoInput.getProfit()
-                    && minusOneInput.getQuantity() < minusTwoInput.getQuantity() && minusOneInput.getOfferedPrice() < minusTwoInput.getOfferedPrice()) {
-                double y2 = minusOneInput.getOfferedPrice();
-                double y1 = minusTwoInput.getOfferedPrice();
-                double x2 = minusOneInput.getQuantity();
-                double x1 = minusTwoInput.getQuantity();
-                double slope = calculateSlope(y2, y1, x2, x1);
-                double intercept = minusOneInput.getMRP();
-                double offeredPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantity());
-                tempInput.setOfferedPrice(offeredPrice);
-                double revenue = calculateRevenue(tempInput.getOfferedPrice(), tempInput.getQuantity());
-                double cost = calculateCost(tempInput.getBreakEvenPrice(), tempInput.getQuantity());
-                double profit = calculateProfit(revenue, cost);
-                tempInput.setSlope(slope);
-                tempInput.setCost(cost);
-                tempInput.setProfit(profit);
-                tempInput.setRevenue(revenue);
-                tempInput.setWeightedAverage(calculateWeightedAverage(traversedInputs));
             } else if (null != minusOneInput && null != minusTwoInput && minusOneInput.getProfit() > minusTwoInput.getProfit()
                     && minusOneInput.getQuantity() < minusTwoInput.getQuantity() && minusOneInput.getOfferedPrice() > minusTwoInput.getOfferedPrice()) {
                 double y2 = minusOneInput.getOfferedPrice();

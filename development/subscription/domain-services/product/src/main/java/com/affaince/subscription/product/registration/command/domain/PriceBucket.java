@@ -11,11 +11,11 @@ public class PriceBucket {
     private double purchasePricePerUnit;
     private double offeredPricePerUnit;
     private long totalQuantitySusbcribed;
-    //no need to maintain MPR versions in each basket
-    //private Map<LocalDate, Double> MRPVersions;
     private double MRP;
     private LocalDate fromDate;
     private LocalDate toDate;
+    private double fixedOperatingExpPerUnit;
+    private double variableOperatingExpPerUnit;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
@@ -116,5 +116,24 @@ public class PriceBucket {
 
     public void setTotalQuantitySusbcribed(long totalQuantitySusbcribed) {
         this.totalQuantitySusbcribed = totalQuantitySusbcribed;
+    }
+
+    public double getFixedOperatingExpPerUnit() {
+        return this.fixedOperatingExpPerUnit;
+    }
+
+    public void setFixedOperatingExpPerUnit(double fixedOperatingExpPerUnit) {
+        this.fixedOperatingExpPerUnit = fixedOperatingExpPerUnit;
+    }
+
+    public double getVariableOperatingExpPerUnit() {
+        return this.variableOperatingExpPerUnit;
+    }
+
+    public void setVariableOperatingExpPerUnit(double variableOperatingExpPerUnit) {
+        this.variableOperatingExpPerUnit = variableOperatingExpPerUnit;
+    }
+    private double calculateProfitPerBasket(){
+        return (this.numberOfExistingCustomersAssociatedWithAPrice*this.offeredPricePerUnit)-(this.numberOfExistingCustomersAssociatedWithAPrice*(this.purchasePricePerUnit+this.fixedOperatingExpPerUnit+this.variableOperatingExpPerUnit));
     }
 }

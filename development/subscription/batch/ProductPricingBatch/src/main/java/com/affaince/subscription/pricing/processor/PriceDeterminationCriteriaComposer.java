@@ -28,8 +28,7 @@ public class PriceDeterminationCriteriaComposer {
             FunctionCoefficients coefficient = new FunctionCoefficients(productView.getProductId(),0.0,0.0, CoefficientsType.DEMAND_FUNCTION_COEFFICIENT);
             List<FunctionCoefficients> functionCoefficientsList= new ArrayList<FunctionCoefficients>();
             functionCoefficientsList.add(coefficient);
-            PriceDeterminationCriteria criteria= new PriceDeterminationCriteria(functionCoefficientsList);
-            return criteria;
+            return new PriceDeterminationCriteria(functionCoefficientsList);
         }else if(productView.getPricingStrategyType()== PricingStrategyType.DEMAND_AND_COST_BASED_PRICING_STRATEGY){
             List<FunctionCoefficients> functionCoefficientsList= new ArrayList<FunctionCoefficients>();
             FunctionCoefficients costFunctionCoefficient=processCostFunction(productView);
