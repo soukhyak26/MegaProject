@@ -10,7 +10,7 @@ import java.util.List;
  * Created by mandark on 27-03-2016.
  */
 public class OpeningPriceCalculator extends AbstractPriceCalculator {
-    public PriceBucketView calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
         PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
         //if price is entered by merchant but there is no subscription yet as the product is not active yet...
 
@@ -18,7 +18,7 @@ public class OpeningPriceCalculator extends AbstractPriceCalculator {
             latestPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
             return latestPriceBucket;
         } else {
-            return getNextCalculator().calculatePrice(productId, activePriceBuckets, productStatisticsView);
+            return getNextCalculator().calculatePrice(activePriceBuckets, productStatisticsView);
         }
     }
 }

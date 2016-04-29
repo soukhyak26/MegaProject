@@ -18,7 +18,7 @@ public class CalculatorChain {
         initialCalculator = calculator;
     }
 
-    public PriceBucketView calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
-        return initialCalculator.calculatePrice(productId, activePriceBuckets, productStatisticsView);
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
+        return initialCalculator.calculatePrice(activePriceBuckets, productStatisticsView);
     }
 }

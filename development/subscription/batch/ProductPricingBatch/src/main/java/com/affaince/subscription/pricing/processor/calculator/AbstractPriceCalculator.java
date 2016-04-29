@@ -87,6 +87,6 @@ public abstract class AbstractPriceCalculator {
         return intercept + (slope * quantity);
     }
 
-    public abstract PriceBucketView calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView);
+    public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView);
 
 }

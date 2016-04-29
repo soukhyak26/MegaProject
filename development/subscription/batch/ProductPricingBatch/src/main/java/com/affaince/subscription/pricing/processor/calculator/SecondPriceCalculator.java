@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class SecondPriceCalculator extends AbstractPriceCalculator {
 
-    public PriceBucketView calculatePrice(String productId, List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
-
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
+        String productId = productStatisticsView.getProductMonthlyVersionId().getProductId();
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         final PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
 
@@ -41,7 +41,7 @@ public class SecondPriceCalculator extends AbstractPriceCalculator {
             newPrieBucket.setOfferedPricePerUnit(offeredPrice);
             return newPrieBucket;
         }else{
-            return getNextCalculator().calculatePrice(productId, activePriceBuckets, productStatisticsView);
+            return getNextCalculator().calculatePrice(activePriceBuckets, productStatisticsView);
 
         }
 

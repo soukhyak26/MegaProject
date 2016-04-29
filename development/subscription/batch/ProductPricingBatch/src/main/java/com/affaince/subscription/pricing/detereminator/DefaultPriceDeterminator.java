@@ -43,7 +43,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         CalculatorChain calculatorChain = new CalculatorChain();
         calculatorChain.addCalculator(new OpeningPriceCalculator());
         calculatorChain.addCalculator(new DemandCurveBasedPriceCalculator());
-        PriceBucketView latestPriceBucket= calculatorChain.calculatePrice(productId, activePriceBuckets, productStatisticsView);
+        PriceBucketView latestPriceBucket= calculatorChain.calculatePrice(activePriceBuckets, productStatisticsView);
         priceBucketViewRepository.save(latestPriceBucket);
         return latestPriceBucket;
 
