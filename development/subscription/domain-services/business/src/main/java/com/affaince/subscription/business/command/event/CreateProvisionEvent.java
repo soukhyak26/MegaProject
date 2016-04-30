@@ -10,6 +10,9 @@ public class CreateProvisionEvent {
     private double provisionForPurchaseCost;
     private LocalDate provisionDate;
 
+    public CreateProvisionEvent() {
+
+    }
     public CreateProvisionEvent(String businessAccountId, double provisionForPurchaseCost, LocalDate provisionDate) {
         this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;

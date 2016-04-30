@@ -1,5 +1,10 @@
 package com.affaince.subscription.metadata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.mongodb.util.JSON;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,7 +26,7 @@ import java.util.Map;
  */
 public final class ExecutionFlowConfiguration {
     public static final String XSD_NAME = "ExecutionFlow.xsd";
-    public static final String XSD_PATH = File.separator + "src"
+    public static final String XSD_PATH = "src"
             + File.separator
             + "main"
             + File.separator
@@ -29,13 +34,21 @@ public final class ExecutionFlowConfiguration {
             + File.separator
             + XSD_NAME;
     public static final String XML_NAME = "ExecutionFlow.xml";
-    public static final String XML_PATH = File.separator + "src"
+    public static final String XML_PATH = "src"
             + File.separator
             + "main"
             + File.separator
             + "resources"
             + File.separator
             + XML_NAME;
+    public static final String JSON_NAME = "/ExecutionFlow.json";
+    public static final String JSON_PATH = "src"
+            + File.separator
+            + "main"
+            + File.separator
+            + "resources"
+            + File.separator
+            + JSON_NAME;
     private static final String EXECUTIONFLOWS_TAG = "ExecutionFlows";
     private static final String EXECUTIONFLOW_TAG = "ExecutionFlow";
     private static final String EXECUTIONSTEP_TAG = "ExecutionStep";
@@ -43,7 +56,7 @@ public final class ExecutionFlowConfiguration {
     public Map<String, ExecutionFlow> getFlowConfiguration() {
         return flowConfiguration;
     }
-    private final Map<String, ExecutionFlow> flowConfiguration = new HashMap<>();
+    private Map<String, ExecutionFlow> flowConfiguration = new HashMap<>();
     private boolean isInit = false;
     private ExecutionFlowConfiguration() {
         if(isInit) return;
@@ -62,13 +75,13 @@ public final class ExecutionFlowConfiguration {
     //TODO: Can we use JAXB and generated classes for more sophisticated parsing?
     public void initConfiguration() throws SAXException, ParserConfigurationException, IOException {
         if(isInit) return;
-        SAXParserFactory factory = SAXParserFactory.newInstance();
+        /*SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(false);
         factory.setNamespaceAware(true);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        factory.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(XSD_NAME)}));
+        factory.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(XSD_PATH)}));
         SAXParser parser = factory.newSAXParser();
-        parser.parse(XML_NAME, new DefaultHandler() {
+        parser.parse(XML_PATH, new DefaultHandler() {
             private String currentFlow;
             @Override
             public void startElement(String uri, String localName, String qName, Attributes attributes)
@@ -83,14 +96,20 @@ public final class ExecutionFlowConfiguration {
                     case EXECUTIONSTEP_TAG:
                         flowConfiguration.get(currentFlow)
                                 .addExecutionFlowNode(
-                                        new ExecutionFlowNode(attributes.getValue(NAME_ATTRIBUTE), currentFlow)
+                                        new ExecutionFlowNode(attributes.getValue(NAME_ATTRIBUTE)*//*, currentFlow*//*)
                                 );
                         return;
                     default:
                         throw new RuntimeException("Invalid Tag : " + qName);
                 }
             }
-        });
+        });*/
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+        //flowConfiguration = new HashMap<>();
+        TypeFactory typeFactory = mapper.getTypeFactory();
+        MapType mapType = typeFactory.constructMapType(HashMap.class, String.class, ExecutionFlow.class);
+        flowConfiguration = mapper.readValue(new File(JSON_NAME), mapType);
         isInit = true;
     }
 }

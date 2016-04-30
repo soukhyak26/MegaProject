@@ -24,13 +24,13 @@ import java.util.concurrent.Executor;
  */
 public class TrackingEventProcessor extends EventProcessor {
     static {
-        try {
+       /* try {
             ExecutionFlowConfiguration.getInstance().initConfiguration();
         } catch (Exception e) {
             //TODO: Handle error
             System.out.println(e);
             e.printStackTrace();
-        }
+        }*/
     }
     //TODO: Check how to get instance of commonViewRepository
     private CommonViewRepository commonViewRepository;
@@ -51,14 +51,17 @@ public class TrackingEventProcessor extends EventProcessor {
             MetaData metadata = event.getMetaData();
             //String uuid = (String)metadata.get(MetadataFilter.FLOW_ID);
             CommonView commonViewMetadata = (CommonView)metadata.get(CommonView.METADATA);
-            String uuid = commonViewMetadata.getUuid();
-            CommonView commonView = commonViewRepository.findOne(uuid);
-            if(commonView == null) {
-                commonView = commonViewMetadata;
+            //TODO: fix how to read json file via sprint boot - then remove null check
+            if(commonViewMetadata != null) {
+                String uuid = commonViewMetadata.getUuid();
+                CommonView commonView = commonViewRepository.findOne(uuid);
+                if (commonView == null) {
+                    commonView = commonViewMetadata;
+                }
+                //TODO: Ideally, input to construct ExecutionFlowNode should come from configuration (ExecutionFlowConfiguration)
+                commonView.getExecutionFlow().addExecutionFlowNode(new ExecutionFlowNode("nodeName"/*, "flowName"*/));
+                commonViewRepository.save(commonView);
             }
-            //TODO: Ideally, input to construct ExecutionFlowNode should come from configuration (ExecutionFlowConfiguration)
-            commonView.getExecutionFlow().addExecutionFlowNode(new ExecutionFlowNode("nodeName", "flowName"));
-            commonViewRepository.save(commonView);
             return super.doHandle(event);
         } finally {
             //clear metadata from thread local

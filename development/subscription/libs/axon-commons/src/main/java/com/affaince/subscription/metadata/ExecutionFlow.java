@@ -9,8 +9,11 @@ import java.util.Set;
  * Created by anayonkar on 26/3/16.
  */
 public final class ExecutionFlow {
-    private final String flowName;
-    private final List<ExecutionFlowNode> flowNodes;
+    private String flowName;
+    private List<ExecutionFlowNode> flowNodes;
+    public ExecutionFlow() {
+
+    }
     public ExecutionFlow(String flowName) {
         this.flowName = flowName;
         this.flowNodes = new LinkedList<>();
@@ -22,6 +25,14 @@ public final class ExecutionFlow {
 
     public List<ExecutionFlowNode> getFlowNodes() {
         return flowNodes;
+    }
+
+    public void setFlowName(String flowName) {
+        this.flowName = flowName;
+    }
+
+    public void setFlowNodes(List<ExecutionFlowNode> flowNodes) {
+        this.flowNodes = flowNodes;
     }
 
     public boolean addExecutionFlowNode(ExecutionFlowNode executionFlowNode) {

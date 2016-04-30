@@ -4,23 +4,34 @@ package com.affaince.subscription.metadata;
  * Created by anayonkar on 26/3/16.
  */
 public final class ExecutionFlowNode {
-    private final String flowNodeName;
-    private final String flowName;
+    private String flowNodeName;
+    //private String flowName;
 
-    public ExecutionFlowNode(String flowNodeName, String flowName) {
+    public ExecutionFlowNode() {
+
+    }
+    public ExecutionFlowNode(String flowNodeName/*, String flowName*/) {
         this.flowNodeName = flowNodeName;
-        this.flowName = flowName;
+        //this.flowName = flowName;
     }
 
     public String getFlowNodeName() {
         return flowNodeName;
     }
 
-    public String getFlowName() {
+    /*public String getFlowName() {
         return flowName;
+    }*/
+
+    public void setFlowNodeName(String flowNodeName) {
+        this.flowNodeName = flowNodeName;
     }
 
-    @Override
+    /*public void setFlowName(String flowName) {
+        this.flowName = flowName;
+    }*/
+
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -37,5 +48,6 @@ public final class ExecutionFlowNode {
         int result = flowNodeName != null ? flowNodeName.hashCode() : 0;
         result = 31 * result + (flowName != null ? flowName.hashCode() : 0);
         return result;
-    }
+    }*/
+
 }

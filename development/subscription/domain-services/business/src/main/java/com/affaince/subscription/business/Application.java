@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 
 /**
  * Created by NIKUNJ on 7/12/2015.
@@ -18,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan("com.affaince")
 @AnnotationDriven
 @EnableAspectJAutoProxy
-@PropertySource({"classpath:Application.properties","classpath:ExecutionFlow.xsd","classpath:ExecutionFlow.xml"})
+@PropertySource({"classpath:Application.properties","classpath:ExecutionFlow.json"})
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
