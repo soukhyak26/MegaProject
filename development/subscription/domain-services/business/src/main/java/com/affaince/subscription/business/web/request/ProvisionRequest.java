@@ -7,14 +7,18 @@ import org.joda.time.LocalDate;
  */
 public class ProvisionRequest {
     private double provisionForPurchaseCost;
+    private double provisionForLosses;
+    /*private double provisionForBenefits;
+    private double provisionForTaxes;*/
     private LocalDate provisionDate;
 
     public ProvisionRequest() {
 
     }
 
-    public ProvisionRequest(double provisionForPurchaseCost, LocalDate provisionDate) {
+    public ProvisionRequest(double provisionForPurchaseCost, double provisionForLosses, LocalDate provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
+        this.provisionForLosses = provisionForLosses;
         this.provisionDate = provisionDate;
     }
 
@@ -24,6 +28,14 @@ public class ProvisionRequest {
 
     public void setProvisionForPurchaseCost(double provisionForPurchaseCost) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
+    }
+
+    public double getProvisionForLosses() {
+        return provisionForLosses;
+    }
+
+    public void setProvisionForLosses(double provisionForLosses) {
+        this.provisionForLosses = provisionForLosses;
     }
 
     public LocalDate getProvisionDate() {
@@ -38,6 +50,7 @@ public class ProvisionRequest {
     public String toString() {
         return "ProvisionRequest{" +
                 "provisionForPurchaseCost=" + provisionForPurchaseCost +
+                ", provisionForLosses=" + provisionForLosses +
                 ", provisionDate=" + provisionDate +
                 '}';
     }

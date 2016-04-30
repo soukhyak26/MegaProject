@@ -30,20 +30,38 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     private long totalSubscriptionsRegistered;
 
     private Account purchaseCostAccount = new Account(0);
+    private Account lossesAccount = new Account(0);
 
     private Account provisionalPurchaseCostAccount;
+    private Account provisionalLossesAccount;
 
     private LocalDate dateForProvision;
+
+    public Account getLossesAccount() {
+        return lossesAccount;
+    }
+
+    public void setLossesAccount(Account lossesAccount) {
+        this.lossesAccount = lossesAccount;
+    }
+
+    public Account getProvisionalLossesAccount() {
+        return provisionalLossesAccount;
+    }
+
+    public void setProvisionalLossesAccount(Account provisionalLossesAccount) {
+        this.provisionalLossesAccount = provisionalLossesAccount;
+    }
 
     public BusinessAccount() {
 
     }
 
-    public BusinessAccount(String id, double provisionForPurchaseCost, LocalDate provisionDate) {
+    public BusinessAccount(String id, double provisionForPurchaseCost, double provisionForLosses, LocalDate provisionDate) {
         /*this.id = id;
         this.provisionalPurchaseCostAccount = new Account(provisionForPurchaseCost);
         this.dateForProvision = provisionDate;*/
-        apply(new CreateProvisionEvent(id, provisionForPurchaseCost, provisionDate));
+        apply(new CreateProvisionEvent(id, provisionForPurchaseCost, provisionForLosses, provisionDate));
     }
 
    /* public void createProvisionForPurchaseCost(String businessAccountId, double provisionForPurchaseCost, LocalDate provisionDate) {
@@ -61,6 +79,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void on(CreateProvisionEvent event) {
         this.id = event.getBusinessAccountId();
         this.provisionalPurchaseCostAccount = new Account(event.getProvisionForPurchaseCost());
+        this.provisionalLossesAccount = new Account(event.getProvisionForLosses());
         this.dateForProvision = event.getProvisionDate();
     }
 

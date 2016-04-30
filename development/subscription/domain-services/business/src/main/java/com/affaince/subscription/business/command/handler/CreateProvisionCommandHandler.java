@@ -31,7 +31,7 @@ public class CreateProvisionCommandHandler {
         LocalDate provisionDate = command.getProvisionDate();
         double provisionForPurchaseCost = command.getProvisionForPurchaseCost();
         businessAccount.createProvisionForPurchaseCost(command.getBusinessAccountId(), command.getProvisionForPurchaseCost(), command.getProvisionDate());*/
-        BusinessAccount businessAccount = new BusinessAccount(command.getBusinessAccountId(), command.getProvisionForPurchaseCost(), command.getProvisionDate());
+        BusinessAccount businessAccount = new BusinessAccount(command.getBusinessAccountId(), command.getProvisionForPurchaseCost(), command.getProvisionForLosses(), command.getProvisionDate());
         repository.add(businessAccount);
     }
 

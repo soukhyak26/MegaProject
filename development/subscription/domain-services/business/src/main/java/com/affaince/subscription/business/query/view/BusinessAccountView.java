@@ -27,9 +27,27 @@ public class BusinessAccountView {
     }
 
     private Account purchaseCostAccount = new Account(0);
+    private Account lossesAccount = new Account(0);
 
     //TODO: Will be received via REST controller
     private Account provisionalPurchaseCostAccount;
+    private Account provisionalLossesAccount;
+
+    public Account getLossesAccount() {
+        return lossesAccount;
+    }
+
+    public void setLossesAccount(Account lossesAccount) {
+        this.lossesAccount = lossesAccount;
+    }
+
+    public Account getProvisionalLossesAccount() {
+        return provisionalLossesAccount;
+    }
+
+    public void setProvisionalLossesAccount(Account provisionalLossesAccount) {
+        this.provisionalLossesAccount = provisionalLossesAccount;
+    }
 
     public BusinessAccountView(String id, LocalDate dateForProvision) {
         this.id = id;

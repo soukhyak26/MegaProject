@@ -8,15 +8,25 @@ import org.joda.time.LocalDate;
 public class CreateProvisionEvent {
     private String businessAccountId;
     private double provisionForPurchaseCost;
+    private double provisionForLosses;
     private LocalDate provisionDate;
 
     public CreateProvisionEvent() {
 
     }
-    public CreateProvisionEvent(String businessAccountId, double provisionForPurchaseCost, LocalDate provisionDate) {
+    public CreateProvisionEvent(String businessAccountId, double provisionForPurchaseCost, double provisionForLosses, LocalDate provisionDate) {
         this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;
+        this.provisionForLosses = provisionForLosses;
         this.provisionDate = provisionDate;
+    }
+
+    public double getProvisionForLosses() {
+        return provisionForLosses;
+    }
+
+    public void setProvisionForLosses(double provisionForLosses) {
+        this.provisionForLosses = provisionForLosses;
     }
 
     public String getBusinessAccountId() {

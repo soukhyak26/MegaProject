@@ -27,6 +27,7 @@ public class CreateProvisionEventListener {
             businessAccountView = new BusinessAccountView(event.getBusinessAccountId(), event.getProvisionDate());
         }
         businessAccountView.setProvisionalPurchaseCostAccount(new Account(event.getProvisionForPurchaseCost()));
+        businessAccountView.setProvisionalLossesAccount(new Account(event.getProvisionForLosses()));
         businessAccountView.setDateForProvision(event.getProvisionDate());
         businessAccountViewRepository.save(businessAccountView);
     }
