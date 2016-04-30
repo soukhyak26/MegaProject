@@ -1,27 +1,29 @@
 package com.affaince.subscription.product.registration.vo;
 
-import org.joda.time.YearMonth;
+import org.joda.time.LocalDate;
 
 /**
  * Created by mandark on 01-01-2016.
  */
 public class ForecastedPriceParameter {
+    private LocalDate fromDate;
+    private LocalDate toDate;
     private double purchasePricePerUnit;
     private double MRP;
     private long numberofNewSubscriptions;
-    private long numberOfChurnedSubscritptions;
+    private long numberOfChurnedSubscriptions;
     private double demandDensity;
     private double averageDemandPerSubscriber;
-    private YearMonth monthOfYear;
 
-    public ForecastedPriceParameter(double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, double demandDensity, double averageDemandPerSubscriber, YearMonth monthOfYear) {
+    public ForecastedPriceParameter(LocalDate fromDate,LocalDate toDate,double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, double demandDensity, double averageDemandPerSubscriber) {
+        this.fromDate=fromDate;
+        this.toDate=toDate;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberofNewSubscriptions = numberofNewSubscriptions;
-        this.numberOfChurnedSubscritptions = numberOfChurnedSubscritptions;
+        this.numberOfChurnedSubscriptions = numberOfChurnedSubscritptions;
         this.demandDensity = demandDensity;
         this.averageDemandPerSubscriber = averageDemandPerSubscriber;
-        this.monthOfYear = monthOfYear;
     }
 
     public double getPurchasePricePerUnit() {
@@ -36,8 +38,8 @@ public class ForecastedPriceParameter {
         return this.numberofNewSubscriptions;
     }
 
-    public long getNumberOfChurnedSubscritptions() {
-        return this.numberOfChurnedSubscritptions;
+    public long getNumberOfChurnedSubscriptions() {
+        return this.numberOfChurnedSubscriptions;
     }
 
     public double getDemandDensity() {
@@ -48,7 +50,11 @@ public class ForecastedPriceParameter {
         return this.averageDemandPerSubscriber;
     }
 
-    public YearMonth getMonthOfYear() {
-        return this.monthOfYear;
+    public LocalDate getFromDate() {
+        return this.fromDate;
+    }
+
+    public LocalDate getToDate() {
+        return this.toDate;
     }
 }

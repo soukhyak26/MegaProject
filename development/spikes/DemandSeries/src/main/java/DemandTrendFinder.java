@@ -23,6 +23,7 @@ public class DemandTrendFinder {
             dp.setIndependentValue("p", Double.parseDouble(priceAndQuantity[0]));
             timeLags.add(Double.parseDouble(priceAndQuantity[4]));
             dp.setIndependentValue("t", Double.parseDouble(priceAndQuantity[4]));
+            //dp.setIndependentValue("t",i+1);
 
             observedData.add(dp);
             i++;
@@ -38,7 +39,7 @@ public class DemandTrendFinder {
 
         for (int k = 0; k < 10; k++) {
             dp = new Observation(0.0);
-            dp.setIndependentValue("t", newLags[k]);
+            dp.setIndependentValue("t",newLags[k]);
             fcValues.add(dp);
         }
         // Get forecast values

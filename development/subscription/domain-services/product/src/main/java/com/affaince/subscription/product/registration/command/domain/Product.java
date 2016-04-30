@@ -2,7 +2,6 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.product.registration.command.AddForecastParametersCommand;
 import com.affaince.subscription.product.registration.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
@@ -12,6 +11,7 @@ import com.affaince.subscription.product.registration.vo.ForecastedPriceParamete
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
@@ -19,10 +19,7 @@ import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by rbsavaliya on 19-07-2015.
- */
-public class Product extends AbstractAnnotatedAggregateRoot {
+public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     @AggregateIdentifier
     private String productId;
@@ -34,11 +31,11 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     private List<String> substitutes;
     private List<String> complements;
 
+    @EventSourcedMember
     private ProductConfiguration productConfiguration;
-    private ProductAccount forecastedProductAccount = new ProductAccount();
-    private ProductAccount actualProdctAccount = new ProductAccount();
+    @EventSourcedMember
+    private ProductAccount productAccount ;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
-    private transient CalculationBasis calculationBasis = CalculationBasis.ACTUAL;
 
     public Product() {
 
@@ -69,25 +66,10 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     public ProductAccount getProductAccount() {
-        return getCurrentProductAccount();
+        return this.productAccount;
     }
-
     public PriceBucket getLatestPriceBucket() {
-        return getCurrentProductAccount().getLatestPriceBucket();
-    }
-
-    private ProductAccount getCurrentProductAccount() {
-        return this.calculationBasis == CalculationBasis.FORECAST ?
-                this.forecastedProductAccount :
-                this.actualProdctAccount;
-    }
-
-    private ProductAccount getForecastedProductAccount() {
-        return this.forecastedProductAccount;
-    }
-
-    private ProductAccount getActualProdctAccount() {
-        return this.actualProdctAccount;
+        return getProductAccount().getLatestPriceBucket();
     }
 
     public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
@@ -134,13 +116,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         return getProductAccount().getLatestPerformanceTracker().getDemandDensity();
     }
 
-    public CalculationBasis getCalculationBasis() {
-        return calculationBasis;
-    }
 
-    public void setCalculationBasis(CalculationBasis calculationBasis) {
-        this.calculationBasis = calculationBasis;
-    }
 
     @EventSourcingHandler
     public void on(ProductRegisteredEvent event) {
@@ -152,14 +128,13 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         this.substitutes = event.getSubstitutes();
         this.complements = event.getComplements();
         this.sensitiveTo = event.getSensitiveTo();
-        forecastedProductAccount = new ProductAccount();
+        this.productAccount = new ProductAccount();
     }
 
     //Currently assuming it to be for actual price
     @EventSourcingHandler
     public void on(OfferedPriceUpdatedEvent event) {
         this.productId = event.getProductId();
-        this.calculationBasis = CalculationBasis.ACTUAL;
         PriceBucket lastPriceBucket = this.getLatestPriceBucket();
         PriceBucket newPriceBucket = new PriceBucket(lastPriceBucket);
         newPriceBucket.setFromDate(event.getCurrentPriceDate());
@@ -169,6 +144,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     }
 
     //Currently assuming it to be for forecast
+/*
     @EventSourcingHandler
     public void on(ForecastParametersAddedEvent event) {
         this.productId = event.getProductId();
@@ -183,7 +159,7 @@ public class Product extends AbstractAnnotatedAggregateRoot {
                 fromDate,
                 toDate,
                 priceParameter.getNumberofNewSubscriptions(),
-                priceParameter.getNumberOfChurnedSubscritptions()
+                priceParameter.getNumberOfChurnedSubscriptions()
         );
         getProductAccount().addNewPriceBucket(new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1), priceBucket);
 
@@ -192,12 +168,12 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         productPerformanceTracker.setDemandDensity(priceParameter.getDemandDensity());
         getProductAccount().addPerformanceTracker(fromDate, productPerformanceTracker);
     }
+*/
 
     //Only for actuals
     @EventSourcingHandler
     public void on(ProductStatusReceivedEvent event) {
         this.productId = event.getProductId();
-        this.calculationBasis = CalculationBasis.ACTUAL;
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
         if (latestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
             PriceBucket newPriceBucket = new PriceBucket();
@@ -206,8 +182,6 @@ public class Product extends AbstractAnnotatedAggregateRoot {
             newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
             newPriceBucket.setMRP(event.getCurrentMRP());
             this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
-            //PriceDeterminator priceDeterminator = new DefaultPriceDeterminator(null);
-            //priceDeterminator.calculateOfferedPrice(this);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
@@ -215,7 +189,6 @@ public class Product extends AbstractAnnotatedAggregateRoot {
     @EventHandler
     public void on(ProductStatusUpdatedEvent event) {
         this.productId = event.getProductId();
-        this.calculationBasis = CalculationBasis.ACTUAL;
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
         if (latestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
             PriceBucket newPriceBucket = new PriceBucket();
@@ -250,12 +223,6 @@ public class Product extends AbstractAnnotatedAggregateRoot {
         apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
 
-    public void addForecastParameters(AddForecastParametersCommand command) {
-        apply(new ForecastParametersAddedEvent(
-                this.productId, command.getForecastedPriceParameter()));
-
-    }
-
     public void addCurrentOfferedPrice(double currentOfferedPrice) {
         apply(new CurrentOfferedPriceAddedEvent(this.productId, currentOfferedPrice));
     }
@@ -266,12 +233,5 @@ public class Product extends AbstractAnnotatedAggregateRoot {
 
     public void setLatestOfferedPrice(double offeredPrice) {
         getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
-    }
-
-
-    public void updateForecastFromActuals() {
-        ProductAccount actualAccount=this.getActualProdctAccount();
-
-
     }
 }

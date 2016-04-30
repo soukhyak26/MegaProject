@@ -2,13 +2,14 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
 import java.util.List;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
  */
-public class ProductConfiguration {
+public class ProductConfiguration extends AbstractAnnotatedEntity {
     private Period demandCurvePeriod;
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;

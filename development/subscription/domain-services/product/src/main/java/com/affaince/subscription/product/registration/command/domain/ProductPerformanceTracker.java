@@ -1,11 +1,12 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDate;
 
 /**
  * Created by mandark on 28-11-2015.
  */
-public class ProductPerformanceTracker {
+public class ProductPerformanceTracker extends AbstractAnnotatedEntity{
     private LocalDate fromDate;
     private LocalDate toDate;
     private double expectedMerchantProfitPercentage;

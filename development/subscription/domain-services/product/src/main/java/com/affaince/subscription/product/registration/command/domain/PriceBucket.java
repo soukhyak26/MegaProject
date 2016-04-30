@@ -1,13 +1,13 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDate;
 
 /**
  * Created by mandark on 28-11-2015.
  */
-public class PriceBucket {
+public class PriceBucket extends AbstractAnnotatedEntity {
     //No need to maintain purchase price versions in each basket
-    //private Map<LocalDate, Double> purchasePricePerUnitVersions;
     private double purchasePricePerUnit;
     private double offeredPricePerUnit;
     private long totalQuantitySusbcribed;

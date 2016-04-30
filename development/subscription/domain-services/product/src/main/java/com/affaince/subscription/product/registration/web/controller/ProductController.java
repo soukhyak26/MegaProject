@@ -2,8 +2,15 @@ package com.affaince.subscription.product.registration.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.product.registration.command.*;
+import com.affaince.subscription.product.registration.command.AddCurrentOfferedPriceCommand;
+import com.affaince.subscription.product.registration.command.RegisterProductCommand;
+import com.affaince.subscription.product.registration.command.SetProductConfigurationCommand;
+import com.affaince.subscription.product.registration.command.UpdateProductStatusCommand;
+import com.affaince.subscription.product.registration.query.repository.ForecastedPriceBucketViewRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
+import com.affaince.subscription.product.registration.query.view.ForecastedPriceBucketsView;
+import com.affaince.subscription.product.registration.query.view.ProductForecastView;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
@@ -35,11 +42,15 @@ public class ProductController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository repository;
+    private final ProductForecastViewRepository productForecastViewRepository;
+    private final ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
 
     @Autowired
-    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository repository) {
+    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository repository, ProductForecastViewRepository productForecastViewRepository, ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository) {
         this.commandGateway = commandGateway;
         this.repository = repository;
+        this.productForecastViewRepository = productForecastViewRepository;
+        this.forecastedPriceBucketViewRepository = forecastedPriceBucketViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -102,6 +113,7 @@ public class ProductController {
         }
         ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
         for (ForecastedPriceParameter parameter : forecastParameters) {
+/*
             AddForecastParametersCommand command = new AddForecastParametersCommand(productId, parameter);
 
             try {
@@ -109,6 +121,12 @@ public class ProductController {
             } catch (Exception e) {
                 throw e;
             }
+*/
+            ProductForecastView productForecastView = new ProductForecastView(productId, parameter.getFromDate(), parameter.getToDate(), parameter.getDemandDensity(), parameter.getAverageDemandPerSubscriber(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
+            productForecastViewRepository.save(productForecastView);
+
+            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, parameter.getFromDate(), parameter.getToDate(), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
+            forecastedPriceBucketViewRepository.save(forecastedPriceBucketsView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

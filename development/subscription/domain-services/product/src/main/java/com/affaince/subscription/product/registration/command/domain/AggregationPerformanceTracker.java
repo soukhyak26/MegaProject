@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.YearMonth;
 
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 /**
  * Created by mandark on 02-01-2016.
  */
-public class AggregationPerformanceTracker {
+public class AggregationPerformanceTracker extends AbstractAnnotatedEntity {
     private YearMonth monthOfYear;
     private double expectedMerchantProfitPercentage;
     private double grossMargin;

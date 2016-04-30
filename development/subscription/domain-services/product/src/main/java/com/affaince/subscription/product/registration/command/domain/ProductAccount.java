@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonth;
 
@@ -10,7 +11,7 @@ import java.util.TreeMap;
 /**
  * Created by mandark on 28-11-2015.
  */
-public class ProductAccount {
+public class ProductAccount extends AbstractAnnotatedEntity {
     private Map<LocalDate, PriceBucket> activePriceBuckets;
     private Map<LocalDate, ProductPerformanceTracker> performanceTracker;
     private Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics;
