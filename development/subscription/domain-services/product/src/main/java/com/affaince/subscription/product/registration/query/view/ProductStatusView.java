@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Created by anayonkar on 13/2/16.
- */
 @Document(collection = "ProductStatusView")
 public class ProductStatusView {
 

@@ -14,8 +14,9 @@ public class CalculatorChain {
     public void addCalculator(AbstractPriceCalculator calculator) {
         if (initialCalculator != null) {
             initialCalculator.setNextCalculator(calculator);
+        }else {
+            initialCalculator = calculator;
         }
-        initialCalculator = calculator;
     }
 
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
