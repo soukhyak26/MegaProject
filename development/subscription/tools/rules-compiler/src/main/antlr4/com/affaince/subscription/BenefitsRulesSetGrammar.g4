@@ -4,7 +4,7 @@ grammar BenefitsRulesSetGrammar;
 
 GIVEN : 'given';
 CONFIGURE : 'configure';
-OFFER : 'offer';
+ELIGIBLE : 'eligible';
 CURRENCY : 'currency';
 CASHBACK : 'cashback';
 DISCOUNT : 'discount';
@@ -67,7 +67,7 @@ WS : [ \r\t\u000C\n]+ -> skip ;
 /* Parser rules */
 rule_set : single_rule;
 
-single_rule :GIVEN convert_expr CONFIGURE AS arithmatic_expr OFFER offer_expr APPLY WHEN conclusion SEMI;
+single_rule :GIVEN convert_expr CONFIGURE AS arithmatic_expr ELIGIBLE WHEN eligibility_condition APPLY WHEN conclusion SEMI;
 
 convert_expr:
     money_convert_expr  AND period_convert_expr
@@ -89,8 +89,34 @@ arithmatic_expr:
 benefit_money_base_var : IDENTIFIER;
 benefit_period_base_var : IDENTIFIER;
 
-offer_expr: DECIMAL POINT EQ DECIMAL benefit_type DISCOUNT;
-benefit_type : CURRENCY | CASHBACK | REWARD_POINT;
+eligibility_condition:
+    logical_expr;
+
+logical_expr
+ : logical_expr AND logical_expr # LogicalExpressionAnd
+ | logical_expr OR logical_expr  # LogicalExpressionOr
+ | comparison_expr               # ComparisonExpression
+ | LPAREN logical_expr AND logical_expr RPAREN    # LogicalExpressionInParen
+ | LPAREN logical_expr OR logical_expr RPAREN    # LogicalExpressionInParen
+ | logical_entity                # LogicalEntity
+ ;
+
+comparison_expr : comparison_operand comp_operator DECIMAL
+                    # ComparisonExpressionWithOperator
+                | LPAREN comparison_expr RPAREN # ComparisonExpressionParens
+                ;
+
+comparison_operand: IDENTIFIER;
+comp_operator : GT
+              | GE
+              | LT
+              | LE
+              | EQ
+              ;
+
+logical_entity : (TRUE | FALSE) # LogicalConst
+               | IDENTIFIER     # LogicalVariable
+               ;
 
 conclusion:
     PAYMENT_MODE EQ DECIMAL PERCENT_ADVANCE_PAYMENT benefit_pay_method WITH which_delivey option;
