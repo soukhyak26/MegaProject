@@ -34,6 +34,13 @@ public class BusinessAccountProvisionController {
         CreateProvisionCommand command = new CreateProvisionCommand(request.getProvisionForPurchaseCost(),
                 request.getProvisionForLosses(),
                 request.getProvisionForBenefits(),
+                request.getProvisionForTaxes(),
+                request.getProvisionForOthers(),
+                request.getProvisionForCommonExpenses(),
+                request.getProvisionForNodalAccount(),
+                request.getProvisionForRevenue(),
+                request.getProvisionForBookingAmount(),
+                request.getProvisionForSubscriptionSpecificExpenses(),
                 request.getProvisionDate());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

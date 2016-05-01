@@ -35,6 +35,13 @@ public class CreateProvisionCommandHandler {
                 command.getProvisionForPurchaseCost(),
                 command.getProvisionForLosses(),
                 command.getProvisionForBenefits(),
+                command.getProvisionForTaxes(),
+                command.getProvisionForOthers(),
+                command.getProvisionForCommonExpenses(),
+                command.getProvisionForNodalAccount(),
+                command.getProvisionForRevenue(),
+                command.getProvisionForBookingAmount(),
+                command.getProvisionForSubscriptionSpecificExpenses(),
                 command.getProvisionDate());
         repository.add(businessAccount);
     }

@@ -28,11 +28,26 @@ public class BusinessAccountView {
 
     private Account purchaseCostAccount = new Account(0);
     private Account lossesAccount = new Account(0);
+    private Account benefitsAccount = new Account(0);
+    private Account taxesAccount = new Account(0);
+    private Account othersAccount = new Account(0);
+    private Account commonExpensesAccount = new Account(0);
+    private Account nodalAccountAccount = new Account(0);
+    private Account revenueAccount = new Account(0);
+    private Account bookingAmountAccount = new Account(0);
+    private Account subscriptionSpecificExpensesAccount = new Account(0);
 
     //TODO: Will be received via REST controller
     private Account provisionalPurchaseCostAccount;
     private Account provisionalLossesAccount;
     private Account provisionalBenefitsAccount;
+    private Account provisionalTaxesAccount;
+    private Account provisionalOthersAccount;
+    private Account provisionalCommonExpensesAccount;
+    private Account provisionalNodalAccountAccount;
+    private Account provisionalRevenueAccount;
+    private Account provisionalBookingAmountAccount;
+    private Account provisoinalSubscriptionSpecificExpensesAccount;
 
     public Account getLossesAccount() {
         return lossesAccount;
@@ -82,5 +97,125 @@ public class BusinessAccountView {
 
     public void setProvisionalBenefitsAccount(Account provisionalBenefitsAccount) {
         this.provisionalBenefitsAccount = provisionalBenefitsAccount;
+    }
+
+    public Account getBenefitsAccount() {
+        return benefitsAccount;
+    }
+
+    public void setBenefitsAccount(Account benefitsAccount) {
+        this.benefitsAccount = benefitsAccount;
+    }
+
+    public Account getTaxesAccount() {
+        return taxesAccount;
+    }
+
+    public void setTaxesAccount(Account taxesAccount) {
+        this.taxesAccount = taxesAccount;
+    }
+
+    public Account getOthersAccount() {
+        return othersAccount;
+    }
+
+    public void setOthersAccount(Account othersAccount) {
+        this.othersAccount = othersAccount;
+    }
+
+    public Account getProvisionalTaxesAccount() {
+        return provisionalTaxesAccount;
+    }
+
+    public void setProvisionalTaxesAccount(Account provisionalTaxesAccount) {
+        this.provisionalTaxesAccount = provisionalTaxesAccount;
+    }
+
+    public Account getProvisionalOthersAccount() {
+        return provisionalOthersAccount;
+    }
+
+    public void setProvisionalOthersAccount(Account provisionalOthersAccount) {
+        this.provisionalOthersAccount = provisionalOthersAccount;
+    }
+
+    public Account getCommonExpensesAccount() {
+        return commonExpensesAccount;
+    }
+
+    public void setCommonExpensesAccount(Account commonExpensesAccount) {
+        this.commonExpensesAccount = commonExpensesAccount;
+    }
+
+    public Account getNodalAccountAccount() {
+        return nodalAccountAccount;
+    }
+
+    public void setNodalAccountAccount(Account nodalAccountAccount) {
+        this.nodalAccountAccount = nodalAccountAccount;
+    }
+
+    public Account getRevenueAccount() {
+        return revenueAccount;
+    }
+
+    public void setRevenueAccount(Account revenueAccount) {
+        this.revenueAccount = revenueAccount;
+    }
+
+    public Account getBookingAmountAccount() {
+        return bookingAmountAccount;
+    }
+
+    public void setBookingAmountAccount(Account bookingAmountAccount) {
+        this.bookingAmountAccount = bookingAmountAccount;
+    }
+
+    public Account getSubscriptionSpecificExpensesAccount() {
+        return subscriptionSpecificExpensesAccount;
+    }
+
+    public void setSubscriptionSpecificExpensesAccount(Account subscriptionSpecificExpensesAccount) {
+        this.subscriptionSpecificExpensesAccount = subscriptionSpecificExpensesAccount;
+    }
+
+    public Account getProvisionalCommonExpensesAccount() {
+        return provisionalCommonExpensesAccount;
+    }
+
+    public void setProvisionalCommonExpensesAccount(Account provisionalCommonExpensesAccount) {
+        this.provisionalCommonExpensesAccount = provisionalCommonExpensesAccount;
+    }
+
+    public Account getProvisionalNodalAccountAccount() {
+        return provisionalNodalAccountAccount;
+    }
+
+    public void setProvisionalNodalAccountAccount(Account provisionalNodalAccountAccount) {
+        this.provisionalNodalAccountAccount = provisionalNodalAccountAccount;
+    }
+
+    public Account getProvisionalRevenueAccount() {
+        return provisionalRevenueAccount;
+    }
+
+    public void setProvisionalRevenueAccount(Account provisionalRevenueAccount) {
+        this.provisionalRevenueAccount = provisionalRevenueAccount;
+    }
+
+    public Account getProvisionalBookingAmountAccount() {
+        return provisionalBookingAmountAccount;
+    }
+
+    public void setProvisionalBookingAmountAccount(Account provisionalBookingAmountAccount) {
+        this.provisionalBookingAmountAccount = provisionalBookingAmountAccount;
+    }
+
+    public Account getProvisoinalSubscriptionSpecificExpensesAccount() {
+        return provisoinalSubscriptionSpecificExpensesAccount;
+    }
+
+    public void setProvisoinalSubscriptionSpecificExpensesAccount(Account provisoinalSubscriptionSpecificExpensesAccount) {
+        this.provisoinalSubscriptionSpecificExpensesAccount = provisoinalSubscriptionSpecificExpensesAccount;
     }
 }

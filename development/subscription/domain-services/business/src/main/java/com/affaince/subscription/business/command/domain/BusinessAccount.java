@@ -32,10 +32,25 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     private Account purchaseCostAccount = new Account(0);
     private Account lossesAccount = new Account(0);
     private Account benefitsAccount = new Account(0);
+    private Account taxesAccount = new Account(0);
+    private Account othersAccount = new Account(0);
+    private Account commonExpensesAccount = new Account(0);
+    private Account nodalAccountAccount = new Account(0);
+    private Account revenueAccount = new Account(0);
+    private Account bookingAmountAccount = new Account(0);
+    private Account subscriptionSpecificExpensesAccount = new Account(0);
 
     private Account provisionalPurchaseCostAccount;
     private Account provisionalLossesAccount;
     private Account provisionalBenefitsAccount;
+    private Account provisionalTaxesAccount;
+    private Account provisionalOthersAccount;
+    private Account provisionalCommonExpensesAccount;
+    private Account provisionalNodalAccountAccount;
+    private Account provisionalRevenueAccount;
+    private Account provisoinalBookinAmountAccount;
+    private Account provisionalSubscriptionSpecificExpensesAccount;
+
 
     private LocalDate dateForProvision;
 
@@ -63,6 +78,13 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                            double provisionForPurchaseCost,
                            double provisionForLosses,
                            double provisionForBenefits,
+                           double provisionForTaxes,
+                           double provisionForOthers,
+                           double provisionForCommonExpenses,
+                           double provisionForNodalAccount,
+                           double provisionForRevenue,
+                           double provisionForBookingAmount,
+                           double provisoinForSubscriptionSpecificExpenses,
                            LocalDate provisionDate) {
         /*this.id = id;
         this.provisionalPurchaseCostAccount = new Account(provisionForPurchaseCost);
@@ -71,6 +93,13 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                 provisionForPurchaseCost,
                 provisionForLosses,
                 provisionForBenefits,
+                provisionForTaxes,
+                provisionForOthers,
+                provisionForCommonExpenses,
+                provisionForNodalAccount,
+                provisionForRevenue,
+                provisionForBookingAmount,
+                provisoinForSubscriptionSpecificExpenses,
                 provisionDate));
     }
 
@@ -108,6 +137,54 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     public void setProvisionalPurchaseCostAccount(Account provisionalPurchaseCostAccount) {
         this.provisionalPurchaseCostAccount = provisionalPurchaseCostAccount;
+    }
+
+    public Account getBenefitsAccount() {
+        return benefitsAccount;
+    }
+
+    public void setBenefitsAccount(Account benefitsAccount) {
+        this.benefitsAccount = benefitsAccount;
+    }
+
+    public Account getTaxesAccount() {
+        return taxesAccount;
+    }
+
+    public void setTaxesAccount(Account taxesAccount) {
+        this.taxesAccount = taxesAccount;
+    }
+
+    public Account getOthersAccount() {
+        return othersAccount;
+    }
+
+    public void setOthersAccount(Account othersAccount) {
+        this.othersAccount = othersAccount;
+    }
+
+    public Account getProvisionalBenefitsAccount() {
+        return provisionalBenefitsAccount;
+    }
+
+    public void setProvisionalBenefitsAccount(Account provisionalBenefitsAccount) {
+        this.provisionalBenefitsAccount = provisionalBenefitsAccount;
+    }
+
+    public Account getProvisionalTaxesAccount() {
+        return provisionalTaxesAccount;
+    }
+
+    public void setProvisionalTaxesAccount(Account provisionalTaxesAccount) {
+        this.provisionalTaxesAccount = provisionalTaxesAccount;
+    }
+
+    public Account getProvisionalOthersAccount() {
+        return provisionalOthersAccount;
+    }
+
+    public void setProvisionalOthersAccount(Account provisionalOthersAccount) {
+        this.provisionalOthersAccount = provisionalOthersAccount;
     }
 
     public TimeBoundMoney getCommonOperationExpensesReserve() {
