@@ -7,6 +7,12 @@ public class Rule implements RuleSetPojo {
 
     private Conclusion conclusion;
 
+    private MoneyConversion moneyConversion;
+
+    private PeriodConversion periodConversion;
+
+    private ArithmeticExpression arithmeticExpression;
+
     public Rule() {
     }
 
@@ -15,7 +21,7 @@ public class Rule implements RuleSetPojo {
         this.conclusion = conclusion;
     }
 
-    @JsonProperty("cond")
+    @JsonProperty("eligibilityCondition")
     public LogicalExpression getCondition() {
         return condition;
     }
@@ -24,13 +30,32 @@ public class Rule implements RuleSetPojo {
         this.condition = condition;
     }
 
-    @JsonProperty("concl")
+    @JsonProperty("payableCriteria")
     public Conclusion getConclusion() {
         return conclusion;
     }
 
     public void setConclusion(String unit, double value) {
         this.conclusion = new Conclusion(unit, value);
+    }
+
+    @JsonProperty ("moneyConversion")
+    public MoneyConversion getMoneyConversion() {
+        return moneyConversion;
+    }
+
+    @JsonProperty ("periodConversion")
+    public PeriodConversion getPeriodConversion() {
+        return periodConversion;
+    }
+
+    @JsonProperty ("totalPointCalcExpr")
+    public ArithmeticExpression getArithmeticExpression() {
+        return arithmeticExpression;
+    }
+
+    public void setArithmeticExpression(ArithmeticExpression arithmeticExpression) {
+        this.arithmeticExpression = arithmeticExpression;
     }
 
     @Override
