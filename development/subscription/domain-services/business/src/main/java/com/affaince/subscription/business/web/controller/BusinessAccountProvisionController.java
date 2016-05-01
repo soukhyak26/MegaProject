@@ -22,7 +22,8 @@ public class BusinessAccountProvisionController {
     private final BusinessAccountViewRepository businessAccountViewRepository;
 
     @Autowired
-    public BusinessAccountProvisionController(SubscriptionCommandGateway commandGateway, BusinessAccountViewRepository businessAccountViewRepository) {
+    public BusinessAccountProvisionController(SubscriptionCommandGateway commandGateway,
+                                              BusinessAccountViewRepository businessAccountViewRepository) {
         this.commandGateway = commandGateway;
         this.businessAccountViewRepository = businessAccountViewRepository;
     }
@@ -30,7 +31,10 @@ public class BusinessAccountProvisionController {
     @RequestMapping(method = RequestMethod.POST, value = "setProvision")
     @Consumes("application/json")
     public ResponseEntity<Object> setProvision(@RequestBody @Valid ProvisionRequest request) throws Exception {
-        CreateProvisionCommand command = new CreateProvisionCommand(request.getProvisionForPurchaseCost(), request.getProvisionForLosses(), request.getProvisionDate());
+        CreateProvisionCommand command = new CreateProvisionCommand(request.getProvisionForPurchaseCost(),
+                request.getProvisionForLosses(),
+                request.getProvisionForBenefits(),
+                request.getProvisionDate());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

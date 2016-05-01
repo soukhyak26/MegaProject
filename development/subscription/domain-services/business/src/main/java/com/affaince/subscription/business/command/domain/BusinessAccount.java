@@ -31,9 +31,11 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     private Account purchaseCostAccount = new Account(0);
     private Account lossesAccount = new Account(0);
+    private Account benefitsAccount = new Account(0);
 
     private Account provisionalPurchaseCostAccount;
     private Account provisionalLossesAccount;
+    private Account provisionalBenefitsAccount;
 
     private LocalDate dateForProvision;
 
@@ -57,11 +59,19 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public BusinessAccount(String id, double provisionForPurchaseCost, double provisionForLosses, LocalDate provisionDate) {
+    public BusinessAccount(String id,
+                           double provisionForPurchaseCost,
+                           double provisionForLosses,
+                           double provisionForBenefits,
+                           LocalDate provisionDate) {
         /*this.id = id;
         this.provisionalPurchaseCostAccount = new Account(provisionForPurchaseCost);
         this.dateForProvision = provisionDate;*/
-        apply(new CreateProvisionEvent(id, provisionForPurchaseCost, provisionForLosses, provisionDate));
+        apply(new CreateProvisionEvent(id,
+                provisionForPurchaseCost,
+                provisionForLosses,
+                provisionForBenefits,
+                provisionDate));
     }
 
    /* public void createProvisionForPurchaseCost(String businessAccountId, double provisionForPurchaseCost, LocalDate provisionDate) {
@@ -80,6 +90,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.id = event.getBusinessAccountId();
         this.provisionalPurchaseCostAccount = new Account(event.getProvisionForPurchaseCost());
         this.provisionalLossesAccount = new Account(event.getProvisionForLosses());
+        this.provisionalBenefitsAccount = new Account(event.getProvisionForBenefits());
         this.dateForProvision = event.getProvisionDate();
     }
 

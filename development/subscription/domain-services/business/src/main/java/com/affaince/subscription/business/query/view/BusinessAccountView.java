@@ -32,6 +32,7 @@ public class BusinessAccountView {
     //TODO: Will be received via REST controller
     private Account provisionalPurchaseCostAccount;
     private Account provisionalLossesAccount;
+    private Account provisionalBenefitsAccount;
 
     public Account getLossesAccount() {
         return lossesAccount;
@@ -73,5 +74,13 @@ public class BusinessAccountView {
 
     public void setProvisionalPurchaseCostAccount(Account provisionalPurchaseCostAccount) {
         this.provisionalPurchaseCostAccount = provisionalPurchaseCostAccount;
+    }
+
+    public Account getProvisionalBenefitsAccount() {
+        return provisionalBenefitsAccount;
+    }
+
+    public void setProvisionalBenefitsAccount(Account provisionalBenefitsAccount) {
+        this.provisionalBenefitsAccount = provisionalBenefitsAccount;
     }
 }

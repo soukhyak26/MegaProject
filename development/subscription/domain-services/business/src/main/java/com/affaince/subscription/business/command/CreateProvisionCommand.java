@@ -8,12 +8,17 @@ import org.joda.time.LocalDate;
 public class CreateProvisionCommand {
     private double provisionForPurchaseCost;
     private double provisionForLosses;
+    private double provisionForBenefits;
     private LocalDate provisionDate;
     private String businessAccountId;
 
-    public CreateProvisionCommand(double provisionForPurchaseCost, double provisionForLosses, LocalDate provisionDate) {
+    public CreateProvisionCommand(double provisionForPurchaseCost,
+                                  double provisionForLosses,
+                                  double provisionForBenefits,
+                                  LocalDate provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
+        this.provisionForBenefits = provisionForBenefits;
         this.provisionDate = provisionDate;
         businessAccountId = Integer.valueOf(provisionDate.getYear()).toString();
     }
@@ -44,5 +49,13 @@ public class CreateProvisionCommand {
 
     public String getBusinessAccountId() {
         return businessAccountId;
+    }
+
+    public double getProvisionForBenefits() {
+        return provisionForBenefits;
+    }
+
+    public void setProvisionForBenefits(double provisionForBenefits) {
+        this.provisionForBenefits = provisionForBenefits;
     }
 }

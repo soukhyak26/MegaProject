@@ -22,6 +22,7 @@ public class ProductStatusReceivedEventListener {
     @EventHandler
     public void on(ProductStatusReceivedEvent productStatusReceivedEvent) {
         double currentPurchasePrice = productStatusReceivedEvent.getCurrentPurchasePrice();
+        //TODO : fix id for business account aggregate (must be year of provision)
         BusinessAccountView businessAccountView = businessAccountViewRepository.findById(BusinessAccountView.BA_VIEW_ID);
         businessAccountView.debitPurchaseCost(currentPurchasePrice);
     }

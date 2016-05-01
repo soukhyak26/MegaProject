@@ -9,15 +9,21 @@ public class CreateProvisionEvent {
     private String businessAccountId;
     private double provisionForPurchaseCost;
     private double provisionForLosses;
+    private double provisionForBenefits;
     private LocalDate provisionDate;
 
     public CreateProvisionEvent() {
 
     }
-    public CreateProvisionEvent(String businessAccountId, double provisionForPurchaseCost, double provisionForLosses, LocalDate provisionDate) {
+    public CreateProvisionEvent(String businessAccountId,
+                                double provisionForPurchaseCost,
+                                double provisionForLosses,
+                                double provisionForBenefits,
+                                LocalDate provisionDate) {
         this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
+        this.provisionForBenefits = provisionForBenefits;
         this.provisionDate = provisionDate;
     }
 
@@ -51,5 +57,13 @@ public class CreateProvisionEvent {
 
     public void setProvisionDate(LocalDate provisionDate) {
         this.provisionDate = provisionDate;
+    }
+
+    public double getProvisionForBenefits() {
+        return provisionForBenefits;
+    }
+
+    public void setProvisionForBenefits(double provisionForBenefits) {
+        this.provisionForBenefits = provisionForBenefits;
     }
 }
