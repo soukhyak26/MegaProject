@@ -1,0 +1,45 @@
+{
+	"id": "a165618d-f358-dd26-248a-b133a0e0ac28",
+	"name": "BusinessAccount",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"id": "18eb3c9e-c936-4156-19ed-1b86bbe00203",
+			"name": "ProvisionsForBusinessAccount",
+			"description": "",
+			"order": [
+				"8884e162-3d5e-34f7-e5d1-8f7986341570"
+			],
+			"owner": 0
+		}
+	],
+	"timestamp": 1462099897246,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "8884e162-3d5e-34f7-e5d1-8f7986341570",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:8082/businessacount/setProvision",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "a165618d-f358-dd26-248a-b133a0e0ac28",
+			"data": [],
+			"dataMode": "raw",
+			"name": "SetProvision",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1462100004450,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "18eb3c9e-c936-4156-19ed-1b86bbe00203",
+			"rawModeData": "{\n    \"provisionForPurchaseCost\":\"100000.0\",\n    \"provisionForLosses\":\"50000.0\",\n    \"provisionForBenefits\":\"25000.0\",\n    \"provisionForTaxes\":\"20000.0\",\n    \"provisionForOthers\":\"10000.0\",\n    \"provisionForCommonExpenses\":\"10000.0\",\n    \"provisionForNodalAccount\":\"20000.0\",\n    \"provisionForRevenue\":\"30000.0\",\n    \"provisionForBookingAmount\":\"40000.0\",\n    \"provisionForSubscriptionSpecificExpenses\":\"50000.0\",\n    \"provisionDate\":\"2016-04-29\"\n}"
+		}
+	]
+}
