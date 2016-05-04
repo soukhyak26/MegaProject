@@ -3,11 +3,15 @@ package com.affaince.subscription.business.command.domain;
 import com.affaince.subscription.business.accounting.Account;
 import com.affaince.subscription.business.command.event.CreateProvisionEvent;
 import com.affaince.subscription.business.command.event.ProductStatusReceivedEvent;
+import com.affaince.subscription.business.provision.ProvisionIndex;
 import com.affaince.subscription.common.type.TimeBoundMoney;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rsavaliya on 17/1/16.
@@ -29,77 +33,29 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     private TimeBoundMoney totalRevenueRegistered;
     private long totalSubscriptionsRegistered;
 
-    private Account purchaseCostAccount = new Account(0);
-    private Account lossesAccount = new Account(0);
-    private Account benefitsAccount = new Account(0);
-    private Account taxesAccount = new Account(0);
-    private Account othersAccount = new Account(0);
-    private Account commonExpensesAccount = new Account(0);
-    private Account nodalAccountAccount = new Account(0);
-    private Account revenueAccount = new Account(0);
-    private Account bookingAmountAccount = new Account(0);
-    private Account subscriptionSpecificExpensesAccount = new Account(0);
-
-    private Account provisionalPurchaseCostAccount;
-    private Account provisionalLossesAccount;
-    private Account provisionalBenefitsAccount;
-    private Account provisionalTaxesAccount;
-    private Account provisionalOthersAccount;
-    private Account provisionalCommonExpensesAccount;
-    private Account provisionalNodalAccountAccount;
-    private Account provisionalRevenueAccount;
-    private Account provisoinalBookinAmountAccount;
-    private Account provisionalSubscriptionSpecificExpensesAccount;
-
+    List<Double> provisionList;
+    List<Account> accountList = new ArrayList<>(ProvisionIndex.MAX_CAPACITY.getIndex());
+    List<Account> provisionalAccountList = new ArrayList<>(ProvisionIndex.MAX_CAPACITY.getIndex());
 
     private LocalDate dateForProvision;
 
-    public Account getLossesAccount() {
-        return lossesAccount;
+    {
+        for(int i = 0 ; i < ProvisionIndex.MAX_CAPACITY.getIndex() ; i++) {
+            accountList.add(i, new Account(0));
+        }
     }
-
-    public void setLossesAccount(Account lossesAccount) {
-        this.lossesAccount = lossesAccount;
-    }
-
-    public Account getProvisionalLossesAccount() {
-        return provisionalLossesAccount;
-    }
-
-    public void setProvisionalLossesAccount(Account provisionalLossesAccount) {
-        this.provisionalLossesAccount = provisionalLossesAccount;
-    }
-
     public BusinessAccount() {
 
     }
 
     public BusinessAccount(String id,
-                           double provisionForPurchaseCost,
-                           double provisionForLosses,
-                           double provisionForBenefits,
-                           double provisionForTaxes,
-                           double provisionForOthers,
-                           double provisionForCommonExpenses,
-                           double provisionForNodalAccount,
-                           double provisionForRevenue,
-                           double provisionForBookingAmount,
-                           double provisoinForSubscriptionSpecificExpenses,
+                           List<Double> provisionList,
                            LocalDate provisionDate) {
         /*this.id = id;
         this.provisionalPurchaseCostAccount = new Account(provisionForPurchaseCost);
         this.dateForProvision = provisionDate;*/
         apply(new CreateProvisionEvent(id,
-                provisionForPurchaseCost,
-                provisionForLosses,
-                provisionForBenefits,
-                provisionForTaxes,
-                provisionForOthers,
-                provisionForCommonExpenses,
-                provisionForNodalAccount,
-                provisionForRevenue,
-                provisionForBookingAmount,
-                provisoinForSubscriptionSpecificExpenses,
+                provisionList,
                 provisionDate));
     }
 
@@ -110,81 +66,30 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ProductStatusReceivedEvent event) {
         double currentPurchasePrice = event.getCurrentPurchasePrice();
-        purchaseCostAccount.credit(currentPurchasePrice);
-        provisionalPurchaseCostAccount.debit(currentPurchasePrice);
+        /*purchaseCostAccount.credit(currentPurchasePrice);
+        provisionalPurchaseCostAccount.debit(currentPurchasePrice);*/
+        accountList.get(ProvisionIndex.PURCHASE_COST.getIndex()).credit(currentPurchasePrice);
+        provisionalAccountList.get(ProvisionIndex.PURCHASE_COST.getIndex()).debit(currentPurchasePrice);
     }
 
     @EventSourcingHandler
     public void on(CreateProvisionEvent event) {
         this.id = event.getBusinessAccountId();
-        this.provisionalPurchaseCostAccount = new Account(event.getProvisionForPurchaseCost());
+        /*this.provisionalPurchaseCostAccount = new Account(event.getProvisionForPurchaseCost());
         this.provisionalLossesAccount = new Account(event.getProvisionForLosses());
-        this.provisionalBenefitsAccount = new Account(event.getProvisionForBenefits());
+        this.provisionalBenefitsAccount = new Account(event.getProvisionForBenefits());*/
+        /*for(ProvisionIndex provisionIndex : ProvisionIndex.values()) {
+            switch (provisionIndex) {
+                case MAX_CAPACITY:
+                    break;
+                default:
+                    provisionalAccountList.add(provisionIndex.getIndex(), new Account(event.getProvisionList().get(provisionIndex.getIndex())));
+            }
+        }*/
+        for(int i = 0 ; i < ProvisionIndex.MAX_CAPACITY.getIndex() ; i++) {
+            provisionalAccountList.add(i, new Account(event.getProvisionList().get(i)));
+        }
         this.dateForProvision = event.getProvisionDate();
-    }
-
-    public Account getPurchaseCostAccount() {
-        return purchaseCostAccount;
-    }
-
-    public void setPurchaseCostAccount(Account purchaseCostAccount) {
-        this.purchaseCostAccount = purchaseCostAccount;
-    }
-
-    public Account getProvisionalPurchaseCostAccount() {
-        return provisionalPurchaseCostAccount;
-    }
-
-    public void setProvisionalPurchaseCostAccount(Account provisionalPurchaseCostAccount) {
-        this.provisionalPurchaseCostAccount = provisionalPurchaseCostAccount;
-    }
-
-    public Account getBenefitsAccount() {
-        return benefitsAccount;
-    }
-
-    public void setBenefitsAccount(Account benefitsAccount) {
-        this.benefitsAccount = benefitsAccount;
-    }
-
-    public Account getTaxesAccount() {
-        return taxesAccount;
-    }
-
-    public void setTaxesAccount(Account taxesAccount) {
-        this.taxesAccount = taxesAccount;
-    }
-
-    public Account getOthersAccount() {
-        return othersAccount;
-    }
-
-    public void setOthersAccount(Account othersAccount) {
-        this.othersAccount = othersAccount;
-    }
-
-    public Account getProvisionalBenefitsAccount() {
-        return provisionalBenefitsAccount;
-    }
-
-    public void setProvisionalBenefitsAccount(Account provisionalBenefitsAccount) {
-        this.provisionalBenefitsAccount = provisionalBenefitsAccount;
-    }
-
-    public Account getProvisionalTaxesAccount() {
-        return provisionalTaxesAccount;
-    }
-
-    public void setProvisionalTaxesAccount(Account provisionalTaxesAccount) {
-        this.provisionalTaxesAccount = provisionalTaxesAccount;
-    }
-
-    public Account getProvisionalOthersAccount() {
-        return provisionalOthersAccount;
-    }
-
-    public void setProvisionalOthersAccount(Account provisionalOthersAccount) {
-        this.provisionalOthersAccount = provisionalOthersAccount;
     }
 
     public TimeBoundMoney getCommonOperationExpensesReserve() {

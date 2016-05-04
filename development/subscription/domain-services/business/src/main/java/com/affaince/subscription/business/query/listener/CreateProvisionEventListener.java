@@ -2,6 +2,7 @@ package com.affaince.subscription.business.query.listener;
 
 import com.affaince.subscription.business.accounting.Account;
 import com.affaince.subscription.business.command.event.CreateProvisionEvent;
+import com.affaince.subscription.business.provision.ProvisionIndex;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -26,16 +27,17 @@ public class CreateProvisionEventListener {
         if(businessAccountView == null) {
             businessAccountView = new BusinessAccountView(event.getBusinessAccountId(), event.getProvisionDate());
         }
-        businessAccountView.setProvisionalPurchaseCostAccount(new Account(event.getProvisionForPurchaseCost()));
-        businessAccountView.setProvisionalLossesAccount(new Account(event.getProvisionForLosses()));
-        businessAccountView.setProvisionalBenefitsAccount(new Account(event.getProvisionForBenefits()));
-        businessAccountView.setProvisionalTaxesAccount(new Account(event.getProvisionForTaxes()));
-        businessAccountView.setProvisionalOthersAccount(new Account(event.getProvisionForOthers()));
-        businessAccountView.setProvisionalCommonExpensesAccount(new Account(event.getProvisionForCommonExpenses()));
-        businessAccountView.setProvisionalNodalAccountAccount(new Account(event.getProvisionForNodalAccount()));
-        businessAccountView.setProvisionalRevenueAccount(new Account(event.getProvisionForRevenue()));
-        businessAccountView.setProvisionalBookingAmountAccount(new Account(event.getProvisionForBookinAmount()));
-        businessAccountView.setProvisoinalSubscriptionSpecificExpensesAccount(new Account(event.getProvisionForSubscriptionSpecificExpenses()));
+        /*for(ProvisionIndex provisionIndex : ProvisionIndex.values()) {
+            switch (provisionIndex) {
+                case MAX_CAPACITY:
+                    break;
+                default:
+                    businessAccountView.getProvisionalAccountList().add(provisionIndex.getIndex(), new Account(event.getProvisionList().get(provisionIndex.getIndex())));
+            }
+        }*/
+        for(int i = 0 ; i < ProvisionIndex.MAX_CAPACITY.getIndex() ; i++) {
+            businessAccountView.getProvisionalAccountList().add(i, new Account(event.getProvisionList().get(i)));
+        }
         businessAccountView.setDateForProvision(event.getProvisionDate());
         businessAccountViewRepository.save(businessAccountView);
     }

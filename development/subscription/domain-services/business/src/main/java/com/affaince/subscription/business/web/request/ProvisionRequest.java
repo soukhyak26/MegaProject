@@ -1,6 +1,10 @@
 package com.affaince.subscription.business.web.request;
 
+import com.affaince.subscription.business.provision.ProvisionIndex;
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anayonkar on 29/4/16.
@@ -17,6 +21,7 @@ public class ProvisionRequest {
     private double provisionForBookingAmount;
     private double provisionForSubscriptionSpecificExpenses;
     private LocalDate provisionDate;
+    private List<Double> provisionList = new ArrayList<>(ProvisionIndex.MAX_CAPACITY.getIndex());
 
     public ProvisionRequest() {
 
