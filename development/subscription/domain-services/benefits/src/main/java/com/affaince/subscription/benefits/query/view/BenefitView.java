@@ -1,6 +1,6 @@
 package com.affaince.subscription.benefits.query.view;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,10 +13,10 @@ public class BenefitView {
     private String benefitId;
     private String benefitEquation;
     private String benefitEquationInJsonFormat;
-    private LocalDateTime activationStartTime;
-    private LocalDateTime activationEndTime;
+    private LocalDate activationStartTime;
+    private LocalDate activationEndTime;
 
-    public BenefitView(String benefitId, String benefitEquation, String benefitEquationInJsonFormat, LocalDateTime activationStartTime, LocalDateTime activationEndTime) {
+    public BenefitView(String benefitId, String benefitEquation, String benefitEquationInJsonFormat, LocalDate activationStartTime, LocalDate activationEndTime) {
         this.benefitId = benefitId;
         this.benefitEquation = benefitEquation;
         this.benefitEquationInJsonFormat = benefitEquationInJsonFormat;
@@ -48,19 +48,19 @@ public class BenefitView {
         this.benefitEquationInJsonFormat = benefitEquationInJsonFormat;
     }
 
-    public LocalDateTime getActivationStartTime() {
+    public LocalDate getActivationStartTime() {
         return activationStartTime;
     }
 
-    public void setActivationStartTime(LocalDateTime activationStartTime) {
+    public void setActivationStartTime(LocalDate activationStartTime) {
         this.activationStartTime = activationStartTime;
     }
 
-    public LocalDateTime getActivationEndTime() {
+    public LocalDate getActivationEndTime() {
         return activationEndTime;
     }
 
-    public void setActivationEndTime(LocalDateTime activationEndTime) {
+    public void setActivationEndTime(LocalDate activationEndTime) {
         this.activationEndTime = activationEndTime;
     }
 }

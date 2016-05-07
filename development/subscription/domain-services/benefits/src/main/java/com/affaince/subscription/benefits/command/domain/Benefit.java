@@ -4,7 +4,7 @@ import com.affaince.subscription.benefits.command.event.BenefitAddedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by rbsavaliya on 25-10-2015.
@@ -14,10 +14,10 @@ public class Benefit extends AbstractAnnotatedAggregateRoot<String> {
     private String benefitId;
     private String benefitEquation;
     private String benefitEquationInJsonFormat;
-    private LocalDateTime activationStartTime;
-    private LocalDateTime activationEndTime;
+    private LocalDate activationStartTime;
+    private LocalDate activationEndTime;
 
-    public Benefit(String benefitId, String benefitEquation, String benefitEquationInJsonFormat, LocalDateTime activationStartTime, LocalDateTime activationEndTime) {
+    public Benefit(String benefitId, String benefitEquation, String benefitEquationInJsonFormat, LocalDate activationStartTime, LocalDate activationEndTime) {
         apply(new BenefitAddedEvent(benefitId, benefitEquation, benefitEquationInJsonFormat, activationStartTime, activationEndTime));
     }
 

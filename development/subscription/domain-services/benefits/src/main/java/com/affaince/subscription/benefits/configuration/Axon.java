@@ -1,6 +1,7 @@
 package com.affaince.subscription.benefits.configuration;
 
 import com.affaince.subscription.benefits.command.domain.Benefit;
+import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends ActiveMQConfiguration {
 
     @Bean
     public Repository<Benefit> createRepository(DisruptorCommandBus commandBus) {
