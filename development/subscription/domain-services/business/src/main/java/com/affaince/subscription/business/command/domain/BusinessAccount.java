@@ -125,6 +125,11 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new BookingAmountCreditedEvent(this.id, bookingAmount));
     }
 
+    public void adjustBasketAmount(double basketAmount) {
+        apply(new BookingAmountDebitedEvent(this.id, basketAmount));
+        apply(new RevenueCreditEvent(this.id, basketAmount));
+    }
+
     @EventSourcingHandler
     public void on(CreateProvisionEvent event) {
         this.id = event.getBusinessAccountId();
@@ -193,6 +198,16 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(BookingAmountCreditedEvent event) {
         this.bookingAmountAccount.credit(event.getAmountToCredit());
+    }
+
+    @EventSourcingHandler
+    public void on(BookingAmountDebitedEvent event) {
+        this.bookingAmountAccount.debit(event.getAmountToDebit());
+    }
+
+    @EventSourcingHandler
+    public void on(RevenueCreditEvent event) {
+        this.revenueAccount.credit(event.getAmountToCredit());
     }
 
     public Account getPurchaseCostAccount() {
