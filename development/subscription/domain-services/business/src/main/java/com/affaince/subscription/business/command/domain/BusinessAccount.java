@@ -130,6 +130,11 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new RevenueCreditEvent(this.id, basketAmount));
     }
 
+    public void adjustBenefits(double benefitAmount) {
+        apply(new BenefitDebitedEvent(this.id, benefitAmount));
+        apply(new BenefitCreditedEvent(this.id, benefitAmount));
+    }
+
     @EventSourcingHandler
     public void on(CreateProvisionEvent event) {
         this.id = event.getBusinessAccountId();

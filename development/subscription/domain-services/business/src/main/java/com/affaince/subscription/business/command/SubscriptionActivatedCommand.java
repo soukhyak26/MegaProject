@@ -3,7 +3,6 @@ package com.affaince.subscription.business.command;
 /**
  * Created by anayonkar on 8/5/16.
  */
-//TODO : Remove
 public class SubscriptionActivatedCommand {
     private String subscriptionId;
     private double totalSubscriptionAmountAfterDiscount;

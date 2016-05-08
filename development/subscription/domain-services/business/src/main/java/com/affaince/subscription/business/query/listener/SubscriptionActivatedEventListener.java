@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by anayonkar on 8/5/16.
  */
-//TODO : Remove
 @Component
 public class SubscriptionActivatedEventListener {
     @Autowired

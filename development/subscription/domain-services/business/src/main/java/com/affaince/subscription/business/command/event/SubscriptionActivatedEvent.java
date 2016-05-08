@@ -3,11 +3,11 @@ package com.affaince.subscription.business.command.event;
 /**
  * Created by anayonkar on 8/5/16.
  */
-//TODO : Remove
 public class SubscriptionActivatedEvent {
     private String subscriptionId;
     private double totalSubscriptionAmountAfterDiscount;
     private double totalDiscount;
+    //TODO: should receive from SubscriptionActivatedEvent of subscriber domain
     private double subscriptionAmountPaid;
 
     public SubscriptionActivatedEvent(String subscriptionId, double totalSubscriptionAmountAfterDiscount, double totalDiscount, double subscriptionAmountPaid) {

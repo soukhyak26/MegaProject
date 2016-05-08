@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by anayonkar on 8/5/16.
  */
-//TODO : Remove
 @Component
 public class SubscriptionActivatedCommandHandler {
     private final Repository<BusinessAccount> repository;
@@ -24,6 +23,6 @@ public class SubscriptionActivatedCommandHandler {
     @CommandHandler
     public void handle(SubscriptionActivatedCommand command) {
         BusinessAccount businessAccount = repository.load(Integer.valueOf(LocalDate.now().getYear()).toString());
-
+        businessAccount.adjustBenefits(command.getTotalDiscount());
     }
 }
