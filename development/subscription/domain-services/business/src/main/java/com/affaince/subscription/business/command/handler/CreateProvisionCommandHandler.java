@@ -32,7 +32,13 @@ public class CreateProvisionCommandHandler {
         double provisionForPurchaseCost = command.getProvisionForPurchaseCost();
         businessAccount.createProvisionForPurchaseCost(command.getBusinessAccountId(), command.getProvisionForPurchaseCost(), command.getProvisionDate());*/
         BusinessAccount businessAccount = new BusinessAccount(command.getBusinessAccountId(),
-                command.getProvisionList(),
+                command.getProvisionForPurchaseCost(),
+                command.getProvisionForLosses(),
+                command.getProvisionForBenefits(),
+                command.getProvisionForTaxes(),
+                command.getProvisionForOthers(),
+                command.getProvisionForCommonExpenses(),
+                command.getProvisionForSubscriptionSpecificExpenses(),
                 command.getProvisionDate());
         repository.add(businessAccount);
     }

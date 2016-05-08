@@ -1,8 +1,8 @@
 package com.affaince.subscription.business.query.listener;
 
 import com.affaince.subscription.business.accounting.Account;
+import com.affaince.subscription.business.accounting.AccountType;
 import com.affaince.subscription.business.command.event.CreateProvisionEvent;
-import com.affaince.subscription.business.provision.ProvisionIndex;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -27,17 +27,13 @@ public class CreateProvisionEventListener {
         if(businessAccountView == null) {
             businessAccountView = new BusinessAccountView(event.getBusinessAccountId(), event.getProvisionDate());
         }
-        /*for(ProvisionIndex provisionIndex : ProvisionIndex.values()) {
-            switch (provisionIndex) {
-                case MAX_CAPACITY:
-                    break;
-                default:
-                    businessAccountView.getProvisionalAccountList().add(provisionIndex.getIndex(), new Account(event.getProvisionList().get(provisionIndex.getIndex())));
-            }
-        }*/
-        for(int i = 0 ; i < ProvisionIndex.MAX_CAPACITY.getIndex() ; i++) {
-            businessAccountView.getProvisionalAccountList().add(i, new Account(event.getProvisionList().get(i)));
-        }
+        businessAccountView.setProvisionalPurchaseCostAccount(new Account(AccountType.PURCHASE_COST, event.getProvisionForPurchaseCost()));
+        businessAccountView.setProvisionalLossesAccount(new Account(AccountType.LOSSES, event.getProvisionForLosses()));
+        businessAccountView.setProvisionalBenefitsAccount(new Account(AccountType.BENEFITS, event.getProvisionForBenefits()));
+        businessAccountView.setProvisionalTaxesAccount(new Account(AccountType.TAXES, event.getProvisionForTaxes()));
+        businessAccountView.setProvisionalOthersAccount(new Account(AccountType.OTHERS, event.getProvisionForOthers()));
+        businessAccountView.setProvisionalCommonExpensesAccount(new Account(AccountType.COMMON_EXPENSES, event.getProvisionForCommonExpenses()));
+        businessAccountView.setProvisoinalSubscriptionSpecificExpensesAccount(new Account(AccountType.SUBSCRIPTION_SPECIFIC_EXPENSES, event.getProvisionForSubscriptionSpecificExpenses()));
         businessAccountView.setDateForProvision(event.getProvisionDate());
         businessAccountViewRepository.save(businessAccountView);
     }

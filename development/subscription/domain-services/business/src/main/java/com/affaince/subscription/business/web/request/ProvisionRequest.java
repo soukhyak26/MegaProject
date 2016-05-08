@@ -1,10 +1,6 @@
 package com.affaince.subscription.business.web.request;
 
-import com.affaince.subscription.business.provision.ProvisionIndex;
 import org.joda.time.LocalDate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by anayonkar on 29/4/16.
@@ -16,12 +12,8 @@ public class ProvisionRequest {
     private double provisionForTaxes;
     private double provisionForOthers;
     private double provisionForCommonExpenses;
-    private double provisionForNodalAccount;
-    private double provisionForRevenue;
-    private double provisionForBookingAmount;
     private double provisionForSubscriptionSpecificExpenses;
     private LocalDate provisionDate;
-    private List<Double> provisionList = new ArrayList<>(ProvisionIndex.MAX_CAPACITY.getIndex());
 
     public ProvisionRequest() {
 
@@ -33,9 +25,6 @@ public class ProvisionRequest {
                             double provisionForTaxes,
                             double provisionForOthers,
                             double provisionForCommonExpenses,
-                            double provisionForNodalAccount,
-                            double provisionForRevenue,
-                            double provisionForBookingAmount,
                             double provisionForSubscriptionSpecificExpenses,
                             LocalDate provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
@@ -44,9 +33,6 @@ public class ProvisionRequest {
         this.provisionForTaxes = provisionForTaxes;
         this.provisionForOthers = provisionForOthers;
         this.provisionForCommonExpenses = provisionForCommonExpenses;
-        this.provisionForNodalAccount = provisionForNodalAccount;
-        this.provisionForRevenue = provisionForRevenue;
-        this.provisionForBookingAmount = provisionForBookingAmount;
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
         this.provisionDate = provisionDate;
     }
@@ -99,30 +85,6 @@ public class ProvisionRequest {
         this.provisionForCommonExpenses = provisionForCommonExpenses;
     }
 
-    public double getProvisionForNodalAccount() {
-        return provisionForNodalAccount;
-    }
-
-    public void setProvisionForNodalAccount(double provisionForNodalAccount) {
-        this.provisionForNodalAccount = provisionForNodalAccount;
-    }
-
-    public double getProvisionForRevenue() {
-        return provisionForRevenue;
-    }
-
-    public void setProvisionForRevenue(double provisionForRevenue) {
-        this.provisionForRevenue = provisionForRevenue;
-    }
-
-    public double getProvisionForBookingAmount() {
-        return provisionForBookingAmount;
-    }
-
-    public void setProvisionForBookingAmount(double provisionForBookingAmount) {
-        this.provisionForBookingAmount = provisionForBookingAmount;
-    }
-
     public double getProvisionForSubscriptionSpecificExpenses() {
         return provisionForSubscriptionSpecificExpenses;
     }
@@ -148,9 +110,6 @@ public class ProvisionRequest {
         sb.append(", provisionForTaxes=").append(provisionForTaxes);
         sb.append(", provisionForOthers=").append(provisionForOthers);
         sb.append(", provisionForCommonExpenses=").append(provisionForCommonExpenses);
-        sb.append(", provisionForNodalAccount=").append(provisionForNodalAccount);
-        sb.append(", provisionForRevenue=").append(provisionForRevenue);
-        sb.append(", provisionForBookingAmount=").append(provisionForBookingAmount);
         sb.append(", provisionForSubscriptionSpecificExpenses=").append(provisionForSubscriptionSpecificExpenses);
         sb.append(", provisionDate=").append(provisionDate);
         sb.append('}');

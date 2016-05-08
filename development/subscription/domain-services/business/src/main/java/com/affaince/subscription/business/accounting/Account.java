@@ -1,29 +1,33 @@
 package com.affaince.subscription.business.accounting;
 
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by anayonkar on 29/4/16.
  */
-public class Account {
+public class Account extends AbstractAnnotatedEntity {
     private double startAmount;
     private double currentAmount;
-    List<Transaction> transactionList = new ArrayList<>();
+    private AccountType accountType;
+    //List<Transaction> transactionList = new ArrayList<>();
 
-    public Account(double startAmount) {
+    public Account(AccountType accountType, double startAmount) {
+        this.accountType = accountType;
         this.startAmount = startAmount;
         this.currentAmount = startAmount;
     }
 
     public void debit(double amount) {
         this.currentAmount -= amount;
-        transactionList.add(new Transaction(amount, TransactionType.DEBIT, currentAmount));
+        //transactionList.add(new Transaction(amount, TransactionType.DEBIT, currentAmount));
     }
 
     public void credit(double amount) {
         this.currentAmount += amount;
-        transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
+        //transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
     }
 
     public double getStartAmount() {
@@ -34,7 +38,7 @@ public class Account {
         return currentAmount;
     }
 
-    public List<Transaction> getTransactionList() {
+    /*public List<Transaction> getTransactionList() {
         return transactionList;
-    }
+    }*/
 }
