@@ -2,6 +2,7 @@ package com.affaince.subscription.product.registration.configuration;
 
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.product.registration.command.domain.Product;
+import com.affaince.subscription.product.registration.command.domain.ProductAccount;
 import com.affaince.subscription.product.registration.command.event.*;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
@@ -67,6 +68,7 @@ public class Axon extends RabbitMQConfiguration {
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.ProductsStatisticsCalculatedEvent", ProductsStatisticsCalculatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
+            put("com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent", SubscriptionSpecificOperatingExpenseCalculatedEvent.class.getName());
 
         }};
     }

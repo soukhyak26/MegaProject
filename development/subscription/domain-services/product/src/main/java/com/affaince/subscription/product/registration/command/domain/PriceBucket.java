@@ -1,6 +1,9 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import com.affaince.subscription.product.registration.command.UpdateDeliveryExpenseToProductCommand;
+import com.affaince.subscription.product.registration.command.event.DeliveryExpenseUpdatedToProductEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
 /**
@@ -135,5 +138,14 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     }
     private double calculateProfitPerBasket(){
         return (this.numberOfExistingCustomersAssociatedWithAPrice*this.offeredPricePerUnit)-(this.numberOfExistingCustomersAssociatedWithAPrice*(this.purchasePricePerUnit+this.fixedOperatingExpPerUnit+this.variableOperatingExpPerUnit));
+    }
+
+    @EventSourcingHandler
+    public void on (DeliveryExpenseUpdatedToProductEvent event) {
+        this.variableOperatingExpPerUnit = event.getOperationExpense();
+    }
+
+    public void updateSubscriptionSpecificPrice(UpdateDeliveryExpenseToProductCommand command) {
+        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), this.fromDate, command.getOperationExpense()));
     }
 }
