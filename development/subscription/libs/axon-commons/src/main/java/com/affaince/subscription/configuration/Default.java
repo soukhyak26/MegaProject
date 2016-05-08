@@ -48,10 +48,7 @@ import org.springframework.util.ErrorHandler;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadFactory;
 
 import static java.util.concurrent.Executors.defaultThreadFactory;
@@ -206,4 +203,8 @@ public class Default {
         return new CustomConversions(converters);
     }
 
+    @Bean
+    public Locale locale (@Value("${subscription.locale}") String locale) {
+        return new Locale(locale);
+    }
 }
