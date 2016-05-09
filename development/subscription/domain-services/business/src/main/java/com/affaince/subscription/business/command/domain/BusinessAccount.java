@@ -1,8 +1,7 @@
 package com.affaince.subscription.business.command.domain;
 
-import com.affaince.subscription.business.accounting.Account;
-import com.affaince.subscription.business.accounting.AccountType;
-import com.affaince.subscription.business.command.event.*;
+import com.affaince.subscription.business.accounting.*;
+import com.affaince.subscription.business.command.event.CreateProvisionEvent;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.TimeBoundMoney;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -31,47 +30,31 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     private long totalSubscriptionsRegistered;
 
     //EXPENSES
-    private Account purchaseCostAccount;
-    private Account lossesAccount;
-    private Account benefitsAccount;
-    private Account taxesAccount;
-    private Account othersAccount;
-    private Account commonExpensesAccount;
-    private Account nodalAccount;
-    private Account bookingAmountAccount;
-    private Account subscriptionSpecificExpensesAccount;
+    private PurchaseCostAccount purchaseCostAccount;
+    private LossesAccount lossesAccount;
+    private BenefitsAccount benefitsAccount;
+    private TaxesAccount taxesAccount;
+    private OthersAccount othersAccount;
+    private CommonExpensesAccount commonExpensesAccount;
+    private NodalAccount nodalAccount;
+    private BookingAmountAccount bookingAmountAccount;
+    private SubscriptionSpecificExpensesAccount subscriptionSpecificExpensesAccount;
 
     //PROVISIONS
-    private Account provisionalPurchaseCostAccount;
-    private Account provisionalLossesAccount;
-    private Account provisionalBenefitsAccount;
-    private Account provisionalTaxesAccount;
-    private Account provisionalOthersAccount;
-    private Account provisionalCommonExpensesAccount;
-    private Account provisionalSubscriptionSpecificExpensesAccount;
+    private PurchaseCostAccount provisionalPurchaseCostAccount;
+    private LossesAccount provisionalLossesAccount;
+    private BenefitsAccount provisionalBenefitsAccount;
+    private TaxesAccount provisionalTaxesAccount;
+    private OthersAccount provisionalOthersAccount;
+    private CommonExpensesAccount provisionalCommonExpensesAccount;
+    private SubscriptionSpecificExpensesAccount provisionalSubscriptionSpecificExpensesAccount;
 
     //GAINS
-    private Account revenueAccount;
-    private Account interestsGainAccount;
+    private RevenueAccount revenueAccount;
+    private InterestsAccount interestsGainAccount;
 
 
     private LocalDate dateForProvision;
-
-    public Account getLossesAccount() {
-        return lossesAccount;
-    }
-
-    public void setLossesAccount(Account lossesAccount) {
-        this.lossesAccount = lossesAccount;
-    }
-
-    public Account getProvisionalLossesAccount() {
-        return provisionalLossesAccount;
-    }
-
-    public void setProvisionalLossesAccount(Account provisionalLossesAccount) {
-        this.provisionalLossesAccount = provisionalLossesAccount;
-    }
 
     public BusinessAccount() {
 
@@ -112,171 +95,145 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     }*/
 
     public void adjustPurchaseCost(double totalPurchaseCost) {
-        apply(new PurchaseCostDebitedEvent(this.id, totalPurchaseCost));
-        apply(new PurchaseCostCreditedEvent(this.id, totalPurchaseCost));
+        this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
+        this.purchaseCostAccount.fireCreditedEvent(this.id, totalPurchaseCost);
     }
 
     public void adjustOperatingExpenses(ExpenseType expenseType, double expenseAmount) {
-        apply(new OperatingExpenseDebitedEvent(this.id, expenseType, expenseAmount));
-        apply(new OperatingExpenseCreditedEvent(this.id, expenseType, expenseAmount));
+        switch (expenseType) {
+            case COMMON_EXPENSE:
+                this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                this.commonExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
+                break;
+            case SUBSCRIPTION_SPECIFIC_EXPENSE:
+                this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                this.commonExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
+                break;
+            default:
+                //TODO : error handling
+        }
     }
 
     public void adjustBookingAmount(double bookingAmount) {
-        apply(new BookingAmountCreditedEvent(this.id, bookingAmount));
+        this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
     }
 
     public void adjustBasketAmount(double basketAmount) {
-        apply(new BookingAmountDebitedEvent(this.id, basketAmount));
-        apply(new RevenueCreditEvent(this.id, basketAmount));
+        this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
+        this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
     }
 
     public void adjustBenefits(double benefitAmount) {
-        apply(new BenefitDebitedEvent(this.id, benefitAmount));
-        apply(new BenefitCreditedEvent(this.id, benefitAmount));
+        this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
+        this.benefitsAccount.fireCreditedEvent(this.id, benefitAmount);
     }
 
     @EventSourcingHandler
     public void on(CreateProvisionEvent event) {
         this.id = event.getBusinessAccountId();
 
-        this.purchaseCostAccount = new Account(AccountType.PURCHASE_COST, 0);
-        this.lossesAccount = new Account(AccountType.LOSSES, 0);
-        this.benefitsAccount = new Account(AccountType.BENEFITS, 0);
-        this.taxesAccount = new Account(AccountType.TAXES, 0);
-        this.othersAccount = new Account(AccountType.OTHERS, 0);
-        this.commonExpensesAccount = new Account(AccountType.COMMON_EXPENSES, 0);
-        this.nodalAccount = new Account(AccountType.NODAL_ACCOUNT, 0);
-        this.bookingAmountAccount = new Account(AccountType.BOOKING_AMOUNT, 0);
-        this.subscriptionSpecificExpensesAccount = new Account(AccountType.SUBSCRIPTION_SPECIFIC_EXPENSES, 0);
-
-        this.provisionalPurchaseCostAccount = new Account(AccountType.PURCHASE_COST, event.getProvisionForPurchaseCost());
-        this.provisionalLossesAccount = new Account(AccountType.LOSSES, event.getProvisionForLosses());
-        this.provisionalBenefitsAccount = new Account(AccountType.BENEFITS, event.getProvisionForBenefits());
-        this.provisionalTaxesAccount = new Account(AccountType.TAXES, event.getProvisionForTaxes());
-        this.provisionalOthersAccount = new Account(AccountType.OTHERS, event.getProvisionForOthers());
-        this.provisionalCommonExpensesAccount = new Account(AccountType.COMMON_EXPENSES, event.getProvisionForCommonExpenses());
-        this.subscriptionSpecificExpensesAccount = new Account(AccountType.SUBSCRIPTION_SPECIFIC_EXPENSES, event.getProvisionForSubscriptionSpecificExpenses());
         this.dateForProvision = event.getProvisionDate();
 
-        this.revenueAccount = new Account(AccountType.REVENUE, 0);
-        this.interestsGainAccount = new Account(AccountType.INTERESTS, 0);
+        this.purchaseCostAccount = new PurchaseCostAccount(0, dateForProvision);
+        this.lossesAccount = new LossesAccount(0, dateForProvision);
+        this.benefitsAccount = new BenefitsAccount(0, dateForProvision);
+        this.taxesAccount = new TaxesAccount(0, dateForProvision);
+        this.othersAccount = new OthersAccount(0, dateForProvision);
+        this.commonExpensesAccount = new CommonExpensesAccount(0, dateForProvision);
+        this.nodalAccount = new NodalAccount(0, dateForProvision);
+        this.bookingAmountAccount = new BookingAmountAccount(0, dateForProvision);
+        this.subscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(0, dateForProvision);
+
+        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(event.getProvisionForPurchaseCost(), dateForProvision);
+        this.provisionalLossesAccount = new LossesAccount(event.getProvisionForLosses(), dateForProvision);
+        this.provisionalBenefitsAccount = new BenefitsAccount(event.getProvisionForBenefits(), dateForProvision);
+        this.provisionalTaxesAccount = new TaxesAccount(event.getProvisionForTaxes(), dateForProvision);
+        this.provisionalOthersAccount = new OthersAccount(event.getProvisionForOthers(), dateForProvision);
+        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(event.getProvisionForCommonExpenses(), dateForProvision);
+        this.subscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(event.getProvisionForSubscriptionSpecificExpenses(), dateForProvision);
+
+        this.revenueAccount = new RevenueAccount(0, dateForProvision);
+        this.interestsGainAccount = new InterestsAccount(0, dateForProvision);
     }
 
-    @EventSourcingHandler
-    public void on(PurchaseCostDebitedEvent event) {
-        this.provisionalPurchaseCostAccount.debit(event.getAmountToDebit());
+    public String getId() {
+        return id;
     }
 
-    @EventSourcingHandler
-    public void on(PurchaseCostCreditedEvent event) {
-        this.purchaseCostAccount.credit(event.getAmountToCredit());
-    }
-
-    @EventSourcingHandler
-    public void on(OperatingExpenseDebitedEvent event) {
-        switch (event.getExpenseType()) {
-            case COMMON_EXPENSE:
-                this.provisionalCommonExpensesAccount.debit(event.getAmountToDebit());
-                break;
-            case SUBSCRIPTION_SPECIFIC_EXPENSE:
-                this.provisionalSubscriptionSpecificExpensesAccount.debit(event.getAmountToDebit());
-                break;
-            default:
-                //TODO : error handling
-        }
-    }
-
-    @EventSourcingHandler
-    public void on(OperatingExpenseCreditedEvent event) {
-        switch (event.getExpenseType()) {
-            case COMMON_EXPENSE:
-                this.commonExpensesAccount.credit(event.getAmountToCredit());
-                break;
-            case SUBSCRIPTION_SPECIFIC_EXPENSE:
-                this.subscriptionSpecificExpensesAccount.credit(event.getAmountToCredit());
-                break;
-            default:
-                //TODO : error handling
-        }
-    }
-
-    @EventSourcingHandler
-    public void on(BookingAmountCreditedEvent event) {
-        this.bookingAmountAccount.credit(event.getAmountToCredit());
-    }
-
-    @EventSourcingHandler
-    public void on(BookingAmountDebitedEvent event) {
-        this.bookingAmountAccount.debit(event.getAmountToDebit());
-    }
-
-    @EventSourcingHandler
-    public void on(RevenueCreditEvent event) {
-        this.revenueAccount.credit(event.getAmountToCredit());
-    }
-
-    public Account getPurchaseCostAccount() {
+    public PurchaseCostAccount getPurchaseCostAccount() {
         return purchaseCostAccount;
     }
 
-    public void setPurchaseCostAccount(Account purchaseCostAccount) {
-        this.purchaseCostAccount = purchaseCostAccount;
+    public LossesAccount getLossesAccount() {
+        return lossesAccount;
     }
 
-    public Account getProvisionalPurchaseCostAccount() {
-        return provisionalPurchaseCostAccount;
-    }
-
-    public void setProvisionalPurchaseCostAccount(Account provisionalPurchaseCostAccount) {
-        this.provisionalPurchaseCostAccount = provisionalPurchaseCostAccount;
-    }
-
-    public Account getBenefitsAccount() {
+    public BenefitsAccount getBenefitsAccount() {
         return benefitsAccount;
     }
 
-    public void setBenefitsAccount(Account benefitsAccount) {
-        this.benefitsAccount = benefitsAccount;
-    }
-
-    public Account getTaxesAccount() {
+    public TaxesAccount getTaxesAccount() {
         return taxesAccount;
     }
 
-    public void setTaxesAccount(Account taxesAccount) {
-        this.taxesAccount = taxesAccount;
-    }
-
-    public Account getOthersAccount() {
+    public OthersAccount getOthersAccount() {
         return othersAccount;
     }
 
-    public void setOthersAccount(Account othersAccount) {
-        this.othersAccount = othersAccount;
+    public CommonExpensesAccount getCommonExpensesAccount() {
+        return commonExpensesAccount;
     }
 
-    public Account getProvisionalBenefitsAccount() {
+    public NodalAccount getNodalAccount() {
+        return nodalAccount;
+    }
+
+    public BookingAmountAccount getBookingAmountAccount() {
+        return bookingAmountAccount;
+    }
+
+    public SubscriptionSpecificExpensesAccount getSubscriptionSpecificExpensesAccount() {
+        return subscriptionSpecificExpensesAccount;
+    }
+
+    public PurchaseCostAccount getProvisionalPurchaseCostAccount() {
+        return provisionalPurchaseCostAccount;
+    }
+
+    public LossesAccount getProvisionalLossesAccount() {
+        return provisionalLossesAccount;
+    }
+
+    public BenefitsAccount getProvisionalBenefitsAccount() {
         return provisionalBenefitsAccount;
     }
 
-    public void setProvisionalBenefitsAccount(Account provisionalBenefitsAccount) {
-        this.provisionalBenefitsAccount = provisionalBenefitsAccount;
-    }
-
-    public Account getProvisionalTaxesAccount() {
+    public TaxesAccount getProvisionalTaxesAccount() {
         return provisionalTaxesAccount;
     }
 
-    public void setProvisionalTaxesAccount(Account provisionalTaxesAccount) {
-        this.provisionalTaxesAccount = provisionalTaxesAccount;
-    }
-
-    public Account getProvisionalOthersAccount() {
+    public OthersAccount getProvisionalOthersAccount() {
         return provisionalOthersAccount;
     }
 
-    public void setProvisionalOthersAccount(Account provisionalOthersAccount) {
-        this.provisionalOthersAccount = provisionalOthersAccount;
+    public CommonExpensesAccount getProvisionalCommonExpensesAccount() {
+        return provisionalCommonExpensesAccount;
+    }
+
+    public SubscriptionSpecificExpensesAccount getProvisionalSubscriptionSpecificExpensesAccount() {
+        return provisionalSubscriptionSpecificExpensesAccount;
+    }
+
+    public RevenueAccount getRevenueAccount() {
+        return revenueAccount;
+    }
+
+    public InterestsAccount getInterestsGainAccount() {
+        return interestsGainAccount;
+    }
+
+    public LocalDate getDateForProvision() {
+        return dateForProvision;
     }
 
     public TimeBoundMoney getCommonOperationExpensesReserve() {
