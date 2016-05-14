@@ -21,6 +21,8 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
     private Stack<ComparisonOperand> comparisonOperands = new Stack<>();
     private Stack<ArithmeticExpression> arithmeticExpressions = new Stack<>();
     private Conclusion conclusion = new Conclusion();
+    private MoneyConversion moneyConversion = new MoneyConversion();
+    private PeriodConversion periodConversion = new PeriodConversion();
 
     public RuleSet getRuleSet() {
         return ruleSet;
@@ -51,6 +53,26 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
     @Override
     public void exitConclusion(@NotNull BenefitsRulesSetGrammarParser.ConclusionContext ctx) {
         rule.setConclusion(conclusion);
+    }
+
+    @Override public void exitMoney_convert_expr(BenefitsRulesSetGrammarParser.Money_convert_exprContext ctx) {
+        rule.setMoneyConversion(moneyConversion);
+    }
+
+    @Override public void exitMoney_expr_name(BenefitsRulesSetGrammarParser.Money_expr_nameContext ctx) {
+        moneyConversion.setMoneyConvExprName(ctx.getText());
+    }
+
+    @Override public void exitCurrency_value(BenefitsRulesSetGrammarParser.Currency_valueContext ctx) {
+        moneyConversion.setCurrencyValue(Integer.parseInt(ctx.getText()));
+    }
+
+    @Override public void exitPoint_value(BenefitsRulesSetGrammarParser.Point_valueContext ctx) {
+        moneyConversion.setPointValue(Float.parseFloat(ctx.getText()));
+    }
+
+    @Override public void exitPeriod_convert_expr(BenefitsRulesSetGrammarParser.Period_convert_exprContext ctx) {
+        rule.setPeriodConversion(periodConversion);
     }
 
     @Override

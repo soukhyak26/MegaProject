@@ -44,9 +44,17 @@ public class Rule implements RuleSetPojo {
         return moneyConversion;
     }
 
+    public void setMoneyConversion(MoneyConversion moneyConversion) {
+        this.moneyConversion = moneyConversion;
+    }
+
     @JsonProperty ("periodConversion")
     public PeriodConversion getPeriodConversion() {
         return periodConversion;
+    }
+
+    public void setPeriodConversion(PeriodConversion periodConversion) {
+        this.periodConversion = periodConversion;
     }
 
     @JsonProperty ("totalPointCalcExpr")
