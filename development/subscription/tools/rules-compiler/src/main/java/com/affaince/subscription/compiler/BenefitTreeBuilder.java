@@ -75,6 +75,14 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
         rule.setPeriodConversion(periodConversion);
     }
 
+    @Override public void exitPeriod_expr_name(BenefitsRulesSetGrammarParser.Period_expr_nameContext ctx) {
+        periodConversion.setPeriodConvExprName(ctx.getText());
+    }
+
+    @Override public void exitPeriod_value(BenefitsRulesSetGrammarParser.Period_valueContext ctx) {
+        periodConversion.setPeriodValue(Integer.parseInt(ctx.getText()));
+    }
+
     @Override
     public void exitSingle_rule(@NotNull BenefitsRulesSetGrammarParser.Single_ruleContext ctx) {
         this.rule.setCondition(this.logicalExpressions.pop());
