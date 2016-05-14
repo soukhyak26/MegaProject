@@ -68,8 +68,8 @@ public class ActiveMQConfiguration extends Default {
         return channel;
     }
 
-    @Bean
+    /*@Bean
     public EventBusTerminal subscriptionEventBusTerminal(Cluster asyncCluster, Serializer serializer, @Qualifier("eventChannel") final SubscribableChannel subscribableChannel) {
-        return new SubscriptionEventBusTerminal(serializer, subscribableChannel, asyncCluster);
-    }
+        return new SimpleEventBus(serializer, subscribableChannel, asyncCluster);
+    }*/
 }

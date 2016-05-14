@@ -125,8 +125,8 @@ public class Default {
     }
 
     @Bean
-    public EventBus eventBus(ClusterSelector selector, EventBusTerminal subscriptionEventBusTerminal) {
-        return new ClusteringEventBus(selector, subscriptionEventBusTerminal);
+    public EventBus eventBus(ClusterSelector selector) {
+        return new ClusteringEventBus(selector);
     }
 
     protected Map<String, String> types() {
