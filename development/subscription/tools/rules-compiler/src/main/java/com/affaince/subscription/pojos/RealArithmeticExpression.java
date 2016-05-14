@@ -13,12 +13,12 @@ public class RealArithmeticExpression implements ArithmeticExpression {
         this.right = right;
     }
 
-    @JsonProperty("t")
+    @JsonProperty("type")
     public String getType() {
         return "arith";
     }
 
-    @JsonProperty("op")
+    @JsonProperty("operator")
     public String getOperator() {
         return operator;
     }

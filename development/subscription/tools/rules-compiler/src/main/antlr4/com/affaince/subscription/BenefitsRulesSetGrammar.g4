@@ -134,8 +134,9 @@ numeric_entity : DECIMAL              # NumericConst
                ;
 
 conclusion:
-    PAYMENT_MODE EQ DECIMAL PERCENT_ADVANCE_PAYMENT benefit_pay_method WITH which_delivey option;
+    PAYMENT_MODE EQ payment_percent PERCENT_ADVANCE_PAYMENT benefit_pay_method WITH which_delivey option;
 
+payment_percent: DECIMAL;
 benefit_pay_method: 'deposit' | 'pay';
 which_delivey: EACH | ALTERNATE | LAST;
 option: DELIVERY | SUBSCRIPTION;

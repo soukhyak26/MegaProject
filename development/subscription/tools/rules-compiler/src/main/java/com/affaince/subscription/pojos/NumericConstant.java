@@ -12,7 +12,7 @@ public class NumericConstant extends NumericEntity {
         this.value = value;
     }
 
-    @JsonProperty("v")
+    @JsonProperty("value")
     public BigDecimal getValue() {
         return value;
     }

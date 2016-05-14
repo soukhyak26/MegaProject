@@ -11,7 +11,7 @@ public class NumericVariable extends NumericEntity {
         this.variableName = variableName;
     }
 
-    @JsonProperty("n")
+    @JsonProperty("VariableName")
     public String getVariableName() {
         return variableName;
     }

@@ -46,7 +46,7 @@ public class TreeBuilder extends RuleSetGrammarBaseListener {
     public void exitConclusion(@NotNull RuleSetGrammarParser.ConclusionContext ctx) {
         String unit = ctx.unit().getText();
         String value = ctx.value().getText();
-        this.rule.setConclusion(unit, Double.parseDouble(value));
+        this.rule.setConclusion(new Conclusion());
     }
 
     @Override

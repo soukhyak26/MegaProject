@@ -20,12 +20,13 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
     private Stack<LogicalExpression> logicalExpressions = new Stack<>();
     private Stack<ComparisonOperand> comparisonOperands = new Stack<>();
     private Stack<ArithmeticExpression> arithmeticExpressions = new Stack<>();
+    private Conclusion conclusion = new Conclusion();
 
     public RuleSet getRuleSet() {
         return ruleSet;
     }
 
-    public Stack <LogicalExpression> getLogicalExpressions () {
+    public Stack<LogicalExpression> getLogicalExpressions() {
         return logicalExpressions;
     }
 
@@ -49,7 +50,7 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
 
     @Override
     public void exitConclusion(@NotNull BenefitsRulesSetGrammarParser.ConclusionContext ctx) {
-
+        rule.setConclusion(conclusion);
     }
 
     @Override
@@ -175,5 +176,24 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
         LogicalExpression left = logicalExpressions.pop();
         AndExpression expr = new AndExpression(left, right);
         this.logicalExpressions.push(expr);
+    }
+
+    @Override
+    public void exitBenefit_pay_method(BenefitsRulesSetGrammarParser.Benefit_pay_methodContext ctx) {
+        conclusion.setBenefitPayMethod(ctx.getText());
+    }
+
+    @Override
+    public void exitWhich_delivey(BenefitsRulesSetGrammarParser.Which_deliveyContext ctx) {
+        conclusion.setBenefitPaymentFrequency(ctx.getText());
+    }
+
+    @Override
+    public void exitOption(BenefitsRulesSetGrammarParser.OptionContext ctx) {
+        conclusion.setPeriodOption(ctx.getText());
+    }
+
+    @Override public void exitPayment_percent(BenefitsRulesSetGrammarParser.Payment_percentContext ctx) {
+        conclusion.setAdvancePaymentPercentage(Short.parseShort(ctx.getText()));
     }
 }

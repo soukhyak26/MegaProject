@@ -9,7 +9,7 @@ public abstract class LogicalExpression implements RuleSetPojo {
         this.type = type;
     }
 
-    @JsonProperty("t")
+    @JsonProperty("type")
     public String getType() {
         return type;
     }

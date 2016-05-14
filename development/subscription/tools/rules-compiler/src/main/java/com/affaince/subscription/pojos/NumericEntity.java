@@ -9,7 +9,7 @@ public abstract class NumericEntity implements ArithmeticExpression, ComparisonO
         this.type = type;
     }
 
-    @JsonProperty("t")
+    @JsonProperty("type")
     public String getType() {
         return type;
     }

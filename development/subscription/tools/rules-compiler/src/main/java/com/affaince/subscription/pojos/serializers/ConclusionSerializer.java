@@ -14,7 +14,7 @@ public class ConclusionSerializer extends JsonSerializer<Conclusion> {
                           JsonGenerator jsonGenerator,
                           SerializerProvider serializerProvider)
             throws IOException, JsonProcessingException {
-        jsonGenerator.writeString(conclusion.getUnit());
-        jsonGenerator.writeNumber(conclusion.getBenefitValue());
+       // jsonGenerator.writeString(conclusion.getUnit());
+       // jsonGenerator.writeNumber(conclusion.getBenefitValue());
     }
 }

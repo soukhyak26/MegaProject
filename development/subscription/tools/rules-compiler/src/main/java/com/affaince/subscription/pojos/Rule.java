@@ -35,8 +35,8 @@ public class Rule implements RuleSetPojo {
         return conclusion;
     }
 
-    public void setConclusion(String unit, double value) {
-        this.conclusion = new Conclusion(unit, value);
+    public void setConclusion(Conclusion conclusion) {
+        this.conclusion = conclusion;
     }
 
     @JsonProperty ("moneyConversion")

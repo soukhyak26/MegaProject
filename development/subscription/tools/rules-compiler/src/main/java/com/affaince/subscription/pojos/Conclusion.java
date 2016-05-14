@@ -4,43 +4,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 //@JsonSerialize(using= ConclusionSerializer.class)
 public class Conclusion implements RuleSetPojo {
-    private final String unit;
-    private final double benefitValue;
+    private short advancePaymentPercentage;
+    private String benefitPayMethod;
+    private String periodOption;
+    private String benefitPaymentFrequency;
 
-    public Conclusion(String unit, double value) {
-        this.unit = unit;
-        this.benefitValue = value;
+    @JsonProperty ("AdvancePaymentPercentage")
+    public short getAdvancePaymentPercentage() {
+        return advancePaymentPercentage;
     }
 
-    @JsonProperty("unit")
-    public String getUnit() {
-        return unit;
+    public void setAdvancePaymentPercentage(short advancePaymentPercentage) {
+        this.advancePaymentPercentage = advancePaymentPercentage;
     }
 
-    @JsonProperty("benefitValue")
-    public double getBenefitValue() {
-        return benefitValue;
+    @JsonProperty ("BenefitPayMethod")
+    public String getBenefitPayMethod() {
+        return benefitPayMethod;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Conclusion)) return false;
-
-        Conclusion that = (Conclusion) o;
-
-        if (Double.compare(that.benefitValue, benefitValue) != 0) return false;
-        return unit.equals(that.unit);
-
+    public void setBenefitPayMethod(String benefitPayMethod) {
+        this.benefitPayMethod = benefitPayMethod;
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = unit.hashCode();
-        temp = Double.doubleToLongBits(benefitValue);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+    @JsonProperty ("PeriodOption")
+    public String getPeriodOption() {
+        return periodOption;
+    }
+
+    public void setPeriodOption(String periodOption) {
+        this.periodOption = periodOption;
+    }
+
+    @JsonProperty ("BenefitPaymentFrequency")
+    public String getBenefitPaymentFrequency() {
+        return benefitPaymentFrequency;
+    }
+
+    public void setBenefitPaymentFrequency(String benefitPaymentFrequency) {
+        this.benefitPaymentFrequency = benefitPaymentFrequency;
     }
 }
