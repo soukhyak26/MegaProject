@@ -3,7 +3,7 @@ package com.affaince.subscription.subscriber.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
-import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
+import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import com.affaince.subscription.subscriber.web.exception.BasketNotFoundException;
@@ -40,7 +40,7 @@ public class BasketController {
         if (deliveryView == null) {
             throw BasketNotFoundException.build(basketId);
         }
-        final UpdateStatusAndDispatchDateCommand command = new UpdateStatusAndDispatchDateCommand(
+        final UpdateDeliveryStatusAndDispatchDateCommand command = new UpdateDeliveryStatusAndDispatchDateCommand(
                 subscriberId, basketId, request.getBasketDeliveryStatus(), request.getDispatchDate(),
                 Arrays.stream(request.getItemStatusRequest()).map(itemStatus -> new ItemDispatchStatus(itemStatus.getItemId(),
                         itemStatus.getItemDeliveryStatus())).collect(Collectors.toList())

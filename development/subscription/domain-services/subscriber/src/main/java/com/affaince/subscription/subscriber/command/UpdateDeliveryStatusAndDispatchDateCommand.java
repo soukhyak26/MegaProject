@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 04-10-2015.
  */
-public class UpdateStatusAndDispatchDateCommand {
+public class UpdateDeliveryStatusAndDispatchDateCommand {
     @TargetAggregateIdentifier
     private String subscriberId;
     private String basketId;
@@ -15,7 +15,7 @@ public class UpdateStatusAndDispatchDateCommand {
     private String dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
 
-    public UpdateStatusAndDispatchDateCommand(String subscriberId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
+    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriberId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
         this.subscriberId = subscriberId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
@@ -23,7 +23,7 @@ public class UpdateStatusAndDispatchDateCommand {
         this.itemDispatchStatuses = itemDispatchStatuses;
     }
 
-    public UpdateStatusAndDispatchDateCommand() {
+    public UpdateDeliveryStatusAndDispatchDateCommand() {
     }
 
     public String getSubscriberId() {

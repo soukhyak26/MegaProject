@@ -8,7 +8,7 @@ import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
-import com.affaince.subscription.subscriber.command.UpdateStatusAndDispatchDateCommand;
+import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.event.*;
 import com.affaince.subscription.subscriber.services.Base64Encoder;
@@ -98,7 +98,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on(StatusAndDispatchDateUpdatedEvent event) {
+    public void on(DeliveryStatusAndDispatchDateUpdatedEvent event) {
         this.subscriberId = event.getSubscriptionId();
         Delivery delivery = this.deliveries.get(event.getBasketId());
         delivery.setDispatchDate(new LocalDate(event.getDispatchDate()));
@@ -153,9 +153,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         apply(new CouponCodeAddedEvent(this.subscriberId, couponCode));
     }
 
-    public void updateStatusAndDispatchDate(UpdateStatusAndDispatchDateCommand command) {
-        apply(new StatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId(), command.getBasketDeliveryStatus(), command.getDispatchDate(),
-                command.getItemDispatchStatuses()));
+    public void updateStatusAndDispatchDate(UpdateDeliveryStatusAndDispatchDateCommand command) {
+        Delivery delivery = this.deliveries.get(command.getBasketId());
+        apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId(),
+                command.getBasketDeliveryStatus(), command.getDispatchDate(),
+                command.getItemDispatchStatuses(), delivery.getDeliveryCharges(),
+                delivery.getTotalDeliveryPrice()));
     }
 
     public void deleteBasket(DeleteBasketCommand command) {
