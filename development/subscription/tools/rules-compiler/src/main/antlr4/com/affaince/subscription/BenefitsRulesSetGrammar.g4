@@ -105,8 +105,7 @@ comparison_expr : comparison_operand comp_operator comparison_operand
                 | LPAREN comparison_expr RPAREN # ComparisonExpressionParens
                 ;
 
-comparison_operand : DECIMAL
-                   ;
+comparison_operand : arithmetic_expr;
 
 comp_operator : GT
               | GE
