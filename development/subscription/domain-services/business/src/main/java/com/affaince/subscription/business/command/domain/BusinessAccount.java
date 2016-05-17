@@ -69,9 +69,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                            double provisionForCommonExpenses,
                            double provisionForSubscriptionSpecificExpenses,
                            LocalDate provisionDate) {
-        /*this.id = id;
-        this.provisionalPurchaseCostAccount = new Account(provisionForPurchaseCost);
-        this.dateForProvision = provisionDate;*/
+
         apply(new CreateProvisionEvent(id,
                 provisionForPurchaseCost,
                 provisionForLosses,
@@ -82,17 +80,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                 provisionForSubscriptionSpecificExpenses,
                 provisionDate));
     }
-
-   /* public void createProvisionForPurchaseCost(String businessAccountId, double provisionForPurchaseCost, LocalDate provisionDate) {
-        apply(new CreateProvisionEvent(businessAccountId, provisionForPurchaseCost, provisionDate));
-    }*/
-
-    /*@EventSourcingHandler
-    public void on(ProductStatusReceivedEvent event) {
-        double currentPurchasePrice = event.getCurrentPurchasePrice();
-        purchaseCostAccount.credit(currentPurchasePrice);
-        provisionalPurchaseCostAccount.debit(currentPurchasePrice);
-    }*/
 
     public void adjustPurchaseCost(double totalPurchaseCost) {
         this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
@@ -117,11 +104,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void adjustBookingAmount(double bookingAmount) {
         this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
     }
-
-    /*public void adjustBasketAmount(double basketAmount) {
-        this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
-        this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
-    }*/
 
     public void adjustBasketAndDeliveryAmount(double basketAmount, double deliveryAmount) {
         this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);

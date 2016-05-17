@@ -1,6 +1,5 @@
 package com.affaince.subscription.business.command.handler;
 
-import com.affaince.subscription.business.command.BasketDispatchStatusUpdatedCommand;
 import com.affaince.subscription.business.command.DeliveryStatusAndDispatchDateUpdatedCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -24,7 +23,6 @@ public class DeliveryStatusAndDispatchDateUpdatedCommandHandler {
     @CommandHandler
     public void handle(DeliveryStatusAndDispatchDateUpdatedCommand command) {
         BusinessAccount businessAccount = repository.load(Integer.valueOf(LocalDate.now().getYear()).toString());
-        //businessAccount.adjustBasketAmount(command.getBasketAmount());
         businessAccount.adjustBasketAndDeliveryAmount(command.getTotalDeliveryPrice(), command.getDeliveryCharges());
     }
 }
