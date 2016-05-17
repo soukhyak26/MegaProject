@@ -20,7 +20,7 @@ public class BasketDispatchStatusUpdatedEventListener {
 
     @EventHandler
     public void on(BasketDispatchStatusUpdatedEvent event) throws Exception {
-        BasketDispatchStatusUpdatedCommand command = new BasketDispatchStatusUpdatedCommand(event.getBasketId(), event.getDispatchDate(), event.getDispactchStatusCode(), event.getReasonCode(), event.getBasketAmount());
+        BasketDispatchStatusUpdatedCommand command = new BasketDispatchStatusUpdatedCommand(event.getBasketId(), event.getDispatchDate(), event.getDispactchStatusCode(), event.getReasonCode());
         commandGateway.executeAsync(command);
     }
 }

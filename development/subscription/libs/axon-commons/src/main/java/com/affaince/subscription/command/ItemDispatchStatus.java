@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.command;
+package com.affaince.subscription.command;
 
 /**
  * Created by rbsavaliya on 04-10-2015.

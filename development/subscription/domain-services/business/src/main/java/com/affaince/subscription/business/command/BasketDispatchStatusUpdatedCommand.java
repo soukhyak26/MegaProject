@@ -10,14 +10,12 @@ public class BasketDispatchStatusUpdatedCommand {
     private Date dispatchDate;
     private int dispactchStatusCode;
     private int reasonCode;
-    private double basketAmount;
 
-    public BasketDispatchStatusUpdatedCommand(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode, double basketAmount) {
+    public BasketDispatchStatusUpdatedCommand(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode) {
         this.basketId = basketId;
         this.dispatchDate = dispatchDate;
         this.dispactchStatusCode = dispactchStatusCode;
         this.reasonCode = reasonCode;
-        this.basketAmount = basketAmount;
     }
 
     public String getBasketId() {
@@ -34,9 +32,5 @@ public class BasketDispatchStatusUpdatedCommand {
 
     public int getReasonCode() {
         return reasonCode;
-    }
-
-    public double getBasketAmount() {
-        return basketAmount;
     }
 }

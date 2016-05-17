@@ -7,7 +7,7 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
-import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
+import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.event.*;

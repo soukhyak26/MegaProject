@@ -2,7 +2,7 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
-import com.affaince.subscription.subscriber.command.ItemDispatchStatus;
+import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;

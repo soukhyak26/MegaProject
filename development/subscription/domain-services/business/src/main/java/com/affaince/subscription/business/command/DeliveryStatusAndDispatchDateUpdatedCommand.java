@@ -1,13 +1,13 @@
-package com.affaince.subscription.subscriber.command.event;
+package com.affaince.subscription.business.command;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
 
 import java.util.List;
 
 /**
- * Created by rbsavaliya on 10-10-2015.
+ * Created by anayonkar on 17/5/16.
  */
-public class DeliveryStatusAndDispatchDateUpdatedEvent {
+public class DeliveryStatusAndDispatchDateUpdatedCommand {
     private String subscriptionId;
     private String basketId;
     private int basketDeliveryStatus;
@@ -16,7 +16,7 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private double deliveryCharges;
     private double totalDeliveryPrice;
 
-    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
+    public DeliveryStatusAndDispatchDateUpdatedCommand(String subscriptionId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
@@ -24,9 +24,6 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
         this.itemDispatchStatuses = itemDispatchStatuses;
         this.deliveryCharges = deliveryCharges;
         this.totalDeliveryPrice = totalDeliveryPrice;
-    }
-
-    public DeliveryStatusAndDispatchDateUpdatedEvent() {
     }
 
     public String getSubscriptionId() {

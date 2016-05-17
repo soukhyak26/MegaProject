@@ -10,15 +10,12 @@ public class BasketDispatchStatusUpdatedEvent {
     private Date dispatchDate;
     private int dispactchStatusCode;
     private int reasonCode;
-    //TODO : this should be received by BasketDispatchStatusUpdatedEvent in subscriber domain
-    private double basketAmount;
 
-    public BasketDispatchStatusUpdatedEvent(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode, double basketAmount) {
+    public BasketDispatchStatusUpdatedEvent(String basketId, Date dispatchDate, int dispactchStatusCode, int reasonCode) {
         this.basketId = basketId;
         this.dispatchDate = dispatchDate;
         this.dispactchStatusCode = dispactchStatusCode;
         this.reasonCode = reasonCode;
-        this.basketAmount = basketAmount;
     }
 
     public String getBasketId() {
@@ -35,9 +32,5 @@ public class BasketDispatchStatusUpdatedEvent {
 
     public int getReasonCode() {
         return reasonCode;
-    }
-
-    public double getBasketAmount() {
-        return basketAmount;
     }
 }

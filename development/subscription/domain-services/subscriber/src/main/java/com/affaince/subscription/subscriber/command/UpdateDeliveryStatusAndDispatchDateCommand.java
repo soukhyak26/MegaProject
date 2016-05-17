@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.command;
 
+import com.affaince.subscription.command.ItemDispatchStatus;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.List;

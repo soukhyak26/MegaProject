@@ -1,11 +1,11 @@
-package com.affaince.subscription.subscriber.command.event;
+package com.affaince.subscription.business.command.event;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
 
 import java.util.List;
 
 /**
- * Created by rbsavaliya on 10-10-2015.
+ * Created by anayonkar on 17/5/16.
  */
 public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private String subscriptionId;

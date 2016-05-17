@@ -107,7 +107,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                 break;
             case SUBSCRIPTION_SPECIFIC_EXPENSE:
                 this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                this.commonExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
+                this.subscriptionSpecificExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
                 break;
             default:
                 //TODO : error handling
@@ -118,9 +118,15 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
     }
 
-    public void adjustBasketAmount(double basketAmount) {
+    /*public void adjustBasketAmount(double basketAmount) {
         this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
         this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
+    }*/
+
+    public void adjustBasketAndDeliveryAmount(double basketAmount, double deliveryAmount) {
+        this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
+        this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
+        adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
     }
 
     public void adjustBenefits(double benefitAmount) {

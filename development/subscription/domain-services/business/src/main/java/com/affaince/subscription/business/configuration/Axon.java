@@ -44,6 +44,7 @@ public class Axon extends RabbitMQConfiguration {
             put("com.affaince.subscription.subscriber.command.event.SubscriptionActivatedEvent", SubscriptionActivatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.PaymentProcessedEvent", PaymentProcessedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.BasketDispatchStatusUpdatedEvent", BasketDispatchStatusUpdatedEvent.class.getName());
+            put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
             put("com.affaince.subscription.business.command.event.*","");
         }};
     }
