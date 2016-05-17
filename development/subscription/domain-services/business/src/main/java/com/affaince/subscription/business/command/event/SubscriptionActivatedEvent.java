@@ -7,14 +7,11 @@ public class SubscriptionActivatedEvent {
     private String subscriptionId;
     private double totalSubscriptionAmountAfterDiscount;
     private double totalDiscount;
-    //TODO: should receive from SubscriptionActivatedEvent of subscriber domain
-    private double subscriptionAmountPaid;
 
     public SubscriptionActivatedEvent(String subscriptionId, double totalSubscriptionAmountAfterDiscount, double totalDiscount, double subscriptionAmountPaid) {
         this.subscriptionId = subscriptionId;
         this.totalSubscriptionAmountAfterDiscount = totalSubscriptionAmountAfterDiscount;
         this.totalDiscount = totalDiscount;
-        this.subscriptionAmountPaid = subscriptionAmountPaid;
     }
 
     public String getSubscriptionId() {
@@ -39,13 +36,5 @@ public class SubscriptionActivatedEvent {
 
     public void setTotalDiscount(double totalDiscount) {
         this.totalDiscount = totalDiscount;
-    }
-
-    public double getSubscriptionAmountPaid() {
-        return subscriptionAmountPaid;
-    }
-
-    public void setSubscriptionAmountPaid(double subscriptionAmountPaid) {
-        this.subscriptionAmountPaid = subscriptionAmountPaid;
     }
 }

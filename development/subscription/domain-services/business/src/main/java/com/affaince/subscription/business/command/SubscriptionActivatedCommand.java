@@ -7,13 +7,11 @@ public class SubscriptionActivatedCommand {
     private String subscriptionId;
     private double totalSubscriptionAmountAfterDiscount;
     private double totalDiscount;
-    private double subscriptionAmountPaid;
 
-    public SubscriptionActivatedCommand(String subscriptionId, double totalSubscriptionAmountAfterDiscount, double totalDiscount, double subscriptionAmountPaid) {
+    public SubscriptionActivatedCommand(String subscriptionId, double totalSubscriptionAmountAfterDiscount, double totalDiscount) {
         this.subscriptionId = subscriptionId;
         this.totalSubscriptionAmountAfterDiscount = totalSubscriptionAmountAfterDiscount;
         this.totalDiscount = totalDiscount;
-        this.subscriptionAmountPaid = subscriptionAmountPaid;
     }
 
     public String getSubscriptionId() {
@@ -40,11 +38,4 @@ public class SubscriptionActivatedCommand {
         this.totalDiscount = totalDiscount;
     }
 
-    public double getSubscriptionAmountPaid() {
-        return subscriptionAmountPaid;
-    }
-
-    public void setSubscriptionAmountPaid(double subscriptionAmountPaid) {
-        this.subscriptionAmountPaid = subscriptionAmountPaid;
-    }
 }

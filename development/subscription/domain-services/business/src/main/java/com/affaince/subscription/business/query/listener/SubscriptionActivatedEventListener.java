@@ -21,7 +21,7 @@ public class SubscriptionActivatedEventListener {
 
     @EventHandler
     public void on(SubscriptionActivatedEvent event) throws Exception {
-        SubscriptionActivatedCommand command = new SubscriptionActivatedCommand(event.getSubscriptionId(), event.getTotalSubscriptionAmountAfterDiscount(), event.getTotalDiscount(), event.getSubscriptionAmountPaid());
+        SubscriptionActivatedCommand command = new SubscriptionActivatedCommand(event.getSubscriptionId(), event.getTotalSubscriptionAmountAfterDiscount(), event.getTotalDiscount());
         commandGateway.executeAsync(command);
     }
 }
