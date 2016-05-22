@@ -12,19 +12,20 @@ MONTH : 'month';
 DAY : 'day';
 YEAR : 'year';
 WEEK : 'week';
-REWARD_POINT : 'reward point';
+REWARD_POINT : 'reward_point';
 APPLY : 'apply';
 ALL : 'all';
 WHEN : 'when';
-PAYMENT_MODE : 'payment mode';
+PAYMENT_MODE : 'payment_mode';
 POINT : 'point';
-PERCENT_ADVANCE_PAYMENT : 'percent advance payment';
+PERCENT_ADVANCE_PAYMENT : 'percent_advance';
 WITH : 'with';
 EACH : 'each';
 ALTERNATE : 'alternate';
 LAST : 'last';
 DELIVERY : 'delivery';
 SUBSCRIPTION : 'subscription';
+OFFER: 'offer';
 IS : 'is';
 AS : 'as';
 
@@ -67,7 +68,11 @@ WS : [ \r\t\u000C\n]+ -> skip ;
 /* Parser rules */
 rule_set : single_rule;
 
-single_rule :GIVEN convert_expr CONFIGURE AS arithmetic_expr ELIGIBLE WHEN eligibility_condition APPLY WHEN conclusion SEMI;
+single_rule :GIVEN convert_expr
+             CONFIGURE AS arithmetic_expr
+             ELIGIBLE WHEN eligibility_condition
+             OFFER AS offer_expr
+             APPLY WHEN conclusion SEMI;
 
 convert_expr:
     money_convert_expr  AND period_convert_expr
@@ -131,6 +136,12 @@ logical_entity : (TRUE | FALSE) # LogicalConst
 numeric_entity : DECIMAL              # NumericConst
                | IDENTIFIER           # NumericVariable
                ;
+
+offer_expr: offer_point_value POINT EQ offeredBenefitValue offered_benefit_type;
+
+offer_point_value: DECIMAL;
+offeredBenefitValue: DECIMAL;
+offered_benefit_type: CASHBACK | REWARD_POINT | CURRENCY;
 
 conclusion:
     PAYMENT_MODE EQ payment_percent PERCENT_ADVANCE_PAYMENT benefit_pay_method WITH which_delivey option;

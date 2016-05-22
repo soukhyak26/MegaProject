@@ -37,6 +37,11 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>axon-commons</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

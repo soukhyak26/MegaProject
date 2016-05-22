@@ -13,6 +13,8 @@ public class Rule implements RuleSetPojo {
 
     private ArithmeticExpression arithmeticExpression;
 
+    private Offer offer;
+
     public Rule() {
     }
 
@@ -64,6 +66,15 @@ public class Rule implements RuleSetPojo {
 
     public void setArithmeticExpression(ArithmeticExpression arithmeticExpression) {
         this.arithmeticExpression = arithmeticExpression;
+    }
+
+    @JsonProperty ("Offer")
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.affaince.subscription.compiler;
 
 import com.affaince.subscription.BenefitsRulesSetGrammarBaseListener;
 import com.affaince.subscription.BenefitsRulesSetGrammarParser;
+import com.affaince.subscription.common.type.DiscountUnit;
 import com.affaince.subscription.pojos.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -23,6 +24,7 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
     private Conclusion conclusion = new Conclusion();
     private MoneyConversion moneyConversion = new MoneyConversion();
     private PeriodConversion periodConversion = new PeriodConversion();
+    private Offer offer = new Offer();
 
     public RuleSet getRuleSet() {
         return ruleSet;
@@ -55,31 +57,38 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
         rule.setConclusion(conclusion);
     }
 
-    @Override public void exitMoney_convert_expr(BenefitsRulesSetGrammarParser.Money_convert_exprContext ctx) {
+    @Override
+    public void exitMoney_convert_expr(BenefitsRulesSetGrammarParser.Money_convert_exprContext ctx) {
         rule.setMoneyConversion(moneyConversion);
     }
 
-    @Override public void exitMoney_expr_name(BenefitsRulesSetGrammarParser.Money_expr_nameContext ctx) {
+    @Override
+    public void exitMoney_expr_name(BenefitsRulesSetGrammarParser.Money_expr_nameContext ctx) {
         moneyConversion.setMoneyConvExprName(ctx.getText());
     }
 
-    @Override public void exitCurrency_value(BenefitsRulesSetGrammarParser.Currency_valueContext ctx) {
+    @Override
+    public void exitCurrency_value(BenefitsRulesSetGrammarParser.Currency_valueContext ctx) {
         moneyConversion.setCurrencyValue(Integer.parseInt(ctx.getText()));
     }
 
-    @Override public void exitPoint_value(BenefitsRulesSetGrammarParser.Point_valueContext ctx) {
+    @Override
+    public void exitPoint_value(BenefitsRulesSetGrammarParser.Point_valueContext ctx) {
         moneyConversion.setPointValue(Float.parseFloat(ctx.getText()));
     }
 
-    @Override public void exitPeriod_convert_expr(BenefitsRulesSetGrammarParser.Period_convert_exprContext ctx) {
+    @Override
+    public void exitPeriod_convert_expr(BenefitsRulesSetGrammarParser.Period_convert_exprContext ctx) {
         rule.setPeriodConversion(periodConversion);
     }
 
-    @Override public void exitPeriod_expr_name(BenefitsRulesSetGrammarParser.Period_expr_nameContext ctx) {
+    @Override
+    public void exitPeriod_expr_name(BenefitsRulesSetGrammarParser.Period_expr_nameContext ctx) {
         periodConversion.setPeriodConvExprName(ctx.getText());
     }
 
-    @Override public void exitPeriod_value(BenefitsRulesSetGrammarParser.Period_valueContext ctx) {
+    @Override
+    public void exitPeriod_value(BenefitsRulesSetGrammarParser.Period_valueContext ctx) {
         periodConversion.setPeriodValue(Integer.parseInt(ctx.getText()));
     }
 
@@ -223,7 +232,28 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
         conclusion.setPeriodOption(ctx.getText());
     }
 
-    @Override public void exitPayment_percent(BenefitsRulesSetGrammarParser.Payment_percentContext ctx) {
+    @Override
+    public void exitPayment_percent(BenefitsRulesSetGrammarParser.Payment_percentContext ctx) {
         conclusion.setAdvancePaymentPercentage(Short.parseShort(ctx.getText()));
+    }
+
+    @Override
+    public void exitOffer_expr(BenefitsRulesSetGrammarParser.Offer_exprContext ctx) {
+        rule.setOffer(offer);
+    }
+
+    @Override
+    public void exitOffer_point_value(BenefitsRulesSetGrammarParser.Offer_point_valueContext ctx) {
+        offer.setOfferPointValue(Double.parseDouble(ctx.getText()));
+    }
+
+    @Override
+    public void exitOfferedBenefitValue(BenefitsRulesSetGrammarParser.OfferedBenefitValueContext ctx) {
+        offer.setOfferedBenefitValue(Double.parseDouble(ctx.getText()));
+    }
+
+    @Override
+    public void exitOffered_benefit_type(BenefitsRulesSetGrammarParser.Offered_benefit_typeContext ctx) {
+        offer.setOfferedBenefitType(DiscountUnit.valueOf(ctx.getText().toUpperCase()));
     }
 }

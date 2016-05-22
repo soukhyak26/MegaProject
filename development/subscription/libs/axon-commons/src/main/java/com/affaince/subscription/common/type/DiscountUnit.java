@@ -4,7 +4,7 @@ package com.affaince.subscription.common.type;
  * Created by rbsavaliya on 29-08-2015.
  */
 public enum DiscountUnit {
-    CURRENCY(0), PERCENTAGE(1), ITEM(2);
+    CURRENCY(0), PERCENTAGE(1), ITEM(2), CASHBACK (3), REWARDPOINTS (4);
 
     private int discountCode;
 
@@ -20,6 +20,10 @@ public enum DiscountUnit {
                 return PERCENTAGE;
             case 2:
                 return ITEM;
+            case 3:
+                return CASHBACK;
+            case 4:
+                return REWARDPOINTS;
             default:
                 return PERCENTAGE;
         }

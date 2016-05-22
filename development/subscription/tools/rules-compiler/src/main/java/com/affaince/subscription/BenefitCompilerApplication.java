@@ -17,9 +17,11 @@ public class BenefitCompilerApplication {
                     "total_revenue/money_convert + total_period/period_convert " +
                 "eligible when " +
                     "total_subscription_amount = 1000 " +
-                    "and (payment_mode > 50 or total_subscription_period > 36) " +
+                    "and (payment_mode1 > 50 or total_subscription_period > 36) " +
+                "offer as " +
+                    "1 point = 3 currency " +
                 "apply when " +
-                    "payment mode = 100 percent advance payment deposit with each delivery;");
+                    "payment_mode = 100 percent_advance deposit with each delivery;");
         // JSON serialization
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
