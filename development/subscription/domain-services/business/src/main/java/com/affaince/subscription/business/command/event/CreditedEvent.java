@@ -3,7 +3,7 @@ package com.affaince.subscription.business.command.event;
 /**
  * Created by anayonkar on 9/5/16.
  */
-public abstract class CreditedEvent extends Event {
+public abstract class CreditedEvent extends AccountingEvent {
     private double amountToCredit;
 
     protected CreditedEvent(String businessAccountId, double amountToCredit) {

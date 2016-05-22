@@ -3,10 +3,10 @@ package com.affaince.subscription.business.command.event;
 /**
  * Created by anayonkar on 9/5/16.
  */
-public abstract class Event {
+public abstract class AccountingEvent {
     private String businessAccountId;
 
-    protected Event(String businessAccountId) {
+    protected AccountingEvent(String businessAccountId) {
         this.businessAccountId = businessAccountId;
     }
 
