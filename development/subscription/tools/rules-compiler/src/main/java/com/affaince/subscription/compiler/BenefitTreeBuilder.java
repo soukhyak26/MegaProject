@@ -164,8 +164,24 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
 
     @Override
     public void exitComparison_operand(@NotNull BenefitsRulesSetGrammarParser.Comparison_operandContext ctx) {
-        ArithmeticExpression expr = this.arithmeticExpressions.pop();
-        this.comparisonOperands.push(expr);
+//        ArithmeticExpression expr = this.arithmeticExpressions.pop();
+   //     this.comparisonOperands.push(expr);
+        this.comparisonOperands.push(new NumericVariable(ctx.getText()));
+    }
+
+    @Override public void exitComparison_constant(BenefitsRulesSetGrammarParser.Comparison_constantContext ctx) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator('.');
+        String pattern = "#0.0#";
+        BigDecimal value = new BigDecimal(0.0);
+        DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+        decimalFormat.setParseBigDecimal(true);
+        try {
+            value = (BigDecimal) decimalFormat.parse(ctx.getText());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.comparisonOperands.push(new NumericConstant(value));
     }
 
     @Override

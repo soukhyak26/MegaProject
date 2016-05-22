@@ -26,6 +26,15 @@ LAST : 'last';
 DELIVERY : 'delivery';
 SUBSCRIPTION : 'subscription';
 OFFER: 'offer';
+
+TOTALSUBSCRIPTIONAMOUNT: 'total_subscription_amount';
+CURRENTSUBSCRIPTIONAMOUNT: 'current_subscription_amount';
+TOTALSUBSCRIPTIONPROFIT: 'total_subscription_profit';
+
+TOTALLOYALTYPERIOD: 'total_loyalty_period';
+CURRENTSUBSCRIPTIONPERIOD: 'current_subscription_period';
+
+
 IS : 'is';
 AS : 'as';
 
@@ -105,12 +114,17 @@ logical_expr
  | logical_entity                # LogicalEntity
  ;
 
-comparison_expr : comparison_operand comp_operator comparison_operand
+comparison_expr : comparison_operand comp_operator comparison_constant
                     # ComparisonExpressionWithOperator
                 | LPAREN comparison_expr RPAREN # ComparisonExpressionParens
                 ;
 
-comparison_operand : arithmetic_expr;
+comparison_operand : TOTALSUBSCRIPTIONAMOUNT
+                   | CURRENTSUBSCRIPTIONAMOUNT
+                   | TOTALSUBSCRIPTIONPROFIT
+                   | TOTALLOYALTYPERIOD
+                   | CURRENTSUBSCRIPTIONPERIOD;
+comparison_constant : DECIMAL;
 
 comp_operator : GT
               | GE
@@ -130,7 +144,7 @@ arithmetic_expr
  ;
 
 logical_entity : (TRUE | FALSE) # LogicalConst
-               | IDENTIFIER     # LogicalVariable
+               | IDENTIFIER # LogicalVariable
                ;
 
 numeric_entity : DECIMAL              # NumericConst

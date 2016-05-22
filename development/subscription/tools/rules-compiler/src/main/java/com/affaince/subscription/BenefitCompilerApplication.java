@@ -17,7 +17,7 @@ public class BenefitCompilerApplication {
                     "total_revenue/money_convert + total_period/period_convert " +
                 "eligible when " +
                     "total_subscription_amount = 1000 " +
-                    "and (payment_mode1 > 50 or total_subscription_period > 36) " +
+                    "and (current_subscription_period > 50 or total_loyalty_period > 36) " +
                 "offer as " +
                     "1 point = 3 currency " +
                 "apply when " +
