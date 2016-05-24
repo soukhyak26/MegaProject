@@ -6,7 +6,7 @@ import { SignUpComponent } from '../signup/signup.component';
 declare var jQuery: any;
 
 @Component({
-    selector: 'my-app',
+    selector: 'dashboard',
     templateUrl: 'app/components/dashboard/dashboard.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [    
@@ -14,19 +14,6 @@ declare var jQuery: any;
     ]
 })
 
-@RouteConfig([
-    {
-        path: '/',
-        name: 'Login',
-        component: LoginComponent,
-        useAsDefault: true
-    },
-    {
-        path: '/signup',
-        name: 'SignUp',
-        component: SignUpComponent
-    }
-])
 export class DashboardComponent {
 
 }

@@ -1,6 +1,5 @@
 var User = (function () {
     function User() {
-        this.enableEncryption = true;
     }
     return User;
 })();

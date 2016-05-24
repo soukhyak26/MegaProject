@@ -10,20 +10,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-// import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from '@angular/router';
 var router_deprecated_1 = require('@angular/router-deprecated');
-// import {User} from '../models/user.model';
-// import { UserService } from '../services/user.service';
+var user_service_1 = require('../../services/user.service');
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(userService, _router) {
+        this.userService = userService;
+        this._router = _router;
+        this.allUsersKey = "users";
+        this.userService = userService;
+        this.allUsers = JSON.parse(localStorage.getItem(this.allUsersKey));
+        if (!this.allUsers) {
+            this.allUsers = new Array();
+        }
     }
+    LoginComponent.prototype.login = function () {
+        var _this = this;
+        console.log('setting count from login...');
+        this.userService.setCount(10);
+        var user = this.allUsers.find(function (x) { return x.id === _this.username && x.password === _this.password; });
+        if (user) {
+            Materialize.toast('Welcome ' + this.username, 3000);
+            this.userService.setUserLoggedInStatus(true);
+            this.userService.setLoggedInUser(user);
+            this._router.navigate(['Dashboard']);
+        }
+        else {
+            this.userService.setUserLoggedInStatus(false);
+            this.userService.setLoggedInUser(null);
+            Materialize.toast('Incorrect username or password', 3000);
+        }
+    };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'login',
             templateUrl: 'app/components/login/login.html',
             directives: [router_deprecated_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.UserService, router_deprecated_1.Router])
     ], LoginComponent);
     return LoginComponent;
 })();

@@ -11,33 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
-var login_component_1 = require('../login/login.component');
-var signup_component_1 = require('../signup/signup.component');
 var DashboardComponent = (function () {
     function DashboardComponent() {
     }
     DashboardComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
+            selector: 'dashboard',
             templateUrl: 'app/components/dashboard/dashboard.html',
             directives: [router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [
                 router_deprecated_1.ROUTER_PROVIDERS
             ]
-        }),
-        router_deprecated_1.RouteConfig([
-            {
-                path: '/',
-                name: 'Login',
-                component: login_component_1.LoginComponent,
-                useAsDefault: true
-            },
-            {
-                path: '/signup',
-                name: 'SignUp',
-                component: signup_component_1.SignUpComponent
-            }
-        ]), 
+        }), 
         __metadata('design:paramtypes', [])
     ], DashboardComponent);
     return DashboardComponent;
