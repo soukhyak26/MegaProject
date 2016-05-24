@@ -1,4 +1,3 @@
-"use strict";
 var Message = (function () {
     function Message() {
         this.enableEncryption = true;
@@ -11,6 +10,6 @@ var Message = (function () {
         this.enableEncryption = true;
     };
     return Message;
-}());
+})();
 exports.Message = Message;
 //# sourceMappingURL=message.model.js.map

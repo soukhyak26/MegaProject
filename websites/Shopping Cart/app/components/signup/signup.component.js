@@ -10,26 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var SearchUserPipe = (function () {
-    function SearchUserPipe() {
+// import {User} from '../models/user.model';
+// import { UserService } from '../services/user.service';
+// import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from 'angular2/router';
+var router_deprecated_1 = require('@angular/router-deprecated');
+var SignUpComponent = (function () {
+    function SignUpComponent() {
     }
-    SearchUserPipe.prototype.transform = function (users, args) {
-        if (args) {
-            var searchUserName = args[0];
-            return users.filter(function (item) { return item.name.indexOf(searchUserName) !== -1; });
-        }
-        else {
-            return users;
-        }
-    };
-    SearchUserPipe = __decorate([
-        core_1.Pipe({
-            name: 'searchUserFilter',
-            pure: false
+    SignUpComponent = __decorate([
+        core_1.Component({
+            selector: 'sign-up',
+            templateUrl: 'app/components/signup/signup.html',
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [])
-    ], SearchUserPipe);
-    return SearchUserPipe;
+    ], SignUpComponent);
+    return SignUpComponent;
 })();
-exports.SearchUserPipe = SearchUserPipe;
-//# sourceMappingURL=searchUser.pipe.js.map
+exports.SignUpComponent = SignUpComponent;
+//# sourceMappingURL=signup.component.js.map

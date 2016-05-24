@@ -10,26 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var SearchUserPipe = (function () {
-    function SearchUserPipe() {
+// import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from '@angular/router';
+var router_deprecated_1 = require('@angular/router-deprecated');
+// import {User} from '../models/user.model';
+// import { UserService } from '../services/user.service';
+var LoginComponent = (function () {
+    function LoginComponent() {
     }
-    SearchUserPipe.prototype.transform = function (users, args) {
-        if (args) {
-            var searchUserName = args[0];
-            return users.filter(function (item) { return item.name.indexOf(searchUserName) !== -1; });
-        }
-        else {
-            return users;
-        }
-    };
-    SearchUserPipe = __decorate([
-        core_1.Pipe({
-            name: 'searchUserFilter',
-            pure: false
+    LoginComponent = __decorate([
+        core_1.Component({
+            selector: 'login',
+            templateUrl: 'app/components/login/login.html',
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [])
-    ], SearchUserPipe);
-    return SearchUserPipe;
+    ], LoginComponent);
+    return LoginComponent;
 })();
-exports.SearchUserPipe = SearchUserPipe;
-//# sourceMappingURL=searchUser.pipe.js.map
+exports.LoginComponent = LoginComponent;
+//# sourceMappingURL=login.component.js.map

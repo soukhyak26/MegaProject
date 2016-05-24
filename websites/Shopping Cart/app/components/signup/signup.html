@@ -1,0 +1,96 @@
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <h4 class="header center orange-text">Track your goal daily...</h4>
+        <div class="row center">
+            <br>
+            <br>
+            <form class="col s12 m8 offset-m2" (submit)="signup()">
+                <div class="row">
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input id="username" type="text" [(ngModel)]="username" class="validate" required="" aria-required="true">
+                        <label for="username" data-error="wrong">User Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input id="password" type="password" class="validate" [(ngModel)]="password" required="" aria-required="true">
+                        <label for="password" data-error="wrong">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input id="confirmPassword" type="password" class="validate" [(ngModel)]="confirmPassword" required="" aria-required="true">
+                        <label for="confirmPassword" data-error="wrong">Confirm Password</label>
+                    </div>
+                </div>
+                <div class="row center">
+                    <button type="submit" id="download-button" class="btn-large waves-effect waves-light orange">Sign Up</button>
+                    <a href="/" class="btn-large waves-effect waves-light orange">Login</a>
+                </div>
+            </form>
+
+            <!--<div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email2" type="email" class="validate" required="" aria-required="true">
+                            <label for="email2">Email</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="example" name="example" type="text" class="validate" required="" aria-required="true">
+                            <label for="example">Field</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>-->
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+                    <h5 class="center">Got an Idea?</h5>
+
+                    <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components.
+                        Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+                    <h5 class="center">Brainstormed</h5>
+
+                    <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates
+                        components and animations that provide more feedback to users. Additionally, a single underlying
+                        responsive system across all platforms allow for a more unified user experience.</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
+                    <h5 class="center">Go Go Go</h5>
+
+                    <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started.
+                        We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <br>
+
+
+</div>
