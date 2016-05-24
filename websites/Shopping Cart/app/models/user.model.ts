@@ -1,9 +1,7 @@
-import { Message } from './message.model';
+import {Goal} from './goal.model';
 
 export class User {
-    id: number;
-    name: string;
-    messages: Array<Message>;
-    enableEncryption = true;
-    avatarUrl:string;
+    id: string;
+    password: string;
+    goals:Array<Goal>
 }
