@@ -1,17 +1,26 @@
 package com.affaince.subscription.product.registration.command.domain;
 
+import com.affaince.subscription.product.registration.command.UpdateDeliveryExpenseToProductCommand;
+import com.affaince.subscription.product.registration.command.UpdateFixedExpenseToProductCommand;
+import com.affaince.subscription.product.registration.command.event.DeliveryExpenseUpdatedToProductEvent;
+import com.affaince.subscription.product.registration.command.event.FixedExpenseUpdatedToProductEvent;
+import com.affaince.subscription.product.registration.vo.FixedExpensePerProduct;
+import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.registration.vo.VariableExpensePerProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonth;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by mandark on 28-11-2015.
  */
 public class ProductAccount extends AbstractAnnotatedEntity {
+    private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
+    private SortedSet<FixedExpensePerProduct> fixedExpenseVersions;
+    private SortedSet<VariableExpensePerProduct> variableExpenseVersions;
     private Map<LocalDate, PriceBucket> activePriceBuckets;
     private Map<LocalDate, ProductPerformanceTracker> performanceTracker;
     private Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics;
@@ -23,6 +32,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public ProductAccount() {
         performanceTracker = new TreeMap<>();
         activePriceBuckets = new TreeMap<>();
+        taggedPriceVersions = new TreeSet<>();
+        fixedExpenseVersions= new TreeSet<>();
+        variableExpenseVersions= new TreeSet<>();
     }
 
     public Map<LocalDate, ProductPerformanceTracker> getPerformanceTracker() {
@@ -92,8 +104,26 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
         return activePriceBuckets.get(max);
     }
+    public void addNewTaggedPriceVersion(PriceTaggedWithProduct newTaggedPrice){
+        this.taggedPriceVersions.add(newTaggedPrice);
+    }
+    public void addNewFixedExpense(FixedExpensePerProduct newFixedExpense){
+        this.fixedExpenseVersions.add(newFixedExpense);
+    }
+    public void addNewVariableExpense(VariableExpensePerProduct newVariableExpense){
+        this.variableExpenseVersions.add(newVariableExpense);
+    }
+    public PriceTaggedWithProduct getLatestTaggedPriceVersion(){
+       return taggedPriceVersions.first();
+    }
 
+    public FixedExpensePerProduct getLatestFixedExpenseVersion(){
+        return fixedExpenseVersions.first();
+    }
 
+    public VariableExpensePerProduct getLatestVariableExpenseVersion(){
+        return variableExpenseVersions.first();
+    }
     public double getCreditPoints() {
         return this.creditPoints;
     }
@@ -117,4 +147,33 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void setVariableExpenseSlope(double variableExpenseSlope) {
         this.variableExpenseSlope = variableExpenseSlope;
     }
+
+    public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command) {
+        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), LocalDate.now(), command.getOperationExpense()));
+    }
+
+    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
+        apply(new FixedExpenseUpdatedToProductEvent(command.getProductId(), LocalDate.now(), command.getOperationExpense()));
+    }
+
+    @EventSourcingHandler
+    public void on (DeliveryExpenseUpdatedToProductEvent event) {
+        //get latest deliveryExpense
+        VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
+        if(latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()){
+            VariableExpensePerProduct newVariableExpenseVersion= new VariableExpensePerProduct(event.getOperationExpense(),LocalDate.now());
+            variableExpenseVersions.add(newVariableExpenseVersion);
+        }
+    }
+
+    @EventSourcingHandler
+    public void on (FixedExpenseUpdatedToProductEvent event) {
+        //get latest deliveryExpense
+        FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
+        if(latestFixedExpense.getFixedOperatingExpPerUnit() != event.getOperationExpense()){
+            FixedExpensePerProduct newFixedExpenseVersion= new FixedExpensePerProduct(event.getOperationExpense(),LocalDate.now());
+            fixedExpenseVersions.add(newFixedExpenseVersion);
+        }
+    }
+
 }

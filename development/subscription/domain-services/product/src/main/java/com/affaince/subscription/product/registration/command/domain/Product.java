@@ -8,6 +8,7 @@ import com.affaince.subscription.product.registration.command.UpdateProductStatu
 import com.affaince.subscription.product.registration.command.event.*;
 import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import com.affaince.subscription.product.registration.vo.ForecastedPriceParameter;
+import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -89,7 +90,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public double getLatestPurchasePrice() {
-        return getProductAccount().getLatestPriceBucket().getPurchasePricePerUnit();
+        return getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit();
     }
 
     public double getLatestMerchantProfit() {
@@ -108,9 +109,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 command.getDemandWiseProfitSharingRules()));
     }
 
+/*
     public DemandWiseProfitSharingRule findProfitSharingRuleByDemandDensity(double demandDensityPercentage) {
         return getProductConfiguration().findDemandWiseProfitSharingRuleByDemandDensity(demandDensityPercentage);
     }
+*/
 
     public double getLatestDemandDensity() {
         return getProductAccount().getLatestPerformanceTracker().getDemandDensity();
@@ -136,7 +139,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void on(OfferedPriceUpdatedEvent event) {
         this.productId = event.getProductId();
         PriceBucket lastPriceBucket = this.getLatestPriceBucket();
-        PriceBucket newPriceBucket = new PriceBucket(lastPriceBucket);
+        PriceBucket newPriceBucket = createPriceBucketForPriceCategory();
         newPriceBucket.setFromDate(event.getCurrentPriceDate());
         newPriceBucket.setOfferedPricePerUnit(event.getOfferedPrice());
         lastPriceBucket.setToDate(LocalDate.now());
@@ -174,14 +177,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ProductStatusReceivedEvent event) {
         this.productId = event.getProductId();
-        PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
-        if (latestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceBucket newPriceBucket = new PriceBucket();
-            newPriceBucket.setFromDate(event.getCurrentPriceDate());
-            newPriceBucket.setToDate(new LocalDate(9999, 12, 31));
-            newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
-            newPriceBucket.setMRP(event.getCurrentMRP());
-            this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
+
+        if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            PriceTaggedWithProduct newtaggedPrice= new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());
+            this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
@@ -190,13 +189,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void on(ProductStatusUpdatedEvent event) {
         this.productId = event.getProductId();
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
-        if (latestPriceBucket.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceBucket newPriceBucket = new PriceBucket();
-            newPriceBucket.setFromDate(event.getCurrentPriceDate());
-            newPriceBucket.setToDate(new LocalDate(9999, 12, 31));
-            newPriceBucket.setPurchasePricePerUnit(event.getCurrentPurchasePrice());
-            newPriceBucket.setMRP(event.getCurrentMRP());
-            this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
+        if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            PriceTaggedWithProduct newtaggedPrice= new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());
+            this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
 
@@ -210,7 +205,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
         productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
-        productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
+       // productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
         this.productConfiguration = productConfiguration;
     }
 
@@ -228,10 +223,20 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public double getLatestMRP() {
-        return getProductAccount().getLatestPriceBucket().getMRP();
+        return getProductAccount().getLatestTaggedPriceVersion().getMRP();
     }
 
     public void setLatestOfferedPrice(double offeredPrice) {
         getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
+    }
+
+    PriceBucket createPriceBucketForPriceCategory(){
+        if(this.getProductAccount().getProductPricingCategory()==ProductPricingCategory.DISCOUNT_COMMITMENT){
+            return new PriceBucketForPercentDiscountCommitment();
+        }else if(this.getProductAccount().getProductPricingCategory()==ProductPricingCategory.PRICE_COMMITMENT){
+            return new PriceBucketForPriceCommitment();
+        }else{
+            return new PriceBucketForNoneCommitment();
+        }
     }
 }
