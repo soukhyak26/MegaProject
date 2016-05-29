@@ -1,12 +1,11 @@
 package com.affaince.subscription.subscriber.configuration;
 
-import com.affaince.subscription.configuration.ActiveMQConfiguration;
-import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.subscriber.command.domain.BasketRule;
 import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
+import com.affaince.subscription.subscriber.command.event.BenefitAddedEvent;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -54,6 +53,7 @@ public class Axon extends RabbitMQConfiguration {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.subscriber.command.event.*", "");
             put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedFromSourceEvent.class.getName());
+            put("com.affaince.subscription.benefits.command.event.BenefitAddedEvent", BenefitAddedEvent.class.getName());
         }};
     }
 }
