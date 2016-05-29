@@ -16,15 +16,19 @@ public class HistorySizeSpecificProductDemandForecaster implements ProductDemand
     public void addNextForecaster(ProductDemandForecaster forecaster){
         this.productDemandForecaster=forecaster;
     }
-    public List<ProductForecastMetricsView> forecastDemandGrowthAndChurn(List<ProductActualMetricsView> productActuals){
+    public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActuals){
         if(productActuals.size()>6){
 
         }else{
             if(null != productDemandForecaster) {
-                return productDemandForecaster.forecastDemandGrowthAndChurn(productActuals);
+                return productDemandForecaster.forecastDemandGrowth(productActuals);
             }
         }
         return null;
     }
+    public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
+        return null;
+    }
+
 
 }

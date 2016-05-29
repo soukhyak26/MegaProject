@@ -2,8 +2,8 @@ package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.common.vo.ProductStatistics;
 import com.affaince.subscription.product.registration.command.event.ProductsStatisticsCalculatedEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductsMonthlyStatisticsViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductMonthlyStatisticsView;
+import com.affaince.subscription.product.registration.query.repository.ProductActualMetricsViewRepository;
+import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductsStatisticsCalculatedEventListener {
 
-    private final ProductsMonthlyStatisticsViewRepository statsViewRepository;
+    private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
 
     @Autowired
-    public ProductsStatisticsCalculatedEventListener(ProductsMonthlyStatisticsViewRepository productStatsViewRepository) {
-        this.statsViewRepository = productStatsViewRepository;
+    public ProductsStatisticsCalculatedEventListener(ProductActualMetricsViewRepository productActualMetricsViewRepository) {
+        this.productActualMetricsViewRepository = productActualMetricsViewRepository;
     }
 
     //not a correct implementation
@@ -24,16 +24,16 @@ public class ProductsStatisticsCalculatedEventListener {
     public void on(ProductsStatisticsCalculatedEvent event) {
         for (ProductStatistics productStatistics : event.getProductsStatistics()) {
             Sort sort = new Sort(Sort.Direction.DESC, "productMonthlyVersionId.fromDate");
-            ProductMonthlyStatisticsView productStatsView = statsViewRepository.findByProductMonthlyVersionId_ProductId(productStatistics.getProductId(),sort).get(0);
+            ProductActualMetricsView productStatsView = productActualMetricsViewRepository.findByProductMonthlyVersionId_ProductId(productStatistics.getProductId(),sort).get(0);
 
             //final ProductMonthlyStatisticsView productStatsView = statsViewRepository.findOne(productStatistics.getProductId());
-            long subscribedProductCount = productStatsView.getProductSubscriptionCount();
-            double subscribedProductRevenue = productStatsView.getSubscribedProductRevenue();
-            double subscribedProductNetProfit = productStatsView.getSubscribedProductNetProfit();
-            productStatsView.setProductSubscriptionCount(subscribedProductCount + productStatistics.getProductSubscriptionCount());
-            productStatsView.setSubscribedProductRevenue(subscribedProductRevenue + productStatistics.getSubscribedProductRevenue());
-            productStatsView.setSubscribedProductNetProfit(subscribedProductNetProfit + productStatistics.getSubscribedProductNetProfit());
-            statsViewRepository.save(productStatsView);
+            long subscribedProductCount = productStatsView.getTotalNumberOfExistingSubscriptions();
+            double subscribedProductRevenue = productStatsView.getRevenue();
+            double subscribedProductNetProfit = productStatsView.getOperatingProfit();
+            productStatsView.setTotalNumberOfExistingSubscriptions(subscribedProductCount + productStatistics.getProductSubscriptionCount());
+            productStatsView.setRevenue(subscribedProductRevenue + productStatistics.getSubscribedProductRevenue());
+            productStatsView.setOperatingProfit(subscribedProductNetProfit + productStatistics.getSubscribedProductNetProfit());
+            productActualMetricsViewRepository.save(productStatsView);
         }
     }
 }

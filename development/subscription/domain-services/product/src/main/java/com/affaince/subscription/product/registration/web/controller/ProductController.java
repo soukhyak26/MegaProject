@@ -113,19 +113,12 @@ public class ProductController {
         }
         ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
         for (ForecastedPriceParameter parameter : forecastParameters) {
-/*
-            AddForecastParametersCommand command = new AddForecastParametersCommand(productId, parameter);
-
-            try {
-                this.commandGateway.executeAsync(command);
-            } catch (Exception e) {
-                throw e;
-            }
-*/
-            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getFromDate(), parameter.getToDate(), parameter.getDemandDensity(), parameter.getAverageDemandPerSubscriber(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
+            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getMonthOfYear());
+            productForecastMetricsView.setNewSubscritptions(parameter.getNumberofNewSubscriptions());
+            productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
             productForecastMetricsViewRepository.save(productForecastMetricsView);
 
-            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, parameter.getFromDate(), parameter.getToDate(), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
+            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, new LocalDate(parameter.getMonthOfYear().getYear(),parameter.getMonthOfYear().getMonthOfYear(),1), new LocalDate(parameter.getMonthOfYear().getYear(),parameter.getMonthOfYear().getMonthOfYear(),parameter.getMonthOfYear().toDateTime(null).dayOfMonth().getMaximumValue()), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
             forecastedPriceBucketViewRepository.save(forecastedPriceBucketsView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);

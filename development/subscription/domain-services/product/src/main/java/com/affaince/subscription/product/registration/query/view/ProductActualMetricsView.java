@@ -1,29 +1,39 @@
 package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.product.registration.command.domain.PriceBucket;
+import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.registration.vo.ProductMonthlyVersionId;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Created by mandark on 28-01-2016.
  */
 @Document(collection = "ProductActualMetricsView")
 public class ProductActualMetricsView {
-    private String productId;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    @Id
+    private final ProductMonthlyVersionId productMonthlyVersionId;
+    private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
+    private double fixedOperatingExpense;
+    private double variableOperatingExpense;
+/*
     private double demandDensity;
     private double averageDemandPerSubscriber;
+*/
     private long newSubscritptions;
     private long churnedSubscriptions;
-
-    private long totalNumberOfExistingCustomers;
+    private long totalNumberOfExistingSubscriptions;
     private double percentageCustomerChurn;
     private double startingMRR;
     private Map<PriceBucket, Double> newMRRPerPriceBucket;
-    private Map<PriceBucket, Double> chrunedMRRPerPriceBucket;
+    private Map<PriceBucket, Double> churnedMRRPerPriceBucket;
     private double grossMargin;
     private double percentageGrossMargin;
     private double totalOperationalExpenses;
@@ -33,6 +43,7 @@ public class ProductActualMetricsView {
     private double percentageMRRChurn;
     private double endingMRR;
     private double netNewMRR;
+    private double revenue;
     private double averageRevenuePerNewSubscriber;
     private double averageRevenuePerSubscriber;
     private double subscriberLIfetimeValue;
@@ -42,130 +53,238 @@ public class ProductActualMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductActualMetricsView(String productId, LocalDate fromDate, LocalDate toDate, double demandDensity, double averageDemandPerSubscriber, long newSubscritptions, long churnedSubscriptions) {
-        this.productId = productId;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.demandDensity = demandDensity;
-        this.averageDemandPerSubscriber = averageDemandPerSubscriber;
-        this.newSubscritptions = newSubscritptions;
-        this.churnedSubscriptions = churnedSubscriptions;
+    public ProductActualMetricsView(String productId, YearMonth monthOfYear) {
+        this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
+        taggedPriceVersions= new TreeSet<>();
+        newMRRPerPriceBucket= new TreeMap<>();
+        churnedMRRPerPriceBucket= new TreeMap<>();
     }
 
-    public String getProductId() {
-        return productId;
+    public ProductMonthlyVersionId getProductMonthlyVersionId() {
+        return productMonthlyVersionId;
     }
 
-    public LocalDate getFromDate() {
-        return fromDate;
+    public SortedSet<PriceTaggedWithProduct> getTaggedPriceVersions() {
+        return taggedPriceVersions;
     }
 
-    public LocalDate getToDate() {
-        return toDate;
+    public void setTaggedPriceVersions(SortedSet<PriceTaggedWithProduct> taggedPriceVersions) {
+        this.taggedPriceVersions = taggedPriceVersions;
     }
 
-    public double getDemandDensity() {
-        return this.demandDensity;
+    public double getFixedOperatingExpense() {
+        return fixedOperatingExpense;
     }
 
-    public double getAverageDemandPerSubscriber() {
-        return this.averageDemandPerSubscriber;
+    public void setFixedOperatingExpense(double fixedOperatingExpense) {
+        this.fixedOperatingExpense = fixedOperatingExpense;
+    }
+
+    public double getVariableOperatingExpense() {
+        return variableOperatingExpense;
+    }
+
+    public void setVariableOperatingExpense(double variableOperatingExpense) {
+        this.variableOperatingExpense = variableOperatingExpense;
     }
 
     public long getNewSubscritptions() {
-        return this.newSubscritptions;
+        return newSubscritptions;
+    }
+
+    public void setNewSubscritptions(long newSubscritptions) {
+        this.newSubscritptions = newSubscritptions;
     }
 
     public long getChurnedSubscriptions() {
-        return this.churnedSubscriptions;
+        return churnedSubscriptions;
     }
 
-    public long getTotalNumberOfExistingCustomers() {
-        return this.totalNumberOfExistingCustomers;
+    public void setChurnedSubscriptions(long churnedSubscriptions) {
+        this.churnedSubscriptions = churnedSubscriptions;
+    }
+
+    public long getTotalNumberOfExistingSubscriptions() {
+        return totalNumberOfExistingSubscriptions;
+    }
+
+    public void setTotalNumberOfExistingSubscriptions(long totalNumberOfExistingSubscriptions) {
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
     public double getPercentageCustomerChurn() {
-        return this.percentageCustomerChurn;
+        return percentageCustomerChurn;
+    }
+
+    public void setPercentageCustomerChurn(double percentageCustomerChurn) {
+        this.percentageCustomerChurn = percentageCustomerChurn;
     }
 
     public double getStartingMRR() {
-        return this.startingMRR;
+        return startingMRR;
+    }
+
+    public void setStartingMRR(double startingMRR) {
+        this.startingMRR = startingMRR;
     }
 
     public Map<PriceBucket, Double> getNewMRRPerPriceBucket() {
         return newMRRPerPriceBucket;
     }
 
-    public Map<PriceBucket, Double> getChrunedMRRPerPriceBucket() {
-        return chrunedMRRPerPriceBucket;
+    public void setNewMRRPerPriceBucket(Map<PriceBucket, Double> newMRRPerPriceBucket) {
+        this.newMRRPerPriceBucket = newMRRPerPriceBucket;
+    }
+
+    public Map<PriceBucket, Double> getChurnedMRRPerPriceBucket() {
+        return churnedMRRPerPriceBucket;
+    }
+
+    public void setChurnedMRRPerPriceBucket(Map<PriceBucket, Double> churnedMRRPerPriceBucket) {
+        this.churnedMRRPerPriceBucket = churnedMRRPerPriceBucket;
     }
 
     public double getGrossMargin() {
-        return this.grossMargin;
+        return grossMargin;
+    }
+
+    public void setGrossMargin(double grossMargin) {
+        this.grossMargin = grossMargin;
     }
 
     public double getPercentageGrossMargin() {
-        return this.percentageGrossMargin;
+        return percentageGrossMargin;
+    }
+
+    public void setPercentageGrossMargin(double percentageGrossMargin) {
+        this.percentageGrossMargin = percentageGrossMargin;
     }
 
     public double getTotalOperationalExpenses() {
-        return this.totalOperationalExpenses;
+        return totalOperationalExpenses;
+    }
+
+    public void setTotalOperationalExpenses(double totalOperationalExpenses) {
+        this.totalOperationalExpenses = totalOperationalExpenses;
     }
 
     public double getOperatingProfit() {
-        return this.operatingProfit;
+        return operatingProfit;
+    }
+
+    public void setOperatingProfit(double operatingProfit) {
+        this.operatingProfit = operatingProfit;
     }
 
     public double getPercentageOperatingProfit() {
-        return this.percentageOperatingProfit;
+        return percentageOperatingProfit;
+    }
+
+    public void setPercentageOperatingProfit(double percentageOperatingProfit) {
+        this.percentageOperatingProfit = percentageOperatingProfit;
     }
 
     public double getTotalChurnedMRR() {
-        return this.totalChurnedMRR;
+        return totalChurnedMRR;
+    }
+
+    public void setTotalChurnedMRR(double totalChurnedMRR) {
+        this.totalChurnedMRR = totalChurnedMRR;
     }
 
     public double getPercentageMRRChurn() {
-        return this.percentageMRRChurn;
+        return percentageMRRChurn;
+    }
+
+    public void setPercentageMRRChurn(double percentageMRRChurn) {
+        this.percentageMRRChurn = percentageMRRChurn;
     }
 
     public double getEndingMRR() {
-        return this.endingMRR;
+        return endingMRR;
+    }
+
+    public void setEndingMRR(double endingMRR) {
+        this.endingMRR = endingMRR;
     }
 
     public double getNetNewMRR() {
-        return this.netNewMRR;
+        return netNewMRR;
+    }
+
+    public void setNetNewMRR(double netNewMRR) {
+        this.netNewMRR = netNewMRR;
     }
 
     public double getAverageRevenuePerNewSubscriber() {
-        return this.averageRevenuePerNewSubscriber;
+        return averageRevenuePerNewSubscriber;
+    }
+
+    public void setAverageRevenuePerNewSubscriber(double averageRevenuePerNewSubscriber) {
+        this.averageRevenuePerNewSubscriber = averageRevenuePerNewSubscriber;
     }
 
     public double getAverageRevenuePerSubscriber() {
-        return this.averageRevenuePerSubscriber;
+        return averageRevenuePerSubscriber;
+    }
+
+    public void setAverageRevenuePerSubscriber(double averageRevenuePerSubscriber) {
+        this.averageRevenuePerSubscriber = averageRevenuePerSubscriber;
     }
 
     public double getSubscriberLIfetimeValue() {
-        return this.subscriberLIfetimeValue;
+        return subscriberLIfetimeValue;
+    }
+
+    public void setSubscriberLIfetimeValue(double subscriberLIfetimeValue) {
+        this.subscriberLIfetimeValue = subscriberLIfetimeValue;
     }
 
     public double getSubscriberLifetimePeriod() {
-        return this.subscriberLifetimePeriod;
+        return subscriberLifetimePeriod;
+    }
+
+    public void setSubscriberLifetimePeriod(double subscriberLifetimePeriod) {
+        this.subscriberLifetimePeriod = subscriberLifetimePeriod;
     }
 
     public double getCostOfAcquiringASubscriber() {
-        return this.costOfAcquiringASubscriber;
+        return costOfAcquiringASubscriber;
+    }
+
+    public void setCostOfAcquiringASubscriber(double costOfAcquiringASubscriber) {
+        this.costOfAcquiringASubscriber = costOfAcquiringASubscriber;
     }
 
     public double getSLVToCASRatio() {
-        return this.SLVToCASRatio;
+        return SLVToCASRatio;
+    }
+
+    public void setSLVToCASRatio(double SLVToCASRatio) {
+        this.SLVToCASRatio = SLVToCASRatio;
     }
 
     public double getMonthsToRecoverCAS() {
-        return this.monthsToRecoverCAS;
+        return monthsToRecoverCAS;
+    }
+
+    public void setMonthsToRecoverCAS(double monthsToRecoverCAS) {
+        this.monthsToRecoverCAS = monthsToRecoverCAS;
     }
 
     public double getSalesAndMarketingExpenses() {
-        return this.salesAndMarketingExpenses;
+        return salesAndMarketingExpenses;
     }
 
+    public void setSalesAndMarketingExpenses(double salesAndMarketingExpenses) {
+        this.salesAndMarketingExpenses = salesAndMarketingExpenses;
+    }
+
+    public double getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(double revenue) {
+        this.revenue = revenue;
+    }
 }

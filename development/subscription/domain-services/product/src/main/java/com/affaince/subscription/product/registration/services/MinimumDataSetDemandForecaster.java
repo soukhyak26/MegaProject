@@ -32,18 +32,19 @@ public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
         this.productDemandForecaster = forecaster;
     }
 
-    public List<ProductForecastMetricsView> forecastDemandGrowthAndChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
+    public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
         if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 6) {
+        } else if(productActualMetricsViewList.size() >= 6 && productActualMetricsViewList.size() <= 15){
             Collections.sort(productActualMetricsViewList, DateTimeComparator.getDateOnlyInstance());
             DataSet observedData = new DataSet();
-            LocalDate startDate = productActualMetricsViewList.get(0).getFromDate();
+            //LocalDate startDate = productActualMetricsViewList.get(0).getProductMonthlyVersionId().getMonthOfYear();
 
             int i = 0;
             for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
-                double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingCustomers();
-                int duration = Days.daysBetween(startDate, productActualMetricsView.getFromDate()).getDays();
+                double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
+                //int duration = Days.daysBetween(startDate, productActualMetricsView.getFromDate()).getDays();
                 DataPoint dp = new Observation(totalSubscriptionCount);
-                dp.setIndependentValue("time", duration);
+                dp.setIndependentValue("time", 1);
                 i++;
             }
             observedData.setPeriodsPerYear(12);
@@ -74,12 +75,16 @@ public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
             }
 
 
-        } else {
+
+        } else{
             if (null != productDemandForecaster) {
-                return productDemandForecaster.forecastDemandGrowthAndChurn(productActualMetricsViewList);
+                return productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);
             }
         }
         return null;
     }
 
+    public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
+        return null;
+    }
 }

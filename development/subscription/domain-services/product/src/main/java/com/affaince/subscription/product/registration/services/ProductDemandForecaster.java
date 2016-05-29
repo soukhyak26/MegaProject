@@ -9,6 +9,7 @@ import java.util.List;
  * Created by mandark on 29-04-2016.
  */
 public interface ProductDemandForecaster {
-    public List<ProductForecastMetricsView> forecastDemandGrowthAndChurn(List<ProductActualMetricsView> productActualMetricsViewList);
+    public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList);
+    public List<Double>forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList);
     public void addNextForecaster(ProductDemandForecaster forecaster);
 }

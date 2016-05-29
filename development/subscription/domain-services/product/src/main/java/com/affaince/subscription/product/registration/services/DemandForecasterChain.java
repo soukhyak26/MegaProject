@@ -42,7 +42,7 @@ public class DemandForecasterChain {
              products) {
             List<ProductActualMetricsView> productActualMetricsViewList =
                     productActualMetricsViewRepository.findByProductId(productView.getProductId());
-            List<ProductForecastMetricsView> forecastViews=initialForecaster.forecastDemandGrowthAndChurn(productActualMetricsViewList);
+            List<Double> forecastViews=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
         }
     }
 }

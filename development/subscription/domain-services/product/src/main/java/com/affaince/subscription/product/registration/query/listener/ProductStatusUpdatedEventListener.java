@@ -1,16 +1,12 @@
 package com.affaince.subscription.product.registration.query.listener;
 
-import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.registration.command.event.ProductStatusUpdatedEvent;
-import com.affaince.subscription.product.registration.query.repository.PriceBucketViewRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.registration.query.repository.ProductsMonthlyStatisticsViewRepository;
-import com.affaince.subscription.product.registration.query.view.PriceBucketView;
-import com.affaince.subscription.product.registration.query.view.ProductMonthlyStatisticsView;
+import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
@@ -20,12 +16,12 @@ import org.springframework.data.domain.Sort;
 public class ProductStatusUpdatedEventListener {
 
     private final ProductViewRepository productViewRepository;
-    private final ProductsMonthlyStatisticsViewRepository productsMonthlyStatisticsViewRepository;
+    private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
 
     @Autowired
-    public ProductStatusUpdatedEventListener(ProductViewRepository productViewRepository, ProductsMonthlyStatisticsViewRepository productsMonthlyStatisticsViewRepository) {
+    public ProductStatusUpdatedEventListener(ProductViewRepository productViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository) {
         this.productViewRepository = productViewRepository;
-        this.productsMonthlyStatisticsViewRepository = productsMonthlyStatisticsViewRepository;
+        this.productActualMetricsViewRepository = productActualMetricsViewRepository;
     }
 
     @EventHandler
@@ -35,12 +31,12 @@ public class ProductStatusUpdatedEventListener {
         Sort sort = new Sort(Sort.Direction.DESC, "productMonthlyVersionId.fromDate");
 
         //if purchase price in incoming event and that of latest price bucket are same do nothing,as there is no change;Else create new price bucket and set new purchase price/MRP in it.
-        ProductMonthlyStatisticsView latestStatisticsView = productsMonthlyStatisticsViewRepository.findByProductMonthlyVersionId_ProductId(event.getProductId(),sort).get(0);
+        ProductActualMetricsView latestStatisticsView = productActualMetricsViewRepository.findByProductMonthlyVersionId_ProductId(event.getProductId(),sort).get(0);
 
         if (latestStatisticsView.getTaggedPriceVersions().first().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
             PriceTaggedWithProduct newTaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());
             latestStatisticsView.getTaggedPriceVersions().add(newTaggedPrice);
-            productsMonthlyStatisticsViewRepository.save(latestStatisticsView);
+            productActualMetricsViewRepository.save(latestStatisticsView);
         }
     }
 }
