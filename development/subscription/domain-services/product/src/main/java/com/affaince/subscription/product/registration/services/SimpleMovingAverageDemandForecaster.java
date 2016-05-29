@@ -2,6 +2,7 @@ package com.affaince.subscription.product.registration.services;
 
 import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.registration.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.registration.vo.ActualVsPredictionEvaluator;
 import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.ForecastingModel;
@@ -12,20 +13,17 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mandark on 01-05-2016.
  */
-public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
+public class SimpleMovingAverageDemandForecaster implements ProductDemandForecaster {
 
     private ProductDemandForecaster productDemandForecaster;
 
     @Autowired
-    public MinimumDataSetDemandForecaster() {
+    public SimpleMovingAverageDemandForecaster() {
     }
 
     public void addNextForecaster(ProductDemandForecaster forecaster) {
@@ -33,12 +31,46 @@ public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
     }
 
     public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
-        if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 6) {
-        } else if(productActualMetricsViewList.size() >= 6 && productActualMetricsViewList.size() <= 15){
+        //starting with simple  moving average
+        if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 15) {
+            final Queue<Double> window = new LinkedList<Double>();
+            double sum=0;
+       //     Collections.sort(productActualMetricsViewList, DateTimeComparator.getDateOnlyInstance());
+            int i = 0;
+            int[] windowSizes = {3,4,5};
+            List<ActualVsPredictionEvaluator> predictionsSet= new ArrayList<>();
+            for (int windSize : windowSizes) {
+                if(productActualMetricsViewList.size() >= windSize) {
+                    for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                        double actualValue=productActualMetricsView.getTotalNumberOfExistingSubscriptions();
+                        sum += actualValue;
+                        window.add(actualValue);
+                        if (window.size() > windSize) {
+                            sum -= window.remove();
+                        }
+                        double predictedValue = sum / window.size();
+                        ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(actualValue);
+                        if(predictionsSet.contains(eval)){
+                            ActualVsPredictionEvaluator newPrediction= predictionsSet.get(predictionsSet.indexOf(eval));
+                            newPrediction.addPredictedValue(predictedValue);
+                        }else{
+                            ActualVsPredictionEvaluator newPrediction= new ActualVsPredictionEvaluator(actualValue);
+                            newPrediction.addPredictedValue(predictedValue);
+                            predictionsSet.add(newPrediction);
+                        }
+                    }
+                }
+            }
+            System.out.println("$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size()-1).getPrecisePrediction());
+            List<Double> resultSet=new ArrayList<Double>();
+            resultSet.add(predictionsSet.get(predictionsSet.size()-1).getPrecisePrediction());
+            return resultSet;
+
+        } else if(productActualMetricsViewList.size() >= 16 && productActualMetricsViewList.size() <= 30){
+/*
             Collections.sort(productActualMetricsViewList, DateTimeComparator.getDateOnlyInstance());
             DataSet observedData = new DataSet();
             //LocalDate startDate = productActualMetricsViewList.get(0).getProductMonthlyVersionId().getMonthOfYear();
-
             int i = 0;
             for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
                 double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
@@ -76,6 +108,7 @@ public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
 
 
 
+*/
         } else{
             if (null != productDemandForecaster) {
                 return productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);
