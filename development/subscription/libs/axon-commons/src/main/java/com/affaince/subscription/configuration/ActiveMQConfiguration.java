@@ -9,9 +9,7 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.serializer.Serializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.jms.SubscribableJmsChannel;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MessagingMessageConverter;
@@ -68,8 +66,8 @@ public class ActiveMQConfiguration extends Default {
         return channel;
     }
 
-    /*@Bean
+    @Bean
     public EventBusTerminal subscriptionEventBusTerminal(Cluster asyncCluster, Serializer serializer, @Qualifier("eventChannel") final SubscribableChannel subscribableChannel) {
-        return new SimpleEventBus(serializer, subscribableChannel, asyncCluster);
-    }*/
+        return new SubscriptionEventBusTerminal(serializer, subscribableChannel, asyncCluster);
+    }
 }
