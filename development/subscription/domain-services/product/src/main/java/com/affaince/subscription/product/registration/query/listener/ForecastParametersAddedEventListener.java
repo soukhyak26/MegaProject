@@ -2,8 +2,8 @@ package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.registration.command.event.ForecastParametersAddedEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductStatusViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductStatusView;
+import com.affaince.subscription.product.registration.query.repository.ProductActivationStatusViewRepository;
+import com.affaince.subscription.product.registration.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.registration.web.exception.InvalidProductStatusException;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -15,20 +15,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ForecastParametersAddedEventListener {
-    private final ProductStatusViewRepository productStatusViewRepository;
+    private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
 
     @Autowired
-    public ForecastParametersAddedEventListener(ProductStatusViewRepository productStatusViewRepository) {
-        this.productStatusViewRepository = productStatusViewRepository;
+    public ForecastParametersAddedEventListener(ProductActivationStatusViewRepository productActivationStatusViewRepository) {
+        this.productActivationStatusViewRepository = productActivationStatusViewRepository;
     }
 
     @EventHandler
     public void on(ForecastParametersAddedEvent event) throws ProductNotFoundException, InvalidProductStatusException {
-        final ProductStatusView productStatusView = productStatusViewRepository.findByProductId(event.getProductId());
-        if(productStatusView == null) {
+        final ProductActivationStatusView productActivationStatusView = productActivationStatusViewRepository.findByProductId(event.getProductId());
+        if(productActivationStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
-        productStatusViewRepository.save(productStatusView);
+        boolean result = productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
+        productActivationStatusViewRepository.save(productActivationStatusView);
     }
 }

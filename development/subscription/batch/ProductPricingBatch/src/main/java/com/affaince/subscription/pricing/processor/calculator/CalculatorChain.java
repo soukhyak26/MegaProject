@@ -1,7 +1,7 @@
 package com.affaince.subscription.pricing.processor.calculator;
 
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class CalculatorChain {
         }
     }
 
-    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
-        return initialCalculator.calculatePrice(activePriceBuckets, productStatisticsView);
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductMonthlyStatisticsView productMonthlyStatisticsView) {
+        return initialCalculator.calculatePrice(activePriceBuckets, productMonthlyStatisticsView);
     }
 }

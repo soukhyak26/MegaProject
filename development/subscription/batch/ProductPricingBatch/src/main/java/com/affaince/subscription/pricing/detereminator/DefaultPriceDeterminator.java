@@ -2,14 +2,13 @@ package com.affaince.subscription.pricing.detereminator;
 
 
 import com.affaince.subscription.common.vo.ProductMonthlyVersionId;
-import com.affaince.subscription.pricing.detereminator.PriceDeterminator;
 import com.affaince.subscription.pricing.processor.calculator.CalculatorChain;
 import com.affaince.subscription.pricing.processor.calculator.DemandCurveBasedPriceCalculator;
 import com.affaince.subscription.pricing.processor.calculator.OpeningPriceCalculator;
 import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
-import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
+import com.affaince.subscription.pricing.query.repository.ProductMonthlyStatisticsViewRepository;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 import com.affaince.subscription.pricing.vo.CoefficientsType;
 import com.affaince.subscription.pricing.vo.FunctionCoefficients;
 import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;
@@ -22,7 +21,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     @Autowired
     PriceBucketViewRepository priceBucketViewRepository;
     @Autowired
-    ProductStatisticsViewRepository productStatisticsViewRepository;
+    ProductMonthlyStatisticsViewRepository productMonthlyStatisticsViewRepository;
 
     public DefaultPriceDeterminator() {
 
@@ -38,12 +37,12 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         final String productId = demandFunctionCoeffiecients.getProductId();
 
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
-        ProductStatisticsView productStatisticsView = productStatisticsViewRepository.findOne(new ProductMonthlyVersionId(productId, YearMonth.now()));
+        ProductMonthlyStatisticsView productMonthlyStatisticsView = productMonthlyStatisticsViewRepository.findOne(new ProductMonthlyVersionId(productId, YearMonth.now()));
 
         CalculatorChain calculatorChain = new CalculatorChain();
         calculatorChain.addCalculator(new OpeningPriceCalculator());
         calculatorChain.addCalculator(new DemandCurveBasedPriceCalculator());
-        PriceBucketView latestPriceBucket= calculatorChain.calculatePrice(activePriceBuckets, productStatisticsView);
+        PriceBucketView latestPriceBucket= calculatorChain.calculatePrice(activePriceBuckets, productMonthlyStatisticsView);
         priceBucketViewRepository.save(latestPriceBucket);
         return latestPriceBucket;
 

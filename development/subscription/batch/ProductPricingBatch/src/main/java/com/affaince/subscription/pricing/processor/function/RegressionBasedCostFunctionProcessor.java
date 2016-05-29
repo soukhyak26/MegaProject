@@ -3,8 +3,8 @@ package com.affaince.subscription.pricing.processor.function;
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.vo.RegressionResult;
 import com.affaince.subscription.pricing.processor.exception.InaccurateRegressionException;
-import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.repository.ProductMonthlyStatisticsViewRepository;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 import com.affaince.subscription.pricing.query.view.ProductView;
 import com.affaince.subscription.pricing.vo.CoefficientsType;
 import com.affaince.subscription.pricing.vo.FunctionCoefficients;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<ProductView> {
     @Autowired
-    ProductStatisticsViewRepository productStatisticsViewRepository;
+    ProductMonthlyStatisticsViewRepository productMonthlyStatisticsViewRepository;
 
     @Override
     public FunctionCoefficients processFunction(ProductView productView) {
@@ -27,10 +27,10 @@ public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<P
         //fixed operating expense per Product(rent,electiricty bill etc) as a fixed cost
         //variable operating expenses such as shipping price per product
         //TrainingData trainingData = TrainingDataBuilder.buildTrainingData()
-        List<ProductStatisticsView> productStatistics =productStatisticsViewRepository.findByProductMonthlyVersionId_ProductId(productView.getProductId());
+        List<ProductMonthlyStatisticsView> productStatistics = productMonthlyStatisticsViewRepository.findByProductMonthlyVersionId_ProductId(productView.getProductId());
 
         List<Double> parametersList = new ArrayList<Double>();
-        for (ProductStatisticsView productStat : productStatistics) {
+        for (ProductMonthlyStatisticsView productStat : productStatistics) {
             double costPerMonth = (productStat.getPurchasePrice() + productStat.getFixedOperatingExpense() + productStat.getVariableOperatingExpense()) * productStat.getProductSubscriptionCount();
             double subscriptionCount = productStat.getProductSubscriptionCount();
             parametersList.add(costPerMonth);

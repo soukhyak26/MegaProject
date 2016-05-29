@@ -3,9 +3,8 @@ package com.affaince.subscription.pricing.detereminator;
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.pricing.detereminator.PriceDeterminator;
 import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
-import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
+import com.affaince.subscription.pricing.query.repository.ProductMonthlyStatisticsViewRepository;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
 import com.affaince.subscription.pricing.vo.CoefficientsType;
 import com.affaince.subscription.pricing.vo.FunctionCoefficients;
@@ -25,7 +24,7 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
     @Autowired
     PriceBucketViewRepository priceBucketViewRepository;
     @Autowired
-    ProductStatisticsViewRepository productStatisticsViewRepository;
+    ProductMonthlyStatisticsViewRepository productMonthlyStatisticsViewRepository;
 
     public PriceBucketView calculateOfferedPrice(PriceDeterminationCriteria criteria) {
         //cost function: cost=yInterceptCost+slopeCost*Quantity
@@ -36,7 +35,7 @@ public class DemandBasedPriceDeterminator implements PriceDeterminator {
 
 /*
         PriceBucketViewRepository priceBucketViewRepository = (PriceBucketViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(PriceBucketViewRepository.class)).findFirst().get();
-        ProductStatisticsViewRepository productStatisticsViewRepository = (ProductStatisticsViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(ProductStatisticsViewRepository.class)).findFirst().get();
+        ProductMonthlyStatisticsViewRepository productMonthlyStatisticsViewRepository = (ProductMonthlyStatisticsViewRepository) repositories.stream().filter(repository -> repository.getClass().isAssignableFrom(ProductMonthlyStatisticsViewRepository.class)).findFirst().get();
 */
 
         FunctionCoefficients demandFunctionCoeffiecients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.DEMAND_FUNCTION_COEFFICIENT)).findFirst().get();

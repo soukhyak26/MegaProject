@@ -24,7 +24,6 @@ public class UpdateDeliveryExpenseToProductCommandHandler {
     @CommandHandler
     public void handle (UpdateDeliveryExpenseToProductCommand command) {
         final Product product = productAccountRepository.load(command.getProductId());
-        PriceBucket priceBucket = product.getLatestPriceBucket();
-        priceBucket.updateSubscriptionSpecificPrice (command);
+        product.getProductAccount().updateSubscriptionSpecificExpenses(command);
     }
 }

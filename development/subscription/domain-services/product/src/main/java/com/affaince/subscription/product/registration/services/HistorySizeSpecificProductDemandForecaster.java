@@ -1,8 +1,7 @@
 package com.affaince.subscription.product.registration.services;
 
-import com.affaince.subscription.product.registration.command.domain.ProductAccount;
-import com.affaince.subscription.product.registration.query.view.ProductActualsView;
-import com.affaince.subscription.product.registration.query.view.ProductForecastView;
+import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.registration.query.view.ProductForecastMetricsView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class HistorySizeSpecificProductDemandForecaster implements ProductDemand
     public void addNextForecaster(ProductDemandForecaster forecaster){
         this.productDemandForecaster=forecaster;
     }
-    public List<ProductForecastView> forecastDemandGrowthAndChurn(List<ProductActualsView> productActuals){
+    public List<ProductForecastMetricsView> forecastDemandGrowthAndChurn(List<ProductActualMetricsView> productActuals){
         if(productActuals.size()>6){
 
         }else{

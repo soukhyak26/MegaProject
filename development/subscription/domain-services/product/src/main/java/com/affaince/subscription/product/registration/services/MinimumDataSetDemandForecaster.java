@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.registration.services;
 
-import com.affaince.subscription.product.registration.query.view.ProductActualsView;
-import com.affaince.subscription.product.registration.query.view.ProductForecastView;
+import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.registration.query.view.ProductForecastMetricsView;
 import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.ForecastingModel;
@@ -32,16 +32,16 @@ public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
         this.productDemandForecaster = forecaster;
     }
 
-    public List<ProductForecastView> forecastDemandGrowthAndChurn(List<ProductActualsView> productActualsViewList) {
-        if (productActualsViewList.size() >= 3 && productActualsViewList.size() <= 6) {
-            Collections.sort(productActualsViewList, DateTimeComparator.getDateOnlyInstance());
+    public List<ProductForecastMetricsView> forecastDemandGrowthAndChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
+        if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 6) {
+            Collections.sort(productActualMetricsViewList, DateTimeComparator.getDateOnlyInstance());
             DataSet observedData = new DataSet();
-            LocalDate startDate = productActualsViewList.get(0).getFromDate();
+            LocalDate startDate = productActualMetricsViewList.get(0).getFromDate();
 
             int i = 0;
-            for (ProductActualsView productActualsView : productActualsViewList) {
-                double totalSubscriptionCount = productActualsView.getTotalNumberOfExistingCustomers();
-                int duration = Days.daysBetween(startDate, productActualsView.getFromDate()).getDays();
+            for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingCustomers();
+                int duration = Days.daysBetween(startDate, productActualMetricsView.getFromDate()).getDays();
                 DataPoint dp = new Observation(totalSubscriptionCount);
                 dp.setIndependentValue("time", duration);
                 i++;
@@ -63,20 +63,20 @@ public class MinimumDataSetDemandForecaster implements ProductDemandForecaster {
 
             DataSet results = forecaster.forecast(fcValues);
             Iterator<DataPoint> it = results.iterator();
-            List<ProductForecastView> newForecasts= new ArrayList<ProductForecastView>();
+            List<ProductForecastMetricsView> newForecasts= new ArrayList<ProductForecastMetricsView>();
             while (it.hasNext()) {
                 // Check that the results are within specified tolerance
                 //  of the expected values
                 DataPoint fc = (DataPoint) it.next();
                 double newSubscriptionCount = fc.getDependentValue();
                 double time = fc.getIndependentValue("t");
-                //ProductForecastView forecastView= new ProductForecastView();
+                //ProductForecastMetricsView forecastView= new ProductForecastMetricsView();
             }
 
 
         } else {
             if (null != productDemandForecaster) {
-                return productDemandForecaster.forecastDemandGrowthAndChurn(productActualsViewList);
+                return productDemandForecaster.forecastDemandGrowthAndChurn(productActualMetricsViewList);
             }
         }
         return null;

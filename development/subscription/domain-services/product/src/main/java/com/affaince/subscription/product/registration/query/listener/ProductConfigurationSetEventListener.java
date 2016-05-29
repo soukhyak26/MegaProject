@@ -2,10 +2,10 @@ package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.registration.command.event.ProductConfigurationSetEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductConfigurationViewRepository;
-import com.affaince.subscription.product.registration.query.repository.ProductStatusViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductConfigurationView;
-import com.affaince.subscription.product.registration.query.view.ProductStatusView;
+import com.affaince.subscription.product.registration.query.repository.ProductActivationStatusViewRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
+import com.affaince.subscription.product.registration.query.view.ProductActivationStatusView;
+import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.InvalidProductStatusException;
 import com.affaince.subscription.product.registration.web.exception.ProductNotFoundException;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -18,31 +18,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductConfigurationSetEventListener {
 
-    private final ProductConfigurationViewRepository productConfigurationViewRepository;
-    private final ProductStatusViewRepository productStatusViewRepository;
+    private final ProductViewRepository productViewRepository;
+    private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
 
     @Autowired
-    public ProductConfigurationSetEventListener(ProductConfigurationViewRepository productConfigurationViewRepository,
-                                                ProductStatusViewRepository productStatusViewRepository) {
-        this.productConfigurationViewRepository = productConfigurationViewRepository;
-        this.productStatusViewRepository = productStatusViewRepository;
+    public ProductConfigurationSetEventListener(ProductViewRepository productViewRepository,
+                                                ProductActivationStatusViewRepository productActivationStatusViewRepository) {
+        this.productViewRepository = productViewRepository;
+        this.productActivationStatusViewRepository = productActivationStatusViewRepository;
     }
 
     @EventHandler
     public void on(ProductConfigurationSetEvent event) throws InvalidProductStatusException, ProductNotFoundException {
-        final ProductConfigurationView productConfigurationView = new ProductConfigurationView();
-        productConfigurationView.setProductId(event.getProductId());
-        productConfigurationView.setDemandCurvePeriod(event.getDemandCurvePeriod());
-        productConfigurationView.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
-        productConfigurationView.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
-        productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
-        productConfigurationView.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
-        productConfigurationViewRepository.save(productConfigurationView);
-        final ProductStatusView productStatusView = productStatusViewRepository.findByProductId(event.getProductId());
-        if(productStatusView == null) {
+        //final ProductConfigurationView productConfigurationView = new ProductConfigurationView();
+        final ProductView productView = productViewRepository.findOne(event.getProductId());
+        productView.setProductId(event.getProductId());
+        productView.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
+        productView.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
+        productView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
+        productView.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
+        productViewRepository.save(productView);
+        final ProductActivationStatusView productActivationStatusView = productActivationStatusViewRepository.findByProductId(event.getProductId());
+        if(productActivationStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
-        productStatusViewRepository.save(productStatusView);
+        boolean result = productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
+        productActivationStatusViewRepository.save(productActivationStatusView);
     }
 }

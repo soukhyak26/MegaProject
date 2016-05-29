@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.registration.validator;
 
 import com.affaince.subscription.common.type.ProductStatus;
-import com.affaince.subscription.product.registration.query.view.ProductStatusView;
+import com.affaince.subscription.product.registration.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.registration.web.exception.InvalidProductStatusException;
 
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.List;
  * Created by anayonkar on 28/2/16.
  */
 public final class ProductConfigurationValidator {
-    public static boolean validateProductConfiguration(ProductStatusView productStatusView) throws InvalidProductStatusException {
-        List<ProductStatus> statusList = productStatusView.getProductStatuses();
+    public static boolean validateProductConfiguration(ProductActivationStatusView productActivationStatusView) throws InvalidProductStatusException {
+        List<ProductStatus> statusList = productActivationStatusView.getProductStatuses();
         boolean registered = false;
         boolean configured = false;
         boolean forecasted = false;
@@ -27,7 +27,7 @@ public final class ProductConfigurationValidator {
                     if(registered) {
                         configured = true;
                     } else {
-                        throw InvalidProductStatusException.build(productStatusView.getProductId(),
+                        throw InvalidProductStatusException.build(productActivationStatusView.getProductId(),
                                 productStatus,
                                 ProductStatus.PRODUCT_REGISTERED);
                     }
@@ -36,7 +36,7 @@ public final class ProductConfigurationValidator {
                     if(registered) {
                         forecasted = true;
                     } else {
-                        throw InvalidProductStatusException.build(productStatusView.getProductId(),
+                        throw InvalidProductStatusException.build(productActivationStatusView.getProductId(),
                                 productStatus,
                                 ProductStatus.PRODUCT_REGISTERED);
                     }
@@ -45,7 +45,7 @@ public final class ProductConfigurationValidator {
                     if(configured && forecasted) {
                         expenseDistributed = true;
                     } else {
-                        throw InvalidProductStatusException.build(productStatusView.getProductId(),
+                        throw InvalidProductStatusException.build(productActivationStatusView.getProductId(),
                                 productStatus,
                                 ProductStatus.PRODUCT_REGISTERED);
                     }
@@ -54,7 +54,7 @@ public final class ProductConfigurationValidator {
                     if(expenseDistributed) {
                         activated = true;
                     } else {
-                        throw InvalidProductStatusException.build(productStatusView.getProductId(),
+                        throw InvalidProductStatusException.build(productActivationStatusView.getProductId(),
                                 productStatus,
                                 ProductStatus.PRODUCT_REGISTERED);
                     }

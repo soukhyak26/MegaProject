@@ -17,6 +17,13 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         this.startDate = startDate;
     }
 
+    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate startDate, LocalDate endDate) {
+        this.purchasePricePerUnit = purchasePricePerUnit;
+        this.MRP = MRP;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }

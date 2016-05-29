@@ -1,10 +1,10 @@
 package com.affaince.subscription.product.registration.services;
 
-import com.affaince.subscription.product.registration.query.repository.ProductActualsViewRepository;
-import com.affaince.subscription.product.registration.query.repository.ProductForecastViewRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductActualMetricsViewRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductActualsView;
-import com.affaince.subscription.product.registration.query.view.ProductForecastView;
+import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.registration.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,16 +14,16 @@ import java.util.List;
  * Created by mandark on 01-05-2016.
  */
 public class DemandForecasterChain {
-    private final ProductForecastViewRepository productForecastViewRepository;
-    private final ProductActualsViewRepository productActualsViewRepository;
+    private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
     private final ProductViewRepository productViewRepository;
     private ProductDemandForecaster initialForecaster;
 
 
     @Autowired
-    DemandForecasterChain(ProductForecastViewRepository productForecastViewRepository,ProductActualsViewRepository productActualsViewRepository, ProductViewRepository productViewRepository) {
-        this.productForecastViewRepository=productForecastViewRepository;
-        this.productActualsViewRepository = productActualsViewRepository;
+    DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductViewRepository productViewRepository) {
+        this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
+        this.productActualMetricsViewRepository = productActualMetricsViewRepository;
         this.productViewRepository = productViewRepository;
     }
 
@@ -40,9 +40,9 @@ public class DemandForecasterChain {
 
         for (ProductView productView:
              products) {
-            List<ProductActualsView> productActualsViewList =
-                    productActualsViewRepository.findByProductId(productView.getProductId());
-            List<ProductForecastView> forecastViews=initialForecaster.forecastDemandGrowthAndChurn(productActualsViewList);
+            List<ProductActualMetricsView> productActualMetricsViewList =
+                    productActualMetricsViewRepository.findByProductId(productView.getProductId());
+            List<ProductForecastMetricsView> forecastViews=initialForecaster.forecastDemandGrowthAndChurn(productActualMetricsViewList);
         }
     }
 }

@@ -15,9 +15,8 @@ public class PriceBucketView {
     @Id
     private ProductVersionId productVersionId;
     private LocalDate toDate;
-    private double purchasePricePerUnit;
     private double offeredPricePerUnit;
-    private double MRP;
+    private double percentDiscountPerUnit;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
@@ -47,28 +46,12 @@ public class PriceBucketView {
         this.toDate = toDate;
     }
 
-    public double getPurchasePricePerUnit() {
-        return this.purchasePricePerUnit;
-    }
-
-    public void setPurchasePricePerUnit(double purchasePricePerUnit) {
-        this.purchasePricePerUnit = purchasePricePerUnit;
-    }
-
     public double getOfferedPricePerUnit() {
         return this.offeredPricePerUnit;
     }
 
     public void setOfferedPricePerUnit(double offeredPricePerUnit) {
         this.offeredPricePerUnit = offeredPricePerUnit;
-    }
-
-    public double getMRP() {
-        return this.MRP;
-    }
-
-    public void setMRP(double MRP) {
-        this.MRP = MRP;
     }
 
     public long getNumberOfNewCustomersAssociatedWithAPrice() {

@@ -9,8 +9,8 @@ import java.util.Map;
 /**
  * Created by mandark on 28-01-2016.
  */
-@Document(collection = "ProductForecastView")
-public class ProductForecastView {
+@Document(collection = "ProductActualMetricsView")
+public class ProductActualMetricsView {
     private String productId;
     private LocalDate fromDate;
     private LocalDate toDate;
@@ -42,7 +42,7 @@ public class ProductForecastView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductForecastView(String productId, LocalDate fromDate, LocalDate toDate, double demandDensity, double averageDemandPerSubscriber, long newSubscritptions, long churnedSubscriptions) {
+    public ProductActualMetricsView(String productId, LocalDate fromDate, LocalDate toDate, double demandDensity, double averageDemandPerSubscriber, long newSubscritptions, long churnedSubscriptions) {
         this.productId = productId;
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -167,4 +167,5 @@ public class ProductForecastView {
     public double getSalesAndMarketingExpenses() {
         return this.salesAndMarketingExpenses;
     }
+
 }

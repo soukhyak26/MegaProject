@@ -1,16 +1,17 @@
-package com.affaince.subscription.product.registration.query.view;
+package com.affaince.subscription.pricing.query.view;
 
+import com.affaince.subscription.common.vo.ProductMonthlyVersionId;
 import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Created by rbsavaliya on 15-01-2016.
- */
-@Document(collection = "ProductStatisticsView")
-public class ProductStatisticsView {
+@Document(collection = "ProductMonthlyStatisticsView")
+public class ProductMonthlyStatisticsView {
     @Id
     private final ProductMonthlyVersionId productMonthlyVersionId;
+    private double purchasePrice;
+    private double MRP;
+    private double forecastedProductSubscriptionCount;
     private long productSubscriptionCount;
     private double subscribedProductRevenue;
     private double subscribedProductNetProfit;
@@ -18,25 +19,20 @@ public class ProductStatisticsView {
     private double variableOperatingExpense;
 
 
-    public ProductStatisticsView(String productId,YearMonth monthOfYear) {
+    public ProductMonthlyStatisticsView(String productId, YearMonth monthOfYear) {
         this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
     }
 
-    public ProductStatisticsView(String productId,YearMonth monthOfYear, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit,double fixedOperatingExpense,double variableOperatingExpense) {
-        this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
-        this.productSubscriptionCount = productSubscriptionCount;
-        this.subscribedProductRevenue = subscribedProductRevenue;
-        this.subscribedProductNetProfit = subscribedProductNetProfit;
-        this.fixedOperatingExpense= fixedOperatingExpense;
-        this.variableOperatingExpense=variableOperatingExpense;
-
-    }
-
-    public ProductStatisticsView(ProductMonthlyVersionId productMonthlyVersionId, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit) {
+    public ProductMonthlyStatisticsView(ProductMonthlyVersionId productMonthlyVersionId, double purchasePrice, double MRP, double forecastedProductSubscriptionCount, long productSubscriptionCount, double subscribedProductRevenue, double subscribedProductNetProfit, double fixedOperatingExpense, double variableOperatingExpense) {
         this.productMonthlyVersionId = productMonthlyVersionId;
+        this.purchasePrice = purchasePrice;
+        this.MRP = MRP;
+        this.forecastedProductSubscriptionCount = forecastedProductSubscriptionCount;
         this.productSubscriptionCount = productSubscriptionCount;
         this.subscribedProductRevenue = subscribedProductRevenue;
         this.subscribedProductNetProfit = subscribedProductNetProfit;
+        this.fixedOperatingExpense = fixedOperatingExpense;
+        this.variableOperatingExpense = variableOperatingExpense;
     }
 
     public long getProductSubscriptionCount() {
@@ -81,5 +77,45 @@ public class ProductStatisticsView {
 
     public void setVariableOperatingExpense(double variableOperatingExpense) {
         this.variableOperatingExpense = variableOperatingExpense;
+    }
+
+    public double getPurchasePrice() {
+        return this.purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getMRP() {
+        return this.MRP;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
+    }
+
+    public double getForecastedProductSubscriptionCount() {
+        return this.forecastedProductSubscriptionCount;
+    }
+
+    public void setForecastedProductSubscriptionCount(double forecastedProductSubscriptionCount) {
+        this.forecastedProductSubscriptionCount = forecastedProductSubscriptionCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+
+        ProductMonthlyStatisticsView that = (ProductMonthlyStatisticsView) o;
+
+        return this.getProductMonthlyVersionId().equals(that.getProductMonthlyVersionId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getProductMonthlyVersionId().hashCode();
     }
 }

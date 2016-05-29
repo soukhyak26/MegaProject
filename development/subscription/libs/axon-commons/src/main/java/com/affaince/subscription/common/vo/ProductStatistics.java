@@ -1,8 +1,5 @@
 package com.affaince.subscription.common.vo;
 
-/**
- * Created by rsavaliya on 17/1/16.
- */
 public class ProductStatistics {
 
     private String productId;

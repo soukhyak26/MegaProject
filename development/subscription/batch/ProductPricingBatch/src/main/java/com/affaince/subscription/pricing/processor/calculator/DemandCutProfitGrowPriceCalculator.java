@@ -3,7 +3,7 @@ package com.affaince.subscription.pricing.processor.calculator;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class DemandCutProfitGrowPriceCalculator extends AbstractPriceCalculator {
 
-    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
-        String productId = productStatisticsView.getProductMonthlyVersionId().getProductId();
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductMonthlyStatisticsView productMonthlyStatisticsView) {
+        String productId = productMonthlyStatisticsView.getProductMonthlyVersionId().getProductId();
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         final PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
 
@@ -33,7 +33,7 @@ public class DemandCutProfitGrowPriceCalculator extends AbstractPriceCalculator 
 
             double intercept = latestPriceBucket.getMRP();
             double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1 );
-            double expectedDemandedQuantity=productStatisticsView.getForecastedProductSubscriptionCount();
+            double expectedDemandedQuantity= productMonthlyStatisticsView.getForecastedProductSubscriptionCount();
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemandedQuantity);
             PriceBucketView newPrieBucket=new PriceBucketView();
             newPrieBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDate.now()));
@@ -44,7 +44,7 @@ public class DemandCutProfitGrowPriceCalculator extends AbstractPriceCalculator 
             newPrieBucket.setOfferedPricePerUnit(offeredPrice);
             return newPrieBucket;
         }else{
-            return getNextCalculator().calculatePrice(activePriceBuckets, productStatisticsView);
+            return getNextCalculator().calculatePrice(activePriceBuckets, productMonthlyStatisticsView);
 
         }
     }
