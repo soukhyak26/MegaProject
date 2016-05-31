@@ -23,4 +23,31 @@ public class ProductMonthlyVersionId implements Serializable {
     public YearMonth getMonthOfYear() {
         return this.monthOfYear;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductMonthlyVersionId that = (ProductMonthlyVersionId) o;
+
+        if (!productId.equals(that.productId)) return false;
+        return monthOfYear.equals(that.monthOfYear);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = productId.hashCode();
+        result = 31 * result + monthOfYear.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductMonthlyVersionId{" +
+                "productId='" + productId + '\'' +
+                ", monthOfYear=" + monthOfYear +
+                '}';
+    }
 }

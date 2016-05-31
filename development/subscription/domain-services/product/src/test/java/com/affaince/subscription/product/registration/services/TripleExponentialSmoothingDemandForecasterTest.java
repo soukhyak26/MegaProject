@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by mandar on 29-05-2016.
  */
-public class SimpleMovingAverageDemandForecasterTest {
+public class TripleExponentialSmoothingDemandForecasterTest {
     private List<ProductActualMetricsView> productActualMetricsViewList;
 
     @Before
@@ -81,8 +81,8 @@ public class SimpleMovingAverageDemandForecasterTest {
     }
     @Test
     public void testPrecisePrediction(){
-        SimpleMovingAverageDemandForecaster forecaster= new SimpleMovingAverageDemandForecaster();
+        TripleExponentialSmoothingDemandForecaster forecaster= new TripleExponentialSmoothingDemandForecaster();
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
-        System.out.println("Precise prediction: "+ result.get(0));
+        System.out.println("Triple expontntial Precise prediction: "+ result.get(0));
     }
 }
