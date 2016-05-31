@@ -20,4 +20,8 @@ export class CheckOutComponent {
 
     constructor(private productService: ProductService) {
     }
+    
+    ngOnInit(){
+        jQuery('select').material_select();
+    }
 }

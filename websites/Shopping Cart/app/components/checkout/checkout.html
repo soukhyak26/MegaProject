@@ -7,17 +7,40 @@
             <ul class="collection with-header">
                 <li class="collection-item">
                     <div class="row">
-                        <div class="col s6 m6">
+                        <div class="col s3 m3">
                             <img src="../../../images/ata.jpg" />
                             <p>Aashirvaad Atta - Whole Weat</p>
                             <strong>MRP: <strike>Rs. 400</strike> Rs. 322</strong>
                         </div>
-                        <div class="col s6 m6">
-                            <p>Free home delivery.</p>
-                            <p>Qty:</p>
-                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10" #quantity1>
-                            <br>
-                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('Aashirvaad Atta - Whole Weat', 322, quantity1.value)">Add to cart</button>
+                        <div class="input-field col s2 m2">
+                            <p>Quantity:</p>
+                            <input style="width:40px" type="number" placeholder="1" value="1" min="1" max="10" #quantity1>
+                        </div>
+                        <div class="col s3 m2">
+                            <p>Frequency:</p>
+                            <div class="input-field col s12">
+                                <select>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="quaterly">Quarterly</option>
+                                    <option value="halfYearly">Half Yearly</option>
+                                 </select>
+                            </div>
+                        </div>
+                        <div class="col s3 m2">
+                            <p>Delivery Date:</p>
+                            <div class="input-field col s12">
+                                <select>
+                                    <option value="1">1st Day</option>
+                                    <option value="3">3rd Day</option>
+                                    <option value="5">5th Day</option>
+                                    <option value="28">28th Day</option>
+                                 </select>
+                            </div>
+                        </div>
+                        <div class="col s1 m1">
+                            <br><br>
+                            <button class="btn-large waves-effect waves-light orange" (click)="removeItem()">Remove Item</button>
                         </div>
                     </div>
                 </li>
