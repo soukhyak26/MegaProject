@@ -3,7 +3,7 @@ package com.affaince.subscription.pricing.processor.calculator;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
  * Created by mandark on 27-03-2016.
  */
 public class DemandCurveBasedPriceCalculator extends AbstractPriceCalculator {
-    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView) {
-        String productId=productStatisticsView.getProductMonthlyVersionId().getProductId();
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductMonthlyStatisticsView productMonthlyStatisticsView) {
+        String productId= productMonthlyStatisticsView.getProductMonthlyVersionId().getProductId();
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         List<Double> totalQuantitySubscribedWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucketView -> new Long(priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice()).doubleValue()).collect(Collectors.toList());
 
@@ -24,10 +24,10 @@ public class DemandCurveBasedPriceCalculator extends AbstractPriceCalculator {
             double expectedDemand = 0;
             PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
             final double MRP = latestPriceBucket.getMRP();
-            final double breakEvenPrice = calculateBreakEvenPrice(latestPriceBucket.getPurchasePricePerUnit(), productStatisticsView.getFixedOperatingExpense(), productStatisticsView.getVariableOperatingExpense());
+            final double breakEvenPrice = calculateBreakEvenPrice(latestPriceBucket.getPurchasePricePerUnit(), productMonthlyStatisticsView.getFixedOperatingExpense(), productMonthlyStatisticsView.getVariableOperatingExpense());
 
             if (activePriceBuckets.size() <= 5) {
-                expectedDemand = productStatisticsView.getForecastedProductSubscriptionCount();
+                expectedDemand = productMonthlyStatisticsView.getForecastedProductSubscriptionCount();
             } else {
                 List<Double> extrapolatedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
                 expectedDemand = extrapolatedDemands.get(0);

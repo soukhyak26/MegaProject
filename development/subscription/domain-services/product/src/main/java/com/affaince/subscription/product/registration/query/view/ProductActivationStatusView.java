@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Document(collection = "ProductStatusView")
-public class ProductStatusView {
+@Document(collection = "ProductActivationStatusView")
+public class ProductActivationStatusView {
 
     @Id
     private String productId;
     private List<ProductStatus> productStatuses;
 
-    public ProductStatusView() {
+    public ProductActivationStatusView() {
 
     }
 
-    public ProductStatusView(String productId, List<ProductStatus> productStatuses) {
+    public ProductActivationStatusView(String productId, List<ProductStatus> productStatuses) {
         this.productId = productId;
         if(productStatuses == null) {
             this.productStatuses = new ArrayList<>();

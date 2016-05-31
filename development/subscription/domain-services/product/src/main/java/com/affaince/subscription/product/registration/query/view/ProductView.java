@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,6 +22,13 @@ public class ProductView {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+
+    private short revenueChangeThresholdForPriceChange;
+    private boolean isCrossPriceElasticityConsidered;
+    private boolean isAdvertisingExpensesConsidered;
+    private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
+
+
     private double currentOperatingExpensePerUnit;
     private long currentStockInUnits;
     private int productPricingCategory;
@@ -133,4 +141,38 @@ public class ProductView {
     public void setCreditPoints(int creditPoints) {
         this.creditPoints = creditPoints;
     }
+
+    public short getRevenueChangeThresholdForPriceChange() {
+        return revenueChangeThresholdForPriceChange;
+    }
+
+    public void setRevenueChangeThresholdForPriceChange(short revenueChangeThresholdForPriceChange) {
+        this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
+    }
+
+
+    public boolean isCrossPriceElasticityConsidered() {
+        return isCrossPriceElasticityConsidered;
+    }
+
+    public void setCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
+        isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;
+    }
+
+    public boolean isAdvertisingExpensesConsidered() {
+        return isAdvertisingExpensesConsidered;
+    }
+
+    public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
+        isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    }
+
+    public List<DemandWiseProfitSharingRule> getDemandWiseProfitSharingRules() {
+        return demandWiseProfitSharingRules;
+    }
+
+    public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
+        this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
+    }
+
 }

@@ -3,16 +3,11 @@ package com.affaince.subscription.pricing.processor;
 import com.affaince.subscription.pricing.processor.function.FunctionProcessor;
 import com.affaince.subscription.pricing.processor.function.RegressionBasedCostFunctionProcessor;
 import com.affaince.subscription.pricing.processor.function.RegressionBasedDemandFunctionProcessor;
-import com.affaince.subscription.pricing.query.repository.PriceBucketViewRepository;
-import com.affaince.subscription.pricing.query.repository.ProductStatisticsViewRepository;
-import com.affaince.subscription.pricing.query.view.PriceBucketView;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
 import com.affaince.subscription.pricing.query.view.ProductView;
 import com.affaince.subscription.pricing.vo.CoefficientsType;
 import com.affaince.subscription.pricing.vo.FunctionCoefficients;
 import com.affaince.subscription.pricing.vo.PriceDeterminationCriteria;
 import com.affaince.subscription.pricing.vo.PricingStrategyType;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

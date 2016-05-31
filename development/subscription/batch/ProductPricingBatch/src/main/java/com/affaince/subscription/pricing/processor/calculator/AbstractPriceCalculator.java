@@ -2,7 +2,7 @@ package com.affaince.subscription.pricing.processor.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.pricing.query.view.PriceBucketView;
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
 
@@ -87,6 +87,6 @@ public abstract class AbstractPriceCalculator {
         return intercept + (slope * quantity);
     }
 
-    public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductStatisticsView productStatisticsView);
+    public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductMonthlyStatisticsView productMonthlyStatisticsView);
 
 }

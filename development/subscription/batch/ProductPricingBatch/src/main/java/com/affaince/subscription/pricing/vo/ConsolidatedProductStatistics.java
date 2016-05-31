@@ -1,8 +1,7 @@
 package com.affaince.subscription.pricing.vo;
 
-import com.affaince.subscription.pricing.query.view.ProductStatisticsView;
+import com.affaince.subscription.pricing.query.view.ProductMonthlyStatisticsView;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,12 +10,12 @@ import java.util.TreeSet;
  */
 public class ConsolidatedProductStatistics {
     private String productId;
-    private Set<ProductStatisticsView> productStatistics;
+    private Set<ProductMonthlyStatisticsView> productStatistics;
 
     public ConsolidatedProductStatistics(){}
     public ConsolidatedProductStatistics(String productId) {
         this.productId = productId;
-        this.productStatistics= new TreeSet<ProductStatisticsView>();
+        this.productStatistics= new TreeSet<ProductMonthlyStatisticsView>();
     }
 
     public String getProductId() {
@@ -27,16 +26,16 @@ public class ConsolidatedProductStatistics {
         this.productId = productId;
     }
 
-    public Set<ProductStatisticsView> getProductStatistics() {
+    public Set<ProductMonthlyStatisticsView> getProductStatistics() {
         return this.productStatistics;
     }
 
-    public void setProductStatistics(Set<ProductStatisticsView> productStatistics) {
+    public void setProductStatistics(Set<ProductMonthlyStatisticsView> productStatistics) {
         this.productStatistics = productStatistics;
     }
 
-    public void addToProductStatistics(ProductStatisticsView productStatisticsView){
-            productStatistics.add(productStatisticsView);
+    public void addToProductStatistics(ProductMonthlyStatisticsView productMonthlyStatisticsView){
+            productStatistics.add(productMonthlyStatisticsView);
     }
 
     @Override

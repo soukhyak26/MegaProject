@@ -27,7 +27,6 @@ import org.axonframework.commandhandling.interceptors.BeanValidationInterceptor;
 import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.domain.MetaData;
 import org.axonframework.eventhandling.*;
-import org.axonframework.eventhandling.async.AsynchronousCluster;
 import org.axonframework.eventhandling.async.SequentialPerAggregatePolicy;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.eventstore.mongo.DefaultMongoTemplate;
@@ -125,8 +124,8 @@ public class Default {
     }
 
     @Bean
-    public EventBus eventBus(ClusterSelector selector) {
-        return new ClusteringEventBus(selector);
+    public EventBus eventBus(ClusterSelector selector, EventBusTerminal eventBusTerminal) {
+        return new ClusteringEventBus(selector, eventBusTerminal);
     }
 
     protected Map<String, String> types() {

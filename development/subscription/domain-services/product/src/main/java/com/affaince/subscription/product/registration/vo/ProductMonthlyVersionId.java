@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.registration.query.view;
+package com.affaince.subscription.product.registration.vo;
 
 import org.joda.time.YearMonth;
 

@@ -2,9 +2,9 @@ package com.affaince.subscription.product.registration.query.listener;
 
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.registration.command.event.ProductRegisteredEvent;
-import com.affaince.subscription.product.registration.query.repository.ProductStatusViewRepository;
+import com.affaince.subscription.product.registration.query.repository.ProductActivationStatusViewRepository;
 import com.affaince.subscription.product.registration.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.registration.query.view.ProductStatusView;
+import com.affaince.subscription.product.registration.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.registration.query.view.ProductView;
 import com.affaince.subscription.product.registration.web.exception.InvalidProductStatusException;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -20,13 +19,13 @@ import java.util.List;
 @Component
 public class ProductRegisteredEventListener {
     private final ProductViewRepository itemRepository;
-    private final ProductStatusViewRepository productStatusViewRepository;
+    private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
 
     @Autowired
     public ProductRegisteredEventListener(ProductViewRepository repository,
-                                          ProductStatusViewRepository productStatusViewRepository) {
+                                          ProductActivationStatusViewRepository productActivationStatusViewRepository) {
         this.itemRepository = repository;
-        this.productStatusViewRepository = productStatusViewRepository;
+        this.productActivationStatusViewRepository = productActivationStatusViewRepository;
     }
 
 
@@ -43,8 +42,8 @@ public class ProductRegisteredEventListener {
                 event.getComplements()
         );
         itemRepository.save(productView);
-        final ProductStatusView productStatusView = new ProductStatusView(event.getProductId(), new ArrayList<>());
-        boolean result = productStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
-        productStatusViewRepository.save(productStatusView);
+        final ProductActivationStatusView productActivationStatusView = new ProductActivationStatusView(event.getProductId(), new ArrayList<>());
+        boolean result = productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
+        productActivationStatusViewRepository.save(productActivationStatusView);
     }
 }

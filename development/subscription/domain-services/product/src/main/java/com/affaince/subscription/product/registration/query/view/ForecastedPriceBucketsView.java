@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.registration.query.view;
 
+import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,24 +11,75 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class ForecastedPriceBucketsView {
     @Id
-    private String productId;
-    private LocalDate fromDate;
+    private ProductVersionId productVersionId;
     private LocalDate toDate;
-    private double purchasePricePerUnit;
-    private double MRP;
+    private double offeredPricePerUnit;
+    private double percentDiscountPerUnit;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedCustomersAssociatedWithAPrice;
-
-    private double offeredPricePerUnit;
     private long numberOfExistingCustomersAssociatedWithAPrice;
 
+
     public ForecastedPriceBucketsView(String productId, LocalDate fromDate, LocalDate toDate, double purchasePricePerUnit, double MRP, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedCustomersAssociatedWithAPrice) {
-        this.productId = productId;
-        this.fromDate = fromDate;
+        this.productVersionId = new ProductVersionId(productId,fromDate);
         this.toDate = toDate;
-        this.purchasePricePerUnit = purchasePricePerUnit;
-        this.MRP = MRP;
         this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
         this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
+    }
+
+    public ProductVersionId getProductVersionId() {
+        return productVersionId;
+    }
+
+    public void setProductVersionId(ProductVersionId productVersionId) {
+        this.productVersionId = productVersionId;
+    }
+
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
+    }
+
+    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
+        this.offeredPricePerUnit = offeredPricePerUnit;
+    }
+
+    public double getPercentDiscountPerUnit() {
+        return percentDiscountPerUnit;
+    }
+
+    public void setPercentDiscountPerUnit(double percentDiscountPerUnit) {
+        this.percentDiscountPerUnit = percentDiscountPerUnit;
+    }
+
+    public long getNumberOfNewCustomersAssociatedWithAPrice() {
+        return numberOfNewCustomersAssociatedWithAPrice;
+    }
+
+    public void setNumberOfNewCustomersAssociatedWithAPrice(long numberOfNewCustomersAssociatedWithAPrice) {
+        this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
+    }
+
+    public long getNumberOfChurnedCustomersAssociatedWithAPrice() {
+        return numberOfChurnedCustomersAssociatedWithAPrice;
+    }
+
+    public void setNumberOfChurnedCustomersAssociatedWithAPrice(long numberOfChurnedCustomersAssociatedWithAPrice) {
+        this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
+    }
+
+    public long getNumberOfExistingCustomersAssociatedWithAPrice() {
+        return numberOfExistingCustomersAssociatedWithAPrice;
+    }
+
+    public void setNumberOfExistingCustomersAssociatedWithAPrice(long numberOfExistingCustomersAssociatedWithAPrice) {
+        this.numberOfExistingCustomersAssociatedWithAPrice = numberOfExistingCustomersAssociatedWithAPrice;
     }
 }
