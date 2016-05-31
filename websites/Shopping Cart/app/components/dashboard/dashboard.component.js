@@ -10,22 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
-var product_model_1 = require('../../models/product.model');
 var product_service_1 = require('../../services/product.service');
 var DashboardComponent = (function () {
     function DashboardComponent(productService, _router) {
         this.productService = productService;
         this._router = _router;
     }
-    DashboardComponent.prototype.addToCart = function (productName, price, quantity) {
-        var newProduct = new product_model_1.Product();
-        newProduct.name = productName;
-        newProduct.price = price;
-        newProduct.quantity = quantity;
-        this.productService.addNewProduct(newProduct);
-        console.log('product: ', productName);
-        console.log('price: ', price);
-        console.log('quantity: ', quantity);
+    DashboardComponent.prototype.ngOnInit = function () {
+        this.allProducts = this.productService.getMockedProducts();
+    };
+    DashboardComponent.prototype.addToCart = function (product) {
+        this.productService.addNewProduct(product);
+        console.log('product: ', product.name);
+        console.log('price: ', product.price);
+        console.log('quantity: ', product.quantity);
     };
     DashboardComponent.prototype.checkOut = function () {
         console.log('checking out cart...');

@@ -4,7 +4,12 @@
         <div class="row center">
             <br>
             <br>
-            <ul class="collection with-header">
+            <ul>
+                <li *ngFor="let product of selectedProducts">
+                    {{ product.name }}
+                </li>
+            </ul>
+            <!--<ul class="collection with-header">
                 <li class="collection-item">
                     <div class="row">
                         <div class="col s3 m3">
@@ -38,13 +43,16 @@
                                  </select>
                             </div>
                         </div>
-                        <div class="col s1 m1">
+                        <div class="col s3 m3">
                             <br><br>
-                            <button class="btn-large waves-effect waves-light orange" (click)="removeItem()">Remove Item</button>
+                            <button class="waves-effect waves-light btn orange" (click)="removeItem()">
+                                <i class="material-icons left">delete</i>
+                               Remove Item
+                            </button>
                         </div>
                     </div>
                 </li>
-            </ul>
+            </ul>-->
         </div>
     </div>
 </div>

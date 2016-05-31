@@ -14,21 +14,22 @@ declare var jQuery: any;
 })
 
 export class DashboardComponent {
-
+    
+    allProducts:Array<Product>;
+    
     constructor(private productService: ProductService, private _router: Router) {
     }
+    
+    ngOnInit(){
+        this.allProducts = this.productService.getMockedProducts();
+    }
+    
+    addToCart(product:Product) {
+        this.productService.addNewProduct(product);
 
-    addToCart(productName: string, price: number, quantity: number) {
-        let newProduct = new Product();
-        newProduct.name = productName;
-        newProduct.price = price;
-        newProduct.quantity = quantity;
-
-        this.productService.addNewProduct(newProduct);
-
-        console.log('product: ', productName);
-        console.log('price: ', price);
-        console.log('quantity: ', quantity);
+        console.log('product: ', product.name);
+        console.log('price: ', product.price);
+        console.log('quantity: ', product.quantity);
     }
 
     checkOut() {

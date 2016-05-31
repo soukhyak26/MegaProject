@@ -17,6 +17,7 @@ var CheckOutComponent = (function () {
     }
     CheckOutComponent.prototype.ngOnInit = function () {
         jQuery('select').material_select();
+        this.selectedProducts = this.productService.getSelectedProducts();
     };
     CheckOutComponent = __decorate([
         core_1.Component({

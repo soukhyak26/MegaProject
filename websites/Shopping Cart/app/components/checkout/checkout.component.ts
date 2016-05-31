@@ -18,10 +18,14 @@ declare var jQuery: any;
 
 export class CheckOutComponent {
 
+    selectedProducts: Array<Product>;
+    
     constructor(private productService: ProductService) {
     }
     
     ngOnInit(){
         jQuery('select').material_select();
+        
+        this.selectedProducts = this.productService.getSelectedProducts();
     }
 }
