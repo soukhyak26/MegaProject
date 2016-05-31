@@ -13,6 +13,7 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var login_component_1 = require('../login/login.component');
 var signup_component_1 = require('../signup/signup.component');
 var dashboard_component_1 = require('../dashboard/dashboard.component');
+var checkout_component_1 = require('../checkout/checkout.component');
 var HomeComponent = (function () {
     function HomeComponent() {
     }
@@ -39,6 +40,11 @@ var HomeComponent = (function () {
                 path: '/dashboard',
                 name: 'Dashboard',
                 component: dashboard_component_1.DashboardComponent
+            },
+            {
+                path: '/checkout',
+                name: 'CheckOut',
+                component: checkout_component_1.CheckOutComponent
             }
         ]), 
         __metadata('design:paramtypes', [])

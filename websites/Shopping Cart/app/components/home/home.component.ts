@@ -4,6 +4,7 @@ import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/route
 import { LoginComponent } from '../login/login.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { CheckOutComponent } from '../checkout/checkout.component';
 
 @Component({
     selector: 'home',
@@ -27,6 +28,12 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
         path: '/dashboard',
         name: 'Dashboard',
         component: DashboardComponent
+    }
+    ,
+    {
+        path: '/checkout',
+        name: 'CheckOut',
+        component: CheckOutComponent
     }
 ])
 export class HomeComponent {

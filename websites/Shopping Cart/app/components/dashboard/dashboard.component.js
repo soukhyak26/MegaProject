@@ -13,8 +13,9 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var product_model_1 = require('../../models/product.model');
 var product_service_1 = require('../../services/product.service');
 var DashboardComponent = (function () {
-    function DashboardComponent(productService) {
+    function DashboardComponent(productService, _router) {
         this.productService = productService;
+        this._router = _router;
     }
     DashboardComponent.prototype.addToCart = function (productName, price, quantity) {
         var newProduct = new product_model_1.Product();
@@ -27,17 +28,16 @@ var DashboardComponent = (function () {
         console.log('quantity: ', quantity);
     };
     DashboardComponent.prototype.checkOut = function () {
+        console.log('checking out cart...');
+        this._router.navigate(['CheckOut']);
     };
     DashboardComponent = __decorate([
         core_1.Component({
             selector: 'dashboard',
             templateUrl: 'app/components/dashboard/dashboard.html',
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
-            providers: [
-                router_deprecated_1.ROUTER_PROVIDERS
-            ]
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [product_service_1.ProductService])
+        __metadata('design:paramtypes', [product_service_1.ProductService, router_deprecated_1.Router])
     ], DashboardComponent);
     return DashboardComponent;
 }());
