@@ -10,12 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
+var product_model_1 = require('../../models/product.model');
+var product_service_1 = require('../../services/product.service');
 var DashboardComponent = (function () {
-    function DashboardComponent() {
+    function DashboardComponent(productService) {
+        this.productService = productService;
     }
-    DashboardComponent.prototype.addToCart = function (productName, price) {
+    DashboardComponent.prototype.addToCart = function (productName, price, quantity) {
+        var newProduct = new product_model_1.Product();
+        newProduct.name = productName;
+        newProduct.price = price;
+        newProduct.quantity = quantity;
+        this.productService.addNewProduct(newProduct);
         console.log('product: ', productName);
         console.log('price: ', price);
+        console.log('quantity: ', quantity);
+    };
+    DashboardComponent.prototype.checkOut = function () {
     };
     DashboardComponent = __decorate([
         core_1.Component({
@@ -26,7 +37,7 @@ var DashboardComponent = (function () {
                 router_deprecated_1.ROUTER_PROVIDERS
             ]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [product_service_1.ProductService])
     ], DashboardComponent);
     return DashboardComponent;
 }());

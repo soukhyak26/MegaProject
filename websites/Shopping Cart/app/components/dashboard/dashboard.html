@@ -7,7 +7,8 @@
             <br>
             <ul class="collection with-header">
                 <li class="collection-header">
-                    <h4>Products</h4></li>
+                    <h4>Products</h4>
+                </li>
                 <li class="collection-item">
                     <div class="row">
                         <div class="col s6 m6">
@@ -18,9 +19,9 @@
                         <div class="col s6 m6">
                             <p>Free home delivery.</p>
                             <p>Qty:</p>
-                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10">
+                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10" #quantity1>
                             <br>
-                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('lenovo', 21999)">Add to cart</button>
+                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('Aashirvaad Atta - Whole Weat', 322, quantity1.value)">Add to cart</button>
                         </div>
                     </div>
                 </li>
@@ -34,9 +35,9 @@
                         <div class="col s6 m6">
                             <p>Free home delivery.</p>
                             <p>Qty:</p>
-                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10">
+                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10" #quantity2>
                             <br>
-                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('lenovo', 21999)">Add to cart</button>
+                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('BB Royal - Almond/Badam California', 605, quantity2.value)">Add to cart</button>
                         </div>
                     </div>
                 </li>
@@ -50,9 +51,9 @@
                         <div class="col s6 m6">
                             <p>Free home delivery.</p>
                             <p>Qty:</p>
-                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10">
+                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10" #quantity3>
                             <br>
-                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('lenovo', 21999)">Add to cart</button>
+                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('Fortune - Sunflower Refined Oil', 469, quantity3.value)">Add to cart</button>
                         </div>
                     </div>
                 </li>
@@ -66,11 +67,14 @@
                         <div class="col s6 m6">
                             <p>Free home delivery.</p>
                             <p>Qty:</p>
-                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10">
+                            <input style="width:30px" type="number" placeholder="1" value="1" min="1" max="10" #quantity4>
                             <br>
-                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('lenovo', 21999)">Add to cart</button>
+                            <button class="btn-large waves-effect waves-light orange" (click)="addToCart('lenovo', 21999, quantity4.value)">Add to cart</button>
                         </div>
                     </div>
+                </li>
+                <li class="collection-header">
+                    <button class="btn-large waves-effect waves-light orange" (click)="checkOut()">Checkout Cart</button>
                 </li>
             </ul>
         </div>
