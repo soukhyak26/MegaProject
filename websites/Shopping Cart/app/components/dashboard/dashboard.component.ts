@@ -9,11 +9,15 @@ declare var jQuery: any;
     selector: 'dashboard',
     templateUrl: 'app/components/dashboard/dashboard.html',
     directives: [ROUTER_DIRECTIVES],
-    providers: [    
+    providers: [
         ROUTER_PROVIDERS
     ]
 })
 
 export class DashboardComponent {
-
+    addToCart(productName: String, price: number) {
+        console.log('product: ', productName);
+        console.log('price: ', price);
+        
+    }
 }
