@@ -103,7 +103,6 @@
         <dependency>
             <groupId>com.affaince</groupId>
             <artifactId>rules-compiler</artifactId>
-            <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

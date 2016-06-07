@@ -7,20 +7,29 @@ public class BenefitResult {
 
     private double rewardPoints;
     private String paymentType;
+    private String periodOption;
+    private String benefitPaymentFrequency;
+
+    public BenefitResult(double rewardPoints, String paymentType, String periodOption, String benefitPaymentFrequency) {
+        this.rewardPoints = rewardPoints;
+        this.paymentType = paymentType;
+        this.periodOption = periodOption;
+        this.benefitPaymentFrequency = benefitPaymentFrequency;
+    }
 
     public double getRewardPoints() {
         return rewardPoints;
-    }
-
-    public void setRewardPoints(double rewardPoints) {
-        this.rewardPoints = rewardPoints;
     }
 
     public String getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public String getPeriodOption() {
+        return periodOption;
+    }
+
+    public String getBenefitPaymentFrequency() {
+        return benefitPaymentFrequency;
     }
 }

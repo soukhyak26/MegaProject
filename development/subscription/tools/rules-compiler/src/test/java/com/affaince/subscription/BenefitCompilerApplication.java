@@ -6,8 +6,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import java.io.IOException;
+
 public class BenefitCompilerApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         BenefitCompiler compiler = new BenefitCompiler();
         Rule ruleSet =
         compiler.compile("given " +
@@ -29,6 +31,8 @@ public class BenefitCompilerApplication {
         String jsonString = null;
         try {
             jsonString = mapper.writeValueAsString(ruleSet);
+            Rule rule = mapper.readValue(jsonString, Rule.class);
+            System.out.println(rule.getApplicability());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -9,13 +9,15 @@ public class BenefitCalculationRequest {
     private double currentSubscriptionAmount;
     private double totalLoyaltyPeriod;
     private double currentSubscriptionPeriod;
+    private double advancePaymentPercent;
 
-    public BenefitCalculationRequest(double totalSubscriptionAmount, double totalProfit, double currentSubscriptionAmount, double totalLoyaltyPeriod, double currentSubscriptionPeriod) {
+    public BenefitCalculationRequest(double totalSubscriptionAmount, double totalProfit, double currentSubscriptionAmount, double totalLoyaltyPeriod, double currentSubscriptionPeriod, double advancePaymentPercent) {
         this.totalSubscriptionAmount = totalSubscriptionAmount;
         this.totalProfit = totalProfit;
         this.currentSubscriptionAmount = currentSubscriptionAmount;
         this.totalLoyaltyPeriod = totalLoyaltyPeriod;
         this.currentSubscriptionPeriod = currentSubscriptionPeriod;
+        this.advancePaymentPercent = advancePaymentPercent;
     }
 
     public double getTotalSubscriptionAmount() {
@@ -56,5 +58,13 @@ public class BenefitCalculationRequest {
 
     public void setCurrentSubscriptionPeriod(double currentSubscriptionPeriod) {
         this.currentSubscriptionPeriod = currentSubscriptionPeriod;
+    }
+
+    public double getAdvancePaymentPercent() {
+        return advancePaymentPercent;
+    }
+
+    public void setAdvancePaymentPercent(double advancePaymentPercent) {
+        this.advancePaymentPercent = advancePaymentPercent;
     }
 }
