@@ -1,6 +1,6 @@
 package com.affaince.subscription;
 
-import com.affaince.subscription.compiler.Compiler;
+import com.affaince.subscription.compiler.spike.Compiler;
 import com.affaince.subscription.pojos.RuleSet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

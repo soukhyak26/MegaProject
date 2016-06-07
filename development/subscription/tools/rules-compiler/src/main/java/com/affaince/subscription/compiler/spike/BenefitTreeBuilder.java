@@ -1,9 +1,15 @@
-package com.affaince.subscription.compiler;
+package com.affaince.subscription.compiler.spike;
 
 import com.affaince.subscription.BenefitsRulesSetGrammarBaseListener;
 import com.affaince.subscription.BenefitsRulesSetGrammarParser;
 import com.affaince.subscription.common.type.DiscountUnit;
 import com.affaince.subscription.pojos.*;
+import com.affaince.subscription.pojos.Conclusion;
+import com.affaince.subscription.pojos.MoneyConversion;
+import com.affaince.subscription.pojos.Offer;
+import com.affaince.subscription.pojos.PeriodConversion;
+import com.affaince.subscription.pojos.Rule;
+import com.affaince.subscription.pojos.RuleSet;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package com.affaince.subscription.compiler;
+package com.affaince.subscription.compiler.spike;
 
 import com.affaince.subscription.RuleSetGrammarBaseListener;
 import com.affaince.subscription.RuleSetGrammarParser;

@@ -78,7 +78,7 @@ WS : [ \r\t\u000C\n]+ -> skip ;
 rule_set : single_rule;
 
 single_rule :GIVEN convert_expr
-             CONFIGURE AS arithmetic_expr
+             CONFIGURE AS arithmetic_expression
              ELIGIBLE WHEN eligibility_condition
              OFFER AS offer_expr
              APPLY WHEN conclusion SEMI;
@@ -142,6 +142,16 @@ arithmetic_expr
  | LPAREN arithmetic_expr RPAREN         # ArithmeticExpressionParens
  | numeric_entity                        # ArithmeticExpressionNumericEntity
  ;
+
+ arithmetic_expression
+  : arithmetic_expression MULT arithmetic_expression
+  | arithmetic_expression DIV arithmetic_expression
+  | arithmetic_expression PLUS arithmetic_expression
+  | arithmetic_expression MINUS arithmetic_expression
+  | MINUS arithmetic_expression
+  | LPAREN arithmetic_expression RPAREN
+  | numeric_entity
+  ;
 
 logical_entity : (TRUE | FALSE) # LogicalConst
                | IDENTIFIER # LogicalVariable

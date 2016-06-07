@@ -1,7 +1,7 @@
 package com.affaince.subscription;
 
 import com.affaince.subscription.compiler.BenefitCompiler;
-import com.affaince.subscription.pojos.RuleSet;
+import com.affaince.subscription.compiler.Rule;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class BenefitCompilerApplication {
     public static void main(String[] args) {
         BenefitCompiler compiler = new BenefitCompiler();
-        RuleSet ruleSet =
+        Rule ruleSet =
         compiler.compile("given " +
                     "money_convert is 1000 currency = 1 point " +
                     "and period_convert is 1 month = 1 point " +
