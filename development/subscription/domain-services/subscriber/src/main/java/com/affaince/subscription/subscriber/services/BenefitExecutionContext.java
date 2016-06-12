@@ -12,19 +12,15 @@ public class BenefitExecutionContext {
     private Rule applicableBenefit;
     private double rewardPoints;
     private String benefitPayMethod;
-    private String periodOption;
-    private String benefitPaymentFrequency;
 
     public BenefitResult calculateBenefit (BenefitCalculationRequest request) {
         BenefitCalculationState benefitCalculationState = new EligibilityState(
-                new ApplicabilityState(
-                        new MoneyToPointConversionState(
-                                new PeriodToPointConversionState(null)
-                        )
+                new PointConversionState(
+                        new ApplicabilityState(null)
                 )
         );
         benefitCalculationState.calculate(this);
-        return new BenefitResult(rewardPoints, benefitPayMethod, periodOption, benefitPaymentFrequency);
+        return new BenefitResult(rewardPoints, benefitPayMethod);
     }
 
     public void setApplicableBenefit(Rule applicableBenefit) {
@@ -43,15 +39,7 @@ public class BenefitExecutionContext {
         this.rewardPoints = this.rewardPoints + rewardPoints;
     }
 
-    public void setPeriodOption(String periodOption) {
-        this.periodOption = periodOption;
-    }
-
     public void setBenefitPayMethod(String benefitPayMethod) {
         this.benefitPayMethod = benefitPayMethod;
-    }
-
-    public void setBenefitPaymentFrequency(String benefitPaymentFrequency) {
-        this.benefitPaymentFrequency = benefitPaymentFrequency;
     }
 }

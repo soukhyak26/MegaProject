@@ -6,30 +6,18 @@ package com.affaince.subscription.subscriber.services;
 public class BenefitResult {
 
     private double rewardPoints;
-    private String paymentType;
-    private String periodOption;
-    private String benefitPaymentFrequency;
+    private String benefitPayMethod;
 
-    public BenefitResult(double rewardPoints, String paymentType, String periodOption, String benefitPaymentFrequency) {
+    public BenefitResult(double rewardPoints, String benefitPayMethod) {
         this.rewardPoints = rewardPoints;
-        this.paymentType = paymentType;
-        this.periodOption = periodOption;
-        this.benefitPaymentFrequency = benefitPaymentFrequency;
+        this.benefitPayMethod = benefitPayMethod;
     }
 
     public double getRewardPoints() {
         return rewardPoints;
     }
 
-    public String getPaymentType() {
-        return paymentType;
-    }
-
-    public String getPeriodOption() {
-        return periodOption;
-    }
-
-    public String getBenefitPaymentFrequency() {
-        return benefitPaymentFrequency;
+    public String getBenefitPayMethod() {
+        return benefitPayMethod;
     }
 }

@@ -1,6 +1,5 @@
 package com.affaince.subscription.subscriber.query.view;
 
-import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.subscriber.vo.RangeRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;

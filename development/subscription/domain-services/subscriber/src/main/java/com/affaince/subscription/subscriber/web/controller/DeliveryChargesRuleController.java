@@ -2,7 +2,6 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.AddDeliveryChargesRuleCommand;
-import com.affaince.subscription.subscriber.vo.RangeRule;
 import com.affaince.subscription.subscriber.web.request.DeliveryChargesRulesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

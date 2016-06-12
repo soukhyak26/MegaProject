@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
-import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.subscriber.command.domain.DeliveryItem;
 import com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
