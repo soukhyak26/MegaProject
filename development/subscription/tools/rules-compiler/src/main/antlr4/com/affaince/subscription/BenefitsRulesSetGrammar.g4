@@ -34,6 +34,9 @@ TOTALSUBSCRIPTIONPROFIT: 'total_subscription_profit';
 TOTALLOYALTYPERIOD: 'total_loyalty_period';
 CURRENTSUBSCRIPTIONPERIOD: 'current_subscription_period';
 
+MONTHLY_INCREMENTAL: 'monthly_incremental';
+WITH_EACH_PAYMENT: 'with_each_payment';
+
 
 IS : 'is';
 AS : 'as';
@@ -80,10 +83,16 @@ rule_set : single_rule;
 single_rule :GIVEN convert_expr
              CONFIGURE AS arithmetic_expression
              ELIGIBLE WHEN eligibility_condition
-             OFFER AS offer_expr
-             APPLY WHEN conclusion SEMI;
+             APPLY AS conclusion SEMI;
 
 convert_expr:
+    subscription_value CURRENCY AND period_value MONTH EQ point_value POINT;
+
+subscription_value: DECIMAL;
+period_value : DECIMAL;
+point_value : DECIMAL;
+
+/*convert_expr:point_value POINT;
     money_convert_expr  AND period_convert_expr
    | money_convert_expr
    | period_convert_expr;
@@ -95,7 +104,7 @@ point_value : DECIMAL;
 
 period_convert_expr: period_expr_name IS period_value MONTH EQ point_value POINT;
 period_expr_name : IDENTIFIER;
-period_value : DECIMAL;
+period_value : DECIMAL;*/
 
 /*arithmatic_expr:
     benefit_money_base_var DIV money_expr_name PLUS benefit_period_base_var DIV period_expr_name;
@@ -161,17 +170,17 @@ numeric_entity : DECIMAL              # NumericConst
                | IDENTIFIER           # NumericVariable
                ;
 
-offer_expr: offer_point_value POINT EQ offeredBenefitValue offered_benefit_type;
+/*offer_expr: offer_point_value POINT EQ offeredBenefitValue offered_benefit_type;
 
 offer_point_value: DECIMAL;
 offeredBenefitValue: DECIMAL;
-offered_benefit_type: CASHBACK | REWARD_POINT | CURRENCY;
+offered_benefit_type: CASHBACK | REWARD_POINT | CURRENCY;*/
 
 conclusion:
-    PAYMENT_MODE EQ payment_percent PERCENT_ADVANCE_PAYMENT benefit_pay_method WITH which_delivey option;
+    benefit_pay_method;
 
-payment_percent: DECIMAL;
-benefit_pay_method: 'deposit' | 'pay';
-which_delivey: EACH | ALTERNATE | LAST;
-option: DELIVERY | SUBSCRIPTION;
+//payment_percent: DECIMAL;
+benefit_pay_method: MONTHLY_INCREMENTAL | WITH_EACH_PAYMENT;
+//which_delivey: EACH | ALTERNATE | LAST;
+//option: DELIVERY | SUBSCRIPTION;
 

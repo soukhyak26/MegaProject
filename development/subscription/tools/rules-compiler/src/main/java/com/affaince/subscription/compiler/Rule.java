@@ -4,15 +4,11 @@ public class Rule {
 
     private String eligibilityCondition ;
 
-    private Conclusion applicability;
-
-    private MoneyConversion moneyConversion;
-
-    private PeriodConversion periodConversion;
+    private PointConversionParameters pointConversionParameters;
 
     private String pointConversionExpression;
 
-    private Offer offer;
+    private String benefitPaymentMethod;
 
     public Rule() {
     }
@@ -25,28 +21,12 @@ public class Rule {
         this.eligibilityCondition = eligibilityCondition;
     }
 
-    public Conclusion getApplicability() {
-        return applicability;
+    public PointConversionParameters getPointConversionParameters() {
+        return pointConversionParameters;
     }
 
-    public void setApplicability(Conclusion applicability) {
-        this.applicability = applicability;
-    }
-
-    public MoneyConversion getMoneyConversion() {
-        return moneyConversion;
-    }
-
-    public void setMoneyConversion(MoneyConversion moneyConversion) {
-        this.moneyConversion = moneyConversion;
-    }
-
-    public PeriodConversion getPeriodConversion() {
-        return periodConversion;
-    }
-
-    public void setPeriodConversion(PeriodConversion periodConversion) {
-        this.periodConversion = periodConversion;
+    public void setPointConversionParameters(PointConversionParameters pointConversionParameters) {
+        this.pointConversionParameters = pointConversionParameters;
     }
 
     public String getPointConversionExpression() {
@@ -57,11 +37,11 @@ public class Rule {
         this.pointConversionExpression = pointConversionExpression;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public String getBenefitPaymentMethod() {
+        return benefitPaymentMethod;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
+    public void setBenefitPaymentMethod(String benefitPaymentMethod) {
+        this.benefitPaymentMethod = benefitPaymentMethod;
     }
 }

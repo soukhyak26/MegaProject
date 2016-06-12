@@ -1,26 +1,10 @@
 package com.affaince.subscription.compiler.spike;
 
 import com.affaince.subscription.BenefitsRulesSetGrammarBaseListener;
-import com.affaince.subscription.BenefitsRulesSetGrammarParser;
-import com.affaince.subscription.common.type.DiscountUnit;
-import com.affaince.subscription.pojos.*;
-import com.affaince.subscription.pojos.Conclusion;
-import com.affaince.subscription.pojos.MoneyConversion;
-import com.affaince.subscription.pojos.Offer;
-import com.affaince.subscription.pojos.PeriodConversion;
-import com.affaince.subscription.pojos.Rule;
-import com.affaince.subscription.pojos.RuleSet;
-import org.antlr.v4.runtime.misc.NotNull;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.util.Stack;
 
 public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
 
-    private RuleSet ruleSet = null;
+    /*private RuleSet ruleSet = null;
     private Rule rule = null;
     private LogicalExpression condition = null;
 
@@ -277,5 +261,5 @@ public class BenefitTreeBuilder extends BenefitsRulesSetGrammarBaseListener {
     @Override
     public void exitOffered_benefit_type(BenefitsRulesSetGrammarParser.Offered_benefit_typeContext ctx) {
         offer.setOfferedBenefitType(DiscountUnit.valueOf(ctx.getText().toUpperCase()));
-    }
+    }*/
 }

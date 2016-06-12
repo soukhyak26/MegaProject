@@ -13,17 +13,14 @@ public class BenefitCompilerApplication {
         BenefitCompiler compiler = new BenefitCompiler();
         Rule ruleSet =
         compiler.compile("given " +
-                    "money_convert is 1000 currency = 1 point " +
-                    "and period_convert is 1 month = 1 point " +
+                    "1000 currency and 2 month = 3 point " +
                 "configure as " +
-                    "total_revenue/money_convert + total_period/period_convert " +
+                    "() " +
                 "eligible when " +
                     "total_subscription_amount = 1000 " +
                     "and (current_subscription_period > 50 or total_loyalty_period > 36) " +
-                "offer as " +
-                    "1 point = 3 currency " +
-                "apply when " +
-                    "payment_mode = 100 percent_advance deposit with each delivery;");
+                "apply as " +
+                    "monthly_incremental;");
         // JSON serialization
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -32,7 +29,7 @@ public class BenefitCompilerApplication {
         try {
             jsonString = mapper.writeValueAsString(ruleSet);
             Rule rule = mapper.readValue(jsonString, Rule.class);
-            System.out.println(rule.getApplicability());
+            System.out.println(rule.getPointConversionExpression());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

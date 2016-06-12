@@ -2,7 +2,6 @@ package com.affaince.subscription.compiler;
 
 import com.affaince.subscription.BenefitsRulesSetGrammarBaseListener;
 import com.affaince.subscription.BenefitsRulesSetGrammarParser;
-import com.affaince.subscription.common.type.DiscountUnit;
 import org.antlr.v4.runtime.misc.NotNull;
 
 public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
@@ -11,8 +10,6 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
     private Rule rule = null;
 
     private Conclusion applicability = new Conclusion();
-    private MoneyConversion moneyConversion = new MoneyConversion();
-    private PeriodConversion periodConversion = new PeriodConversion();
     private Offer offer = new Offer();
 
     public RuleSet getRuleSet() {
@@ -34,42 +31,8 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
 
     @Override
     public void exitConclusion(@NotNull BenefitsRulesSetGrammarParser.ConclusionContext ctx) {
-        rule.setApplicability(applicability);
-    }
-
-    @Override
-    public void exitMoney_convert_expr(BenefitsRulesSetGrammarParser.Money_convert_exprContext ctx) {
-        rule.setMoneyConversion(moneyConversion);
-    }
-
-    @Override
-    public void exitMoney_expr_name(BenefitsRulesSetGrammarParser.Money_expr_nameContext ctx) {
-        moneyConversion.setMoneyConvExprName(ctx.getText());
-    }
-
-    @Override
-    public void exitCurrency_value(BenefitsRulesSetGrammarParser.Currency_valueContext ctx) {
-        moneyConversion.setCurrencyValue(Integer.parseInt(ctx.getText()));
-    }
-
-    @Override
-    public void exitPoint_value(BenefitsRulesSetGrammarParser.Point_valueContext ctx) {
-        moneyConversion.setPointValue(Float.parseFloat(ctx.getText()));
-    }
-
-    @Override
-    public void exitPeriod_convert_expr(BenefitsRulesSetGrammarParser.Period_convert_exprContext ctx) {
-        rule.setPeriodConversion(periodConversion);
-    }
-
-    @Override
-    public void exitPeriod_expr_name(BenefitsRulesSetGrammarParser.Period_expr_nameContext ctx) {
-        periodConversion.setPeriodConvExprName(ctx.getText());
-    }
-
-    @Override
-    public void exitPeriod_value(BenefitsRulesSetGrammarParser.Period_valueContext ctx) {
-        periodConversion.setPeriodValue(Integer.parseInt(ctx.getText()));
+        //rule.setApplicability(applicability);
+        rule.setBenefitPaymentMethod (ctx.getText());
     }
 
     @Override
@@ -84,41 +47,6 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
         applicability.setBenefitPayMethod(ctx.getText());
     }
 
-    @Override
-    public void exitWhich_delivey(BenefitsRulesSetGrammarParser.Which_deliveyContext ctx) {
-        applicability.setBenefitPaymentFrequency(ctx.getText());
-    }
-
-    @Override
-    public void exitOption(BenefitsRulesSetGrammarParser.OptionContext ctx) {
-        applicability.setPeriodOption(ctx.getText());
-    }
-
-    @Override
-    public void exitPayment_percent(BenefitsRulesSetGrammarParser.Payment_percentContext ctx) {
-        applicability.setAdvancePaymentPercentage(Short.parseShort(ctx.getText()));
-    }
-
-    @Override
-    public void exitOffer_expr(BenefitsRulesSetGrammarParser.Offer_exprContext ctx) {
-        rule.setOffer(offer);
-    }
-
-    @Override
-    public void exitOffer_point_value(BenefitsRulesSetGrammarParser.Offer_point_valueContext ctx) {
-        offer.setOfferPointValue(Double.parseDouble(ctx.getText()));
-    }
-
-    @Override
-    public void exitOfferedBenefitValue(BenefitsRulesSetGrammarParser.OfferedBenefitValueContext ctx) {
-        offer.setOfferedBenefitValue(Double.parseDouble(ctx.getText()));
-    }
-
-    @Override
-    public void exitOffered_benefit_type(BenefitsRulesSetGrammarParser.Offered_benefit_typeContext ctx) {
-        offer.setOfferedBenefitType(DiscountUnit.valueOf(ctx.getText().toUpperCase()));
-    }
-
     @Override public void exitArithmetic_expression(BenefitsRulesSetGrammarParser.Arithmetic_expressionContext ctx) {
         rule.setPointConversionExpression(ctx.getText());
     }
@@ -130,5 +58,13 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
             eligibilityCondition = eligibilityCondition + terminalNode.getText();
         }*/
         rule.setEligibilityCondition(ctx.getText());
+    }
+
+    @Override public void exitConvert_expr(BenefitsRulesSetGrammarParser.Convert_exprContext ctx) {
+        PointConversionParameters pointConversionParameters = new PointConversionParameters();
+        pointConversionParameters.setSubscriptionValue(Double.parseDouble(ctx.subscription_value().getText()));
+        pointConversionParameters.setPointValue(Double.parseDouble(ctx.point_value().getText()));
+        pointConversionParameters.setSubscriptionPeriod(Double.parseDouble(ctx.period_value().getText()));
+        rule.setPointConversionParameters(pointConversionParameters);
     }
 }
