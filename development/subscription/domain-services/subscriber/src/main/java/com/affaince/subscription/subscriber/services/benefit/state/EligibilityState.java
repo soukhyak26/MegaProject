@@ -1,8 +1,9 @@
-package com.affaince.subscription.subscriber.services;
+package com.affaince.subscription.subscriber.services.benefit.state;
 
 import com.affaince.subscription.compiler.Rule;
 import com.affaince.subscription.subscriber.query.repository.BenefitViewRepository;
 import com.affaince.subscription.subscriber.query.view.BenefitView;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

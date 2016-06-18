@@ -1,6 +1,10 @@
-package com.affaince.subscription.subscriber.services;
+package com.affaince.subscription.subscriber.services.benefit.context;
 
 import com.affaince.subscription.compiler.Rule;
+import com.affaince.subscription.subscriber.services.benefit.state.ApplicabilityState;
+import com.affaince.subscription.subscriber.services.benefit.state.BenefitCalculationState;
+import com.affaince.subscription.subscriber.services.benefit.state.EligibilityState;
+import com.affaince.subscription.subscriber.services.benefit.state.PointConversionState;
 
 /**
  * Created by rbsavaliya on 29-05-2016.

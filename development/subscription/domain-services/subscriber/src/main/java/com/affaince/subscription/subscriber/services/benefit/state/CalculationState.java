@@ -1,4 +1,6 @@
-package com.affaince.subscription.subscriber.services;
+package com.affaince.subscription.subscriber.services.benefit.state;
+
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 
 /**
  * Created by rbsavaliya on 29-05-2016.

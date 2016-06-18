@@ -1,7 +1,9 @@
-package com.affaince.subscription.subscriber.services;
+package com.affaince.subscription.subscriber.services.benefit.state;
 
 import com.affaince.subscription.compiler.PointConversionParameters;
 import com.affaince.subscription.compiler.Rule;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitCalculationRequest;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -23,14 +25,13 @@ public class PointConversionState implements BenefitCalculationState {
 
         final Rule rule = context.getApplicableBenefit();
         final BenefitCalculationRequest request = context.getRequest();
-        final double currentSubscription = request.getCurrentSubscriptionAmount();
         PointConversionParameters pointCalculationParameters =
                 rule.getPointConversionParameters();
         pointCalculationParameters.setCurrentSubscriptionAmount (request.getCurrentSubscriptionAmount());
         ExpressionParser expressionParser = new SpelExpressionParser();
-        Expression expression1 = expressionParser.parseExpression(rule.getPointConversionExpression());
+        Expression expression = expressionParser.parseExpression(rule.getPointConversionExpression());
         EvaluationContext evaluationContext = new StandardEvaluationContext(pointCalculationParameters);
-        double rewardPoints = expression1.getValue(evaluationContext, Double.class);
+        double rewardPoints = expression.getValue(evaluationContext, Double.class);
         context.addRewardPoints (rewardPoints);
         if (nextState != null) {
             nextState.calculate(context);

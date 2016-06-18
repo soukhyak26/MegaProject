@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.services;
+package com.affaince.subscription.subscriber.services.encoder;
 
 import org.springframework.beans.factory.annotation.Value;
 
