@@ -42,7 +42,7 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
             }
             Vector forecast = arimaModel.forecast(ts, 20);
             List<Double>  forecastedSubscriptionCounts= new ArrayList<>();
-            for (int j = productActualMetricsViewList.size(); i < forecast.argmax(); j++) {
+            for (int j = productActualMetricsViewList.size(); j < forecast.argmax(); j++) {
                 forecastedSubscriptionCounts.add(forecast.apply(j));
                 System.out.println("forecast of next 20 observations: " + forecast.apply(j));
             }
