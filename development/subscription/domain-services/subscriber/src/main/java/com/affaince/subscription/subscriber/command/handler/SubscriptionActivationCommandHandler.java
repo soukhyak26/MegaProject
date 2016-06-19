@@ -22,7 +22,7 @@ public class SubscriptionActivationCommandHandler {
 
     @CommandHandler
     public void handle(SubscriptionActivationCommand command) {
-        Subscription subscription = repository.load(command.getSubscriptionId());
+        final Subscription subscription = repository.load(command.getSubscriptionId());
         subscription.activateSubscription();
     }
 }

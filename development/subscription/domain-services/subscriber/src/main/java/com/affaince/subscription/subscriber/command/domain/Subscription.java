@@ -3,7 +3,6 @@ package com.affaince.subscription.subscriber.command.domain;
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
-import com.affaince.subscription.common.vo.ProductStatistics;
 import com.affaince.subscription.subscriber.command.AddAddressToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.AddItemToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.PaymentReceivedFromSourceCommand;
@@ -158,16 +157,11 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     public void activateSubscription() {
         apply(new SubscriptionActivatedEvent(this.subscriptionId, this.totalSubscriptionAmountAfterDiscount,
                 this.totalSubscriptionAmount-this.totalSubscriptionAmountAfterDiscount));
-        List<ProductStatistics> productsStatistics = new ArrayList<>();
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
-            ProductStatistics productStatistics = new ProductStatistics();
-            productStatistics.setProductId(subscriptionItem.getProductId());
-            productStatistics.setProductSubscriptionCount(subscriptionItem.getNoOfCycles() * subscriptionItem.getCountPerPeriod());
-            productStatistics.getSubscribedProductNetProfit();
-            productStatistics.setSubscribedProductRevenue(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
-            productsStatistics.add(productStatistics);
+            apply(new ProductSubscriptionActivatedEvent(subscriptionItem.getProductId(),
+                    subscriptionItem.getNoOfCycles() * subscriptionItem.getCountPerPeriod(),
+                    LocalDate.now()));
         }
-        apply(new ProductsStatisticsCalculatedEvent(productsStatistics));
     }
 
     public ConsumerBasketActivationStatus getConsumerBasketStatus() {

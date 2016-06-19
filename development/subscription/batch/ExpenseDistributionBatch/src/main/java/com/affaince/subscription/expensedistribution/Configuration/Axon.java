@@ -3,13 +3,12 @@ package com.affaince.subscription.expensedistribution.Configuration;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
-import com.affaince.subscription.expensedistribution.processor.DefaultOperatingExpenseDistributionDeterminator;
-import com.affaince.subscription.expensedistribution.processor.ExtraPolationBasedOperatingExpenseDistributionDeterminator;
-import com.affaince.subscription.expensedistribution.processor.ForecastBasedOperatingExpenseDistributionDeterminator;
+import com.affaince.subscription.expensedistribution.processor.*;
 import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
+import org.apache.camel.util.toolbox.AggregationStrategies;
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,19 +50,25 @@ public class Axon extends RabbitMQConfiguration {
         return new ForecastBasedOperatingExpenseDistributionDeterminator();
     }
 
+    public CalculatePerUnitExpense calculatePerUnitExpense () {
+        return new CalculatePerUnitExpense();
+    }
 
     @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() {
                 from("timer://foo?repeatCount=1").choice()
-                        .to("bean:operatingExpenseStrategyDeterminator?decideOperatingExpenseStrategy(*)")
+                        .to("bean:operatingExpenseStrategyDeterminator?decideOperatingExpenseStrategy()")
                         .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.DEFAULT_STRATEGY}"))
-                        .to("bean:defaultOperatingExpenseDistributionDeterminator").to("bean:publisher")
+                        .to("bean:defaultOperatingExpenseDistributionDeterminator")
                         .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.EXTRAPOLATION_BASED_STRATEGY}"))
-                        .to("bean:extraPolationBasedOperatingExpenseDistributionDeterminator").to("bean:publisher")
+                        .to("bean:extraPolationBasedOperatingExpenseDistributionDeterminator")
                         .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.FORECAST_BASED_STRATEGY}"))
-                        .to("bean:forecastBasedOperatingExpenseDistributionDeterminator").to("bean:publisher");
+                        .to("bean:forecastBasedOperatingExpenseDistributionDeterminator")
+                        .multicast(AggregationStrategies.bean(ProductWiseDeliveryStatsAggregation.class))
+                        .to ("bean:calculatePerUnitExpense")
+                        .to("bean:publisher");
             }
         };
     }
