@@ -27,8 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 public class JavaStocks {
 private static DataFrame loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext, String path) {
-    JavaRDD<Row> rowRdd = sparkContext.textFile(path).map((String line) -> { String[] tokens = line.split("\t");
-    ZonedDateTime dt = ZonedDateTime.of(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[1]), 0, 0, 0, 0, ZoneId.systemDefault());
+    JavaRDD<Row> rowRdd = sparkContext.textFile(path).map((String line) ->
+    {
+    String[] tokens = line.split("\t");
+    ZonedDateTime dt = ZonedDateTime.of(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), 0, 0, 0, 0, ZoneId.systemDefault());
     String symbol = tokens[3];
     double price = Double.parseDouble(tokens[5]);
     return RowFactory.create(Timestamp.from(dt.toInstant()), symbol, price);
