@@ -29,6 +29,8 @@
         <jackson.verson>2.4.4</jackson.verson>
         <camel.version>2.15.2</camel.version>
         <aspectj.version>1.8.8</aspectj.version>
+        <spark.version>1.6.0-cdh5.7.0</spark.version>
+        <sparkts.version>0.3.0</sparkts.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
@@ -448,6 +450,45 @@
                 <artifactId>camel-spring-boot</artifactId>
                 <version>2.15.2</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.10</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_2.10</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-mllib_2.10</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cloudera.sparkts</groupId>
+                <artifactId>sparkts</artifactId>
+                <version>${sparkts.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>scala-tools.org</id>
+            <name>Scala-tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases</url>
+        </repository>
+        <repository>
+            <id>maven-hadoop</id>
+            <name>Hadoop Releases</name>
+            <url>https://repository.cloudera.com/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>cloudera-repos</id>
+            <name>Cloudera Repos</name>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+    </repositories>
+
 </project>
