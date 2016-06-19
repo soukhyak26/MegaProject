@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by mandark on 01-05-2016.
  */
-public interface ProductActualMetricsViewRepository extends CrudRepository<ProductActualMetricsView,String> {
+public interface ProductActualMetricsViewRepository extends CrudRepository<ProductActualMetricsView, com.affaince.subscription.common.vo.ProductMonthlyVersionId> {
     List<ProductActualMetricsView> findByProductId(String productId);
     public List<ProductActualMetricsView> findByProductMonthlyVersionId_ProductId(String productId);
     public List<ProductActualMetricsView> findByProductMonthlyVersionId_ProductId(String productId,Sort sort);

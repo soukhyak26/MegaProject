@@ -1,7 +1,9 @@
 package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.product.registration.command.domain.ProductPricingCategory;
 import com.affaince.subscription.product.registration.vo.DemandWiseProfitSharingRule;
+import com.affaince.subscription.product.registration.vo.PricingStrategyType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,8 +33,9 @@ public class ProductView {
 
     private double currentOperatingExpensePerUnit;
     private long currentStockInUnits;
-    private int productPricingCategory;
+    private ProductPricingCategory productPricingCategory;
     private int creditPoints;
+    private PricingStrategyType pricingStrategyType;
 
 
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
@@ -126,11 +129,11 @@ public class ProductView {
         this.currentStockInUnits = currentStockInUnits;
     }
 
-    public int getProductPricingCategory() {
+    public ProductPricingCategory getProductPricingCategory() {
         return this.productPricingCategory;
     }
 
-    public void setProductPricingCategory(int productPricingCategory) {
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
         this.productPricingCategory = productPricingCategory;
     }
 
@@ -175,4 +178,11 @@ public class ProductView {
         this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
     }
 
+    public PricingStrategyType getPricingStrategyType() {
+        return pricingStrategyType;
+    }
+
+    public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
+        this.pricingStrategyType = pricingStrategyType;
+    }
 }

@@ -2,6 +2,7 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.product.registration.command.UpdateDeliveryExpenseToProductCommand;
 import com.affaince.subscription.product.registration.command.event.DeliveryExpenseUpdatedToProductEvent;
+import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
@@ -10,9 +11,11 @@ import org.joda.time.LocalDate;
  * Created by mandark on 28-11-2015.
  */
 public abstract class PriceBucket extends AbstractAnnotatedEntity {
+    protected PriceTaggedWithProduct taggedPriceVersion;
     protected long numberOfNewSubscriptions;
     protected long numberOfChurnedSubscriptions;
     protected long numberOfExistingSubscriptions;
+    protected double expectedProfit;
     protected LocalDate fromDate;
     protected LocalDate toDate;
 
@@ -58,6 +61,22 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     private double calculateProfitPerBasket(){
         //return (this.numberOfExistingSubscriptions *this.offeredPricePerUnit)-(this.numberOfExistingSubscriptions *(this.purchasePricePerUnit+this.fixedOperatingExpPerUnit+this.variableOperatingExpPerUnit));
         return 0.0;
+    }
+
+    public PriceTaggedWithProduct getTaggedPriceVersion() {
+        return taggedPriceVersion;
+    }
+
+    public void setTaggedPriceVersion(PriceTaggedWithProduct taggedPriceVersion) {
+        this.taggedPriceVersion = taggedPriceVersion;
+    }
+
+    public double getExpectedProfit() {
+        return expectedProfit;
+    }
+
+    public void setExpectedProfit(double expectedProfit) {
+        this.expectedProfit = expectedProfit;
     }
 
     public abstract double getOfferedPricePerUnit();

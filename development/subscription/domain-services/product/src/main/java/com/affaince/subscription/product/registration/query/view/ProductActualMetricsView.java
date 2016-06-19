@@ -287,4 +287,13 @@ public class ProductActualMetricsView {
     public void setRevenue(double revenue) {
         this.revenue = revenue;
     }
+    public PriceTaggedWithProduct getLatestTaggedPriceVersion(){
+        PriceTaggedWithProduct latestTaggedPriceVersion=null;
+        for ( PriceTaggedWithProduct tempTaggedPrice: this.taggedPriceVersions){
+            if(null== latestTaggedPriceVersion || tempTaggedPrice.getStartDate().isAfter(latestTaggedPriceVersion.getStartDate())){
+                latestTaggedPriceVersion=tempTaggedPrice;
+            }
+        }
+        return latestTaggedPriceVersion;
+    }
 }

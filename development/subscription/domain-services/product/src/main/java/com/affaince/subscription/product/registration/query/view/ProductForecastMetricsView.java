@@ -3,7 +3,6 @@ package com.affaince.subscription.product.registration.query.view;
 import com.affaince.subscription.product.registration.command.domain.PriceBucket;
 import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.registration.vo.ProductMonthlyVersionId;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,9 +27,8 @@ public class ProductForecastMetricsView {
     private double demandDensity;
     private double averageDemandPerSubscriber;
 */
-    private long newSubscritptions;
+    private long newSubscriptions;
     private long churnedSubscriptions;
-
     private long totalNumberOfExistingSubscriptions;
     private double percentageCustomerChurn;
     private double startingMRR;
@@ -88,12 +86,12 @@ public class ProductForecastMetricsView {
         this.variableOperatingExpense = variableOperatingExpense;
     }
 
-    public long getNewSubscritptions() {
-        return newSubscritptions;
+    public long getNewSubscriptions() {
+        return newSubscriptions;
     }
 
-    public void setNewSubscritptions(long newSubscritptions) {
-        this.newSubscritptions = newSubscritptions;
+    public void setNewSubscriptions(long newSubscriptions) {
+        this.newSubscriptions = newSubscriptions;
     }
 
     public long getChurnedSubscriptions() {

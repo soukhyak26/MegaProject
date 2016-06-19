@@ -2,18 +2,22 @@ package com.affaince.subscription.product.registration.query.view;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 /**
  * Created by mandark on 28-01-2016.
  */
 
 @Document
-public class PriceBucketView {
+public class PriceBucketView  implements Comparable<PriceBucketView>{
     @Id
     private ProductVersionId productVersionId;
+    private PriceTaggedWithProduct taggedPriceVersion;
     private LocalDate toDate;
     private double offeredPricePerUnit;
     private double percentDiscountPerUnit;
@@ -21,6 +25,8 @@ public class PriceBucketView {
     private long numberOfChurnedCustomersAssociatedWithAPrice;
     private long numberOfExistingCustomersAssociatedWithAPrice;
     private EntityStatus entityStatus;
+    private double totalProfit;
+    private double slope;
 
     public String getProductId() {
         return productVersionId.getProductId();
@@ -92,5 +98,53 @@ public class PriceBucketView {
 
     public void setEntityStatus(EntityStatus entityStatus) {
         this.entityStatus = entityStatus;
+    }
+
+    public PriceTaggedWithProduct getTaggedPriceVersion() {
+        return taggedPriceVersion;
+    }
+
+    public void setTaggedPriceVersion(PriceTaggedWithProduct taggedPriceVersion) {
+        this.taggedPriceVersion = taggedPriceVersion;
+    }
+
+    public double getPercentDiscountPerUnit() {
+        return percentDiscountPerUnit;
+    }
+
+    public void setPercentDiscountPerUnit(double percentDiscountPerUnit) {
+        this.percentDiscountPerUnit = percentDiscountPerUnit;
+    }
+
+    public double getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(double totalProfit) {
+        this.totalProfit = totalProfit;
+    }
+
+    public double getSlope() {
+        return slope;
+    }
+
+    public void setSlope(double slope) {
+        this.slope = slope;
+    }
+
+    public static PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
+        PriceBucketView latestPriceBucketView = null;
+        LocalDate max = activePriceBuckets.get(0).getFromDate();
+        for (PriceBucketView priceBucketView : activePriceBuckets) {
+            if (priceBucketView.getFromDate().compareTo(max) > 0) {
+                latestPriceBucketView = priceBucketView;
+            }
+        }
+        return latestPriceBucketView;
+    }
+
+    @Override
+    public int compareTo(PriceBucketView o) {
+        return this.getFromDate().compareTo(o.getFromDate());
     }
 }

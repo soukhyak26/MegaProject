@@ -114,7 +114,7 @@ public class ProductController {
         ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
         for (ForecastedPriceParameter parameter : forecastParameters) {
             ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getMonthOfYear());
-            productForecastMetricsView.setNewSubscritptions(parameter.getNumberofNewSubscriptions());
+            productForecastMetricsView.setNewSubscriptions(parameter.getNumberofNewSubscriptions());
             productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
             productForecastMetricsViewRepository.save(productForecastMetricsView);
 

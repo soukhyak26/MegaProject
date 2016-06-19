@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.registration.services;
 
 import com.affaince.subscription.product.registration.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.registration.services.forecast.TripleExponentialSmoothingDemandForecaster;
 import org.joda.time.YearMonth;
 import org.junit.Before;
 import org.junit.Test;

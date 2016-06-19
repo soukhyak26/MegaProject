@@ -20,7 +20,6 @@
         <module>domain-services/business</module>
         <module>tools/notifications</module>
         <module>batch/ExpenseDistributionBatch</module>
-        <module>batch/ProductPricingBatch</module>
         <module>tools/user-journey</module>
     </modules>
     <properties>

@@ -2,8 +2,10 @@ package com.affaince.subscription.product.registration.command.domain;
 
 import com.affaince.subscription.product.registration.command.UpdateDeliveryExpenseToProductCommand;
 import com.affaince.subscription.product.registration.command.UpdateFixedExpenseToProductCommand;
+import com.affaince.subscription.product.registration.command.UpdateProductSubscriptionCommand;
 import com.affaince.subscription.product.registration.command.event.DeliveryExpenseUpdatedToProductEvent;
 import com.affaince.subscription.product.registration.command.event.FixedExpenseUpdatedToProductEvent;
+import com.affaince.subscription.product.registration.command.event.ProductSubscriptionUpdatedEvent;
 import com.affaince.subscription.product.registration.vo.FixedExpensePerProduct;
 import com.affaince.subscription.product.registration.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.registration.vo.VariableExpensePerProduct;
@@ -166,6 +168,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
     }
 
+
     @EventSourcingHandler
     public void on (FixedExpenseUpdatedToProductEvent event) {
         //get latest deliveryExpense
@@ -176,4 +179,46 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
     }
 
+    public double findLatestFixedExpensePerUnitInDateRange(LocalDate fromDate,LocalDate toDate){
+        FixedExpensePerProduct latestFixedExpense=null;
+        for(FixedExpensePerProduct fixedExp: fixedExpenseVersions){
+         if(fixedExp.getStartDate().isAfter(fromDate) &&(fixedExp.getStartDate().isBefore(toDate))){
+                if( null== latestFixedExpense || fixedExp.getStartDate().isAfter(latestFixedExpense.getStartDate())){
+                    latestFixedExpense=fixedExp;
+                }
+         }
+        }
+        return latestFixedExpense.getFixedOperatingExpPerUnit();
+    }
+    public double findLatestVariableExpensePerUnitInDateRange(LocalDate fromDate,LocalDate toDate){
+        VariableExpensePerProduct latestVariableExpense=null;
+        for(VariableExpensePerProduct variableExp: variableExpenseVersions){
+            if(variableExp.getStartDate().isAfter(fromDate) &&(variableExp.getStartDate().isBefore(toDate))){
+                if( null== latestVariableExpense || variableExp.getStartDate().isAfter(latestVariableExpense.getStartDate())){
+                    latestVariableExpense=variableExp;
+                }
+            }
+        }
+        return latestVariableExpense.getVariableOperatingExpPerUnit();
+
+    }
+    public double calculateExpectedProfitForPriceBucket(PriceBucket priceBucket){
+        LocalDate fromDate = priceBucket.getFromDate();
+        LocalDate toDate= priceBucket.getToDate();
+        double fixedExpensePerUnit= this.findLatestFixedExpensePerUnitInDateRange(fromDate,toDate);
+        double variableExpensePerUnit= this.findLatestVariableExpensePerUnitInDateRange(fromDate,toDate);
+        double profit = priceBucket.getNumberOfExistingSubscriptions()*priceBucket.getOfferedPricePerUnit()
+                -(priceBucket.getNumberOfExistingSubscriptions()*(priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit())
+                + fixedExpensePerUnit + variableExpensePerUnit );
+        return profit;
+    }
+
+
+    public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
+        PriceBucket latestPriceBucket= this.getLatestPriceBucket();
+        latestPriceBucket.setNumberOfNewSubscriptions(latestPriceBucket.getNumberOfNewSubscriptions()+command.getProductSubscriptionCount());
+        double expectedProfitPerPriceBucket=this.calculateExpectedProfitForPriceBucket(latestPriceBucket);
+        latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
+        apply(new ProductSubscriptionUpdatedEvent(command.getProductId(),command.getProductSubscriptionCount(),command.getSubscriptionActivateDate(),expectedProfitPerPriceBucket));
+    }
 }
