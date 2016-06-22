@@ -99,14 +99,14 @@ public class PrceTest {
         priceInputs.add(pi38);
         priceInputs.add(pi39);
 
-        DoublyLinkedList<PriceInput> outputs= PriceCalculator.getInstance().calculatePrice(markPrice,priceInputs);
+        DoublyLinkedList<PriceInput> outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);
 
         ListIterator<PriceInput> iterator= outputs.iterator();
         double accumulatedProfit=0.0;
         while(iterator.hasNext() ){
             PriceInput tempInput=iterator.next();
             accumulatedProfit +=tempInput.getProfit();
-            //System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
+            System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
         }
         System.out.println("----------------------------------------------------------");
         System.out.println("accumulted profit for 34: " + accumulatedProfit);
@@ -195,14 +195,14 @@ public class PrceTest {
         priceInputs.add(pi38);
         priceInputs.add(pi39);
 
-        DoublyLinkedList<PriceInput> outputs= PriceCalculator.getInstance().calculatePrice(markPrice,priceInputs);
+        DoublyLinkedList<PriceInput> outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);
 
         ListIterator<PriceInput> iterator= outputs.iterator();
         double accumulatedProfit=0.0;
         while(iterator.hasNext() ){
             PriceInput tempInput=iterator.next();
             accumulatedProfit +=tempInput.getProfit();
-           // System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
+            System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
         }
         System.out.println("----------------------------------------------------------");
         System.out.println("accumulted profit for 45: " + accumulatedProfit);
@@ -292,14 +292,14 @@ public class PrceTest {
         priceInputs.add(pi38);
         priceInputs.add(pi39);
 
-        DoublyLinkedList<PriceInput> outputs= PriceCalculator.getInstance().calculatePrice(markPrice,priceInputs);
+        DoublyLinkedList<PriceInput> outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);
 
         ListIterator<PriceInput> iterator= outputs.iterator();
         double accumulatedProfit=0.0;
         while(iterator.hasNext() ){
             PriceInput tempInput=iterator.next();
             accumulatedProfit +=tempInput.getProfit();
-            //System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
+            System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
         }
         System.out.println("----------------------------------------------------------");
         System.out.println("accumulted profit for 50: " + accumulatedProfit);
@@ -389,14 +389,14 @@ public class PrceTest {
         priceInputs.add(pi38);
         priceInputs.add(pi39);
 
-        DoublyLinkedList<PriceInput> outputs= PriceCalculator.getInstance().calculatePrice(markPrice,priceInputs);
+        DoublyLinkedList<PriceInput> outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);
 
         ListIterator<PriceInput> iterator= outputs.iterator();
         double accumulatedProfit=0.0;
         while(iterator.hasNext() ){
             PriceInput tempInput=iterator.next();
             accumulatedProfit +=tempInput.getProfit();
-            //System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
+            System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantity() + "| cost: " + tempInput.getCost() + "| Revenue: " + tempInput.getRevenue() + "| Profit: " + tempInput.getProfit());
         }
         System.out.println("----------------------------------------------------------");
         System.out.println("accumulted profit for 54: " + accumulatedProfit);
