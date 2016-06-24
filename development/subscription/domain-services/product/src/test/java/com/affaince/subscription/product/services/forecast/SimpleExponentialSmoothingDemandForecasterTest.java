@@ -1,8 +1,8 @@
-package com.affaince.subscription.product.services;
+package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecaster;
-import com.affaince.subscription.product.services.forecast.SimpleMovingAverageDemandForecaster;
+import com.affaince.subscription.product.services.forecast.SimpleExponentialSmoothingDemandForecaster;
 import org.joda.time.YearMonth;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by mandar on 29-05-2016.
  */
-public class SimpleMovingAverageDemandForecasterTest {
+public class SimpleExponentialSmoothingDemandForecasterTest {
     private List<ProductActualMetricsView> productActualMetricsViewList;
 
     @Before
@@ -83,7 +83,7 @@ public class SimpleMovingAverageDemandForecasterTest {
     }
     @Test
     public void testPrecisePrediction(){
-        ProductDemandForecaster forecaster= new SimpleMovingAverageDemandForecaster();
+        ProductDemandForecaster forecaster= new SimpleExponentialSmoothingDemandForecaster();
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
         System.out.println("Precise prediction: "+ result.get(0));
     }

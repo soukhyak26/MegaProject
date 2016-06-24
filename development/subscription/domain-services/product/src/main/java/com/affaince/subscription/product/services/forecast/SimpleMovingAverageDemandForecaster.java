@@ -56,54 +56,11 @@
                             }
                         }
                     }
-                    System.out.println("$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
+                    System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
                     List<Double> resultSet=new ArrayList<Double>();
                     resultSet.add(predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
                     return resultSet;
 
-                } else if(productActualMetricsViewList.size() >= 16 && productActualMetricsViewList.size() <= 30){
-        /*
-                    Collections.sort(productActualMetricsViewList, DateTimeComparator.getDateOnlyInstance());
-                    DataSet observedData = new DataSet();
-                    //LocalDate startDate = productActualMetricsViewList.get(0).getProductMonthlyVersionId().getMonthOfYear();
-                    int i = 0;
-                    for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
-                        double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
-                        //int duration = Days.daysBetween(startDate, productActualMetricsView.getFromDate()).getDays();
-                        DataPoint dp = new Observation(totalSubscriptionCount);
-                        dp.setIndependentValue("time", 1);
-                        i++;
-                    }
-                    observedData.setPeriodsPerYear(12);
-                    DataSet fcValues = new DataSet();
-
-                    for (int k = i + 1; k < i + i; k++) {
-                        DataPoint dp = new Observation(0.0);
-                        dp.setIndependentValue("t", k);
-                        fcValues.add(dp);
-                    }
-                    // Get forecast values
-                    //forecaster.init(observedData);
-                    //MovingAverageModel forecaster= new MovingAverageModel(3);
-                    ForecastingModel forecaster = new DoubleExponentialSmoothingModel(0.2, 0.3);
-                    observedData.setTimeVariable("t");
-                    forecaster.init(observedData);
-
-                    DataSet results = forecaster.forecast(fcValues);
-                    Iterator<DataPoint> it = results.iterator();
-                    List<ProductForecastMetricsView> newForecasts= new ArrayList<ProductForecastMetricsView>();
-                    while (it.hasNext()) {
-                        // Check that the results are within specified tolerance
-                        //  of the expected values
-                        DataPoint fc = (DataPoint) it.next();
-                        double newSubscriptionCount = fc.getDependentValue();
-                        double time = fc.getIndependentValue("t");
-                        //ProductForecastMetricsView forecastView= new ProductForecastMetricsView();
-                    }
-
-
-
-        */
                 } else{
                     if (null != productDemandForecaster) {
                         return productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);

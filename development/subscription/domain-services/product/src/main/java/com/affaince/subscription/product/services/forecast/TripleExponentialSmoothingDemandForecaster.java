@@ -30,7 +30,7 @@
         }
 
         public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
-            if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 15) {
+            if (productActualMetricsViewList.size() > 30 && productActualMetricsViewList.size() <= 60) {
                 int i = 0;
                 int[] windowSizes = {3};
                 DataSet observedData = new DataSet();

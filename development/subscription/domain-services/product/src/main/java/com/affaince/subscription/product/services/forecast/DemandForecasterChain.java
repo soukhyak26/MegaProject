@@ -33,7 +33,7 @@ public class DemandForecasterChain {
             initialForecaster = forecaster;
         }
     }
-
+    //forecasting for all products
     public void forecast() {
         Iterable<ProductView> products = productViewRepository.findAll();
 
@@ -44,4 +44,6 @@ public class DemandForecasterChain {
             List<Double> forecastViews=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
         }
     }
+
+
 }

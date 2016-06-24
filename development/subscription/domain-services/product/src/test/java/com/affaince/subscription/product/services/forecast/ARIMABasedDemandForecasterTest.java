@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services;
+package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.services.forecast.ARIMABasedDemandForecaster;

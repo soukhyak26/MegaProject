@@ -39,7 +39,8 @@ public class ProductRegisteredEventListener {
                 event.getQuantity(),
                 event.getQuantityUnit(),
                 event.getSubstitutes(),
-                event.getComplements()
+                event.getComplements(),
+                event.getSensitiveTo()
         );
         itemRepository.save(productView);
         final ProductActivationStatusView productActivationStatusView = new ProductActivationStatusView(event.getProductId(), new ArrayList<>());

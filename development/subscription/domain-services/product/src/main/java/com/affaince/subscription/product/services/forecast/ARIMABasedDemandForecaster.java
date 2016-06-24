@@ -27,7 +27,7 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
 
     public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
 
-        if (productActualMetricsViewList.size() >= 40) {
+        if (productActualMetricsViewList.size() > 60) {
             double[] values = new double[productActualMetricsViewList.size()];
             int i = 0;
             for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
