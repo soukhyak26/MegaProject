@@ -11,7 +11,8 @@ public class PriceInput {
     private double totalFixedExpensePerUnit;
     private double variableExpensePerUnit;
     private double breakEvenPrice;
-    private double quantity;
+    private double quantityForecasted;
+    private double quantityActual;
     private double slope;
     private double offeredPrice;
     private double cost;
@@ -19,13 +20,14 @@ public class PriceInput {
     private double profit;
     private double weightedAverage;
 
-    public PriceInput(double purchasePrice, double MRP,double totalFixedExpensePerUnit, double variableExpensePerUnit,double offeredPrice, double quantity) {
+    public PriceInput(double purchasePrice, double MRP,double totalFixedExpensePerUnit, double variableExpensePerUnit,double offeredPrice, double quantityForecasted,double quantityActual) {
         this.purchasePrice = purchasePrice;
         this.MRP=MRP;
         this.totalFixedExpensePerUnit = totalFixedExpensePerUnit;
         this.variableExpensePerUnit = variableExpensePerUnit;
         this.breakEvenPrice=this.purchasePrice+this.totalFixedExpensePerUnit+this.variableExpensePerUnit;
-        this.quantity = quantity;
+        this.quantityForecasted = quantityForecasted;
+        this.quantityActual=quantityActual;
         this.offeredPrice=offeredPrice;
     }
 
@@ -45,12 +47,12 @@ public class PriceInput {
         this.totalFixedExpensePerUnit = totalFixedExpensePerUnit;
     }
 
-    public double getQuantity() {
-        return this.quantity;
+    public double getQuantityForecasted() {
+        return this.quantityForecasted;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setQuantityForecasted(double quantity) {
+        this.quantityForecasted = quantity;
     }
 
     public double getVariableExpensePerUnit() {
@@ -123,5 +125,21 @@ public class PriceInput {
 
     public void setWeightedAverage(double weightedAverage) {
         this.weightedAverage = weightedAverage;
+    }
+
+    public double getQuantityActual() {
+        return quantityActual;
+    }
+
+    public void setQuantityActual(double quantityActual) {
+        this.quantityActual = quantityActual;
+    }
+
+    public double recalculateOfferPrice(){
+        if(slope!= 0){
+            return ( MRP+ slope*quantityActual);
+        }else{
+            return offeredPrice;
+        }
     }
 }

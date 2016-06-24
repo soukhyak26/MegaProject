@@ -9,6 +9,7 @@ import java.util.ListIterator;
  */
 //WILPDM31305
 public class PriceCalculator {
+/*
     private static PriceCalculator instance = new PriceCalculator();
 
     private PriceCalculator() {
@@ -183,4 +184,5 @@ public class PriceCalculator {
     private double calculateOfferedPrice(double intercept, double slope, double quantity) {
         return intercept + (slope * quantity);
     }
+*/
 }
