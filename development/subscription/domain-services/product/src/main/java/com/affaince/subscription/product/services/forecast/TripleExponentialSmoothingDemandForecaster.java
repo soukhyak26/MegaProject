@@ -80,13 +80,13 @@
                 }
 
 
-                System.out.println("$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+                System.out.println("TEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
                 List<Double> resultSet = new ArrayList<Double>();
                 resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
                 return resultSet;
 
             }else{
-                return null;
+               return productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);
             }
         }
         public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {

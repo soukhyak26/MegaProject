@@ -44,7 +44,7 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
             List<Double>  forecastedSubscriptionCounts= new ArrayList<>();
             for (int j = productActualMetricsViewList.size(); j < forecast.argmax(); j++) {
                 forecastedSubscriptionCounts.add(forecast.apply(j));
-                System.out.println("forecast of next 20 observations: " + forecast.apply(j));
+                System.out.println("ARIMA $$$$$forecast of next 20 observations: " + forecast.apply(j));
             }
             return forecastedSubscriptionCounts;
         }else{
