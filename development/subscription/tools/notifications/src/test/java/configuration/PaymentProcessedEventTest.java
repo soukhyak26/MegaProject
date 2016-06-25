@@ -34,7 +34,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class PaymentProcessedEventTest {
 
     @Produce(uri = "direct:start")
-    protected ProducerTemplate template;
+    private ProducerTemplate template;
 
 
     @Configuration
