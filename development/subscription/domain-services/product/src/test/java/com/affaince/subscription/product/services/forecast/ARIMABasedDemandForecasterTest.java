@@ -184,7 +184,7 @@ public class ARIMABasedDemandForecasterTest {
     public void testPrecisePrediction(){
         ProductDemandForecaster forecaster= new ARIMABasedDemandForecaster();
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
-        System.out.println("ARIMA Precise prediction: "+ result.get(0));
+        System.out.println("ARIMA Precise prediction: " + (result == null ? "null" : result.get(0)));
     }
 
 }

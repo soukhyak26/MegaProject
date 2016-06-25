@@ -80,7 +80,9 @@
                 return resultSet;
 
             }else{
-                return productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);
+                //TODO : Handle NPE
+                return productDemandForecaster == null ? null
+                        :productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);
             }
         }
         public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {

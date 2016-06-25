@@ -85,6 +85,6 @@ public class SimpleExponentialSmoothingDemandForecasterTest {
     public void testPrecisePrediction(){
         ProductDemandForecaster forecaster= new SimpleExponentialSmoothingDemandForecaster();
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
-        System.out.println("Precise prediction: "+ result.get(0));
+        System.out.println("Precise prediction: "+ (result == null ? "null" : result.get(0)));
     }
 }

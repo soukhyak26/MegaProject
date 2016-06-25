@@ -85,6 +85,6 @@ public class TripleExponentialSmoothingDemandForecasterTest {
     public void testPrecisePrediction(){
         ProductDemandForecaster forecaster= new TripleExponentialSmoothingDemandForecaster();
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
-        System.out.println("Triple exponential Precise prediction: "+ result.get(0));
+        System.out.println("Triple exponential Precise prediction: "+ (result == null ? "null" : result.get(0)));
     }
 }
