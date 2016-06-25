@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.mongodb.util.JSON;
+import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -41,7 +42,7 @@ public final class ExecutionFlowConfiguration {
             + "resources"
             + File.separator
             + XML_NAME;
-    public static final String JSON_NAME = "/ExecutionFlow.json";
+    public static final String JSON_NAME = "ExecutionFlow.json";
     public static final String JSON_PATH = "src"
             + File.separator
             + "main"
@@ -109,7 +110,8 @@ public final class ExecutionFlowConfiguration {
         //flowConfiguration = new HashMap<>();
         TypeFactory typeFactory = mapper.getTypeFactory();
         MapType mapType = typeFactory.constructMapType(HashMap.class, String.class, ExecutionFlow.class);
-        flowConfiguration = mapper.readValue(new File(JSON_NAME), mapType);
+        //flowConfiguration = mapper.readValue(new File(JSON_NAME), mapType);
+        flowConfiguration = mapper.readValue((new ClassPathResource(JSON_NAME/*, this.getClass()*/)).getFile(), mapType);
         isInit = true;
     }
 }

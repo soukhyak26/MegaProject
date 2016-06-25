@@ -38,6 +38,13 @@ public class TrackingEventProcessor extends EventProcessor {
                                   UnitOfWorkFactory unitOfWorkFactory, Set<EventListener> eventListeners,
                                   MultiplexingEventProcessingMonitor eventProcessingMonitor) {
         super(executor, shutDownCallback, errorHandler, unitOfWorkFactory, eventListeners, eventProcessingMonitor);
+        try {
+            ExecutionFlowConfiguration.getInstance().initConfiguration();
+        } catch (Exception e) {
+            //TODO: Handle error
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
 
     @Override

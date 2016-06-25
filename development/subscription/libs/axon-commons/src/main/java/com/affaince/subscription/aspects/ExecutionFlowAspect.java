@@ -18,7 +18,11 @@ import java.util.UUID;
 public class ExecutionFlowAspect {
     CommonViewRepository commonViewRepository;
 
-    @Pointcut("call(** org.axonframework.eventsourcing.AbstractEventSourcedAggregateRoot.apply(..))")
+    /*@Pointcut("call(** org.axonframework.eventsourcing.AbstractEventSourcedAggregateRoot.apply(..))")
+    public void executionFlowPointCut() {
+
+    }*/
+    @Pointcut("execution(* org.axonframework.eventsourcing.AbstractEventSourcedAggregateRoot.apply(..))")
     public void executionFlowPointCut() {
 
     }
