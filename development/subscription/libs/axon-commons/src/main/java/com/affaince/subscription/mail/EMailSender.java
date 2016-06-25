@@ -35,10 +35,16 @@ public class EMailSender {
 
     protected void sendEMail() throws EmailException {
         Email email = new SimpleEmail();
-        if(mailAccount == null || !MailAccount.GMAIL.equals(mailAccount)) {
+        if(mailAccount == null) {
             throw new IllegalArgumentException("Invalid mail account type");
         }
-        email.setHostName(GMAIL_HOST_NAME);
+        switch (mailAccount) {
+            case GMAIL:
+                email.setHostName(GMAIL_HOST_NAME);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid mail account type");
+        }
         email.setSmtpPort(SMTP_PORT);
         email.setAuthenticator(new DefaultAuthenticator(from, password));
         email.setSSLOnConnect(true);
