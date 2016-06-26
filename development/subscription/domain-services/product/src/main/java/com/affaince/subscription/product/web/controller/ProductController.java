@@ -17,6 +17,7 @@ import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.*;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,12 +114,13 @@ public class ProductController {
         }
         ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
         for (ForecastedPriceParameter parameter : forecastParameters) {
-            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getMonthOfYear());
+
+            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getInterval());
             productForecastMetricsView.setNewSubscriptions(parameter.getNumberofNewSubscriptions());
             productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
             productForecastMetricsViewRepository.save(productForecastMetricsView);
 
-            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, new LocalDate(parameter.getMonthOfYear().getYear(),parameter.getMonthOfYear().getMonthOfYear(),1), new LocalDate(parameter.getMonthOfYear().getYear(),parameter.getMonthOfYear().getMonthOfYear(),parameter.getMonthOfYear().toDateTime(null).dayOfMonth().getMaximumValue()), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
+            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, parameter.getInterval().getStart().toLocalDate(),parameter.getInterval().getEnd().toLocalDate(), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
             forecastedPriceBucketViewRepository.save(forecastedPriceBucketsView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);

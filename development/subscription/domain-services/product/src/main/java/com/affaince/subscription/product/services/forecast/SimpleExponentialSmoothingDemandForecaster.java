@@ -35,11 +35,11 @@
                 List<ActualVsPredictionEvaluator> predictionsSet = new ArrayList<>();
                 for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
                     double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
-                    final String uniqueKey=productActualMetricsView.getProductMonthlyVersionId().toString() + ":" + (i+1);
+                    final String uniqueKey=productActualMetricsView.getProductPeriodVersionId().toString() + ":" + (i+1);
                     ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,totalSubscriptionCount);
                     predictionsSet.add(eval);
                     DataPoint dp = new Observation(totalSubscriptionCount);
-                    YearMonth monthOfYear = productActualMetricsView.getProductMonthlyVersionId().getMonthOfYear();
+                    //YearMonth monthOfYear = productActualMetricsView.getProductPeriodVersionId().getMonthOfYear();
                    // dp.setIndependentValue("time", new LocalDate(monthOfYear.getYear(), monthOfYear.getMonthOfYear(), monthOfYear.toDateTime(null).dayOfMonth().getMaximumValue()).toDateTimeAtStartOfDay().getMillis());
                     dp.setIndependentValue("t", i+1);
                     observedData.add(dp);

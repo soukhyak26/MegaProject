@@ -1,13 +1,15 @@
 package com.affaince.subscription.product.vo;
 
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.joda.time.YearMonth;
 
 /**
  * Created by mandark on 01-01-2016.
  */
 public class ForecastedPriceParameter {
-    private YearMonth monthOfYear;
+    private Interval interval;
     private double purchasePricePerUnit;
     private double MRP;
     private long numberofNewSubscriptions;
@@ -15,8 +17,8 @@ public class ForecastedPriceParameter {
     private double demandDensity;
     private double averageDemandPerSubscriber;
 
-    public ForecastedPriceParameter(int year,int monthOfYear,double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, double demandDensity, double averageDemandPerSubscriber) {
-        this.monthOfYear=new YearMonth(year,monthOfYear);
+    public ForecastedPriceParameter(LocalDate startDate,LocalDate endDate,double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, double demandDensity, double averageDemandPerSubscriber) {
+        this.interval=new Interval(startDate.toDateTimeAtStartOfDay(),endDate.toDateTimeAtStartOfDay());
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberofNewSubscriptions = numberofNewSubscriptions;
@@ -49,13 +51,6 @@ public class ForecastedPriceParameter {
         return this.averageDemandPerSubscriber;
     }
 
-    public YearMonth getMonthOfYear() {
-        return monthOfYear;
-    }
-
-    public void setMonthOfYear(YearMonth monthOfYear) {
-        this.monthOfYear = monthOfYear;
-    }
 
     public void setPurchasePricePerUnit(double purchasePricePerUnit) {
         this.purchasePricePerUnit = purchasePricePerUnit;
@@ -79,5 +74,13 @@ public class ForecastedPriceParameter {
 
     public void setAverageDemandPerSubscriber(double averageDemandPerSubscriber) {
         this.averageDemandPerSubscriber = averageDemandPerSubscriber;
+    }
+
+    public Interval getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Interval interval) {
+        this.interval = interval;
     }
 }

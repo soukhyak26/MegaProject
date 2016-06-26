@@ -43,7 +43,7 @@
                                     sum -= window.remove();
                                 }
                                 double predictedValue = sum / window.size();
-                                final String uniqueKey=productActualMetricsView.getProductMonthlyVersionId().toString();
+                                final String uniqueKey=productActualMetricsView.getProductPeriodVersionId().toString();
                                 ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
                                 if(predictionsSet.contains(eval)){
                                     ActualVsPredictionEvaluator newPrediction= predictionsSet.get(predictionsSet.indexOf(eval));

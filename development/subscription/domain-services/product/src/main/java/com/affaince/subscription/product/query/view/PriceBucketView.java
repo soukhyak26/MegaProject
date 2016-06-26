@@ -147,4 +147,13 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     public int compareTo(PriceBucketView o) {
         return this.getFromDate().compareTo(o.getFromDate());
     }
+
+    public double recalculateOfferedPriceBasedOnActualDemand(){
+        if(slope!= 0){
+            return ( taggedPriceVersion.getMRP()+ slope*numberOfExistingCustomersAssociatedWithAPrice);
+        }else{
+            return offeredPricePerUnit;
+        }
+
+    }
 }

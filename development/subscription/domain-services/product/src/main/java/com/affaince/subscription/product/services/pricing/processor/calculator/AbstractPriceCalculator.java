@@ -4,18 +4,18 @@ import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.services.pricing.processor.calculator.breakevenprice.BreakEvenPriceCalculator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mandark on 27-03-2016.
  */
 public abstract class AbstractPriceCalculator {
     private AbstractPriceCalculator nextCalculator;
+    private BreakEvenPriceCalculator breakEvenPriceCalculator;
 
     public AbstractPriceCalculator getNextCalculator() {
         return this.nextCalculator;
@@ -27,7 +27,11 @@ public abstract class AbstractPriceCalculator {
 
     protected double calculateBreakEvenPrice(double purchasePrice, double fixedOperatingExpensePerUnit, double variableExpensePerUnit) {
         //We will include merchant's profit if required...not now
-        final double breakEvenPrice = purchasePrice + fixedOperatingExpensePerUnit + variableExpensePerUnit;
+        Map<String, Double> bePriceContributors = new HashMap<>();
+        bePriceContributors.put("purchasePrice", purchasePrice);
+        bePriceContributors.put("fixedOperatingExpense", fixedOperatingExpensePerUnit);
+        bePriceContributors.put("variableOperatingExpense", variableExpensePerUnit);
+        final double breakEvenPrice = breakEvenPriceCalculator.calculateBreakEvenPrice(bePriceContributors);
         return breakEvenPrice;
     }
 
@@ -86,6 +90,10 @@ public abstract class AbstractPriceCalculator {
 
     protected double calculateOfferedPrice(double intercept, double slope, double quantity) {
         return intercept + (slope * quantity);
+    }
+
+    protected double calculateExpectedDemand(ProductForecastMetricsView productForecastMetricsView, ProductActualMetricsView productActualMetricsView) {
+        return productForecastMetricsView.getTotalNumberOfExistingSubscriptions() - productActualMetricsView.getTotalNumberOfExistingSubscriptions();
     }
 
     public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView);

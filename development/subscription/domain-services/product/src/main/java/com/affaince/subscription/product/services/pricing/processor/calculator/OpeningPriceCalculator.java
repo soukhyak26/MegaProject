@@ -12,10 +12,9 @@ import java.util.List;
  */
 public class OpeningPriceCalculator extends AbstractPriceCalculator {
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView) {
-        PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
         //if price is entered by merchant but there is no subscription yet as the product is not active yet...
-
-        if (activePriceBuckets.size() == 1 && activePriceBuckets.get(0).getNumberOfExistingCustomersAssociatedWithAPrice() == 0 && latestPriceBucket.getEntityStatus()== EntityStatus.CREATED ) {
+        if (activePriceBuckets.size() == 1 && activePriceBuckets.get(0).getNumberOfExistingCustomersAssociatedWithAPrice() == 0 && activePriceBuckets.get(0).getEntityStatus()== EntityStatus.CREATED ) {
+            PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
             latestPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
             return latestPriceBucket;
         } else {

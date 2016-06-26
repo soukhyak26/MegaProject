@@ -3,6 +3,9 @@ package com.affaince.subscription.product.query.view;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.ProductMonthlyVersionId;
+import com.affaince.subscription.product.vo.ProductPeriodVersionId;
+import org.joda.time.Interval;
+import org.joda.time.Period;
 import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,7 +21,8 @@ import java.util.TreeSet;
 @Document(collection = "ProductForecastMetricsView")
 public class ProductForecastMetricsView {
     @Id
-    private final ProductMonthlyVersionId productMonthlyVersionId;
+    //private final ProductMonthlyVersionId productMonthlyVersionId;
+    private ProductPeriodVersionId productPeriodVersionId;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private double fixedOperatingExpense;
     private double variableOperatingExpense;
@@ -51,15 +55,15 @@ public class ProductForecastMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductForecastMetricsView(String productId, YearMonth monthOfYear) {
-        this.productMonthlyVersionId= new ProductMonthlyVersionId(productId,monthOfYear);
-        taggedPriceVersions= new TreeSet<>();
-        newMRRPerPriceBucket= new TreeMap<>();
-        churnedMRRPerPriceBucket= new TreeMap<>();
+    public ProductForecastMetricsView(String productId, Interval period) {
+        this.productPeriodVersionId = new ProductPeriodVersionId(productId, period);
+        taggedPriceVersions = new TreeSet<>();
+        newMRRPerPriceBucket = new TreeMap<>();
+        churnedMRRPerPriceBucket = new TreeMap<>();
     }
 
-    public ProductMonthlyVersionId getProductMonthlyVersionId() {
-        return productMonthlyVersionId;
+    public ProductPeriodVersionId getProductPeriodVersionId() {
+        return productPeriodVersionId;
     }
 
     public SortedSet<PriceTaggedWithProduct> getTaggedPriceVersions() {

@@ -13,16 +13,15 @@ import java.util.List;
 /**
  * Created by mandark on 29-04-2016.
  */
-public class DemandGrowProfitCutPriceCalculator extends AbstractPriceCalculator {
+public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView) {
-        String productId = productActualMetricsView.getProductMonthlyVersionId().getProductId();
+        String productId = productActualMetricsView.getProductPeriodVersionId().getProductId();
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         final PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
 
         final PriceBucketView minusOnePriceBucket=findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
-
-        final PriceBucketView minusTwoPriceBucket=findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
+        final PriceBucketView minusTwoPriceBucket=findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
                 minusOnePriceBucket.getTotalProfit() < minusTwoPriceBucket.getTotalProfit() &&
@@ -31,14 +30,14 @@ public class DemandGrowProfitCutPriceCalculator extends AbstractPriceCalculator 
             double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
             double expectedDemandedQuantity= productForecastMetricsView.getTotalNumberOfExistingSubscriptions();
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemandedQuantity);
-            PriceBucketView newPrieBucket=new PriceBucketView();
+            PriceBucketView newPriceBucket=new PriceBucketView();
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(),latestPriceBucket.getTaggedPriceVersion().getMRP(),LocalDate.now());
-            newPrieBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDate.now()));
-            newPrieBucket.setTaggedPriceVersion(taggedPriceVersion);
-            newPrieBucket.setSlope(slope);
-            newPrieBucket.setEntityStatus(EntityStatus.ACTIVE);
-            newPrieBucket.setOfferedPricePerUnit(offeredPrice);
-            return newPrieBucket;
+            newPriceBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDate.now()));
+            newPriceBucket.setTaggedPriceVersion(taggedPriceVersion);
+            newPriceBucket.setSlope(slope);
+            newPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
+            newPriceBucket.setOfferedPricePerUnit(offeredPrice);
+            return newPriceBucket;
         }else{
             return getNextCalculator().calculatePrice(activePriceBuckets, productActualMetricsView,productForecastMetricsView);
 
