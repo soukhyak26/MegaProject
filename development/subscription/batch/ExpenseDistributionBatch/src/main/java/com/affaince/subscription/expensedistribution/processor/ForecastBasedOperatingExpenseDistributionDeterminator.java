@@ -146,6 +146,7 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
             ProductWiseDeliveryStats productWiseDeliveryStats = productWiseYearlyDeliveryStats.get(productId);
             if (productWiseDeliveryStats == null) {
                 productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
+                productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
             }
             productWiseDeliveryStats.addMRP(forecastPriceBucketsView.getMRP());
             productWiseDeliveryStats.addUnitSold(forecastPriceBucketsView.getNumberOfExistingCustomersAssociatedWithAPrice());
