@@ -7,7 +7,6 @@
     import net.sourceforge.openforecast.ForecastingModel;
     import net.sourceforge.openforecast.Observation;
     import net.sourceforge.openforecast.models.TripleExponentialSmoothingModel;
-    import org.joda.time.YearMonth;
     import org.springframework.beans.factory.annotation.Autowired;
 
     import java.util.ArrayList;
@@ -37,11 +36,11 @@
                 List<ActualVsPredictionEvaluator> predictionsSet = new ArrayList<>();
                 for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
                     double totalSubscriptionCount = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
-                    final String uniqueKey=productActualMetricsView.getProductPeriodVersionId().toString() + ":" + (i+1);
+                    final String uniqueKey=productActualMetricsView.getProductVersionId().toString() + "$" + (i+1);
                     ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,totalSubscriptionCount);
                     predictionsSet.add(eval);
                     DataPoint dp = new Observation(totalSubscriptionCount);
-                    //YearMonth monthOfYear = productActualMetricsView.getProductPeriodVersionId().getMonthOfYear();
+                    //YearMonth monthOfYear = productActualMetricsView.getProductVersionId().getMonthOfYear();
                    // dp.setIndependentValue("time", new LocalDate(monthOfYear.getYear(), monthOfYear.getMonthOfYear(), monthOfYear.toDateTime(null).dayOfMonth().getMaximumValue()).toDateTimeAtStartOfDay().getMillis());
                     dp.setIndependentValue("t", i+1);
                     observedData.add(dp);
@@ -69,7 +68,7 @@
                     double newSubscriptionCount = fc.getDependentValue();
                     double time = fc.getIndependentValue("t");
                     for(ActualVsPredictionEvaluator placeholder: predictionsSet){
-                        String subKey=placeholder.getUniqueKey().split(":")[1];
+                        String subKey=placeholder.getUniqueKey().split("\\$")[1];
                         if(time== Double.parseDouble(subKey)){
                             placeholder.addPrediction(newSubscriptionCount);
                             break;

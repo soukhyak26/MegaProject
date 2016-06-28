@@ -9,7 +9,8 @@ import org.joda.time.YearMonth;
  * Created by mandark on 01-01-2016.
  */
 public class ForecastedPriceParameter {
-    private Interval interval;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double purchasePricePerUnit;
     private double MRP;
     private long numberofNewSubscriptions;
@@ -18,13 +19,14 @@ public class ForecastedPriceParameter {
     private double averageDemandPerSubscriber;
 
     public ForecastedPriceParameter(LocalDate startDate,LocalDate endDate,double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, double demandDensity, double averageDemandPerSubscriber) {
-        this.interval=new Interval(startDate.toDateTimeAtStartOfDay(),endDate.toDateTimeAtStartOfDay());
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberofNewSubscriptions = numberofNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscritptions;
         this.demandDensity = demandDensity;
         this.averageDemandPerSubscriber = averageDemandPerSubscriber;
+        this.startDate=startDate;
+        this.endDate=endDate;
     }
 
     public double getPurchasePricePerUnit() {
@@ -76,11 +78,19 @@ public class ForecastedPriceParameter {
         this.averageDemandPerSubscriber = averageDemandPerSubscriber;
     }
 
-    public Interval getInterval() {
-        return interval;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setInterval(Interval interval) {
-        this.interval = interval;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }

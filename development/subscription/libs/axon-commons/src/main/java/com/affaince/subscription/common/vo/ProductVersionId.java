@@ -32,4 +32,12 @@ public class ProductVersionId implements Serializable {
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
+
+    @Override
+    public String toString() {
+        return "ProductVersionId{" +
+                "productId='" + productId + '\'' +
+                ", fromDate=" + fromDate +
+                '}';
+    }
 }

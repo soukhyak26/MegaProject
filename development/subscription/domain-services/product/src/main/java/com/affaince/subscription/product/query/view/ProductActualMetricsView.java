@@ -1,12 +1,9 @@
 package com.affaince.subscription.product.query.view;
 
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.vo.ProductMonthlyVersionId;
-import com.affaince.subscription.product.vo.ProductPeriodVersionId;
-import org.joda.time.Interval;
-import org.joda.time.Period;
-import org.joda.time.YearMonth;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +19,8 @@ import java.util.TreeSet;
 public class ProductActualMetricsView {
     @Id
    // private final ProductMonthlyVersionId productMonthlyVersionId;
-    private final ProductPeriodVersionId productPeriodVersionId;
+    private final ProductVersionId productVersionId;
+    private LocalDate endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private double fixedOperatingExpense;
     private double variableOperatingExpense;
@@ -30,7 +28,7 @@ public class ProductActualMetricsView {
     private double demandDensity;
     private double averageDemandPerSubscriber;
 */
-    private long newSubscritptions;
+    private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private double percentageCustomerChurn;
@@ -56,16 +54,14 @@ public class ProductActualMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductActualMetricsView(String productId, Interval period) {
-        this.productPeriodVersionId= new ProductPeriodVersionId(productId,period);
+    public ProductActualMetricsView(String productId, LocalDate startDate, LocalDate endDate) {
+        this.productVersionId= new ProductVersionId(productId,startDate);
+        this.endDate=endDate;
         taggedPriceVersions= new TreeSet<>();
         newMRRPerPriceBucket= new TreeMap<>();
         churnedMRRPerPriceBucket= new TreeMap<>();
     }
 
-    public ProductPeriodVersionId getProductPeriodVersionId() {
-        return productPeriodVersionId;
-    }
 
     public SortedSet<PriceTaggedWithProduct> getTaggedPriceVersions() {
         return taggedPriceVersions;
@@ -91,12 +87,12 @@ public class ProductActualMetricsView {
         this.variableOperatingExpense = variableOperatingExpense;
     }
 
-    public long getNewSubscritptions() {
-        return newSubscritptions;
+    public long getNewSubscriptions() {
+        return newSubscriptions;
     }
 
-    public void setNewSubscritptions(long newSubscritptions) {
-        this.newSubscritptions = newSubscritptions;
+    public void setNewSubscriptions(long newSubscriptions) {
+        this.newSubscriptions = newSubscriptions;
     }
 
     public long getChurnedSubscriptions() {
@@ -290,6 +286,19 @@ public class ProductActualMetricsView {
     public void setRevenue(double revenue) {
         this.revenue = revenue;
     }
+
+    public ProductVersionId getProductVersionId() {
+        return productVersionId;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public PriceTaggedWithProduct getLatestTaggedPriceVersion(){
         PriceTaggedWithProduct latestTaggedPriceVersion=null;
         for ( PriceTaggedWithProduct tempTaggedPrice: this.taggedPriceVersions){

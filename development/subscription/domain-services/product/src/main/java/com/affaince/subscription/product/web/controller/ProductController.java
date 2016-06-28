@@ -115,12 +115,12 @@ public class ProductController {
         ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
         for (ForecastedPriceParameter parameter : forecastParameters) {
 
-            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getInterval());
+            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getStartDate(),parameter.getEndDate());
             productForecastMetricsView.setNewSubscriptions(parameter.getNumberofNewSubscriptions());
             productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
             productForecastMetricsViewRepository.save(productForecastMetricsView);
 
-            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, parameter.getInterval().getStart().toLocalDate(),parameter.getInterval().getEnd().toLocalDate(), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
+            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, parameter.getStartDate(),parameter.getEndDate(), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
             forecastedPriceBucketViewRepository.save(forecastedPriceBucketsView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);

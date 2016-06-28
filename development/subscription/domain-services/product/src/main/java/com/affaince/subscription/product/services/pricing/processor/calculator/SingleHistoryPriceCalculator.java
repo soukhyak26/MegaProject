@@ -16,7 +16,7 @@ import java.util.List;
 public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView) {
-        String productId = productActualMetricsView.getProductPeriodVersionId().getProductId();
+        String productId = productActualMetricsView.getProductVersionId().getProductId();
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         final PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
 
