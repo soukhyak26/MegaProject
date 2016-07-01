@@ -28,10 +28,10 @@ public class ProductStatusUpdatedEventListener {
     public void on(ProductStatusUpdatedEvent event) {
         ProductView productView = productViewRepository.findOne(event.getProductId());
         productView.setCurrentStockInUnits(event.getCurrentStockInUnits());
-        Sort sort = new Sort(Sort.Direction.DESC, "productMonthlyVersionId.fromDate");
+        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
 
         //if purchase price in incoming event and that of latest price bucket are same do nothing,as there is no change;Else create new price bucket and set new purchase price/MRP in it.
-        ProductActualMetricsView latestStatisticsView = productActualMetricsViewRepository.findByProductMonthlyVersionId_ProductId(event.getProductId(),sort).get(0);
+        ProductActualMetricsView latestStatisticsView = productActualMetricsViewRepository.findByProductVersionId_ProductId(event.getProductId(),sort).get(0);
 
         if (latestStatisticsView.getTaggedPriceVersions().first().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
             PriceTaggedWithProduct newTaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());

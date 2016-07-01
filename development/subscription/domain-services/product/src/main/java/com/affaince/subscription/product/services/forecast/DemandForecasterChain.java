@@ -4,8 +4,11 @@ import com.affaince.subscription.product.query.repository.ProductActualMetricsVi
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class DemandForecasterChain {
 
 
     @Autowired
-    DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductViewRepository productViewRepository) {
+    public DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductViewRepository productViewRepository) {
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
         this.productActualMetricsViewRepository = productActualMetricsViewRepository;
         this.productViewRepository = productViewRepository;
@@ -34,15 +37,23 @@ public class DemandForecasterChain {
         }
     }
     //forecasting for all products
-    public void forecast() {
-        Iterable<ProductView> products = productViewRepository.findAll();
+    public void forecast(ProductView productView) {
+       // Iterable<ProductView> products = productViewRepository.findAll();
 
+/*
         for (ProductView productView:
              products) {
+*/
             List<ProductActualMetricsView> productActualMetricsViewList =
                     productActualMetricsViewRepository.findByProductId(productView.getProductId());
             List<Double> forecastViews=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
-        }
+            Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+            ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(productView.getProductId(),sort).get(0);
+            latestProductForecastMetricsView.setEndDate(LocalDate.now());
+            ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(productView.getProductId(), LocalDate.now(),new LocalDate(9999,12,31));
+            newProductForecastMetricsView.setTotalNumberOfExistingSubscriptions(Double.valueOf(forecastViews.get(0)).longValue());
+            productForecastMetricsViewRepository.save(newProductForecastMetricsView);
+//        }
     }
 
 

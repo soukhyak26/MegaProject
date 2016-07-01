@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.pricing.determinator;
 
 
 import com.affaince.subscription.common.vo.ProductMonthlyVersionId;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
@@ -14,8 +15,10 @@ import com.affaince.subscription.product.services.pricing.processor.calculator.S
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
 import com.affaince.subscription.product.vo.PriceDeterminationCriteria;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -41,8 +44,10 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         final String productId = demandFunctionCoefficients.getProductId();
 
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
-        ProductActualMetricsView productActualMetricsView = productActualMetricsViewRepository.findOne(new ProductMonthlyVersionId(productId, YearMonth.now()));
-        ProductForecastMetricsView productForecastMetricsView = productForecastMetricsViewRepository.findOne(new ProductMonthlyVersionId(productId, YearMonth.now()));
+
+        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        ProductActualMetricsView productActualMetricsView = productActualMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
+        ProductForecastMetricsView productForecastMetricsView = productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
         CalculatorChain calculatorChain = new CalculatorChain();
         calculatorChain.addCalculator(new OpeningPriceCalculator());
         calculatorChain.addCalculator(new SingleHistoryPriceCalculator());

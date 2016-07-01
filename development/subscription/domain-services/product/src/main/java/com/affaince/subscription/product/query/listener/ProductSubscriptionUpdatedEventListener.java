@@ -25,8 +25,8 @@ public class ProductSubscriptionUpdatedEventListener {
 
     @EventHandler
     public void on(ProductSubscriptionUpdatedEvent event) {
-        Sort sort = new Sort(Sort.Direction.DESC, "productMonthlyVersionId.fromDate");
-        ProductActualMetricsView productActualMetricsView = productActualMetricsViewRepository.findByProductMonthlyVersionId_ProductId(event.getProductId(), sort).get(0);
+        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        ProductActualMetricsView productActualMetricsView = productActualMetricsViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
         //final ProductMonthlyStatisticsView productActualMetricsView = statsViewRepository.findOne(productStatistics.getProductId());
         long subscribedProductCount = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
         productActualMetricsView.setTotalNumberOfExistingSubscriptions(subscribedProductCount + event.getSubscriptionCount());

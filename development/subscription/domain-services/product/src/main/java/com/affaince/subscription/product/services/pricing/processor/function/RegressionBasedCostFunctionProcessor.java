@@ -27,7 +27,7 @@ public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<P
         //fixed operating expense per Product(rent,electiricty bill etc) as a fixed cost
         //variable operating expenses such as shipping price per product
         //TrainingData trainingData = TrainingDataBuilder.buildTrainingData()
-        List<ProductActualMetricsView> productActualMetricsViews = productActualMetricsViewRepository.findByProductMonthlyVersionId_ProductId(productView.getProductId());
+        List<ProductActualMetricsView> productActualMetricsViews = productActualMetricsViewRepository.findByProductVersionId_ProductId(productView.getProductId());
 
         List<Double> parametersList = new ArrayList<Double>();
         for (ProductActualMetricsView productStat : productActualMetricsViews) {
