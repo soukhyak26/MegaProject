@@ -3,6 +3,7 @@ package com.affaince.subscription.product.query.repository;
 import com.affaince.subscription.common.idconverter.*;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by mandar on 02-07-2016.
  */
+@Configuration
 @EnableMongoRepositories
 public class SpringMongoConfiguration {
     @Bean
