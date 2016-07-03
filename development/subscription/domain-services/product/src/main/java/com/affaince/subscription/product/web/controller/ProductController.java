@@ -2,6 +2,7 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.SetProductConfigurationCommand;
@@ -115,7 +116,7 @@ public class ProductController {
         ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
         for (ForecastedPriceParameter parameter : forecastParameters) {
 
-            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(productId, parameter.getStartDate(),parameter.getEndDate());
+            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(new ProductVersionId(productId, parameter.getStartDate()),parameter.getEndDate());
             productForecastMetricsView.setNewSubscriptions(parameter.getNumberofNewSubscriptions());
             productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
             productForecastMetricsViewRepository.save(productForecastMetricsView);

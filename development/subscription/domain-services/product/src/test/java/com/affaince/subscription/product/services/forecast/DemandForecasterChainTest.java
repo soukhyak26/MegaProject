@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -73,8 +74,10 @@ public class DemandForecasterChainTest {
         view4.setTotalNumberOfExistingSubscriptions(1250);
         productActualMetricsViewList.add(view4);
 
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
+        List<ProductForecastMetricsView> forecasts=new ArrayList<>();
+        forecasts.add(forecastView);
 
         String productId = "1";
         ProductView product = new ProductView(productId, "Myproduct", "MyCat", "MySubCat", 100, QuantityUnit.GM, null, null, null);
@@ -82,8 +85,8 @@ public class DemandForecasterChainTest {
         allProducts.add(product);
 
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-        Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate")).get(0)).thenReturn(forecastView);
-        Mockito.when(productActualMetricsViewRepository.findByProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
+        Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+        Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
         chain.forecast(product);
     }
@@ -253,16 +256,19 @@ public class DemandForecasterChainTest {
         view40.setTotalNumberOfExistingSubscriptions(10250);
         productActualMetricsViewList.add(view40);
 
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
+
+        List<ProductForecastMetricsView> forecasts=new ArrayList<>();
+        forecasts.add(forecastView);
 
         String productId = "1";
         ProductView product = new ProductView(productId, "Myproduct", "MyCat", "MySubCat", 100, QuantityUnit.GM, null, null, null);
         List<ProductView> allProducts=new ArrayList<ProductView>();
         allProducts.add(product);
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-        Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate")).get(0)).thenReturn(forecastView);
-        Mockito.when(productActualMetricsViewRepository.findByProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
+        Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+        Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
         chain.forecast(product);
 
     }

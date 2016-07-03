@@ -18,7 +18,7 @@ public class PricingStrategyDeterminator {
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productView.getProductId());
         PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
         //collect all the historical price buckets with same purchase price(active and inactive)
-        List<PriceBucketView> priceBucketsWithSamePurchasePrice = priceBucketViewRepository.findByProductVersionId_ProductIdAndPurchasePrice(productView.getProductId(), latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit());
+        List<PriceBucketView> priceBucketsWithSamePurchasePrice = priceBucketViewRepository.findByProductVersionId_ProductIdAndTaggedPriceVersion_PurchasePricePerUnit(productView.getProductId(), latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit());
 
         //check if you have enough number of history records so as to decide of default pricing/demand funation based pricing needs to be applied.
         //What will happen when purchase price changes.

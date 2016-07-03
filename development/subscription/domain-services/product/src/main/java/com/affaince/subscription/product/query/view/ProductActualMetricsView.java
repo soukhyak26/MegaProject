@@ -302,7 +302,7 @@ public class ProductActualMetricsView {
     public PriceTaggedWithProduct getLatestTaggedPriceVersion(){
         PriceTaggedWithProduct latestTaggedPriceVersion=null;
         for ( PriceTaggedWithProduct tempTaggedPrice: this.taggedPriceVersions){
-            if(null== latestTaggedPriceVersion || tempTaggedPrice.getStartDate().isAfter(latestTaggedPriceVersion.getStartDate())){
+            if(null== latestTaggedPriceVersion || tempTaggedPrice.getTaggedStartDate().isAfter(latestTaggedPriceVersion.getTaggedStartDate())){
                 latestTaggedPriceVersion=tempTaggedPrice;
             }
         }

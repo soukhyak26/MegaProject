@@ -54,6 +54,15 @@ public class ProductForecastMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
+    public ProductForecastMetricsView(ProductVersionId productVersionId,LocalDate endDate){
+        this.productVersionId=productVersionId;
+        this.endDate=endDate;
+        taggedPriceVersions = new TreeSet<>();
+        newMRRPerPriceBucket = new TreeMap<>();
+        churnedMRRPerPriceBucket = new TreeMap<>();
+
+    }
+/*
     public ProductForecastMetricsView(String productId, LocalDate startDate,LocalDate endDate) {
         this.productVersionId = new ProductVersionId(productId, startDate);
         this.endDate=endDate;
@@ -61,6 +70,7 @@ public class ProductForecastMetricsView {
         newMRRPerPriceBucket = new TreeMap<>();
         churnedMRRPerPriceBucket = new TreeMap<>();
     }
+*/
 
     public ProductVersionId getProductVersionId() {
         return productVersionId;

@@ -20,7 +20,7 @@ public interface PriceBucketViewRepository extends PagingAndSortingRepository<Pr
     @Query("{ entityStatus:'1' }")
     List<PriceBucketView> findByProductVersionId_ProductId(String productId);
 
-    List<PriceBucketView> findByProductVersionId_ProductIdAndPurchasePrice(String productId, double purchsePricePerUnit);
+    List<PriceBucketView> findByProductVersionId_ProductIdAndTaggedPriceVersion_PurchasePricePerUnit(String productId, double purchasePricePerUnit);
     List<PriceBucketView> findByProductVersionIdAndEntityStatus(ProductVersionId versionId, int entityStatus);
 
 }

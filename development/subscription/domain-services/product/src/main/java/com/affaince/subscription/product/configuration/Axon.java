@@ -58,6 +58,7 @@ public class Axon extends RabbitMQConfiguration {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversionsForProductVersionId());
+       // converter.setCustomConversions(customConversionsForEndDate());
         return converter;
     }
 

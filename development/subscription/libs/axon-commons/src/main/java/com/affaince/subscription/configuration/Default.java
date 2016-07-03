@@ -2,9 +2,7 @@ package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
-import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
-import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
-import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
+import com.affaince.subscription.common.idconverter.*;
 import com.affaince.subscription.monitoring.TrackingAsynchronousCluster;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
@@ -201,6 +199,16 @@ public class Default {
         converters.add(new ProductMonthlyVersionIdReaderConverter());
         return new CustomConversions(converters);
     }
+
+/*
+    @Bean(name="customConversionsForEndDate")
+    public CustomConversions customConversionsForEndDate() {
+        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new LocalDateWritingConverter());
+        converters.add(new LocalDateReadingConverter());
+        return new CustomConversions(converters);
+    }
+*/
 
     @Bean
     public Locale locale (@Value("${subscription.locale}") String locale) {

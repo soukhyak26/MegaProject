@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -45,12 +46,12 @@ public class DemandForecasterChain {
              products) {
 */
             List<ProductActualMetricsView> productActualMetricsViewList =
-                    productActualMetricsViewRepository.findByProductId(productView.getProductId());
+                    productActualMetricsViewRepository.findByProductVersionId_ProductId(productView.getProductId());
             List<Double> forecastViews=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
             Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
             ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(productView.getProductId(),sort).get(0);
             latestProductForecastMetricsView.setEndDate(LocalDate.now());
-            ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(productView.getProductId(), LocalDate.now(),new LocalDate(9999,12,31));
+            ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(new ProductVersionId(productView.getProductId(), LocalDate.now()),new LocalDate(9999,12,31));
             newProductForecastMetricsView.setTotalNumberOfExistingSubscriptions(Double.valueOf(forecastViews.get(0)).longValue());
             productForecastMetricsViewRepository.save(newProductForecastMetricsView);
 //        }

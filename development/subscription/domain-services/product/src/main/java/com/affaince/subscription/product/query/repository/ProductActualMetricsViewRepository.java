@@ -12,7 +12,7 @@ import java.util.List;
  * Created by mandark on 01-05-2016.
  */
 public interface ProductActualMetricsViewRepository extends CrudRepository<ProductActualMetricsView, com.affaince.subscription.common.vo.ProductVersionId> {
-    List<ProductActualMetricsView> findByProductId(String productId);
+    //List<ProductActualMetricsView> findByProductId(String productId);
     public List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId);
     public List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId,Sort sort);
     public List<ProductActualMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);

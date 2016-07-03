@@ -450,6 +450,18 @@
                 <version>2.15.2</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>1.9.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb-parent</artifactId>
+                <version>1.9.2.RELEASE</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-core_2.10</artifactId>
                 <version>${spark.version}</version>

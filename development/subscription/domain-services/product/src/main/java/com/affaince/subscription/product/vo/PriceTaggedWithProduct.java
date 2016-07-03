@@ -8,24 +8,24 @@ import org.joda.time.LocalDate;
 public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduct> {
     private double purchasePricePerUnit;
     private double MRP;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate taggedStartDate;
+    private LocalDate taggedEndDate;
 
-    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate startDate) {
+    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate taggedStartDate) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
-        this.startDate = startDate;
+        this.taggedStartDate = taggedStartDate;
     }
 
-    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate startDate, LocalDate endDate) {
+    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.taggedStartDate = taggedStartDate;
+        this.taggedEndDate = taggedEndDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setTaggedEndDate(LocalDate taggedEndDate) {
+        this.taggedEndDate = taggedEndDate;
     }
 
     public double getPurchasePricePerUnit() {
@@ -36,17 +36,17 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         return MRP;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getTaggedStartDate() {
+        return taggedStartDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getTaggedEndDate() {
+        return taggedEndDate;
     }
 
     @Override
     public int compareTo(PriceTaggedWithProduct price2){
-        if(this.startDate.isBefore(price2.getStartDate())){
+        if(this.taggedStartDate.isBefore(price2.getTaggedStartDate())){
             return 1;
         }else{
             return -1;

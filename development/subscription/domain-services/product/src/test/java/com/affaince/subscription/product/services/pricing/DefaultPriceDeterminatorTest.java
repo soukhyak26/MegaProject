@@ -72,7 +72,7 @@ public class DefaultPriceDeterminatorTest {
         allProducts.add(product);
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
 
-        Mockito.when(productActualMetricsViewRepository.findByProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
+        Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
         chain.forecast(product);
 
