@@ -19,9 +19,26 @@
         <module>domain-services/product</module>
         <module>domain-services/business</module>
         <module>tools/notifications</module>
+        <module>batch/ProductPricingBatch</module>
         <module>batch/ExpenseDistributionBatch</module>
         <module>tools/user-journey</module>
     </modules>
+    <dependencies>
+<!--
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>axon-commons</artifactId>
+        </dependency>
+-->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot</artifactId>
+        </dependency>
+    </dependencies>
     <properties>
         <axon.version>2.4.2</axon.version>
         <springboot.version>1.2.5.RELEASE</springboot.version>
@@ -31,6 +48,8 @@
         <spark.version>1.6.0-cdh5.7.0</spark.version>
         <sparkts.version>0.3.0</sparkts.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <build>
         <defaultGoal>clean install</defaultGoal>
