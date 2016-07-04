@@ -48,7 +48,7 @@ public class DemandForecasterChainTest {
         forecaster1.addNextForecaster(forecaster2);
         forecaster2.addNextForecaster(forecaster3);
         forecaster3.addNextForecaster(forecaster4);
-        chain = new DemandForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository,productViewRepository);
+        chain = new DemandForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
         chain.addForecaster(forecaster1);
 
     }
@@ -88,7 +88,7 @@ public class DemandForecasterChainTest {
         Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
         Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
-        chain.forecast(product);
+        chain.forecast(product.getProductId());
     }
 
     @Test
@@ -269,7 +269,7 @@ public class DemandForecasterChainTest {
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
         Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
         Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
-        chain.forecast(product);
+        chain.forecast(product.getProductId());
 
     }
 

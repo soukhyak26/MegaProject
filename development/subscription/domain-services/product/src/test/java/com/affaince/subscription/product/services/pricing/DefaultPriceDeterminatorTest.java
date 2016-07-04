@@ -41,7 +41,7 @@ public class DefaultPriceDeterminatorTest {
         forecaster1.addNextForecaster(forecaster2);
         forecaster2.addNextForecaster(forecaster3);
         forecaster3.addNextForecaster(forecaster4);
-        chain = new DemandForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository,productViewRepository);
+        chain = new DemandForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
         chain.addForecaster(forecaster1);
     }
 
@@ -74,7 +74,7 @@ public class DefaultPriceDeterminatorTest {
 
         Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
-        chain.forecast(product);
+        chain.forecast(product.getProductId());
 
     }
 }

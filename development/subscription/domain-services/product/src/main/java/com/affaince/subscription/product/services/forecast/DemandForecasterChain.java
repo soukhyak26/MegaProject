@@ -16,18 +16,24 @@ import java.util.List;
 /**
  * Created by mandark on 01-05-2016.
  */
+
 public class DemandForecasterChain {
-    private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
-    private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
-    private final ProductViewRepository productViewRepository;
+    @Autowired
+    private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    @Autowired
+    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    //private final ProductViewRepository productViewRepository;
     private ProductDemandForecaster initialForecaster;
 
-
     @Autowired
-    public DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductViewRepository productViewRepository) {
+    public DemandForecasterChain(){
+
+    }
+
+    public DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository) {
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
         this.productActualMetricsViewRepository = productActualMetricsViewRepository;
-        this.productViewRepository = productViewRepository;
+        //this.productViewRepository = productViewRepository;
     }
 
     public void addForecaster(ProductDemandForecaster forecaster) {
@@ -38,7 +44,7 @@ public class DemandForecasterChain {
         }
     }
     //forecasting for all products
-    public void forecast(ProductView productView) {
+    public void forecast(String productId) {
        // Iterable<ProductView> products = productViewRepository.findAll();
 
 /*
@@ -46,12 +52,12 @@ public class DemandForecasterChain {
              products) {
 */
             List<ProductActualMetricsView> productActualMetricsViewList =
-                    productActualMetricsViewRepository.findByProductVersionId_ProductId(productView.getProductId());
+                    productActualMetricsViewRepository.findByProductVersionId_ProductId(productId);
             List<Double> forecastViews=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
             Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-            ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(productView.getProductId(),sort).get(0);
+            ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
             latestProductForecastMetricsView.setEndDate(LocalDate.now());
-            ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(new ProductVersionId(productView.getProductId(), LocalDate.now()),new LocalDate(9999,12,31));
+            ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(new ProductVersionId(productId, LocalDate.now()),new LocalDate(9999,12,31));
             newProductForecastMetricsView.setTotalNumberOfExistingSubscriptions(Double.valueOf(forecastViews.get(0)).longValue());
             productForecastMetricsViewRepository.save(newProductForecastMetricsView);
 //        }
