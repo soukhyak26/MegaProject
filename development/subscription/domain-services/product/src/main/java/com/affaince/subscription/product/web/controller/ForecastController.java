@@ -25,7 +25,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/product")
 @Component
-
 public class ForecastController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
@@ -35,17 +34,16 @@ public class ForecastController {
     DemandForecasterChain demandForecasterChain;
     @Autowired
     public ForecastController() {
-        //this.productViewRepository = productViewRepository;
     }
-    @RequestMapping(method= RequestMethod.GET, value="/pricing/findall")
+    @RequestMapping(method= RequestMethod.GET, value="/forecast/findall")
     @Produces("application/json")
     public ResponseEntity<Object> findAllProducts(){
-        List<ProductView> target= new ArrayList<>();
-        productViewRepository.findAll().forEach(target::add);
+        List<String> target= new ArrayList<>();
+        productViewRepository.findAll().forEach((item)->{target.add(item.getProductId());});
         return new ResponseEntity<Object>(ImmutableList.of(target),HttpStatus.CREATED);
     }
-    @RequestMapping(value ="/forecastdemand/{productid}" )
-    public ResponseEntity<Object> foreCastDemand(@PathVariable String productId){
+    @RequestMapping(method= RequestMethod.PUT,value ="/forecast/{productid}" )
+    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId){
         ProductDemandForecaster forecaster1 = new SimpleMovingAverageDemandForecaster();
         ProductDemandForecaster forecaster2 = new SimpleExponentialSmoothingDemandForecaster();
         ProductDemandForecaster forecaster3 = new TripleExponentialSmoothingDemandForecaster();
@@ -55,7 +53,7 @@ public class ForecastController {
         forecaster3.addNextForecaster(forecaster4);
         demandForecasterChain.addForecaster(forecaster1);
         demandForecasterChain.forecast( productId);
-        return new ResponseEntity<Object>(HttpStatus.OK);
+        return new ResponseEntity<String>(productId,HttpStatus.OK);
     }
 
 }

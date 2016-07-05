@@ -10,6 +10,7 @@ import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -24,6 +25,11 @@ public class Axon extends RabbitMQConfiguration {
     public GenericEventPublisher publisher(EventTemplate template) {
         return new GenericEventPublisher(template);
     }
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+/*
     @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
@@ -42,6 +48,7 @@ public class Axon extends RabbitMQConfiguration {
             }
         };
     }
+*/
 
     @Bean
     CamelContextConfiguration contextConfiguration() {
