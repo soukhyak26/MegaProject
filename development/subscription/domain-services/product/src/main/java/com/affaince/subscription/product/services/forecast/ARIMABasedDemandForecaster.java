@@ -53,7 +53,30 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
     }
 
     public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
-        return null;
+        if (productActualMetricsViewList.size() > 60) {
+            double[] values = new double[productActualMetricsViewList.size()];
+            int i = 0;
+            for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                values[i] = productActualMetricsView.getChurnedSubscriptions();
+                i++;
+            }
+            Vector ts = Vectors.dense(values);
+            ARIMAModel arimaModel = ARIMA.fitModel(1, 0, 1, ts, true, "css-cgd", null);
+            double[] coefficients = arimaModel.coefficients();
+            for (Double coeff : coefficients) {
+                System.out.println("coefficients: " + coeff);
+            }
+            Vector forecast = arimaModel.forecast(ts, 20);
+            List<Double>  forecastedChurnedSubscriptionCounts= new ArrayList<>();
+            for (int j = productActualMetricsViewList.size(); j < forecast.argmax(); j++) {
+                forecastedChurnedSubscriptionCounts.add(forecast.apply(j));
+                System.out.println("ARIMA $$$$$forecast of churned subscriptions: " + forecast.apply(j));
+            }
+            return forecastedChurnedSubscriptionCounts;
+        }else{
+            return null;
+        }
+
     }
 
 }

@@ -91,7 +91,67 @@
             }
         }
         public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
-            return null;
+            if (productActualMetricsViewList.size() > 30 && productActualMetricsViewList.size() <= 60) {
+                int i = 0;
+                int[] windowSizes = {3};
+                DataSet observedData = new DataSet();
+                List<ActualVsPredictionEvaluator> predictionsSet = new ArrayList<>();
+                for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                    double churnedSubscriptionCount = productActualMetricsView.getChurnedSubscriptions();
+                    final String uniqueKey=productActualMetricsView.getProductVersionId().toString() + "$" + (i+1);
+                    ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,churnedSubscriptionCount);
+                    predictionsSet.add(eval);
+                    DataPoint dp = new Observation(churnedSubscriptionCount);
+                    //YearMonth monthOfYear = productActualMetricsView.getProductVersionId().getMonthOfYear();
+                    // dp.setIndependentValue("time", new LocalDate(monthOfYear.getYear(), monthOfYear.getMonthOfYear(), monthOfYear.toDateTime(null).dayOfMonth().getMaximumValue()).toDateTimeAtStartOfDay().getMillis());
+                    dp.setIndependentValue("t", i+1);
+                    observedData.add(dp);
+                    i++;
+                }
+                observedData.setPeriodsPerYear(5);
+                DataSet fcValues = new DataSet();
+
+                for (int t = 1; t <= productActualMetricsViewList.size(); t++) {
+                    DataPoint dp = new Observation(0.0);
+                    dp.setIndependentValue("t", t);
+                    fcValues.add(dp);
+                }
+                observedData.setTimeVariable("t");
+                ForecastingModel forecaster = TripleExponentialSmoothingModel.getBestFitModel(observedData);
+
+
+                DataSet results = forecaster.forecast(fcValues);
+                Iterator<DataPoint> it = results.iterator();
+                //List<ProductForecastMetricsView> newForecasts= new ArrayList<ProductForecastMetricsView>();
+                while (it.hasNext()) {
+                    // Check that the results are within specified tolerance
+                    //  of the expected values
+                    DataPoint fc = (DataPoint) it.next();
+                    double churnedSubscriptionCount = fc.getDependentValue();
+                    double time = fc.getIndependentValue("t");
+                    for(ActualVsPredictionEvaluator placeholder: predictionsSet){
+                        String subKey=placeholder.getUniqueKey().split("\\$")[1];
+                        if(time== Double.parseDouble(subKey)){
+                            placeholder.addPrediction(churnedSubscriptionCount);
+                            break;
+                        }
+
+                    }
+                    //ProductForecastMetricsView forecastView= new ProductForecastMetricsView();
+                }
+
+
+                System.out.println("TEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+                List<Double> resultSet = new ArrayList<Double>();
+                resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+                return resultSet;
+
+            }else{
+                //TODO : Handle NPE
+                return productDemandForecaster == null ? null
+                        :productDemandForecaster.forecastDemandChurn(productActualMetricsViewList);
+            }
+
         }
 
     }

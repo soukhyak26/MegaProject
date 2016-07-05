@@ -12,9 +12,9 @@ import java.util.Map;
 public class BreakEvenPriceCalculator {
     @Autowired
     public BreakEvenPriceCalculator(){}
-    public double calculateBreakEvenPrice(Map<String,Double> bePriceContriutors) {
+    public double calculateBreakEvenPrice(Map<String,Double> breakEvenPriceContributors) {
         double breakEvenPrice=0.0;
-        Iterator<Map.Entry<String,Double>> bePriceParamIterator= bePriceContriutors.entrySet().iterator();
+        Iterator<Map.Entry<String,Double>> bePriceParamIterator= breakEvenPriceContributors.entrySet().iterator();
         while(bePriceParamIterator.hasNext()){
             breakEvenPrice+=bePriceParamIterator.next().getValue();
         }

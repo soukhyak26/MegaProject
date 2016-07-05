@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping(value = "/product")
 @Component
 
-public class PricingController {
+public class ForecastController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     @Autowired
@@ -34,7 +34,7 @@ public class PricingController {
     @Autowired
     DemandForecasterChain demandForecasterChain;
     @Autowired
-    public PricingController() {
+    public ForecastController() {
         //this.productViewRepository = productViewRepository;
     }
     @RequestMapping(method= RequestMethod.GET, value="/pricing/findall")
@@ -57,4 +57,5 @@ public class PricingController {
         demandForecasterChain.forecast( productId);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
 }

@@ -43,24 +43,24 @@ public class DemandForecasterChain {
             initialForecaster = forecaster;
         }
     }
-    //forecasting for all products
+    //forecasting for each product
     public void forecast(String productId) {
-       // Iterable<ProductView> products = productViewRepository.findAll();
-
-/*
-        for (ProductView productView:
-             products) {
-*/
             List<ProductActualMetricsView> productActualMetricsViewList =
                     productActualMetricsViewRepository.findByProductVersionId_ProductId(productId);
-            List<Double> forecastViews=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
+            //Forecast total subscriptions for next period
+            List<Double> forecastTotalSubscriptions=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
+            //forecast new subscriptions for next period
+            List<Double> forecastChurnedSubscriptions= initialForecaster.forecastDemandChurn(productActualMetricsViewList);
             Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
             ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
             latestProductForecastMetricsView.setEndDate(LocalDate.now());
+            //forecasted new subscriptions per period= (new forecasted total subscription - latest forecasted total subscription + new forecasted churned subscriptions)
+            double newSubscriptions = forecastTotalSubscriptions.get(0) - latestProductForecastMetricsView.getTotalNumberOfExistingSubscriptions() +  forecastChurnedSubscriptions.get(0);
             ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(new ProductVersionId(productId, LocalDate.now()),new LocalDate(9999,12,31));
-            newProductForecastMetricsView.setTotalNumberOfExistingSubscriptions(Double.valueOf(forecastViews.get(0)).longValue());
+            newProductForecastMetricsView.setTotalNumberOfExistingSubscriptions(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue());
+            newProductForecastMetricsView.setChurnedSubscriptions(Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
+            newProductForecastMetricsView.setNewSubscriptions(Double.valueOf(newSubscriptions).longValue());
             productForecastMetricsViewRepository.save(newProductForecastMetricsView);
-//        }
     }
 
 

@@ -1,9 +1,10 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator;
+package com.affaince.subscription.product.services.pricing.processor.calculator.classic;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
 
 import java.util.List;
 

@@ -26,8 +26,6 @@
                 if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 15) {
                     Queue<Double> window = null;
                     double sum=0;
-                    int period=0;
-               //     Collections.sort(productActualMetricsViewList, DateTimeComparator.getDateOnlyInstance());
                     int i = 0;
                     int[] windowSizes = {3};
                     List<ActualVsPredictionEvaluator> predictionsSet= new ArrayList<>();
@@ -70,6 +68,48 @@
             }
 
             public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
+                if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 15) {
+                    Queue<Double> window = null;
+                    double sum=0;
+                    int i = 0;
+                    int[] windowSizes = {3};
+                    List<ActualVsPredictionEvaluator> predictionsSet= new ArrayList<>();
+                    for (int windSize : windowSizes) {
+                        window= new LinkedList<>();
+                        sum=0;
+                        if(productActualMetricsViewList.size() >= windSize) {
+                            for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                                double actualValue=productActualMetricsView.getChurnedSubscriptions();
+                                sum += actualValue;
+                                window.add(actualValue);
+                                if (window.size() > windSize) {
+                                    sum -= window.remove();
+                                }
+                                double predictedValue = sum / window.size();
+                                final String uniqueKey=productActualMetricsView.getProductVersionId().toString();
+                                ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
+                                if(predictionsSet.contains(eval)){
+                                    ActualVsPredictionEvaluator newPrediction= predictionsSet.get(predictionsSet.indexOf(eval));
+                                    newPrediction.addPrediction(predictedValue);
+                                }else{
+                                    ActualVsPredictionEvaluator newPrediction= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
+                                    newPrediction.addPrediction(predictedValue);
+                                    predictionsSet.add(newPrediction);
+                                }
+                            }
+                        }
+                    }
+                    System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value for churned subscriptions:" + predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
+                    List<Double> resultSet=new ArrayList<Double>();
+                    resultSet.add(predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
+                    return resultSet;
+
+                } else{
+                    if (null != productDemandForecaster) {
+                        return productDemandForecaster.forecastDemandChurn(productActualMetricsViewList);
+                    }
+                }
                 return null;
+
             }
         }

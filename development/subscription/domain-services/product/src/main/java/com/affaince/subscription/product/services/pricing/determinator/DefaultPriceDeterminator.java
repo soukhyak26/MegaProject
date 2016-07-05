@@ -1,8 +1,6 @@
 package com.affaince.subscription.product.services.pricing.determinator;
 
 
-import com.affaince.subscription.common.vo.ProductMonthlyVersionId;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
@@ -10,13 +8,11 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.CalculatorChain;
-import com.affaince.subscription.product.services.pricing.processor.calculator.OpeningPriceCalculator;
-import com.affaince.subscription.product.services.pricing.processor.calculator.SingleHistoryPriceCalculator;
+import com.affaince.subscription.product.services.pricing.processor.calculator.classic.OpeningPriceCalculator;
+import com.affaince.subscription.product.services.pricing.processor.calculator.classic.SingleHistoryPriceCalculator;
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
 import com.affaince.subscription.product.vo.PriceDeterminationCriteria;
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
