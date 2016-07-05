@@ -3,9 +3,6 @@ package com.affaince.subscription.product.web.controller;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.services.forecast.*;
-import com.google.common.collect.ImmutableList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,26 +20,26 @@ import java.util.List;
  * Created by mandar on 04-07-2016.
  */
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/forecast")
 @Component
 public class ForecastController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+   // private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+    private final ProductViewRepository productViewRepository;
+    private final DemandForecasterChain demandForecasterChain;
     @Autowired
-    private ProductViewRepository productViewRepository;
-    @Autowired
-    DemandForecasterChain demandForecasterChain;
-    @Autowired
-    public ForecastController() {
+    public ForecastController(ProductViewRepository productViewRepository,DemandForecasterChain demandForecasterChain) {
+        this.productViewRepository=productViewRepository;
+        this.demandForecasterChain=demandForecasterChain;
     }
-    @RequestMapping(method= RequestMethod.GET, value="/forecast/findall")
+    @RequestMapping(method= RequestMethod.GET, value="/findall")
     @Produces("application/json")
     public ResponseEntity<Object> findAllProducts(){
         List<String> target= new ArrayList<>();
         productViewRepository.findAll().forEach((item)->{target.add(item.getProductId());});
-        return new ResponseEntity<Object>(ImmutableList.of(target),HttpStatus.CREATED);
+        return new ResponseEntity<Object>(target,HttpStatus.CREATED);
     }
-    @RequestMapping(method= RequestMethod.PUT,value ="/forecast/{productid}" )
+    @RequestMapping(method= RequestMethod.PUT,value ="/predict/{productid}" )
     public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId){
         ProductDemandForecaster forecaster1 = new SimpleMovingAverageDemandForecaster();
         ProductDemandForecaster forecaster2 = new SimpleExponentialSmoothingDemandForecaster();

@@ -443,6 +443,7 @@
                 <artifactId>commons-math3</artifactId>
                 <version>3.4</version>
             </dependency>
+
             <dependency>
                 <groupId>com.github.lbordowitz.openforecast</groupId>
                 <artifactId>openforecast</artifactId>
@@ -499,6 +500,12 @@
                 <groupId>com.cloudera.sparkts</groupId>
                 <artifactId>sparkts</artifactId>
                 <version>${sparkts.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.slf4j/log4j-over-slf4j -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>1.7.14</version>
             </dependency>
 
         </dependencies>

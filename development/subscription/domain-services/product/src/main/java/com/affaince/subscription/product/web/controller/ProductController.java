@@ -19,8 +19,6 @@ import com.affaince.subscription.product.web.request.*;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +39,7 @@ import java.util.Map;
 @Component
 public class ProductController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository repository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
@@ -79,7 +77,7 @@ public class ProductController {
         } catch (Exception e) {
             throw e;
         }
-        ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
+     //   ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
         return new ResponseEntity<Object>(ImmutableMap.of("id", request.getProductId()), HttpStatus.CREATED);
     }
 

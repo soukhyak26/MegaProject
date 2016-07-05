@@ -23,10 +23,7 @@ import java.util.List;
 /**
  * Created by mandar on 24-06-2016.
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
 @RunWith(MockitoJUnitRunner.class)
-//@SpringApplicationConfiguration(classes = DemandForecasterChain.class)
-//@ContextConfiguration(locations = {"/applicationContext_mock.xml"})
 public class DemandForecasterChainTest {
     @Mock
     private static ProductViewRepository productViewRepository;
