@@ -1,6 +1,5 @@
 package com.affaince.subscription.monitoring;
 
-import com.affaince.subscription.metadata.ExecutionFlowConfiguration;
 import com.affaince.subscription.metadata.ExecutionFlowNode;
 import com.affaince.subscription.query.view.CommonView;
 import com.affaince.subscription.repository.CommonViewRepository;
@@ -12,10 +11,7 @@ import org.axonframework.eventhandling.MultiplexingEventProcessingMonitor;
 import org.axonframework.eventhandling.async.ErrorHandler;
 import org.axonframework.eventhandling.async.EventProcessor;
 import org.axonframework.unitofwork.UnitOfWorkFactory;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
@@ -39,7 +35,7 @@ public class TrackingEventProcessor extends EventProcessor {
                                   MultiplexingEventProcessingMonitor eventProcessingMonitor) {
         super(executor, shutDownCallback, errorHandler, unitOfWorkFactory, eventListeners, eventProcessingMonitor);
         try {
-            ExecutionFlowConfiguration.getInstance().initConfiguration();
+//            ExecutionFlowConfiguration.getInstance().initConfiguration();
         } catch (Exception e) {
             //TODO: Handle error
             System.out.println(e);

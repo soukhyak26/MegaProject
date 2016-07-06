@@ -1,18 +1,16 @@
 package com.affaince.subscription.product.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
-import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.product.command.domain.Product;
-import com.affaince.subscription.product.services.pricing.aggregate.CoefficientAggregationStrategy;
+import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.services.pricing.determinator.DemandBasedPriceDeterminator;
 import com.affaince.subscription.product.services.pricing.processor.PricingStrategyDeterminator;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedCostFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedDemandFunctionProcessor;
 import com.mongodb.Mongo;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.util.toolbox.AggregationStrategies;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventhandling.EventTemplate;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -36,7 +34,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends ActiveMQConfiguration {
 
     @Bean
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {
@@ -93,6 +91,11 @@ public class Axon extends RabbitMQConfiguration {
     }
 
     @Bean
+    public DemandForecasterChain demandForecasterChain () {
+        return new DemandForecasterChain ();
+    }
+
+    @Bean
     public RegressionBasedCostFunctionProcessor costFunctionProcessor (){
         return new RegressionBasedCostFunctionProcessor();
     }
@@ -106,7 +109,7 @@ public class Axon extends RabbitMQConfiguration {
     DemandBasedPriceDeterminator demandBasedPriceDeterminator(){
         return new DemandBasedPriceDeterminator();
     }
-    @Bean
+    /*@Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() {
@@ -129,6 +132,6 @@ public class Axon extends RabbitMQConfiguration {
                         .to("bean:publisher");
             }
         };
-    }
+    }*/
 
 }
