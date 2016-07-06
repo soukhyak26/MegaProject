@@ -32,7 +32,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private ProductConfiguration productConfiguration;
     @EventSourcedMember
-    private ProductAccount productAccount ;
+    private ProductAccount productAccount;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
 
     public Product() {
@@ -66,6 +66,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public ProductAccount getProductAccount() {
         return this.productAccount;
     }
+
     public PriceBucket getLatestPriceBucket() {
         return getProductAccount().getLatestPriceBucket();
     }
@@ -115,7 +116,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public double getLatestDemandDensity() {
         return getProductAccount().getLatestPerformanceTracker().getDemandDensity();
     }
-
 
 
     @EventSourcingHandler
@@ -176,7 +176,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productId = event.getProductId();
 
         if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceTaggedWithProduct newtaggedPrice= new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
@@ -187,7 +187,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productId = event.getProductId();
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
         if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceTaggedWithProduct newtaggedPrice= new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
@@ -202,7 +202,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
         productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
-       // productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
+        // productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
         this.productConfiguration = productConfiguration;
     }
 
@@ -227,13 +227,18 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
     }
 
-    PriceBucket createPriceBucketForPriceCategory(){
-        if(this.getProductAccount().getProductPricingCategory()==ProductPricingCategory.DISCOUNT_COMMITMENT){
+    PriceBucket createPriceBucketForPriceCategory() {
+        if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT) {
             return new PriceBucketForPercentDiscountCommitment();
-        }else if(this.getProductAccount().getProductPricingCategory()==ProductPricingCategory.PRICE_COMMITMENT){
+        } else if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT) {
             return new PriceBucketForPriceCommitment();
-        }else{
+        } else {
             return new PriceBucketForNoneCommitment();
         }
+    }
+
+    public void updateForecastFromActuals(LocalDate forecastDate, long forecastTotalSubscriptionCount, long forecastChurnedSubscriptionCount) {
+        //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
+        apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecastTotalSubscriptionCount, forecastChurnedSubscriptionCount));
     }
 }

@@ -7,6 +7,7 @@ import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
+import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -30,13 +31,21 @@ public class DemandForecasterChain {
 
     }
 
-    public DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository) {
+    public DemandForecasterChain buildForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository) {
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
         this.productActualMetricsViewRepository = productActualMetricsViewRepository;
-        //this.productViewRepository = productViewRepository;
+        ProductDemandForecaster forecaster1 = new SimpleMovingAverageDemandForecaster();
+        ProductDemandForecaster forecaster2 = new SimpleExponentialSmoothingDemandForecaster();
+        ProductDemandForecaster forecaster3 = new TripleExponentialSmoothingDemandForecaster();
+        ProductDemandForecaster forecaster4 = new ARIMABasedDemandForecaster();
+        forecaster1.addNextForecaster(forecaster2);
+        forecaster2.addNextForecaster(forecaster3);
+        forecaster3.addNextForecaster(forecaster4);
+        this.addForecaster(forecaster1);
+        return this;
     }
 
-    public void addForecaster(ProductDemandForecaster forecaster) {
+    private void addForecaster(ProductDemandForecaster forecaster) {
         if (null != initialForecaster) {
             initialForecaster.addNextForecaster(forecaster);
         } else {
@@ -44,23 +53,14 @@ public class DemandForecasterChain {
         }
     }
     //forecasting for each product
-    public void forecast(String productId) {
+    public DemandGrowthAndChurnForecast forecast(String productId) {
             List<ProductActualMetricsView> productActualMetricsViewList =
                     productActualMetricsViewRepository.findByProductVersionId_ProductId(productId);
             //Forecast total subscriptions for next period
             List<Double> forecastTotalSubscriptions=initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
             //forecast new subscriptions for next period
             List<Double> forecastChurnedSubscriptions= initialForecaster.forecastDemandChurn(productActualMetricsViewList);
-            Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-            ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
-            latestProductForecastMetricsView.setEndDate(LocalDate.now());
-            //forecasted new subscriptions per period= (new forecasted total subscription - latest forecasted total subscription + new forecasted churned subscriptions)
-            double newSubscriptions = forecastTotalSubscriptions.get(0) - latestProductForecastMetricsView.getTotalNumberOfExistingSubscriptions() +  forecastChurnedSubscriptions.get(0);
-            ProductForecastMetricsView newProductForecastMetricsView= new ProductForecastMetricsView(new ProductVersionId(productId, LocalDate.now()),new LocalDate(9999,12,31));
-            newProductForecastMetricsView.setTotalNumberOfExistingSubscriptions(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue());
-            newProductForecastMetricsView.setChurnedSubscriptions(Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
-            newProductForecastMetricsView.setNewSubscriptions(Double.valueOf(newSubscriptions).longValue());
-            productForecastMetricsViewRepository.save(newProductForecastMetricsView);
+            return new DemandGrowthAndChurnForecast(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue(),Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
     }
 
 

@@ -38,16 +38,7 @@ public class DemandForecasterChainTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        ProductDemandForecaster forecaster1 = new SimpleMovingAverageDemandForecaster();
-        ProductDemandForecaster forecaster2 = new SimpleExponentialSmoothingDemandForecaster();
-        ProductDemandForecaster forecaster3 = new TripleExponentialSmoothingDemandForecaster();
-        ProductDemandForecaster forecaster4 = new ARIMABasedDemandForecaster();
-        forecaster1.addNextForecaster(forecaster2);
-        forecaster2.addNextForecaster(forecaster3);
-        forecaster3.addNextForecaster(forecaster4);
-        chain = new DemandForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
-        chain.addForecaster(forecaster1);
-
+        chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
     }
 
     @Test

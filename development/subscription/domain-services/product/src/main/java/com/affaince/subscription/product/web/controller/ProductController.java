@@ -24,7 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import java.util.Arrays;
@@ -39,7 +40,7 @@ import java.util.Map;
 @Component
 public class ProductController {
 
-    //private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository repository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
@@ -77,7 +78,7 @@ public class ProductController {
         } catch (Exception e) {
             throw e;
         }
-     //   ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
+        ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
         return new ResponseEntity<Object>(ImmutableMap.of("id", request.getProductId()), HttpStatus.CREATED);
     }
 

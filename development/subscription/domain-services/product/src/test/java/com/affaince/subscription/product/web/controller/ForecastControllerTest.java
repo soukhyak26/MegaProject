@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.web.controller;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
@@ -54,6 +55,8 @@ import java.util.List;
 @ContextConfiguration(classes = {TestConfig.class})
 @WebAppConfiguration
 public class ForecastControllerTest {
+    @Autowired
+    private SubscriptionCommandGateway commandGateway;
     @InjectMocks
     private ForecastController forecastController;
     @Mock
@@ -84,11 +87,9 @@ public class ForecastControllerTest {
         forecaster1.addNextForecaster(forecaster2);
         forecaster2.addNextForecaster(forecaster3);
         forecaster3.addNextForecaster(forecaster4);
-        chain = new DemandForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
-        chain.addForecaster(forecaster1);
-        forecastController = new ForecastController(productViewRepository,chain);
+        chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
+        forecastController = new ForecastController(commandGateway,productViewRepository,chain);
         this.mockMvc=MockMvcBuilders.standaloneSetup(forecastController).build();
-
     }
 
     @Test

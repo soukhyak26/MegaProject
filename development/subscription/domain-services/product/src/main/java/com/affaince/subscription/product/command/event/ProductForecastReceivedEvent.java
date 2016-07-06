@@ -5,6 +5,8 @@ import org.joda.time.YearMonth;
 /**
  * Created by mandark on 05-12-2015.
  */
+
+//Coming fromm Integration layer
 public class ProductForecastReceivedEvent {
     private String productId;
     private YearMonth monthOfYear;

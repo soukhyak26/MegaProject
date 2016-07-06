@@ -9,6 +9,7 @@ import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +29,7 @@ public class ProductConfigurationSetEventListener {
         this.productActivationStatusViewRepository = productActivationStatusViewRepository;
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void on(ProductConfigurationSetEvent event) throws InvalidProductStatusException, ProductNotFoundException {
         //final ProductConfigurationView productConfigurationView = new ProductConfigurationView();
         final ProductView productView = productViewRepository.findOne(event.getProductId());
