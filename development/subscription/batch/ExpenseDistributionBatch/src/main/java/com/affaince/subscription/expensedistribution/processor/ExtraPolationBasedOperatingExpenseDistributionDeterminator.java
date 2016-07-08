@@ -1,25 +1,24 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
-import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
+import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by rsavaliya on 26/3/16.
  */
 public class ExtraPolationBasedOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
-    @Autowired
-    private DeliveryViewRepository deliveryViewRepository;
 
     @Override
     public Map<String, Double> distributeDeliveryExpensesToProduct() {
-        final Iterable<DeliveryView> deliveries = deliveryViewRepository.findAll();
+        final ExpenseDistributionClient expenseDistributionClient = new ExpenseDistributionClient();
+        final List<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         Map<String, Map<Integer, ProductWiseDeliveryStats>> productWiseDeliveryStatsMap
                 = createMonthlyDeliveryStatsMap(deliveries);
         Map<String, Double> unitWiseDeliveryExpenseMap = new HashMap<>(productWiseDeliveryStatsMap.size());
