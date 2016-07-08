@@ -18,19 +18,18 @@ import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.*;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import javax.ws.rs.Produces;
+import java.util.*;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -42,14 +41,14 @@ public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
-    private final ProductViewRepository repository;
+    private final ProductViewRepository productViewRepository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
     private final ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
 
     @Autowired
-    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository repository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository) {
+    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository) {
         this.commandGateway = commandGateway;
-        this.repository = repository;
+        this.productViewRepository = productViewRepository;
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
         this.forecastedPriceBucketViewRepository = forecastedPriceBucketViewRepository;
     }
@@ -85,7 +84,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateProductStatus(@RequestBody @Valid UpdateProductStatusRequest request, @PathVariable String productId) throws Exception {
-        ProductView productView = this.repository.findOne(productId);
+        ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
@@ -108,7 +107,7 @@ public class ProductController {
     @Consumes("application/json")
     public ResponseEntity<Object> addProjectionParameters(@RequestBody @Valid AddForecastParametersRequest request,
                                                           @PathVariable String productId) throws Exception {
-        ProductView productView = this.repository.findOne(productId);
+        ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
@@ -129,7 +128,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable String productId, @RequestBody @Valid AddCurrentOfferedPriceRequest request) throws Exception {
-        ProductView productView = this.repository.findOne(productId);
+        ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
@@ -145,7 +144,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.PUT, value = "/setproductconfig/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> setProductConfiguration(@PathVariable String productId, @RequestBody @Valid ProductConfigurationRequest request) throws Exception {
-        ProductView productView = this.repository.findOne(productId);
+        final ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
@@ -163,4 +162,11 @@ public class ProductController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    @Produces("application/json")
+    public ResponseEntity <List <ProductView>> getAllProducts () {
+        final List <ProductView> productViews = new ArrayList<>();
+        productViewRepository.findAll().forEach(productView -> productViews.add(productView));
+        return new ResponseEntity<List<ProductView>>(productViews, HttpStatus.OK);
+    }
 }

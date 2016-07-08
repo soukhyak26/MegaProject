@@ -1,19 +1,16 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionTemplateViewRepository;
-import com.affaince.subscription.subscriber.query.view.DeliveryItem;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionTemplateView;
 import com.affaince.subscription.subscriber.web.exception.SubscriberNotFoundException;
 import com.affaince.subscription.subscriber.web.request.*;
 import com.google.common.collect.ImmutableMap;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -165,9 +162,9 @@ public class SubscriberController {
     @RequestMapping(method = RequestMethod.GET, value = "fetchdeliveries")
     @Consumes("application/json")
     public ResponseEntity <List<DeliveryView>> fetchAllDeliveries () {
-        final Iterable <DeliveryView> deliveryViews = deliveryViewRepository.findAll();
+        final List <DeliveryView> deliveryViews = new ArrayList <> ();
         final List<DeliveryView> deliveryViewList = new ArrayList<>();
-        deliveryViews.forEach(deliveryView -> deliveryViewList.add(deliveryView));
-        return new ResponseEntity<List<DeliveryView>>(deliveryViewList, HttpStatus.OK);
+        deliveryViewRepository.findAll().forEach(deliveryView -> deliveryViews.add(deliveryView));
+        return new ResponseEntity<List<DeliveryView>>(deliveryViews, HttpStatus.OK);
     }
 }

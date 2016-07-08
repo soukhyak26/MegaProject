@@ -2,9 +2,9 @@ package com.affaince.subscription.expensedistribution.Configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
 import com.affaince.subscription.expensedistribution.processor.*;
-import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
@@ -22,8 +22,6 @@ public class Axon extends RabbitMQConfiguration {
 
     @Autowired
     private CamelContext camelContext;
-    @Autowired
-    private DeliveryViewRepository deliveryViewRepository;
 
     @Bean
     public GenericEventPublisher publisher(EventTemplate template) {
@@ -48,6 +46,11 @@ public class Axon extends RabbitMQConfiguration {
     @Bean
     public ForecastBasedOperatingExpenseDistributionDeterminator forecastBasedOperatingExpenseDistributionDeterminator () {
         return new ForecastBasedOperatingExpenseDistributionDeterminator();
+    }
+
+    @Bean
+    public ExpenseDistributionClient expenseDistributionClient () {
+        return new ExpenseDistributionClient();
     }
 
     public CalculatePerUnitExpense calculatePerUnitExpense () {

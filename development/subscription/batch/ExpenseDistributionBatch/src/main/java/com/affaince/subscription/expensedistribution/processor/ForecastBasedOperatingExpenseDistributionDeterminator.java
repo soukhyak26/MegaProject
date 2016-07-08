@@ -1,9 +1,7 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.common.type.QuantityUnit;
-import com.affaince.subscription.expensedistribution.query.repository.DeliveryChargesRuleViewRepository;
-import com.affaince.subscription.expensedistribution.query.repository.ForecastPriceBucketsViewRepository;
-import com.affaince.subscription.expensedistribution.query.repository.ProductViewRepository;
+import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.*;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +18,7 @@ import java.util.stream.Collectors;
 public class ForecastBasedOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
 
     @Autowired
-    private ProductViewRepository productViewRepository;
-    @Autowired
-    private ForecastPriceBucketsViewRepository forecastPriceBucketsViewRepository;
-    @Autowired
-    private DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository;
+    private ExpenseDistributionClient expenseDistributionClient;
 
     public ForecastBasedOperatingExpenseDistributionDeterminator() {
     }
@@ -61,7 +55,7 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
 
     private double calculateTotalDeliveryCharges(List<DeliveryView> forecastDeliveries) {
         double totalDeliveryExpenses = 0;
-        final Iterable<DeliveryChargesRuleView> deliveryChargesRuleViews = deliveryChargesRuleViewRepository.findAll();
+        final Iterable<DeliveryChargesRuleView> deliveryChargesRuleViews = expenseDistributionClient.fetchAllDeliveryChargesRules();
         final List<RangeRule> rangeRules = deliveryChargesRuleViews.iterator().next().getRangeRules();
         for (DeliveryView deliveryView : forecastDeliveries) {
             double totalDeliveryWeight = calculateTotalWeightOfDelivery(deliveryView.getDeliveryItems());
@@ -85,7 +79,7 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
     }
 
     private List<DeliveryView> createDeliveriesFromForecastData(Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats) {
-        final Iterable<ProductView> productViews = productViewRepository.findAll();
+        final Iterable<ProductView> productViews = expenseDistributionClient.fetchAllProducts();
         final List<DeliveryView> deliveryViews = new ArrayList<>();
         for (ProductView productView : productViews) {
             long totalYearlySubscriptions = productWiseYearlyDeliveryStats.get(productView.getProductId()).getTotalUnitsSold();
@@ -141,7 +135,7 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
 
     private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats() {
         final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats = new HashMap<>();
-        for (ForecastPriceBucketsView forecastPriceBucketsView : forecastPriceBucketsViewRepository.findAll()) {
+        for (ForecastPriceBucketsView forecastPriceBucketsView : expenseDistributionClient.fetchAllForecastedPriceBuckets()) {
             final String productId = forecastPriceBucketsView.getProductId();
             ProductWiseDeliveryStats productWiseDeliveryStats = productWiseYearlyDeliveryStats.get(productId);
             if (productWiseDeliveryStats == null) {

@@ -1,7 +1,6 @@
 package com.affaince.subscription.expensedistribution.processor;
 
-import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
-import com.affaince.subscription.expensedistribution.query.repository.ForecastPriceBucketsViewRepository;
+import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.query.view.ForecastPriceBucketsView;
@@ -17,13 +16,12 @@ import java.util.Map;
  * Created by rbsavaliya on 26-06-2016.
  */
 public class AverageBasedOperatingExpenseDistribution {
+
     @Autowired
-    private DeliveryViewRepository deliveryViewRepository;
-    @Autowired
-    private ForecastPriceBucketsViewRepository forecastPriceBucketsViewRepository;
+    private ExpenseDistributionClient expenseDistributionClient;
 
     public Map<String, Double> distributeDeliveryExpensesToProduct (final List <String> productIds) {
-        final Iterable<DeliveryView> deliveries = deliveryViewRepository.findAll();
+        final Iterable<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         final List<ProductWiseDeliveryStats> productWiseDeliveriesStats = new ArrayList<>();
         final Map <String, Double> perUnitProductExpensesMap = new HashMap<>();
         double totalDeliveryExpense = 0;
@@ -54,7 +52,7 @@ public class AverageBasedOperatingExpenseDistribution {
                 = new HashMap<>(productIds.size());
         for (String productId: productIds) {
             final List <ForecastPriceBucketsView> forecastPriceBucketsViews =
-                    forecastPriceBucketsViewRepository.findByProductId(productId);
+                    expenseDistributionClient.fetchForecastedPriceBucketsByProductId(productId);
             ProductWiseDeliveryStats productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
             productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
             for (ForecastPriceBucketsView forecastPriceBucketsView : forecastPriceBucketsViews) {

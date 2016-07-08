@@ -3,6 +3,7 @@ package com.affaince.subscription.product.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.query.repository.ForecastedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -14,39 +15,29 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.ConfigFileApplicationContextInitializer;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by mandar on 05-07-2016.
@@ -65,6 +56,8 @@ public class ForecastControllerTest {
     private static ProductActualMetricsViewRepository productActualMetricsViewRepository;
     @Mock
     private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    @Mock
+    private ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
 
 
     @InjectMocks
@@ -88,7 +81,14 @@ public class ForecastControllerTest {
         forecaster2.addNextForecaster(forecaster3);
         forecaster3.addNextForecaster(forecaster4);
         chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
-        forecastController = new ForecastController(commandGateway,productViewRepository,chain);
+        forecastController = new ForecastController(
+                productViewRepository,
+                chain,
+                commandGateway,
+                productForecastMetricsViewRepository,
+                productActualMetricsViewRepository,
+                forecastedPriceBucketViewRepository
+        );
         this.mockMvc=MockMvcBuilders.standaloneSetup(forecastController).build();
     }
 
