@@ -1,14 +1,19 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionTemplateViewRepository;
+import com.affaince.subscription.subscriber.query.view.DeliveryItem;
+import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionTemplateView;
 import com.affaince.subscription.subscriber.web.exception.SubscriberNotFoundException;
 import com.affaince.subscription.subscriber.web.request.*;
 import com.google.common.collect.ImmutableMap;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,12 +36,14 @@ public class SubscriberController {
     private final SubscriptionCommandGateway commandGateway;
     private final SubscriberViewRepository subscriberViewRepository;
     private final SubscriptionTemplateViewRepository subscriptionTemplateViewRepository;
+    private final DeliveryViewRepository deliveryViewRepository;
 
     @Autowired
-    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository subscriberViewRepository, SubscriptionTemplateViewRepository subscriptionTemplateViewRepository) {
+    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository subscriberViewRepository, SubscriptionTemplateViewRepository subscriptionTemplateViewRepository, DeliveryViewRepository deliveryViewRepository) {
         this.commandGateway = commandGateway;
         this.subscriberViewRepository = subscriberViewRepository;
         this.subscriptionTemplateViewRepository = subscriptionTemplateViewRepository;
+        this.deliveryViewRepository = deliveryViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -151,5 +160,14 @@ public class SubscriberController {
         );
         subscriptionTemplateViewRepository.save(subscriptionTemplateView);
         return new ResponseEntity<Object>(subscriptionTemplateView, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "fetchdeliveries")
+    @Consumes("application/json")
+    public ResponseEntity <List<DeliveryView>> fetchAllDeliveries () {
+        final Iterable <DeliveryView> deliveryViews = deliveryViewRepository.findAll();
+        final List<DeliveryView> deliveryViewList = new ArrayList<>();
+        deliveryViews.forEach(deliveryView -> deliveryViewList.add(deliveryView));
+        return new ResponseEntity<List<DeliveryView>>(deliveryViewList, HttpStatus.OK);
     }
 }

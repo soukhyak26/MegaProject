@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.subscriber.command.domain.DeliveryItem;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

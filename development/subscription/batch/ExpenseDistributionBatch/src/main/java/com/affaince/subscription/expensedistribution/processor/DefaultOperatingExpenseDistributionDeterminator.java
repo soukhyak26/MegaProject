@@ -1,10 +1,9 @@
 package com.affaince.subscription.expensedistribution.processor;
 
-import com.affaince.subscription.expensedistribution.query.repository.DeliveryViewRepository;
+import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,11 +15,9 @@ import java.util.Map;
  */
 public class DefaultOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
 
-    @Autowired
-    private DeliveryViewRepository deliveryViewRepository;
-
     public Map<String, Double> distributeDeliveryExpensesToProduct () {
-        final Iterable<DeliveryView> deliveries = deliveryViewRepository.findAll();
+        final ExpenseDistributionClient expenseDistributionClient = new ExpenseDistributionClient();
+        final Iterable<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         final List<ProductWiseDeliveryStats> productWiseDeliveriesStats = new ArrayList<>();
         final Map <String, Double> perUnitProductExpensesMap = new HashMap<>();
 
