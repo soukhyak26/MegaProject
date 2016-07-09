@@ -8,6 +8,7 @@ import org.apache.spark.mllib.linalg.Vectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
             for (Double coeff : coefficients) {
                 System.out.println("coefficients: " + coeff);
             }
-            Vector forecast = arimaModel.forecast(ts, 20);
+            Vector forecast = arimaModel.forecast(ts, values.length/2);
             List<Double> forecastedSubscriptionCounts = new ArrayList<>();
             for (int j = i; j < forecast.size(); j++) {
                 double forecastedValue=forecast.apply(j);
@@ -78,7 +79,7 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
             for (Double coeff : coefficients) {
                 System.out.println("coefficients: " + coeff);
             }
-            Vector forecast = arimaModel.forecast(ts, 20);
+            Vector forecast = arimaModel.forecast(ts, values.length/2);
             List<Double> forecastedChurnedSubscriptionCounts = new ArrayList<>();
             for (int j = productActualMetricsViewList.size(); j < forecast.argmax(); j++) {
                 forecastedChurnedSubscriptionCounts.add(forecast.apply(j));
@@ -89,6 +90,11 @@ public class ARIMABasedDemandForecaster implements ProductDemandForecaster {
             return null;
         }
 
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("================== " + minHistorySize + "================== ");
     }
 
 }

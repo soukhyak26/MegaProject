@@ -5,6 +5,7 @@ import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -125,5 +126,9 @@ public class SimpleMovingAverageDemandForecaster implements ProductDemandForecas
         }
         return null;
 
+    }
+    @PostConstruct
+    public void init() {
+        System.out.println("================== " + minHistorySize + "================== ");
     }
 }

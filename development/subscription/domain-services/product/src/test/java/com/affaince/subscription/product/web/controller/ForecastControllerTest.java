@@ -55,7 +55,7 @@ import java.util.List;
  */
 //@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class,Application.class})
+@ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class ForecastControllerTest {
     @InjectMocks

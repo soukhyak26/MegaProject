@@ -12,9 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 
-/**
- * Created by NIKUNJ on 7/12/2015.
- */
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan("com.affaince")

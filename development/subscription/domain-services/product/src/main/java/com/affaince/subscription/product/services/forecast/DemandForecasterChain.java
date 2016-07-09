@@ -9,10 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by mandark on 01-05-2016.
@@ -23,7 +20,7 @@ public class DemandForecasterChain {
     private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
     @Autowired
     private ProductActualMetricsViewRepository productActualMetricsViewRepository;
-    //private final ProductViewRepository productViewRepository;
+
     private ProductDemandForecaster initialForecaster;
 
     @Autowired
@@ -51,16 +48,6 @@ public class DemandForecasterChain {
             }
 
         }
-/*
-        ProductDemandForecaster forecaster1 = new SimpleMovingAverageDemandForecaster();
-        ProductDemandForecaster forecaster2 = new SimpleExponentialSmoothingDemandForecaster();
-        ProductDemandForecaster forecaster3 = new TripleExponentialSmoothingDemandForecaster();
-        ProductDemandForecaster forecaster4 = new ARIMABasedDemandForecaster();
-        forecaster1.addNextForecaster(forecaster2);
-        forecaster2.addNextForecaster(forecaster3);
-        forecaster3.addNextForecaster(forecaster4);
-        this.addForecaster(forecaster1);
-*/
         return this;
     }
 

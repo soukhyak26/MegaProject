@@ -45,21 +45,6 @@ public class ForecastController {
     ProductViewRepository productViewRepository;
     @Autowired
     private DemandForecasterChain demandForecasterChain;
-/*
-    @Autowired
-    private ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
-
-    public ForecastController(ProductViewRepository productViewRepository, DemandForecasterChain demandForecasterChain, SubscriptionCommandGateway commandGateway, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository) {
-        this.productViewRepository = productViewRepository;
-        this.demandForecasterChain = demandForecasterChain;
-        this.commandGateway = commandGateway;
-        this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
-        this.productActualMetricsViewRepository = productActualMetricsViewRepository;
-        this.forecastedPriceBucketViewRepository = forecastedPriceBucketViewRepository;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/findall")
-*/
     @RequestMapping(method= RequestMethod.GET, value="/findall")
     @Produces("application/json")
     public ResponseEntity<List<String>> findAllProducts() {

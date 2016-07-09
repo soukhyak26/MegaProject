@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Created by mandar on 05-07-2016.
  */
-@SpringBootApplication
+//@SpringBootApplication
 public class ForecastControllerTestApp {
-    public static void main(String[] args) {
-        SpringApplication.run(ForecastControllerTestApp.class, args);
-    }
+  //  public static void main(String[] args) {
+    //    SpringApplication.run(ForecastControllerTestApp.class, args);
+    //}
 }

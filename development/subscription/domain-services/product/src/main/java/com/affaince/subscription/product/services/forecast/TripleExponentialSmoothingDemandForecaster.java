@@ -10,6 +10,7 @@ import net.sourceforge.openforecast.models.TripleExponentialSmoothingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -164,6 +165,11 @@ public class TripleExponentialSmoothingDemandForecaster implements ProductDemand
                     : nextForecaster.forecastDemandChurn(productActualMetricsViewList);
         }
 
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("================== " + minHistorySize + "================== ");
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.FilterType;
 /**
  * Created by mandar on 05-07-2016.
  */
+/*
 @SpringBootApplication
 @ComponentScan(
         excludeFilters = {
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.FilterType;
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ForecastControllerTestApp.class)
         }
 )
+*/
 public class TestConfig {
 
 
