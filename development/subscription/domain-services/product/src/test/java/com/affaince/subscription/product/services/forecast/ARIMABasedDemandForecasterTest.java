@@ -1,21 +1,34 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.product.Application;
+import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mandar on 19-06-2016.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes={Application.class})
 public class ARIMABasedDemandForecasterTest {
     private List<ProductActualMetricsView> productActualMetricsViewList;
+    @Autowired
+    ARIMABasedDemandForecaster forecaster;
     @Before
     public void setUp(){
+/*
         productActualMetricsViewList= new ArrayList<>();
 
         ProductActualMetricsView view1= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
@@ -178,10 +191,104 @@ public class ARIMABasedDemandForecasterTest {
         view40.setTotalNumberOfExistingSubscriptions(10250);
         productActualMetricsViewList.add(view40);
 
+        ProductActualMetricsView view41= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view41.setTotalNumberOfExistingSubscriptions(10500);
+        productActualMetricsViewList.add(view41);
+
+        ProductActualMetricsView view42= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view42.setTotalNumberOfExistingSubscriptions(10750);
+        productActualMetricsViewList.add(view42);
+
+        ProductActualMetricsView view43= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view43.setTotalNumberOfExistingSubscriptions(11000);
+        productActualMetricsViewList.add(view43);
+
+        ProductActualMetricsView view44= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view44.setTotalNumberOfExistingSubscriptions(11250);
+        productActualMetricsViewList.add(view44);
+
+        ProductActualMetricsView view45= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view45.setTotalNumberOfExistingSubscriptions(11500);
+        productActualMetricsViewList.add(view45);
+
+        ProductActualMetricsView view46= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view46.setTotalNumberOfExistingSubscriptions(11750);
+        productActualMetricsViewList.add(view46);
+
+        ProductActualMetricsView view47= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view47.setTotalNumberOfExistingSubscriptions(12000);
+        productActualMetricsViewList.add(view47);
+
+        ProductActualMetricsView view48= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view48.setTotalNumberOfExistingSubscriptions(12250);
+        productActualMetricsViewList.add(view48);
+
+        ProductActualMetricsView view49= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view49.setTotalNumberOfExistingSubscriptions(12500);
+        productActualMetricsViewList.add(view49);
+
+        ProductActualMetricsView view50= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view50.setTotalNumberOfExistingSubscriptions(12750);
+        productActualMetricsViewList.add(view50);
+
+        ProductActualMetricsView view51= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view51.setTotalNumberOfExistingSubscriptions(13000);
+        productActualMetricsViewList.add(view51);
+
+        ProductActualMetricsView view52= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view52.setTotalNumberOfExistingSubscriptions(13250);
+        productActualMetricsViewList.add(view52);
+
+        ProductActualMetricsView view53= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view53.setTotalNumberOfExistingSubscriptions(13500);
+        productActualMetricsViewList.add(view53);
+
+        ProductActualMetricsView view54= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view54.setTotalNumberOfExistingSubscriptions(13750);
+        productActualMetricsViewList.add(view54);
+
+        ProductActualMetricsView view55= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view55.setTotalNumberOfExistingSubscriptions(14000);
+        productActualMetricsViewList.add(view55);
+
+        ProductActualMetricsView view56= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view56.setTotalNumberOfExistingSubscriptions(14250);
+        productActualMetricsViewList.add(view56);
+
+        ProductActualMetricsView view57= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view57.setTotalNumberOfExistingSubscriptions(14500);
+        productActualMetricsViewList.add(view57);
+
+        ProductActualMetricsView view58= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view58.setTotalNumberOfExistingSubscriptions(14750);
+        productActualMetricsViewList.add(view58);
+
+        ProductActualMetricsView view59= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view59.setTotalNumberOfExistingSubscriptions(15000);
+        productActualMetricsViewList.add(view59);
+
+        ProductActualMetricsView view60= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view60.setTotalNumberOfExistingSubscriptions(15250);
+        productActualMetricsViewList.add(view60);
+
+        ProductActualMetricsView view61= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        view61.setTotalNumberOfExistingSubscriptions(15500);
+        productActualMetricsViewList.add(view61);
+*/
+
     }
     @Test
-    public void testPrecisePrediction(){
-        ProductDemandForecaster forecaster= new ARIMABasedDemandForecaster();
+    public void testPrecisePrediction() throws FileNotFoundException,IOException{
+    //    ProductDemandForecaster forecaster= new ARIMABasedDemandForecaster();
+        productActualMetricsViewList= new ArrayList<>();
+
+        BufferedReader fileReader= new BufferedReader(new InputStreamReader(new FileInputStream(new File("E:\\apps\\affaince\\development\\spikes\\BoxJenkinsSpike\\data\\demands2.tsv"))));
+        double[] values= fileReader.lines().mapToDouble(n->Double.parseDouble(n)).toArray();
+        for(Double value: values){
+            ProductActualMetricsView view= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+            view.setTotalNumberOfExistingSubscriptions(Double.valueOf(value).longValue());
+            productActualMetricsViewList.add(view);
+        }
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
         System.out.println("ARIMA Precise prediction: " + (result == null ? "null" : result.get(0)));
     }

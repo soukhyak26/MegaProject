@@ -33,13 +33,21 @@ import java.util.List;
 public class ForecastController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-    private final ProductViewRepository productViewRepository;
-    private final DemandForecasterChain demandForecasterChain;
-    private final SubscriptionCommandGateway commandGateway;
+
     @Autowired
-    private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private SubscriptionCommandGateway commandGateway;
     @Autowired
-    private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    @Autowired
+    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    @Autowired
+    private ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
+
+    @Autowired
+    ProductViewRepository productViewRepository;
+    @Autowired
+    private DemandForecasterChain demandForecasterChain;
+/*
     @Autowired
     private ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
 
@@ -53,6 +61,8 @@ public class ForecastController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/findall")
+*/
+    @RequestMapping(method= RequestMethod.GET, value="/findall")
     @Produces("application/json")
     public ResponseEntity<List<String>> findAllProducts() {
         List<String> target = new ArrayList<>();

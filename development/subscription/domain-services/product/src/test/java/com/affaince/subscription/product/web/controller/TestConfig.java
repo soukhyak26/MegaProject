@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.web.controller;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -18,7 +19,7 @@ import org.springframework.context.annotation.FilterType;
                // @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ProductForecastMetricsViewRepository.class),
                 // Exclude the default boot application or it's
                 // @ComponentScan will pull in the default message service
-
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SubscriptionCommandGateway.class),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ForecastControllerTestApp.class)
         }
 )

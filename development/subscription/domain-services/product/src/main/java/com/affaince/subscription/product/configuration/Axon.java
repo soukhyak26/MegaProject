@@ -4,7 +4,7 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
-import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
+import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.services.pricing.determinator.DemandBasedPriceDeterminator;
 import com.affaince.subscription.product.services.pricing.processor.PricingStrategyDeterminator;
@@ -16,6 +16,8 @@ import org.axonframework.eventhandling.EventTemplate;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -34,8 +36,13 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
+@EnableAutoConfiguration(exclude={EmbeddedServletContainerFactory.class})
 public class Axon extends ActiveMQConfiguration {
 
+    @Bean
+    public EmbeddedServletContainerFactory servletContainerFactory(){
+        return new org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory();
+    }
     @Bean
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {
 
@@ -43,9 +50,9 @@ public class Axon extends ActiveMQConfiguration {
         return repository;
     }
 
-    public
+
     @Bean
-    MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
+    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
         return new SimpleMongoDbFactory(mongo, dbName);
     }
 
@@ -93,6 +100,25 @@ public class Axon extends ActiveMQConfiguration {
     @Bean
     public DemandForecasterChain demandForecasterChain () {
         return new DemandForecasterChain ();
+    }
+
+    @Bean
+    public SimpleMovingAverageDemandForecaster smaForecaster(){
+        return new SimpleMovingAverageDemandForecaster();
+    }
+
+    @Bean
+    public SimpleExponentialSmoothingDemandForecaster semaForecaster(){
+        return new SimpleExponentialSmoothingDemandForecaster();
+    }
+
+    @Bean
+    public TripleExponentialSmoothingDemandForecaster temaForecaster(){
+        return new TripleExponentialSmoothingDemandForecaster();
+    }
+    @Bean
+    public ARIMABasedDemandForecaster arimaForecaster(){
+        return new ARIMABasedDemandForecaster();
     }
 
     @Bean

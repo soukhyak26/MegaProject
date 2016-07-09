@@ -127,6 +127,7 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.10</artifactId>
             <version>${spark.version}</version>
+<!--
             <exclusions>
                 <exclusion>
                     <groupId>javax.servlet</groupId>
@@ -141,6 +142,7 @@
                     <artifactId>javax.servlet</artifactId>
                 </exclusion>
             </exclusions>
+-->
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>

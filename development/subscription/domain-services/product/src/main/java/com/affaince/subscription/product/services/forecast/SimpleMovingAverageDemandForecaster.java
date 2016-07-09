@@ -1,115 +1,129 @@
-        package com.affaince.subscription.product.services.forecast;
+package com.affaince.subscription.product.services.forecast;
 
-        import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-        import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
-        import org.springframework.beans.factory.annotation.Autowired;
+import com.affaince.subscription.product.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
-        import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
-        /**
-         * Created by mandark on 01-05-2016.
-         */
-        public class SimpleMovingAverageDemandForecaster implements ProductDemandForecaster {
+/**
+ * Created by mandark on 01-05-2016.
+ */
+public class SimpleMovingAverageDemandForecaster implements ProductDemandForecaster {
 
-            private ProductDemandForecaster productDemandForecaster;
+    private ProductDemandForecaster nextForecaster;
 
-            @Autowired
-            public SimpleMovingAverageDemandForecaster() {
-            }
+    @Value("${forecaster.sma.threshold.min}")
+    private int minHistorySize;
 
-            public void addNextForecaster(ProductDemandForecaster forecaster) {
-                this.productDemandForecaster = forecaster;
-            }
+    @Value("${forecaster.sma.threshold.max}")
+    private int maxHistorySize;
 
-            public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
-                //starting with simple  moving average
-                if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 15) {
-                    Queue<Double> window = null;
-                    double sum=0;
-                    int i = 0;
-                    int[] windowSizes = {3};
-                    List<ActualVsPredictionEvaluator> predictionsSet= new ArrayList<>();
-                    for (int windSize : windowSizes) {
-                        window= new LinkedList<>();
-                        sum=0;
-                         if(productActualMetricsViewList.size() >= windSize) {
-                            for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
-                                double actualValue=productActualMetricsView.getTotalNumberOfExistingSubscriptions();
-                                sum += actualValue;
-                                window.add(actualValue);
-                                if (window.size() > windSize) {
-                                    sum -= window.remove();
-                                }
-                                double predictedValue = sum / window.size();
-                                final String uniqueKey=productActualMetricsView.getProductVersionId().toString();
-                                ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
-                                if(predictionsSet.contains(eval)){
-                                    ActualVsPredictionEvaluator newPrediction= predictionsSet.get(predictionsSet.indexOf(eval));
-                                    newPrediction.addPrediction(predictedValue);
-                                }else{
-                                    ActualVsPredictionEvaluator newPrediction= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
-                                    newPrediction.addPrediction(predictedValue);
-                                    predictionsSet.add(newPrediction);
-                                }
-                            }
+    @Autowired
+    public SimpleMovingAverageDemandForecaster() {
+    }
+
+    public void addNextForecaster(ProductDemandForecaster forecaster) {
+        if (null == nextForecaster) {
+            this.nextForecaster = forecaster;
+        } else {
+            this.nextForecaster.addNextForecaster(forecaster);
+        }
+    }
+
+    public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
+        //starting with simple  moving average
+        if (productActualMetricsViewList.size() > minHistorySize && productActualMetricsViewList.size() <= maxHistorySize) {
+            Queue<Double> window = null;
+            double sum = 0;
+            int i = 0;
+            int[] windowSizes = {3};
+            List<ActualVsPredictionEvaluator> predictionsSet = new ArrayList<>();
+            for (int windSize : windowSizes) {
+                window = new LinkedList<>();
+                sum = 0;
+                if (productActualMetricsViewList.size() >= windSize) {
+                    for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                        double actualValue = productActualMetricsView.getTotalNumberOfExistingSubscriptions();
+                        sum += actualValue;
+                        window.add(actualValue);
+                        if (window.size() > windSize) {
+                            sum -= window.remove();
+                        }
+                        double predictedValue = sum / window.size();
+                        final String uniqueKey = productActualMetricsView.getProductVersionId().toString();
+                        ActualVsPredictionEvaluator eval = new ActualVsPredictionEvaluator(uniqueKey, actualValue);
+                        if (predictionsSet.contains(eval)) {
+                            ActualVsPredictionEvaluator newPrediction = predictionsSet.get(predictionsSet.indexOf(eval));
+                            newPrediction.addPrediction(predictedValue);
+                        } else {
+                            ActualVsPredictionEvaluator newPrediction = new ActualVsPredictionEvaluator(uniqueKey, actualValue);
+                            newPrediction.addPrediction(predictedValue);
+                            predictionsSet.add(newPrediction);
                         }
                     }
-                    System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
-                    List<Double> resultSet=new ArrayList<Double>();
-                    resultSet.add(predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
-                    return resultSet;
-
-                } else{
-                    if (null != productDemandForecaster) {
-                        return productDemandForecaster.forecastDemandGrowth(productActualMetricsViewList);
-                    }
                 }
-                return null;
             }
+            System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+            List<Double> resultSet = new ArrayList<Double>();
+            resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+            return resultSet;
 
-            public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
-                if (productActualMetricsViewList.size() >= 3 && productActualMetricsViewList.size() <= 15) {
-                    Queue<Double> window = null;
-                    double sum=0;
-                    int i = 0;
-                    int[] windowSizes = {3};
-                    List<ActualVsPredictionEvaluator> predictionsSet= new ArrayList<>();
-                    for (int windSize : windowSizes) {
-                        window= new LinkedList<>();
-                        sum=0;
-                        if(productActualMetricsViewList.size() >= windSize) {
-                            for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
-                                double actualValue=productActualMetricsView.getChurnedSubscriptions();
-                                sum += actualValue;
-                                window.add(actualValue);
-                                if (window.size() > windSize) {
-                                    sum -= window.remove();
-                                }
-                                double predictedValue = sum / window.size();
-                                final String uniqueKey=productActualMetricsView.getProductVersionId().toString();
-                                ActualVsPredictionEvaluator eval= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
-                                if(predictionsSet.contains(eval)){
-                                    ActualVsPredictionEvaluator newPrediction= predictionsSet.get(predictionsSet.indexOf(eval));
-                                    newPrediction.addPrediction(predictedValue);
-                                }else{
-                                    ActualVsPredictionEvaluator newPrediction= new ActualVsPredictionEvaluator(uniqueKey,actualValue);
-                                    newPrediction.addPrediction(predictedValue);
-                                    predictionsSet.add(newPrediction);
-                                }
-                            }
-                        }
-                    }
-                    System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value for churned subscriptions:" + predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
-                    List<Double> resultSet=new ArrayList<Double>();
-                    resultSet.add(predictionsSet.get(predictionsSet.size()-1).findPrecisePrediction());
-                    return resultSet;
-
-                } else{
-                    if (null != productDemandForecaster) {
-                        return productDemandForecaster.forecastDemandChurn(productActualMetricsViewList);
-                    }
-                }
-                return null;
-
+        } else {
+            if (null != nextForecaster) {
+                return nextForecaster.forecastDemandGrowth(productActualMetricsViewList);
             }
         }
+        return null;
+    }
+
+    public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
+        if (productActualMetricsViewList.size() > minHistorySize && productActualMetricsViewList.size() <= maxHistorySize) {
+            Queue<Double> window = null;
+            double sum = 0;
+            int i = 0;
+            int[] windowSizes = {3};
+            List<ActualVsPredictionEvaluator> predictionsSet = new ArrayList<>();
+            for (int windSize : windowSizes) {
+                window = new LinkedList<>();
+                sum = 0;
+                if (productActualMetricsViewList.size() >= windSize) {
+                    for (ProductActualMetricsView productActualMetricsView : productActualMetricsViewList) {
+                        double actualValue = productActualMetricsView.getChurnedSubscriptions();
+                        sum += actualValue;
+                        window.add(actualValue);
+                        if (window.size() > windSize) {
+                            sum -= window.remove();
+                        }
+                        double predictedValue = sum / window.size();
+                        final String uniqueKey = productActualMetricsView.getProductVersionId().toString();
+                        ActualVsPredictionEvaluator eval = new ActualVsPredictionEvaluator(uniqueKey, actualValue);
+                        if (predictionsSet.contains(eval)) {
+                            ActualVsPredictionEvaluator newPrediction = predictionsSet.get(predictionsSet.indexOf(eval));
+                            newPrediction.addPrediction(predictedValue);
+                        } else {
+                            ActualVsPredictionEvaluator newPrediction = new ActualVsPredictionEvaluator(uniqueKey, actualValue);
+                            newPrediction.addPrediction(predictedValue);
+                            predictionsSet.add(newPrediction);
+                        }
+                    }
+                }
+            }
+            System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value for churned subscriptions:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+            List<Double> resultSet = new ArrayList<Double>();
+            resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+            return resultSet;
+
+        } else {
+            if (null != nextForecaster) {
+                return nextForecaster.forecastDemandChurn(productActualMetricsViewList);
+            }
+        }
+        return null;
+
+    }
+}

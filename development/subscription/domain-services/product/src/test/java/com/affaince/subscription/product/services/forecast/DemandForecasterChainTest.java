@@ -2,6 +2,8 @@ package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.Application;
+import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -15,7 +17,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +30,9 @@ import java.util.List;
 /**
  * Created by mandar on 24-06-2016.
  */
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes={Application.class})
 public class DemandForecasterChainTest {
     @Mock
     private static ProductViewRepository productViewRepository;
@@ -33,12 +42,13 @@ public class DemandForecasterChainTest {
     private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
 
    @InjectMocks
+   @Autowired
     private DemandForecasterChain chain;
 
     @Before
-    public void setUp() {
+    public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);
-        chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
+        chain = chain.buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
     }
 
     @Test

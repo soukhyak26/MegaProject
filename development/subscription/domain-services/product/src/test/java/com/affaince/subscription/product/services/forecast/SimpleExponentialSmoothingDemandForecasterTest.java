@@ -1,10 +1,17 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.product.Application;
+import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +19,12 @@ import java.util.List;
 /**
  * Created by mandar on 29-05-2016.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes={Application.class})
 public class SimpleExponentialSmoothingDemandForecasterTest {
     private List<ProductActualMetricsView> productActualMetricsViewList;
-
+    @Autowired
+    private SimpleExponentialSmoothingDemandForecaster forecaster;
     @Before
     public void setUp(){
         productActualMetricsViewList= new ArrayList<>();
@@ -82,7 +92,7 @@ public class SimpleExponentialSmoothingDemandForecasterTest {
     }
     @Test
     public void testPrecisePrediction(){
-        ProductDemandForecaster forecaster= new SimpleExponentialSmoothingDemandForecaster();
+       // ProductDemandForecaster forecaster= new SimpleExponentialSmoothingDemandForecaster();
         List<Double> result=forecaster.forecastDemandGrowth(productActualMetricsViewList);
         System.out.println("Precise prediction: "+ (result == null ? "null" : result.get(0)));
     }
