@@ -3,7 +3,7 @@ package com.affaince.subscription.expensedistribution.processor;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
-import com.affaince.subscription.expensedistribution.query.view.ForecastPriceBucketsView;
+import com.affaince.subscription.expensedistribution.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -51,14 +51,14 @@ public class AverageBasedOperatingExpenseDistribution {
         final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats
                 = new HashMap<>(productIds.size());
         for (String productId: productIds) {
-            final List <ForecastPriceBucketsView> forecastPriceBucketsViews =
-                    expenseDistributionClient.fetchForecastedPriceBucketsByProductId(productId);
+            final List <ProductForecastMetricsView> productForecastMetricsViews =
+                    expenseDistributionClient.fetchProductForecastMetricsByProductId(productId);
             ProductWiseDeliveryStats productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
             productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
-            for (ForecastPriceBucketsView forecastPriceBucketsView : forecastPriceBucketsViews) {
-                productWiseDeliveryStats.addMRP(forecastPriceBucketsView.getMRP());
+            for (ProductForecastMetricsView productForecastMetricsView : productForecastMetricsViews) {
+                productWiseDeliveryStats.addMRP(productForecastMetricsView.getTaggedPriceVersions().first().getMRP());
                 productWiseDeliveryStats.addUnitSold(
-                        forecastPriceBucketsView.getNumberOfExistingCustomersAssociatedWithAPrice()
+                        productForecastMetricsView.getTotalNumberOfExistingSubscriptions()
                 );
             }
         }

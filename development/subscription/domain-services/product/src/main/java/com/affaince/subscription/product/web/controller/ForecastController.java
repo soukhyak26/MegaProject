@@ -2,16 +2,16 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
-import com.affaince.subscription.product.query.repository.ForecastedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ForecastedPriceBucketsView;
+import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -40,8 +40,6 @@ public class ForecastController {
     private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
     @Autowired
     private ProductActualMetricsViewRepository productActualMetricsViewRepository;
-    @Autowired
-    private ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
 
     @Autowired
     ProductViewRepository productViewRepository;
@@ -82,18 +80,19 @@ public class ForecastController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/pricebucket/all")
-    public ResponseEntity<List<ForecastedPriceBucketsView>> findAllForecastedPriceBuckets() {
-        final List<ForecastedPriceBucketsView> forecastedPriceBucketsViews = new ArrayList<>();
-        forecastedPriceBucketViewRepository.findAll().forEach
-                (forecastedPriceBucketsView -> forecastedPriceBucketsViews.add(forecastedPriceBucketsView));
-        return new ResponseEntity <List<ForecastedPriceBucketsView>> (forecastedPriceBucketsViews, HttpStatus.OK);
+    public ResponseEntity<List<ProductForecastMetricsView>> findAllForecastedPriceBuckets() {
+        final List<ProductForecastMetricsView> forecastedPriceBucketsViews = new ArrayList<>();
+        productForecastMetricsViewRepository.findAll().forEach
+                (productForecastMetricsView -> forecastedPriceBucketsViews.add(productForecastMetricsView));
+        return new ResponseEntity <List<ProductForecastMetricsView>> (forecastedPriceBucketsViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/pricebucket/{productid}")
-    public ResponseEntity <List<ForecastedPriceBucketsView>> findForecastedPriceBucketsViewByProductId (@PathVariable String productId) {
-        final List<ForecastedPriceBucketsView> forecastedPriceBucketsViews = new ArrayList<>();
-        forecastedPriceBucketViewRepository.findByProductId(productId).forEach
-                (forecastedPriceBucketsView -> forecastedPriceBucketsViews.add(forecastedPriceBucketsView));
-        return new ResponseEntity <List<ForecastedPriceBucketsView>> (forecastedPriceBucketsViews, HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value = "/productforecastmetrics/{productid}")
+    public ResponseEntity <List<ProductForecastMetricsView>> findProductForecastMetricsByProductId (@PathVariable String productId) {
+        final List<ProductForecastMetricsView> forecastedPriceBucketsViews = new ArrayList<>();
+        final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId, sort).forEach
+                ( productForecastMetricsView -> forecastedPriceBucketsViews.add(productForecastMetricsView));
+        return new ResponseEntity <List<ProductForecastMetricsView>> (forecastedPriceBucketsViews, HttpStatus.OK);
     }
 }

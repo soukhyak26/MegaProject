@@ -2,7 +2,7 @@ package com.affaince.subscription.expensedistribution.client;
 
 import com.affaince.subscription.expensedistribution.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
-import com.affaince.subscription.expensedistribution.query.view.ForecastPriceBucketsView;
+import com.affaince.subscription.expensedistribution.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.expensedistribution.query.view.ProductView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
@@ -43,9 +43,9 @@ public class ExpenseDistributionClient {
         return result;
     }
 
-    public List <ForecastPriceBucketsView> fetchAllForecastedPriceBuckets () {
+    public List <ProductForecastMetricsView> fetchAllProductForecastMetrics () {
         final RestTemplate restTemplate = new RestTemplate();
-        ArrayList<ForecastPriceBucketsView> result = restTemplate.getForObject(fetchAllForecastedPriceBucketsUrl, ArrayList.class);
+        ArrayList<ProductForecastMetricsView> result = restTemplate.getForObject(fetchAllForecastedPriceBucketsUrl, ArrayList.class);
         return result;
     }
 
@@ -55,11 +55,11 @@ public class ExpenseDistributionClient {
         return result;
     }
 
-    public List <ForecastPriceBucketsView> fetchForecastedPriceBucketsByProductId (final String productId) {
+    public List <ProductForecastMetricsView> fetchProductForecastMetricsByProductId (final String productId) {
         final RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = new HashMap<String, String>();
         params.put("productid", productId);
-        ArrayList<ForecastPriceBucketsView> result =
+        ArrayList<ProductForecastMetricsView> result =
                 restTemplate.getForObject(fetchAllForecastedPriceBucketsUrl, ArrayList.class, params);
         return result;
     }

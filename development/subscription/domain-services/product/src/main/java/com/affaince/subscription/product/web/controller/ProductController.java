@@ -7,10 +7,8 @@ import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
-import com.affaince.subscription.product.query.repository.ForecastedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ForecastedPriceBucketsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.vo.ForecastedPriceParameter;
@@ -43,14 +41,12 @@ public class ProductController {
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository productViewRepository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
-    private final ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository;
 
     @Autowired
-    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ForecastedPriceBucketViewRepository forecastedPriceBucketViewRepository) {
+    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository) {
         this.commandGateway = commandGateway;
         this.productViewRepository = productViewRepository;
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
-        this.forecastedPriceBucketViewRepository = forecastedPriceBucketViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -118,9 +114,6 @@ public class ProductController {
             productForecastMetricsView.setNewSubscriptions(parameter.getNumberofNewSubscriptions());
             productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
             productForecastMetricsViewRepository.save(productForecastMetricsView);
-
-            ForecastedPriceBucketsView forecastedPriceBucketsView = new ForecastedPriceBucketsView(productId, parameter.getStartDate(),parameter.getEndDate(), parameter.getPurchasePricePerUnit(), parameter.getMRP(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions());
-            forecastedPriceBucketViewRepository.save(forecastedPriceBucketsView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

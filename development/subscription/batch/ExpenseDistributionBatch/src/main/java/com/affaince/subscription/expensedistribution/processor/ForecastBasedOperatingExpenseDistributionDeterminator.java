@@ -135,15 +135,15 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
 
     private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats() {
         final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats = new HashMap<>();
-        for (ForecastPriceBucketsView forecastPriceBucketsView : expenseDistributionClient.fetchAllForecastedPriceBuckets()) {
-            final String productId = forecastPriceBucketsView.getProductId();
+        for (ProductForecastMetricsView productForecastMetricsView : expenseDistributionClient.fetchAllProductForecastMetrics()) {
+            final String productId = productForecastMetricsView.getProductVersionId().getProductId();
             ProductWiseDeliveryStats productWiseDeliveryStats = productWiseYearlyDeliveryStats.get(productId);
             if (productWiseDeliveryStats == null) {
                 productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
                 productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
             }
-            productWiseDeliveryStats.addMRP(forecastPriceBucketsView.getMRP());
-            productWiseDeliveryStats.addUnitSold(forecastPriceBucketsView.getNumberOfExistingCustomersAssociatedWithAPrice());
+            productWiseDeliveryStats.addMRP(productForecastMetricsView.getTaggedPriceVersions().first().getMRP());
+            productWiseDeliveryStats.addUnitSold(productForecastMetricsView.getTotalNumberOfExistingSubscriptions());
         }
         return productWiseYearlyDeliveryStats;
     }

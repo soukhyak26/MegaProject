@@ -1,16 +1,14 @@
 package com.affaince.subscription.expensedistribution.Configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
-import com.affaince.subscription.expensedistribution.processor.*;
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.spring.boot.CamelContextConfiguration;
-import org.apache.camel.util.toolbox.AggregationStrategies;
+import com.affaince.subscription.expensedistribution.processor.CalculatePerUnitExpense;
+import com.affaince.subscription.expensedistribution.processor.DefaultOperatingExpenseDistributionDeterminator;
+import com.affaince.subscription.expensedistribution.processor.ExtraPolationBasedOperatingExpenseDistributionDeterminator;
+import com.affaince.subscription.expensedistribution.processor.ForecastBasedOperatingExpenseDistributionDeterminator;
 import org.axonframework.eventhandling.EventTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,10 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by mandark on 19-07-2015.
  */
 @Configuration
-public class Axon extends RabbitMQConfiguration {
-
-    @Autowired
-    private CamelContext camelContext;
+public class Axon extends ActiveMQConfiguration {
 
     @Bean
     public GenericEventPublisher publisher(EventTemplate template) {
@@ -57,7 +52,7 @@ public class Axon extends RabbitMQConfiguration {
         return new CalculatePerUnitExpense();
     }
 
-    @Bean
+    /*@Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() {
@@ -84,5 +79,5 @@ public class Axon extends RabbitMQConfiguration {
                 System.out.println("@@@@@@@@@@@Hey Camel Started@@@@@@@@@@@");
             }
         };
-    }
+    }*/
 }

@@ -1,16 +1,13 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.product.Application;
-import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.*;
@@ -282,7 +279,7 @@ public class ARIMABasedDemandForecasterTest {
     //    ProductDemandForecaster forecaster= new ARIMABasedDemandForecaster();
         productActualMetricsViewList= new ArrayList<>();
 
-        BufferedReader fileReader= new BufferedReader(new InputStreamReader(new FileInputStream(new File("E:\\apps\\affaince\\development\\spikes\\BoxJenkinsSpike\\data\\demands2.tsv"))));
+        BufferedReader fileReader= new BufferedReader(new InputStreamReader(new FileInputStream(new File("demands2.tsv"))));
         double[] values= fileReader.lines().mapToDouble(n->Double.parseDouble(n)).toArray();
         for(Double value: values){
             ProductActualMetricsView view= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
