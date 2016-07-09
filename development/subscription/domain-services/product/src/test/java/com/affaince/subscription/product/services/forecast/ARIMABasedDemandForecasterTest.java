@@ -279,7 +279,7 @@ public class ARIMABasedDemandForecasterTest {
     //    ProductDemandForecaster forecaster= new ARIMABasedDemandForecaster();
         productActualMetricsViewList= new ArrayList<>();
 
-        BufferedReader fileReader= new BufferedReader(new InputStreamReader(new FileInputStream(new File("demands2.tsv"))));
+        BufferedReader fileReader= new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         double[] values= fileReader.lines().mapToDouble(n->Double.parseDouble(n)).toArray();
         for(Double value: values){
             ProductActualMetricsView view= new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
