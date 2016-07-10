@@ -19,7 +19,6 @@ import java.util.TreeSet;
 @Document(collection = "ProductForecastMetricsView")
 public class ProductForecastMetricsView {
     @Id
-    //private final ProductMonthlyVersionId productMonthlyVersionId;
     private final ProductVersionId productVersionId;
     private LocalDate endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
@@ -62,15 +61,6 @@ public class ProductForecastMetricsView {
         churnedMRRPerPriceBucket = new TreeMap<>();
 
     }
-/*
-    public ProductForecastMetricsView(String productId, LocalDate startDate,LocalDate endDate) {
-        this.productVersionId = new ProductVersionId(productId, startDate);
-        this.endDate=endDate;
-        taggedPriceVersions = new TreeSet<>();
-        newMRRPerPriceBucket = new TreeMap<>();
-        churnedMRRPerPriceBucket = new TreeMap<>();
-    }
-*/
 
     public ProductVersionId getProductVersionId() {
         return productVersionId;

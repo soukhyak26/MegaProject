@@ -43,7 +43,7 @@ import java.util.Map;
 @EnableJms
 @EnableAutoConfiguration(exclude = {EmbeddedServletContainerFactory.class})
 @ComponentScan("com.affaince")
-@EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, ForecastersList.class,Axon.HistoryMaxSizeConstraints.class})
+@EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, Axon.HistoryMaxSizeConstraints.class})
 public class Axon extends ActiveMQConfiguration {
 
     @Bean

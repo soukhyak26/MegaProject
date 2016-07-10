@@ -14,7 +14,6 @@ import java.util.List;
  */
 
 public interface ProductForecastMetricsViewRepository extends CrudRepository<ProductForecastMetricsView, com.affaince.subscription.common.vo.ProductVersionId> {
-    //List<ProductForecastMetricsView> findByProductId(String productId);
     public List<ProductForecastMetricsView> findByProductVersionId_ProductId(String productId);
     public List<ProductForecastMetricsView> findByProductVersionId_ProductId(String productId,Sort sort);
     public List<ProductForecastMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);

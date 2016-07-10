@@ -24,6 +24,7 @@ public class UpdateForecastFromActualsCommandHandler {
     @CommandHandler
     public void handle(UpdateForecastFromActualsCommand command) {
         Product product = repository.load(command.getProductId());
-       product.updateForecastFromActuals(command.getForecastDate(),command.getTotalSubscriptionsForecast(),command.getChurnedSubscriptionsForecast());
+
+        product.updateForecastFromActuals(command.getForecastDate());
     }
 }

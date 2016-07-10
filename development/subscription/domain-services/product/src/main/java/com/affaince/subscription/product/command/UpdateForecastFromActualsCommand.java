@@ -10,14 +10,10 @@ public class UpdateForecastFromActualsCommand {
     @TargetAggregateIdentifier
     private final String productId;
     private final LocalDate forecastDate;
-    private final long totalSubscriptionsForecast;
-    private final long churnedSubscriptionsForecast;
 
-    public UpdateForecastFromActualsCommand(String productId, LocalDate forecastDate, long totalSubscriptionsForecast, long churnedSubscriptionsForecast) {
+    public UpdateForecastFromActualsCommand(String productId, LocalDate forecastDate) {
         this.productId = productId;
         this.forecastDate = forecastDate;
-        this.totalSubscriptionsForecast = totalSubscriptionsForecast;
-        this.churnedSubscriptionsForecast = churnedSubscriptionsForecast;
     }
 
     public String getProductId() {
@@ -28,11 +24,4 @@ public class UpdateForecastFromActualsCommand {
         return forecastDate;
     }
 
-    public long getTotalSubscriptionsForecast() {
-        return totalSubscriptionsForecast;
-    }
-
-    public long getChurnedSubscriptionsForecast() {
-        return churnedSubscriptionsForecast;
-    }
 }

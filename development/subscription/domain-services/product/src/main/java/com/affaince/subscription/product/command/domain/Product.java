@@ -6,6 +6,8 @@ import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
+import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -13,6 +15,7 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private ProductAccount productAccount;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
+
+    @Autowired
+    DemandForecasterChain demandForecasterChain;
 
     public Product() {
 
@@ -237,8 +243,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public void updateForecastFromActuals(LocalDate forecastDate, long forecastTotalSubscriptionCount, long forecastChurnedSubscriptionCount) {
+    public void updateForecastFromActuals(LocalDate forecastDate) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecastTotalSubscriptionCount, forecastChurnedSubscriptionCount));
+        DemandGrowthAndChurnForecast forecast = demandForecasterChain.forecast(productId);
+        apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
     }
 }

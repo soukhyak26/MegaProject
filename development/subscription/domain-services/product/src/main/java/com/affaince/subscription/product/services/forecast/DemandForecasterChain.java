@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
@@ -55,28 +56,6 @@ public class DemandForecasterChain {
         }
 
     }
-/*
-    @Autowired
-    public DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository,ProductActualMetricsViewRepository productActualMetricsViewRepository) {
-        this.productForecastMetricsViewRepository=productForecastMetricsViewRepository;
-        this.productActualMetricsViewRepository=productActualMetricsViewRepository;
-        List<String> forecasterPrefixes = Arrays.asList(forecasterChainElements.split(","));
-        for (String prefix : forecasterPrefixes) {
-
-            if (prefix.equals("sma")) {
-                this.addForecaster(simpleMovingAverageDemandForecaster);
-            } else if (prefix.equals("sema")) {
-                this.addForecaster(simpleExponentialSmoothingDemandForecaster);
-            } else if (prefix.equals("tema")) {
-                this.addForecaster(tripleExponentialSmoothingDemandForecaster);
-            } else {
-                this.addForecaster(arimaBasedDemandForecaster);
-            }
-        }
-    }
-
-*/
-
     private void addForecaster(ProductDemandForecaster forecaster) {
         if (null != initialForecaster) {
             initialForecaster.addNextForecaster(forecaster);
@@ -96,5 +75,13 @@ public class DemandForecasterChain {
         return new DemandGrowthAndChurnForecast(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue(), Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
     }
 
+
+    public DemandGrowthAndChurnForecast forecast(List<ProductActualMetricsView> productActualMetricsViewList) {
+        //Forecast total subscriptions for next period
+        List<Double> forecastTotalSubscriptions = initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
+        //forecast churned subscriptions for next period
+        List<Double> forecastChurnedSubscriptions = initialForecaster.forecastDemandChurn(productActualMetricsViewList);
+        return new DemandGrowthAndChurnForecast(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue(), Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
+    }
 
 }

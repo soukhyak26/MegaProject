@@ -5,7 +5,7 @@ package com.affaince.subscription.common.type;
  */
 public enum PeriodUnit {
 
-    WEEK(0), MONTH(1), YEAR(2);
+    DAY(0),WEEK(1), MONTH(2), YEAR(3);
 
     private int periodCode;
 
@@ -16,10 +16,12 @@ public enum PeriodUnit {
     public static PeriodUnit valueOf(int periodCode) {
         switch (periodCode) {
             case 0:
-                return WEEK;
+                return DAY;
             case 1:
-                return MONTH;
+                return WEEK;
             case 2:
+                return MONTH;
+            case 3:
                 return YEAR;
             default:
                 return MONTH;

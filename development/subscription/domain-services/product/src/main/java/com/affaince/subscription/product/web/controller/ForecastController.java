@@ -59,8 +59,8 @@ public class ForecastController {
     @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}")
     public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId) throws Exception {
         //demandForecasterChain.buildForecasterChain(productForecastMetricsViewRepository, productActualMetricsViewRepository);
-        DemandGrowthAndChurnForecast forecast = demandForecasterChain.forecast(productId);
-        UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, org.joda.time.LocalDate.now(), forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount());
+
+        UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, org.joda.time.LocalDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
