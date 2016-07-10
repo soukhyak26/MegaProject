@@ -16,7 +16,8 @@ public class GenericMailEventPublisher {
                 + event.getClass() + "\t" + event
                 + "\n\t\t\t\t******************************\n");
         if(NotificationEvent.class.isAssignableFrom(event.getClass())) {
-            ((NotificationEvent)event).sendEmail();
+            //TODO: refine configuration for email sender
+            //((NotificationEvent)event).sendEmail();
         }
     }
 }

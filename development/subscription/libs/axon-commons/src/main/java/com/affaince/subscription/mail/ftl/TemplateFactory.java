@@ -13,7 +13,7 @@ import java.util.Locale;
 public class TemplateFactory {
     public static Template getTemplate(String ftlFile) throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
-        cfg.setClassLoaderForTemplateLoading(FTLDemo.class.getClassLoader(), "/");
+        cfg.setClassLoaderForTemplateLoading(TemplateFactory.class.getClassLoader(), "/");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setLocale(Locale.US);
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
