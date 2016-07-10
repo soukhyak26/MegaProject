@@ -5,6 +5,7 @@ import com.affaince.subscription.product.command.event.SubscriptionForecastUpdat
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class SubscriptionForecastUpdatedEventListener {
         this.productActualMetricsViewRepository = productActualMetricsViewRepository;
     }
 
-    @EventSourcingHandler
+    @EventHandler
     public void on(SubscriptionForecastUpdatedEvent event){
             Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
             ProductForecastMetricsView latestProductForecastMetricsView= productForecastMetricsViewRepository.findByProductVersionId_ProductId(event.getProductId(),sort).get(0);
