@@ -1,5 +1,6 @@
 package com.affaince.notification.events;
 
+import com.affaince.subscription.mail.ftl.PaymentProcessedTemplateGenerator;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by rbsavaliya on 16-01-2016.
  */
 
-public class PaymentProcessedEvent {
+public class PaymentProcessedEvent extends NotificationEvent {
     private String subscriptionId;
     private String subscriberId;
     private double paymentAmount;
@@ -18,6 +19,8 @@ public class PaymentProcessedEvent {
         this.subscriberId = subscriberId;
         this.paymentAmount = paymentAmount;
         this.paymentDate = paymentDate;
+        this.receiver = subscriberId + "@email.com";
+        this.subject = "Payment Processed";
     }
 
     @Autowired
@@ -73,5 +76,10 @@ public class PaymentProcessedEvent {
                 ", paymentAmount=" + paymentAmount +
                 ", paymentDate=" + paymentDate +
                 '}';
+    }
+
+    @Override
+    public String getEmailMessage() {
+        return PaymentProcessedTemplateGenerator.generateEmailMessage(subscriberId, paymentAmount, paymentDate);
     }
 }

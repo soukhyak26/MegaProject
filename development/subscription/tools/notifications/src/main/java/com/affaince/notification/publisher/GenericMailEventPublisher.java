@@ -1,5 +1,6 @@
 package com.affaince.notification.publisher;
 
+import com.affaince.notification.events.NotificationEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -14,5 +15,8 @@ public class GenericMailEventPublisher {
         System.out.println("\n\t\t\t\t******************************\n\t\t\t\t"
                 + event.getClass() + "\t" + event
                 + "\n\t\t\t\t******************************\n");
+        if(NotificationEvent.class.isAssignableFrom(event.getClass())) {
+            ((NotificationEvent)event).sendEmail();
+        }
     }
 }

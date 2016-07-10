@@ -21,7 +21,7 @@ public class EMailSender {
     private final String subject;
     private final String message;
 
-    protected EMailSender(String from, String password, String to, MailAccount mailAccount, String subject, String message) {
+    public EMailSender(String from, String password, String to, MailAccount mailAccount, String subject, String message) {
         if(mailAccount == null) {
             throw new IllegalArgumentException("Invalid mail account type");
         }
@@ -33,7 +33,7 @@ public class EMailSender {
         this.message = message;
     }
 
-    protected void sendEMail() throws EmailException {
+    public void sendEMail() throws EmailException {
         Email email = new SimpleEmail();
         if(mailAccount == null) {
             throw new IllegalArgumentException("Invalid mail account type");
