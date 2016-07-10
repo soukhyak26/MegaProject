@@ -15,7 +15,6 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -37,9 +36,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private ProductAccount productAccount;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
-
-    @Autowired
-    DemandForecasterChain demandForecasterChain;
 
     public Product() {
 
@@ -212,6 +208,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productConfiguration = productConfiguration;
     }
 
+    @EventSourcingHandler
+    public void on (SubscriptionForecastUpdatedEvent event) {
+        this.productId = event.getProductId();
+    }
+
     public void updateProductStatus(UpdateProductStatusCommand command) {
         apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
@@ -243,7 +244,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public void updateForecastFromActuals(LocalDate forecastDate) {
+    public void updateForecastFromActuals(LocalDate forecastDate, DemandForecasterChain demandForecasterChain) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
         DemandGrowthAndChurnForecast forecast = demandForecasterChain.forecast(productId);
         apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));

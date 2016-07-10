@@ -10,7 +10,6 @@ import com.affaince.subscription.product.services.pricing.determinator.DemandBas
 import com.affaince.subscription.product.services.pricing.processor.PricingStrategyDeterminator;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedCostFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedDemandFunctionProcessor;
-import com.affaince.subscription.product.vo.ForecastersList;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventhandling.EventTemplate;
@@ -50,6 +49,20 @@ public class Axon extends ActiveMQConfiguration {
     public EmbeddedServletContainerFactory servletContainerFactory() {
         return new org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory();
     }
+
+    /*@Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Product product() {
+        Product product = new Product();
+        return product;
+    }
+
+    @Bean
+    public SpringPrototypeAggregateFactory<Product> aggregateFactory() {
+        SpringPrototypeAggregateFactory<Product> aggregateFactory = new SpringPrototypeAggregateFactory<Product>();
+        aggregateFactory.setPrototypeBeanName("product");
+        return aggregateFactory;
+    }*/
 
     @Bean
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {

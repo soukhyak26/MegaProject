@@ -7,7 +7,6 @@ import com.affaince.subscription.product.query.repository.ProductForecastMetrics
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
-import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +55,9 @@ public class ForecastController {
         return new ResponseEntity<List<String>>(target, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productId}")
     public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId) throws Exception {
         //demandForecasterChain.buildForecasterChain(productForecastMetricsViewRepository, productActualMetricsViewRepository);
-
         UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, org.joda.time.LocalDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
