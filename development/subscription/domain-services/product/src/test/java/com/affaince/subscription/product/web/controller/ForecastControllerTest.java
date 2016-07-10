@@ -94,19 +94,19 @@ public class ForecastControllerTest {
         List<ProductActualMetricsView> productActualMetricsViewList;
         productActualMetricsViewList = new ArrayList<>();
 
-        ProductActualMetricsView view1 = new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
         view1.setTotalNumberOfExistingSubscriptions(500);
         productActualMetricsViewList.add(view1);
 
-        ProductActualMetricsView view2 = new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
         view2.setTotalNumberOfExistingSubscriptions(750);
         productActualMetricsViewList.add(view2);
 
-        ProductActualMetricsView view3 = new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
         view3.setTotalNumberOfExistingSubscriptions(1000);
         productActualMetricsViewList.add(view3);
 
-        ProductActualMetricsView view4 = new ProductActualMetricsView("1",new LocalDate(2016,1,1),new LocalDate(9999,12,31));
+        ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
         view4.setTotalNumberOfExistingSubscriptions(1250);
         productActualMetricsViewList.add(view4);
 

@@ -42,7 +42,7 @@ public class ARIMABasedDemandForecasterTest {
         List<ProductForecastMetricsView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
         for (int i = 0; i < readings.length; i++) {
-            ProductActualMetricsView actualMetrics = new ProductActualMetricsView("1", new LocalDate(2016, 1, 1), new LocalDate(9999, 12, 31));
+            ProductActualMetricsView actualMetrics = new ProductActualMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
             actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
             actualMetrics.setChurnedSubscriptions(readings[i][1]);
             productActualMetricsViewList.add(actualMetrics);

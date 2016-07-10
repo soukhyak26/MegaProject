@@ -1,9 +1,9 @@
 package com.affaince.subscription.product.services.forecast;
 
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductApproximateForecastViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
+import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -20,13 +20,23 @@ public class ForecastBuilder {
 
     @Autowired
     private ProductApproximateForecastViewRepository productApproximateForecastViewRepository;
-    public void buildForecastForLongFuture(String productId){
+
+    @Autowired
+    private ProductForecastViewRepository productForecastViewRepository;
+
+    @Autowired
+    private ProductActualsViewRepository productActualsViewRepository;
+
+    public void buildForecastForLongFuture(String productId) {
         List<ProductActualMetricsView> productActualMetricsViewList =
                 productActualMetricsViewRepository.findByProductVersionId_ProductId(productId);
 
     }
 
-    public void buidlForecastForShortFuture(){
+    public void aggregateActuals(String productId) {
+    }
+
+    public void buildForecastForShortFuture() {
 
     }
 }

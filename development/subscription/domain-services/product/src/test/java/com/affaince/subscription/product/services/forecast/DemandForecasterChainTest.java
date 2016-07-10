@@ -77,7 +77,7 @@ public class DemandForecasterChainTest {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
             for (int i = 0; i < 4; i++) {
-                ProductActualMetricsView actualMetrics = new ProductActualMetricsView("1", new LocalDate(2016, 1, 1), new LocalDate(9999, 12, 31));
+                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
                 actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);
@@ -113,7 +113,7 @@ public class DemandForecasterChainTest {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
             for (int i = 0; i < readings.length; i++) {
-                ProductActualMetricsView actualMetrics = new ProductActualMetricsView("1", new LocalDate(2016, 1, 1), new LocalDate(9999, 12, 31));
+                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
                 actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);

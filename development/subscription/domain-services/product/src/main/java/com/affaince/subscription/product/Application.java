@@ -19,7 +19,6 @@ import org.springframework.context.annotation.PropertySource;
 @AnnotationDriven
 @EnableAspectJAutoProxy
 @PropertySource({"classpath:Application.properties"})
-
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
