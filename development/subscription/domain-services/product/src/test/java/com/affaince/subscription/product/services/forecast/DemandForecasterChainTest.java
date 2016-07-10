@@ -11,6 +11,7 @@ import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import org.joda.time.LocalDate;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -34,6 +35,7 @@ import java.util.stream.Stream;
 //@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
+@Ignore
 public class DemandForecasterChainTest {
     @Mock
     private static ProductViewRepository productViewRepository;
