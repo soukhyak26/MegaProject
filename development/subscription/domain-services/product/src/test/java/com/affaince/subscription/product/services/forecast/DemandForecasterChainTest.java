@@ -37,7 +37,6 @@ import java.util.stream.Stream;
 //@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
-@Ignore
 public class DemandForecasterChainTest {
     @Mock
     private ProductViewRepository productViewRepository;
