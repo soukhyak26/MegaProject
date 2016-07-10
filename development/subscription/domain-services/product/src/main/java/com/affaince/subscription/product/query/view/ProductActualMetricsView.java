@@ -54,8 +54,8 @@ public class ProductActualMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductActualMetricsView(String productId, LocalDate startDate, LocalDate endDate) {
-        this.productVersionId= new ProductVersionId(productId,startDate);
+    public ProductActualMetricsView(ProductVersionId productVersionId, LocalDate endDate) {
+        this.productVersionId= productVersionId;
         this.endDate=endDate;
         taggedPriceVersions= new TreeSet<>();
         newMRRPerPriceBucket= new TreeMap<>();
