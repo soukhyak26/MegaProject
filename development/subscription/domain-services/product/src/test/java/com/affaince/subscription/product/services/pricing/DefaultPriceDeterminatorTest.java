@@ -32,9 +32,9 @@ public class DefaultPriceDeterminatorTest {
     private DemandForecasterChain chain;
 
     @Before
-    public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+    public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException,NoSuchMethodException{
         MockitoAnnotations.initMocks(this);
-        chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
+        //chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
     }
 
 

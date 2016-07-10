@@ -1,8 +1,8 @@
 package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
-import com.affaince.subscription.product.web.controller.TestConfig;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import java.util.List;
  * Created by mandar on 02-07-2016.
  */
 @RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {Application.class})
 public class ProductForecastMetricsViewRepositoryTest {
     @Mock
     private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;

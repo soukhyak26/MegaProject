@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
 import net.sourceforge.openforecast.DataPoint;
@@ -21,15 +22,15 @@ import java.util.List;
 public class SimpleExponentialSmoothingDemandForecaster implements ProductDemandForecaster {
 
     private ProductDemandForecaster nextForecaster;
-
-    @Value("${forecaster.sema.threshold.min}")
-    int minHistorySize;
-
-    @Value("${forecaster.sema.threshold.max}")
-    int maxHistorySize;
     @Autowired
+    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+
     public SimpleExponentialSmoothingDemandForecaster() {
     }
+
+
 
     public void addNextForecaster(ProductDemandForecaster forecaster) {
         if (null == nextForecaster) {
@@ -41,7 +42,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements ProductDemand
 
 
     public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
-        if (productActualMetricsViewList.size() > minHistorySize && productActualMetricsViewList.size() <= maxHistorySize) {
+        if (productActualMetricsViewList.size() > historyMinSizeConstraints.getSema() && productActualMetricsViewList.size() <= historyMaxSizeConstraints.getSema()) {
             int i = 0;
             int[] windowSizes = {3};
             DataSet observedData = new DataSet();
@@ -100,7 +101,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements ProductDemand
     }
 
     public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
-        if (productActualMetricsViewList.size() > minHistorySize && productActualMetricsViewList.size() <= maxHistorySize) {
+        if (productActualMetricsViewList.size() > historyMinSizeConstraints.getSema() && productActualMetricsViewList.size() <= historyMaxSizeConstraints.getSema()) {
             int i = 0;
             int[] windowSizes = {3};
             DataSet observedData = new DataSet();
@@ -157,10 +158,6 @@ public class SimpleExponentialSmoothingDemandForecaster implements ProductDemand
                     : nextForecaster.forecastDemandChurn(productActualMetricsViewList);
         }
 
-    }
-    @PostConstruct
-    public void init() {
-        System.out.println("================== " + minHistorySize + "================== ");
     }
 
 }

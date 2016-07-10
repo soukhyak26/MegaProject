@@ -81,18 +81,10 @@ public class ForecastControllerTest {
     final RestTemplate template = new RestTemplate();
 
     @Before
-    public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
         MockitoAnnotations.initMocks(this);
         //this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-        ProductDemandForecaster forecaster1 = new SimpleMovingAverageDemandForecaster();
-        ProductDemandForecaster forecaster2 = new SimpleExponentialSmoothingDemandForecaster();
-        ProductDemandForecaster forecaster3 = new TripleExponentialSmoothingDemandForecaster();
-        ProductDemandForecaster forecaster4 = new ARIMABasedDemandForecaster();
-        forecaster1.addNextForecaster(forecaster2);
-        forecaster2.addNextForecaster(forecaster3);
-        forecaster3.addNextForecaster(forecaster4);
-        chain = chain.buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
-       // forecastController = new ForecastController(commandGateway,productViewRepository,chain);
+        //chain = chain.buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
         this.mockMvc=MockMvcBuilders.standaloneSetup(forecastController).build();
     }
 

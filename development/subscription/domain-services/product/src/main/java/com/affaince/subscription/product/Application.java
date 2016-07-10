@@ -1,5 +1,6 @@
 package com.affaince.subscription.product;
 
+import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.vo.ForecastersList;
 import org.axonframework.contextsupport.spring.AnnotationDriven;
 import org.springframework.boot.SpringApplication;
@@ -14,11 +15,11 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan("com.affaince")
+@ComponentScan({"com.affaince"})
 @AnnotationDriven
 @EnableAspectJAutoProxy
 @PropertySource({"classpath:Application.properties"})
-@EnableConfigurationProperties(ForecastersList.class)
+
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -30,4 +31,6 @@ public class Application extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
     }
+
+
 }

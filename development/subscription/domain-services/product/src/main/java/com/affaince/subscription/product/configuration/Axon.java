@@ -10,15 +10,20 @@ import com.affaince.subscription.product.services.pricing.determinator.DemandBas
 import com.affaince.subscription.product.services.pricing.processor.PricingStrategyDeterminator;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedCostFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedDemandFunctionProcessor;
+import com.affaince.subscription.product.vo.ForecastersList;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventhandling.EventTemplate;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -36,13 +41,16 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-@EnableAutoConfiguration(exclude={EmbeddedServletContainerFactory.class})
+@EnableAutoConfiguration(exclude = {EmbeddedServletContainerFactory.class})
+@ComponentScan("com.affaince")
+@EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, ForecastersList.class,Axon.HistoryMaxSizeConstraints.class})
 public class Axon extends ActiveMQConfiguration {
 
     @Bean
-    public EmbeddedServletContainerFactory servletContainerFactory(){
+    public EmbeddedServletContainerFactory servletContainerFactory() {
         return new org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory();
     }
+
     @Bean
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {
 
@@ -63,7 +71,7 @@ public class Axon extends ActiveMQConfiguration {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversionsForProductVersionId());
-       // converter.setCustomConversions(customConversionsForEndDate());
+        // converter.setCustomConversions(customConversionsForEndDate());
         return converter;
     }
 
@@ -98,41 +106,43 @@ public class Axon extends ActiveMQConfiguration {
     }
 
     @Bean
-    public DemandForecasterChain demandForecasterChain () {
-        return new DemandForecasterChain ();
+    public DemandForecasterChain demandForecasterChain() {
+        return new DemandForecasterChain();
     }
 
     @Bean
-    public SimpleMovingAverageDemandForecaster smaForecaster(){
+    public SimpleMovingAverageDemandForecaster smaForecaster() {
         return new SimpleMovingAverageDemandForecaster();
     }
 
     @Bean
-    public SimpleExponentialSmoothingDemandForecaster semaForecaster(){
+    public SimpleExponentialSmoothingDemandForecaster semaForecaster() {
         return new SimpleExponentialSmoothingDemandForecaster();
     }
 
     @Bean
-    public TripleExponentialSmoothingDemandForecaster temaForecaster(){
+    public TripleExponentialSmoothingDemandForecaster temaForecaster() {
         return new TripleExponentialSmoothingDemandForecaster();
-    }
-    @Bean
-    public ARIMABasedDemandForecaster arimaForecaster(){
-        return new ARIMABasedDemandForecaster();
     }
 
     @Bean
-    public RegressionBasedCostFunctionProcessor costFunctionProcessor (){
+    public ARIMABasedDemandForecaster arimaForecaster() {
+        return new ARIMABasedDemandForecaster();
+    }
+
+
+    @Bean
+    public RegressionBasedCostFunctionProcessor costFunctionProcessor() {
         return new RegressionBasedCostFunctionProcessor();
     }
 
     @Bean
-    public RegressionBasedDemandFunctionProcessor demandFunctionProcessor (){
+    public RegressionBasedDemandFunctionProcessor demandFunctionProcessor() {
         return new RegressionBasedDemandFunctionProcessor();
     }
 
     @Bean
-    DemandBasedPriceDeterminator demandBasedPriceDeterminator(){
+    DemandBasedPriceDeterminator demandBasedPriceDeterminator() {
         return new DemandBasedPriceDeterminator();
     }
     /*@Bean
@@ -159,5 +169,91 @@ public class Axon extends ActiveMQConfiguration {
             }
         };
     }*/
+
+    @Autowired
+    HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    HistoryMaxSizeConstraints historyMaxSizeConstraints;
+
+    @ConfigurationProperties(prefix= "forecaster.threshold_min")
+    public static class HistoryMinSizeConstraints {
+        private int sma;
+        private int sema;
+        private int tema;
+        private int arima;
+
+        public int getSma() {
+            return sma;
+        }
+
+        public void setSma(int sma) {
+            this.sma = sma;
+        }
+
+        public int getSema() {
+            return sema;
+        }
+
+        public void setSema(int sema) {
+            this.sema = sema;
+        }
+
+        public int getTema() {
+            return tema;
+        }
+
+        public void setTema(int tema) {
+            this.tema = tema;
+        }
+
+        public int getArima() {
+            return arima;
+        }
+
+        public void setArima(int arima) {
+            this.arima = arima;
+        }
+    }
+
+    @ConfigurationProperties(prefix = "forecaster.threshold_max")
+    public static class HistoryMaxSizeConstraints {
+        private int sma;
+        private int sema;
+        private int tema;
+        private int arima;
+
+        public int getSma() {
+            return sma;
+        }
+
+        public void setSma(int sma) {
+            this.sma = sma;
+        }
+
+        public int getSema() {
+            return sema;
+        }
+
+        public void setSema(int sema) {
+            this.sema = sema;
+        }
+
+        public int getTema() {
+            return tema;
+        }
+
+        public void setTema(int tema) {
+            this.tema = tema;
+        }
+
+        public int getArima() {
+            return arima;
+        }
+
+        public void setArima(int arima) {
+            this.arima = arima;
+        }
+    }
+
 
 }

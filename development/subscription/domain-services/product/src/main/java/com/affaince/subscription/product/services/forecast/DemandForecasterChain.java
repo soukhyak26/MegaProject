@@ -4,12 +4,12 @@ import com.affaince.subscription.product.query.repository.ProductActualMetricsVi
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
-import com.affaince.subscription.product.vo.ForecastersList;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.*;
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mandark on 01-05-2016.
@@ -24,32 +24,58 @@ public class DemandForecasterChain {
     private ProductDemandForecaster initialForecaster;
 
     @Autowired
-    private ForecastersList forecastersList;
+    SimpleMovingAverageDemandForecaster simpleMovingAverageDemandForecaster;
+    @Autowired
+    SimpleExponentialSmoothingDemandForecaster simpleExponentialSmoothingDemandForecaster;
+    @Autowired
+    TripleExponentialSmoothingDemandForecaster tripleExponentialSmoothingDemandForecaster;
+    @Autowired
+    ARIMABasedDemandForecaster arimaBasedDemandForecaster;
 
     @Value("${forecaster.chain.list}")
     private String forecasterChainElements;
 
-    @Autowired
     public DemandForecasterChain() {
-
     }
 
-    public DemandForecasterChain buildForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
-        this.productActualMetricsViewRepository = productActualMetricsViewRepository;
+    @PostConstruct
+    public void init(){
         List<String> forecasterPrefixes = Arrays.asList(forecasterChainElements.split(","));
-        Map<String, String> forecasters = forecastersList.getElements();
-        Iterator<Map.Entry<String, String>> iterator = forecasters.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> forecasterEntry = iterator.next();
-            if (forecasterPrefixes.contains(forecasterEntry.getKey())) {
-                ProductDemandForecaster forecaster = (ProductDemandForecaster) BeanUtils.instantiate(Class.forName(forecasterEntry.getValue()));
-                this.addForecaster(forecaster);
-            }
+        for (String prefix : forecasterPrefixes) {
 
+            if (prefix.equals("sma")) {
+                this.addForecaster(simpleMovingAverageDemandForecaster);
+            } else if (prefix.equals("sema")) {
+                this.addForecaster(simpleExponentialSmoothingDemandForecaster);
+            } else if (prefix.equals("tema")) {
+                this.addForecaster(tripleExponentialSmoothingDemandForecaster);
+            } else {
+                this.addForecaster(arimaBasedDemandForecaster);
+            }
         }
-        return this;
+
     }
+/*
+    @Autowired
+    public DemandForecasterChain(ProductForecastMetricsViewRepository productForecastMetricsViewRepository,ProductActualMetricsViewRepository productActualMetricsViewRepository) {
+        this.productForecastMetricsViewRepository=productForecastMetricsViewRepository;
+        this.productActualMetricsViewRepository=productActualMetricsViewRepository;
+        List<String> forecasterPrefixes = Arrays.asList(forecasterChainElements.split(","));
+        for (String prefix : forecasterPrefixes) {
+
+            if (prefix.equals("sma")) {
+                this.addForecaster(simpleMovingAverageDemandForecaster);
+            } else if (prefix.equals("sema")) {
+                this.addForecaster(simpleExponentialSmoothingDemandForecaster);
+            } else if (prefix.equals("tema")) {
+                this.addForecaster(tripleExponentialSmoothingDemandForecaster);
+            } else {
+                this.addForecaster(arimaBasedDemandForecaster);
+            }
+        }
+    }
+
+*/
 
     private void addForecaster(ProductDemandForecaster forecaster) {
         if (null != initialForecaster) {
@@ -65,7 +91,7 @@ public class DemandForecasterChain {
                 productActualMetricsViewRepository.findByProductVersionId_ProductId(productId);
         //Forecast total subscriptions for next period
         List<Double> forecastTotalSubscriptions = initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
-        //forecast new subscriptions for next period
+        //forecast churned subscriptions for next period
         List<Double> forecastChurnedSubscriptions = initialForecaster.forecastDemandChurn(productActualMetricsViewList);
         return new DemandGrowthAndChurnForecast(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue(), Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
     }

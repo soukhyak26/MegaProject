@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,16 @@ import java.util.Queue;
 public class SimpleMovingAverageDemandForecaster implements ProductDemandForecaster {
 
     private ProductDemandForecaster nextForecaster;
-
-    @Value("${forecaster.sma.threshold.min}")
-    private int minHistorySize;
-
-    @Value("${forecaster.sma.threshold.max}")
-    private int maxHistorySize;
-
     @Autowired
+    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+
     public SimpleMovingAverageDemandForecaster() {
     }
+
+
+
 
     public void addNextForecaster(ProductDemandForecaster forecaster) {
         if (null == nextForecaster) {
@@ -38,7 +39,7 @@ public class SimpleMovingAverageDemandForecaster implements ProductDemandForecas
 
     public List<Double> forecastDemandGrowth(List<ProductActualMetricsView> productActualMetricsViewList) {
         //starting with simple  moving average
-        if (productActualMetricsViewList.size() > minHistorySize && productActualMetricsViewList.size() <= maxHistorySize) {
+        if (productActualMetricsViewList.size() > historyMinSizeConstraints.getSma() && productActualMetricsViewList.size() <= historyMaxSizeConstraints.getSma()) {
             Queue<Double> window = null;
             double sum = 0;
             int i = 0;
@@ -83,7 +84,7 @@ public class SimpleMovingAverageDemandForecaster implements ProductDemandForecas
     }
 
     public List<Double> forecastDemandChurn(List<ProductActualMetricsView> productActualMetricsViewList) {
-        if (productActualMetricsViewList.size() > minHistorySize && productActualMetricsViewList.size() <= maxHistorySize) {
+        if (productActualMetricsViewList.size() > historyMinSizeConstraints.getSma() && productActualMetricsViewList.size() <= historyMaxSizeConstraints.getSma()) {
             Queue<Double> window = null;
             double sum = 0;
             int i = 0;
@@ -126,9 +127,5 @@ public class SimpleMovingAverageDemandForecaster implements ProductDemandForecas
         }
         return null;
 
-    }
-    @PostConstruct
-    public void init() {
-        System.out.println("================== " + minHistorySize + "================== ");
     }
 }
