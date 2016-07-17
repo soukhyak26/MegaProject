@@ -5,6 +5,7 @@ import com.affaince.subscription.expensedistribution.client.ExpenseDistributionC
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,9 +17,11 @@ import java.util.Map;
  */
 public class ExtraPolationBasedOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
 
+    @Autowired
+    private ExpenseDistributionClient expenseDistributionClient;
+
     @Override
     public Map<String, Double> distributeDeliveryExpensesToProduct() throws IOException {
-        final ExpenseDistributionClient expenseDistributionClient = new ExpenseDistributionClient();
         final List<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         Map<String, Map<Integer, ProductWiseDeliveryStats>> productWiseDeliveryStatsMap
                 = createMonthlyDeliveryStatsMap(deliveries);
@@ -46,7 +49,7 @@ public class ExtraPolationBasedOperatingExpenseDistributionDeterminator implemen
         MathsProcessingService mathsProcessingService = new MathsProcessingService();
         double[] expenseForecast = mathsProcessingService.
                 processForecastUsingTripleExponentialTimeSeries(integerProductWiseDeliveryStatsMap.values().
-                                stream().mapToDouble(ProductWiseDeliveryStats::getTotalDeliveryExpense).toArray()
+                                stream().mapToDouble(ProductWiseDeliveryStats::getTotalUnitsSold).toArray()
                         , integerProductWiseDeliveryStatsMap.size());
         return expenseForecast[0];
     }
