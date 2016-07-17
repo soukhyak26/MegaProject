@@ -10,6 +10,8 @@ import com.affaince.subscription.subscriber.query.view.SubscriberView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionTemplateView;
 import com.affaince.subscription.subscriber.web.exception.SubscriberNotFoundException;
 import com.affaince.subscription.subscriber.web.request.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -161,10 +163,10 @@ public class SubscriberController {
 
     @RequestMapping(method = RequestMethod.GET, value = "fetchdeliveries")
     @Consumes("application/json")
-    public ResponseEntity <List<DeliveryView>> fetchAllDeliveries () {
-        final List <DeliveryView> deliveryViews = new ArrayList <> ();
-        final List<DeliveryView> deliveryViewList = new ArrayList<>();
+    public String fetchAllDeliveries () throws JsonProcessingException {
+        final List<DeliveryView> deliveryViews = new ArrayList<>();
         deliveryViewRepository.findAll().forEach(deliveryView -> deliveryViews.add(deliveryView));
-        return new ResponseEntity<List<DeliveryView>>(deliveryViews, HttpStatus.OK);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(deliveryViews);
     }
 }

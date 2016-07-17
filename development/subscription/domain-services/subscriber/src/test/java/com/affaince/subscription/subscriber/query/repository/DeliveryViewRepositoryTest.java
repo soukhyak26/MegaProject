@@ -34,6 +34,8 @@ public class DeliveryViewRepositoryTest {
             weightWiseDeliveryCharges.put(i, i*10);
         }
 
+        deliveryViewRepository.deleteAll();
+
         int deliveryId = 0;
         for (int i=0; i<90; i++) {
             LocalDate deliveryDate = LocalDate.now().plusDays(i);
@@ -72,14 +74,14 @@ public class DeliveryViewRepositoryTest {
     }
 
     private void calculateItemLevelDeliveryCharges(DeliveryView deliveryView) {
-        double totalWeight = 0;
+        int totalWeight = 0;
         double totalDeliveryPrice = 0;
         for (DeliveryItem deliveryItem: deliveryView.getDeliveryItems()) {
             totalWeight += deliveryItem.getWeightInGrms();
             totalDeliveryPrice += deliveryItem.getOfferedPriceWithBasketLevelDiscount();
         }
         totalWeight = totalWeight/1000;
-        double totalDeliveryCharges = weightWiseDeliveryCharges.get(5);
+        double totalDeliveryCharges = weightWiseDeliveryCharges.get(totalWeight);
 
         for (DeliveryItem item: deliveryView.getDeliveryItems()) {
             item.setDeliveryCharges((item.getOfferedPriceWithBasketLevelDiscount()*totalDeliveryCharges)/totalDeliveryPrice);

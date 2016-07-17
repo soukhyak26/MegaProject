@@ -7,6 +7,7 @@ import com.affaince.subscription.expensedistribution.query.view.ProductForecastM
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class AverageBasedOperatingExpenseDistribution {
     @Autowired
     private ExpenseDistributionClient expenseDistributionClient;
 
-    public Map<String, Double> distributeDeliveryExpensesToProduct (final List <String> productIds) {
+    public Map<String, Double> distributeDeliveryExpensesToProduct (final List <String> productIds) throws IOException {
         final Iterable<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         final List<ProductWiseDeliveryStats> productWiseDeliveriesStats = new ArrayList<>();
         final Map <String, Double> perUnitProductExpensesMap = new HashMap<>();

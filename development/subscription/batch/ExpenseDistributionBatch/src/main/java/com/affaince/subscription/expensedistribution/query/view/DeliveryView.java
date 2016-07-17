@@ -1,6 +1,10 @@
 package com.affaince.subscription.expensedistribution.query.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +21,11 @@ public class DeliveryView {
     private String subscriberId;
     private String subscriptionId;
     private List<DeliveryItem> deliveryItems;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate deliveryDate;
+    @JsonSerialize (using = LocalDateSerializer.class)
+    @JsonDeserialize (using = LocalDateDeserializer.class)
     private LocalDate dispatchDate;
     private DeliveryStatus status;
 

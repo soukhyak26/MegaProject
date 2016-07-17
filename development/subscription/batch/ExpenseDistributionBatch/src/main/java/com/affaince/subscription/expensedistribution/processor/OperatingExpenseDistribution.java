@@ -1,5 +1,6 @@
 package com.affaince.subscription.expensedistribution.processor;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -7,5 +8,5 @@ import java.util.Map;
  */
 public interface OperatingExpenseDistribution {
 
-    public Map<String, Double> distributeDeliveryExpensesToProduct ();
+    public Map<String, Double> distributeDeliveryExpensesToProduct () throws IOException;
 }

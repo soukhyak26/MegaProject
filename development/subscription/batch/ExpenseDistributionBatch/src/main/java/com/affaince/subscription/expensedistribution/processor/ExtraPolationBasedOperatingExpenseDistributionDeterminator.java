@@ -6,6 +6,7 @@ import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class ExtraPolationBasedOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
 
     @Override
-    public Map<String, Double> distributeDeliveryExpensesToProduct() {
+    public Map<String, Double> distributeDeliveryExpensesToProduct() throws IOException {
         final ExpenseDistributionClient expenseDistributionClient = new ExpenseDistributionClient();
         final List<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         Map<String, Map<Integer, ProductWiseDeliveryStats>> productWiseDeliveryStatsMap

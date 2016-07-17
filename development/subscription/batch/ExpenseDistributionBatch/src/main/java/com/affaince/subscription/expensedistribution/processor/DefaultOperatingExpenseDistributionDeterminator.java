@@ -4,7 +4,9 @@ import com.affaince.subscription.expensedistribution.client.ExpenseDistributionC
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.Map;
  */
 public class DefaultOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
 
-    public Map<String, Double> distributeDeliveryExpensesToProduct () {
-        final ExpenseDistributionClient expenseDistributionClient = new ExpenseDistributionClient();
-        final Iterable<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
+    @Autowired
+    private ExpenseDistributionClient expenseDistributionClient;
+
+    public Map<String, Double> distributeDeliveryExpensesToProduct () throws IOException {
+        final List<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         final List<ProductWiseDeliveryStats> productWiseDeliveriesStats = new ArrayList<>();
         final Map <String, Double> perUnitProductExpensesMap = new HashMap<>();
 
