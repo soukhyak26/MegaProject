@@ -22,9 +22,9 @@ import java.util.stream.Stream;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 public class ProductForecastMetricsViewRepositoryTest {
+    private static final int QTY = 20;
     @Autowired
     private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
-    private static final int QTY = 20;
 
     @Before
     public void init() throws FileNotFoundException {
@@ -41,7 +41,7 @@ public class ProductForecastMetricsViewRepositoryTest {
         for (int i = 0; i < readings.length; i++) {
             localDate = localDate.plusDays(1);
             ProductForecastMetricsView actualMetrics = new ProductForecastMetricsView(new ProductVersionId("1", localDate), new LocalDate(9999, 12, 31));
-            actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+            actualMetrics.setNewSubscriptions(readings[i][0]);
             actualMetrics.setChurnedSubscriptions(readings[i][1]);
             productActualMetricsViewList.add(actualMetrics);
             //productForecastMetricsViewRepository.save(actualMetrics);

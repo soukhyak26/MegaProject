@@ -11,16 +11,13 @@ import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import org.joda.time.LocalDate;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,6 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -38,22 +36,19 @@ import java.util.stream.Stream;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 public class DemandForecasterChainTest {
+    @Autowired
+    Axon.HistoryMinSizeConstraints minSizeConstraints;
+    @Autowired
+    Axon.HistoryMaxSizeConstraints maxSizeConstraints;
     @Mock
     private ProductViewRepository productViewRepository;
     @Mock
     private ProductActualMetricsViewRepository productActualMetricsViewRepository;
     @Mock
     private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
-
     @InjectMocks
     @Autowired
     private DemandForecasterChain chain;
-
-    @Autowired
-    Axon.HistoryMinSizeConstraints minSizeConstraints;
-
-    @Autowired
-    Axon.HistoryMaxSizeConstraints maxSizeConstraints;
 
     @Before
     public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -66,8 +61,8 @@ public class DemandForecasterChainTest {
 
             List<ProductActualMetricsView> productActualMetricsViewList;
             productActualMetricsViewList = new ArrayList<>();
-
-            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
+        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDate(9999, 12, 31));
             forecastView.setTotalNumberOfExistingSubscriptions(1250);
             List<ProductForecastMetricsView> forecasts = new ArrayList<>();
             forecasts.add(forecastView);
@@ -77,8 +72,9 @@ public class DemandForecasterChainTest {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
             for (int i = 0; i < 4; i++) {
-                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-                actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDate(9999, 12, 31));
+                //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+                actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);
             }
@@ -92,7 +88,8 @@ public class DemandForecasterChainTest {
             Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
             Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
-            chain.forecast(product.getProductId());
+            List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+            chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
         }finally{
             fileReader.close();
         }
@@ -102,8 +99,8 @@ public class DemandForecasterChainTest {
     public void testForecastFor40HistoricalLinearRecords() throws FileNotFoundException, IOException {
         List<ProductActualMetricsView> productActualMetricsViewList;
         productActualMetricsViewList = new ArrayList<>();
-
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
+        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDate(9999, 12, 31));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastMetricsView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
@@ -113,8 +110,9 @@ public class DemandForecasterChainTest {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
             for (int i = 0; i < readings.length; i++) {
-                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-                actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDate(9999, 12, 31));
+                //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+                actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);
             }
@@ -127,8 +125,8 @@ public class DemandForecasterChainTest {
             Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
             Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
             Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
-
-            chain.forecast(product.getProductId());
+            List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+            chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
         }finally{
             fileReader.close();
         }

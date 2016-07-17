@@ -1,10 +1,5 @@
 package com.affaince.subscription.product.services.forecast;
 
-import com.affaince.subscription.common.type.PeriodUnit;
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -17,12 +12,6 @@ import java.util.List;
  */
 
 public class DemandForecasterChain {
-    @Autowired
-    private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
-    @Autowired
-    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
-
-    private ProductDemandForecaster initialForecaster;
 
     @Autowired
     SimpleMovingAverageDemandForecaster simpleMovingAverageDemandForecaster;
@@ -32,7 +21,7 @@ public class DemandForecasterChain {
     TripleExponentialSmoothingDemandForecaster tripleExponentialSmoothingDemandForecaster;
     @Autowired
     ARIMABasedDemandForecaster arimaBasedDemandForecaster;
-
+    private TimeSeriesBasedForecaster initialForecaster;
     @Value("${forecaster.chain.list}")
     private String forecasterChainElements;
 
@@ -56,7 +45,8 @@ public class DemandForecasterChain {
         }
 
     }
-    private void addForecaster(ProductDemandForecaster forecaster) {
+
+    private void addForecaster(TimeSeriesBasedForecaster forecaster) {
         if (null != initialForecaster) {
             initialForecaster.addNextForecaster(forecaster);
         } else {
@@ -64,24 +54,8 @@ public class DemandForecasterChain {
         }
     }
 
-    //forecasting for each product
-    public DemandGrowthAndChurnForecast forecast(String productId) {
-        List<ProductActualMetricsView> productActualMetricsViewList =
-                productActualMetricsViewRepository.findByProductVersionId_ProductId(productId);
-        //Forecast total subscriptions for next period
-        List<Double> forecastTotalSubscriptions = initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
-        //forecast churned subscriptions for next period
-        List<Double> forecastChurnedSubscriptions = initialForecaster.forecastDemandChurn(productActualMetricsViewList);
-        return new DemandGrowthAndChurnForecast(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue(), Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
+
+    public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList) {
+        return initialForecaster.forecast(dataIdentifier, historicalDataList);
     }
-
-
-    public DemandGrowthAndChurnForecast forecast(List<ProductActualMetricsView> productActualMetricsViewList) {
-        //Forecast total subscriptions for next period
-        List<Double> forecastTotalSubscriptions = initialForecaster.forecastDemandGrowth(productActualMetricsViewList);
-        //forecast churned subscriptions for next period
-        List<Double> forecastChurnedSubscriptions = initialForecaster.forecastDemandChurn(productActualMetricsViewList);
-        return new DemandGrowthAndChurnForecast(Double.valueOf(forecastTotalSubscriptions.get(0)).longValue(), Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
-    }
-
 }

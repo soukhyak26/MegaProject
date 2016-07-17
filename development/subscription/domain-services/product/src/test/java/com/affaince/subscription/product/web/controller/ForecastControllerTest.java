@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.web.controller;
 
-import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
@@ -10,45 +9,34 @@ import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.services.forecast.*;
+import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.ConfigFileApplicationContextInitializer;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by mandar on 05-07-2016.
@@ -58,27 +46,22 @@ import java.util.List;
 @ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class ForecastControllerTest {
-    @InjectMocks
-    @Autowired
-    private ForecastController forecastController;
-
     @Mock
     private static ProductViewRepository productViewRepository;
     @Mock
     private static ProductActualMetricsViewRepository productActualMetricsViewRepository;
     @Mock
     private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
-
-
+    final RestTemplate template = new RestTemplate();
+    @InjectMocks
+    @Autowired
+    private ForecastController forecastController;
     @InjectMocks
     @Autowired
     private DemandForecasterChain chain;
-
     @Autowired
     private WebApplicationContext wac;
-
     private MockMvc mockMvc;
-    final RestTemplate template = new RestTemplate();
 
     @Before
     public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
@@ -95,19 +78,19 @@ public class ForecastControllerTest {
         productActualMetricsViewList = new ArrayList<>();
 
         ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view1.setTotalNumberOfExistingSubscriptions(500);
+        view1.setNewSubscriptions(500);
         productActualMetricsViewList.add(view1);
 
         ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view2.setTotalNumberOfExistingSubscriptions(750);
+        view2.setNewSubscriptions(750);
         productActualMetricsViewList.add(view2);
 
         ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view3.setTotalNumberOfExistingSubscriptions(1000);
+        view3.setNewSubscriptions(1000);
         productActualMetricsViewList.add(view3);
 
         ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view4.setTotalNumberOfExistingSubscriptions(1250);
+        view4.setNewSubscriptions(1250);
         productActualMetricsViewList.add(view4);
 
         ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));

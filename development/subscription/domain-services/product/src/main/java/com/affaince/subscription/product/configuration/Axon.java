@@ -45,10 +45,8 @@ import java.util.Map;
 @EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, Axon.HistoryMaxSizeConstraints.class})
 public class Axon extends ActiveMQConfiguration {
 
-    @Bean
-    public EmbeddedServletContainerFactory servletContainerFactory() {
-        return new org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory();
-    }
+    @Autowired
+    HistoryMinSizeConstraints historyMinSizeConstraints;
 
     /*@Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -63,6 +61,13 @@ public class Axon extends ActiveMQConfiguration {
         aggregateFactory.setPrototypeBeanName("product");
         return aggregateFactory;
     }*/
+    @Autowired
+    HistoryMaxSizeConstraints historyMaxSizeConstraints;
+
+    @Bean
+    public EmbeddedServletContainerFactory servletContainerFactory() {
+        return new org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory();
+    }
 
     @Bean
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {
@@ -71,12 +76,10 @@ public class Axon extends ActiveMQConfiguration {
         return repository;
     }
 
-
     @Bean
     public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
         return new SimpleMongoDbFactory(mongo, dbName);
     }
-
 
     @Bean
     public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {
@@ -143,20 +146,9 @@ public class Axon extends ActiveMQConfiguration {
         return new ARIMABasedDemandForecaster();
     }
 
-
     @Bean
     public RegressionBasedCostFunctionProcessor costFunctionProcessor() {
         return new RegressionBasedCostFunctionProcessor();
-    }
-
-    @Bean
-    public RegressionBasedDemandFunctionProcessor demandFunctionProcessor() {
-        return new RegressionBasedDemandFunctionProcessor();
-    }
-
-    @Bean
-    DemandBasedPriceDeterminator demandBasedPriceDeterminator() {
-        return new DemandBasedPriceDeterminator();
     }
     /*@Bean
     public RouteBuilder routes() {
@@ -183,10 +175,20 @@ public class Axon extends ActiveMQConfiguration {
         };
     }*/
 
-    @Autowired
-    HistoryMinSizeConstraints historyMinSizeConstraints;
-    @Autowired
-    HistoryMaxSizeConstraints historyMaxSizeConstraints;
+    @Bean
+    public RegressionBasedDemandFunctionProcessor demandFunctionProcessor() {
+        return new RegressionBasedDemandFunctionProcessor();
+    }
+
+    @Bean
+    DemandBasedPriceDeterminator demandBasedPriceDeterminator() {
+        return new DemandBasedPriceDeterminator();
+    }
+
+    @Bean
+    ProductDemandForecastBuilder productDemandForecastBuilder() {
+        return new ProductDemandForecastBuilder();
+    }
 
     @ConfigurationProperties(prefix= "forecaster.threshold_min")
     public static class HistoryMinSizeConstraints {

@@ -7,7 +7,7 @@ import com.affaince.subscription.product.query.repository.ProductForecastMetrics
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.services.forecast.*;
+import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ public class DefaultPriceDeterminatorTest {
     private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
 
     @InjectMocks
-    private DemandForecasterChain chain;
+    private ProductDemandForecastBuilder builder;
 
     @Before
     public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException,NoSuchMethodException{
@@ -44,19 +44,19 @@ public class DefaultPriceDeterminatorTest {
         productActualMetricsViewList = new ArrayList<>();
 
         ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view1.setTotalNumberOfExistingSubscriptions(500);
+        view1.setNewSubscriptions(500);
         productActualMetricsViewList.add(view1);
 
         ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view2.setTotalNumberOfExistingSubscriptions(750);
+        view2.setNewSubscriptions(750);
         productActualMetricsViewList.add(view2);
 
         ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view3.setTotalNumberOfExistingSubscriptions(1000);
+        view3.setNewSubscriptions(1000);
         productActualMetricsViewList.add(view3);
 
         ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
-        view4.setTotalNumberOfExistingSubscriptions(1250);
+        view4.setNewSubscriptions(1250);
         productActualMetricsViewList.add(view4);
         // Mockito.when(productViewRepository.findOne(productId)).thenReturn(product);
         String productId = "1";
@@ -67,7 +67,7 @@ public class DefaultPriceDeterminatorTest {
 
         Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
-        chain.forecast(product.getProductId());
+        builder.buildForecast(product.getProductId());
 
     }
 }

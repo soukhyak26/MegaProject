@@ -6,7 +6,7 @@ import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
-import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
+import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -244,9 +244,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public void updateForecastFromActuals(LocalDate forecastDate, DemandForecasterChain demandForecasterChain) {
+    public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        DemandGrowthAndChurnForecast forecast = demandForecasterChain.forecast(productId);
+        DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId);
         apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
     }
 }
