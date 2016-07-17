@@ -2,6 +2,7 @@ package com.affaince.subscription.expensedistribution.client;
 
 import com.affaince.subscription.expensedistribution.Application;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-//@Ignore
+@Ignore
 public class ExpenseDistributionClientTest {
 
     @Autowired
