@@ -43,10 +43,11 @@ public class PriceCalculator2 {
             if (null == minusOneInput && null == minusTwoInput && tempInput.getOfferedPrice() < markPrice.getOfferedPrice()) {
                 //OPENING PRICE
             } else if (null != minusOneInput && null == minusTwoInput) {
+                //First BASELINE price... NOT OK
                 double y2 = minusOneInput.getOfferedPrice();
                 double y1 = markPrice.getOfferedPrice();
                 double x2 = minusOneInput.getQuantityActual();
-                double x1 = markPrice.getQuantityActual();
+                double x1 = markPrice.getQuantityForecasted();
 
                 double slope = calculateSlope(y2, y1, x2, x1);
                 double intercept = minusOneInput.getMRP();
@@ -54,11 +55,11 @@ public class PriceCalculator2 {
                 tempInput.setOfferedPrice(offeredPrice);
                 tempInput.setSlope(slope);
             } else if (null != minusOneInput && null != minusTwoInput) {
-                if (minusOneInput.getProfit() > minusTwoInput.getProfit()) {
-                    if ((minusOneInput.getOfferedPrice() < minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() > minusTwoInput.getQuantityActual())) {
-                        //normal scenario where proft is increasing but price is decreasing
-                        double y2 = minusOneInput.recalculateOfferPrice();
-                        double y1 = minusTwoInput.recalculateOfferPrice();
+                if (minusOneInput.getProfitActual() > minusTwoInput.getProfitActual()) {
+                    if ((minusOneInput.getOfferedPrice() < minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() >= minusTwoInput.getQuantityActual())) {
+                        //normal scenario where profit is increasing but price is decreasing & demand increasing -- OK
+                        double y2 = minusOneInput.recalculatePriceOnActuals();
+                        double y1 = minusTwoInput.recalculatePriceOnActuals();
                         double x2 = minusOneInput.getQuantityActual();
                         double x1 = minusTwoInput.getQuantityActual();
                         double slope = calculateSlope(y2, y1, x2, x1);
@@ -67,12 +68,12 @@ public class PriceCalculator2 {
                         tempInput.setOfferedPrice(offeredPrice);
                         tempInput.setSlope(slope);
 
-                    } else if ((minusOneInput.getOfferedPrice() > minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() > minusTwoInput.getQuantityActual())
-                            || (minusOneInput.getOfferedPrice() > minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() < minusTwoInput.getQuantityActual())) {
-                        double y2 = minusOneInput.recalculateOfferPrice();
+                    } else if ((minusOneInput.getOfferedPrice() > minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() >= minusTwoInput.getQuantityActual())) {
+                        //price increased.. demand increased
+                        double y2 = minusOneInput.recalculatePriceOnActuals();
                         double y1 = markPrice.getOfferedPrice();
                         double x2 = minusOneInput.getQuantityActual();
-                        double x1 = markPrice.getQuantityActual();
+                        double x1 = markPrice.getQuantityForecasted();
 
                         //double slope=minusOneInput.getSlope() - (minusOneInput.getSlope()*minusOneInput.getWeightedAverage()/100);
                         double slope = calculateSlope(y2, y1, x2, x1);
@@ -80,23 +81,53 @@ public class PriceCalculator2 {
                         double offeredPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
                         tempInput.setOfferedPrice(offeredPrice);
                         tempInput.setSlope(slope);
-                    }
-                } else if (minusOneInput.getProfit() < minusTwoInput.getProfit()) {
-                    if (minusOneInput.getQuantityActual() < minusTwoInput.getQuantityActual()) {
-                        double y2 = minusOneInput.recalculateOfferPrice();
-                        double y1 = minusTwoInput.recalculateOfferPrice();
+                    } else if(minusOneInput.getOfferedPrice() > minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() <= minusTwoInput.getQuantityActual()) {
+                        // Price increased.. demand decreased
+                        double y2 = minusOneInput.recalculatePriceOnActuals();
+                        double y1 = markPrice.getOfferedPrice();
                         double x2 = minusOneInput.getQuantityActual();
-                        double x1 = minusTwoInput.getQuantityActual();
+                        double x1 = markPrice.getQuantityForecasted();
+
                         double slope = calculateSlope(y2, y1, x2, x1);
                         double intercept = minusOneInput.getMRP();
                         double offeredPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
                         tempInput.setOfferedPrice(offeredPrice);
                         tempInput.setSlope(slope);
-                    } else if (minusOneInput.getQuantityActual() > minusTwoInput.getQuantityActual()) {
-                        double slope = minusOneInput.getSlope() - (minusOneInput.getSlope() * minusOneInput.getWeightedAverage() / 100);
+                    } else if (minusOneInput.getOfferedPrice() == minusTwoInput.getOfferedPrice()) {
+                        double y2 = minusOneInput.recalculatePriceOnActuals();
+                        double y1 = markPrice.getOfferedPrice();
+                        double x2 = minusOneInput.getQuantityActual();
+                        double x1 = markPrice.getQuantityForecasted();
+
+                        double slope = calculateSlope(y2, y1, x2, x1);
                         double intercept = minusOneInput.getMRP();
                         double offeredPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
                         tempInput.setOfferedPrice(offeredPrice);
+                        tempInput.setSlope(slope);
+                    }
+                } else if (minusOneInput.getProfitActual() < minusTwoInput.getProfitActual()) {
+                    if (minusOneInput.getOfferedPrice() < minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() <= minusTwoInput.getQuantityActual()) {
+                        double slope = minusOneInput.getSlope() - (minusOneInput.getSlope()*minusOneInput.getWeightedAverage()/100);
+                        double intercept = minusOneInput.getMRP();
+                        double offerPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
+                        tempInput.setOfferedPrice(offerPrice);
+                        tempInput.setSlope(slope);
+                    } else if (minusOneInput.getOfferedPrice() < minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() >= minusTwoInput.getQuantityActual()) {
+                        double slope = minusOneInput.getSlope() - (minusOneInput.getSlope()*minusOneInput.getWeightedAverage()/100);
+                        double intercept = minusOneInput.getMRP();
+                        double offerPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
+                        tempInput.setOfferedPrice(offerPrice);
+                        tempInput.setSlope(slope);
+                    } else if (minusOneInput.getOfferedPrice() > minusTwoInput.getOfferedPrice() && minusOneInput.getQuantityActual() <= minusTwoInput.getQuantityActual()) {
+                        double y2 = minusOneInput.recalculatePriceOnActuals();
+                        double y1 = minusTwoInput.recalculatePriceOnActuals();
+                        double x2 = minusOneInput.getQuantityActual();
+                        double x1 = minusTwoInput.getQuantityActual();
+                        double slope = calculateSlope(y1, y2, x1, x2);
+                        //double slope = minusOneInput.getSlope() + (minusOneInput.getSlope()*minusOneInput.getWeightedAverage()/100);
+                        double intercept = minusOneInput.getMRP();
+                        double offerPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
+                        tempInput.setOfferedPrice(offerPrice);
                         tempInput.setSlope(slope);
                     }
                 }
@@ -104,9 +135,9 @@ public class PriceCalculator2 {
             double revenue = calculateRevenue(tempInput.getOfferedPrice(), tempInput.getQuantityActual());
             double cost = calculateCost(tempInput.getBreakEvenPrice(), tempInput.getQuantityActual());
             double profit = calculateProfit(revenue, cost);
-            tempInput.setCost(cost);
-            tempInput.setProfit(profit);
-            tempInput.setRevenue(revenue);
+            tempInput.setCostActual(cost);
+            tempInput.setProfitActual(profit);
+            tempInput.setRevenueActual(revenue);
             tempInput.setWeightedAverage(tempInput.getOfferedPrice());
 
             for (int i = previousCount; i > 0; i--) {
@@ -118,13 +149,7 @@ public class PriceCalculator2 {
     }
 
     private double calculateSlope(double y2, double y1, double x2, double x1) {
-
-        double slope=(y2 - y1) / (x2 - x1);
-        if( slope==0.0){
-            return -0.00001;
-        }else{
-            return slope;
-        }
+        return (y2-y1) / (x2 - x1);
     }
 
     private double calculateRevenue(double offeredPrice, double quantity) {
