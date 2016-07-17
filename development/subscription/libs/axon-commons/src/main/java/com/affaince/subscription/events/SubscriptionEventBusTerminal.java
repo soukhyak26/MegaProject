@@ -17,6 +17,7 @@ import org.springframework.messaging.support.GenericMessage;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.springframework.integration.jms.JmsHeaders.TYPE;
@@ -49,9 +50,10 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
                 metadataMap.put(MetadataFilter.TIMESTAMP, event.getTimestamp().toString());*/
                 //TODO: Verify if this is proper place to create metadata and flows. I think it should be at first command creation.
                 CommonView commonView = new CommonView(UUID.randomUUID().toString(), "someFlowName");
-                MetaData metadata = new MetaData(new HashMap<String, Object>());
-                metadata.put(TYPE, event.getPayloadType().getName());
-                metadata.put(CommonView.METADATA, commonView);
+                Map<String, Object> items = new HashMap<>();
+                items.put(TYPE, event.getPayloadType().getName());
+                items.put(CommonView.METADATA, commonView);
+                MetaData metadata = new MetaData(items);
                 event = event.andMetaData(metadata);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 EventMessageWriter out = new EventMessageWriter(new DataOutputStream(outputStream), serializer);
