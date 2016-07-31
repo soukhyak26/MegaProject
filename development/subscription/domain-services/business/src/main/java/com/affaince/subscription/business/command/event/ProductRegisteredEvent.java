@@ -18,6 +18,9 @@ public class ProductRegisteredEvent {
     private List<String> substitutes;
     private List<String> complements;
 
+    public ProductRegisteredEvent() {
+    }
+
     public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
         this.productId = productId;
         this.productName = productName;
@@ -27,9 +30,6 @@ public class ProductRegisteredEvent {
         this.quantityUnit = quantityUnit;
         this.substitutes = substitutes;
         this.complements = complements;
-    }
-
-    public ProductRegisteredEvent() {
     }
 
     public String getProductId() {

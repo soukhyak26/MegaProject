@@ -7,17 +7,22 @@ import org.joda.time.LocalDate;
  */
 public class ProductStatusReceivedCommand {
     private String productId;
-    private double currentPurchasePrice;
-    private double currentMRP;
-    private int currentStockInUnits;
+    private Double currentPurchasePrice;
+    private Double currentMRP;
+    private Integer currentStockInUnits;
     private LocalDate currentPriceDate;
 
-    public ProductStatusReceivedCommand(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDate currentPriceDate) {
+    public ProductStatusReceivedCommand(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits, LocalDate currentPriceDate) {
         this.productId = productId;
         this.currentPurchasePrice = currentPurchasePrice;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
         this.currentPriceDate = currentPriceDate;
+    }
+
+    public ProductStatusReceivedCommand(Double currentPurchasePrice, Integer currentStockInUnits) {
+        this.currentPurchasePrice = currentPurchasePrice;
+        this.currentStockInUnits = currentStockInUnits;
     }
 
     public String getProductId() {
@@ -28,27 +33,27 @@ public class ProductStatusReceivedCommand {
         this.productId = productId;
     }
 
-    public double getCurrentPurchasePrice() {
+    public Double getCurrentPurchasePrice() {
         return currentPurchasePrice;
     }
 
-    public void setCurrentPurchasePrice(double currentPurchasePrice) {
+    public void setCurrentPurchasePrice(Double currentPurchasePrice) {
         this.currentPurchasePrice = currentPurchasePrice;
     }
 
-    public double getCurrentMRP() {
+    public Double getCurrentMRP() {
         return currentMRP;
     }
 
-    public void setCurrentMRP(double currentMRP) {
+    public void setCurrentMRP(Double currentMRP) {
         this.currentMRP = currentMRP;
     }
 
-    public int getCurrentStockInUnits() {
+    public Integer getCurrentStockInUnits() {
         return currentStockInUnits;
     }
 
-    public void setCurrentStockInUnits(int currentStockInUnits) {
+    public void setCurrentStockInUnits(Integer currentStockInUnits) {
         this.currentStockInUnits = currentStockInUnits;
     }
 
@@ -61,10 +66,10 @@ public class ProductStatusReceivedCommand {
     }
 
     public String getBusinessAccountId() {
-        return Integer.valueOf(currentPriceDate.getYear()).toString();
+        return currentPriceDate == null ? null : Integer.valueOf(currentPriceDate.getYear()).toString();
     }
 
-    public double getTotalPurchaseCost() {
+    public Double getTotalPurchaseCost() {
         return currentPurchasePrice * currentStockInUnits;
     }
 }

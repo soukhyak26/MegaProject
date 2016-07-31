@@ -5,12 +5,16 @@ package com.affaince.subscription.business.command;
  */
 public class SubscriptionActivatedCommand {
     private String subscriptionId;
-    private double totalSubscriptionAmountAfterDiscount;
-    private double totalDiscount;
+    private Double totalSubscriptionAmountAfterDiscount;
+    private Double totalDiscount;
 
-    public SubscriptionActivatedCommand(String subscriptionId, double totalSubscriptionAmountAfterDiscount, double totalDiscount) {
+    public SubscriptionActivatedCommand(String subscriptionId, Double totalSubscriptionAmountAfterDiscount, Double totalDiscount) {
         this.subscriptionId = subscriptionId;
         this.totalSubscriptionAmountAfterDiscount = totalSubscriptionAmountAfterDiscount;
+        this.totalDiscount = totalDiscount;
+    }
+
+    public SubscriptionActivatedCommand(Double totalDiscount) {
         this.totalDiscount = totalDiscount;
     }
 
@@ -22,19 +26,19 @@ public class SubscriptionActivatedCommand {
         this.subscriptionId = subscriptionId;
     }
 
-    public double getTotalSubscriptionAmountAfterDiscount() {
+    public Double getTotalSubscriptionAmountAfterDiscount() {
         return totalSubscriptionAmountAfterDiscount;
     }
 
-    public void setTotalSubscriptionAmountAfterDiscount(double totalSubscriptionAmountAfterDiscount) {
+    public void setTotalSubscriptionAmountAfterDiscount(Double totalSubscriptionAmountAfterDiscount) {
         this.totalSubscriptionAmountAfterDiscount = totalSubscriptionAmountAfterDiscount;
     }
 
-    public double getTotalDiscount() {
+    public Double getTotalDiscount() {
         return totalDiscount;
     }
 
-    public void setTotalDiscount(double totalDiscount) {
+    public void setTotalDiscount(Double totalDiscount) {
         this.totalDiscount = totalDiscount;
     }
 

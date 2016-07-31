@@ -12,6 +12,9 @@ public class ProductStatusReceivedEvent {
     private int currentStockInUnits;
     private LocalDate currentPriceDate;
 
+    public ProductStatusReceivedEvent() {
+    }
+
     public ProductStatusReceivedEvent(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDate currentPrizeDate) {
         this.productId = productId;
         this.currentPurchasePrice = currentPurchasePrice;

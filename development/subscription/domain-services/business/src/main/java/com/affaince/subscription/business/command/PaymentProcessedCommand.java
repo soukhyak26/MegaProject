@@ -8,14 +8,18 @@ import org.joda.time.LocalDate;
 public class PaymentProcessedCommand {
     private String subscriptionId;
     private String subscriberId;
-    private double paymentAmount;
+    private Double paymentAmount;
     private LocalDate paymentDate;
 
-    public PaymentProcessedCommand(String subscriptionId, String subscriberId, double paymentAmount, LocalDate paymentDate) {
+    public PaymentProcessedCommand(String subscriptionId, String subscriberId, Double paymentAmount, LocalDate paymentDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
         this.paymentAmount = paymentAmount;
         this.paymentDate = paymentDate;
+    }
+
+    public PaymentProcessedCommand(Double paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
     public String getSubscriptionId() {
@@ -26,7 +30,7 @@ public class PaymentProcessedCommand {
         return subscriberId;
     }
 
-    public double getPaymentAmount() {
+    public Double getPaymentAmount() {
         return paymentAmount;
     }
 

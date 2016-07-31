@@ -11,6 +11,9 @@ public class PaymentProcessedEvent {
     private double paymentAmount;
     private LocalDate paymentDate;
 
+    public PaymentProcessedEvent() {
+    }
+
     public PaymentProcessedEvent(String subscriptionId, String subscriberId, double paymentAmount, LocalDate paymentDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;

@@ -15,6 +15,9 @@ public class OperatingExpenseReceivedEvent {
     private int forMonth;
     private int forYear;
 
+    public OperatingExpenseReceivedEvent() {
+    }
+
     public OperatingExpenseReceivedEvent(ExpenseType expenseType, String expenseId, String expenseHeader, double expenseAmount, Period period, int forMonth, int forYear) {
         this.expenseType = expenseType;
         this.expenseId = expenseId;

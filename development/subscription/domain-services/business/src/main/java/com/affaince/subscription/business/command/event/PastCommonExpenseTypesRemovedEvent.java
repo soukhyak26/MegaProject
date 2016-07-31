@@ -10,6 +10,9 @@ public class PastCommonExpenseTypesRemovedEvent {
     private String expenseHeader;
     private YearMonth monthOfYear;
 
+    public PastCommonExpenseTypesRemovedEvent() {
+    }
+
     public PastCommonExpenseTypesRemovedEvent(String id, String expenseHeader, YearMonth yearMonth) {
         this.id = id;
         this.expenseHeader = expenseHeader;

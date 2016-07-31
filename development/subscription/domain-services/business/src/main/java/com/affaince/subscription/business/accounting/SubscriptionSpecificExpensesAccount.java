@@ -1,6 +1,5 @@
 package com.affaince.subscription.business.accounting;
 
-import com.affaince.subscription.business.command.event.OperatingExpenseCreditedEvent;
 import com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseCreditedEvent;
 import com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseDebitedEvent;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;

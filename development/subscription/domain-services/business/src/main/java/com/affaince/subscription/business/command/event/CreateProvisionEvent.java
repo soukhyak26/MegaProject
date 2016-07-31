@@ -17,8 +17,8 @@ public class CreateProvisionEvent {
     private LocalDate provisionDate;
 
     public CreateProvisionEvent() {
-
     }
+
     public CreateProvisionEvent(String businessAccountId,
                                 double provisionForPurchaseCost,
                                 double provisionForLosses,

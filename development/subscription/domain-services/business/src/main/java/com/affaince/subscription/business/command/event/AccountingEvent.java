@@ -6,6 +6,9 @@ package com.affaince.subscription.business.command.event;
 public abstract class AccountingEvent {
     private String businessAccountId;
 
+    protected AccountingEvent() {
+    }
+
     protected AccountingEvent(String businessAccountId) {
         this.businessAccountId = businessAccountId;
     }

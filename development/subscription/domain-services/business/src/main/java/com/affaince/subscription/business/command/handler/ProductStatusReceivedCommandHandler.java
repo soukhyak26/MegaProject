@@ -4,6 +4,7 @@ import com.affaince.subscription.business.command.ProductStatusReceivedCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ public class ProductStatusReceivedCommandHandler {
 
     @CommandHandler
     public void handle(ProductStatusReceivedCommand command) {
-        BusinessAccount businessAccount = repository.load(command.getBusinessAccountId());
+        BusinessAccount businessAccount = repository.load(Integer.valueOf(LocalDate.now().getYear()).toString());
         businessAccount.adjustPurchaseCost(command.getTotalPurchaseCost());
     }
 }

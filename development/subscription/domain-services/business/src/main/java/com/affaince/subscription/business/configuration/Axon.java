@@ -44,7 +44,22 @@ public class Axon extends RabbitMQConfiguration {
             put("com.affaince.subscription.subscriber.command.event.SubscriptionActivatedEvent", SubscriptionActivatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.PaymentProcessedEvent", PaymentProcessedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
-            put("com.affaince.subscription.business.command.event.*","");
+            //put("com.affaince.subscription.business.command.event.*","");
+            put("com.affaince.subscription.business.command.event.BenefitCreditedEvent", BenefitCreditedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.BenefitDebitedEvent", BenefitDebitedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.BookingAmountCreditedEvent", BookingAmountCreditedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.BookingAmountDebitedEvent", BookingAmountDebitedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.CommonExpenseCreditedEvent", CommonExpenseCreditedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.CommonExpenseDebitedEvent", CommonExpenseDebitedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.CreateProvisionEvent", CreateProvisionEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.OperatingExpenseReceivedEvent", OperatingExpenseReceivedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.PaymentProcessedEvent", PaymentProcessedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.PurchaseCostCreditedEvent", PurchaseCostCreditedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.PurchaseCostDebitedEvent", PurchaseCostDebitedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.SubscriptionActivatedEvent", SubscriptionActivatedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseCreditedEvent", SubscriptionSpecificExpenseCreditedEvent.class.getName());
+            put("com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseDebitedEvent", SubscriptionSpecificExpenseDebitedEvent.class.getName());
         }};
     }
 }

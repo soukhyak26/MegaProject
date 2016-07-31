@@ -6,6 +6,9 @@ package com.affaince.subscription.business.command.event;
 public abstract class DebitedEvent extends AccountingEvent {
     private double amountToDebit;
 
+    protected DebitedEvent() {
+    }
+
     protected DebitedEvent(String businessAccountId, double amountToDebit) {
         super(businessAccountId);
         this.amountToDebit = amountToDebit;

@@ -6,6 +6,9 @@ package com.affaince.subscription.business.command.event;
 public abstract class CreditedEvent extends AccountingEvent {
     private double amountToCredit;
 
+    public CreditedEvent() {
+    }
+
     protected CreditedEvent(String businessAccountId, double amountToCredit) {
         super(businessAccountId);
         this.amountToCredit = amountToCredit;

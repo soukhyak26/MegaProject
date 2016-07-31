@@ -8,6 +8,9 @@ public class SubscriptionActivatedEvent {
     private double totalSubscriptionAmountAfterDiscount;
     private double totalDiscount;
 
+    public SubscriptionActivatedEvent() {
+    }
+
     public SubscriptionActivatedEvent(String subscriptionId, double totalSubscriptionAmountAfterDiscount, double totalDiscount, double subscriptionAmountPaid) {
         this.subscriptionId = subscriptionId;
         this.totalSubscriptionAmountAfterDiscount = totalSubscriptionAmountAfterDiscount;

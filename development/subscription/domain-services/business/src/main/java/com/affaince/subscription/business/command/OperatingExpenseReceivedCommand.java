@@ -10,12 +10,12 @@ public class OperatingExpenseReceivedCommand {
     private ExpenseType expenseType;
     private String expenseId;
     private String expenseHeader;
-    private double expenseAmount;
+    private Double expenseAmount;
     private Period period;
-    private int forMonth;
-    private int forYear;
+    private Integer forMonth;
+    private Integer forYear;
 
-    public OperatingExpenseReceivedCommand(ExpenseType expenseType, String expenseId, String expenseHeader, double expenseAmount, Period period, int forMonth, int forYear) {
+    public OperatingExpenseReceivedCommand(ExpenseType expenseType, String expenseId, String expenseHeader, Double expenseAmount, Period period, Integer forMonth, Integer forYear) {
         this.expenseType = expenseType;
         this.expenseId = expenseId;
         this.expenseHeader = expenseHeader;
@@ -23,6 +23,11 @@ public class OperatingExpenseReceivedCommand {
         this.period = period;
         this.forMonth = forMonth;
         this.forYear = forYear;
+    }
+
+    public OperatingExpenseReceivedCommand(ExpenseType expenseType, Double expenseAmount) {
+        this.expenseType = expenseType;
+        this.expenseAmount = expenseAmount;
     }
 
     public ExpenseType getExpenseType() {
@@ -49,7 +54,7 @@ public class OperatingExpenseReceivedCommand {
         this.expenseHeader = expenseHeader;
     }
 
-    public double getExpenseAmount() {
+    public Double getExpenseAmount() {
         return expenseAmount;
     }
 
@@ -65,7 +70,7 @@ public class OperatingExpenseReceivedCommand {
         this.period = period;
     }
 
-    public int getForMonth() {
+    public Integer getForMonth() {
         return forMonth;
     }
 
@@ -73,7 +78,7 @@ public class OperatingExpenseReceivedCommand {
         this.forMonth = forMonth;
     }
 
-    public int getForYear() {
+    public Integer getForYear() {
         return forYear;
     }
 
@@ -82,6 +87,6 @@ public class OperatingExpenseReceivedCommand {
     }
 
     public String getBusinessAccountId() {
-        return Integer.valueOf(this.forYear).toString();
+        return this.forYear == null ? null : this.forYear.toString();
     }
 }

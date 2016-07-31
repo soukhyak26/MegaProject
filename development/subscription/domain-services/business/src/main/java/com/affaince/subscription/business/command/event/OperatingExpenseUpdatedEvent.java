@@ -13,6 +13,9 @@ public class OperatingExpenseUpdatedEvent {
     private int forMonth;
     private int forYear;
 
+    public OperatingExpenseUpdatedEvent() {
+    }
+
     public ExpenseType getExpenseType() {
         return expenseType;
     }

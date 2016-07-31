@@ -6,23 +6,23 @@ import org.joda.time.LocalDate;
  * Created by anayonkar on 29/4/16.
  */
 public class CreateProvisionCommand {
-    private double provisionForPurchaseCost;
-    private double provisionForLosses;
-    private double provisionForBenefits;
-    private double provisionForTaxes;
-    private double provisionForOthers;
-    private double provisionForCommonExpenses;
-    private double provisionForSubscriptionSpecificExpenses;
+    private Double provisionForPurchaseCost;
+    private Double provisionForLosses;
+    private Double provisionForBenefits;
+    private Double provisionForTaxes;
+    private Double provisionForOthers;
+    private Double provisionForCommonExpenses;
+    private Double provisionForSubscriptionSpecificExpenses;
     private LocalDate provisionDate;
     private String businessAccountId;
 
-    public CreateProvisionCommand(double provisionForPurchaseCost,
-                                  double provisionForLosses,
-                                  double provisionForBenefits,
-                                  double provisionForTaxes,
-                                  double provisionForOthers,
-                                  double provisionForCommonExpenses,
-                                  double provisionForSubscriptionSpecificExpenses,
+    public CreateProvisionCommand(Double provisionForPurchaseCost,
+                                  Double provisionForLosses,
+                                  Double provisionForBenefits,
+                                  Double provisionForTaxes,
+                                  Double provisionForOthers,
+                                  Double provisionForCommonExpenses,
+                                  Double provisionForSubscriptionSpecificExpenses,
                                   LocalDate provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
@@ -35,7 +35,7 @@ public class CreateProvisionCommand {
         businessAccountId = Integer.valueOf(provisionDate.getYear()).toString();
     }
 
-    public double getProvisionForLosses() {
+    public Double getProvisionForLosses() {
         return provisionForLosses;
     }
 
@@ -43,7 +43,7 @@ public class CreateProvisionCommand {
         this.provisionForLosses = provisionForLosses;
     }
 
-    public double getProvisionForPurchaseCost() {
+    public Double getProvisionForPurchaseCost() {
         return provisionForPurchaseCost;
     }
 
@@ -51,7 +51,7 @@ public class CreateProvisionCommand {
         return provisionDate;
     }
 
-    public void setProvisionForPurchaseCost(double provisionForPurchaseCost) {
+    public void setProvisionForPurchaseCost(Double provisionForPurchaseCost) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
     }
 
@@ -63,43 +63,43 @@ public class CreateProvisionCommand {
         return businessAccountId;
     }
 
-    public double getProvisionForBenefits() {
+    public Double getProvisionForBenefits() {
         return provisionForBenefits;
     }
 
-    public void setProvisionForBenefits(double provisionForBenefits) {
+    public void setProvisionForBenefits(Double provisionForBenefits) {
         this.provisionForBenefits = provisionForBenefits;
     }
 
-    public double getProvisionForTaxes() {
+    public Double getProvisionForTaxes() {
         return provisionForTaxes;
     }
 
-    public void setProvisionForTaxes(double provisionForTaxes) {
+    public void setProvisionForTaxes(Double provisionForTaxes) {
         this.provisionForTaxes = provisionForTaxes;
     }
 
-    public double getProvisionForOthers() {
+    public Double getProvisionForOthers() {
         return provisionForOthers;
     }
 
-    public void setProvisionForOthers(double provisionForOthers) {
+    public void setProvisionForOthers(Double provisionForOthers) {
         this.provisionForOthers = provisionForOthers;
     }
 
-    public double getProvisionForCommonExpenses() {
+    public Double getProvisionForCommonExpenses() {
         return provisionForCommonExpenses;
     }
 
-    public void setProvisionForCommonExpenses(double provisionForCommonExpenses) {
+    public void setProvisionForCommonExpenses(Double provisionForCommonExpenses) {
         this.provisionForCommonExpenses = provisionForCommonExpenses;
     }
 
-    public double getProvisionForSubscriptionSpecificExpenses() {
+    public Double getProvisionForSubscriptionSpecificExpenses() {
         return provisionForSubscriptionSpecificExpenses;
     }
 
-    public void setProvisionForSubscriptionSpecificExpenses(double provisionForSubscriptionSpecificExpenses) {
+    public void setProvisionForSubscriptionSpecificExpenses(Double provisionForSubscriptionSpecificExpenses) {
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
     }
 }

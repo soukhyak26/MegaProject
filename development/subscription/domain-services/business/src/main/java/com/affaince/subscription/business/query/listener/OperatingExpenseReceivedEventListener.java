@@ -3,7 +3,6 @@ package com.affaince.subscription.business.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.business.command.OperatingExpenseReceivedCommand;
 import com.affaince.subscription.business.command.event.OperatingExpenseReceivedEvent;
-import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

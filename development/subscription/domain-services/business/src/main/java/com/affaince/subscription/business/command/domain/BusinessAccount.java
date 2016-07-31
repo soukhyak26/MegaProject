@@ -2,10 +2,12 @@ package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.accounting.*;
 import com.affaince.subscription.business.command.event.CreateProvisionEvent;
+import com.affaince.subscription.business.exception.ProvisionNotCreatedException;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.TimeBoundMoney;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
@@ -30,31 +32,51 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     private long totalSubscriptionsRegistered;
 
     //EXPENSES
+    @EventSourcedMember
     private PurchaseCostAccount purchaseCostAccount;
+    @EventSourcedMember
     private LossesAccount lossesAccount;
+    @EventSourcedMember
     private BenefitsAccount benefitsAccount;
+    @EventSourcedMember
     private TaxesAccount taxesAccount;
+    @EventSourcedMember
     private OthersAccount othersAccount;
+    @EventSourcedMember
     private CommonExpensesAccount commonExpensesAccount;
+    @EventSourcedMember
     private NodalAccount nodalAccount;
+    @EventSourcedMember
     private BookingAmountAccount bookingAmountAccount;
+    @EventSourcedMember
     private SubscriptionSpecificExpensesAccount subscriptionSpecificExpensesAccount;
 
     //PROVISIONS
+    @EventSourcedMember
     private PurchaseCostAccount provisionalPurchaseCostAccount;
+    @EventSourcedMember
     private LossesAccount provisionalLossesAccount;
+    @EventSourcedMember
     private BenefitsAccount provisionalBenefitsAccount;
+    @EventSourcedMember
     private TaxesAccount provisionalTaxesAccount;
+    @EventSourcedMember
     private OthersAccount provisionalOthersAccount;
+    @EventSourcedMember
     private CommonExpensesAccount provisionalCommonExpensesAccount;
+    @EventSourcedMember
     private SubscriptionSpecificExpensesAccount provisionalSubscriptionSpecificExpensesAccount;
 
     //GAINS
+    @EventSourcedMember
     private RevenueAccount revenueAccount;
+    @EventSourcedMember
     private InterestsAccount interestsGainAccount;
 
 
     private LocalDate dateForProvision;
+
+    private static final String INIT_ERROR_MESSAGE = "Please make sure that BusinessAccount aggregate is properly created via CreateProvisionEvent";
 
     public BusinessAccount() {
 
@@ -82,38 +104,58 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void adjustPurchaseCost(double totalPurchaseCost) {
-        this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
-        this.purchaseCostAccount.fireCreditedEvent(this.id, totalPurchaseCost);
+        try {
+            this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
+            this.purchaseCostAccount.fireCreditedEvent(this.id, totalPurchaseCost);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
     }
 
     public void adjustOperatingExpenses(ExpenseType expenseType, double expenseAmount) {
-        switch (expenseType) {
-            case COMMON_EXPENSE:
-                this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                this.commonExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
-                break;
-            case SUBSCRIPTION_SPECIFIC_EXPENSE:
-                this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                this.subscriptionSpecificExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
-                break;
-            default:
-                //TODO : error handling
+        try {
+            switch (expenseType) {
+                case COMMON_EXPENSE:
+                    this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                    this.commonExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
+                    break;
+                case SUBSCRIPTION_SPECIFIC_EXPENSE:
+                    this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                    this.subscriptionSpecificExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
+                    break;
+                default:
+                    //TODO : error handling
+            }
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
 
     public void adjustBookingAmount(double bookingAmount) {
-        this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
+        try {
+            this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
     }
 
     public void adjustBasketAndDeliveryAmount(double basketAmount, double deliveryAmount) {
-        this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
-        this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
-        adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
+        try {
+            this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
+            this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
+            adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
     }
 
     public void adjustBenefits(double benefitAmount) {
-        this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
-        this.benefitsAccount.fireCreditedEvent(this.id, benefitAmount);
+        try {
+            this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
+            this.benefitsAccount.fireCreditedEvent(this.id, benefitAmount);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
     }
 
     @EventSourcingHandler
@@ -138,11 +180,22 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.provisionalTaxesAccount = new TaxesAccount(event.getProvisionForTaxes(), dateForProvision);
         this.provisionalOthersAccount = new OthersAccount(event.getProvisionForOthers(), dateForProvision);
         this.provisionalCommonExpensesAccount = new CommonExpensesAccount(event.getProvisionForCommonExpenses(), dateForProvision);
-        this.subscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(event.getProvisionForSubscriptionSpecificExpenses(), dateForProvision);
+        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(event.getProvisionForSubscriptionSpecificExpenses(), dateForProvision);
 
         this.revenueAccount = new RevenueAccount(0, dateForProvision);
         this.interestsGainAccount = new InterestsAccount(0, dateForProvision);
     }
+
+    /*private void validateInitialization(Object... inputs) {
+        if(inputs == null) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE);
+        }
+        for(Object input : inputs) {
+            if(input == null) {
+                throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE);
+            }
+        }
+    }*/
 
     public String getId() {
         return id;

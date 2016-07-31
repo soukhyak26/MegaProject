@@ -13,6 +13,9 @@ public class CommonExpenseCreatedEvent {
     private SensitivityCharacteristic sensitivityCharacteristic;
     private YearMonth monthOfYear;
 
+    public CommonExpenseCreatedEvent() {
+    }
+
     public CommonExpenseCreatedEvent(String id, String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic, YearMonth monthOfYear) {
         this.commonOperatingExpenseId = id;
         this.expenseHeader = expenseHeader;

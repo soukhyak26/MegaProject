@@ -16,6 +16,9 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private double deliveryCharges;
     private double totalDeliveryPrice;
 
+    public DeliveryStatusAndDispatchDateUpdatedEvent() {
+    }
+
     public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
@@ -24,9 +27,6 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
         this.itemDispatchStatuses = itemDispatchStatuses;
         this.deliveryCharges = deliveryCharges;
         this.totalDeliveryPrice = totalDeliveryPrice;
-    }
-
-    public DeliveryStatusAndDispatchDateUpdatedEvent() {
     }
 
     public String getSubscriptionId() {

@@ -10,18 +10,23 @@ import java.util.List;
 public class DeliveryStatusAndDispatchDateUpdatedCommand {
     private String subscriptionId;
     private String basketId;
-    private int basketDeliveryStatus;
+    private Integer basketDeliveryStatus;
     private String dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
-    private double deliveryCharges;
-    private double totalDeliveryPrice;
+    private Double deliveryCharges;
+    private Double totalDeliveryPrice;
 
-    public DeliveryStatusAndDispatchDateUpdatedCommand(String subscriptionId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
+    public DeliveryStatusAndDispatchDateUpdatedCommand(String subscriptionId, String basketId, Integer basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, Double deliveryCharges, Double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
         this.dispatchDate = dispatchDate;
         this.itemDispatchStatuses = itemDispatchStatuses;
+        this.deliveryCharges = deliveryCharges;
+        this.totalDeliveryPrice = totalDeliveryPrice;
+    }
+
+    public DeliveryStatusAndDispatchDateUpdatedCommand(Double deliveryCharges, Double totalDeliveryPrice) {
         this.deliveryCharges = deliveryCharges;
         this.totalDeliveryPrice = totalDeliveryPrice;
     }
@@ -34,7 +39,7 @@ public class DeliveryStatusAndDispatchDateUpdatedCommand {
         return basketId;
     }
 
-    public int getBasketDeliveryStatus() {
+    public Integer getBasketDeliveryStatus() {
         return basketDeliveryStatus;
     }
 
@@ -46,11 +51,11 @@ public class DeliveryStatusAndDispatchDateUpdatedCommand {
         return itemDispatchStatuses;
     }
 
-    public double getDeliveryCharges() {
+    public Double getDeliveryCharges() {
         return deliveryCharges;
     }
 
-    public double getTotalDeliveryPrice() {
+    public Double getTotalDeliveryPrice() {
         return totalDeliveryPrice;
     }
 }

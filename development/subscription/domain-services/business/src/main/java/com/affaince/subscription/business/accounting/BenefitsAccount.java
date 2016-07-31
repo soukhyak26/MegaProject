@@ -2,7 +2,6 @@ package com.affaince.subscription.business.accounting;
 
 import com.affaince.subscription.business.command.event.BenefitCreditedEvent;
 import com.affaince.subscription.business.command.event.BenefitDebitedEvent;
-import com.affaince.subscription.business.command.event.CreditedEvent;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 

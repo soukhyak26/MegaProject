@@ -1,6 +1,5 @@
 package com.affaince.subscription.business.query.listener;
 
-import com.affaince.subscription.business.command.event.CreateProvisionEvent;
 import com.affaince.subscription.business.command.event.PurchaseCostDebitedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
