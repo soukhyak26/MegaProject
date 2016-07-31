@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.query.view;
 
+import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.subscriber.vo.RangeRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -14,21 +15,21 @@ import java.util.List;
 @Document(collection = "DeliveryChargesRuleView")
 public class DeliveryChargesRuleView {
     @Id
-    private int ruleId;
+    private DeliveryChargesRuleType ruleId;
     private List <RangeRule> rangeRules;
     @Autowired
     private Currency currency;
 
-    public DeliveryChargesRuleView(int ruleId, List<RangeRule> rangeRules) {
+    public DeliveryChargesRuleView(DeliveryChargesRuleType ruleId, List<RangeRule> rangeRules) {
         this.ruleId = ruleId;
         this.rangeRules = rangeRules;
     }
 
-    public int getRuleId() {
+    public DeliveryChargesRuleType getRuleId() {
         return ruleId;
     }
 
-    public void setRuleId(int ruleId) {
+    public void setRuleId(DeliveryChargesRuleType ruleId) {
         this.ruleId = ruleId;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class DeliveryChargesRule extends AbstractAnnotatedAggregateRoot <Integer>{
     @AggregateIdentifier
-    private Integer ruleId;
+    private DeliveryChargesRuleType ruleId;
     private List<RangeRule> deliveryChargesRules;
 
     public DeliveryChargesRule(Integer ruleId, List<RangeRule> deliveryChargesRules) {
@@ -26,7 +26,7 @@ public class DeliveryChargesRule extends AbstractAnnotatedAggregateRoot <Integer
 
     @EventSourcingHandler
     public void on (DeliveryChargesRuleAddedEvent event) {
-        this.ruleId = event.getRuleId().getDeliveryChargesRuleTypeCode();
+        this.ruleId = DeliveryChargesRuleType.valueOf(event.getRuleId().getDeliveryChargesRuleTypeCode());
         this.deliveryChargesRules = event.getDeliveryChargesRules();
     }
 

@@ -23,7 +23,7 @@ public class DeliveryChargesRuleAddedEventListener {
     @EventHandler
     public void on (DeliveryChargesRuleAddedEvent event) {
         final DeliveryChargesRuleView deliveryChargesRuleView = new DeliveryChargesRuleView(
-                event.getRuleId().getDeliveryChargesRuleTypeCode(), event.getDeliveryChargesRules()
+                event.getRuleId(), event.getDeliveryChargesRules()
         );
         deliveryChargesRuleViewRepository.save(deliveryChargesRuleView);
     }

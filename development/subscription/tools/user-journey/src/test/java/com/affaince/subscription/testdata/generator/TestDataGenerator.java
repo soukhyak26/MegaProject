@@ -100,9 +100,12 @@ public class TestDataGenerator {
 	public void generateData() throws IOException{
 		
 		final String SEPARATOR = ",";
-		
-		File file = new File("resources\\product.csv");
-		
+
+		File file = new File("c:/tmp/product1.csv");
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		
 		loadProductData();
