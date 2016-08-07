@@ -30,23 +30,25 @@ public class ProductForecastMetricsViewRepositoryTest {
     public void init() throws FileNotFoundException {
         //MockitoAnnotations.initMocks(this);
         productForecastMetricsViewRepository.deleteAll();
-        List <ProductForecastMetricsView> productActualMetricsViewList= new ArrayList<>();
+        for (int k=0;k<=1000;k++) {
+            List<ProductForecastMetricsView> productActualMetricsViewList = new ArrayList<>();
 
-        BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
-        long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
+            BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
+            long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        forecastView.setTotalNumberOfExistingSubscriptions(1250);
-        LocalDate localDate = new LocalDate(2016, 1, 1);
-        for (int i = 0; i < readings.length; i++) {
-            localDate = localDate.plusDays(1);
-            ProductForecastMetricsView actualMetrics = new ProductForecastMetricsView(new ProductVersionId("1", localDate), new LocalDate(9999, 12, 31));
-            actualMetrics.setNewSubscriptions(readings[i][0]);
-            actualMetrics.setChurnedSubscriptions(readings[i][1]);
-            productActualMetricsViewList.add(actualMetrics);
-            //productForecastMetricsViewRepository.save(actualMetrics);
+            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product"+k, new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+            forecastView.setTotalNumberOfExistingSubscriptions(1250);
+            LocalDate localDate = new LocalDate(2016, 1, 1);
+            for (int i = 0; i < readings.length; i++) {
+                localDate = localDate.plusDays(1);
+                ProductForecastMetricsView actualMetrics = new ProductForecastMetricsView(new ProductVersionId("product"+k, localDate), new LocalDate(9999, 12, 31));
+                actualMetrics.setNewSubscriptions(readings[i][0]);
+                actualMetrics.setChurnedSubscriptions(readings[i][1]);
+                productActualMetricsViewList.add(actualMetrics);
+                //productForecastMetricsViewRepository.save(actualMetrics);
+            }
+            productForecastMetricsViewRepository.save(productActualMetricsViewList);
         }
-        productForecastMetricsViewRepository.save(productActualMetricsViewList);
         //Mockito.when(productForecastMetricsViewRepository.findAll()).thenReturn(testViewList);
     }
     @Test

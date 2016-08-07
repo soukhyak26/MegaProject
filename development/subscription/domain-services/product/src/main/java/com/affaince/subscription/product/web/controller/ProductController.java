@@ -14,6 +14,8 @@ import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.vo.ForecastedPriceParameter;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -157,9 +159,11 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     @Produces("application/json")
-    public ResponseEntity <List <ProductView>> getAllProducts () {
+    public String getAllProducts () throws JsonProcessingException {
         final List <ProductView> productViews = new ArrayList<>();
         productViewRepository.findAll().forEach(productView -> productViews.add(productView));
-        return new ResponseEntity<List<ProductView>>(productViews, HttpStatus.OK);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(productViews);
+        //return new ResponseEntity<List<ProductView>>(productViews, HttpStatus.OK);
     }
 }

@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.QuantityUnit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,30 +20,13 @@ public class ProductView {
     private String subCategoryId;
     private long quantity;
     private QuantityUnit quantityUnit;
-    private List<String> substitutes;
-    private List<String> complements;
+    private String [] substitutes;
+    private String [] complements;
     private double currentOperatingExpensePerUnit;
     private long currentStockInUnits;
     private int productPricingCategory;
     private int creditPoints;
     private double targetMonthlyConsumption;
-
-
-    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, double currentOperatingExpensePerUnit, long currentStockInUnits, int productPricingCategory, int creditPoints, double targetMonthlyConsumption) {
-        this.productId = productId;
-        this.productName = productName;
-        this.categoryId = categoryId;
-        this.subCategoryId = subCategoryId;
-        this.quantity = quantity;
-        this.quantityUnit = quantityUnit;
-        this.substitutes = substitutes;
-        this.complements = complements;
-        this.currentOperatingExpensePerUnit = currentOperatingExpensePerUnit;
-        this.currentStockInUnits = currentStockInUnits;
-        this.productPricingCategory = productPricingCategory;
-        this.creditPoints = creditPoints;
-        this.targetMonthlyConsumption = targetMonthlyConsumption;
-    }
 
     public String getProductId() {
         return productId;
@@ -93,18 +77,18 @@ public class ProductView {
     }
 
     public List<String> getSubstitutes() {
-        return substitutes;
+        return Arrays.asList(substitutes);
     }
 
-    public void setSubstitutes(List<String> substitutes) {
+    public void setSubstitutes(String[] substitutes) {
         this.substitutes = substitutes;
     }
 
     public List<String> getComplements() {
-        return complements;
+        return Arrays.asList(complements);
     }
 
-    public void setComplements(List<String> complements) {
+    public void setComplements(String[] complements) {
         this.complements = complements;
     }
 

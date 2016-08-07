@@ -1,9 +1,11 @@
 package com.affaince.subscription.expensedistribution.query.view;
 
+import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 
@@ -13,29 +15,24 @@ import java.util.List;
 @Document(collection = "DeliveryChargesRuleView")
 public class DeliveryChargesRuleView {
     @Id
-    private int ruleId;
-    private List<RangeRule> rangeRules;
+    private DeliveryChargesRuleType ruleId;
+    private RangeRule[] rangeRules;
     @Autowired
     private Currency currency;
 
-    public DeliveryChargesRuleView(int ruleId, List<RangeRule> rangeRules) {
-        this.ruleId = ruleId;
-        this.rangeRules = rangeRules;
-    }
-
-    public int getRuleId() {
+    public DeliveryChargesRuleType getRuleId() {
         return ruleId;
     }
 
-    public void setRuleId(int ruleId) {
+    public void setRuleId(DeliveryChargesRuleType ruleId) {
         this.ruleId = ruleId;
     }
 
     public List<RangeRule> getRangeRules() {
-        return rangeRules;
+        return Arrays.asList(rangeRules);
     }
 
-    public void setRangeRules(List<RangeRule> rangeRules) {
+    public void setRangeRules(RangeRule[] rangeRules) {
         this.rangeRules = rangeRules;
     }
 

@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by rsavaliya on 21/1/16.
  */
 public interface DeliveryChargesRuleViewRepository extends CrudRepository<DeliveryChargesRuleView, DeliveryChargesRuleType> {
-
+    DeliveryChargesRuleView findByRuleId (DeliveryChargesRuleType ruleId);
 }

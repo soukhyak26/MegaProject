@@ -1,13 +1,18 @@
-package com.affaince.subscription.expensedistribution.query.view;
+package com.affaince.subscription.product.query.view;
 
 /**
  * Created by mandark on 28-01-2016.
  */
-public class ProductForecastMetricsView {
-    //private final ProductMonthlyVersionId productMonthlyVersionId;
+public class ProductForecastMetricsForOpExView {
     private String productId;
     private double mrp;
     private long totalNumberOfExistingSubscriptions;
+
+    public ProductForecastMetricsForOpExView(String productId, double mrp, long totalNumberOfExistingSubscriptions) {
+        this.productId = productId;
+        this.mrp = mrp;
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
+    }
 
     public String getProductId() {
         return productId;

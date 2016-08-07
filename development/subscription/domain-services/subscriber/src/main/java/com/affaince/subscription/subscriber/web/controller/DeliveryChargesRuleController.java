@@ -1,17 +1,17 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.subscriber.command.AddDeliveryChargesRuleCommand;
 import com.affaince.subscription.subscriber.query.repository.DeliveryChargesRuleViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.subscriber.web.request.DeliveryChargesRulesRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -51,5 +51,12 @@ public class DeliveryChargesRuleController {
         final List<DeliveryChargesRuleView> deliveryChargesRuleViews = new ArrayList<>();
         deliveryChargesRuleViewRepository.findAll().forEach(deliveryChargesRuleView -> deliveryChargesRuleViews.add(deliveryChargesRuleView));
         return new ResponseEntity<List<DeliveryChargesRuleView>>(deliveryChargesRuleViews, HttpStatus.OK);
+    }
+
+    @RequestMapping (method = RequestMethod.GET, value = "{ruleId}")
+    public String findDeliveryChargesRulesById (@PathVariable("ruleId") Integer ruleId) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(
+                deliveryChargesRuleViewRepository.findByRuleId(DeliveryChargesRuleType.valueOf(ruleId)));
     }
 }

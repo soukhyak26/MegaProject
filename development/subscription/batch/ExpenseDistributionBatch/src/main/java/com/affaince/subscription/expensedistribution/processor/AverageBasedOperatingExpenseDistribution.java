@@ -57,7 +57,8 @@ public class AverageBasedOperatingExpenseDistribution {
             ProductWiseDeliveryStats productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
             productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
             for (ProductForecastMetricsView productForecastMetricsView : productForecastMetricsViews) {
-                productWiseDeliveryStats.addMRP(productForecastMetricsView.getTaggedPriceVersions().first().getMRP());
+               // productWiseDeliveryStats.addMRP(productForecastMetricsView.getTaggedPriceVersions().first().getMRP());
+                productWiseDeliveryStats.addMRP(80);
                 productWiseDeliveryStats.addUnitSold(
                         productForecastMetricsView.getTotalNumberOfExistingSubscriptions()
                 );

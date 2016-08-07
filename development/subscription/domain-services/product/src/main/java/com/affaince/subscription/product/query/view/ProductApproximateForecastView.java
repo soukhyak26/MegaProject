@@ -5,9 +5,6 @@ import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 /**
  * Created by mandar on 10-07-2016.
  */

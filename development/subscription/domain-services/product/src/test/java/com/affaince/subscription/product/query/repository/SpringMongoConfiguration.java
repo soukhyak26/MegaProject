@@ -1,13 +1,14 @@
 package com.affaince.subscription.product.query.repository;
 
-import com.affaince.subscription.common.idconverter.*;
+import com.affaince.subscription.common.idconverter.LocalDateReadingConverter;
+import com.affaince.subscription.common.idconverter.LocalDateWritingConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,8 @@ import java.util.List;
 /**
  * Created by mandar on 02-07-2016.
  */
-@Configuration
-@EnableMongoRepositories
+//@Configuration
+//@EnableMongoRepositories
 public class SpringMongoConfiguration {
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
