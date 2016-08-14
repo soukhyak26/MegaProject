@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.command.domain;
 
-import com.affaince.subscription.common.type.Period;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
 /**
@@ -8,32 +7,49 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
  */
 public class ProductConfiguration extends AbstractAnnotatedEntity {
     //private Period demandCurvePeriod;
+    //whether to aggregate daily actuals for daily/weekly/monthly/quarterly Forecast
+    private int actualsAggregationPeriodForTargetForecast = 30;
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
-    public void setDemandCurvePeriod(Period demandCurvePeriod) {
-        //this.demandCurvePeriod = demandCurvePeriod;
+    public int getActualsAggregationPeriodForTargetForecast() {
+        return actualsAggregationPeriodForTargetForecast;
+    }
+
+    public void setActualsAggregationPeriodForTargetForecast(int actualsAggregationPeriodForTargetForecast) {
+        this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
+    }
+
+    public short getRevenueChangeThresholdForPriceChange() {
+        return revenueChangeThresholdForPriceChange;
     }
 
     public void setRevenueChangeThresholdForPriceChange(short revenueChangeThresholdForPriceChange) {
         this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
     }
 
+    public boolean isCrossPriceElasticityConsidered() {
+        return isCrossPriceElasticityConsidered;
+    }
 
     public void setCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
         isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;
+    }
+
+    public boolean isAdvertisingExpensesConsidered() {
+        return isAdvertisingExpensesConsidered;
     }
 
     public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
     }
 
-/*
+    /*
     public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
         this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
-    }
+s    }
 */
 
 /*

@@ -35,7 +35,7 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
 
         List<FunctionCoefficients> demandAndCostFunctionCoefficients = priceDeterminationCriteria.getListOfCriteriaElements();
 
-        //who will set demand function coefficient
+        //who will set demand function coefficient??
         FunctionCoefficients demandFunctionCoefficients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.DEMAND_FUNCTION_COEFFICIENT)).findFirst().get();
         final String productId = demandFunctionCoefficients.getProductId();
 

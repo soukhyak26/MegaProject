@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class ProductConfigurationSetEvent {
     private String productId;
-    private Period demandCurvePeriod;
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
@@ -18,7 +17,6 @@ public class ProductConfigurationSetEvent {
 
     public ProductConfigurationSetEvent(String productId, Period demandCurvePeriod, short revenueChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
         this.productId = productId;
-        this.demandCurvePeriod = demandCurvePeriod;
         this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
@@ -32,9 +30,6 @@ public class ProductConfigurationSetEvent {
         return productId;
     }
 
-    public Period getDemandCurvePeriod() {
-        return demandCurvePeriod;
-    }
 
     public short getRevenueChangeThresholdForPriceChange() {
         return revenueChangeThresholdForPriceChange;

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by mandark on 28-01-2016.
  */
-public class ProductVersionId implements Serializable {
+public class ProductVersionId implements Serializable, Comparable<ProductVersionId> {
     private String productId;
     private LocalDate fromDate;
 
@@ -39,5 +39,10 @@ public class ProductVersionId implements Serializable {
                 "productId='" + productId + '\'' +
                 ", fromDate=" + fromDate +
                 '}';
+    }
+
+    @Override
+    public int compareTo(ProductVersionId o) {
+        return this.getFromDate().compareTo(o.getFromDate());
     }
 }

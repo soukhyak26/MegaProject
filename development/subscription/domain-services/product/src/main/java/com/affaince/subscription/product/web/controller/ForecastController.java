@@ -5,11 +5,7 @@ import com.affaince.subscription.product.command.UpdateForecastFromActualsComman
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsForOpExView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
-import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,18 +31,14 @@ import java.util.List;
 public class ForecastController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-
+    @Autowired
+    ProductViewRepository productViewRepository;
     @Autowired
     private SubscriptionCommandGateway commandGateway;
     @Autowired
     private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
     @Autowired
     private ProductActualMetricsViewRepository productActualMetricsViewRepository;
-
-    @Autowired
-    ProductViewRepository productViewRepository;
-    @Autowired
-    private DemandForecasterChain demandForecasterChain;
 
     @RequestMapping(method= RequestMethod.GET, value="/findall")
     @Produces("application/json")
@@ -60,23 +52,17 @@ public class ForecastController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productId}")
     public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId) throws Exception {
-        //demandForecasterChain.buildForecasterChain(productForecastMetricsViewRepository, productActualMetricsViewRepository);
         UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, org.joda.time.LocalDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/pricebucket/all")
-    public String findAllForecastedPriceBuckets() throws JsonProcessingException {
-        final List<ProductForecastMetricsForOpExView> productForecastMetricsForOpExViews = new ArrayList<>();
+    public ResponseEntity<List<ProductForecastMetricsView>> findAllForecastedPriceBuckets() {
+        final List<ProductForecastMetricsView> forecastedPriceBucketsViews = new ArrayList<>();
         productForecastMetricsViewRepository.findAll().forEach
-                (productForecastMetricsView -> productForecastMetricsForOpExViews.add(
-                        new ProductForecastMetricsForOpExView(productForecastMetricsView.getProductVersionId().getProductId()
-                        , productForecastMetricsView.getTaggedPriceVersions().first().getMRP()
-                        , productForecastMetricsView.getTotalNumberOfExistingSubscriptions())
-                ));
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(productForecastMetricsForOpExViews);
+                (productForecastMetricsView -> forecastedPriceBucketsViews.add(productForecastMetricsView));
+        return new ResponseEntity<List<ProductForecastMetricsView>>(forecastedPriceBucketsViews, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/productforecastmetrics/{productid}")

@@ -101,6 +101,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return productConfiguration;
     }
 
+    //for product administrator to configure product
     public void setProductConfiguration(SetProductConfigurationCommand command) {
         apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
                 command.getRevenueChangeThresholdForPriceChange(),
@@ -109,17 +110,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 command.getDemandWiseProfitSharingRules()));
     }
 
-/*
-    public DemandWiseProfitSharingRule findProfitSharingRuleByDemandDensity(double demandDensityPercentage) {
-        return getProductConfiguration().findDemandWiseProfitSharingRuleByDemandDensity(demandDensityPercentage);
-    }
-*/
 
     public double getLatestDemandDensity() {
         return getProductAccount().getLatestPerformanceTracker().getDemandDensity();
     }
 
-
+    //When product is "first time " registered by product administrator
     @EventSourcingHandler
     public void on(ProductRegisteredEvent event) {
         this.productId = event.getProductId();
@@ -133,7 +129,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productAccount = new ProductAccount();
     }
 
-    //Currently assuming it to be for actual price
+    //When the new actual offer price is recommended
+    //Expire current price bucket and register a new price bucket
     @EventSourcingHandler
     public void on(OfferedPriceUpdatedEvent event) {
         this.productId = event.getProductId();
@@ -145,34 +142,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
     }
 
-    //Currently assuming it to be for forecast
-/*
-    @EventSourcingHandler
-    public void on(ForecastParametersAddedEvent event) {
-        this.productId = event.getProductId();
-        this.calculationBasis = CalculationBasis.FORECAST;
-        final ForecastedPriceParameter priceParameter = event.getForecastedPriceParameter();
-        final LocalDate fromDate = new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1);
-        final LocalDate toDate = new LocalDate(fromDate.getYear(), fromDate.getMonthOfYear(), fromDate.dayOfMonth().getMaximumValue());
-
-        PriceBucket priceBucket = new PriceBucket(
-                priceParameter.getPurchasePricePerUnit(),
-                priceParameter.getMRP(),
-                fromDate,
-                toDate,
-                priceParameter.getNumberofNewSubscriptions(),
-                priceParameter.getNumberOfChurnedSubscriptions()
-        );
-        getProductAccount().addNewPriceBucket(new LocalDate(priceParameter.getMonthOfYear().get(DateTimeFieldType.year()), priceParameter.getMonthOfYear().get(DateTimeFieldType.monthOfYear()), 1), priceBucket);
-
-        ProductPerformanceTracker productPerformanceTracker = new ProductPerformanceTracker();
-        productPerformanceTracker.setFromDate(fromDate);
-        productPerformanceTracker.setDemandDensity(priceParameter.getDemandDensity());
-        getProductAccount().addPerformanceTracker(fromDate, productPerformanceTracker);
-    }
-*/
 
     //Only for actuals
+    //Product status should be received from main application.
+    //when the purchase price is changed --it should create new price bucket,by stalling all existing price buckets
     @EventSourcingHandler
     public void on(ProductStatusReceivedEvent event) {
         this.productId = event.getProductId();
@@ -183,6 +156,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
+
+    //Only for actuals
+    //Product status should be received from main application.
+    //when the purchase price is changed --it should create new price bucket,by stalling all existing price buckets
 
     @EventHandler
     public void on(ProductStatusUpdatedEvent event) {
@@ -196,11 +173,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
+    //Event for setting product configuration
     @EventSourcingHandler
     public void on(ProductConfigurationSetEvent event) {
         this.productId = event.getProductId();
         final ProductConfiguration productConfiguration = new ProductConfiguration();
-        productConfiguration.setDemandCurvePeriod(event.getDemandCurvePeriod());
+        // productConfiguration.setDemandCurvePeriod(event.getDemandCurvePeriod());
         productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
         productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
@@ -208,11 +186,13 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productConfiguration = productConfiguration;
     }
 
+    //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler
     @EventSourcingHandler
     public void on (SubscriptionForecastUpdatedEvent event) {
         this.productId = event.getProductId();
     }
 
+    //Product status should be received from main application
     public void updateProductStatus(UpdateProductStatusCommand command) {
         apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
@@ -222,6 +202,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
 
+    //When current offered price are set/overriden by product administrator.
+    //Ideally it should update latest price bucket with merchant overriden price.
+    //Some work is needed to be done on this API
     public void addCurrentOfferedPrice(double currentOfferedPrice) {
         apply(new CurrentOfferedPriceAddedEvent(this.productId, currentOfferedPrice));
     }
@@ -234,7 +217,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
     }
 
-    PriceBucket createPriceBucketForPriceCategory() {
+
+    private PriceBucket createPriceBucketForPriceCategory() {
         if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT) {
             return new PriceBucketForPercentDiscountCommitment();
         } else if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT) {
@@ -244,9 +228,22 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
+    //business logic to create forecast for a product and store it on read side.
+    //There are two forecasts to be created- one is daily forecast based on historical data until last day
+    //periodic (monthly,weekly,quarterly forecast) where forecast is created for current period( month,week,quarter) using historical data until last period.
+
     public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId);
+        DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId, getProductConfiguration().getActualsAggregationPeriodForTargetForecast());
         apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
+    }
+
+    @EventHandler
+    public void on(ProductSubscriptionRegisteredEvent productSubscriptionRegisteredEvent) {
+
+    }
+
+    public void on(ProductChurnRegisteredEvent productChurnRegisteredEvent) {
+
     }
 }
