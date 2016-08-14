@@ -13,7 +13,7 @@ import java.util.Map;
 public class ForecastingClient {
     @Value("${subscription.forecast.findproducts.url}")
     private static String findProductsUrl;
-    @Value("${subscription.forecast.forecast.url}")
+    @Value("${subscription.forecast.predictforecast.url}")
     private static String forecastUrl;
     @Value("${subscription.forecast.predictpseudoactual.url}")
     private static String pseudoActualUrl;

@@ -16,7 +16,7 @@ public class PricingClient {
     @Value("${subscription.pricing.url}")
     private static String pricingUrl;
 
-    public static void initiateForecast() {
+    public static void calculatePrice() {
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
         for (String productId : result) {

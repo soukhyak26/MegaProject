@@ -5,12 +5,14 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by mandark on 27-03-2016.
  */
+@Component
 public class OpeningPriceCalculator extends AbstractPriceCalculator {
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView) {
         //if price is entered by merchant but there is no subscription yet as the product is not active yet...

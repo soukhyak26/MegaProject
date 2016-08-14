@@ -17,9 +17,12 @@ public class ProductForecastView {
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
 
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate) {
-        this.productVersionId=productVersionId;
-        this.endDate=endDate;
+    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+        this.productVersionId = productVersionId;
+        this.endDate = endDate;
+        this.newSubscriptions = newSubscriptions;
+        this.churnedSubscriptions = churnedSubscriptions;
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
     public ProductVersionId getProductVersionId() {

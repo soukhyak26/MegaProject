@@ -7,31 +7,42 @@ import org.joda.time.LocalDate;
  */
 public class SubscriptionForecastUpdatedEvent {
     private final String productId;
-    private final LocalDate startDate;
-    private final long totalSubscriptionForecast;
+    private final LocalDate forecastStartDate;
+    private final LocalDate forecastEndDate;
+    private final long newSubscriptionForecast;
     private final long churnedSubscriptionForecast;
+    private final long forecastedTotalSubscriptionCount;
 
-    public SubscriptionForecastUpdatedEvent(String productId, LocalDate startDate, long totalSubscriptionForecast, long churnedSubscriptionForecast) {
+    public SubscriptionForecastUpdatedEvent(String productId, LocalDate forecastStartDate, LocalDate forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
         this.productId = productId;
-        this.startDate = startDate;
-        this.totalSubscriptionForecast = totalSubscriptionForecast;
+        this.forecastStartDate = forecastStartDate;
+        this.forecastEndDate = forecastEndDate;
+        this.newSubscriptionForecast = newSubscriptionForecast;
         this.churnedSubscriptionForecast = churnedSubscriptionForecast;
-
+        this.forecastedTotalSubscriptionCount = forecastedTotalSubscriptionCount;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getForecastStartDate() {
+        return forecastStartDate;
     }
 
-    public long getTotalSubscriptionForecast() {
-        return totalSubscriptionForecast;
+    public LocalDate getForecastEndDate() {
+        return forecastEndDate;
+    }
+
+    public long getNewSubscriptionForecast() {
+        return newSubscriptionForecast;
     }
 
     public long getChurnedSubscriptionForecast() {
         return churnedSubscriptionForecast;
+    }
+
+    public long getForecastedTotalSubscriptionCount() {
+        return forecastedTotalSubscriptionCount;
     }
 }

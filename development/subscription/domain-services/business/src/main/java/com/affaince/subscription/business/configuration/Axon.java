@@ -3,7 +3,7 @@ package com.affaince.subscription.business.configuration;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
 import com.affaince.subscription.business.command.event.*;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends ActiveMQConfiguration {
 
 
     @Bean

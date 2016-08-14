@@ -8,12 +8,14 @@ import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDate;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by mandark on 24-04-2016.
  */
+@Component
 public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView) {
