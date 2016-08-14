@@ -37,7 +37,7 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
                 startDate = productActualsView.getProductVersionId().getFromDate();
                 endDate = productActualsView.getEndDate();
                 if (null == aggregatedView) {
-                    aggregatedView = new ProductActualsView(new ProductVersionId(productId, startDate.minusDays(period)), endDate);
+                    aggregatedView = new ProductActualsView(new ProductVersionId(productId, startDate), endDate.plusDays(period));
                 }
                 aggregatedView = productActualsView.visit(aggregatedView);
             }
