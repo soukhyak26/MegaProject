@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.aggregators;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.services.Comparator.ProductAcualsViewReversedComparatorOnLocalDate;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -22,10 +23,10 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
         List<ProductActualsView> aggregateViewList = new ArrayList<>();
         //are product actuals view sorted??
 
-        Collections.sort(historicalData);
-        for (int periodIndex = 0; periodIndex < historicalData.size() % period; periodIndex++) {
+        Collections.sort(historicalData, new ProductAcualsViewReversedComparatorOnLocalDate());
+        for (int periodIndex = 1; periodIndex <= historicalData.size() / period; periodIndex++) {
             ProductActualsView aggregatedView = null;
-            for (int index = period; index <= 0; index--) {
+            for (int index = (period*periodIndex-1); index >= period*(periodIndex-1); index--) {
                 ProductActualsView productActualsView = historicalData.get(index);
                 if (null == productId) {
                     productId = productActualsView.getProductVersionId().getProductId();
