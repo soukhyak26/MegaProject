@@ -238,6 +238,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
     }
 
+    public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
+        //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
+        DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId, 1);
+        apply(new SubscriptionPseudoActualsUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
+    }
+
     @EventHandler
     public void on(ProductSubscriptionRegisteredEvent productSubscriptionRegisteredEvent) {
 
