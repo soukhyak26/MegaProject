@@ -24,6 +24,9 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
         //are product actuals view sorted??
 
         Collections.sort(historicalData, new ProductAcualsViewReversedComparatorOnLocalDate());
+        if (period == 1) {
+            return historicalData;
+        }
         for (int periodIndex = 1; periodIndex <= historicalData.size() / period; periodIndex++) {
             ProductActualsView aggregatedView = null;
             for (int index = (period*periodIndex-1); index >= period*(periodIndex-1); index--) {
@@ -31,20 +34,14 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
                 if (null == productId) {
                     productId = productActualsView.getProductVersionId().getProductId();
                 }
-                if (null == startDate) {
-                    startDate = productActualsView.getProductVersionId().getFromDate();
-                }
-                if (index == 0) {
-                    endDate = productActualsView.getEndDate();
-                }
+                startDate = productActualsView.getProductVersionId().getFromDate();
+                endDate = productActualsView.getEndDate();
                 if (null == aggregatedView) {
-                    aggregatedView = new ProductActualsView(new ProductVersionId(productId, startDate), endDate);
+                    aggregatedView = new ProductActualsView(new ProductVersionId(productId, startDate.minusDays(period)), endDate);
                 }
                 aggregatedView = productActualsView.visit(aggregatedView);
             }
             aggregateViewList.add(aggregatedView);
-            startDate = null;
-            endDate = null;
         }
         return aggregateViewList;
     }

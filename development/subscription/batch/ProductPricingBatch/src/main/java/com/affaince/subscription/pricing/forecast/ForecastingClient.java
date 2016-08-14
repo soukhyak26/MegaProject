@@ -14,7 +14,9 @@ public class ForecastingClient {
     @Value("${subscription.forecast.findproducts.url}")
     private static String findProductsUrl;
     @Value("${subscription.forecast.forecast.url}")
-    private static String forcastUrl;
+    private static String forecastUrl;
+    @Value("${subscription.forecast.predictpseudoactual.url}")
+    private static String pseudoActualUrl;
 
     public static void initiateForecast(){
         RestTemplate restTemplate = new RestTemplate();
@@ -22,7 +24,18 @@ public class ForecastingClient {
         for (String productId : result) {
             Map<String, String> params = new HashMap<String, String>();
             params.put("productid", productId);
-            restTemplate.put(forcastUrl, params);
+            restTemplate.put(forecastUrl, params);
         }
     }
+
+    public static void initiatePseudoActual() {
+        RestTemplate restTemplate = new RestTemplate();
+        ArrayList<String> result = restTemplate.getForObject(pseudoActualUrl, ArrayList.class);
+        for (String productId : result) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("productid", productId);
+            restTemplate.put(forecastUrl, params);
+        }
+    }
+
 }

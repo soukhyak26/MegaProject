@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;

@@ -8,8 +8,6 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.CalculatorChain;
-import com.affaince.subscription.product.services.pricing.processor.calculator.classic.OpeningPriceCalculator;
-import com.affaince.subscription.product.services.pricing.processor.calculator.classic.SingleHistoryPriceCalculator;
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
 import com.affaince.subscription.product.vo.PriceDeterminationCriteria;
@@ -20,11 +18,13 @@ import java.util.List;
 
 public class DefaultPriceDeterminator implements PriceDeterminator {
     @Autowired
-    PriceBucketViewRepository priceBucketViewRepository;
+    private PriceBucketViewRepository priceBucketViewRepository;
     @Autowired
-    ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
     @Autowired
-    ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    @Autowired
+    private CalculatorChain calculatorChain;
 
     public DefaultPriceDeterminator() {
 
@@ -44,9 +44,6 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         ProductActualMetricsView productActualMetricsView = productActualMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
         ProductForecastMetricsView productForecastMetricsView = productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
-        CalculatorChain calculatorChain = new CalculatorChain();
-        calculatorChain.addCalculator(new OpeningPriceCalculator());
-        calculatorChain.addCalculator(new SingleHistoryPriceCalculator());
         PriceBucketView latestPriceBucket= calculatorChain.calculatePrice(activePriceBuckets, productActualMetricsView,productForecastMetricsView);
         priceBucketViewRepository.save(latestPriceBucket);
         return latestPriceBucket;

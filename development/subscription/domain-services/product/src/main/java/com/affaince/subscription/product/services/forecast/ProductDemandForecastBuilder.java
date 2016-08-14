@@ -28,7 +28,12 @@ public class ProductDemandForecastBuilder {
 
         List<Double> forecastNewSubscriptions = demandForecasterChain.forecast(productId, historicalDailySubscriptionCountList);
         List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalDailySubscriptionChurnCountList);
-        return new DemandGrowthAndChurnForecast(Double.valueOf(forecastNewSubscriptions.get(0)).longValue(), Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue());
+        return new DemandGrowthAndChurnForecast(
+                Double.valueOf(forecastNewSubscriptions.get(0)).longValue(),
+                Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue(),
+                aggregatedActualsViewList.get(0).getTotalNumberOfExistingSubscriptions() + Double.valueOf(forecastNewSubscriptions.get(0)).longValue() - Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue(),
+                aggregatedActualsViewList.get(0).getEndDate().plusDays(1),
+                aggregatedActualsViewList.get(0).getEndDate().plusDays(chunkAggregationPeriod));
     }
 
 }

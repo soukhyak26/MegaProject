@@ -235,13 +235,19 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
         DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId, getProductConfiguration().getActualsAggregationPeriodForTargetForecast());
-        apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
+        apply(new SubscriptionForecastUpdatedEvent(productId, forecastDate, forecast.getForecastedNewSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
     }
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
         DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId, 1);
-        apply(new SubscriptionPseudoActualsUpdatedEvent(productId, forecastDate, forecast.getForecastedTotalSubscriptionCount(), forecast.getForecastedChurnedSubscriptionCount()));
+        apply(new SubscriptionPseudoActualsUpdatedEvent(
+                productId,
+                forecast.getForecastStartDate(),
+                forecast.getForecastEndDate(),
+                forecast.getForecastedNewSubscriptionCount(),
+                forecast.getForecastedChurnedSubscriptionCount(),
+                forecast.getForecastedTotalSubscriptionCount()));
     }
 
     @EventHandler

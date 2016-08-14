@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by mandark on 21-02-2016.
  */
+@Deprecated
 public class RegressionBasedCostFunctionProcessor implements FunctionProcessor<ProductView> {
     @Autowired
     ProductActualMetricsViewRepository productActualMetricsViewRepository;

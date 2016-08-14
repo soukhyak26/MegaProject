@@ -16,6 +16,7 @@ import java.util.*;
 /**
  * Created by mandark on 28-02-2016.
  */
+@Deprecated
 public class RegressionBasedDemandFunctionProcessor implements FunctionProcessor<ProductView> {
     @Autowired
     PriceBucketViewRepository priceBucketViewRepository;

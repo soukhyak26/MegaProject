@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 10-07-2016.
  */
-@Document(collection = "ProductApproximateForecastView")
-public class ProductApproximateForecastView {
+@Document(collection = "ProductPseudoActualsView")
+public class ProductPseudoActualsView {
     @Id
     private final ProductVersionId productVersionId;
     private LocalDate endDate;
@@ -17,9 +17,13 @@ public class ProductApproximateForecastView {
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
 
-    public ProductApproximateForecastView(ProductVersionId productVersionId,LocalDate endDate){
-        this.productVersionId=productVersionId;
-        this.endDate=endDate;
+
+    public ProductPseudoActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+        this.productVersionId = productVersionId;
+        this.endDate = endDate;
+        this.newSubscriptions = newSubscriptions;
+        this.churnedSubscriptions = churnedSubscriptions;
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -57,4 +61,5 @@ public class ProductApproximateForecastView {
     public void setTotalNumberOfExistingSubscriptions(long totalNumberOfExistingSubscriptions) {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
+
 }
