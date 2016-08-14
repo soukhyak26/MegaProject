@@ -45,4 +45,23 @@ public class ProductVersionId implements Serializable, Comparable<ProductVersion
     public int compareTo(ProductVersionId o) {
         return this.getFromDate().compareTo(o.getFromDate());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductVersionId that = (ProductVersionId) o;
+
+        if (productId != null ? !productId.equals(that.productId) : that.productId != null) return false;
+        return fromDate != null ? fromDate.equals(that.fromDate) : that.fromDate == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = productId != null ? productId.hashCode() : 0;
+        result = 31 * result + (fromDate != null ? fromDate.hashCode() : 0);
+        return result;
+    }
 }
