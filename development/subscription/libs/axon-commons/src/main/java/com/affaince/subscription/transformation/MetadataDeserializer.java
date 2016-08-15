@@ -16,7 +16,7 @@ import java.util.Map;
 public class MetadataDeserializer extends JsonDeserializer<MetaData> {
     @Override
     public MetaData deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        JsonDeserializer deserializer = deserializationContext.findRootValueDeserializer(deserializationContext.getTypeFactory().constructMapType(HashMap.class, String.class, String.class));
+        JsonDeserializer deserializer = deserializationContext.findRootValueDeserializer(deserializationContext.getTypeFactory().constructMapType(MetaData.class, String.class, String.class));
         return MetaData.from((Map) deserializer.deserialize(jsonParser, deserializationContext));
     }
 }
