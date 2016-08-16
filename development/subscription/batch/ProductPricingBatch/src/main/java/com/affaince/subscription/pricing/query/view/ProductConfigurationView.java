@@ -11,14 +11,14 @@ public class ProductConfigurationView {
     @Id
     private String productId;
     private int actualsAggregationPeriodForTargetForecast = 30;
-    private short revenueChangeThresholdForPriceChange;
+    private short changeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
 
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, short revenueChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, short changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
-        this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
+        this.changeThresholdForPriceChange = changeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
     }
@@ -39,12 +39,12 @@ public class ProductConfigurationView {
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
     }
 
-    public short getRevenueChangeThresholdForPriceChange() {
-        return revenueChangeThresholdForPriceChange;
+    public short getChangeThresholdForPriceChange() {
+        return changeThresholdForPriceChange;
     }
 
-    public void setRevenueChangeThresholdForPriceChange(short revenueChangeThresholdForPriceChange) {
-        this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
+    public void setChangeThresholdForPriceChange(short changeThresholdForPriceChange) {
+        this.changeThresholdForPriceChange = changeThresholdForPriceChange;
     }
 
     public boolean isCrossPriceElasticityConsidered() {

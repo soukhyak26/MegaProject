@@ -1,8 +1,12 @@
 package com.affaince.subscription.pricing.forecast;
 
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.forecast.interpolate.Interpolator;
+import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
+import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
+import com.affaince.subscription.pricing.query.view.ProductPseudoActualsView;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +29,15 @@ public class ForecastingClient {
     private static String forecastUrl;
     @Value("${subscription.forecast.predictpseudoactual.url}")
     private static String pseudoActualUrl;
+
     @Autowired
-    ProductForecastViewRepository productForecastViewRepository;
+    private ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
+
+    @Autowired
+    private ProductForecastViewRepository productForecastViewRepository;
+
+    @Autowired
+    private ProductConfigurationViewRepository productConfigurationViewRepository;
     @Autowired
     Interpolator interpolator;
 
@@ -70,4 +81,17 @@ public class ForecastingClient {
 
     }
 
+    public boolean triggerProductPricing (String productId, LocalDate currentDate) {
+        final ProductVersionId productVersionId = new ProductVersionId(productId, currentDate);
+        final ProductPseudoActualsView productPseudoActualsView = productPseudoActualsViewRepository.findOne(productVersionId);
+        final double interpolatedTotalSubscriptionsOnDay = findInterpolatedTotalSubscriptionCountOnADay(productId, currentDate);
+        final short changeThresholdForPriceChange =
+                productConfigurationViewRepository.findOne(productId).getChangeThresholdForPriceChange();
+        double difference = productPseudoActualsView.getTotalNumberOfExistingSubscriptions() - interpolatedTotalSubscriptionsOnDay;
+        if (difference >= (interpolatedTotalSubscriptionsOnDay*10)/100 ||
+                difference <= (-1)*((interpolatedTotalSubscriptionsOnDay*10)/100)) {
+            return true;
+        }
+        return false;
+    }
 }

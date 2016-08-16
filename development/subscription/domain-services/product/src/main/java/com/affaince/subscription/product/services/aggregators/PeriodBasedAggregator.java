@@ -29,7 +29,7 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
         }
         for (int periodIndex = 1; periodIndex <= historicalData.size() / period; periodIndex++) {
             ProductActualsView aggregatedView = null;
-            for (int index = (period*periodIndex-1); index >= period*(periodIndex-1); index--) {
+            for (int index = (period * periodIndex - 1); index >= period * (periodIndex - 1); index--) {
                 ProductActualsView productActualsView = historicalData.get(index);
                 if (null == productId) {
                     productId = productActualsView.getProductVersionId().getProductId();
