@@ -24,8 +24,8 @@ public class ProductPricingTrigger {
         final short changeThresholdForPriceChange =
                 productConfigurationViewRepository.findOne(productId).getChangeThresholdForPriceChange();
         double difference = productPseudoActualsView.getTotalNumberOfExistingSubscriptions() - interpolatedTotalSubscriptionsOnDay;
-        if (difference >= (interpolatedTotalSubscriptionsOnDay * 10) / 100 ||
-                difference <= (-1) * ((interpolatedTotalSubscriptionsOnDay * 10) / 100)) {
+        if (difference >= (interpolatedTotalSubscriptionsOnDay * changeThresholdForPriceChange) / 100 ||
+                difference <= (-1) * ((interpolatedTotalSubscriptionsOnDay * changeThresholdForPriceChange) / 100)) {
             return true;
         }
         return false;
