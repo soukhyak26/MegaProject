@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services;
+package com.affaince.subscription.pricing.forecast.interpolate;
 
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
@@ -8,7 +8,7 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
  */
 public class Interpolator {
 
-    public static double[] cubicSplineInterpolate(double[] x, double[] y) {
+    public double[] cubicSplineInterpolate(double[] x, double[] y) {
         int resultLength = Double.valueOf(x[x.length - 1]).intValue();
         double[] interpolationResult = new double[resultLength];
         SplineInterpolator interpol = new SplineInterpolator();
