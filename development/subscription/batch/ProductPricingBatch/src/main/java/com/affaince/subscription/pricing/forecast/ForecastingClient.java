@@ -3,7 +3,6 @@ package com.affaince.subscription.pricing.forecast;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,26 +18,24 @@ public class ForecastingClient {
     private static String pseudoActualUrl;
 
 
-
-
-    public void initiateForecast() {
+    public void initiateForecast(String productId) {
         RestTemplate restTemplate = new RestTemplate();
-        ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
-        for (String productId : result) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("productid", productId);
-            restTemplate.put(forecastUrl, params);
-        }
+        //ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
+        //for (String productId : result) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("productid", productId);
+        restTemplate.put(forecastUrl, params);
+        //}
     }
 
-    public void initiatePseudoActual() {
+    public void initiatePseudoActual(String productId) {
         RestTemplate restTemplate = new RestTemplate();
-        ArrayList<String> result = restTemplate.getForObject(pseudoActualUrl, ArrayList.class);
-        for (String productId : result) {
+        //ArrayList<String> result = restTemplate.getForObject(pseudoActualUrl, ArrayList.class);
+        //for (String productId : result) {
             Map<String, String> params = new HashMap<String, String>();
             params.put("productid", productId);
-            restTemplate.put(forecastUrl, params);
-        }
+        restTemplate.put(pseudoActualUrl, params);
+        //}
     }
 
 

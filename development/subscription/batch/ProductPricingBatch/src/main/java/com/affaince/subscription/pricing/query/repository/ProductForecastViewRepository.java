@@ -21,7 +21,7 @@ public interface ProductForecastViewRepository extends CrudRepository<ProductFor
 
     public List<ProductForecastView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
 
-    public ProductForecastView findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc (String productId);
+    public ProductForecastView findFirstByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
 
 
 }

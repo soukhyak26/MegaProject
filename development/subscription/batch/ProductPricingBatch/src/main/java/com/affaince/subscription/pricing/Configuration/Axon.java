@@ -4,6 +4,8 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.ThreadPoolBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -51,6 +55,18 @@ public class Axon extends ActiveMQConfiguration {
         return converter;
     }
 
+    public RouteBuilder routes() {
+        return new RouteBuilder() {
+            public void configure() throws Exception {
+                ExecutorService executorService = new ThreadPoolBuilder(camelContext).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
+                from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
+                        .split(body())
+                        .threads()
+                        .executorService(executorService)
+                        .to("bean:forecastingTrigger");
+            }
+        };
+    }
 /*
     @Bean
     public RouteBuilder routes() {
