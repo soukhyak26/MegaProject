@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -59,6 +61,15 @@ public class ProductForecastViewRepositoryTest {
                         findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc("1");
         ProductVersionId productVersionId = new ProductVersionId("1", LocalDate.now().plusDays(52));
         assertThat (productForecastView.getProductVersionId(), is (productVersionId));
+    }
+
+    @Test
+    public void testFindByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc () {
+        List<ProductForecastView> productForecastViewList = productForecastViewRepository.
+                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc("1", ProductForecastStatus.CORRECTED);
+        assertThat(productForecastViewList.size(), is (2));
+        ProductVersionId productVersionId = new ProductVersionId("1", LocalDate.now().plusDays(52));
+        assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));
     }
 
     @After
