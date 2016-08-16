@@ -1,5 +1,6 @@
 package com.affaince.subscription.pricing.forecast;
 
+import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.forecast.interpolate.Interpolator;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
@@ -63,7 +64,9 @@ public class ForecastingClient {
 
     public double findInterpolatedTotalSubscriptionCountOnADay(String productId, LocalDate currentDate) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        List<ProductForecastView> previousValues = productForecastViewRepository.findByProductVersionId_ProductId(productId, sort);
+        List<ProductForecastView> previousValues = productForecastViewRepository.
+                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
+                (productId, ProductForecastStatus.CORRECTED);
         ProductForecastView firstForecastView = previousValues.get(previousValues.size() - 1);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
         double[] x = new double[previousValues.size()];     //day on which interpolated vslue has been taken
