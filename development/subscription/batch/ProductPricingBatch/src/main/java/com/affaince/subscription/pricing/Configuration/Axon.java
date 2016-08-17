@@ -1,7 +1,13 @@
-package com.affaince.subscription.pricing.Configuration;
+package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
+import com.affaince.subscription.pricing.determine.PricingClient;
+import com.affaince.subscription.pricing.forecast.ForecastingClient;
+import com.affaince.subscription.pricing.forecast.ForecastingTrigger;
+import com.affaince.subscription.pricing.forecast.ProductPricingTrigger;
+import com.affaince.subscription.pricing.forecast.ProductsRetriever;
+import com.affaince.subscription.pricing.forecast.interpolate.ForecastInterpolatedSubscriptionCountFinder;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -35,8 +41,9 @@ public class Axon extends ActiveMQConfiguration {
     public GenericEventPublisher publisher(EventTemplate template) {
         return new GenericEventPublisher(template);
     }
+
     @Bean
-    public RestTemplate restTemplate(){
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
@@ -55,6 +62,36 @@ public class Axon extends ActiveMQConfiguration {
         return converter;
     }
 
+    @Bean
+    ForecastingClient forecastingClient() {
+        return new ForecastingClient();
+    }
+
+    @Bean
+    PricingClient pricingClient() {
+        return new PricingClient();
+    }
+
+    @Bean
+    ProductsRetriever productsRetriever() {
+        return new ProductsRetriever();
+    }
+
+    @Bean
+    ForecastingTrigger forecastingTrigger() {
+        return new ForecastingTrigger();
+    }
+
+    @Bean
+    ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder() {
+        return new ForecastInterpolatedSubscriptionCountFinder();
+    }
+
+    @Bean
+    ProductPricingTrigger productPricingTrigger() {
+        return new ProductPricingTrigger();
+    }
+
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() throws Exception {
@@ -68,13 +105,22 @@ public class Axon extends ActiveMQConfiguration {
                         .executorService(executorService)
                         .to("bean:forecastingTrigger")
                         .choice()
-                        .when(simple("${body}==true")).to("bean:forecastingClient?method=initiateForecast")
+                        .when(simple("${body}==true"))
+                        .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
 
                 from("quartz://timer?cron=0+0+22+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
-                        .executorService(executorService);
+                        .executorService(executorService)
+                        .multicast()
+                        .parallelProcessing()
+                        .to("bean:forecastingClient?method=initiatePseudoActual", "bean:forecastInterpolatedSubscriptionCountFinder")
+                        .end().to("bean:productPricingTrigger").
+                        choice()
+                        .when(simple("${body}==true"))
+                        .to("bean:pricingClient")
+                        .endChoice();
 
             }
         };
