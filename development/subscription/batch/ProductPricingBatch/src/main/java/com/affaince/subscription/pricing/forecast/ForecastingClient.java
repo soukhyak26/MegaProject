@@ -32,8 +32,8 @@ public class ForecastingClient {
         RestTemplate restTemplate = new RestTemplate();
         //ArrayList<String> result = restTemplate.getForObject(pseudoActualUrl, ArrayList.class);
         //for (String productId : result) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("productid", productId);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("productid", productId);
         restTemplate.put(pseudoActualUrl, params);
         //}
     }

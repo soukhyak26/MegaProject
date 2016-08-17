@@ -21,7 +21,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
 
-    public double findInterpolatedTotalSubscriptionCountOnADay(String productId, LocalDate currentDate) {
+    public double findInterpolatedTotalSubscriptionCountOnCurrentDate(String productId) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> previousValues = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
@@ -38,6 +38,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
         }
         double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
+        LocalDate currentDate = LocalDate.now();
         int currentDay = Days.daysBetween(dateOfPlatformBeginning, currentDate).getDays();
         return interpolatedTotalSubscriptionsPerDay[currentDay];
 

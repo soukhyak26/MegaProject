@@ -17,7 +17,8 @@ public class ProductPricingTrigger {
     @Autowired
     private ProductConfigurationViewRepository productConfigurationViewRepository;
 
-    public boolean triggerProductPricing(String productId, LocalDate currentDate, double interpolatedTotalSubscriptionsOnDay) {
+    public boolean triggerProductPricing(String productId, double interpolatedTotalSubscriptionsOnDay) {
+        LocalDate currentDate = LocalDate.now();
         final ProductVersionId productVersionId = new ProductVersionId(productId, currentDate);
         final ProductPseudoActualsView productPseudoActualsView = productPseudoActualsViewRepository.findOne(productVersionId);
         // final double interpolatedTotalSubscriptionsOnDay = findInterpolatedTotalSubscriptionCountOnADay(productId, currentDate);
