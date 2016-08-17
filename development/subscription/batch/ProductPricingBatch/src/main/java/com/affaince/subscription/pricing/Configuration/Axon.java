@@ -59,11 +59,23 @@ public class Axon extends ActiveMQConfiguration {
         return new RouteBuilder() {
             public void configure() throws Exception {
                 ExecutorService executorService = new ThreadPoolBuilder(camelContext).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
+                //Initiate forecasting each day at 8.00 pm.
+                //Retrieve all product ids and fed each of them to a thread in thread pool
+                //Invoke forecasting trigger which will check the status of
                 from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
                         .executorService(executorService)
-                        .to("bean:forecastingTrigger");
+                        .to("bean:forecastingTrigger")
+                        .choice()
+                        .when(simple("${body}==true")).to("bean:forecastingClient?method=initiateForecast")
+                        .endChoice();
+
+                from("quartz://timer?cron=0+0+22+*+*+?").to("bean:productsRetriever")
+                        .split(body())
+                        .threads()
+                        .executorService(executorService);
+
             }
         };
     }
