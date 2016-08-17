@@ -2,8 +2,8 @@ package com.affaince.subscription.product.services.pricing.processor.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.breakevenprice.BreakEvenPriceCalculator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
@@ -92,10 +92,10 @@ public abstract class AbstractPriceCalculator {
         return intercept + (slope * quantity);
     }
 
-    protected double calculateExpectedDemand(ProductForecastMetricsView productForecastMetricsView, ProductActualMetricsView productActualMetricsView) {
-        return productForecastMetricsView.getTotalNumberOfExistingSubscriptions() - productActualMetricsView.getTotalNumberOfExistingSubscriptions();
+    protected double calculateExpectedDemand(ProductForecastView productForecastView, ProductActualsView productActualsView) {
+        return productForecastView.getTotalNumberOfExistingSubscriptions() - productActualsView.getTotalNumberOfExistingSubscriptions();
     }
 
-    public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualMetricsView productActualMetricsView, ProductForecastMetricsView productForecastMetricsView);
+    public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductForecastView productForecastView);
 
 }

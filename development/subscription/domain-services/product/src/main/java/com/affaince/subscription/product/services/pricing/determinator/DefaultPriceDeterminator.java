@@ -2,11 +2,11 @@ package com.affaince.subscription.product.services.pricing.determinator;
 
 
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
+import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
+import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.CalculatorChain;
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
@@ -16,13 +16,14 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
+@Deprecated
 public class DefaultPriceDeterminator implements PriceDeterminator {
     @Autowired
     private PriceBucketViewRepository priceBucketViewRepository;
     @Autowired
-    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private ProductActualsViewRepository productActualsViewRepository;
     @Autowired
-    private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private ProductForecastViewRepository productForecastViewRepository;
     @Autowired
     private CalculatorChain calculatorChain;
 
@@ -42,9 +43,9 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
 
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        ProductActualMetricsView productActualMetricsView = productActualMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
-        ProductForecastMetricsView productForecastMetricsView = productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
-        PriceBucketView latestPriceBucket= calculatorChain.calculatePrice(activePriceBuckets, productActualMetricsView,productForecastMetricsView);
+        ProductActualsView productActualsView = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
+        ProductForecastView productForecastView = productForecastViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
+        PriceBucketView latestPriceBucket = calculatorChain.calculatePrice(activePriceBuckets, productActualsView, productForecastView);
         priceBucketViewRepository.save(latestPriceBucket);
         return latestPriceBucket;
 

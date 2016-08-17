@@ -2,10 +2,10 @@ package com.affaince.subscription.product.services.pricing;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
+import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
+import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
+import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import org.joda.time.LocalDate;
@@ -25,9 +25,9 @@ public class DefaultPriceDeterminatorTest {
     @Mock
     private static ProductViewRepository productViewRepository;
     @Mock
-    private static ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private static ProductActualsViewRepository productActualsViewRepository;
     @Mock
-    private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private static ProductForecastViewRepository productForecastViewRepository;
 
     @InjectMocks
     private ProductDemandForecastBuilder builder;
@@ -35,29 +35,29 @@ public class DefaultPriceDeterminatorTest {
     @Before
     public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException,NoSuchMethodException{
         MockitoAnnotations.initMocks(this);
-        //chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
+        //chain = new DemandForecasterChain().buildForecasterChain(productForecastMetricsViewRepository,ProductActualsViewRepository);
     }
 
 
     public void createForecast(){
-        List<ProductActualMetricsView> productActualMetricsViewList;
-        productActualMetricsViewList = new ArrayList<>();
+        List<ProductActualsView> productActualsViewList;
+        productActualsViewList = new ArrayList<>();
 
-        ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view1.setNewSubscriptions(500);
-        productActualMetricsViewList.add(view1);
+        productActualsViewList.add(view1);
 
-        ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view2.setNewSubscriptions(750);
-        productActualMetricsViewList.add(view2);
+        productActualsViewList.add(view2);
 
-        ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view3.setNewSubscriptions(1000);
-        productActualMetricsViewList.add(view3);
+        productActualsViewList.add(view3);
 
-        ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view4.setNewSubscriptions(1250);
-        productActualMetricsViewList.add(view4);
+        productActualsViewList.add(view4);
         // Mockito.when(productViewRepository.findOne(productId)).thenReturn(product);
         String productId = "1";
         ProductView product = new ProductView(productId, "Myproduct", "MyCat", "MySubCat", 100, QuantityUnit.GM, null, null, null);
@@ -65,7 +65,7 @@ public class DefaultPriceDeterminatorTest {
         allProducts.add(product);
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
 
-        Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
+        Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
 
         builder.buildForecast(product.getProductId(), 1);
 
