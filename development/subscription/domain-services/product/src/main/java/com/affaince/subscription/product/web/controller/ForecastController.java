@@ -51,7 +51,7 @@ public class ForecastController {
         productViewRepository.findAll().forEach((item) -> {
             target.add(item.getProductId());
         });
-        return new ResponseEntity<List<String>>(target, HttpStatus.CREATED);
+        return new ResponseEntity<List<String>>(target, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predictforecast/{productId}")

@@ -1,5 +1,6 @@
 package com.affaince.subscription.pricing.forecast;
 
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
@@ -17,7 +18,8 @@ public class ProductPricingTrigger {
     @Autowired
     private ProductConfigurationViewRepository productConfigurationViewRepository;
 
-    public boolean triggerProductPricing(String productId, double interpolatedTotalSubscriptionsOnDay) {
+    public ProductDemandTrend triggerProductPricing(String productId, double interpolatedTotalSubscriptionsOnDay) {
+        boolean doTriggerPrice = false;
         LocalDate currentDate = LocalDate.now();
         final ProductVersionId productVersionId = new ProductVersionId(productId, currentDate);
         final ProductPseudoActualsView productPseudoActualsView = productPseudoActualsViewRepository.findOne(productVersionId);
@@ -25,11 +27,12 @@ public class ProductPricingTrigger {
         final short changeThresholdForPriceChange =
                 productConfigurationViewRepository.findOne(productId).getChangeThresholdForPriceChange();
         double difference = productPseudoActualsView.getTotalNumberOfExistingSubscriptions() - interpolatedTotalSubscriptionsOnDay;
-        if (difference >= (interpolatedTotalSubscriptionsOnDay * changeThresholdForPriceChange) / 100 ||
-                difference <= ((interpolatedTotalSubscriptionsOnDay * changeThresholdForPriceChange) / 100)) {
-            return true;
+        if (difference >= (interpolatedTotalSubscriptionsOnDay * changeThresholdForPriceChange) / 100) {
+            return ProductDemandTrend.UPWARD;
+        } else if (difference <= ((interpolatedTotalSubscriptionsOnDay * changeThresholdForPriceChange) / 100)) {
+            return ProductDemandTrend.DOWNWARD;
         }
-        return false;
+        return ProductDemandTrend.NOCHANGE;
     }
 
 }

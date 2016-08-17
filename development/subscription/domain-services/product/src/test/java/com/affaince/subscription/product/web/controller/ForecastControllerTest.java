@@ -108,7 +108,7 @@ public class ForecastControllerTest {
         Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
         MvcResult result= this.mockMvc.perform(get("/forecast/findall"))
-                .andExpect(status().is(201))
+                .andExpect(status().is(200))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn();
         String json=result.getResponse().getContentAsString();

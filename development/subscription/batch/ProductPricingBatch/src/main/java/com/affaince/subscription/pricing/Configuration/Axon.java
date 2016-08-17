@@ -1,6 +1,7 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.pricing.determine.PricingClient;
 import com.affaince.subscription.pricing.forecast.ForecastingClient;
@@ -10,6 +11,7 @@ import com.affaince.subscription.pricing.forecast.ProductsRetriever;
 import com.affaince.subscription.pricing.forecast.interpolate.ForecastInterpolatedSubscriptionCountFinder;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
@@ -27,6 +29,8 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.ExecutorService;
+
+import static org.apache.camel.builder.PredicateBuilder.or;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -109,6 +113,7 @@ public class Axon extends ActiveMQConfiguration {
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
 
+                Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
                 from("quartz://timer?cron=0+0+22+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
@@ -118,7 +123,7 @@ public class Axon extends ActiveMQConfiguration {
                         .to("bean:forecastingClient?method=initiatePseudoActual", "bean:forecastInterpolatedSubscriptionCountFinder")
                         .end().to("bean:productPricingTrigger").
                         choice()
-                        .when(simple("${body}==true"))
+                        .when(demandTrendChecker)
                         .to("bean:pricingClient")
                         .endChoice();
 

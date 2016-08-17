@@ -1,10 +1,10 @@
 package com.affaince.subscription.product.services.pricing.processor.calculator.classic;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDate;
@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPriceCalculator {
 
-    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductForecastView productForecastView) {
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductDemandTrend productDemandTrend, double changeThresholdForPriceChange) {
         String productId = productActualsView.getProductVersionId().getProductId();
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
         final PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
@@ -31,8 +31,15 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
                 minusOnePriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice() > minusTwoPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice() ){
             double slope = minusOnePriceBucket.getSlope() - (minusOnePriceBucket.getSlope() * calculateWeightedAverage(activePriceBuckets) / 100);
             double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
-            double expectedDemandedQuantity = productForecastView.getTotalNumberOfExistingSubscriptions();
-            double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemandedQuantity);
+            double expectedDemand = 0;
+            //double expectedDemandedQuantity = productForecastView.getTotalNumberOfExistingSubscriptions();
+            if (productDemandTrend == ProductDemandTrend.DOWNWARD) {
+                expectedDemand = latestPriceBucket.getNumberOfNewCustomersAssociatedWithAPrice() - latestPriceBucket.getNumberOfNewCustomersAssociatedWithAPrice() * changeThresholdForPriceChange;
+            } else {
+                expectedDemand = latestPriceBucket.getNumberOfNewCustomersAssociatedWithAPrice() + latestPriceBucket.getNumberOfNewCustomersAssociatedWithAPrice() * changeThresholdForPriceChange;
+            }
+
+            double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
             PriceBucketView newPriceBucket=new PriceBucketView();
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(),latestPriceBucket.getTaggedPriceVersion().getMRP(),LocalDate.now());
             newPriceBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDate.now()));
@@ -42,7 +49,7 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
             newPriceBucket.setOfferedPricePerUnit(offeredPrice);
             return newPriceBucket;
         }else{
-            return getNextCalculator().calculatePrice(activePriceBuckets, productActualsView, productForecastView);
+            return getNextCalculator().calculatePrice(activePriceBuckets, productActualsView, productDemandTrend, changeThresholdForPriceChange);
 
         }
     }

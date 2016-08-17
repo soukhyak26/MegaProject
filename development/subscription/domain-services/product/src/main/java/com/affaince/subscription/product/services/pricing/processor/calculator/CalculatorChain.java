@@ -1,8 +1,8 @@
 package com.affaince.subscription.product.services.pricing.processor.calculator;
 
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.classic.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,7 +62,7 @@ public class CalculatorChain {
         }
     }
 
-    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductForecastView productForecastView) {
-        return initialCalculator.calculatePrice(activePriceBuckets, productActualsView, productForecastView);
+    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductDemandTrend productDemandTrend, double changeThresholdForPriceChange) {
+        return initialCalculator.calculatePrice(activePriceBuckets, productActualsView, productDemandTrend, changeThresholdForPriceChange);
     }
 }

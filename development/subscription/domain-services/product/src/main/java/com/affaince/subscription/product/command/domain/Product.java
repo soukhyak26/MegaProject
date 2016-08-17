@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
@@ -7,6 +8,7 @@ import com.affaince.subscription.product.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
+import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -262,5 +264,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void on(ProductChurnRegisteredEvent productChurnRegisteredEvent) {
 
+    }
+
+    public void calculatePrice(DefaultPriceDeterminator defaultPriceDeterminator, ProductDemandTrend productDemandTrend) {
+        defaultPriceDeterminator.calculateOfferedPrice(this.getProductId(), productDemandTrend);
     }
 }

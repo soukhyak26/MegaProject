@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * Created by mandark on 13-02-2016.
  */
 @Deprecated
-public class DemandBasedPriceDeterminator implements PriceDeterminator {
+public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
     @Autowired
     PriceBucketViewRepository priceBucketViewRepository;
     @Autowired
