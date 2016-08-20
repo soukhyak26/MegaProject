@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.services.aggregators;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class PeriodBasedAggregatorTest {
     @Before
     public void init () {
         for (int i=0;i<1000;i++) {
-            LocalDate date = LocalDate.now().minusDays(1000-i);
+            LocalDate date = SysDate.now().minusDays(1000 - i);
             ProductActualsView productActualsView = new ProductActualsView(
                     new ProductVersionId("1", date), date
             );
@@ -36,9 +37,9 @@ public class PeriodBasedAggregatorTest {
         }
         int temp = 999;
         for (int i=0; i<33 ; i++) {
-            LocalDate date = LocalDate.now();
+            LocalDate date = SysDate.now();
             ProductActualsView productActualsView = new ProductActualsView(
-                    new ProductVersionId("1", LocalDate.now().minusDays(30*(i+1))), LocalDate.now().minusDays(30*i));
+                    new ProductVersionId("1", SysDate.now().minusDays(30 * (i + 1))), SysDate.now().minusDays(30 * i));
             long newSubscription = 0;
             long churnSubscription = 0;
             for (int k=0;k<30;k++) {

@@ -22,6 +22,7 @@
         <module>batch/ProductPricingBatch</module>
         <module>batch/ExpenseDistributionBatch</module>
         <module>tools/user-journey</module>
+        <module>libs/sysdate</module>
     </modules>
     <dependencies>
 <!--
@@ -435,6 +436,11 @@
             <dependency>
                 <groupId>com.affaince</groupId>
                 <artifactId>axon-commons</artifactId>
+                <version>0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.affaince</groupId>
+                <artifactId>sysdate</artifactId>
                 <version>0.1-SNAPSHOT</version>
             </dependency>
             <dependency>

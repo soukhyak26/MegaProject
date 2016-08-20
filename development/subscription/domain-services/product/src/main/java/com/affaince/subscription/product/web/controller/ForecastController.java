@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
@@ -56,14 +57,14 @@ public class ForecastController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predictforecast/{productId}")
     public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId) throws Exception {
-        UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, org.joda.time.LocalDate.now());
+        UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predictpseudoactual/{productId}")
     public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable String productId) throws Exception {
-        UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, org.joda.time.LocalDate.now());
+        UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }

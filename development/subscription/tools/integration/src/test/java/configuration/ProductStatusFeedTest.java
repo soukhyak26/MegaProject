@@ -1,5 +1,6 @@
 package configuration;
 
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
@@ -10,7 +11,6 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.MockEndpoints;
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.Bean;
@@ -59,7 +59,7 @@ public class ProductStatusFeedTest {
         event.setCurrentPurchasePricePerUnit(47.00);
         event.setCurrentMRP(74.50);
         event.setCurrentStockInUnits(23456);
-        event.setCurrentPriceDate(LocalDate.now());
+        event.setCurrentPriceDate(SysDate.now());
         mock.expectedMessageCount(1);
         mock.expectedBodiesReceived(event.toString());
         mock.assertIsSatisfied();

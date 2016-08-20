@@ -1,5 +1,6 @@
 package com.affaince.subscription.business.accounting;
 
+import com.affaince.subscription.date.SysDate;
 import org.joda.time.LocalDate;
 
 /**
@@ -15,7 +16,7 @@ public class Transaction implements Comparable<Transaction> {
         this.amount = amount;
         this.transactionType = transactionType;
         this.resultant = resultant;
-        this.transactionDate = LocalDate.now();
+        this.transactionDate = SysDate.now();
     }
 
     public double getAmount() {

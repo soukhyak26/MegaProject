@@ -3,6 +3,7 @@ package com.affaince.subscription.subscriber.command.domain;
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.command.AddAddressToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.AddItemToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.PaymentReceivedFromSourceCommand;
@@ -37,7 +38,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     private LocalDate subscriptionExpiredDate;
 
     public Subscription(String subscriptionId, String subscriberId) {
-        apply(new SubscriptionCreatedEvent(subscriptionId, subscriberId, LocalDate.now(), null, ConsumerBasketActivationStatus.CREATED));
+        apply(new SubscriptionCreatedEvent(subscriptionId, subscriberId, SysDate.now(), null, ConsumerBasketActivationStatus.CREATED));
     }
 
     public Subscription() {
@@ -160,7 +161,7 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             apply(new ProductSubscriptionActivatedEvent(subscriptionItem.getProductId(),
                     subscriptionItem.getNoOfCycles() * subscriptionItem.getCountPerPeriod(),
-                    LocalDate.now()));
+                    SysDate.now()));
         }
     }
 

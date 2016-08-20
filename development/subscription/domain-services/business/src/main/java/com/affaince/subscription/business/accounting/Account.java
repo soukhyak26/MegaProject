@@ -2,6 +2,7 @@ package com.affaince.subscription.business.accounting;
 
 import com.affaince.subscription.business.command.event.CreditedEvent;
 import com.affaince.subscription.business.command.event.DebitedEvent;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDate;
 
@@ -27,7 +28,7 @@ public abstract class Account extends AbstractAnnotatedEntity {
         this.accountType = accountType;
         this.endDate = endDate;
         this.currentAmount = startAmount;
-        this.startDate = LocalDate.now();
+        this.startDate = SysDate.now();
     }
 
     public void debit(double amount) {

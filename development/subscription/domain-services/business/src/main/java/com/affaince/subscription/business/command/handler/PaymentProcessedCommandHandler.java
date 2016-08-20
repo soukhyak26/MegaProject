@@ -2,9 +2,9 @@ package com.affaince.subscription.business.command.handler;
 
 import com.affaince.subscription.business.command.PaymentProcessedCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class PaymentProcessedCommandHandler {
 
     @CommandHandler
     public void handle(PaymentProcessedCommand command) {
-        BusinessAccount businessAccount = repository.load(Integer.valueOf(LocalDate.now().getYear()).toString());
+        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()).toString());
         businessAccount.adjustBookingAmount(command.getPaymentAmount());
     }
 }

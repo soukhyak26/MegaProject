@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.vo;
 
+import com.affaince.subscription.date.SysDate;
 import org.joda.time.LocalDate;
 
 /**
@@ -37,9 +38,9 @@ public class PriceBucket {
     public PriceBucket(PriceBucket priceBucket) {
         this.taggedPriceVersion = priceBucket.getTaggedPriceVersion();
         this.offeredPricePerUnit = priceBucket.getOfferedPricePerUnit();
-        this.fromDate = LocalDate.now();
+        this.fromDate = SysDate.now();
         //TO BE CORRECTED IT SHOULD BE END OF CURRENT YEAR
-        this.toDate = LocalDate.now();
+        this.toDate = SysDate.now();
         this.numberOfNewCustomersAssociatedWithAPrice = 0;
         this.numberOfChurnedSubscriptionsAssociatedWithAPrice = 0;
 

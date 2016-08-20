@@ -1,56 +1,59 @@
 package com.affaince.subscription.date;
 
-import com.affaince.subscription.repository.SysDateViewRepository;
+import com.mongodb.*;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.UnknownHostException;
+import java.util.ResourceBundle;
 
 /**
  * Created by rbsavaliya on 17-08-2016.
  */
-@Component
-public class SysDate {
-
+public final class SysDate {
+    private static Logger logger = LoggerFactory.getLogger(SysDate.class);
     private LocalDate localDate;
-    private SysDate sysDate;
-    @Value("${subscription.productionMode}")
-    private boolean productionMode;
-    @Autowired
-    private SysDateViewRepository sysDateViewRepository;
+    private static SysDate sysDate;
+    private static boolean productionMode;
+    private static DBCollection dbCollection;
 
-    public SysDate() {
+    static {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("sysdatesetting");
+        MongoClient mongoClient = null;
+        try {
+            mongoClient = new MongoClient(resourceBundle.getString("view.db.host"), Integer.parseInt(resourceBundle.getString("view.db.port")));
+        } catch (UnknownHostException e) {
+            logger.info("Cannot connect to host: " + e.getMessage());
+        }
+        DB db = mongoClient.getDB(resourceBundle.getString("view.db.name"));
+        dbCollection = db.getCollection(resourceBundle.getString("view.db.collection"));
+        productionMode = Boolean.parseBoolean(resourceBundle.getString("subscription.productionMode"));
     }
 
-    public SysDate(LocalDate currentDate) {
-        sysDateViewRepository.deleteAll();
-        SysDateView sysDateView = new SysDateView(currentDate);
-        sysDateViewRepository.save(sysDateView);
+    private SysDate() {
+
     }
 
-    public SysDate(String date, DateTimeFormatter dateTimeFormatter) {
-        this.sysDate = new SysDate(LocalDate.parse(date, dateTimeFormatter));
+    public static void setCurrentDate(LocalDate currentDate) {
+        dbCollection.drop();
+        DateTimeFormatter formatter =
+                DateTimeFormat.forPattern("dd-MM-yyyy");
+        String date = formatter.print(currentDate);
+        BasicDBObject basicDBObject = new BasicDBObject();
+        basicDBObject.put("currentDate", date);
+        dbCollection.insert(basicDBObject);
     }
 
-    public void setCurrentDate(LocalDate currentDate) {
-        sysDateViewRepository.deleteAll();
-        SysDateView sysDateView = new SysDateView(currentDate);
-        sysDateViewRepository.save(sysDateView);
-    }
-
-    public LocalDate now() {
+    public static LocalDate now() {
         if (productionMode) {
             return LocalDate.now();
         }
-        return sysDateViewRepository.findAll().iterator().next().getCurrentDate();
-    }
-
-    public LocalDate minusDays(int days) {
-        return localDate.minusDays(days);
-    }
-
-    public LocalDate plusDays(int days) {
-        return localDate.plusDays(days);
+        DateTimeFormatter formatter =
+                DateTimeFormat.forPattern("dd-MM-yyyy");
+        DBObject dbObject = dbCollection.find().next();
+        return LocalDate.parse(dbObject.get("currentDate").toString(), formatter);
     }
 }

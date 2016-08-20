@@ -1,11 +1,12 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
 import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
+import com.affaince.subscription.product.command.UpdateProductSubscriptionCommand;
 import com.affaince.subscription.product.command.event.DeliveryExpenseUpdatedToProductEvent;
 import com.affaince.subscription.product.command.event.FixedExpenseUpdatedToProductEvent;
 import com.affaince.subscription.product.command.event.ProductSubscriptionUpdatedEvent;
-import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
-import com.affaince.subscription.product.command.UpdateProductSubscriptionCommand;
 import com.affaince.subscription.product.vo.FixedExpensePerProduct;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.VariableExpensePerProduct;
@@ -151,11 +152,11 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command) {
-        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), LocalDate.now(), command.getOperationExpense()));
+        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
     }
 
     public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
-        apply(new FixedExpenseUpdatedToProductEvent(command.getProductId(), LocalDate.now(), command.getOperationExpense()));
+        apply(new FixedExpenseUpdatedToProductEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
     }
 
     @EventSourcingHandler
@@ -163,7 +164,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         //get latest deliveryExpense
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
         if(latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()){
-            VariableExpensePerProduct newVariableExpenseVersion= new VariableExpensePerProduct(event.getOperationExpense(),LocalDate.now());
+            VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
             variableExpenseVersions.add(newVariableExpenseVersion);
         }
     }
@@ -174,7 +175,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         //get latest deliveryExpense
         FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
         if(latestFixedExpense.getFixedOperatingExpPerUnit() != event.getOperationExpense()){
-            FixedExpensePerProduct newFixedExpenseVersion= new FixedExpensePerProduct(event.getOperationExpense(),LocalDate.now());
+            FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(event.getOperationExpense(), SysDate.now());
             fixedExpenseVersions.add(newFixedExpenseVersion);
         }
     }

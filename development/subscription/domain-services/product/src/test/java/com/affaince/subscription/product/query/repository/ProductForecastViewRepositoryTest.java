@@ -2,6 +2,7 @@ package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
@@ -29,7 +30,7 @@ public class ProductForecastViewRepositoryTest {
 
     @Before
     public void init () {
-        LocalDate localDate = LocalDate.now();
+        LocalDate localDate = SysDate.now();
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
@@ -59,7 +60,7 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView =
                 productForecastViewRepository.
                         findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc("1");
-        ProductVersionId productVersionId = new ProductVersionId("1", LocalDate.now().plusDays(52));
+        ProductVersionId productVersionId = new ProductVersionId("1", SysDate.now().plusDays(52));
         assertThat (productForecastView.getProductVersionId(), is (productVersionId));
     }
 
@@ -68,7 +69,7 @@ public class ProductForecastViewRepositoryTest {
         List<ProductForecastView> productForecastViewList = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc("1", ProductForecastStatus.CORRECTED);
         assertThat(productForecastViewList.size(), is (2));
-        ProductVersionId productVersionId = new ProductVersionId("1", LocalDate.now().plusDays(52));
+        ProductVersionId productVersionId = new ProductVersionId("1", SysDate.now().plusDays(52));
         assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));
     }
 

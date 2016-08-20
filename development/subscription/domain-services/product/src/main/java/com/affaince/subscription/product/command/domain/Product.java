@@ -3,6 +3,7 @@ package com.affaince.subscription.product.command.domain;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
@@ -140,7 +141,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         PriceBucket newPriceBucket = createPriceBucketForPriceCategory();
         newPriceBucket.setFromDate(event.getCurrentPriceDate());
         newPriceBucket.setOfferedPricePerUnit(event.getOfferedPrice());
-        lastPriceBucket.setToDate(LocalDate.now());
+        lastPriceBucket.setToDate(SysDate.now());
         this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
     }
 

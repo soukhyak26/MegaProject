@@ -1,5 +1,6 @@
 package com.affaince.subscription.integration.command.event.productstatus;
 
+import com.affaince.subscription.date.SysDate;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 import org.joda.time.LocalDate;
@@ -23,7 +24,7 @@ public class ProductStatusReceivedEvent {
     @DataField(name = "CURRENT_STOCK", pos = 6, trim = true)
     private int currentStockInUnits;
 
-    private LocalDate currentPriceDate = LocalDate.now();
+    private LocalDate currentPriceDate = SysDate.now();
 
     public ProductStatusReceivedEvent() {
     }

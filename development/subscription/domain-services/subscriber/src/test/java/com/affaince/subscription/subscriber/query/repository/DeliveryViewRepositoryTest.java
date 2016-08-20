@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.repository;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.Application;
 import com.affaince.subscription.subscriber.query.view.DeliveryItem;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
@@ -38,7 +39,7 @@ public class DeliveryViewRepositoryTest {
 
         int deliveryId = 0;
         for (int i=0; i<90; i++) {
-            LocalDate deliveryDate = LocalDate.now().plusDays(i);
+            LocalDate deliveryDate = SysDate.now().plusDays(i);
             Random perDayDeliveryRandomObj = new Random ();
             int perDayDeliveryCount = perDayDeliveryRandomObj.ints(20,50).findFirst().getAsInt();
             for (int j=0; j<perDayDeliveryCount; j++) {

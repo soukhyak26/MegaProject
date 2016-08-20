@@ -155,5 +155,9 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>sysdate</artifactId>
+        </dependency>
     </dependencies>
 </project>

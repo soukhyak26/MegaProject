@@ -7,6 +7,7 @@ import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
@@ -177,7 +178,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription) {
         final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
         final Map<Integer, Delivery> deliveries = new HashMap<>();
-        int weekOfYear = LocalDate.now().getWeekOfWeekyear();
+        int weekOfYear = SysDate.now().getWeekOfWeekyear();
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             int nextDeliveryWeek = weekOfYear;
             for (int i = 0; i < subscriptionItem.getNoOfCycles(); i++) {
@@ -189,8 +190,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 Delivery weeklyDelivery = deliveries.get(nextDeliveryWeek);
                 if (weeklyDelivery == null) {
                     weeklyDelivery = new Delivery();
-                    weeklyDelivery.setDeliveryId(nextDeliveryWeek + LocalDate.now().getYear() + "");
-                    weeklyDelivery.setDeliveryDate(LocalDate.now().plusWeeks(nextDeliveryWeek - weekOfYear));
+                    weeklyDelivery.setDeliveryId(nextDeliveryWeek + SysDate.now().getYear() + "");
+                    weeklyDelivery.setDeliveryDate(SysDate.now().plusWeeks(nextDeliveryWeek - weekOfYear));
                     weeklyDelivery.setStatus(DeliveryStatus.CREATED);
                     deliveries.put(nextDeliveryWeek, weeklyDelivery);
                 }
