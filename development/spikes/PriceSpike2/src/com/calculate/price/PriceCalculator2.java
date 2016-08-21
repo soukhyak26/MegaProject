@@ -1,5 +1,7 @@
 package com.calculate.price;
 
+import com.calculate.price.regression.RegressionBasedDemandFunctionProcessor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -124,6 +126,7 @@ public class PriceCalculator2 {
                         double x2 = minusOneInput.getQuantityActual();
                         double x1 = minusTwoInput.getQuantityActual();
                         double slope = calculateSlope(y1, y2, x1, x2);
+                        //slope by regression
                         //double slope = minusOneInput.getSlope() + (minusOneInput.getSlope()*minusOneInput.getWeightedAverage()/100);
                         double intercept = minusOneInput.getMRP();
                         double offerPrice = calculateOfferedPrice(intercept, slope, tempInput.getQuantityForecasted());
