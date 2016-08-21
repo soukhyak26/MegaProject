@@ -1,5 +1,6 @@
 package com.calculate.price.forecast;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,12 +14,19 @@ public class DemandForecasterChain {
     TripleExponentialSmoothingDemandForecaster tripleExponentialSmoothingDemandForecaster;
     ARIMABasedDemandForecaster arimaBasedDemandForecaster;
     private TimeSeriesBasedForecaster initialForecaster;
+   // private String forecasterChainElements;
 
     public DemandForecasterChain() {
         simpleMovingAverageDemandForecaster = new SimpleMovingAverageDemandForecaster();
         simpleExponentialSmoothingDemandForecaster = new SimpleExponentialSmoothingDemandForecaster();
         tripleExponentialSmoothingDemandForecaster = new TripleExponentialSmoothingDemandForecaster();
         arimaBasedDemandForecaster = new ARIMABasedDemandForecaster();
+        init();
+
+    }
+
+    public void init() {
+        //List<String> forecasterPrefixes = Arrays.asList(forecasterChainElements.split(","));
         this.addForecaster(simpleMovingAverageDemandForecaster);
         this.addForecaster(simpleExponentialSmoothingDemandForecaster);
         this.addForecaster(tripleExponentialSmoothingDemandForecaster);

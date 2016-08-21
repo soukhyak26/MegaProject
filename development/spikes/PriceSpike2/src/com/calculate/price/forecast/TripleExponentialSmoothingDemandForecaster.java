@@ -30,7 +30,7 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
     }
 
     public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList) {
-        if (historicalDataList.size() > 25 && historicalDataList.size() <= 50) {
+        if (historicalDataList.size() > 30 && historicalDataList.size() <= 60) {
             int i = 0;
             int[] windowSizes = {3};
             DataSet observedData = new DataSet();
@@ -53,9 +53,10 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
                 fcValues.add(dp);
             }
             observedData.setTimeVariable("t");
-            ForecastingModel forecaster = TripleExponentialSmoothingModel.getBestFitModel(observedData);
-
-
+            TripleExponentialSmoothingModel forecaster = TripleExponentialSmoothingModel.getBestFitModel(observedData);
+            System.out.println("TEMA coefficient alpha: " + forecaster.getAlpha());
+            System.out.println("TEMA coefficient beta: " + forecaster.getBeta());
+            System.out.println("TEMA coefficient gamma: " + forecaster.getGamma());
             DataSet results = forecaster.forecast(fcValues);
             Iterator<DataPoint> it = results.iterator();
             while (it.hasNext()) {
@@ -75,7 +76,7 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
             }
 
 
-            System.out.println("TEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+          //  System.out.println("TEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;

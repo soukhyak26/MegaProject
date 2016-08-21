@@ -16,6 +16,12 @@ import java.util.List;
 public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBasedForecaster {
 
     private TimeSeriesBasedForecaster nextForecaster;
+/*
+    @Autowired
+    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+*/
 
     public SimpleExponentialSmoothingDemandForecaster() {
     }
@@ -30,7 +36,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
     }
 
     public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList) {
-        if (historicalDataList.size() > 10 && historicalDataList.size() <= 15) {
+        if (historicalDataList.size() > 15 && historicalDataList.size() <= 30) {
             int i = 0;
             int[] windowSizes = {3};
             DataSet observedData = new DataSet();
@@ -53,16 +59,20 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
                 fcValues.add(dp);
             }
             observedData.setTimeVariable("t");
-            ForecastingModel forecaster = SimpleExponentialSmoothingModel.getBestFitModel(observedData);
+            SimpleExponentialSmoothingModel forecaster = SimpleExponentialSmoothingModel.getBestFitModel(observedData);
 
 
             DataSet results = forecaster.forecast(fcValues);
+            System.out.println("SES coefficient alpha:" + forecaster.getAlpha());
+
+
             Iterator<DataPoint> it = results.iterator();
             while (it.hasNext()) {
                 // Check that the results are within specified tolerance
                 //  of the expected values
                 DataPoint fc = (DataPoint) it.next();
                 double newSubscriptionCount = fc.getDependentValue();
+
                 double time = fc.getIndependentValue("t");
                 for (ActualVsPredictionEvaluator placeholder : predictionsSet) {
                     String subKey = placeholder.getUniqueKey().split("\\$")[1];
@@ -72,7 +82,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
                     }
                 }
             }
-            System.out.println("SEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+          //  System.out.println("SEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;

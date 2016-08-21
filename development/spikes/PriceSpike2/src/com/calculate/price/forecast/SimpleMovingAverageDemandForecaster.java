@@ -12,6 +12,12 @@ import java.util.Queue;
 public class SimpleMovingAverageDemandForecaster implements TimeSeriesBasedForecaster {
 
     private TimeSeriesBasedForecaster nextForecaster;
+/*
+    @Autowired
+    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+*/
 
     public SimpleMovingAverageDemandForecaster() {
     }
@@ -27,7 +33,7 @@ public class SimpleMovingAverageDemandForecaster implements TimeSeriesBasedForec
 
     public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList) {
         //starting with simple  moving average
-        if (historicalDataList.size() > 3 && historicalDataList.size() <= 10) {
+        if (historicalDataList.size() > 3 && historicalDataList.size() <= 15) {
             Queue<Double> window = null;
             double sum = 0;
             int i = 0;
@@ -56,7 +62,7 @@ public class SimpleMovingAverageDemandForecaster implements TimeSeriesBasedForec
                     }
                 }
             }
-            System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+           // System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;
