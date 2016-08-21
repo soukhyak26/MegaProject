@@ -3,6 +3,7 @@ package com.affaince.subscription.pricing.forecast.interpolate;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
+import com.affaince.subscription.pricing.vo.InterpolatedTotalSubscriptionsPerDay;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
 
-    public double findInterpolatedTotalSubscriptionCountOnCurrentDate(String productId) {
+    public InterpolatedTotalSubscriptionsPerDay findInterpolatedTotalSubscriptionCountOnCurrentDate(String productId) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> previousValues = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
@@ -40,7 +41,9 @@ public class ForecastInterpolatedSubscriptionCountFinder {
         double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
         LocalDate currentDate = LocalDate.now();
         int currentDay = Days.daysBetween(dateOfPlatformBeginning, currentDate).getDays();
-        return interpolatedTotalSubscriptionsPerDay[currentDay];
+        return new InterpolatedTotalSubscriptionsPerDay(
+                productId,
+                interpolatedTotalSubscriptionsPerDay[currentDay]);
 
     }
 

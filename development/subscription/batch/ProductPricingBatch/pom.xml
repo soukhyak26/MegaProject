@@ -11,6 +11,20 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ProductPricingBatch</artifactId>
     <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5010
+                    </jvmArguments>
+                    <addResources>false</addResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>com.affaince</groupId>

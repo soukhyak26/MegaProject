@@ -5,6 +5,7 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductPseudoActualsView;
+import com.affaince.subscription.pricing.vo.InterpolatedTotalSubscriptionsPerDay;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,9 +19,11 @@ public class ProductPricingTrigger {
     @Autowired
     private ProductConfigurationViewRepository productConfigurationViewRepository;
 
-    public ProductDemandTrend triggerProductPricing(String productId, double interpolatedTotalSubscriptionsOnDay) {
+    public ProductDemandTrend triggerProductPricing(InterpolatedTotalSubscriptionsPerDay interpolatedTotalSubscriptionsOnDayForProduct) {
         boolean doTriggerPrice = false;
         LocalDate currentDate = LocalDate.now();
+        String productId = interpolatedTotalSubscriptionsOnDayForProduct.getProductId();
+        double interpolatedTotalSubscriptionsOnDay = interpolatedTotalSubscriptionsOnDayForProduct.getInterpolatedTotalSubscriptionsPerDay();
         final ProductVersionId productVersionId = new ProductVersionId(productId, currentDate);
         final ProductPseudoActualsView productPseudoActualsView = productPseudoActualsViewRepository.findOne(productVersionId);
         // final double interpolatedTotalSubscriptionsOnDay = findInterpolatedTotalSubscriptionCountOnADay(productId, currentDate);

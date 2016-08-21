@@ -9,6 +9,7 @@ import com.affaince.subscription.pricing.forecast.ForecastingTrigger;
 import com.affaince.subscription.pricing.forecast.ProductPricingTrigger;
 import com.affaince.subscription.pricing.forecast.ProductsRetriever;
 import com.affaince.subscription.pricing.forecast.interpolate.ForecastInterpolatedSubscriptionCountFinder;
+import com.affaince.subscription.pricing.forecast.interpolate.Interpolator;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Predicate;
@@ -67,35 +68,41 @@ public class Axon extends ActiveMQConfiguration {
     }
 
     @Bean
-    ForecastingClient forecastingClient() {
+    public ForecastingClient forecastingClient() {
         return new ForecastingClient();
     }
 
     @Bean
-    PricingClient pricingClient() {
+    public PricingClient pricingClient() {
         return new PricingClient();
     }
 
     @Bean
-    ProductsRetriever productsRetriever() {
+    public ProductsRetriever productsRetriever() {
         return new ProductsRetriever();
     }
 
     @Bean
-    ForecastingTrigger forecastingTrigger() {
+    public ForecastingTrigger forecastingTrigger() {
         return new ForecastingTrigger();
     }
 
     @Bean
-    ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder() {
+    public ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder() {
         return new ForecastInterpolatedSubscriptionCountFinder();
     }
 
     @Bean
-    ProductPricingTrigger productPricingTrigger() {
+    public ProductPricingTrigger productPricingTrigger() {
         return new ProductPricingTrigger();
     }
 
+    @Bean
+    public Interpolator interpolator() {
+        return new Interpolator();
+    }
+
+    @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() throws Exception {
@@ -109,7 +116,7 @@ public class Axon extends ActiveMQConfiguration {
                         .executorService(executorService)
                         .to("bean:forecastingTrigger")
                         .choice()
-                        .when(simple("${body}==true"))
+                        .when(simple("${body}"))
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
 
@@ -126,7 +133,6 @@ public class Axon extends ActiveMQConfiguration {
                         .when(demandTrendChecker)
                         .to("bean:pricingClient")
                         .endChoice();
-
             }
         };
     }
