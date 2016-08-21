@@ -1,27 +1,25 @@
-package com.affaince.subscription.integration.command.event.paymentreceipt;
+package com.affaince.subscription.payments.command.event;
 
-import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
-import org.apache.camel.dataformat.bindy.annotation.DataField;
+import com.affaince.subscription.date.SysDate;
 import org.joda.time.LocalDate;
 
 /**
- * Created by rbsavaliya on 16-01-2016.
+ * Created by anayonkar on 21/8/16.
  */
-@CsvRecord(separator = ",", skipFirstLine = true)
 public class PaymentReceivedEvent {
-    @DataField(name = "SUBSCRIBER_ID", pos = 1, trim = true)
     private String susbcriberId;
-
-    @DataField(name = "SUBSCRIPTION_ID", pos = 2, trim = true)
     private String subscriptionId;
-
-    @DataField(name = "AMOUNT", pos = 3, trim = true)
     private double paidAmount;
-
-    @DataField(name = "PAY_DATE", pos = 4, trim = true)
     private LocalDate paymentDate;
 
     public PaymentReceivedEvent() {
+    }
+
+    public PaymentReceivedEvent(String susbcriberId, String subscriptionId, double paidAmount, LocalDate paymentDate) {
+        this.susbcriberId = susbcriberId;
+        this.subscriptionId = subscriptionId;
+        this.paidAmount = paidAmount;
+        this.paymentDate = paymentDate;
     }
 
     public String getSusbcriberId() {
@@ -55,16 +53,4 @@ public class PaymentReceivedEvent {
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
-
-    @Override
-    public String toString() {
-        return "PaymentReceivedEvent{" +
-                "susbcriberId='" + susbcriberId + '\'' +
-                ", subscriptionId='" + subscriptionId + '\'' +
-                ", paidAmount=" + paidAmount +
-                ", paymentDate=" + paymentDate +
-                '}';
-    }
 }
-
-
