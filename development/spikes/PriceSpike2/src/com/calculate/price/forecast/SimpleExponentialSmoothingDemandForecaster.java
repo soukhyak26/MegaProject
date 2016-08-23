@@ -63,7 +63,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
 
 
             DataSet results = forecaster.forecast(fcValues);
-            System.out.println("SES coefficient alpha:" + forecaster.getAlpha());
+//            System.out.println("SES coefficient alpha:" + forecaster.getAlpha());
 
 
             Iterator<DataPoint> it = results.iterator();

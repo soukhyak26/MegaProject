@@ -54,9 +54,11 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
             }
             observedData.setTimeVariable("t");
             TripleExponentialSmoothingModel forecaster = TripleExponentialSmoothingModel.getBestFitModel(observedData);
+/*
             System.out.println("TEMA coefficient alpha: " + forecaster.getAlpha());
             System.out.println("TEMA coefficient beta: " + forecaster.getBeta());
             System.out.println("TEMA coefficient gamma: " + forecaster.getGamma());
+*/
             DataSet results = forecaster.forecast(fcValues);
             Iterator<DataPoint> it = results.iterator();
             while (it.hasNext()) {

@@ -43,11 +43,13 @@ public class ARIMABasedDemandForecaster implements TimeSeriesBasedForecaster {
             ARIMAModel arimaModel = ARIMA.fitModel(1, 0, 1, ts, true, "css-cgd", null);
             double[] coefficients = arimaModel.coefficients();
             int m=0;
+/*
             for (Double coeff : coefficients) {
 
                 System.out.println("ARIMA coefficients " +m+ ":" + coeff);
                 m++;
             }
+*/
             Vector forecast = arimaModel.forecast(ts, values.length / 2);
             List<Double> forecastedSubscriptionCounts = new ArrayList<>();
             for (int j = i; j < forecast.size(); j++) {

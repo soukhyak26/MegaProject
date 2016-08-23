@@ -44,8 +44,9 @@ public class PrceTest {
         for(int i=0;i<50;i++){
             priceInputs.forEach(pi-> historicalSubscriptions.add(pi.getQuantityActual()));
             double newforecastedSubscription = demandForecasterChain.forecast("1",historicalSubscriptions).get(0);
-            PriceInput newofrecastInput = new PriceInput(30.0,54.0,0.83,2.0,-1.0,newforecastedSubscription,avg(newforecastedSubscription));
-            priceInputs.add(newofrecastInput);
+            PriceInput newforecastInput = new PriceInput(30.0,54.0,0.83,2.0,-1.0,newforecastedSubscription,avg(newforecastedSubscription));
+
+            priceInputs.add(newforecastInput);
         }
         DoublyLinkedList<PriceInput> outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);
 

@@ -17,6 +17,17 @@ public class PriceInput {
     private double revenueActual;
     private double profitActual;
     private double weightedAverage;
+    private double intercept;
+
+    public boolean getInstanteneousSlope() {
+        return instanteneousSlope;
+    }
+
+    public void setInstanteneousSlope(boolean instanteneousSlope) {
+        this.instanteneousSlope = instanteneousSlope;
+    }
+
+    private boolean instanteneousSlope;
 
     public PriceInput(double purchasePrice, double MRP, double totalFixedExpensePerUnit, double variableExpensePerUnit, double offeredPrice, double quantityForecasted, double quantityActual) {
         this.purchasePrice = purchasePrice;
@@ -147,5 +158,12 @@ public class PriceInput {
         } else {
             return offeredPrice;
         }
+    }
+
+    public void setIntercept(double intercept) {
+        this.intercept = intercept;
+    }
+    public double getIntercept(){
+        return this.intercept;
     }
 }
