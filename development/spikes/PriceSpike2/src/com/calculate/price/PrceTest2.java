@@ -43,64 +43,41 @@ public class PrceTest2 {
         priceInputs.add(pi5);
         priceInputs.add(pi6);
         priceInputs.add(pi7);
-        DemandForecasterChain demandForecasterChain = new DemandForecasterChain();
-        DoublyLinkedList<PriceInput> outputs = PriceCalculator2.getInstance().calculatePrice(markPrice, priceInputs);
 
         List<Double> historicalSubscriptions = new ArrayList<>();
-        Map<Double, Double> historicalPriceVsDemand = new HashMap<>();
-
-        RegressionBasedDemandFunctionProcessor processor = new RegressionBasedDemandFunctionProcessor();
-        FunctionCoefficients functionCoefficients = null;
-
-        for (int i = 6; i < 50; i++) {
+        DemandForecasterChain demandForecasterChain = new DemandForecasterChain();
+        for (int i = 0; i < 100; i++) {
             priceInputs.forEach(pi -> historicalSubscriptions.add(pi.getQuantityActual()));
             double newforecastedSubscription = demandForecasterChain.forecast("1", historicalSubscriptions).get(0);
             PriceInput newforecastInput = new PriceInput(30.0, 54.0, 0.83, 2.0, -1.0, newforecastedSubscription, avg(newforecastedSubscription));
             priceInputs.add(newforecastInput);
         }
-        List<Double> priceInputSlopes = new ArrayList<>();
-        priceInputs.forEach(pi -> priceInputSlopes.add(pi.getSlope()));
-        for (int j = 0; j < priceInputs.size(); j++) {
-            if (priceInputSlopes.get(j) != -1) {
-                priceInputs.forEach(pi -> historicalPriceVsDemand.put(pi.getOfferedPrice(), pi.getQuantityActual()));
-                functionCoefficients = processor.processFunction(historicalPriceVsDemand);
-                System.out.println("@@@@Slope::" + functionCoefficients.getSlope());
-            }
+        DoublyLinkedList<PriceInput> outputs = PriceCalculator2.getInstance().calculatePrice(markPrice, priceInputs);
 
-        }
-        outputs = PriceCalculator2.getInstance().calculatePrice(markPrice, priceInputs);
-        /*DemandForecasterChain demandForecasterChain= new DemandForecasterChain();
-        List<Double> historicalSubscriptions= new ArrayList<>();
-        Map<Double,Double> historicalPriceVsDemand= new HashMap<>();
-        List<Double> historicalPrices= new ArrayList<>();
+        Map<Double, Double> historicalPriceVsDemand = new HashMap<>();
         RegressionBasedDemandFunctionProcessor processor = new RegressionBasedDemandFunctionProcessor();
-        FunctionCoefficients functionCoefficients=null;
-        DoublyLinkedList<PriceInput> outputs = null;
-        for(int i=0;i<50;i++){
-            priceInputs.forEach(pi-> historicalSubscriptions.add(pi.getQuantityActual()));
-            priceInputs.forEach((pi->historicalPrices.add(pi.getOfferedPrice())));
-            //double price =historicalPrices.get(i);
-            if(i>=5) {
-                priceInputs.forEach(pi -> historicalPriceVsDemand.put(pi.getOfferedPrice(), pi.getQuantityActual()));
-                functionCoefficients =processor.processFunction(historicalPriceVsDemand);
-            }
-            double newforecastedSubscription = demandForecasterChain.forecast("1",historicalSubscriptions).get(0);
+        FunctionCoefficients functionCoefficients = null;
 
-            PriceInput newforecastInput = new PriceInput(30.0,54.0,0.83,2.0,-1.0,newforecastedSubscription,avg(newforecastedSubscription));
-            outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);
-            if(null !=functionCoefficients) {
-                newforecastInput.setSlope(functionCoefficients.getSlope());
-            }
-            priceInputs.add(newforecastInput);
-        }
-        outputs= PriceCalculator2.getInstance().calculatePrice(markPrice,priceInputs);*/
-
-        ListIterator<PriceInput> iterator = outputs.iterator();
-        double accumulatedProfit = 0.0;
+        Iterator<PriceInput> iterator = priceInputs.iterator();
         while (iterator.hasNext()) {
-            PriceInput tempInput = iterator.next();
+            PriceInput input = iterator.next();
+            historicalPriceVsDemand.put(input.getOfferedPrice(), input.getQuantityActual());
+            if(historicalPriceVsDemand.size()>20) {
+                functionCoefficients = processor.processFunction(historicalPriceVsDemand);
+                System.out.printf("@@@@Slope:%f\n", functionCoefficients.getSlope());
+            }
+
+        }
+        //outputs = PriceCalculator2.getInstance().calculatePrice(markPrice, priceInputs);
+
+
+        ListIterator<PriceInput> iterator2 = outputs.iterator();
+        double accumulatedProfit = 0.0;
+        while (iterator2.hasNext()) {
+            PriceInput tempInput = iterator2.next();
             accumulatedProfit += tempInput.getProfitActual();
-            System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantityActual() + "| cost: " + tempInput.getCostActual() + "| Revenue: " + tempInput.getRevenueActual() + "| Profit: " + tempInput.getProfitActual());
+            System.out.printf("slope: %f",tempInput.getSlope());
+            System.out.println("| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantityActual() + "| cost: " + tempInput.getCostActual() + "| Revenue: " + tempInput.getRevenueActual() + "| Profit: " + tempInput.getProfitActual());
         }
         System.out.println("----------------------------------------------------------");
         System.out.println("accumulted profit for 54: " + accumulatedProfit);
@@ -141,7 +118,7 @@ public class PrceTest2 {
         while (iterator.hasNext()) {
             PriceInput tempInput = iterator.next();
             accumulatedProfit += tempInput.getProfitActual();
-            System.out.println("slope: " + tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantityActual() + "| cost: " + tempInput.getCostActual() + "| Revenue: " + tempInput.getRevenueActual() + "| Profit: " + tempInput.getProfitActual());
+            System.out.printf("slope: %f", tempInput.getSlope() + "| offeredPrice: " + tempInput.getOfferedPrice() + "| qunatity: " + tempInput.getQuantityActual() + "| cost: " + tempInput.getCostActual() + "| Revenue: " + tempInput.getRevenueActual() + "| Profit: " + tempInput.getProfitActual());
         }
         System.out.println("----------------------------------------------------------");
         System.out.println("accumulted profit for 54: " + accumulatedProfit);

@@ -23,12 +23,12 @@ public class RegressionBasedDemandFunctionProcessor {
         /*final Map <Double, Double> offerPriceVersesSubscriptionsMapping =
                 offerPriceVersesSubscriptionMapping(priceBucketsWithSamePurchasePrice, priceBucketJustBeforePurchasePriceChange);*/
         List<Double> parametersList = new ArrayList<Double>();
-        /*for (Map.Entry<Double, Double> entry : offerPriceVersesSubscriptionsMapping.entrySet()) {
+        for (Map.Entry<Double, Double> entry : historicalPriceVsDemand.entrySet()) {
             double offeredPrice= entry.getKey();
             double subscriptionCount = entry.getValue();
             parametersList.add(offeredPrice);
             parametersList.add(subscriptionCount);
-        }*/
+        }
 
         RegressionResult result = MathsProcessingService.processMultipleLinearRegression(parametersList.stream().mapToDouble(Double::doubleValue).toArray(), parametersList.size() / 2, 1);
         if (result.getAdjustedRSquaredValue() < 0.5) {
