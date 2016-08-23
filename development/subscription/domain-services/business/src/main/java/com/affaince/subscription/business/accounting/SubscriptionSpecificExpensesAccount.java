@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
  */
 public class SubscriptionSpecificExpensesAccount extends Account {
     public SubscriptionSpecificExpensesAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.SUBSCRIPTION_SPECIFIC_EXPENSES, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override

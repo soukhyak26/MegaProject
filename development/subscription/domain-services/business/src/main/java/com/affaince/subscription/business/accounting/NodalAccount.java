@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
  */
 public class NodalAccount extends Account {
     public NodalAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.NODAL_ACCOUNT, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override

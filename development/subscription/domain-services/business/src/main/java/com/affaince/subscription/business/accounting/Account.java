@@ -12,7 +12,6 @@ import org.joda.time.LocalDate;
 public abstract class Account extends AbstractAnnotatedEntity {
     private double startAmount;
     private double currentAmount;
-    private AccountType accountType;
     private LocalDate startDate;
     private LocalDate endDate;
     //List<Transaction> transactionList = new ArrayList<>();
@@ -23,9 +22,8 @@ public abstract class Account extends AbstractAnnotatedEntity {
         this.currentAmount = startAmount;
     }*/
 
-    protected Account(AccountType accountType, double startAmount, LocalDate endDate) {
+    protected Account(double startAmount, LocalDate endDate) {
         this.startAmount = startAmount;
-        this.accountType = accountType;
         this.endDate = endDate;
         this.currentAmount = startAmount;
         this.startDate = SysDate.now();
@@ -47,10 +45,6 @@ public abstract class Account extends AbstractAnnotatedEntity {
 
     public double getCurrentAmount() {
         return currentAmount;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
     }
 
     public LocalDate getStartDate() {

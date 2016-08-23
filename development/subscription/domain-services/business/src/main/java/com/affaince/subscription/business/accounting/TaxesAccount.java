@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
  */
 public class TaxesAccount extends Account {
     public TaxesAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.TAXES, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override

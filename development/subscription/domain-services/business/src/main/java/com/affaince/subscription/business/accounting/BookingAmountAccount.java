@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
  */
 public class BookingAmountAccount extends Account {
     public BookingAmountAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.BOOKING_AMOUNT, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override

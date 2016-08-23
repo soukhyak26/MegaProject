@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
  */
 public class CommonExpensesAccount extends Account {
     public CommonExpensesAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.COMMON_EXPENSES, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override

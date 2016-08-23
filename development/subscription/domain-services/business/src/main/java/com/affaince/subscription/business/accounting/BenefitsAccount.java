@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 public class BenefitsAccount extends Account {
 
     public BenefitsAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.BENEFITS, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override

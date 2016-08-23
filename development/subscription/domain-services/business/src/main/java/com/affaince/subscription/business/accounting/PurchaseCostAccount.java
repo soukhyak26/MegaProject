@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 public class PurchaseCostAccount extends Account {
 
     public PurchaseCostAccount(double startAmount, LocalDate endDate) {
-        super(AccountType.PURCHASE_COST, startAmount, endDate);
+        super(startAmount, endDate);
     }
 
     @Override
