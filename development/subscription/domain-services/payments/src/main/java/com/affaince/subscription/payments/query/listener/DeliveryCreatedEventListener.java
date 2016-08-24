@@ -3,6 +3,7 @@ package com.affaince.subscription.payments.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
 import com.affaince.subscription.payments.command.event.DeliveryCreatedEvent;
+import com.affaince.subscription.payments.query.repository.DeliveryCostViewRepository;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DeliveryCreatedEventListener {
+
     @Autowired
     private SubscriptionCommandGateway commandGateway;
 
-    public DeliveryCreatedEventListener() {
+    public DeliveryCreatedEventListener(DeliveryCostViewRepository deliveryCostViewRepository) {
     }
 
     @EventHandler

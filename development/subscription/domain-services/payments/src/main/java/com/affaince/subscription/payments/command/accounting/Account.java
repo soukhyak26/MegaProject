@@ -1,5 +1,6 @@
 package com.affaince.subscription.payments.command.accounting;
 
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.event.CreditedEvent;
 import com.affaince.subscription.payments.command.event.DebitedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
@@ -14,14 +15,17 @@ public abstract class Account extends AbstractAnnotatedEntity {
 
     public Account(double amount) {
         this.amount = amount;
+        transactionDate = SysDate.now();
     }
 
     public void credit(double amount) {
         this.amount += amount;
+        transactionDate = SysDate.now();
     }
 
     public void debit(double amount) {
         this.amount -= amount;
+        transactionDate = SysDate.now();
     }
 
     public double getAmount() {

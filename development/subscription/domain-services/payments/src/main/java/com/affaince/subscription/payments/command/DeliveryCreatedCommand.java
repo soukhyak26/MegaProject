@@ -10,7 +10,7 @@ import java.util.List;
  * Created by anayonkar on 21/8/16.
  */
 public class DeliveryCreatedCommand {
-    public String deliveryId;
+    private String deliveryId;
     private String subscriberId;
     private String subscriptionId;
     private List<DeliveryItem> deliveryItems;
