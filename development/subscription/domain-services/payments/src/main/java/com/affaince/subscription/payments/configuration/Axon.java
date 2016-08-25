@@ -2,9 +2,7 @@ package com.affaince.subscription.payments.configuration;
 
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.payments.command.domain.Payment;
-import com.affaince.subscription.payments.command.event.DeliveryCreatedEvent;
-import com.affaince.subscription.payments.command.event.DeliveryStatusAndDispatchDateUpdatedEvent;
-import com.affaince.subscription.payments.command.event.PaymentReceivedEvent;
+import com.affaince.subscription.payments.command.event.*;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -35,7 +33,12 @@ public class Axon extends ActiveMQConfiguration {
             put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
-            //TODO: add remaining events
+            put("com.affaince.subscription.payments.command.event.DeliveryCostAccountCreditedEvent", DeliveryCostAccountCreditedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.DeliveryCostAccountDebitedEvent", DeliveryCostAccountDebitedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.DeliveryInitiatedEvent", DeliveryInitiatedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.PaymentInitiatedEvent", PaymentInitiatedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.PaymentReceivedAccountCreditedEvent", PaymentReceivedAccountCreditedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.PaymentReceivedAccountDebitedEvent", PaymentReceivedAccountDebitedEvent.class.getName());
         }};
     }
 

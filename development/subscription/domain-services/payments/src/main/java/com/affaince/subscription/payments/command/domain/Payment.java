@@ -21,10 +21,6 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
 
     @AggregateIdentifier
     private String subscriptionId;
-    //TODO: change below 2 fields to abstractannotatedentity and mark as eventsourcedmember
-    //TODO: create 2 views - 1 for delivery(i.e. debit) and another for payment received(i.e. credit)
-    private Map<String, Double> deliveryCosts;
-    private Double totalBalance;
     @EventSourcedMember
     private Map<String, DeliveryCostAccount> deliveryCostAccountMap;
     @EventSourcedMember
@@ -33,21 +29,16 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
     //TODO: What about subscriber id (i.e. same subscriber and multiple subscriptions) - will there be repository for that too?
 
     public Payment() {
-        /*deliveryCosts = new HashMap<>();
-        deliveryCostAccountMap = new HashMap<>();*/
     }
 
     public Payment(String subscriptionId, Double totalBalance) {
-        /*this();
-        this.subscriptionId = subscriptionId;
-        paymentReceivedAccount = new PaymentReceivedAccount(totalBalance);*/
         apply(new PaymentInitiatedEvent(subscriptionId, totalBalance));
     }
 
     @EventSourcingHandler
     public void on(PaymentInitiatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();
-        this.totalBalance = event.getTotalBalance();
+        this.paymentReceivedAccount = new PaymentReceivedAccount(event.getTotalBalance());
         this.deliveryCostAccountMap = new HashMap<>();
     }
 
@@ -56,19 +47,11 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void handleDeliveryStatusAndDispatchDateUpdatedCommand(DeliveryStatusAndDispatchDateUpdatedCommand command) {
-        /*double deliveryCost = command.getDeliveryCharges() + command.getTotalDeliveryPrice();
-        totalBalance -= deliveryCost;
-        deliveryCosts.put(command.getBasketId(), deliveryCost);*/
         this.deliveryCostAccountMap.get(command.getBasketId()).fireCreditedEvent(command.getBasketId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
         this.paymentReceivedAccount.fireDebitedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
     }
 
-    /*public void handlePaymentReceivedCommand(PaymentReceivedCommand command) {
-        totalBalance += command.getPaidAmount();
-    }*/
-
     public void handleDeliveryCreatedCommand(DeliveryCreatedCommand command) {
-        //deliveryCosts.put(command.getDeliveryId(), 0.0);
         apply(new DeliveryInitiatedEvent(command.getDeliveryId(), command.getSubscriptionId()));
     }
 

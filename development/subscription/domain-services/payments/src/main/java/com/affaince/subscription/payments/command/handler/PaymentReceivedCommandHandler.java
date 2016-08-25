@@ -21,14 +21,12 @@ public class PaymentReceivedCommandHandler {
 
     @CommandHandler
     public void handle(PaymentReceivedCommand command) {
-        /*Payment payment = repository.load(command.getSubscriptionId());
-        payment.handlePaymentReceivedCommand(command);*/
         Payment payment = repository.load(command.getSubscriptionId());
         if(payment == null) {
             payment = new Payment(command.getSubscriptionId(), command.getPaidAmount());
+            repository.add(payment);
         } else {
             payment.handlePartialPayment(command.getPaidAmount());
         }
-        repository.add(payment);
     }
 }
