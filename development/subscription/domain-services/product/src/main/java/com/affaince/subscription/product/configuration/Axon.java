@@ -8,8 +8,9 @@ import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.services.pricing.determinator.DemandBasedPriceDeterminator;
 import com.affaince.subscription.product.services.pricing.processor.PricingStrategyDeterminator;
+import com.affaince.subscription.product.services.pricing.processor.calculator.historybased.RegressionBasedPriceCalculator;
+import com.affaince.subscription.product.services.pricing.processor.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedCostFunctionProcessor;
-import com.affaince.subscription.product.services.pricing.processor.function.RegressionBasedDemandFunctionProcessor;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventhandling.EventTemplate;
@@ -180,6 +181,10 @@ public class Axon extends ActiveMQConfiguration {
         return new RegressionBasedDemandFunctionProcessor();
     }
 
+    @Bean
+    public RegressionBasedPriceCalculator regressionBasedPriceCalculator() {
+        return new RegressionBasedPriceCalculator();
+    }
     @Bean
     DemandBasedPriceDeterminator demandBasedPriceDeterminator() {
         return new DemandBasedPriceDeterminator();

@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by mandark on 06-04-2016.
  */
+@Deprecated
 public class PriceDeterminationCriteriaComposer {
 
 

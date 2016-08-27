@@ -11,6 +11,8 @@ import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.CalculatorChain;
+import com.affaince.subscription.product.vo.PriceCalculationParameters;
+import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
@@ -36,20 +38,14 @@ public class DefaultPriceDeterminator implements PriceDeterminator {
     @Override
     public PriceBucketView calculateOfferedPrice(String productId, ProductDemandTrend productDemandTrend) {
 
-        //List<FunctionCoefficients> demandAndCostFunctionCoefficients = priceDeterminationCriteria.getListOfCriteriaElements();
-
-        //who will set demand function coefficient??
-/*
-        FunctionCoefficients demandFunctionCoefficients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.DEMAND_FUNCTION_COEFFICIENT)).findFirst().get();
-        final String productId = demandFunctionCoefficients.getProductId();
-*/
-
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(productId);
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         ProductActualsView productActualsView = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
         ProductForecastView productForecastView = productForecastViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
-        PriceBucketView latestPriceBucket = calculatorChain.calculatePrice(activePriceBuckets, productActualsView, productDemandTrend, productConfigurationView.getChangeThresholdForPriceChange());
+        PricingStrategyType pricingStrategyType = productConfigurationView.getPricingStrategyType();
+        PriceCalculationParameters priceCalculationParameters = new PriceCalculationParameters(activePriceBuckets, productActualsView, productDemandTrend, productConfigurationView.getChangeThresholdForPriceChange(), pricingStrategyType);
+        PriceBucketView latestPriceBucket = calculatorChain.calculatePrice(priceCalculationParameters);
         priceBucketViewRepository.save(latestPriceBucket);
         return latestPriceBucket;
 

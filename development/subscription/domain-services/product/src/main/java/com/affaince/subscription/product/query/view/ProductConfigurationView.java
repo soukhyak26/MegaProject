@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
+import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,13 +15,15 @@ public class ProductConfigurationView {
     private double changeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private PricingStrategyType pricingStrategyType;
 
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.changeThresholdForPriceChange = changeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
+        this.pricingStrategyType = pricingStrategyType;
     }
 
     public String getProductId() {
@@ -61,5 +64,13 @@ public class ProductConfigurationView {
 
     public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    }
+
+    public PricingStrategyType getPricingStrategyType() {
+        return pricingStrategyType;
+    }
+
+    public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
+        this.pricingStrategyType = pricingStrategyType;
     }
 }

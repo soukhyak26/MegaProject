@@ -1,11 +1,11 @@
 package com.affaince.subscription.product.services.pricing.processor.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.processor.calculator.breakevenprice.BreakEvenPriceCalculator;
+import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
 
@@ -97,6 +97,6 @@ public abstract class AbstractPriceCalculator {
         return productForecastView.getTotalNumberOfExistingSubscriptions() - productActualsView.getTotalNumberOfExistingSubscriptions();
     }
 
-    public abstract PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductDemandTrend productDemandTrend, double changeThresholdForPriceChange);
+    public abstract PriceBucketView calculatePrice(PriceCalculationParameters priceCalculationParameters);
 
 }

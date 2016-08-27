@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
 /**
@@ -12,6 +13,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private PricingStrategyType pricingStrategyType;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -46,20 +48,11 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
     }
 
-    /*
-    public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
-        this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
-s    }
-*/
-
-/*
-    public DemandWiseProfitSharingRule findDemandWiseProfitSharingRuleByDemandDensity(double demandDensity) {
-        DemandWiseProfitSharingRule rule = new DemandWiseProfitSharingRule();
-        rule.setDemandDensityPercentage(demandDensity);
-        if (demandWiseProfitSharingRules.contains(rule)) {
-            return demandWiseProfitSharingRules.get(demandWiseProfitSharingRules.indexOf(rule));
-        }
-        return null;
+    public PricingStrategyType getPricingStrategyType() {
+        return pricingStrategyType;
     }
-*/
+
+    public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
+        this.pricingStrategyType = pricingStrategyType;
+    }
 }

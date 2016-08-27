@@ -1,9 +1,9 @@
 package com.affaince.subscription.product.services.pricing.processor.calculator;
 
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.classic.*;
+import com.affaince.subscription.product.services.pricing.processor.calculator.historybased.RegressionBasedPriceCalculator;
+import com.affaince.subscription.product.services.pricing.processor.calculator.instant.*;
+import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,9 @@ import java.util.List;
  */
 @Component
 public class CalculatorChain {
+    @Autowired
+    RegressionBasedPriceCalculator regressionBasedPriceCalculator;
     private AbstractPriceCalculator initialCalculator;
-
     @Value("${pricing.calculator.chain.list}")
     private String pricingCalculatorChainElements;
     @Autowired
@@ -50,6 +51,8 @@ public class CalculatorChain {
                 this.addCalculator(profitReductionAfterDemandGrowthPriceCalculator);
             } else if (prefix.equals("ProfitReductionDueToDemand")) {
                 this.addCalculator(profitReductionDueToDemandPriceCalculator);
+            } else if (prefix.equals("RegressionBasedPriceCalculator")) {
+                this.addCalculator(regressionBasedPriceCalculator);
             }
         }
     }
@@ -62,7 +65,7 @@ public class CalculatorChain {
         }
     }
 
-    public PriceBucketView calculatePrice(List<PriceBucketView> activePriceBuckets, ProductActualsView productActualsView, ProductDemandTrend productDemandTrend, double changeThresholdForPriceChange) {
-        return initialCalculator.calculatePrice(activePriceBuckets, productActualsView, productDemandTrend, changeThresholdForPriceChange);
+    public PriceBucketView calculatePrice(PriceCalculationParameters priceCalculationParameters) {
+        return initialCalculator.calculatePrice(priceCalculationParameters);
     }
 }

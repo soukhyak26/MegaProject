@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by mandark on 04-03-2016.
  */
+@Deprecated
 public class PricingStrategyDeterminator {
     @Autowired
     PriceBucketViewRepository priceBucketViewRepository;
