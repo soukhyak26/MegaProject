@@ -1,8 +1,8 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator.instant;
+package com.affaince.subscription.product.services.pricing.calculator.instant;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
+import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import org.springframework.stereotype.Component;
 

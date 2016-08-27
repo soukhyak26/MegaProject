@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator.historybased.regression;
+package com.affaince.subscription.product.services.pricing.calculator.historybased.regression;
 
 /**
  * Created by mandark on 28-02-2016.

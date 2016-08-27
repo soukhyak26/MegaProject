@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services.pricing.processor.exception;
+package com.affaince.subscription.product.services.pricing.exception;
 
 /**
  * Created by mandark on 28-02-2016.

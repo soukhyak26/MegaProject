@@ -1,11 +1,9 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator.instant;
+package com.affaince.subscription.product.services.pricing.calculator.instant;
 
-import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
+import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.springframework.stereotype.Component;
@@ -49,14 +47,9 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
             }
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
-            PriceBucketView newPrieBucket = new PriceBucketView();
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
-            newPrieBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), SysDate.now()));
-            newPrieBucket.setTaggedPriceVersion(taggedPriceVersion);
-            newPrieBucket.setSlope(slope);
-            newPrieBucket.setEntityStatus(EntityStatus.ACTIVE);
-            newPrieBucket.setOfferedPricePerUnit(offeredPrice);
-            return newPrieBucket;
+            return createPriceBucket(productId, taggedPriceVersion, slope, offeredPrice);
+
         } else {
             return getNextCalculator().calculatePrice(priceCalculationParameters);
 

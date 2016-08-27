@@ -5,7 +5,7 @@ import com.affaince.subscription.common.vo.RegressionResult;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.services.pricing.processor.exception.InaccurateRegressionException;
+import com.affaince.subscription.product.services.pricing.exception.InaccurateRegressionException;
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
 import org.joda.time.LocalDate;

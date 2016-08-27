@@ -1,8 +1,8 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator;
+package com.affaince.subscription.product.services.pricing.calculator;
 
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.historybased.RegressionBasedPriceCalculator;
-import com.affaince.subscription.product.services.pricing.processor.calculator.instant.*;
+import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
+import com.affaince.subscription.product.services.pricing.calculator.instant.*;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +51,7 @@ public class CalculatorChain {
                 this.addCalculator(profitReductionAfterDemandGrowthPriceCalculator);
             } else if (prefix.equals("ProfitReductionDueToDemand")) {
                 this.addCalculator(profitReductionDueToDemandPriceCalculator);
-            } else if (prefix.equals("RegressionBasedPriceCalculator")) {
+            } else if (prefix.equals("RegressionBased")) {
                 this.addCalculator(regressionBasedPriceCalculator);
             }
         }

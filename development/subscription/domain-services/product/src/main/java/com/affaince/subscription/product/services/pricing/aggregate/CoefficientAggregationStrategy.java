@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by mandark on 28-02-2016.
  */
+@Deprecated
 public class CoefficientAggregationStrategy {
 
     public PriceDeterminationCriteria aggregate(FunctionCoefficients coefficients1, FunctionCoefficients coefficients2) {

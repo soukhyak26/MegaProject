@@ -1,11 +1,9 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator.instant;
+package com.affaince.subscription.product.services.pricing.calculator.instant;
 
-import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.AbstractPriceCalculator;
+import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.springframework.stereotype.Component;
@@ -13,10 +11,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Created by mandark on 24-04-2016.
+ * Created by mandark on 29-04-2016.
  */
 @Component
-public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
+public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucketView calculatePrice(PriceCalculationParameters priceCalculationParameters) {
         String productId = priceCalculationParameters.getProductActualsView().getProductVersionId().getProductId();
@@ -26,19 +24,13 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
         final PriceBucketView minusOnePriceBucket = findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
         final PriceBucketView minusTwoPriceBucket = findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
 
-        if (null != minusOnePriceBucket && null == minusTwoPriceBucket && latestPriceBucket.getEntityStatus() == EntityStatus.ACTIVE) {
-
-            double y2 = minusOnePriceBucket.getOfferedPricePerUnit();
-            double y1 = latestPriceBucket.getTaggedPriceVersion().getMRP(); //mark  price
-            double x2 = latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice();
-            double x1 = 0;//mark quantity
-            double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1);
+        if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
+                minusOnePriceBucket.getTotalProfit() < minusTwoPriceBucket.getTotalProfit() &&
+                minusOnePriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice() > minusTwoPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice()) {
+            double slope = minusOnePriceBucket.getSlope() - (minusOnePriceBucket.getSlope() * calculateWeightedAverage(priceCalculationParameters.getActivePriceBuckets()) / 100);
             double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
             double expectedDemand = 0;
-            //BIG QUESTION MARK HOW TO EXTRAPOLATE?
-            //currently taking the forecast of current month(when batch is executing)
-            //double expectedDemandedQuantity= productForecastMetricsView.getTotalNumberOfExistingSubscriptions();
-            //final double expectedDemand = calculateExpectedDemand(productForecastView, productActualsView);
+            //double expectedDemandedQuantity = productForecastView.getTotalNumberOfExistingSubscriptions();
             if (priceCalculationParameters.getProductDemandTrend() == ProductDemandTrend.DOWNWARD) {
                 expectedDemand = latestPriceBucket.getNumberOfNewCustomersAssociatedWithAPrice() - latestPriceBucket.getNumberOfNewCustomersAssociatedWithAPrice() * priceCalculationParameters.getChangeThresholdPercentageForPriceChange();
             } else {
@@ -46,18 +38,22 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             }
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
-            PriceBucketView newPriceBucket = new PriceBucketView();
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
-            newPriceBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), SysDate.now()));
-            newPriceBucket.setTaggedPriceVersion(taggedPriceVersion);
-            newPriceBucket.setSlope(slope);
-            newPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
-            newPriceBucket.setOfferedPricePerUnit(offeredPrice);
-            return newPriceBucket;
+            return createPriceBucket(productId, taggedPriceVersion, slope, offeredPrice);
         } else {
             return getNextCalculator().calculatePrice(priceCalculationParameters);
 
         }
-
     }
+
+    private double calculateWeightedAverage(List<PriceBucketView> activePriceBuckets) {
+        double weightedProduct = 0.0;
+        double quantitySum = 0.0;
+        for (PriceBucketView tempInput : activePriceBuckets) {
+            weightedProduct += tempInput.getOfferedPricePerUnit() * tempInput.getNumberOfExistingCustomersAssociatedWithAPrice();
+            quantitySum += tempInput.getNumberOfExistingCustomersAssociatedWithAPrice();
+        }
+        return weightedProduct / quantitySum;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator.breakevenprice;
+package com.affaince.subscription.product.services.pricing.calculator.breakevenprice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

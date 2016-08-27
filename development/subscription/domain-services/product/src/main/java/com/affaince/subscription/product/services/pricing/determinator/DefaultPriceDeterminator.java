@@ -10,7 +10,7 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.CalculatorChain;
+import com.affaince.subscription.product.services.pricing.calculator.CalculatorChain;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.springframework.beans.factory.annotation.Autowired;

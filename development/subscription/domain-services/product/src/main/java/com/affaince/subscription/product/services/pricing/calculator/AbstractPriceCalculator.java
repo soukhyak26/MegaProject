@@ -1,11 +1,15 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator;
+package com.affaince.subscription.product.services.pricing.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
+import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import com.affaince.subscription.product.services.pricing.processor.calculator.breakevenprice.BreakEvenPriceCalculator;
+import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDate;
 
@@ -97,6 +101,18 @@ public abstract class AbstractPriceCalculator {
         return productForecastView.getTotalNumberOfExistingSubscriptions() - productActualsView.getTotalNumberOfExistingSubscriptions();
     }
 
+    protected PriceBucketView createPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double slope, double offeredPrice) {
+        PriceBucketView newPrieBucket = new PriceBucketView();
+        // PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
+        ProductVersionId productVersionId = new ProductVersionId(productId, SysDate.now());
+        newPrieBucket.setProductVersionId(new ProductVersionId(productVersionId.getProductId(), SysDate.now()));
+        newPrieBucket.setTaggedPriceVersion(taggedPriceVersion);
+        newPrieBucket.setSlope(slope);
+        newPrieBucket.setEntityStatus(EntityStatus.ACTIVE);
+        newPrieBucket.setOfferedPricePerUnit(offeredPrice);
+        return newPrieBucket;
+
+    }
     public abstract PriceBucketView calculatePrice(PriceCalculationParameters priceCalculationParameters);
 
 }

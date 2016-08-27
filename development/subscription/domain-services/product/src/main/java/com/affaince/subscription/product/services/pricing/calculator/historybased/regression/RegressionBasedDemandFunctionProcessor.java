@@ -1,8 +1,8 @@
-package com.affaince.subscription.product.services.pricing.processor.calculator.historybased.regression;
+package com.affaince.subscription.product.services.pricing.calculator.historybased.regression;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.vo.RegressionResult;
-import com.affaince.subscription.product.services.pricing.processor.exception.InaccurateRegressionException;
+import com.affaince.subscription.product.services.pricing.exception.InaccurateRegressionException;
 
 import java.util.ArrayList;
 import java.util.List;
