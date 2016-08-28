@@ -1,6 +1,6 @@
 package com.affaince.subscription.payments.query.view;
 
-import com.affaince.subscription.payments.command.accounting.PaymentReceivedAccount;
+import com.affaince.subscription.payments.command.accounting.TotalBalanceAccount;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,10 +12,10 @@ public class SubscriptionPaymentView {
     @Id
     private String subscriptionId;
     private Double totalBalance;
-    private PaymentReceivedAccount paymentReceivedAccount;
+    private TotalBalanceAccount totalBalanceAccount;
 
     public SubscriptionPaymentView() {
-        this.paymentReceivedAccount = new PaymentReceivedAccount(0);
+        this.totalBalanceAccount = new TotalBalanceAccount(0);
     }
 
     public SubscriptionPaymentView(String subscriptionId, Double totalBalance) {
@@ -32,7 +32,7 @@ public class SubscriptionPaymentView {
         return totalBalance;
     }
 
-    public PaymentReceivedAccount getPaymentReceivedAccount() {
-        return paymentReceivedAccount;
+    public TotalBalanceAccount getTotalBalanceAccount() {
+        return totalBalanceAccount;
     }
 }
