@@ -39,6 +39,12 @@ public class Axon extends ActiveMQConfiguration {
             put("com.affaince.subscription.payments.command.event.PaymentInitiatedEvent", PaymentInitiatedEvent.class.getName());
             put("com.affaince.subscription.payments.command.event.TotalBalanceAccountCreditedEvent", TotalBalanceAccountCreditedEvent.class.getName());
             put("com.affaince.subscription.payments.command.event.TotalBalanceAccountDebitedEvent", TotalBalanceAccountDebitedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.TotalReceivableCostAccountCreditedEvent", TotalReceivableCostAccountCreditedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.TotalReceivableCostAccountDebitedEvent", TotalReceivableCostAccountDebitedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.TotalReceivedCostAccountCreditedEvent", TotalReceivedCostAccountCreditedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.TotalReceivedCostAccountDebitedEvent", TotalReceivedCostAccountDebitedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.TotalSubscriptionCostAccountCreditedEvent", TotalSubscriptionCostAccountCreditedEvent.class.getName());
+            put("com.affaince.subscription.payments.command.event.TotalSubscriptionCostAccountDebitedEvent", TotalSubscriptionCostAccountDebitedEvent.class.getName());
         }};
     }
 

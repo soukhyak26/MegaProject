@@ -1,9 +1,9 @@
 package com.affaince.subscription.payments.command.domain;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
 import com.affaince.subscription.payments.command.DeliveryStatusAndDispatchDateUpdatedCommand;
-import com.affaince.subscription.payments.command.accounting.DeliveryCostAccount;
-import com.affaince.subscription.payments.command.accounting.PaymentReceivedAccount;
+import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.DeliveryInitiatedEvent;
 import com.affaince.subscription.payments.command.event.PaymentInitiatedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -24,7 +24,20 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private Map<String, DeliveryCostAccount> deliveryCostAccountMap;
     @EventSourcedMember
-    private PaymentReceivedAccount paymentReceivedAccount;
+    private TotalBalanceAccount totalBalanceAccount;
+    @EventSourcedMember
+    //TODO: for below account, should delivery price and charge be part of DeliveryCreatedEvent/Command?
+    private TotalSubscriptionCostAccount totalSubscriptionCostAccount;
+    @EventSourcedMember
+    private TotalReceivableCostAccount totalReceivableCostAccount;
+    @EventSourcedMember
+    private TotalReceivedCostAccount totalReceivedCostAccount;
+
+    /**
+     * Basically, when subscription cost increases, receivable increases
+     * When balance increases, recievable decreases
+     * At the end, everything balance and recievable should be 0
+     */
 
     //TODO: What about subscriber id (i.e. same subscriber and multiple subscriptions) - will there be repository for that too?
 
@@ -38,17 +51,33 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(PaymentInitiatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();
-        this.paymentReceivedAccount = new PaymentReceivedAccount(event.getTotalBalance());
+        this.totalBalanceAccount = new TotalBalanceAccount(event.getTotalBalance());
         this.deliveryCostAccountMap = new HashMap<>();
+        this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(0);
+        this.totalReceivableCostAccount = new TotalReceivableCostAccount(0 - event.getTotalBalance());
+        this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getTotalBalance());
+        this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getTotalBalance());
     }
 
     public void handlePartialPayment(Double partialPayment) {
-        this.paymentReceivedAccount.fireCreditedEvent(this.subscriptionId, partialPayment);
+        this.totalBalanceAccount.fireCreditedEvent(this.subscriptionId, partialPayment);
+        this.totalReceivableCostAccount.fireDebitedEvent(this.subscriptionId, partialPayment);
+        this.totalReceivedCostAccount.fireCreditedEvent(this.subscriptionId, partialPayment);
     }
 
     public void handleDeliveryStatusAndDispatchDateUpdatedCommand(DeliveryStatusAndDispatchDateUpdatedCommand command) {
-        this.deliveryCostAccountMap.get(command.getBasketId()).fireCreditedEvent(command.getBasketId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
-        this.paymentReceivedAccount.fireDebitedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
+        switch (DeliveryStatus.valueOf(command.getBasketDeliveryStatus())) {
+            case CREATED:
+                this.totalSubscriptionCostAccount.fireCreditedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
+                this.totalReceivableCostAccount.fireCreditedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
+                break;
+            case DELIVERED:
+                this.deliveryCostAccountMap.get(command.getBasketId()).fireCreditedEvent(command.getBasketId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
+                this.totalBalanceAccount.fireDebitedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
+                //here receivable will not increase because payment is already received in terms of balance
+                //this.totalReceivableCostAccount.fireCreditedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
+                break;
+        }
     }
 
     public void handleDeliveryCreatedCommand(DeliveryCreatedCommand command) {
@@ -68,4 +97,31 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
         this.subscriptionId = subscriptionId;
     }
 
+    public Map<String, DeliveryCostAccount> getDeliveryCostAccountMap() {
+        return deliveryCostAccountMap;
+    }
+
+    public void setDeliveryCostAccountMap(Map<String, DeliveryCostAccount> deliveryCostAccountMap) {
+        this.deliveryCostAccountMap = deliveryCostAccountMap;
+    }
+
+    public TotalBalanceAccount getTotalBalanceAccount() {
+        return totalBalanceAccount;
+    }
+
+    public void setTotalBalanceAccount(TotalBalanceAccount totalBalanceAccount) {
+        this.totalBalanceAccount = totalBalanceAccount;
+    }
+
+    public TotalSubscriptionCostAccount getTotalSubscriptionCostAccount() {
+        return totalSubscriptionCostAccount;
+    }
+
+    public TotalReceivableCostAccount getTotalReceivableCostAccount() {
+        return totalReceivableCostAccount;
+    }
+
+    public TotalReceivedCostAccount getTotalReceivedCostAccount() {
+        return totalReceivedCostAccount;
+    }
 }
