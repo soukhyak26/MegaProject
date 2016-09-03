@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDate;
 
 /**
@@ -11,9 +13,16 @@ public class PriceBucketForPercentDiscountCommitment extends PriceBucket {
     public PriceBucketForPercentDiscountCommitment() {
     }
 
+    public PriceBucketForPercentDiscountCommitment(String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double percentDiscount, EntityStatus entityStatus) {
+        this.setPriceBucketId(priceBucketId);
+        this.setTaggedPriceVersion(taggedPriceVersion);
+        this.percentDiscountPerUnit = percentDiscount;
+        this.setEntityStatus(entityStatus);
+    }
+
     public PriceBucketForPercentDiscountCommitment(double percentDiscountPerUnit, LocalDate fromDate) {
         this.percentDiscountPerUnit = percentDiscountPerUnit;
-        this.fromDate=fromDate;
+        this.setFromDate(fromDate);
     }
 
 

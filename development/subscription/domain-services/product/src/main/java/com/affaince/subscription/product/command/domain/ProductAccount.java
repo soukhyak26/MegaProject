@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
 import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
@@ -14,6 +15,8 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonth;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.*;
 
@@ -85,6 +88,30 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return this.activePriceBuckets.get(dateIdentifier);
     }
 
+    public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus) {
+        if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
+            String priceBucketId = "" + productId + "_" + LocalDate.now().toString(fmt);
+            PriceBucket newPriceBucket = new PriceBucketForNoneCommitment(priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+            //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
+            return newPriceBucket;
+        } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
+            String priceBucketId = "" + productId + "_" + LocalDate.now().toString(fmt);
+            PriceBucket newPriceBucket = new PriceBucketForPercentDiscountCommitment(priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+            //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
+            return newPriceBucket;
+
+        } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
+            String priceBucketId = "" + productId + "_" + LocalDate.now().toString(fmt);
+            PriceBucket newPriceBucket = new PriceBucketForPriceCommitment(priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+            //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
+            return newPriceBucket;
+        } else {
+            return null;
+        }
+    }
     public Map<LocalDate, PriceBucket> getActivePriceBuckets() {
         return activePriceBuckets;
     }
@@ -203,6 +230,20 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return latestVariableExpense.getVariableOperatingExpPerUnit();
 
     }
+
+    public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
+        //final PriceBucket latestPriceBucket = this.getLatestPriceBucket();
+        List<PriceBucket> bucketsWithSamePurchasePrice = new ArrayList<PriceBucket>();
+        Iterator<Map.Entry<LocalDate, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
+        while (priceBucketIterator.hasNext()) {
+            PriceBucket currentBucket = priceBucketIterator.next().getValue();
+            if (currentBucket.getTaggedPriceVersion().getPurchasePricePerUnit() == priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit()) {
+                bucketsWithSamePurchasePrice.add(currentBucket);
+            }
+        }
+        return bucketsWithSamePurchasePrice;
+    }
+
     public double calculateExpectedProfitForPriceBucket(PriceBucket priceBucket){
         LocalDate fromDate = priceBucket.getFromDate();
         LocalDate toDate= priceBucket.getToDate();
@@ -222,4 +263,49 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
         apply(new ProductSubscriptionUpdatedEvent(command.getProductId(),command.getProductSubscriptionCount(),command.getSubscriptionActivateDate(),expectedProfitPerPriceBucket));
     }
+
+    public PriceBucket findEarlierPriceBucketInActivePriceBuckets(PriceBucket priceBucket) {
+        PriceBucket earlierPriceBucket = null;
+        List<PriceBucket> earlierPriceBuckets = new ArrayList<PriceBucket>();
+        LocalDate latestBucketDate = priceBucket.getFromDate();
+        Iterator<Map.Entry<LocalDate, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
+
+        while (priceBucketIterator.hasNext()) {
+            PriceBucket tempPriceBucket = priceBucketIterator.next().getValue();
+            if (tempPriceBucket.getFromDate().isBefore(latestBucketDate)) {
+                if (null != earlierPriceBucket) {
+                    if (tempPriceBucket.getFromDate().isAfter(earlierPriceBucket.getFromDate())) {
+                        earlierPriceBucket = tempPriceBucket;
+                    }
+                } else {
+                    earlierPriceBucket = tempPriceBucket;
+                }
+            }
+        }
+
+        return earlierPriceBucket;
+    }
+
+    public PriceBucket findEarlierPriceBucketTo(PriceBucket priceBucket, List<PriceBucket> priceBuckets) {
+        PriceBucket earlierPriceBucket = null;
+        List<PriceBucket> earlierPriceBuckets = new ArrayList<PriceBucket>();
+        LocalDate latestBucketDate = priceBucket.getFromDate();
+        Iterator<PriceBucket> priceBucketIterator = priceBuckets.iterator();
+
+        while (priceBucketIterator.hasNext()) {
+            PriceBucket tempPriceBucket = priceBucketIterator.next();
+            if (tempPriceBucket.getFromDate().isBefore(latestBucketDate)) {
+                if (null != earlierPriceBucket) {
+                    if (tempPriceBucket.getFromDate().isAfter(earlierPriceBucket.getFromDate())) {
+                        earlierPriceBucket = tempPriceBucket;
+                    }
+                } else {
+                    earlierPriceBucket = tempPriceBucket;
+                }
+            }
+        }
+
+        return earlierPriceBucket;
+    }
+
 }

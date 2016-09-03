@@ -1,17 +1,12 @@
 package com.affaince.subscription.product.services.pricing.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
-import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.product.query.view.PriceBucketView;
+import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import com.affaince.subscription.product.vo.PriceCalculationParameters;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.apache.commons.lang3.ArrayUtils;
-import org.joda.time.LocalDate;
 
 import java.util.*;
 
@@ -45,24 +40,6 @@ public abstract class AbstractPriceCalculator {
     }
 
 
-    protected PriceBucketView findEarlierPriceBucketTo(PriceBucketView priceBucket, List<PriceBucketView> activePriceBuckets) {
-        PriceBucketView earlierPriceBucket = null;
-        List<PriceBucketView> earlierPriceBuckets = new ArrayList<PriceBucketView>();
-        LocalDate latestBucketDate = priceBucket.getFromDate();
-        for (PriceBucketView tempPriceBucket : activePriceBuckets) {
-            if (tempPriceBucket.getFromDate().isBefore(latestBucketDate)) {
-                if (null != earlierPriceBucket) {
-                    if (tempPriceBucket.getFromDate().isAfter(earlierPriceBucket.getFromDate())) {
-                        earlierPriceBucket = tempPriceBucket;
-                    }
-                } else {
-                    earlierPriceBucket = tempPriceBucket;
-                }
-            }
-        }
-
-        return earlierPriceBucket;
-    }
 
     protected List<Double> extrapolateDemand(List<Double> totalQuantitySubscribedWithSamePurchasePrice, int periodPerYear) {
         MathsProcessingService mathService = new MathsProcessingService();
@@ -71,27 +48,18 @@ public abstract class AbstractPriceCalculator {
         return Arrays.asList(ArrayUtils.toObject(forecastedQuantities));
     }
 
-    protected List<PriceBucketView> findBucketsWithSamePurchasePrice(String productId, List<PriceBucketView> activePriceBuckets) {
-        final PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
-        List<PriceBucketView> bucketsWithSamePurchasePrice = new ArrayList<PriceBucketView>();
 
-        for (PriceBucketView activeBucket : activePriceBuckets) {
-            if (activeBucket.getTaggedPriceVersion().getPurchasePricePerUnit() == latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit()) {
-                bucketsWithSamePurchasePrice.add(activeBucket);
-            }
-        }
-        return bucketsWithSamePurchasePrice;
-    }
-
-    protected PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
-        PriceBucketView latestPriceBucketView = activePriceBuckets.get(0);
-        for (PriceBucketView priceBucketView : activePriceBuckets) {
-            if (priceBucketView.getFromDate().compareTo(latestPriceBucketView.getFromDate()) > 0) {
-                latestPriceBucketView = priceBucketView;
+/*
+    protected PriceBucketView getLatestPriceBucket(Collection<PriceBucket> activePriceBuckets) {
+        PriceBucket latestPriceBucket = activePriceBuckets.iterator().next();
+        for (PriceBucket priceBucket : activePriceBuckets) {
+            if (priceBucket.getFromDate().compareTo(latestPriceBucket.getFromDate()) > 0) {
+                latestPriceBucket = priceBucket;
             }
         }
         return latestPriceBucketView;
     }
+*/
 
     protected double calculateOfferedPrice(double intercept, double slope, double quantity) {
         return intercept + (slope * quantity);
@@ -101,18 +69,6 @@ public abstract class AbstractPriceCalculator {
         return productForecastView.getTotalNumberOfExistingSubscriptions() - productActualsView.getTotalNumberOfExistingSubscriptions();
     }
 
-    protected PriceBucketView createPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double slope, double offeredPrice) {
-        PriceBucketView newPrieBucket = new PriceBucketView();
-        // PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
-        ProductVersionId productVersionId = new ProductVersionId(productId, SysDate.now());
-        newPrieBucket.setProductVersionId(new ProductVersionId(productVersionId.getProductId(), SysDate.now()));
-        newPrieBucket.setTaggedPriceVersion(taggedPriceVersion);
-        newPrieBucket.setSlope(slope);
-        newPrieBucket.setEntityStatus(EntityStatus.ACTIVE);
-        newPrieBucket.setOfferedPricePerUnit(offeredPrice);
-        return newPrieBucket;
-
-    }
-    public abstract PriceBucketView calculatePrice(PriceCalculationParameters priceCalculationParameters);
+    public abstract PriceBucket calculatePrice(PriceCalculationParameters priceCalculationParameters);
 
 }

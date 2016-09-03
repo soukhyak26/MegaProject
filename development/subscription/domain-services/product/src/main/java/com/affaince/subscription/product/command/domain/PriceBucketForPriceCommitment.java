@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDate;
 
 /**
@@ -11,9 +13,16 @@ public class PriceBucketForPriceCommitment extends PriceBucket {
     public PriceBucketForPriceCommitment() {
     }
 
+    public PriceBucketForPriceCommitment(String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus) {
+        this.setPriceBucketId(priceBucketId);
+        this.setTaggedPriceVersion(taggedPriceVersion);
+        this.offeredPricePerUnit = offeredPricePerUnit;
+        this.setEntityStatus(entityStatus);
+    }
+
     public PriceBucketForPriceCommitment(double offeredPricePerUnit, LocalDate fromDate) {
         this.offeredPricePerUnit = offeredPricePerUnit;
-        this.fromDate = fromDate;
+        this.setFromDate(fromDate);
     }
 
 

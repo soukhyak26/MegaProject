@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
@@ -205,6 +206,17 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
 
+    public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
+        return getProductAccount().findBucketsWithSamePurchasePrice(priceBucket);
+    }
+
+    public PriceBucket findEarlierPriceBucketInActivePriceBuckets(PriceBucket priceBucket) {
+        return getProductAccount().findEarlierPriceBucketInActivePriceBuckets(priceBucket);
+    }
+
+    public PriceBucket findEarlierPriceBucketTo(PriceBucket priceBucket, List<PriceBucket> priceBuckets) {
+        return getProductAccount().findEarlierPriceBucketTo(priceBucket, priceBuckets);
+    }
     //When current offered price are set/overriden by product administrator.
     //Ideally it should update latest price bucket with merchant overriden price.
     //Some work is needed to be done on this API
@@ -220,7 +232,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
     }
 
-
+    public PriceBucket createNewPriceBucket(PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus) {
+        return getProductAccount().createNewPriceBucket(productId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+    }
     private PriceBucket createPriceBucketForPriceCategory() {
         if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT) {
             return new PriceBucketForPercentDiscountCommitment();
@@ -258,6 +272,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 forecast.getForecastedTotalSubscriptionCount()));
     }
 
+    public Map<LocalDate, PriceBucket> getActivePriceBuckets() {
+        return this.getProductAccount().getActivePriceBuckets();
+    }
     @EventHandler
     public void on(ProductSubscriptionRegisteredEvent productSubscriptionRegisteredEvent) {
 
@@ -268,6 +285,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void calculatePrice(DefaultPriceDeterminator defaultPriceDeterminator, ProductDemandTrend productDemandTrend) {
-        defaultPriceDeterminator.calculateOfferedPrice(this.getProductId(), productDemandTrend);
+        defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
     }
 }
