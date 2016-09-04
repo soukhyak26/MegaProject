@@ -20,22 +20,16 @@ public class ForecastingClient {
 
     public void initiateForecast(String productId) {
         RestTemplate restTemplate = new RestTemplate();
-        //ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
-        //for (String productId : result) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("productid", productId);
         restTemplate.put(forecastUrl, params);
-        //}
     }
 
     public void initiatePseudoActual(String productId) {
         RestTemplate restTemplate = new RestTemplate();
-        //ArrayList<String> result = restTemplate.getForObject(pseudoActualUrl, ArrayList.class);
-        //for (String productId : result) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("productid", productId);
         restTemplate.put(pseudoActualUrl, params);
-        //}
     }
 
 

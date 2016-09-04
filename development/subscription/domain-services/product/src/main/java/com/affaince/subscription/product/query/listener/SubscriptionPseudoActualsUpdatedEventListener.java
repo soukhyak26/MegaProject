@@ -4,6 +4,7 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.event.SubscriptionPseudoActualsUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class SubscriptionPseudoActualsUpdatedEventListener {
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
     }
 
+    @EventHandler
     public void on(SubscriptionPseudoActualsUpdatedEvent event) {
         final ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(
                 new ProductVersionId(event.getProductId(), event.getForecastStartDate()),
@@ -28,5 +30,6 @@ public class SubscriptionPseudoActualsUpdatedEventListener {
                 event.getChurnedSubscriptionForecast(),
                 event.getForecastedTotalSubscriptionCount()
         );
+        productPseudoActualsViewRepository.save(productPseudoActualsView);
     }
 }
