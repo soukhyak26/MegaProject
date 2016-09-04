@@ -6,7 +6,6 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
-import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +18,7 @@ import java.util.List;
 @Component
 public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPriceCalculator {
 
-    public PriceBucket calculatePrice(PriceCalculationParameters priceCalculationParameters) {
-        Product product = priceCalculationParameters.getProduct();
+    public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         final PriceBucket latestPriceBucket = product.getLatestPriceBucket();
         String productId = product.getProductId();
 
@@ -36,10 +34,10 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
             double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
             double expectedDemand = 0;
             //double expectedDemandedQuantity = productForecastView.getTotalNumberOfExistingSubscriptions();
-            if (priceCalculationParameters.getProductDemandTrend() == ProductDemandTrend.DOWNWARD) {
-                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() - latestPriceBucket.getNumberOfNewSubscriptions() * priceCalculationParameters.getChangeThresholdPercentageForPriceChange();
+            if (productDemandTrend == ProductDemandTrend.DOWNWARD) {
+                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() - latestPriceBucket.getNumberOfNewSubscriptions() * product.getRevenueChangeThresholdForPriceChange();
             } else {
-                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() + latestPriceBucket.getNumberOfNewSubscriptions() * priceCalculationParameters.getChangeThresholdPercentageForPriceChange();
+                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() + latestPriceBucket.getNumberOfNewSubscriptions() * product.getRevenueChangeThresholdForPriceChange();
             }
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
@@ -49,7 +47,7 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
             return newPriceBucket;
 
         } else {
-            return getNextCalculator().calculatePrice(priceCalculationParameters);
+            return getNextCalculator().calculatePrice(product, productDemandTrend);
 
         }
     }

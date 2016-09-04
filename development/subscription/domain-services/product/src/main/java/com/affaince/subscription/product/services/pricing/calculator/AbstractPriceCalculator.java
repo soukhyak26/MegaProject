@@ -1,11 +1,12 @@
 package com.affaince.subscription.product.services.pricing.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.command.domain.PriceBucket;
+import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
-import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
@@ -49,18 +50,6 @@ public abstract class AbstractPriceCalculator {
     }
 
 
-/*
-    protected PriceBucketView getLatestPriceBucket(Collection<PriceBucket> activePriceBuckets) {
-        PriceBucket latestPriceBucket = activePriceBuckets.iterator().next();
-        for (PriceBucket priceBucket : activePriceBuckets) {
-            if (priceBucket.getFromDate().compareTo(latestPriceBucket.getFromDate()) > 0) {
-                latestPriceBucket = priceBucket;
-            }
-        }
-        return latestPriceBucketView;
-    }
-*/
-
     protected double calculateOfferedPrice(double intercept, double slope, double quantity) {
         return intercept + (slope * quantity);
     }
@@ -69,6 +58,6 @@ public abstract class AbstractPriceCalculator {
         return productForecastView.getTotalNumberOfExistingSubscriptions() - productActualsView.getTotalNumberOfExistingSubscriptions();
     }
 
-    public abstract PriceBucket calculatePrice(PriceCalculationParameters priceCalculationParameters);
+    public abstract PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend);
 
 }

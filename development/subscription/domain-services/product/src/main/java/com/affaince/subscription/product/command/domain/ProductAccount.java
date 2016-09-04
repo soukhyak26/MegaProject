@@ -14,6 +14,7 @@ import com.affaince.subscription.product.vo.VariableExpensePerProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.YearMonth;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -27,7 +28,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private SortedSet<FixedExpensePerProduct> fixedExpenseVersions;
     private SortedSet<VariableExpensePerProduct> variableExpenseVersions;
-    private Map<LocalDate, PriceBucket> activePriceBuckets;
+    private Map<LocalDateTime, PriceBucket> activePriceBuckets;
     private Map<LocalDate, ProductPerformanceTracker> performanceTracker;
     private Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics;
     private long currentStockInUnits;
@@ -89,45 +90,47 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus) {
+        LocalDateTime fromDate = LocalDateTime.now();
         if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
-            String priceBucketId = "" + productId + "_" + LocalDate.now().toString(fmt);
-            PriceBucket newPriceBucket = new PriceBucketForNoneCommitment(priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+            String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
+            PriceBucket newPriceBucket = new PriceBucketForNoneCommitment(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
             return newPriceBucket;
         } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
-            String priceBucketId = "" + productId + "_" + LocalDate.now().toString(fmt);
-            PriceBucket newPriceBucket = new PriceBucketForPercentDiscountCommitment(priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+            String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
+            PriceBucket newPriceBucket = new PriceBucketForPercentDiscountCommitment(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
             return newPriceBucket;
 
         } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
-            String priceBucketId = "" + productId + "_" + LocalDate.now().toString(fmt);
-            PriceBucket newPriceBucket = new PriceBucketForPriceCommitment(priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+            String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
+            PriceBucket newPriceBucket = new PriceBucketForPriceCommitment(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
             return newPriceBucket;
         } else {
             return null;
         }
     }
-    public Map<LocalDate, PriceBucket> getActivePriceBuckets() {
+
+    public Map<LocalDateTime, PriceBucket> getActivePriceBuckets() {
         return activePriceBuckets;
     }
 
-    public void setActivePriceBuckets(Map<LocalDate, PriceBucket> activePriceBuckets) {
+    public void setActivePriceBuckets(Map<LocalDateTime, PriceBucket> activePriceBuckets) {
         this.activePriceBuckets = activePriceBuckets;
     }
 
-    public void addNewPriceBucket(LocalDate date, PriceBucket forecastedPriceBucket) {
+    public void addNewPriceBucket(LocalDateTime date, PriceBucket forecastedPriceBucket) {
         activePriceBuckets.put(date, forecastedPriceBucket);
     }
 
     public PriceBucket getLatestPriceBucket() {
-        Set<LocalDate> timeBasedKeys = activePriceBuckets.keySet();
-        LocalDate max = null;
-        for (LocalDate time : timeBasedKeys) {
+        Set<LocalDateTime> timeBasedKeys = activePriceBuckets.keySet();
+        LocalDateTime max = null;
+        for (LocalDateTime time : timeBasedKeys) {
             if (time.compareTo(max) > 0) {
                 max = time;
             }
@@ -207,7 +210,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
     }
 
-    public double findLatestFixedExpensePerUnitInDateRange(LocalDate fromDate,LocalDate toDate){
+    public double findLatestFixedExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
         FixedExpensePerProduct latestFixedExpense=null;
         for(FixedExpensePerProduct fixedExp: fixedExpenseVersions){
          if(fixedExp.getStartDate().isAfter(fromDate) &&(fixedExp.getStartDate().isBefore(toDate))){
@@ -218,7 +221,8 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
         return latestFixedExpense.getFixedOperatingExpPerUnit();
     }
-    public double findLatestVariableExpensePerUnitInDateRange(LocalDate fromDate,LocalDate toDate){
+
+    public double findLatestVariableExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
         VariableExpensePerProduct latestVariableExpense=null;
         for(VariableExpensePerProduct variableExp: variableExpenseVersions){
             if(variableExp.getStartDate().isAfter(fromDate) &&(variableExp.getStartDate().isBefore(toDate))){
@@ -234,7 +238,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
         //final PriceBucket latestPriceBucket = this.getLatestPriceBucket();
         List<PriceBucket> bucketsWithSamePurchasePrice = new ArrayList<PriceBucket>();
-        Iterator<Map.Entry<LocalDate, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
+        Iterator<Map.Entry<LocalDateTime, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
         while (priceBucketIterator.hasNext()) {
             PriceBucket currentBucket = priceBucketIterator.next().getValue();
             if (currentBucket.getTaggedPriceVersion().getPurchasePricePerUnit() == priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit()) {
@@ -245,8 +249,8 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public double calculateExpectedProfitForPriceBucket(PriceBucket priceBucket){
-        LocalDate fromDate = priceBucket.getFromDate();
-        LocalDate toDate= priceBucket.getToDate();
+        LocalDateTime fromDate = priceBucket.getFromDate();
+        LocalDateTime toDate = priceBucket.getToDate();
         double fixedExpensePerUnit= this.findLatestFixedExpensePerUnitInDateRange(fromDate,toDate);
         double variableExpensePerUnit= this.findLatestVariableExpensePerUnitInDateRange(fromDate,toDate);
         double profit = priceBucket.getNumberOfExistingSubscriptions()*priceBucket.getOfferedPricePerUnit()
@@ -267,8 +271,8 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public PriceBucket findEarlierPriceBucketInActivePriceBuckets(PriceBucket priceBucket) {
         PriceBucket earlierPriceBucket = null;
         List<PriceBucket> earlierPriceBuckets = new ArrayList<PriceBucket>();
-        LocalDate latestBucketDate = priceBucket.getFromDate();
-        Iterator<Map.Entry<LocalDate, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
+        LocalDateTime latestBucketDate = priceBucket.getFromDate();
+        Iterator<Map.Entry<LocalDateTime, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
 
         while (priceBucketIterator.hasNext()) {
             PriceBucket tempPriceBucket = priceBucketIterator.next().getValue();
@@ -289,7 +293,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public PriceBucket findEarlierPriceBucketTo(PriceBucket priceBucket, List<PriceBucket> priceBuckets) {
         PriceBucket earlierPriceBucket = null;
         List<PriceBucket> earlierPriceBuckets = new ArrayList<PriceBucket>();
-        LocalDate latestBucketDate = priceBucket.getFromDate();
+        LocalDateTime latestBucketDate = priceBucket.getFromDate();
         Iterator<PriceBucket> priceBucketIterator = priceBuckets.iterator();
 
         while (priceBucketIterator.hasNext()) {

@@ -6,7 +6,6 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
-import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +17,7 @@ import java.util.List;
 @Component
 public class ProfitGrowthBasedOnDemandGrowthPriceCalculator extends AbstractPriceCalculator {
 
-    public PriceBucket calculatePrice(PriceCalculationParameters priceCalculationParameters) {
-        Product product = priceCalculationParameters.getProduct();
+    public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         final PriceBucket latestPriceBucket = product.getLatestPriceBucket();
         String productId = product.getProductId();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
@@ -41,10 +39,10 @@ public class ProfitGrowthBasedOnDemandGrowthPriceCalculator extends AbstractPric
             double expectedDemand = 0;
             //double expectedDemandedQuantity = productForecastMetricsView.getTotalNumberOfExistingSubscriptions();
             //final double expectedDemand = calculateExpectedDemand(productForecastView, productActualsView); ////???? May not be correct
-            if (priceCalculationParameters.getProductDemandTrend() == ProductDemandTrend.DOWNWARD) {
-                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() - latestPriceBucket.getNumberOfNewSubscriptions() * priceCalculationParameters.getChangeThresholdPercentageForPriceChange();
+            if (productDemandTrend == ProductDemandTrend.DOWNWARD) {
+                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() - latestPriceBucket.getNumberOfNewSubscriptions() * product.getRevenueChangeThresholdForPriceChange();
             } else {
-                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() + latestPriceBucket.getNumberOfNewSubscriptions() * priceCalculationParameters.getChangeThresholdPercentageForPriceChange();
+                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() + latestPriceBucket.getNumberOfNewSubscriptions() * product.getRevenueChangeThresholdForPriceChange();
             }
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
@@ -53,7 +51,7 @@ public class ProfitGrowthBasedOnDemandGrowthPriceCalculator extends AbstractPric
             return newPriceBucket;
 
         } else {
-            return getNextCalculator().calculatePrice(priceCalculationParameters);
+            return getNextCalculator().calculatePrice(product, productDemandTrend);
 
         }
     }

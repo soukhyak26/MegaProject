@@ -3,20 +3,21 @@ package com.affaince.subscription.product.command.domain;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandark on 28-11-2015.
  */
 public abstract class PriceBucket extends AbstractAnnotatedEntity {
+    private String productId;
     private String priceBucketId;
     private PriceTaggedWithProduct taggedPriceVersion;
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     private long numberOfExistingSubscriptions;
     private double expectedProfit;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private LocalDateTime fromDate;
+    private LocalDateTime toDate;
     private EntityStatus entityStatus;
     private double totalProfit;
     private double slope;
@@ -29,19 +30,19 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         this.priceBucketId = priceBucketId;
     }
 
-    public LocalDate getFromDate() {
+    public LocalDateTime getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(LocalDate fromDate) {
+    public void setFromDate(LocalDateTime fromDate) {
         this.fromDate = fromDate;
     }
 
-    public LocalDate getToDate() {
+    public LocalDateTime getToDate() {
         return toDate;
     }
 
-    public void setToDate(LocalDate toDate) {
+    public void setToDate(LocalDateTime toDate) {
         this.toDate = toDate;
     }
 
@@ -117,6 +118,14 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
 
     public void setSlope(double slope) {
         this.slope = slope;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public double recalculateOfferedPriceBasedOnActualDemand() {

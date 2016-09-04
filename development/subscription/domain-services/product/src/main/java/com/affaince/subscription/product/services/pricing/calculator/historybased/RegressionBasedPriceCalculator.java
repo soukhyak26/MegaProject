@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.services.pricing.calculator.historybased;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
@@ -9,7 +10,6 @@ import com.affaince.subscription.product.services.pricing.calculator.AbstractPri
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.FunctionCoefficients;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.exception.PricingEligibilityViolationException;
-import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,8 +27,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
     @Autowired
     DemandForecasterChain demandForecasterChain;
 
-    public PriceBucket calculatePrice(PriceCalculationParameters priceCalculationParameters) {
-        Product product = priceCalculationParameters.getProduct();
+    public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         String productId = product.getProductId();
         final PriceBucket latestPriceBucket = product.getLatestPriceBucket();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);

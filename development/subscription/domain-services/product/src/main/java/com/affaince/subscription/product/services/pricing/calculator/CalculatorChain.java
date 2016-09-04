@@ -1,9 +1,10 @@
 package com.affaince.subscription.product.services.pricing.calculator;
 
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.command.domain.PriceBucket;
+import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
 import com.affaince.subscription.product.services.pricing.calculator.instant.*;
-import com.affaince.subscription.product.vo.PriceCalculationParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -65,7 +66,7 @@ public class CalculatorChain {
         }
     }
 
-    public PriceBucket calculatePrice(PriceCalculationParameters priceCalculationParameters) {
-        return initialCalculator.calculatePrice(priceCalculationParameters);
+    public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
+        return initialCalculator.calculatePrice(product, productDemandTrend);
     }
 }

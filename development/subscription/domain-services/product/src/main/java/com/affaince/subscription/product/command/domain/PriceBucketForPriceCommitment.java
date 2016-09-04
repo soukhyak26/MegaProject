@@ -2,7 +2,7 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandar on 27-05-2016.
@@ -13,14 +13,16 @@ public class PriceBucketForPriceCommitment extends PriceBucket {
     public PriceBucketForPriceCommitment() {
     }
 
-    public PriceBucketForPriceCommitment(String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus) {
+    public PriceBucketForPriceCommitment(String productId, String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
+        this.setProductId(productId);
         this.setPriceBucketId(priceBucketId);
         this.setTaggedPriceVersion(taggedPriceVersion);
         this.offeredPricePerUnit = offeredPricePerUnit;
         this.setEntityStatus(entityStatus);
+        this.setFromDate(fromDate);
     }
 
-    public PriceBucketForPriceCommitment(double offeredPricePerUnit, LocalDate fromDate) {
+    public PriceBucketForPriceCommitment(double offeredPricePerUnit, LocalDateTime fromDate) {
         this.offeredPricePerUnit = offeredPricePerUnit;
         this.setFromDate(fromDate);
     }
