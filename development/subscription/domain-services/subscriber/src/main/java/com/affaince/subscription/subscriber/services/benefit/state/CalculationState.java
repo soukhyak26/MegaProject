@@ -14,7 +14,7 @@ public class CalculationState implements BenefitCalculationState {
 
     @Override
     public void calculate(BenefitExecutionContext context) {
-
+        String calculationEquation = context.getApplicableBenefit().getEligibilityCondition();
         if (nextState != null) {
             nextState.calculate(context);
         }

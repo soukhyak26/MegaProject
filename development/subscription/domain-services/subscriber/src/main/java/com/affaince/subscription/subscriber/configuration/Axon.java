@@ -1,10 +1,7 @@
 package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
-import com.affaince.subscription.subscriber.command.domain.BasketRule;
-import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
-import com.affaince.subscription.subscriber.command.domain.Subscriber;
-import com.affaince.subscription.subscriber.command.domain.Subscription;
+import com.affaince.subscription.subscriber.command.domain.*;
 import com.affaince.subscription.subscriber.command.event.BenefitAddedEvent;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -48,12 +45,19 @@ public class Axon extends ActiveMQConfiguration {
         return repository;
     }
 
+    @Bean
+    public Repository<LatestPriceBucket> createLatestPriceBucketRepository(DisruptorCommandBus commandBus) {
+        Repository<LatestPriceBucket> repository = commandBus.createRepository(new GenericAggregateFactory<>(LatestPriceBucket.class));
+        return repository;
+    }
+
     @Override
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.subscriber.command.event.*", "");
             put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedFromSourceEvent.class.getName());
             put("com.affaince.subscription.benefits.command.event.BenefitAddedEvent", BenefitAddedEvent.class.getName());
+            // put("com.affaince.subscription.product.command.event.OfferedPriceChangedEvent", OfferedPriceChangedEvent.class.getName());
         }};
     }
 }

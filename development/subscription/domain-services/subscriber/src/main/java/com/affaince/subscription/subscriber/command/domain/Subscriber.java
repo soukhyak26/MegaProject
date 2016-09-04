@@ -41,6 +41,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private int rewardPoints;
     private Map<String, Delivery> deliveries;
     private String password;
+    private double totalRewardsPoint;
+    private double availableRewardsPoint;
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 

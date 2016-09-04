@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 
+
 /**
  * Created by rbsavaliya on 02-10-2015.
  */
