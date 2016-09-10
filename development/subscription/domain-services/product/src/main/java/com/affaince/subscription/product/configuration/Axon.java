@@ -4,6 +4,7 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;
@@ -195,6 +196,10 @@ public class Axon extends ActiveMQConfiguration {
         return new ProductDemandForecastBuilder();
     }
 
+    @Bean
+    PeriodBasedAggregator periodBasedAggregator() {
+        return new PeriodBasedAggregator();
+    }
     @ConfigurationProperties(prefix= "forecaster.threshold_min")
     public static class HistoryMinSizeConstraints {
         private int sma;

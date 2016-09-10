@@ -3,7 +3,6 @@ package com.affaince.subscription.pricing.forecast.interpolate;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
-import com.affaince.subscription.pricing.vo.InterpolatedTotalSubscriptionsPerDay;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +21,14 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
 
-    public InterpolatedTotalSubscriptionsPerDay findInterpolatedTotalSubscriptionCountOnCurrentDate(String productId) {
+    public double[] findInterpolatedTotalSubscriptionCountOnCurrentDate(String productId) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> previousValues = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
                         (productId, ProductForecastStatus.CORRECTED);
         ProductForecastView firstForecastView = previousValues.get(previousValues.size() - 1);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
-        double[] x = new double[previousValues.size()];     //day on which interpolated vslue has been taken
+        double[] x = new double[previousValues.size()];     //day on which interpolated value has been taken
         double[] y = new double[previousValues.size()];     //interpolated value of toal subscription
         int count = 0;
         for (ProductForecastView previousView : previousValues) {
@@ -39,11 +38,11 @@ public class ForecastInterpolatedSubscriptionCountFinder {
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
         }
         double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
+/*
         LocalDate currentDate = LocalDate.now();
         int currentDay = Days.daysBetween(dateOfPlatformBeginning, currentDate).getDays();
-        return new InterpolatedTotalSubscriptionsPerDay(
-                productId,
-                interpolatedTotalSubscriptionsPerDay[currentDay]);
+*/
+        return interpolatedTotalSubscriptionsPerDay;
 
     }
 

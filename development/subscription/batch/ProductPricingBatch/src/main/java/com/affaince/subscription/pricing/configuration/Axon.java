@@ -109,7 +109,8 @@ public class Axon extends ActiveMQConfiguration {
                 ExecutorService executorService = new ThreadPoolBuilder(camelContext).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
                 //Initiate forecasting each day at 8.00 pm.
                 //Retrieve all product ids and fed each of them to a thread in thread pool
-                //Invoke forecasting trigger which will check the status of
+                //Invoke forecasting trigger which will check the status of next calendar date..
+                // if it is today then only forecast will be initiated for that product
                 from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
@@ -120,15 +121,21 @@ public class Axon extends ActiveMQConfiguration {
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
 
-                Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
-                from("quartz://timer?cron=0+0+22+*+*+?").to("bean:productsRetriever")
+
+                from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
                         .executorService(executorService)
-                        .multicast()
-                        .parallelProcessing()
-                        .to("bean:forecastingClient?method=initiatePseudoActual", "bean:forecastInterpolatedSubscriptionCountFinder")
-                        .end().to("bean:productPricingTrigger").
+                        .to("bean:forecastingClient?method=initiatePseudoActual")
+                        .endChoice();
+
+                Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
+                from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
+                        .split(body())
+                        .threads()
+                        .executorService(executorService)
+                        .to("bean:forecastInterpolatedSubscriptionCountFinder")
+                        .to("bean:productPricingTrigger").
                         choice()
                         .when(demandTrendChecker)
                         .to("bean:pricingClient")
