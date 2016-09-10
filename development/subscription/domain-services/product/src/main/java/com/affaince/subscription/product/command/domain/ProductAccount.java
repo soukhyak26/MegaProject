@@ -15,7 +15,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.YearMonth;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -29,28 +28,19 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     private SortedSet<FixedExpensePerProduct> fixedExpenseVersions;
     private SortedSet<VariableExpensePerProduct> variableExpenseVersions;
     private Map<LocalDateTime, PriceBucket> activePriceBuckets;
-    private Map<LocalDate, ProductPerformanceTracker> performanceTracker;
-    private Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics;
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;
     private double creditPoints;
     private double variableExpenseSlope;
 
     public ProductAccount() {
-        performanceTracker = new TreeMap<>();
         activePriceBuckets = new TreeMap<>();
         taggedPriceVersions = new TreeSet<>();
         fixedExpenseVersions= new TreeSet<>();
         variableExpenseVersions= new TreeSet<>();
     }
 
-    public Map<LocalDate, ProductPerformanceTracker> getPerformanceTracker() {
-        return this.performanceTracker;
-    }
 
-    public void setPerformanceTracker(Map<LocalDate, ProductPerformanceTracker> performanceTracker) {
-        this.performanceTracker = performanceTracker;
-    }
 
     public long getCurrentStockInUnits() {
         return this.currentStockInUnits;
@@ -68,22 +58,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         this.productPricingCategory = productPricingCategory;
     }
 
-    public void addPerformanceTracker(LocalDate date, ProductPerformanceTracker tracker) {
-        this.performanceTracker.put(date, tracker);
-    }
-
-
-    public ProductPerformanceTracker getLatestPerformanceTracker() {
-        Set<LocalDate> dateKeys = performanceTracker.keySet();
-        LocalDate max = null;
-        for (LocalDate date : dateKeys) {
-            if (date.isAfter(max)) {
-                max = date;
-            }
-        }
-        return performanceTracker.get(max);
-
-    }
 
     public PriceBucket findActivePriceBucketByDate(LocalDate dateIdentifier) {
         return this.activePriceBuckets.get(dateIdentifier);
@@ -163,14 +137,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public void setCreditPoints(double creditPoints) {
         this.creditPoints = creditPoints;
-    }
-
-    public Map<YearMonth, AggregationPerformanceTracker> getMonthlyPerformanceMetrics() {
-        return this.monthlyPerformanceMetrics;
-    }
-
-    public void setMonthlyPerformanceMetrics(Map<YearMonth, AggregationPerformanceTracker> monthlyPerformanceMetrics) {
-        this.monthlyPerformanceMetrics = monthlyPerformanceMetrics;
     }
 
     public double getVariableExpenseSlope() {

@@ -97,9 +97,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit();
     }
 
-    public double getLatestMerchantProfit() {
-        return getProductAccount().getLatestPerformanceTracker().getExpectedMerchantProfitPercentage();
-    }
 
     public ProductConfiguration getProductConfiguration() {
         return productConfiguration;
@@ -114,10 +111,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 command.getDemandWiseProfitSharingRules()));
     }
 
-
-    public double getLatestDemandDensity() {
-        return getProductAccount().getLatestPerformanceTracker().getDemandDensity();
-    }
 
     //When product is "first time " registered by product administrator
     @EventSourcingHandler
