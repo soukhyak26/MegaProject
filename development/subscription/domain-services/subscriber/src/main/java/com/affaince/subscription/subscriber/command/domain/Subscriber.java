@@ -197,12 +197,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                     weeklyDelivery.setStatus(DeliveryStatus.CREATED);
                     deliveries.put(nextDeliveryWeek, weeklyDelivery);
                 }
-                DeliveryItem deliveryItem = new DeliveryItem();
-                deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
-                deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
-                deliveryItem.setOfferedPriceWithBasketLevelDiscount(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
-                deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
-                weeklyDelivery.getDeliveryItems().add(deliveryItem);
+                for (int j = 0; j < subscriptionItem.getCountPerPeriod(); j++) {
+                    DeliveryItem deliveryItem = new DeliveryItem();
+                    deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
+                    deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
+                    deliveryItem.setOfferedPriceWithBasketLevelDiscount(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
+                    deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
+                    weeklyDelivery.getDeliveryItems().add(deliveryItem);
+                }
             }
         }
         return deliveries;

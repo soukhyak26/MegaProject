@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.subscriber.vo.RangeRule;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,9 @@ public class Delivery {
     }
 
     public List<DeliveryItem> getDeliveryItems() {
+        if (this.deliveryItems == null) {
+            this.deliveryItems = new ArrayList<>();
+        }
         return deliveryItems;
     }
 
