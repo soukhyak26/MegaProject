@@ -12,7 +12,7 @@ public class ProductConfigurationView {
     @Id
     private String productId;
     private int actualsAggregationPeriodForTargetForecast = 30;
-    private double changeThresholdForPriceChange;
+    private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
@@ -20,7 +20,7 @@ public class ProductConfigurationView {
     public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
-        this.changeThresholdForPriceChange = changeThresholdForPriceChange;
+        this.targetChangeThresholdForPriceChange = changeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
         this.pricingStrategyType = pricingStrategyType;
@@ -42,12 +42,12 @@ public class ProductConfigurationView {
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
     }
 
-    public double getChangeThresholdForPriceChange() {
-        return changeThresholdForPriceChange;
+    public double getTargetChangeThresholdForPriceChange() {
+        return targetChangeThresholdForPriceChange;
     }
 
-    public void setChangeThresholdForPriceChange(double changeThresholdForPriceChange) {
-        this.changeThresholdForPriceChange = changeThresholdForPriceChange;
+    public void setTargetChangeThresholdForPriceChange(double changeThresholdForPriceChange) {
+        this.targetChangeThresholdForPriceChange = changeThresholdForPriceChange;
     }
 
     public boolean isCrossPriceElasticityConsidered() {

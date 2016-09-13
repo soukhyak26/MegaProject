@@ -11,9 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by rbsavaliya on 19-07-2015.
- */
+
 @Document(collection = "Product")
 public class ProductView {
 

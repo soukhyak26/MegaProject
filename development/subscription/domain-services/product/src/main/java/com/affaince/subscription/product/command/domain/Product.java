@@ -5,7 +5,7 @@ import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
-import com.affaince.subscription.product.command.SetProductConfigurationCommand;
+import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
@@ -103,12 +103,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     //for product administrator to configure product
-    public void setProductConfiguration(SetProductConfigurationCommand command) {
-        apply(new ProductConfigurationSetEvent(this.productId, command.getDemandCurvePeriod(),
-                command.getRevenueChangeThresholdForPriceChange(),
+    public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) {
+        apply(new ProductPricingConfigurationSetEvent(this.productId,
+                command.getTargetChangeThresholdForPriceChange(),
                 command.isCrossPriceElasticityConsidered(),
-                command.isAdvertisingExpensesConsidered(),
-                command.getDemandWiseProfitSharingRules()));
+                command.isAdvertisingExpensesConsidered()));
     }
 
 
@@ -170,11 +169,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     //Event for setting product configuration
     @EventSourcingHandler
-    public void on(ProductConfigurationSetEvent event) {
+    public void on(ProductPricingConfigurationSetEvent event) {
         this.productId = event.getProductId();
         final ProductConfiguration productConfiguration = new ProductConfiguration();
         // productConfiguration.setDemandCurvePeriod(event.getDemandCurvePeriod());
-        productConfiguration.setRevenueChangeThresholdForPriceChange(event.getRevenueChangeThresholdForPriceChange());
+        productConfiguration.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
         productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
         productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
         // productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
@@ -224,8 +223,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
     }
 
-    public short getRevenueChangeThresholdForPriceChange() {
-        return getProductConfiguration().getRevenueChangeThresholdForPriceChange();
+    public double getRevenueChangeThresholdForPriceChange() {
+        return getProductConfiguration().getTargetChangeThresholdForPriceChange();
     }
 
     public PriceBucket createNewPriceBucket(PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus) {

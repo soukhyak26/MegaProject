@@ -3,14 +3,11 @@ package com.affaince.subscription.product.command.domain;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 
-/**
- * Created by rbsavaliya on 15-01-2016.
- */
 public class ProductConfiguration extends AbstractAnnotatedEntity {
     //private Period demandCurvePeriod;
     //whether to aggregate daily actuals for daily/weekly/monthly/quarterly Forecast
     private int actualsAggregationPeriodForTargetForecast = 30;
-    private short revenueChangeThresholdForPriceChange;
+    private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
@@ -24,12 +21,12 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
     }
 
-    public short getRevenueChangeThresholdForPriceChange() {
-        return revenueChangeThresholdForPriceChange;
+    public double getTargetChangeThresholdForPriceChange() {
+        return targetChangeThresholdForPriceChange;
     }
 
-    public void setRevenueChangeThresholdForPriceChange(short revenueChangeThresholdForPriceChange) {
-        this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
+    public void setTargetChangeThresholdForPriceChange(double targetChangeThresholdForPriceChange) {
+        this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
     }
 
     public boolean isCrossPriceElasticityConsidered() {

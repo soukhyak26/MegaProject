@@ -6,7 +6,6 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
-import com.affaince.subscription.product.command.SetProductConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -14,7 +13,10 @@ import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.vo.ForecastedPriceParameter;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
-import com.affaince.subscription.product.web.request.*;
+import com.affaince.subscription.product.web.request.AddCurrentOfferedPriceRequest;
+import com.affaince.subscription.product.web.request.AddForecastParametersRequest;
+import com.affaince.subscription.product.web.request.RegisterProductRequest;
+import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
@@ -136,26 +138,6 @@ public class ProductController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/setproductconfig/{productId}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> setProductConfiguration(@PathVariable String productId, @RequestBody @Valid ProductConfigurationRequest request) throws Exception {
-        final ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.build(productId);
-        }
-
-        SetProductConfigurationCommand command = new SetProductConfigurationCommand(
-                productId, request.getDemandCurvePeriod(), request.getRevenueChangeThresholdForPriceChange(),
-                request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(),
-                Arrays.asList(request.getDemandWiseProfitSharingRules())
-        );
-        try {
-            this.commandGateway.executeAsync(command);
-        } catch (Exception e) {
-            throw e;
-        }
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     @Produces("application/json")
