@@ -18,9 +18,12 @@ import com.affaince.subscription.product.web.exception.ProductForecastModificati
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddForecastParametersRequest;
 import com.affaince.subscription.product.web.request.UpdateForecastRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -180,5 +183,13 @@ public class ForecastController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-
+    @RequestMapping(method = RequestMethod.GET, value = "/{productId}")
+    public String findProductForecastByProductId(@PathVariable String productId) throws JsonProcessingException {
+        final List<ProductForecastView> productForecastViews = new ArrayList<>();
+        final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        productForecastViewRepository.findByProductVersionId_ProductId(productId, sort).forEach
+                (productForecastMetricsView -> productForecastViews.add(productForecastMetricsView));
+        final ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(productForecastViews);
+    }
 }

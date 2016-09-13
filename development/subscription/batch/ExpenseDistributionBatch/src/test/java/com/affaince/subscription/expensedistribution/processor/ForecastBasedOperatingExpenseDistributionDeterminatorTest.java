@@ -1,6 +1,7 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.expensedistribution.Application;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-//@Ignore
+@Ignore
 public class ForecastBasedOperatingExpenseDistributionDeterminatorTest {
     @Autowired
     private ForecastBasedOperatingExpenseDistributionDeterminator
