@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  */
 public class AnnovaTest {
 
-    private static final double SIGNIFICANCE_LEVEL = 0.001; // 99.9%
+    private static final double SIGNIFICANCE_LEVEL = 0.05; // 99.9%
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         Map<Double, Double> xyDaily = new HashMap<>();
@@ -27,7 +27,7 @@ public class AnnovaTest {
         double[] yMonthly = null;
 
 
-        try (BufferedReader dailyDatafileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("dailydata.csv"))))) {
+        try (BufferedReader dailyDatafileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("dailydata1.csv"))))) {
             dailyReadings = dailyDatafileReader.lines().map(line -> line.trim().split(",")).map(sa -> Stream.of(sa).mapToDouble(Double::parseDouble).toArray()).toArray(double[][]::new);
             xDaily = new double[dailyReadings.length];
             yDaily = new double[dailyReadings.length];
@@ -36,7 +36,7 @@ public class AnnovaTest {
                 yDaily[i] = dailyReadings[i][1];
             }
         }
-        try (BufferedReader monthlyDatafileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("monthlydata.csv"))))) {
+        try (BufferedReader monthlyDatafileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("dailydata3.csv"))))) {
             monthlyReadings = monthlyDatafileReader.lines().map(line -> line.trim().split(",")).map(sa -> Stream.of(sa).mapToDouble(Double::parseDouble).toArray()).toArray(double[][]::new);
             xMonthly = new double[monthlyReadings.length];
             yMonthly = new double[monthlyReadings.length];
@@ -47,10 +47,12 @@ public class AnnovaTest {
 
         }
 
+/*
         Interpolator interpolator = new Interpolator();
         double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(xMonthly, yMonthly);
+*/
 
-        double[][] observations = {interpolatedTotalSubscriptionsPerDay, yDaily};
+        double[][] observations = {yMonthly, yDaily};
         final List<double[]> classes = new ArrayList<double[]>();
         for (int i = 0; i < observations.length; i++) {
             classes.add(observations[i]);
