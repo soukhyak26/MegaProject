@@ -6,9 +6,11 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
+import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
+import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
 import com.affaince.subscription.product.query.view.ProductView;
@@ -17,6 +19,7 @@ import com.affaince.subscription.product.web.exception.ProductForecastAlreadyExi
 import com.affaince.subscription.product.web.exception.ProductForecastModificationException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddForecastParametersRequest;
+import com.affaince.subscription.product.web.request.NextCalendarRequest;
 import com.affaince.subscription.product.web.request.UpdateForecastRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,17 +48,19 @@ public class ForecastController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final ProductViewRepository productViewRepository;
     private final ProductForecastViewRepository productForecastViewRepository;
-
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
+    private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, SubscriptionCommandGateway commandGateway) {
+    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, SubscriptionCommandGateway commandGateway) {
         this.productViewRepository = productViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
+        this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.commandGateway = commandGateway;
     }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/findall")
     @Produces("application/json")
@@ -192,4 +197,23 @@ public class ForecastController {
         final ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(productForecastViews);
     }
+
+
+    @RequestMapping(method = RequestMethod.PUT, value = "setnextcalendar/forecast/{productId}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setNextCalendarForForecast(@RequestBody @Valid NextCalendarRequest nextCalendarRequest, @PathVariable String productId) {
+        ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
+
+        this.productConfigurationViewRepository.save(productConfigurationView);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "setnextstepcalendar/forecast/{productId}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setNextCalendarForPseudo(@RequestBody @Valid NextCalendarRequest nextCalendarRequest, @PathVariable String productId) {
+        ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
+        this.productConfigurationViewRepository.save(productConfigurationView);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
 }

@@ -16,6 +16,8 @@ public class ProductConfigurationView {
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
+    private String cronExpressionForForecast;
+    private String cronExpressionForPseudoActuals;
 
     public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
         this.productId = productId;
@@ -72,5 +74,21 @@ public class ProductConfigurationView {
 
     public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
         this.pricingStrategyType = pricingStrategyType;
+    }
+
+    public String getCronExpressionForForecast() {
+        return cronExpressionForForecast;
+    }
+
+    public void setCronExpressionForForecast(String cronExpressionForForecast) {
+        this.cronExpressionForForecast = cronExpressionForForecast;
+    }
+
+    public String getCronExpressionForPseudoActuals() {
+        return cronExpressionForPseudoActuals;
+    }
+
+    public void setCronExpressionForPseudoActuals(String cronExpressionForPseudoActuals) {
+        this.cronExpressionForPseudoActuals = cronExpressionForPseudoActuals;
     }
 }
