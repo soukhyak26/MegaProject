@@ -3,13 +3,10 @@ package com.affaince.subscription.product.web.request;
 import com.affaince.subscription.product.vo.ProductForecastParameter;
 
 /**
- * Created by rbsavaliya on 05-12-2015.
+ * Created by mandar on 13-09-2016.
  */
-public class AddForecastParametersRequest {
+public class AddStepForecastParametersRequest {
     private ProductForecastParameter[] productForecastParameters;
-
-    public AddForecastParametersRequest() {
-    }
 
     public ProductForecastParameter[] getProductForecastParameters() {
         return productForecastParameters;
@@ -18,5 +15,4 @@ public class AddForecastParametersRequest {
     public void setProductForecastParameters(ProductForecastParameter[] productForecastParameters) {
         this.productForecastParameters = productForecastParameters;
     }
-
 }

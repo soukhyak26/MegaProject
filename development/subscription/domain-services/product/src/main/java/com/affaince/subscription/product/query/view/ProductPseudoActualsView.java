@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
+import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -16,6 +17,7 @@ public class ProductPseudoActualsView {
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
+    private ProductForecastStatus productForecastStatus;
 
 
     public ProductPseudoActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
@@ -62,4 +64,11 @@ public class ProductPseudoActualsView {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
+    public ProductForecastStatus getProductForecastStatus() {
+        return productForecastStatus;
+    }
+
+    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
+        this.productForecastStatus = productForecastStatus;
+    }
 }

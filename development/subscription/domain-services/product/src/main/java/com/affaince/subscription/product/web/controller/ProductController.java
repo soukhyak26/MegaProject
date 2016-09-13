@@ -2,19 +2,15 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.vo.ForecastedPriceParameter;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddCurrentOfferedPriceRequest;
-import com.affaince.subscription.product.web.request.AddForecastParametersRequest;
 import com.affaince.subscription.product.web.request.RegisterProductRequest;
 import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -103,24 +99,6 @@ public class ProductController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "addprojectionparameters/{productId}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> addProjectionParameters(@RequestBody @Valid AddForecastParametersRequest request,
-                                                          @PathVariable String productId) throws Exception {
-        ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.build(productId);
-        }
-        ForecastedPriceParameter[] forecastParameters = request.getForecastedPriceParameters();
-        for (ForecastedPriceParameter parameter : forecastParameters) {
-
-            ProductForecastMetricsView productForecastMetricsView = new ProductForecastMetricsView(new ProductVersionId(productId, parameter.getStartDate()),parameter.getEndDate());
-            productForecastMetricsView.setNewSubscriptions(parameter.getNumberofNewSubscriptions());
-            productForecastMetricsView.setChurnedSubscriptions(parameter.getNumberOfChurnedSubscriptions());
-            productForecastMetricsViewRepository.save(productForecastMetricsView);
-        }
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{productId}")
     @Consumes("application/json")
