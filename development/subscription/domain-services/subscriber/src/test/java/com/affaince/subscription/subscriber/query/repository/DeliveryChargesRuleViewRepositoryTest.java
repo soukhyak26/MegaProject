@@ -30,9 +30,9 @@ public class DeliveryChargesRuleViewRepositoryTest {
 
     @Before
     public void init () {
-
-        final List<RangeRule> rangeRules = new ArrayList<>(11);
-        for (int i=0;i<=9;i++) {
+        deliveryChargesRuleViewRepository.deleteAll();
+        final List<RangeRule> rangeRules = new ArrayList<>(40);
+        for (int i = 0; i < 40; i++) {
             RangeRule rangeRule = new RangeRule();
             rangeRule.setRuleHeader("CHARGES_TILL_" + i + QuantityUnit.KG.toString());
             rangeRule.setRuleMinimum(i);
@@ -48,6 +48,6 @@ public class DeliveryChargesRuleViewRepositoryTest {
     @Test
     public void testTotalRangeRules () {
         final DeliveryChargesRuleView deliveryChargesRuleView = deliveryChargesRuleViewRepository.findOne(DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT);
-        assertThat (deliveryChargesRuleView.getRangeRules().size(),is (10));
+        assertThat(deliveryChargesRuleView.getRangeRules().size(), is(40));
     }
 }

@@ -4,6 +4,8 @@ import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.*;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -21,13 +23,19 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
     @Autowired
     private ExpenseDistributionClient expenseDistributionClient;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ForecastBasedOperatingExpenseDistributionDeterminator.class);
+
     public ForecastBasedOperatingExpenseDistributionDeterminator() {
     }
 
     @Override
     public Map<String, Double> distributeDeliveryExpensesToProduct() throws IOException {
-        final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats = createYearlyProductWiseDeliveryStats();
-        final List<DeliveryView> forecastDeliveries = createDeliveriesFromForecastData(productWiseYearlyDeliveryStats);
+        final List<ProductView> productViews = expenseDistributionClient.fetchAllProducts();
+        //List<ProductView> productViews1 = productViews.subList(0,100);
+        final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats
+                = createYearlyProductWiseDeliveryStats(productViews);
+        final List<DeliveryView> forecastDeliveries
+                = createDeliveriesFromForecastData(productWiseYearlyDeliveryStats, productViews);
         double totalDeliveryExpenses = calculateTotalDeliveryCharges(forecastDeliveries);
         final Map<String, Double> productWisePerUnitDeliveryExpenseMap
                 = calculateProductWisePerUnitDeliveryExpenses(totalDeliveryExpenses, productWiseYearlyDeliveryStats);
@@ -79,15 +87,17 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
         return deliveryItems.stream().mapToDouble(DeliveryItem::getWeightInGrms).sum();
     }
 
-    private List<DeliveryView> createDeliveriesFromForecastData(Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats) {
-        final Iterable<ProductView> productViews = expenseDistributionClient.fetchAllProducts();
+    private List<DeliveryView> createDeliveriesFromForecastData(
+            Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats,
+            List<ProductView> productViews) {
+
         final List<DeliveryView> deliveryViews = new ArrayList<>();
         for (ProductView productView : productViews) {
             long totalYearlySubscriptions = productWiseYearlyDeliveryStats.get(productView.getProductId()).getTotalUnitsSold();
             int yearlyTargetConsumption = 14;//((Double) (productView.getTargetMonthlyConsumption() * 12)).intValue();
-            long totalDeliveries = yearlyTargetConsumption * totalYearlySubscriptions;
+            long totalDeliveries = totalYearlySubscriptions;
             List<String> substitutes = productView.getSubstitutes();
-            long productQuantityInKG = productView.getQuantity();
+            double productQuantityInKG = productView.getQuantity();
             if (productView.getQuantityUnit() == QuantityUnit.ml || productView.getQuantityUnit() == QuantityUnit.GM) {
                 productQuantityInKG = productQuantityInKG / 1000;
             }
@@ -135,18 +145,25 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
         return true;
     }
 
-    private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats() throws IOException {
+    private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats(List<ProductView> productViews) throws IOException {
         final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats = new HashMap<>();
-        for (ProductForecastMetricsView productForecastMetricsView : expenseDistributionClient.fetchAllProductForecastMetrics()) {
-            final String productId = productForecastMetricsView.getProductId();
-            ProductWiseDeliveryStats productWiseDeliveryStats = productWiseYearlyDeliveryStats.get(productId);
-            if (productWiseDeliveryStats == null) {
-                productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
-                productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
+        productViews.forEach(productView -> {
+            try {
+                for (ProductForecastView productForecastView : expenseDistributionClient.fetchProductForecastByProductId(productView.getProductId())) {
+                    final String productId = productView.getProductId();
+                    ProductWiseDeliveryStats productWiseDeliveryStats = productWiseYearlyDeliveryStats.get(productId);
+                    if (productWiseDeliveryStats == null) {
+                        productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
+                        productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
+                    }
+                    productWiseDeliveryStats.addMRP(100 * productForecastView.getTotalNumberOfExistingSubscriptions());
+                    productWiseDeliveryStats.addUnitSold(productForecastView.getTotalNumberOfExistingSubscriptions());
+                }
+            } catch (IOException e) {
+                LOGGER.info("Cannot create product stats from forecast data: " + e.getMessage());
             }
-            productWiseDeliveryStats.addMRP(productForecastMetricsView.getMrp()*productForecastMetricsView.getTotalNumberOfExistingSubscriptions());
-            productWiseDeliveryStats.addUnitSold(productForecastMetricsView.getTotalNumberOfExistingSubscriptions());
-        }
+        });
+
         return productWiseYearlyDeliveryStats;
     }
 }

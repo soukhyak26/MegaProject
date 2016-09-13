@@ -1,5 +1,9 @@
 package com.affaince.subscription.common.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
 import java.io.Serializable;
@@ -9,12 +13,17 @@ import java.io.Serializable;
  */
 public class ProductVersionId implements Serializable, Comparable<ProductVersionId> {
     private String productId;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate fromDate;
 
 
     public ProductVersionId(String productId, LocalDate fromDate) {
         this.productId = productId;
         this.fromDate = fromDate;
+    }
+
+    public ProductVersionId() {
     }
 
     public String getProductId() {

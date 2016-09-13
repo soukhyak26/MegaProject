@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.query.view;
+package com.affaince.subscription.expensedistribution.query.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
@@ -7,16 +7,12 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by mandar on 10-07-2016.
  */
-@Document(collection = "ProductForecastView")
 public class ProductForecastView {
-    @Id
-    private final ProductVersionId productVersionId;
+    private ProductVersionId productVersionId;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
@@ -25,17 +21,15 @@ public class ProductForecastView {
     private long totalNumberOfExistingSubscriptions;
     private ProductForecastStatus productForecastStatus;
 
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
-        this.productVersionId = productVersionId;
-        this.endDate = endDate;
-        this.newSubscriptions = newSubscriptions;
-        this.churnedSubscriptions = churnedSubscriptions;
-        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.productForecastStatus = productForecastStatus;
+    public ProductForecastView() {
     }
 
     public ProductVersionId getProductVersionId() {
         return productVersionId;
+    }
+
+    public void setProductVersionId(ProductVersionId productVersionId) {
+        this.productVersionId = productVersionId;
     }
 
     public LocalDate getEndDate() {

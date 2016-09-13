@@ -1,17 +1,15 @@
 package com.affaince.subscription.expensedistribution.client;
 
 import com.affaince.subscription.common.type.DeliveryChargesRuleType;
-import com.affaince.subscription.expensedistribution.query.view.DeliveryChargesRuleView;
-import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
-import com.affaince.subscription.expensedistribution.query.view.ProductForecastMetricsView;
-import com.affaince.subscription.expensedistribution.query.view.ProductView;
+import com.affaince.subscription.expensedistribution.query.view.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 08-07-2016.
@@ -29,15 +27,14 @@ public class ExpenseDistributionClient {
     @Value("${subscription.expensedistribution.fetchalldeliverychargesrules}")
     private String fetchAllDeliveryChargesRulesUrl;
 
-    @Value("${subscription.expensedistribution.fetchforecastedpricebucketsbyproductid.url}")
-    private String fetchForecastedPriceBucketsbyProductId;
     @Autowired
     private ObjectMapper objectMapper;
+    @Value("${subscription.expensedistribution.fetchForecastbyProductId.url}")
+    private String fetchForecastbyProductId;
 
     public List<DeliveryView> fetchAllDeliveries () throws IOException {
         final RestTemplate restTemplate = new RestTemplate();
         String  result = restTemplate.getForObject(fetchDeliveriesUrl, String.class);
-        System.out.println(result);
         final ObjectMapper objectMapper = new ObjectMapper();
         final DeliveryView [] deliveryViews = objectMapper.readValue(result, DeliveryView[].class);
         return Arrays.asList(deliveryViews);
@@ -65,12 +62,13 @@ public class ExpenseDistributionClient {
         return Arrays.asList(result);
     }
 
-    public List <ProductForecastMetricsView> fetchProductForecastMetricsByProductId (final String productId) {
+    public List<ProductForecastView> fetchProductForecastByProductId(final String productId) throws IOException {
         final RestTemplate restTemplate = new RestTemplate();
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("productid", productId);
-        ArrayList<ProductForecastMetricsView> result =
-                restTemplate.getForObject(fetchAllForecastedPriceBucketsUrl, ArrayList.class, params);
-        return result;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String result =
+                restTemplate.getForObject(fetchForecastbyProductId + "/" + productId, String.class);
+        ProductForecastView[] productForecastViews;
+        productForecastViews = objectMapper.readValue(result, ProductForecastView[].class);
+        return Arrays.asList(productForecastViews);
     }
 }

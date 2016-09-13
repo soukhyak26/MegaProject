@@ -3,7 +3,7 @@ package com.affaince.subscription.expensedistribution.processor;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
-import com.affaince.subscription.expensedistribution.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.expensedistribution.query.view.ProductForecastView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,19 +48,19 @@ public class AverageBasedOperatingExpenseDistribution {
         return perUnitProductExpensesMap;
     }
 
-    private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats(final List <String> productIds) {
+    private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats(final List<String> productIds) throws IOException {
         final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats
                 = new HashMap<>(productIds.size());
         for (String productId: productIds) {
-            final List <ProductForecastMetricsView> productForecastMetricsViews =
-                    expenseDistributionClient.fetchProductForecastMetricsByProductId(productId);
+            final List<ProductForecastView> productForecastViews =
+                    expenseDistributionClient.fetchProductForecastByProductId(productId);
             ProductWiseDeliveryStats productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
             productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
-            for (ProductForecastMetricsView productForecastMetricsView : productForecastMetricsViews) {
+            for (ProductForecastView productForecastView : productForecastViews) {
                // productWiseDeliveryStats.addMRP(productForecastMetricsView.getTaggedPriceVersions().first().getMRP());
                 productWiseDeliveryStats.addMRP(80);
                 productWiseDeliveryStats.addUnitSold(
-                        productForecastMetricsView.getTotalNumberOfExistingSubscriptions()
+                        productForecastView.getTotalNumberOfExistingSubscriptions()
                 );
             }
         }

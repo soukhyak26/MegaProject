@@ -18,7 +18,7 @@ public class ProductView {
     private String productName;
     private String categoryId;
     private String subCategoryId;
-    private long quantity;
+    private double quantity;
     private QuantityUnit quantityUnit;
     private String [] substitutes;
     private String [] complements;
@@ -60,11 +60,11 @@ public class ProductView {
         this.subCategoryId = subCategoryId;
     }
 
-    public long getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
