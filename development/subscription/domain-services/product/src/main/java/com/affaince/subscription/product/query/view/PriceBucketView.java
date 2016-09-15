@@ -3,7 +3,7 @@ package com.affaince.subscription.product.query.view;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,9 +16,9 @@ import java.util.List;
 @Document
 public class PriceBucketView  implements Comparable<PriceBucketView>{
     @Id
-    private ProductVersionId productVersionId;
+    private final ProductVersionId productVersionId;
     private PriceTaggedWithProduct taggedPriceVersion;
-    private LocalDate toDate;
+    private LocalDateTime toDate;
     private double offeredPricePerUnit;
     private double percentDiscountPerUnit;
     private long numberOfNewCustomersAssociatedWithAPrice;
@@ -28,6 +28,21 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     private double totalProfit;
     private double slope;
 
+    public PriceBucketView(ProductVersionId productVersionId) {
+        this.productVersionId = productVersionId;
+    }
+
+    public static PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
+        PriceBucketView latestPriceBucketView = null;
+        LocalDateTime max = activePriceBuckets.get(0).getFromDate();
+        for (PriceBucketView priceBucketView : activePriceBuckets) {
+            if (priceBucketView.getFromDate().compareTo(max) > 0) {
+                latestPriceBucketView = priceBucketView;
+            }
+        }
+        return latestPriceBucketView;
+    }
+
     public String getProductId() {
         return productVersionId.getProductId();
     }
@@ -36,19 +51,19 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.productVersionId.setProductId(productId);
     }
 
-    public LocalDate getFromDate() {
+    public LocalDateTime getFromDate() {
         return this.productVersionId.getFromDate();
     }
 
-    public void setFromDate(LocalDate fromDate) {
+    public void setFromDate(LocalDateTime fromDate) {
         this.productVersionId.setFromDate(fromDate);
     }
 
-    public LocalDate getToDate() {
+    public LocalDateTime getToDate() {
         return toDate;
     }
 
-    public void setToDate(LocalDate toDate) {
+    public void setToDate(LocalDateTime toDate) {
         this.toDate = toDate;
     }
 
@@ -86,10 +101,6 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
 
     public ProductVersionId getProductVersionId() {
         return this.productVersionId;
-    }
-
-    public void setProductVersionId(ProductVersionId productVersionId) {
-        this.productVersionId = productVersionId;
     }
 
     public EntityStatus getEntityStatus() {
@@ -130,17 +141,6 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
 
     public void setSlope(double slope) {
         this.slope = slope;
-    }
-
-    public static PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
-        PriceBucketView latestPriceBucketView = null;
-        LocalDate max = activePriceBuckets.get(0).getFromDate();
-        for (PriceBucketView priceBucketView : activePriceBuckets) {
-            if (priceBucketView.getFromDate().compareTo(max) > 0) {
-                latestPriceBucketView = priceBucketView;
-            }
-        }
-        return latestPriceBucketView;
     }
 
     @Override

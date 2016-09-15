@@ -1,12 +1,12 @@
 package com.affaince.subscription.product.query.view;
 
-import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,15 +17,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductForecastView {
     @Id
     private final ProductVersionId productVersionId;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate endDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ProductForecastStatus productForecastStatus;
 
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
@@ -38,11 +38,11 @@ public class ProductForecastView {
         return productVersionId;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

@@ -3,8 +3,7 @@ package com.affaince.subscription.product.query.view;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.vo.ProductPeriodVersionId;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +19,7 @@ import java.util.TreeSet;
 public class ProductForecastMetricsView {
     @Id
     private final ProductVersionId productVersionId;
-    private LocalDate endDate;
+    private LocalDateTime endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private double fixedOperatingExpense;
     private double variableOperatingExpense;
@@ -53,7 +52,7 @@ public class ProductForecastMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductForecastMetricsView(ProductVersionId productVersionId,LocalDate endDate){
+    public ProductForecastMetricsView(ProductVersionId productVersionId, LocalDateTime endDate) {
         this.productVersionId=productVersionId;
         this.endDate=endDate;
         taggedPriceVersions = new TreeSet<>();
@@ -274,11 +273,11 @@ public class ProductForecastMetricsView {
         this.salesAndMarketingExpenses = salesAndMarketingExpenses;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 }

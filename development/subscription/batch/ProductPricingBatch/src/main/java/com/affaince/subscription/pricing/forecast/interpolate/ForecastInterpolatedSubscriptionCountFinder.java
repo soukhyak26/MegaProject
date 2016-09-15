@@ -5,6 +5,7 @@ import com.affaince.subscription.pricing.query.repository.ProductForecastViewRep
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
@@ -27,7 +28,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
                         (productId, ProductForecastStatus.CORRECTED);
         ProductForecastView firstForecastView = previousValues.get(previousValues.size() - 1);
-        LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
+        LocalDateTime dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
         double[] x = new double[previousValues.size()];     //day on which interpolated value has been taken
         double[] y = new double[previousValues.size()];     //interpolated value of toal subscription
         int count = 0;

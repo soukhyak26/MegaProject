@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.vo;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandar on 06-07-2016.
@@ -9,10 +9,10 @@ public class DemandGrowthAndChurnForecast {
     private final long forecastedNewSubscriptionCount;
     private final long forecastedChurnedSubscriptionCount;
     private final long forecastedTotalSubscriptionCount;
-    private final LocalDate forecastStartDate;
-    private final LocalDate forecastEndDate;
+    private final LocalDateTime forecastStartDate;
+    private final LocalDateTime forecastEndDate;
 
-    public DemandGrowthAndChurnForecast(long forecastedNewSubscriptionCount, long forecastedChurnedSubscriptionCount, long forecastedTotalSubscriptionCount, LocalDate forecastStartDate, LocalDate forecastEndDate) {
+    public DemandGrowthAndChurnForecast(long forecastedNewSubscriptionCount, long forecastedChurnedSubscriptionCount, long forecastedTotalSubscriptionCount, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
         this.forecastedNewSubscriptionCount = forecastedNewSubscriptionCount;
         this.forecastedChurnedSubscriptionCount = forecastedChurnedSubscriptionCount;
         this.forecastedTotalSubscriptionCount = forecastedTotalSubscriptionCount;
@@ -32,11 +32,11 @@ public class DemandGrowthAndChurnForecast {
         return forecastedTotalSubscriptionCount;
     }
 
-    public LocalDate getForecastStartDate() {
+    public LocalDateTime getForecastStartDate() {
         return forecastStartDate;
     }
 
-    public LocalDate getForecastEndDate() {
+    public LocalDateTime getForecastEndDate() {
         return forecastEndDate;
     }
 }

@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.vo;
 
-import com.affaince.subscription.date.SysDate;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandark on 28-11-2015.
@@ -15,8 +14,8 @@ public class PriceBucket {
     private long totalQuantitySusbcribed;
     //no need to maintain MPR versions in each basket
     //private Map<LocalDate, Double> MRPVersions;
-    private LocalDate fromDate;
-    private LocalDate toDate;
+    private LocalDateTime fromDate;
+    private LocalDateTime toDate;
     private long numberOfNewCustomersAssociatedWithAPrice;
     private long numberOfChurnedSubscriptionsAssociatedWithAPrice;
     private long numberOfExistingSubscriptionsAssociatedWithAPrice;
@@ -25,7 +24,7 @@ public class PriceBucket {
     public PriceBucket() {
     }
 
-    public PriceBucket(double purchasePricePerUnit, double MRP, LocalDate fromDate, LocalDate toDate, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedSubscriptionsAssociatedWithAPrice) {
+    public PriceBucket(double purchasePricePerUnit, double MRP, LocalDateTime fromDate, LocalDateTime toDate, long numberOfNewCustomersAssociatedWithAPrice, long numberOfChurnedSubscriptionsAssociatedWithAPrice) {
 
         this.taggedPriceVersion = new PriceTaggedWithProduct(purchasePricePerUnit,MRP,fromDate);
         this.offeredPricePerUnit = offeredPricePerUnit;
@@ -38,9 +37,9 @@ public class PriceBucket {
     public PriceBucket(PriceBucket priceBucket) {
         this.taggedPriceVersion = priceBucket.getTaggedPriceVersion();
         this.offeredPricePerUnit = priceBucket.getOfferedPricePerUnit();
-        this.fromDate = SysDate.now();
+        this.fromDate = LocalDateTime.now();
         //TO BE CORRECTED IT SHOULD BE END OF CURRENT YEAR
-        this.toDate = SysDate.now();
+        this.toDate = LocalDateTime.now();
         this.numberOfNewCustomersAssociatedWithAPrice = 0;
         this.numberOfChurnedSubscriptionsAssociatedWithAPrice = 0;
 
@@ -55,19 +54,19 @@ public class PriceBucket {
     }
 
 
-    public LocalDate getFromDate() {
+    public LocalDateTime getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(LocalDate fromDate) {
+    public void setFromDate(LocalDateTime fromDate) {
         this.fromDate = fromDate;
     }
 
-    public LocalDate getToDate() {
+    public LocalDateTime getToDate() {
         return toDate;
     }
 
-    public void setToDate(LocalDate toDate) {
+    public void setToDate(LocalDateTime toDate) {
         this.toDate = toDate;
     }
 

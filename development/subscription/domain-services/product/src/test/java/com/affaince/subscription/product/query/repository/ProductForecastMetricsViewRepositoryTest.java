@@ -3,7 +3,7 @@ package com.affaince.subscription.product.query.repository;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,12 +36,12 @@ public class ProductForecastMetricsViewRepositoryTest {
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
-            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product"+k, new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product" + k, new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
             forecastView.setTotalNumberOfExistingSubscriptions(1250);
-            LocalDate localDate = new LocalDate(2016, 1, 1);
+            LocalDateTime localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
             for (int i = 0; i < readings.length; i++) {
                 localDate = localDate.plusDays(1);
-                ProductForecastMetricsView actualMetrics = new ProductForecastMetricsView(new ProductVersionId("product"+k, localDate), new LocalDate(9999, 12, 31));
+                ProductForecastMetricsView actualMetrics = new ProductForecastMetricsView(new ProductVersionId("product" + k, localDate), new LocalDateTime(9999, 12, 31, 0, 0, 0));
                 actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);

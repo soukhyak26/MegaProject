@@ -1,7 +1,7 @@
 package com.affaince.subscription.expensedistribution.query.view;
 
-import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 public class ProductVersionId implements Serializable {
     private String productId;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate fromDate;
 
     public ProductVersionId() {

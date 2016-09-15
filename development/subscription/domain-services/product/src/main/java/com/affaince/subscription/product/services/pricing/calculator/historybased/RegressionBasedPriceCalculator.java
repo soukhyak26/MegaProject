@@ -2,7 +2,6 @@ package com.affaince.subscription.product.services.pricing.calculator.historybas
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
@@ -11,6 +10,7 @@ import com.affaince.subscription.product.services.pricing.calculator.historybase
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.exception.PricingEligibilityViolationException;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             //NEED TO VERIFY IF BELOW STEP IS CORRECT???
             double expectedDemand = demandForecasterChain.forecast(productId, historyOfSubscriptions).get(0);
             double offeredPrice = calculateOfferedPrice(functionCoefficients.getIntercept(), functionCoefficients.getSlope(), expectedDemand);
-            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
-            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED);
+            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), LocalDateTime.now());
+            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, LocalDateTime.now());
             newPriceBucket.setSlope(functionCoefficients.getSlope());
             return newPriceBucket;
         }

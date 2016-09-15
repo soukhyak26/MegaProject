@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.query.repository;
 
-import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.query.view.PriceBucketView;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -20,6 +20,8 @@ public interface PriceBucketViewRepository extends PagingAndSortingRepository<Pr
     @Query("{ entityStatus:'1' }")
     List<PriceBucketView> findByProductVersionId_ProductId(String productId);
 
+    @Query("{ entityStatus:'1' }")
+    List<PriceBucketView> findByProductVersionId_ProductId(String productId, Sort sort);
     List<PriceBucketView> findByProductVersionId_ProductIdAndTaggedPriceVersion_PurchasePricePerUnit(String productId, double purchasePricePerUnit);
     List<PriceBucketView> findByProductVersionIdAndEntityStatus(ProductVersionId versionId, int entityStatus);
 

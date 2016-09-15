@@ -2,7 +2,7 @@ package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.services.aggregators.AggregationVisitor;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,12 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductActualsView implements Comparable<ProductActualsView>, AggregationVisitor<ProductActualsView> {
     @Id
     private final ProductVersionId productVersionId;
-    private LocalDate endDate;
+    private LocalDateTime endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
 
-    public ProductActualsView(ProductVersionId productVersionId,LocalDate endDate){
+    public ProductActualsView(ProductVersionId productVersionId, LocalDateTime endDate) {
         this.productVersionId=productVersionId;
         this.endDate=endDate;
     }
@@ -27,11 +27,11 @@ public class ProductActualsView implements Comparable<ProductActualsView>, Aggre
         return productVersionId;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

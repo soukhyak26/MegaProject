@@ -2,11 +2,10 @@ package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +34,7 @@ public class ProductForecastViewRepositoryTest {
     public void init() throws FileNotFoundException {
         productForecastViewRepository.deleteAll();
 
-        LocalDate localDate = SysDate.now();
+        LocalDateTime localDate = LocalDateTime.now();
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
@@ -65,13 +64,13 @@ public class ProductForecastViewRepositoryTest {
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
-            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product" + k, new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product" + k, new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
             forecastView.setTotalNumberOfExistingSubscriptions(1250);
-            localDate = new LocalDate(2016, 1, 1);
+            localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
             for (int i = 0; i < readings.length; i++) {
                 localDate = localDate.plusDays(1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, localDate),
-                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ORIGINAL);
+                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ORIGINAL);
                 productActualMetricsViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }
@@ -84,7 +83,7 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView =
                 productForecastViewRepository.
                         findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc("1");
-        ProductVersionId productVersionId = new ProductVersionId("1", SysDate.now().plusDays(52));
+        ProductVersionId productVersionId = new ProductVersionId("1", LocalDateTime.now().plusDays(52));
         assertThat (productForecastView.getProductVersionId(), is (productVersionId));
     }
 
@@ -93,7 +92,7 @@ public class ProductForecastViewRepositoryTest {
         List<ProductForecastView> productForecastViewList = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc("1", ProductForecastStatus.CORRECTED);
         assertThat(productForecastViewList.size(), is (2));
-        ProductVersionId productVersionId = new ProductVersionId("1", SysDate.now().plusDays(52));
+        ProductVersionId productVersionId = new ProductVersionId("1", LocalDateTime.now().plusDays(52));
         assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));
     }
 

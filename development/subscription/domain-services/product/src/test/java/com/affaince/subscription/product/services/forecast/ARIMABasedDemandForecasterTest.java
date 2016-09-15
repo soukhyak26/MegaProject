@@ -4,7 +4,7 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,13 +38,13 @@ public class ARIMABasedDemandForecasterTest {
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
-        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDate(9999, 12, 31));
+        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
+        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastMetricsView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
         for (int i = 0; i < readings.length; i++) {
-            ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDate(9999, 12, 31));
+            ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
             //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
             actualMetrics.setNewSubscriptions(readings[i][0]);
             actualMetrics.setChurnedSubscriptions(readings[i][1]);

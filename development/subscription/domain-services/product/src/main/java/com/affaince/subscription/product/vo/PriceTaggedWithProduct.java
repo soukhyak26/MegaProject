@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.vo;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandar on 27-05-2016.
@@ -8,23 +8,19 @@ import org.joda.time.LocalDate;
 public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduct> {
     private double purchasePricePerUnit;
     private double MRP;
-    private LocalDate taggedStartDate;
-    private LocalDate taggedEndDate;
+    private LocalDateTime taggedStartDate;
+    private LocalDateTime taggedEndDate;
 
-    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate taggedStartDate) {
+    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;
     }
 
-    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
+    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate, LocalDateTime taggedEndDate) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;
-        this.taggedEndDate = taggedEndDate;
-    }
-
-    public void setTaggedEndDate(LocalDate taggedEndDate) {
         this.taggedEndDate = taggedEndDate;
     }
 
@@ -36,12 +32,16 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         return MRP;
     }
 
-    public LocalDate getTaggedStartDate() {
+    public LocalDateTime getTaggedStartDate() {
         return taggedStartDate;
     }
 
-    public LocalDate getTaggedEndDate() {
+    public LocalDateTime getTaggedEndDate() {
         return taggedEndDate;
+    }
+
+    public void setTaggedEndDate(LocalDateTime taggedEndDate) {
+        this.taggedEndDate = taggedEndDate;
     }
 
     @Override

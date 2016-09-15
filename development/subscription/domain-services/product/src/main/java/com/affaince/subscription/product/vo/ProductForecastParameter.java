@@ -1,14 +1,14 @@
 package com.affaince.subscription.product.vo;
 
 import com.affaince.subscription.common.type.ProductForecastStatus;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandark on 01-01-2016.
  */
 public class ProductForecastParameter {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private double purchasePricePerUnit;
     private double MRP;
     private long numberofNewSubscriptions;
@@ -16,7 +16,7 @@ public class ProductForecastParameter {
     private long numberOfTotalSubscriptions;
     private ProductForecastStatus productForecastStatus;
 
-    public ProductForecastParameter(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, long numberOfTotalSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastParameter(LocalDateTime startDate, LocalDateTime endDate, double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, long numberOfTotalSubscriptions, ProductForecastStatus productForecastStatus) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberofNewSubscriptions = numberofNewSubscriptions;
@@ -60,19 +60,19 @@ public class ProductForecastParameter {
     }
 
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

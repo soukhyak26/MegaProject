@@ -23,12 +23,10 @@ import javax.ws.rs.Consumes;
 @RestController
 @RequestMapping(value = "/pricing")
 @Component
-
 public class PricingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository productViewRepository;
-
 
     @Autowired
     public PricingController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository) {

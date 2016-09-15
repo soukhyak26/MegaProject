@@ -8,7 +8,7 @@ import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,19 +43,19 @@ public class DefaultPriceDeterminatorTest {
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
 
-        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view1.setNewSubscriptions(500);
         productActualsViewList.add(view1);
 
-        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view2.setNewSubscriptions(750);
         productActualsViewList.add(view2);
 
-        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view3.setNewSubscriptions(1000);
         productActualsViewList.add(view3);
 
-        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
+        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view4.setNewSubscriptions(1250);
         productActualsViewList.add(view4);
         // Mockito.when(productViewRepository.findOne(productId)).thenReturn(product);

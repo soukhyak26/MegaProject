@@ -20,11 +20,9 @@ public class PricingClient {
     public static void calculatePrice(String productId, ProductDemandTrend trend) {
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
-        //for (String productId : result) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("productid", productId);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("productid", productId);
         params.put("productdemandtrend", "" + trend.getTrendCode());
-            restTemplate.put(pricingUrl, params);
-        //}
+        restTemplate.put(pricingUrl, params);
     }
 }

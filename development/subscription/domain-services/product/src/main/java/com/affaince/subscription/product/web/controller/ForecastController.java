@@ -79,7 +79,7 @@ public class ForecastController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predictpseudoactual/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productId}")
     public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable String productId) throws Exception {
         UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
@@ -201,19 +201,10 @@ public class ForecastController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "setnextcalendar/forecast/{productId}")
     @Consumes("application/json")
-    public ResponseEntity<Object> setNextCalendarForForecast(@RequestBody @Valid NextCalendarRequest nextCalendarRequest, @PathVariable String productId) {
+    public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable String productId) {
         ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
-
+        productConfigurationView.setNextForecastDate(request.getNextForecastDate());
         this.productConfigurationViewRepository.save(productConfigurationView);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
-
-    @RequestMapping(method = RequestMethod.PUT, value = "setnextstepcalendar/forecast/{productId}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> setNextCalendarForPseudo(@RequestBody @Valid NextCalendarRequest nextCalendarRequest, @PathVariable String productId) {
-        ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
-        this.productConfigurationViewRepository.save(productConfigurationView);
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
-
 }

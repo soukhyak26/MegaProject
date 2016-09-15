@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.product.vo.PricingStrategyType;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,8 +17,7 @@ public class ProductConfigurationView {
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
-    private String cronExpressionForForecast;
-    private String cronExpressionForPseudoActuals;
+    private LocalDateTime nextForecastDate;
 
     public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
         this.productId = productId;
@@ -76,19 +76,11 @@ public class ProductConfigurationView {
         this.pricingStrategyType = pricingStrategyType;
     }
 
-    public String getCronExpressionForForecast() {
-        return cronExpressionForForecast;
+    public LocalDateTime getNextForecastDate() {
+        return nextForecastDate;
     }
 
-    public void setCronExpressionForForecast(String cronExpressionForForecast) {
-        this.cronExpressionForForecast = cronExpressionForForecast;
-    }
-
-    public String getCronExpressionForPseudoActuals() {
-        return cronExpressionForPseudoActuals;
-    }
-
-    public void setCronExpressionForPseudoActuals(String cronExpressionForPseudoActuals) {
-        this.cronExpressionForPseudoActuals = cronExpressionForPseudoActuals;
+    public void setNextForecastDate(LocalDateTime nextForecastDate) {
+        this.nextForecastDate = nextForecastDate;
     }
 }

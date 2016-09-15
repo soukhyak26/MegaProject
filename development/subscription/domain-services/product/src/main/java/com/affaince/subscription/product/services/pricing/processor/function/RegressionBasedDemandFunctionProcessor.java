@@ -8,7 +8,7 @@ import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.services.pricing.exception.InaccurateRegressionException;
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -74,7 +74,7 @@ public class RegressionBasedDemandFunctionProcessor implements FunctionProcessor
 
     private PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
         PriceBucketView latestPriceBucketView = null;
-        LocalDate max = activePriceBuckets.get(0).getFromDate();
+        LocalDateTime max = activePriceBuckets.get(0).getFromDate();
         for (PriceBucketView priceBucketView:activePriceBuckets) {
             if (priceBucketView.getFromDate().compareTo(max) > 0) {
                 latestPriceBucketView = priceBucketView;

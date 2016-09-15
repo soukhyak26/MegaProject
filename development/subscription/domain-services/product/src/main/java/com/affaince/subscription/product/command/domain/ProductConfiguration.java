@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.joda.time.LocalDateTime;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
     //private Period demandCurvePeriod;
@@ -11,6 +12,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
+    private LocalDateTime nextForecastDate;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -51,5 +53,13 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
 
     public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
         this.pricingStrategyType = pricingStrategyType;
+    }
+
+    public LocalDateTime getNextForecastDate() {
+        return nextForecastDate;
+    }
+
+    public void setNextForecastDate(LocalDateTime nextForecastDate) {
+        this.nextForecastDate = nextForecastDate;
     }
 }

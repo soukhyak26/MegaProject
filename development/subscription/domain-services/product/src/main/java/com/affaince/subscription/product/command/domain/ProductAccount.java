@@ -63,8 +63,8 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return this.activePriceBuckets.get(dateIdentifier);
     }
 
-    public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus) {
-        LocalDateTime fromDate = LocalDateTime.now();
+    public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
+        //LocalDateTime fromDate = LocalDateTime.now();
         if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
             String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
@@ -148,7 +148,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command) {
-        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
+        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), LocalDateTime.now(), command.getOperationExpense()));
     }
 
     public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {

@@ -31,6 +31,4 @@ public class ForecastingClient {
         params.put("productid", productId);
         restTemplate.put(pseudoActualUrl, params);
     }
-
-
 }

@@ -1,7 +1,7 @@
 package com.affaince.subscription.expensedistribution.query.view;
 
-import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -13,8 +13,8 @@ import org.joda.time.LocalDate;
  */
 public class ProductForecastView {
     private ProductVersionId productVersionId;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;

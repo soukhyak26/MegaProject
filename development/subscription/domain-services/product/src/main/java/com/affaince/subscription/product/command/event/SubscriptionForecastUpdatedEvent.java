@@ -1,19 +1,19 @@
 package com.affaince.subscription.product.command.event;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandar on 06-07-2016.
  */
 public class SubscriptionForecastUpdatedEvent {
     private final String productId;
-    private final LocalDate forecastStartDate;
-    private final LocalDate forecastEndDate;
+    private final LocalDateTime forecastStartDate;
+    private final LocalDateTime forecastEndDate;
     private final long newSubscriptionForecast;
     private final long churnedSubscriptionForecast;
     private final long forecastedTotalSubscriptionCount;
 
-    public SubscriptionForecastUpdatedEvent(String productId, LocalDate forecastStartDate, LocalDate forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
+    public SubscriptionForecastUpdatedEvent(String productId, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
         this.productId = productId;
         this.forecastStartDate = forecastStartDate;
         this.forecastEndDate = forecastEndDate;
@@ -26,11 +26,11 @@ public class SubscriptionForecastUpdatedEvent {
         return productId;
     }
 
-    public LocalDate getForecastStartDate() {
+    public LocalDateTime getForecastStartDate() {
         return forecastStartDate;
     }
 
-    public LocalDate getForecastEndDate() {
+    public LocalDateTime getForecastEndDate() {
         return forecastEndDate;
     }
 

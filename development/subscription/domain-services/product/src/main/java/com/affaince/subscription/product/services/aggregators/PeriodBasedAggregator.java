@@ -3,7 +3,7 @@ package com.affaince.subscription.product.services.aggregators;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.services.Comparator.ProductAcualsViewReversedComparatorOnLocalDate;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +17,8 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
     public List<ProductActualsView> aggregate(List<ProductActualsView> historicalData, int period) {
         String productId = null;
-        LocalDate startDate = null;
-        LocalDate endDate = null;
+        LocalDateTime startDate = null;
+        LocalDateTime endDate = null;
 
         List<ProductActualsView> aggregateViewList = new ArrayList<>();
         //are product actuals view sorted??

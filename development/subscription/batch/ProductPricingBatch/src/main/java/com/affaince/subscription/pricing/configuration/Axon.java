@@ -121,22 +121,15 @@ public class Axon extends ActiveMQConfiguration {
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
 
-
-                from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
-                        .split(body())
-                        .threads()
-                        .executorService(executorService)
-                        .to("bean:forecastingClient?method=initiatePseudoActual")
-                        .endChoice();
-
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
                 from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
                         .executorService(executorService)
-                        .to("bean:forecastInterpolatedSubscriptionCountFinder")
-                        .to("bean:productPricingTrigger").
-                        choice()
+                        .multicast()
+                        .to("bean:forecastingClient?method=initiatePseudoActual", "bean:forecastInterpolatedSubscriptionCountFinder")
+                        .to("bean:productPricingTrigger")
+                        .choice()
                         .when(demandTrendChecker)
                         .to("bean:pricingClient")
                         .endChoice();

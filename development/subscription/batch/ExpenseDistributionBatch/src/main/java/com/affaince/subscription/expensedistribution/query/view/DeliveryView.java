@@ -1,7 +1,7 @@
 package com.affaince.subscription.expensedistribution.query.view;
 
-import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -21,11 +21,11 @@ public class DeliveryView {
     private String subscriberId;
     private String subscriptionId;
     private List<DeliveryItem> deliveryItems;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate deliveryDate;
-    @JsonSerialize (using = LocalDateSerializer.class)
-    @JsonDeserialize (using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate dispatchDate;
     private DeliveryStatus status;
 

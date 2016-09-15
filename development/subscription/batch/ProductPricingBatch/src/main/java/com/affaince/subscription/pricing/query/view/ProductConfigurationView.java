@@ -1,5 +1,6 @@
 package com.affaince.subscription.pricing.query.view;
 
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,14 +12,16 @@ public class ProductConfigurationView {
     @Id
     private String productId;
     private int actualsAggregationPeriodForTargetForecast = 30;
-    private short changeThresholdForPriceChange;
+    private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    //private PricingStrategyType pricingStrategyType;
+    private LocalDate nextForecastDate;
 
     public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, short changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
-        this.changeThresholdForPriceChange = changeThresholdForPriceChange;
+        this.targetChangeThresholdForPriceChange = changeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
     }
@@ -39,14 +42,6 @@ public class ProductConfigurationView {
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
     }
 
-    public short getChangeThresholdForPriceChange() {
-        return changeThresholdForPriceChange;
-    }
-
-    public void setChangeThresholdForPriceChange(short changeThresholdForPriceChange) {
-        this.changeThresholdForPriceChange = changeThresholdForPriceChange;
-    }
-
     public boolean isCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;
     }
@@ -61,5 +56,21 @@ public class ProductConfigurationView {
 
     public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    }
+
+    public double getTargetChangeThresholdForPriceChange() {
+        return targetChangeThresholdForPriceChange;
+    }
+
+    public void setTargetChangeThresholdForPriceChange(double targetChangeThresholdForPriceChange) {
+        this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
+    }
+
+    public LocalDate getNextForecastDate() {
+        return nextForecastDate;
+    }
+
+    public void setNextForecastDate(LocalDate nextForecastDate) {
+        this.nextForecastDate = nextForecastDate;
     }
 }

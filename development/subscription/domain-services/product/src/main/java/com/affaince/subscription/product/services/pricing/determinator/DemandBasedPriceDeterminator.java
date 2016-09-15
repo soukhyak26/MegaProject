@@ -3,13 +3,12 @@ package com.affaince.subscription.product.services.pricing.determinator;
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.*;
 import org.apache.commons.lang3.ArrayUtils;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -49,9 +48,8 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
         //first and foremost : find if the demand is going up or it is going down for a product using extrapolation
         List<Double> forecastedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
         double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), forecastedDemands);
-        PriceBucketView newPriceBucket= new PriceBucketView();
-        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
-        newPriceBucket.setProductVersionId(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), SysDate.now()));
+        PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDateTime.now()));
+        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), LocalDateTime.now());
         newPriceBucket.setTaggedPriceVersion(taggedPriceVersion);
         //newPriceBucket.setSlope(0.0);//slope to be calculated WIP
         newPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
@@ -132,7 +130,7 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
 
     private PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
         PriceBucketView latestPriceBucketView = null;
-        LocalDate max = activePriceBuckets.get(0).getFromDate();
+        LocalDateTime max = activePriceBuckets.get(0).getFromDate();
         for (PriceBucketView priceBucketView : activePriceBuckets) {
             if (priceBucketView.getFromDate().compareTo(max) > 0) {
                 latestPriceBucketView = priceBucketView;

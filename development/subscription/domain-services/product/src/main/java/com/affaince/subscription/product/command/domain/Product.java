@@ -130,10 +130,14 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(OfferedPriceChangedEvent event) {
         this.productId = event.getProductId();
-        PriceBucket lastPriceBucket = this.getLatestPriceBucket();
-        PriceBucket newPriceBucket = createPriceBucketForPriceCategory(event.getProductId(), event.getPriceBucketId(), event.getTaggedPriceVersion(), event.getOfferedPricePerUnit(), event.getEntityStatus(), event.getCurrentPriceDate());
-        lastPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59, 59));
-        this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
+        PriceBucket latestPriceBucket = this.getLatestPriceBucket();
+        double newOfferedPrice = event.getOfferedPricePerUnit();
+        //Change price ONLY if difference between latest price and new price is more than 0.5 money
+        if (Math.abs(latestPriceBucket.getOfferedPricePerUnit() - newOfferedPrice) > 0.5) {
+            PriceBucket newPriceBucket = createPriceBucketForPriceCategory(event.getProductId(), event.getPriceBucketId(), event.getTaggedPriceVersion(), event.getOfferedPricePerUnit(), event.getEntityStatus(), event.getCurrentPriceDate());
+            latestPriceBucket.setToDate(event.getCurrentPriceDate());
+            this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
+        }
     }
 
 
@@ -184,6 +188,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(SubscriptionForecastUpdatedEvent event) {
         this.productId = event.getProductId();
+        this.getProductConfiguration().setNextForecastDate(event.getForecastEndDate().plusDays(1));
     }
 
     //Product status should be received from main application
@@ -227,8 +232,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return getProductConfiguration().getTargetChangeThresholdForPriceChange();
     }
 
-    public PriceBucket createNewPriceBucket(PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus) {
-        return getProductAccount().createNewPriceBucket(productId, taggedPriceVersion, offeredPriceOrPercent, entityStatus);
+    public PriceBucket createNewPriceBucket(PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
+        return getProductAccount().createNewPriceBucket(productId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
     }
 
     private PriceBucket createPriceBucketForPriceCategory(String productId, String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime currentPriceDate) {
@@ -272,11 +277,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return this.getProductAccount().getActivePriceBuckets();
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void on(ProductSubscriptionRegisteredEvent productSubscriptionRegisteredEvent) {
 
     }
 
+    @EventSourcingHandler
     public void on(ProductChurnRegisteredEvent productChurnRegisteredEvent) {
 
     }
@@ -286,4 +292,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new OfferedPriceChangedEvent(productId, priceBucket.getPriceBucketId(), priceBucket.getTaggedPriceVersion(), priceBucket.getOfferedPricePerUnit(), priceBucket.getEntityStatus(), priceBucket.getFromDate()));
 
     }
+
+
 }

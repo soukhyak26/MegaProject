@@ -12,7 +12,7 @@ import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,23 +77,23 @@ public class ForecastControllerTest {
         List<ProductActualMetricsView> productActualMetricsViewList;
         productActualMetricsViewList = new ArrayList<>();
 
-        ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view1.setNewSubscriptions(500);
         productActualMetricsViewList.add(view1);
 
-        ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view2.setNewSubscriptions(750);
         productActualMetricsViewList.add(view2);
 
-        ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view3.setNewSubscriptions(1000);
         productActualMetricsViewList.add(view3);
 
-        ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         view4.setNewSubscriptions(1250);
         productActualMetricsViewList.add(view4);
 
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1",new LocalDate(2016,1,1)),new LocalDate(9999,12,31));
+        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastMetricsView> forecasts=new ArrayList<>();
         forecasts.add(forecastView);

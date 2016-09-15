@@ -2,11 +2,11 @@ package com.affaince.subscription.product.services.pricing.calculator.instant;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -46,8 +46,8 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             }
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
-            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), SysDate.now());
-            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED);
+            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), LocalDateTime.now());
+            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, LocalDateTime.now());
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 
