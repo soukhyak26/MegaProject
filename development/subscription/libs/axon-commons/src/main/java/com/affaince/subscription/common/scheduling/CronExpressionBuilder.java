@@ -35,26 +35,98 @@ public class CronExpressionBuilder {
     private boolean OCT;
     private boolean NOV;
     private boolean DEC;
-    private int dayOfMonth;
+    private int[] daysOfMonth;
+    private int[] years;
 
     public static void main(String[] args) {
         CronExpressionBuilder pCron = new CronExpressionBuilder();
-        pCron.setTime("11:00 AM");
-        pCron.setMON(true);
-        pCron.setSUN(true);
-        // pCron.setRecurring(true);
+        //pCron.setTime("11:00 AM");
+        pCron.setTime("17:30");
+        //pCron.setMON(true);
+        //pCron.setSUN(true);
+        //pCron.setJAN(true);
+        //pCron.setMAR(true);
+        //pCron.setYears(new int[]{2016});
+        pCron.setRecurring(true);
         pCron.setStartDate("12-05-2011");
         System.out.println(pCron.buildCronExpression());
     }
 
+    public int[] getYears() {
+        return years;
+    }
+
+    public void setYears(int[] years) {
+        this.years = years;
+    }
 
     public String buildCronExpression() {
+        final String hour = buildHoursString();
+        final String minutes = buildMinutesString();
+        if (isRecurring()) {
+            final String daysOfXString = buildDayString();
+            //final String monthString = buildMonthString();
+            final String yearString = buildYearsString();
+            //Day of month and day of week are mutually exclusive
+            //In case both are provided then dayOfMonth will take precedence over dayOfWeek
+            StringBuilder cronExp = new StringBuilder();
+            cronExp.append("0");
+            if (!"".equals(minutes)) {
+                cronExp.append(" ");
+                cronExp.append(minutes);
+            }
+            if (!"".equals(hour)) {
+                cronExp.append(" ");
+                cronExp.append(hour);
+            }
+            if (!"".equals(daysOfXString)) {
+                cronExp.append(" ");
+                cronExp.append(daysOfXString);
+            }
+            if (!"".equals(yearString)) {
+                cronExp.append(" ");
+                cronExp.append(yearString);
+            }
+            //final String cronExp = "0 " + minutes + " " + hour + " " + daysOfXString + " " + yearString;
+            return cronExp.toString();
+        } else {
+            final String cronExp = buildStartDateString();
+            return cronExp;
+        }
+    }
+
+    private String buildStartDateString() {
+        String startDate = getStartDate();
+        String[] dateArray = startDate.split("\\-");
+        String day = dateArray[0];
+        String hour = buildHoursString();
+        String minutes = buildMinutesString();
+        String cronExp = "";
+        if (day.charAt(0) == '0') {
+            day = day.substring(1);
+        }
+        String month = dateArray[1];
+        if (month.charAt(0) == '0') {
+            month = month.substring(1);
+        }
+        String year = dateArray[2];
+        cronExp = "0 " + minutes + " " + hour + " " + day + " " + month
+                + " ? " + year;
+        return cronExp;
+    }
+
+    private String buildHoursString() {
         String time = getTime();
         String[] time1 = time.split("\\:");
-        String[] time2 = time1[1].split("\\ ");
-
+        String[] time2 = null;
+        if (time1[1].contains("\\ ")) {
+            time2 = time1[1].split("\\ ");
+        } else {
+            time2 = new String[1];
+            time2[0] = "";
+        }
         String hour = "";
-        if (time2[1].equalsIgnoreCase("PM")) {
+        if (time2.length > 1 && time2[1].equalsIgnoreCase("PM")) {
             Integer hourInt = Integer.parseInt(time1[0]) + 12;
             if (hourInt == 24) {
                 hourInt = 0;
@@ -63,50 +135,109 @@ public class CronExpressionBuilder {
         } else {
             hour = time1[0];
         }
-
-        String minutes = time2[0];
-        String cronExp = "";
-        if (isRecurring()) {
-            final String daysOfWeekString = processDayString().toString();
-            final String monthString = processMonthString().toString();
-
-            if (dayOfMonth > 0) {
-                cronExp = "0 " + minutes + " " + hour + " ? * " + daysOfWeekString;
-            } else {
-                cronExp = "0 " + minutes + " " + hour + " " + dayOfMonth + " * " + daysOfWeekString;
-            }
-
-        } else {
-            String startDate = getStartDate();
-            String[] dateArray = startDate.split("\\-");
-            String day = dateArray[0];
-            if (day.charAt(0) == '0') {
-                day = day.substring(1);
-            }
-
-            String month = dateArray[1];
-
-            if (month.charAt(0) == '0') {
-                month = month.substring(1);
-            }
-
-            String year = dateArray[2];
-            cronExp = "0 " + minutes + " " + hour + " " + day + " " + month
-                    + " ? " + year;
-
-        }
-        return cronExp;
+        return hour;
     }
 
-    private StringBuilder processMonthString() {
+    private String buildMinutesString() {
+        String time = getTime();
+        String[] time1 = null;
+        String[] time2 = null;
+        if (time.contains(":")) {
+            time1 = time.split("\\:");
+        }
+        if (null != time1 && time1.length > 1) {
+            time2 = time1[1].split("\\ ");
+            return time2[0];
+        }
+        return "";
+    }
+
+    private String buildDayString() {
         StringBuilder sb = new StringBuilder(800);
         boolean moreConditions = false;
+        final int[] daysOfMonth = getDaysOfMonth();
+        //if DayOfMonth is specified then it would take priority over day name;
+        //only single day permonth is allowed for this version.. in order to get mul
+        if (null != daysOfMonth && daysOfMonth.length > 0) {
+            for (int i = 0; i < daysOfMonth.length; i++) {
+                sb.append(daysOfMonth[i]);
+                if (i != daysOfMonth.length - 1) {
+                    sb.append(",");
+                }
+            }
+            sb.append(" ");
+            sb.append(buildMonthString());
+            sb.append(" ");
+            //DaysOfWeek are not required.
+            sb.append("?");
+            return sb.toString();
+        }
+        if (isSUN()) {
+            sb.append("SUN");
+            moreConditions = true;
+        }
+        if (isMON()) {
+            if (moreConditions) {
+                sb.append(",");
+            }
+            sb.append("MON");
+            moreConditions = true;
+        }
+        if (isTUE()) {
+            if (moreConditions) {
+                sb.append(",");
+            }
 
+            sb.append("TUE");
+            moreConditions = true;
+        }
+        if (isWED()) {
+            if (moreConditions) {
+                sb.append(",");
+            }
+
+            sb.append("WED");
+            moreConditions = true;
+        }
+        if (isTHU()) {
+            if (moreConditions) {
+                sb.append(",");
+            }
+            sb.append("THU");
+            moreConditions = true;
+        }
+        if (isFRI()) {
+            if (moreConditions) {
+                sb.append(",");
+            }
+            sb.append("FRI");
+            moreConditions = true;
+        }
+        if (isSAT()) {
+            if (moreConditions) {
+                sb.append(",");
+            }
+            sb.append("SAT");
+            moreConditions = true;
+        }
+
+        if (sb.toString().equals("")) {
+            sb.append("*");
+            sb.append(" ");
+            sb.append("*");
+            sb.append(" ");
+            sb.append("?");
+        }
+        return sb.toString();
+    }
+
+    private String buildMonthString() {
+        boolean moreConditions = false;
+        StringBuilder sb = new StringBuilder(800);
         if (isJAN()) {
             sb.append("JAN");
             moreConditions = true;
         }
-
         if (isFEB()) {
             if (moreConditions) {
                 sb.append(",");
@@ -114,7 +245,6 @@ public class CronExpressionBuilder {
             sb.append("FEB");
             moreConditions = true;
         }
-
         if (isMAR()) {
             if (moreConditions) {
                 sb.append(",");
@@ -123,7 +253,6 @@ public class CronExpressionBuilder {
             sb.append("MAR");
             moreConditions = true;
         }
-
         if (isAPR()) {
             if (moreConditions) {
                 sb.append(",");
@@ -132,7 +261,6 @@ public class CronExpressionBuilder {
             sb.append("APR");
             moreConditions = true;
         }
-
         if (isMAY()) {
             if (moreConditions) {
                 sb.append(",");
@@ -140,7 +268,6 @@ public class CronExpressionBuilder {
             sb.append("MAY");
             moreConditions = true;
         }
-
         if (isJUN()) {
             if (moreConditions) {
                 sb.append(",");
@@ -148,7 +275,6 @@ public class CronExpressionBuilder {
             sb.append("JUN");
             moreConditions = true;
         }
-
         if (isJUL()) {
             if (moreConditions) {
                 sb.append(",");
@@ -191,70 +317,26 @@ public class CronExpressionBuilder {
             sb.append("DEC");
             moreConditions = true;
         }
-
-        return sb;
+        if (sb.toString().equals("")) {
+            sb.append("*");
+        }
+        return sb.toString();
     }
 
-
-    private StringBuilder processDayString() {
+    private String buildYearsString() {
+        int[] years = getYears();
         StringBuilder sb = new StringBuilder(800);
-        boolean moreConditions = false;
-
-        if (isSUN()) {
-            sb.append("SUN");
-            moreConditions = true;
-        }
-
-        if (isMON()) {
-            if (moreConditions) {
-                sb.append(",");
+        if (null != years && years.length > 0) {
+            for (int i = 0; i < years.length; i++) {
+                sb.append(years[i]);
+                if (i != years.length - 1) {
+                    sb.append(",");
+                }
             }
-            sb.append("MON");
-            moreConditions = true;
+        } else {
+            sb.append("");
         }
-
-        if (isTUE()) {
-            if (moreConditions) {
-                sb.append(",");
-            }
-
-            sb.append("TUE");
-            moreConditions = true;
-        }
-
-        if (isWED()) {
-            if (moreConditions) {
-                sb.append(",");
-            }
-
-            sb.append("WED");
-            moreConditions = true;
-        }
-
-        if (isTHU()) {
-            if (moreConditions) {
-                sb.append(",");
-            }
-            sb.append("THU");
-            moreConditions = true;
-        }
-
-        if (isFRI()) {
-            if (moreConditions) {
-                sb.append(",");
-            }
-            sb.append("FRI");
-            moreConditions = true;
-        }
-
-        if (isSAT()) {
-            if (moreConditions) {
-                sb.append(",");
-            }
-            sb.append("SAT");
-            moreConditions = true;
-        }
-        return sb;
+        return sb.toString();
     }
 
     /**
@@ -452,12 +534,16 @@ public class CronExpressionBuilder {
         this.DEC = DEC;
     }
 
-    public int getDayOfMonth() {
-        return dayOfMonth;
+    public int[] getDaysOfMonth() {
+        return daysOfMonth;
     }
 
-    public void setDayOfMonth(int dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
+    public void setDaysOfMonth(int[] daysOfMonth) {
+        this.daysOfMonth = daysOfMonth;
+    }
+
+    public void setDayOfMonth(int[] daysOfMonth) {
+        this.daysOfMonth = daysOfMonth;
     }
 
     public int hashCode() {
