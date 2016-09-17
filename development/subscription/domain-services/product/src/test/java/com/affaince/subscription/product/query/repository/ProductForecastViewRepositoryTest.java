@@ -3,7 +3,6 @@ package com.affaince.subscription.product.query.repository;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
@@ -29,12 +28,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ProductForecastViewRepositoryTest {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
-
+    private LocalDateTime localDate;
     @Before
     public void init() throws FileNotFoundException {
         productForecastViewRepository.deleteAll();
 
-        LocalDateTime localDate = LocalDateTime.now();
+        //LocalDateTime localDate = LocalDateTime.now();
+        localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
@@ -59,22 +59,24 @@ public class ProductForecastViewRepositoryTest {
         productForecastViewRepository.save(productForecastView3);
 
         for (int k = 0; k <= 1000; k++) {
-            List<ProductForecastView> productActualMetricsViewList = new ArrayList<>();
+            List<ProductForecastView> productForecastViewList = new ArrayList<>();
 
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
+/*
             ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product" + k, new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
             forecastView.setTotalNumberOfExistingSubscriptions(1250);
-            localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
+*/
+            //localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
             for (int i = 0; i < readings.length; i++) {
-                localDate = localDate.plusDays(1);
-                ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, localDate),
+                LocalDateTime newDate = localDate.plusDays(i + 1);
+                ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
                         new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ORIGINAL);
-                productActualMetricsViewList.add(productForecastView);
+                productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }
-            productForecastViewRepository.save(productActualMetricsViewList);
+            productForecastViewRepository.save(productForecastViewList);
         }
     }
 
@@ -83,7 +85,7 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView =
                 productForecastViewRepository.
                         findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc("1");
-        ProductVersionId productVersionId = new ProductVersionId("1", LocalDateTime.now().plusDays(52));
+        ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
         assertThat (productForecastView.getProductVersionId(), is (productVersionId));
     }
 
@@ -92,7 +94,7 @@ public class ProductForecastViewRepositoryTest {
         List<ProductForecastView> productForecastViewList = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc("1", ProductForecastStatus.CORRECTED);
         assertThat(productForecastViewList.size(), is (2));
-        ProductVersionId productVersionId = new ProductVersionId("1", LocalDateTime.now().plusDays(52));
+        ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
         assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));
     }
 

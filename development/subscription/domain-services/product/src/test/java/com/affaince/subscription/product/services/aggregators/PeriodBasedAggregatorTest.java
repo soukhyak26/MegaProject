@@ -21,13 +21,15 @@ public class PeriodBasedAggregatorTest {
     private List <ProductActualsView> productActualsViews = new ArrayList<>(1000);
 
     private List <ProductActualsView> expectedAggregateViews = new ArrayList<>(33);
+    private LocalDateTime date;
 
     @Before
     public void init () {
+        date = LocalDateTime.now();
         for (int i=0;i<1000;i++) {
-            LocalDateTime date = LocalDateTime.now().minusDays(1000 - i);
+            LocalDateTime startEndDate = date.minusDays(1000 - i);
             ProductActualsView productActualsView = new ProductActualsView(
-                    new ProductVersionId("1", date), date
+                    new ProductVersionId("1", startEndDate), startEndDate
             );
             Random randomObj = new Random();
             productActualsView.setChurnedSubscriptions(randomObj.longs(10,30).findFirst().getAsLong());
@@ -36,9 +38,9 @@ public class PeriodBasedAggregatorTest {
         }
         int temp = 999;
         for (int i=0; i<33 ; i++) {
-            LocalDateTime date = LocalDateTime.now();
+            //LocalDateTime date = LocalDateTime.now();
             ProductActualsView productActualsView = new ProductActualsView(
-                    new ProductVersionId("1", LocalDateTime.now().minusDays(30 * (i + 1))), LocalDateTime.now().minusDays(30 * i));
+                    new ProductVersionId("1", date.minusDays(30 * (i + 1))), date.minusDays(30 * i));
             long newSubscription = 0;
             long churnSubscription = 0;
             for (int k=0;k<30;k++) {
