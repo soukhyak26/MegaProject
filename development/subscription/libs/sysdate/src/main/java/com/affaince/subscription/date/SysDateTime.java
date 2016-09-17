@@ -1,7 +1,7 @@
 package com.affaince.subscription.date;
 
 import com.mongodb.*;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -13,10 +13,10 @@ import java.util.ResourceBundle;
 /**
  * Created by rbsavaliya on 17-08-2016.
  */
-public final class SysDate {
-    private static Logger logger = LoggerFactory.getLogger(SysDate.class);
-    private LocalDate localDate;
-    private static SysDate sysDate;
+public final class SysDateTime {
+    private static Logger logger = LoggerFactory.getLogger(SysDateTime.class);
+    private LocalDateTime localDateTime;
+    private static SysDateTime sysDateTime;
     private static boolean productionMode;
     private static DBCollection dbCollection;
 
@@ -29,31 +29,31 @@ public final class SysDate {
             logger.info("Cannot connect to host: " + e.getMessage());
         }
         DB db = mongoClient.getDB(resourceBundle.getString("view.db.name"));
-        dbCollection = db.getCollection(resourceBundle.getString("sysdate.view.db.collection"));
+        dbCollection = db.getCollection(resourceBundle.getString("sysdatetime.view.db.collection"));
         productionMode = Boolean.parseBoolean(resourceBundle.getString("subscription.productionMode"));
     }
 
-    private SysDate() {
+    private SysDateTime() {
 
     }
 
-    public static void setCurrentDate(LocalDate currentDate) {
+    public static void setCurrentDateTime(LocalDateTime currentDateTime) {
         dbCollection.drop();
         DateTimeFormatter formatter =
-                DateTimeFormat.forPattern("dd-MM-yyyy");
-        String date = formatter.print(currentDate);
+                DateTimeFormat.forPattern("dd-MM-yyyy-hh:mm:ss");
+        String date = formatter.print(currentDateTime);
         BasicDBObject basicDBObject = new BasicDBObject();
-        basicDBObject.put("currentDate", date);
+        basicDBObject.put("currentDateTime", date);
         dbCollection.insert(basicDBObject);
     }
 
-    public static LocalDate now() {
+    public static LocalDateTime now() {
         if (productionMode) {
-            return LocalDate.now();
+            return LocalDateTime.now();
         }
         DateTimeFormatter formatter =
-                DateTimeFormat.forPattern("dd-MM-yyyy");
+                DateTimeFormat.forPattern("dd-MM-yyyy-hh:mm:ss");
         DBObject dbObject = dbCollection.find().next();
-        return LocalDate.parse(dbObject.get("currentDate").toString(), formatter);
+        return LocalDateTime.parse(dbObject.get("currentDateTime").toString(), formatter);
     }
 }
