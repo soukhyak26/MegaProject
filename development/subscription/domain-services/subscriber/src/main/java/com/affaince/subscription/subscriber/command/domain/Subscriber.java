@@ -20,6 +20,7 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private double totalRewardsPoint;
     private double availableRewardsPoint;
     private double totalSubscriptionAmount;
-    private double totalLoyaltyPeriod;
+    private int totalLoyaltyPeriod;
+    private LocalDate lastDeliveryDate;
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
@@ -106,9 +108,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         this.couponCodes.add(event.getCouponCode());
     }
 
+    // TODO: Need to refactor DeliveryStatusAndDispatchDateUpdatedEvent. It might only require id, date and status
     @EventSourcingHandler
     public void on(DeliveryStatusAndDispatchDateUpdatedEvent event) {
         this.subscriberId = event.getSubscriptionId();
+
         Delivery delivery = this.deliveries.get(event.getBasketId());
         delivery.setDispatchDate(new LocalDate(event.getDispatchDate()));
         delivery.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
@@ -119,8 +123,16 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
         }
         if (DeliveryStatus.DELIVERED.getDeliveryStatusCode() == event.getBasketDeliveryStatus()) {
-            availableRewardsPoint = availableRewardsPoint + delivery.getRewardPoints();
+            setSubscriberLevelParameters(delivery);
         }
+    }
+
+    private void setSubscriberLevelParameters(Delivery delivery) {
+        this.totalSubscriptionAmount = this.totalSubscriptionAmount + delivery.getTotalDeliveryPrice();
+        this.availableRewardsPoint = this.availableRewardsPoint + delivery.getRewardPoints();
+        Period period = new Period(this.lastDeliveryDate, delivery.getDeliveryDate());
+        this.totalLoyaltyPeriod = this.totalLoyaltyPeriod + period.getDays();
+        this.lastDeliveryDate = delivery.getDeliveryDate();
     }
 
     @EventSourcingHandler
