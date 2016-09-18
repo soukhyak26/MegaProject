@@ -30,7 +30,7 @@ public class IncrementalPaymentStrategyTest {
     }
 
     @Test
-    public void distributeRewardPointsForEvenNOOfDeliveries() {
+    public void testDistributeRewardPointsForEvenNOOfDeliveries() {
         PaymentStrategy paymentStrategy = new IncrementalPaymentStrategy();
         Map<String, Double> deliveryWiseRewardsDistributions =
                 paymentStrategy.distributeRewardPoints(deliveryValuesEven, 900);
@@ -42,7 +42,7 @@ public class IncrementalPaymentStrategyTest {
     }
 
     @Test
-    public void distributeRewardPointsForOddNOOfDeliveries() {
+    public void testDistributeRewardPointsForOddNOOfDeliveries() {
         PaymentStrategy paymentStrategy = new IncrementalPaymentStrategy();
         Map<String, Double> deliveryWiseRewardsDistributions =
                 paymentStrategy.distributeRewardPoints(deliveryValuesOdd, 900);

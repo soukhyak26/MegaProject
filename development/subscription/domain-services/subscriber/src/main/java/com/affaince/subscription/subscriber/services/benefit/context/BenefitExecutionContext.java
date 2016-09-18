@@ -6,6 +6,8 @@ import com.affaince.subscription.subscriber.services.benefit.state.BenefitCalcul
 import com.affaince.subscription.subscriber.services.benefit.state.EligibilityState;
 import com.affaince.subscription.subscriber.services.benefit.state.PointConversionState;
 
+import java.util.Map;
+
 /**
  * Created by rbsavaliya on 29-05-2016.
  */
@@ -16,6 +18,7 @@ public class BenefitExecutionContext {
     private Rule applicableBenefit;
     private double rewardPoints;
     private String benefitPayMethod;
+    private Map<String, Double> rewardPointsDistribution;
 
     public BenefitResult calculateBenefit (BenefitCalculationRequest request) {
         BenefitCalculationState benefitCalculationState = new EligibilityState(
@@ -24,7 +27,7 @@ public class BenefitExecutionContext {
                 )
         );
         benefitCalculationState.calculate(this);
-        return new BenefitResult(rewardPoints, benefitPayMethod);
+        return new BenefitResult(rewardPoints, benefitPayMethod, rewardPointsDistribution);
     }
 
     public void setApplicableBenefit(Rule applicableBenefit) {
@@ -49,5 +52,13 @@ public class BenefitExecutionContext {
 
     public double getRewardPoints() {
         return rewardPoints;
+    }
+
+    public Map<String, Double> getRewardPointsDistribution() {
+        return rewardPointsDistribution;
+    }
+
+    public void setRewardPointsDistribution(Map<String, Double> rewardPointsDistribution) {
+        this.rewardPointsDistribution = rewardPointsDistribution;
     }
 }

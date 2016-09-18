@@ -9,7 +9,7 @@ import java.util.Map;
 public class IncrementalPaymentStrategy implements PaymentStrategy {
     @Override
     public Map<String, Double> distributeRewardPoints(Map<String, Double> deliveryValues, double rewardPoints) {
-        Map<String, Double> deliveryWiseRewardsDistributions = new HashMap<>(deliveryValues.size());
+        final Map<String, Double> deliveryWiseRewardsDistributions = new HashMap<>(deliveryValues.size());
         double multiplier = findMultiplier(deliveryValues.size(), rewardPoints);
         int i = 0;
         boolean isMiddlePointReached = false;
