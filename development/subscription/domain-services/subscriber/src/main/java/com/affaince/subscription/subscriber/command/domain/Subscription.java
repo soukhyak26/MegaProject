@@ -45,6 +45,10 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
+    public double getTotalSubscriptionAmount() {
+        return totalSubscriptionAmount;
+    }
+
     @EventSourcingHandler
     public void on(SubscriptionCreatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();

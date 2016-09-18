@@ -19,6 +19,7 @@ public class Delivery {
     private double deliveryCharges;
     private double totalWeight;
     private double totalDeliveryPrice;
+    private double rewardPoints;
 
     public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
         this.deliveryId = deliveryId;
@@ -96,6 +97,14 @@ public class Delivery {
 
     public void setTotalDeliveryPrice(double totalDeliveryPrice) {
         this.totalDeliveryPrice = totalDeliveryPrice;
+    }
+
+    public double getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public void setRewardPoints(double rewardPoints) {
+        this.rewardPoints = rewardPoints;
     }
 
     public void calculateTotalWeightInGrams() {

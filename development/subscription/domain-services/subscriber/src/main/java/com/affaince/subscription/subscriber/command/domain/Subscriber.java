@@ -12,6 +12,9 @@ import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.event.*;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitCalculationRequest;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitResult;
 import com.affaince.subscription.subscriber.services.encoder.Base64Encoder;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by rbsavaliya on 02-08-2015.
@@ -43,6 +47,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private String password;
     private double totalRewardsPoint;
     private double availableRewardsPoint;
+    private double totalSubscriptionAmount;
+    private double totalLoyaltyPeriod;
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
@@ -111,6 +117,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId());
             deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
             deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
+        }
+        if (DeliveryStatus.DELIVERED.getDeliveryStatusCode() == event.getBasketDeliveryStatus()) {
+            availableRewardsPoint = availableRewardsPoint + delivery.getRewardPoints();
         }
     }
 
@@ -212,13 +221,29 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void confirmSubscription(Subscription subscription, DeliveryChargesRule deliveryChargesRule) {
         final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
+        BenefitResult benefitResult = calculateBenefits(subscription, deliveries);
+        Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
+            delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
             apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), subscription.getSubscriberId(), subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                     delivery.getTotalWeight()));
         }
+    }
+
+    private BenefitResult calculateBenefits(Subscription subscription, Map<Integer, Delivery> deliveries) {
+        final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
+        benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount());
+        benefitCalculationRequest.setDeliveryAmounts(deliveries.values().stream().collect(Collectors.toMap(
+                Delivery::getDeliveryId, Delivery::getTotalDeliveryPrice
+        )));
+        benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
+        benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
+        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
+        BenefitResult benefitResult = benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
+        return benefitResult;
     }
 }
 
