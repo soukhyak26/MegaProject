@@ -50,19 +50,6 @@ public class Axon extends ActiveMQConfiguration {
     @Autowired
     HistoryMinSizeConstraints historyMinSizeConstraints;
 
-    /*@Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public Product product() {
-        Product product = new Product();
-        return product;
-    }
-
-    @Bean
-    public SpringPrototypeAggregateFactory<Product> aggregateFactory() {
-        SpringPrototypeAggregateFactory<Product> aggregateFactory = new SpringPrototypeAggregateFactory<Product>();
-        aggregateFactory.setPrototypeBeanName("product");
-        return aggregateFactory;
-    }*/
     @Autowired
     HistoryMaxSizeConstraints historyMaxSizeConstraints;
 

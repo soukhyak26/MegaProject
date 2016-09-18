@@ -26,7 +26,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> previousValues = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
-                        (productId, ProductForecastStatus.CORRECTED);
+                        (productId, ProductForecastStatus.ACTIVE);
         ProductForecastView firstForecastView = previousValues.get(previousValues.size() - 1);
         LocalDateTime dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
         double[] x = new double[previousValues.size()];     //day on which interpolated value has been taken

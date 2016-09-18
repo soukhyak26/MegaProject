@@ -14,7 +14,6 @@ import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.ThreadPoolBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,6 @@ import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.concurrent.ExecutorService;
 
 import static org.apache.camel.builder.PredicateBuilder.or;
 
@@ -106,11 +103,12 @@ public class Axon extends ActiveMQConfiguration {
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() throws Exception {
-                ExecutorService executorService = new ThreadPoolBuilder(camelContext).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
+                //ExecutorService executorService = new ThreadPoolBuilder(camelContext).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
                 //Initiate forecasting each day at 8.00 pm.
                 //Retrieve all product ids and fed each of them to a thread in thread pool
                 //Invoke forecasting trigger which will check the status of next calendar date..
                 // if it is today then only forecast will be initiated for that product
+/*
                 from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
@@ -120,8 +118,25 @@ public class Axon extends ActiveMQConfiguration {
                         .when(simple("${body}"))
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
+*/
+                //job for calculating forecast  and pseudoActuals for eligible products.
+                from("quartz://timer?cron=0+0+20+*+*+?")
+                        .to("bean:productsRetriever")
+                        .split(body())
+                        .to("jms:topic:forecastTopic?jmsMessageType=Text&concurrentConsumers=10&maxConcurrentConsumers=20");
+
+                from("jms:topic:forecastTopic")
+                        .to("bean:forecastingTrigger")
+                        .choice()
+                        .when(simple("${body}"))
+                        .to("bean:forecastingClient?method=initiateForecast")
+                        .endChoice();
+
+                from("jms:topic:forecastTopic")
+                        .to("bean:forecastingClient?method=initiatePseudoActual");
 
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
+/*
                 from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
                         .split(body())
                         .threads()
@@ -133,6 +148,15 @@ public class Axon extends ActiveMQConfiguration {
                         .when(demandTrendChecker)
                         .to("bean:pricingClient")
                         .endChoice();
+*/
+                //job for calculating pseudoActuals for each product.
+
+                from("quartz://timer?cron=0+0+24+*+*+?").to("bean:forecastInterpolatedSubscriptionCountFinder").to("bean:productPricingTrigger")
+                        .choice()
+                        .when(demandTrendChecker)
+                        .to("bean:pricingClient")
+                        .endChoice();
+                ;
             }
         };
     }

@@ -103,7 +103,7 @@ public class ForecastController {
             if (null != existingForecastViews && existingForecastViews.size() > 0) {
                 throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
             }
-            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions(), ProductForecastStatus.ORIGINAL);
+            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions(), ProductForecastStatus.ACTIVE);
             productForecastViewRepository.save(productForecastView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
@@ -124,9 +124,9 @@ public class ForecastController {
         if (null != existingForecastViews && existingForecastViews.size() == 0) {
             for (ProductForecastView eachView : existingForecastViews) {
                 //this.productForecastViewRepository.delete(eachView);
-                eachView.setProductForecastStatus(ProductForecastStatus.OVERRIDDEN);
+                eachView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
                 this.productForecastViewRepository.save(eachView);
-                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions(), ProductForecastStatus.CORRECTED);
+                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions(), ProductForecastStatus.ACTIVE);
             }
         } else {
             throw ProductForecastModificationException.build(productId, request.getStartDate(), request.getEndDate());
@@ -153,7 +153,7 @@ public class ForecastController {
                 throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
             }
             ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions());
-            productPseudoActualsView.setProductForecastStatus(ProductForecastStatus.ORIGINAL);
+            productPseudoActualsView.setProductForecastStatus(ProductForecastStatus.ACTIVE);
             productPseudoActualsViewRepository.save(productPseudoActualsView);
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
@@ -175,10 +175,10 @@ public class ForecastController {
         if (null != existingPseudoActualsViews && existingPseudoActualsViews.size() == 0) {
             for (ProductPseudoActualsView eachView : existingPseudoActualsViews) {
                 //this.productForecastViewRepository.delete(eachView);
-                eachView.setProductForecastStatus(ProductForecastStatus.OVERRIDDEN);
+                eachView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
                 this.productPseudoActualsViewRepository.save(eachView);
                 modifiedView = new ProductPseudoActualsView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions());
-                modifiedView.setProductForecastStatus(ProductForecastStatus.CORRECTED);
+                modifiedView.setProductForecastStatus(ProductForecastStatus.ACTIVE);
             }
         } else {
             throw ProductForecastModificationException.build(productId, request.getStartDate(), request.getEndDate());

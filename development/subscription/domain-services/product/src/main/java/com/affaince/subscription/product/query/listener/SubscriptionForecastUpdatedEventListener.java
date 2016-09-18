@@ -32,7 +32,7 @@ public class SubscriptionForecastUpdatedEventListener {
         //expire latest Forecast
         if (event.getForecastStartDate().isBefore(latestProductForecastView.getEndDate())) {
             latestProductForecastView.setEndDate(event.getForecastStartDate().minusDays(1));
-            latestProductForecastView.setProductForecastStatus(ProductForecastStatus.OVERRIDDEN);
+            latestProductForecastView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
             productForecastViewRepository.save(latestProductForecastView);
         }
         //create and save new latest forecast
@@ -42,7 +42,7 @@ public class SubscriptionForecastUpdatedEventListener {
                 event.getNewSubscriptionForecast(),
                 event.getChurnedSubscriptionForecast(),
                 event.getForecastedTotalSubscriptionCount(),
-                ProductForecastStatus.CORRECTED);
+                ProductForecastStatus.ACTIVE);
 
         productForecastViewRepository.save(productForecastView);
     }

@@ -38,7 +38,7 @@ public class PriceBucket {
         this.taggedPriceVersion = priceBucket.getTaggedPriceVersion();
         this.offeredPricePerUnit = priceBucket.getOfferedPricePerUnit();
         this.fromDate = LocalDateTime.now();
-        //TO BE CORRECTED IT SHOULD BE END OF CURRENT YEAR
+        //TO BE ACTIVE IT SHOULD BE END OF CURRENT YEAR
         this.toDate = LocalDateTime.now();
         this.numberOfNewCustomersAssociatedWithAPrice = 0;
         this.numberOfChurnedSubscriptionsAssociatedWithAPrice = 0;
