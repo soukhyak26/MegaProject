@@ -19,6 +19,16 @@ public class ApplicabilityState implements BenefitCalculationState {
         final Rule rule = context.getApplicableBenefit();
         context.setBenefitPayMethod(rule.getBenefitPaymentMethod());
 
+        if (rule.getBenefitPaymentMethod().equals("incremental")) {
+            PaymentStrategy paymentStrategy = new IncrementalPaymentStrategy();
+            paymentStrategy.distributeRewardPoints(context.getRequest().getDeliveryAmounts(),
+                    context.getRewardPoints());
+        } else if (rule.getBenefitPaymentMethod().equals("on_delivery_size")) {
+            PaymentStrategy paymentStrategy = new OnDeliverySizePaymentStrategy();
+            paymentStrategy.distributeRewardPoints(context.getRequest().getDeliveryAmounts(),
+                    context.getRewardPoints());
+        }
+
         if (nextState != null) {
             nextState.calculate(context);
         }

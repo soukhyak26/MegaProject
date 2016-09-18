@@ -46,4 +46,8 @@ public class BenefitExecutionContext {
     public void setBenefitPayMethod(String benefitPayMethod) {
         this.benefitPayMethod = benefitPayMethod;
     }
+
+    public double getRewardPoints() {
+        return rewardPoints;
+    }
 }

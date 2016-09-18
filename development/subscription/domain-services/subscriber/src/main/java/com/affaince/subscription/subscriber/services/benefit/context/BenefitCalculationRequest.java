@@ -1,5 +1,7 @@
 package com.affaince.subscription.subscriber.services.benefit.context;
 
+import java.util.Map;
+
 /**
  * Created by rbsavaliya on 29-05-2016.
  */
@@ -10,15 +12,7 @@ public class BenefitCalculationRequest {
     private double totalLoyaltyPeriod;
     private double currentSubscriptionPeriod;
     private double advancePaymentPercent;
-
-    public BenefitCalculationRequest(double totalSubscriptionAmount, double totalProfit, double currentSubscriptionAmount, double totalLoyaltyPeriod, double currentSubscriptionPeriod, double advancePaymentPercent) {
-        this.totalSubscriptionAmount = totalSubscriptionAmount;
-        this.totalProfit = totalProfit;
-        this.currentSubscriptionAmount = currentSubscriptionAmount;
-        this.totalLoyaltyPeriod = totalLoyaltyPeriod;
-        this.currentSubscriptionPeriod = currentSubscriptionPeriod;
-        this.advancePaymentPercent = advancePaymentPercent;
-    }
+    private Map<String, Double> deliveryAmounts;
 
     public double getTotalSubscriptionAmount() {
         return totalSubscriptionAmount;
@@ -66,5 +60,13 @@ public class BenefitCalculationRequest {
 
     public void setAdvancePaymentPercent(double advancePaymentPercent) {
         this.advancePaymentPercent = advancePaymentPercent;
+    }
+
+    public Map<String, Double> getDeliveryAmounts() {
+        return deliveryAmounts;
+    }
+
+    public void setDeliveryAmounts(Map<String, Double> deliveryAmounts) {
+        this.deliveryAmounts = deliveryAmounts;
     }
 }
