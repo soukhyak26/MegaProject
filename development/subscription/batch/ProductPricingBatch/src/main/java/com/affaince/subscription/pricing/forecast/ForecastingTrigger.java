@@ -14,12 +14,12 @@ public class ForecastingTrigger {
     public ForecastingTrigger() {
     }
 
-    public boolean doTriggerForecast(String productId) {
+    public String doTriggerForecast(String productId) {
         LocalDate nextForecastDate = productConfigurationViewRepository.findOne(productId).getNextForecastDate();
         LocalDate currentDate = LocalDate.now();
         if (currentDate.equals(nextForecastDate) || currentDate.isAfter(nextForecastDate)) {
-            return true;
+            return productId;
         }
-        return false;
+        return null;
     }
 }

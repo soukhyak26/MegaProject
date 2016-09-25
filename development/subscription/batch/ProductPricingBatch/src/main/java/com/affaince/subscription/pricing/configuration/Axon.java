@@ -104,60 +104,32 @@ public class Axon extends ActiveMQConfiguration {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
-                //ExecutorService executorService = new ThreadPoolBuilder(camelContext).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
-                //Initiate forecasting each day at 8.00 pm.
-                //Retrieve all product ids and fed each of them to a thread in thread pool
-                //Invoke forecasting trigger which will check the status of next calendar date..
-                // if it is today then only forecast will be initiated for that product
-/*
-                from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
-                        .split(body())
-                        .threads()
-                        .executorService(executorService)
-                        .to("bean:forecastingTrigger")
-                        .choice()
-                        .when(simple("${body}"))
-                        .to("bean:forecastingClient?method=initiateForecast")
-                        .endChoice();
-*/
                 //job for calculating forecast  and pseudoActuals for eligible products.
                 from("{{subscription.forecast.timer.expression}}")
                         .routeId("productsRetriever")
                         .to("bean:productsRetriever")
                         .split(body())
-                        .to("{{subscription.forecast.poston}}");
-
+                        .to("{{subscription.forecast.poston}}")
+                        .multicast().to("direct:forecaster", "direct:stepForecaster");
 /*
-                from("{{subscription.forecast.from}}")
+                from("{{subscription.forecast.poston}}")
                         .routeId("forecaster")
+*/
+                from("direct:forecaster")
                         .to("bean:forecastingTrigger")
-                        .choice()
-                        .when(simple("${body}"))
+                        .choice().when()
+                        .simple("${body} != null")
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
 
-                from("{{subscription.forecast.from}}")
-                        .routeId("stepForecaster")
+                from("direct:stepForecaster")
                         .to("bean:forecastingClient?method=initiatePseudoActual");
 
-                Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
-*/
-/*
-                from("quartz://timer?cron=0+0+20+*+*+?").to("bean:productsRetriever")
-                        .split(body())
-                        .threads()
-                        .executorService(executorService)
-                        .multicast()
-                        .to("bean:forecastingClient?method=initiatePseudoActual", "bean:forecastInterpolatedSubscriptionCountFinder")
-                        .to("bean:productPricingTrigger")
-                        .choice()
-                        .when(demandTrendChecker)
-                        .to("bean:pricingClient")
-                        .endChoice();
-*/
-                //job for calculating pseudoActuals for each product.
 
 /*
+                Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
+                //job for calculating pseudoActuals for each product.
+
                 from("{{subscription.pricing.timer.expression}}")
                         .routeId("PriceDeterminator")
                         .to("bean:forecastInterpolatedSubscriptionCountFinder")

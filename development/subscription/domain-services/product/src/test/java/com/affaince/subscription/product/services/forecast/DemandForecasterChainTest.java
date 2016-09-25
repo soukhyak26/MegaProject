@@ -32,7 +32,6 @@ import java.util.stream.Stream;
 /**
  * Created by mandar on 24-06-2016.
  */
-//@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 public class DemandForecasterChainTest {

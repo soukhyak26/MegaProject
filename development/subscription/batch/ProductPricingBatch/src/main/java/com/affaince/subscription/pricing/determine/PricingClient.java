@@ -13,11 +13,11 @@ import java.util.Map;
  */
 public class PricingClient {
     @Value("${subscription.forecast.findproducts.url}")
-    private static String findProductsUrl;
+    private String findProductsUrl;
     @Value("${subscription.pricing.url}")
-    private static String pricingUrl;
+    private String pricingUrl;
 
-    public static void calculatePrice(String productId, ProductDemandTrend trend) {
+    public void calculatePrice(String productId, ProductDemandTrend trend) {
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
         Map<String, String> params = new HashMap<String, String>();

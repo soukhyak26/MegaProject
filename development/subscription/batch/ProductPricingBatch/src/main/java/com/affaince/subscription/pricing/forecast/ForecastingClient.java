@@ -11,11 +11,11 @@ import java.util.Map;
  */
 public class ForecastingClient {
     @Value("${subscription.forecast.findproducts.url}")
-    private static String findProductsUrl;
+    private String findProductsUrl;
     @Value("${subscription.forecast.predictforecast.url}")
-    private static String forecastUrl;
+    private String forecastUrl;
     @Value("${subscription.forecast.predictpseudoactual.url}")
-    private static String pseudoActualUrl;
+    private String pseudoActualUrl;
 
 
     public void initiateForecast(String productId) {

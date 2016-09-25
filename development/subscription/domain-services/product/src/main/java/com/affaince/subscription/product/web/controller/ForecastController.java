@@ -72,14 +72,14 @@ public class ForecastController {
         return new ResponseEntity<List<String>>(target, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predictforecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/predictforecast/{productid}")
     public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId) throws Exception {
         UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productid}")
     public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable String productId) throws Exception {
         UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
@@ -87,7 +87,7 @@ public class ForecastController {
     }
 
     //API to add forecast manually
-    @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addForecast(@RequestBody @Valid AddForecastParametersRequest request,
                                               @PathVariable String productId) throws Exception {
@@ -110,7 +110,7 @@ public class ForecastController {
     }
 
     //API to override existing forecast manually
-    @RequestMapping(method = RequestMethod.PUT, value = "updateforecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "updateforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateForecast(@RequestBody @Valid UpdateForecastRequest request,
                                                  @PathVariable String productId) throws Exception {
@@ -137,7 +137,7 @@ public class ForecastController {
     }
 
     //API to add immediate forecasts manually
-    @RequestMapping(method = RequestMethod.PUT, value = "addstepforecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "addstepforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addPseudoActuals(@RequestBody @Valid AddForecastParametersRequest request,
                                                    @PathVariable String productId) throws Exception {
@@ -161,7 +161,7 @@ public class ForecastController {
 
 
     //API to override existing  immediate forecast manually
-    @RequestMapping(method = RequestMethod.PUT, value = "updatestepforecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "updatestepforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> updatePseudoActuals(@RequestBody @Valid UpdateForecastRequest request,
                                                       @PathVariable String productId) throws Exception {
@@ -188,7 +188,7 @@ public class ForecastController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{productId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{productid}")
     public String findProductForecastByProductId(@PathVariable String productId) throws JsonProcessingException {
         final List<ProductForecastView> productForecastViews = new ArrayList<>();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
@@ -199,7 +199,7 @@ public class ForecastController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "setnextcalendar/forecast/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "setnextcalendar/forecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable String productId) {
         ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
