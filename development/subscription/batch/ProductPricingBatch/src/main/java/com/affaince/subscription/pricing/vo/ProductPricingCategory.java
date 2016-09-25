@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.command.domain;
+package com.affaince.subscription.pricing.vo;
 
 /**
  * Created by rbsavaliya on 05-12-2015.

@@ -2,9 +2,9 @@ package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.product.command.domain.ProductPricingCategory;
 import com.affaince.subscription.product.vo.DemandWiseProfitSharingRule;
 import com.affaince.subscription.product.vo.PricingStrategyType;
+import com.affaince.subscription.product.vo.ProductPricingCategory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

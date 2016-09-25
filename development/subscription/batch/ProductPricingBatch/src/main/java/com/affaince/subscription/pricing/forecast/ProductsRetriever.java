@@ -15,6 +15,7 @@ public class ProductsRetriever {
     private ProductViewRepository productViewRepository;
 
     public List<String> retrieveProductIds() {
+        System.out.println("in ProductsRetriever###############");
         Iterable<ProductView> allProducts = productViewRepository.findAll();
         List<String> allProductIds = new ArrayList<>();
         allProducts.forEach(productView -> allProductIds.add(productView.getProductId()));
