@@ -6,18 +6,21 @@ import org.joda.time.LocalDateTime;
  * Created by mandar on 27-05-2016.
  */
 public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduct> {
+    private String taggedPriceVersionId;
     private double purchasePricePerUnit;
     private double MRP;
     private LocalDateTime taggedStartDate;
     private LocalDateTime taggedEndDate;
 
-    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate) {
+    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate) {
+        this.taggedPriceVersionId = taggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;
     }
 
-    public PriceTaggedWithProduct(double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate, LocalDateTime taggedEndDate) {
+    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate, LocalDateTime taggedEndDate) {
+        this.taggedPriceVersionId = taggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;

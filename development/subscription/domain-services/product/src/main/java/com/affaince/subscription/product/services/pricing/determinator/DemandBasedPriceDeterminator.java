@@ -9,6 +9,8 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -49,7 +51,11 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
         List<Double> forecastedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
         double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), forecastedDemands);
         PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), LocalDateTime.now()));
-        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), LocalDateTime.now());
+        DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+        LocalDateTime currentDate = LocalDateTime.now();
+        final String taggedPriceVersionId = productId + currentDate.toString(format);
+
+        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
         newPriceBucket.setTaggedPriceVersion(taggedPriceVersion);
         //newPriceBucket.setSlope(0.0);//slope to be calculated WIP
         newPriceBucket.setEntityStatus(EntityStatus.ACTIVE);

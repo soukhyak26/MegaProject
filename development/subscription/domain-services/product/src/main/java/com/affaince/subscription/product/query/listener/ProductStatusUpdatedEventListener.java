@@ -1,12 +1,14 @@
 package com.affaince.subscription.product.query.listener;
 
+import com.affaince.subscription.product.command.event.ProductStatusUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.command.event.ProductStatusUpdatedEvent;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
@@ -34,7 +36,9 @@ public class ProductStatusUpdatedEventListener {
         ProductActualMetricsView latestStatisticsView = productActualMetricsViewRepository.findByProductVersionId_ProductId(event.getProductId(),sort).get(0);
 
         if (latestStatisticsView.getTaggedPriceVersions().first().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceTaggedWithProduct newTaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(),event.getCurrentMRP(),event.getCurrentPriceDate());
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            final String taggedPriceVersionId = event.getProductId() + event.getCurrentPriceDate().toString(format);
+            PriceTaggedWithProduct newTaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             latestStatisticsView.getTaggedPriceVersions().add(newTaggedPrice);
             productActualMetricsViewRepository.save(latestStatisticsView);
         }

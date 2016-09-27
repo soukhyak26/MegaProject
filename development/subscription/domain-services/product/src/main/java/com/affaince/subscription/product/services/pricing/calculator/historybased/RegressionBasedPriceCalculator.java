@@ -11,6 +11,8 @@ import com.affaince.subscription.product.services.pricing.calculator.historybase
 import com.affaince.subscription.product.services.pricing.exception.PricingEligibilityViolationException;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -40,8 +42,12 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             //NEED TO VERIFY IF BELOW STEP IS CORRECT???
             double expectedDemand = demandForecasterChain.forecast(productId, historyOfSubscriptions).get(0);
             double offeredPrice = calculateOfferedPrice(functionCoefficients.getIntercept(), functionCoefficients.getSlope(), expectedDemand);
-            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), LocalDateTime.now());
-            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, LocalDateTime.now());
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            LocalDateTime currentDate = LocalDateTime.now();
+            final String taggedPriceVersionId = productId + currentDate.toString(format);
+
+            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(functionCoefficients.getSlope());
             return newPriceBucket;
         }

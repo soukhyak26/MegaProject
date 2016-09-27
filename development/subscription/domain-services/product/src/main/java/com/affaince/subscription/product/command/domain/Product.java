@@ -20,6 +20,8 @@ import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Map;
@@ -150,7 +152,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productId = event.getProductId();
 
         if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
@@ -165,7 +169,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productId = event.getProductId();
         PriceBucket latestPriceBucket = getProductAccount().getLatestPriceBucket();
         if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
         }
         this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
