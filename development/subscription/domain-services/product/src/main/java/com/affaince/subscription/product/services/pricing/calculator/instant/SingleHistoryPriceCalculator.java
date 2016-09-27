@@ -30,7 +30,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
         if (null != minusOnePriceBucket && null == minusTwoPriceBucket && latestPriceBucket.getEntityStatus() == EntityStatus.ACTIVE) {
 
-            double y2 = minusOnePriceBucket.getOfferedPricePerUnit();
+            double y2 = minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit();
             double y1 = latestPriceBucket.getTaggedPriceVersion().getMRP(); //mark  price
             double x2 = latestPriceBucket.getNumberOfNewSubscriptions();
             double x1 = 0;//mark quantity
@@ -53,7 +53,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
-            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 

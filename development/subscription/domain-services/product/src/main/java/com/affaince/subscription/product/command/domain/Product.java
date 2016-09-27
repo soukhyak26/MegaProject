@@ -48,8 +48,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo) {
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo));
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory));
     }
 
     public String getProductId() {
@@ -125,7 +125,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.substitutes = event.getSubstitutes();
         this.complements = event.getComplements();
         this.sensitiveTo = event.getSensitiveTo();
-        this.productAccount = new ProductAccount();
+        this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
     }
 
     //When the new actual offer price is recommended
@@ -136,8 +136,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         PriceBucket latestPriceBucket = this.getLatestPriceBucket();
         double newOfferedPrice = event.getOfferedPricePerUnit();
         //Change price ONLY if difference between latest price and new price is more than 0.5 money
-        if (Math.abs(latestPriceBucket.getOfferedPricePerUnit() - newOfferedPrice) > 0.5) {
-            PriceBucket newPriceBucket = createPriceBucketForPriceCategory(event.getProductId(), event.getPriceBucketId(), event.getTaggedPriceVersion(), event.getOfferedPricePerUnit(), event.getEntityStatus(), event.getCurrentPriceDate());
+        if (Math.abs(latestPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() - newOfferedPrice) > 0.5) {
+            PriceBucket newPriceBucket = createNewPriceBucket(event.getProductId(), event.getTaggedPriceVersion(), event.getOfferedPricePerUnit(), event.getEntityStatus(), event.getCurrentPriceDate());
             latestPriceBucket.setToDate(event.getCurrentPriceDate());
             this.getProductAccount().addNewPriceBucket(event.getCurrentPriceDate(), newPriceBucket);
         }
@@ -232,26 +232,17 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void setLatestOfferedPrice(double offeredPrice) {
-        getProductAccount().getLatestPriceBucket().setOfferedPricePerUnit(offeredPrice);
+        getProductAccount().getLatestPriceBucket().setOfferedPriceOrPercentDiscountPerUnit(offeredPrice);
     }
 
     public double getRevenueChangeThresholdForPriceChange() {
         return getProductConfiguration().getTargetChangeThresholdForPriceChange();
     }
 
-    public PriceBucket createNewPriceBucket(PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
+    public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
         return getProductAccount().createNewPriceBucket(productId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
     }
 
-    private PriceBucket createPriceBucketForPriceCategory(String productId, String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime currentPriceDate) {
-        if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT) {
-            return new PriceBucketForPercentDiscountCommitment(productId, priceBucketId, taggedPriceVersion, offeredPricePerUnit, entityStatus, currentPriceDate);
-        } else if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT) {
-            return new PriceBucketForPriceCommitment();
-        } else {
-            return new PriceBucketForNoneCommitment();
-        }
-    }
 
     //business logic to create forecast for a product and store it on read side.
     //There are two forecasts to be created- one is daily forecast based on historical data until last day
@@ -296,7 +287,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void calculatePrice(DefaultPriceDeterminator defaultPriceDeterminator, ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
-        apply(new OfferedPriceChangedEvent(productId, priceBucket.getPriceBucketId(), priceBucket.getTaggedPriceVersion(), priceBucket.getOfferedPricePerUnit(), priceBucket.getEntityStatus(), priceBucket.getFromDate()));
+        apply(new OfferedPriceChangedEvent(productId, priceBucket.getTaggedPriceVersion(), priceBucket.getOfferedPriceOrPercentDiscountPerUnit(), priceBucket.getEntityStatus(), priceBucket.getFromDate()));
 
     }
 

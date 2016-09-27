@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.product.vo.ProductPricingCategory;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class RegisterProductCommand {
     private List<String> substitutes;
     private List<String> complements;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    private ProductPricingCategory productPricingCategory;
 
-    public RegisterProductCommand(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo) {
+    public RegisterProductCommand(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -33,6 +35,7 @@ public class RegisterProductCommand {
         this.substitutes = substitutes;
         this.complements = complements;
         this.sensitiveTo = sensitiveTo;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public RegisterProductCommand() {
@@ -72,5 +75,9 @@ public class RegisterProductCommand {
 
     public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
         return this.sensitiveTo;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
     }
 }

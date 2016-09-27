@@ -8,7 +8,7 @@ import org.joda.time.LocalDateTime;
 /**
  * Created by mandark on 28-11-2015.
  */
-public abstract class PriceBucket extends AbstractAnnotatedEntity {
+public class PriceBucket extends AbstractAnnotatedEntity {
     private String productId;
     private String priceBucketId;
     private PriceTaggedWithProduct taggedPriceVersion;
@@ -21,6 +21,34 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     private EntityStatus entityStatus;
     private double totalProfit;
     private double slope;
+
+    private double offeredPriceOrPercentDiscountPerUnit;
+
+    //Only to be used for product with none commitment
+    public PriceBucket(String productId, String priceBucketId) {
+        this.productId = productId;
+        this.priceBucketId = priceBucketId;
+        this.entityStatus = EntityStatus.CREATED;
+    }
+
+    public PriceBucket(String productId, String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercentDiscountPerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
+        this.productId = productId;
+        this.priceBucketId = priceBucketId;
+        this.taggedPriceVersion = taggedPriceVersion;
+        this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
+        this.entityStatus = entityStatus;
+        this.fromDate = fromDate;
+    }
+
+    public double getOfferedPriceOrPercentDiscountPerUnit() {
+        return offeredPriceOrPercentDiscountPerUnit;
+    }
+
+    public void setOfferedPriceOrPercentDiscountPerUnit(double offeredPriceOrPercentDiscountPerUnit) {
+        this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
+    }
+
+
 
     public String getPriceBucketId() {
         return priceBucketId;
@@ -91,11 +119,6 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         this.expectedProfit = expectedProfit;
     }
 
-    public abstract double getOfferedPricePerUnit();
-    public abstract void setOfferedPricePerUnit(double offeredPrice);
-    public abstract double getPercentDiscountPerUnit();
-    public abstract void setPercentDiscountPerUnit(double offeredDiscount);
-
     public EntityStatus getEntityStatus() {
         return entityStatus;
     }
@@ -132,7 +155,7 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         if (slope != 0) {
             return (taggedPriceVersion.getMRP() + slope * getNumberOfNewSubscriptions());
         } else {
-            return getOfferedPricePerUnit();
+            return getOfferedPriceOrPercentDiscountPerUnit();
         }
 
     }

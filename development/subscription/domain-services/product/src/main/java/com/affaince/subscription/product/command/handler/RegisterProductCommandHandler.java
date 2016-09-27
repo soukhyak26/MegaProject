@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterProductCommandHandler {
 
-    private Repository<Product> repository;
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterProductCommandHandler.class);
+    private Repository<Product> repository;
 
     @Autowired
     public RegisterProductCommandHandler(Repository<Product> repository) {
@@ -34,7 +34,9 @@ public class RegisterProductCommandHandler {
                 command.getQuantity(),
                 command.getQuantityUnit(),
                 command.getSubstitutes(),
-                command.getComplements(), command.getSensitiveTo()
+                command.getComplements(),
+                command.getSensitiveTo(),
+                command.getProductPricingCategory()
         );
         repository.add(product);
         LOGGER.info("Product added to write repository with id: " + command.getProductId());

@@ -4,12 +4,8 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
 
-/**
- * Created by rbsavaliya on 25-07-2015.
- */
 public class OfferedPriceChangedEvent {
     private String productId;
-    private String priceBucketId;
     private PriceTaggedWithProduct taggedPriceVersion;
     private double offeredPricePerUnit;
     private EntityStatus entityStatus;
@@ -19,18 +15,14 @@ public class OfferedPriceChangedEvent {
     public OfferedPriceChangedEvent() {
     }
 
-    public OfferedPriceChangedEvent(String productId, String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime currentPriceDate) {
+    public OfferedPriceChangedEvent(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime currentPriceDate) {
         this.productId = productId;
-        this.priceBucketId = priceBucketId;
         this.taggedPriceVersion = taggedPriceVersion;
         this.offeredPricePerUnit = offeredPricePerUnit;
         this.entityStatus = entityStatus;
         this.currentPriceDate = currentPriceDate;
     }
 
-    public String getPriceBucketId() {
-        return priceBucketId;
-    }
 
     public PriceTaggedWithProduct getTaggedPriceVersion() {
         return taggedPriceVersion;

@@ -66,7 +66,8 @@ public class ProductController {
                 request.getQuantityUnit(),
                 Arrays.asList(request.getSubstitutes()),
                 Arrays.asList(request.getComplements()),
-                receivedSensitivityCharactersistic
+                receivedSensitivityCharactersistic,
+                request.getProductPricingCategory()
         );
         try {
             this.commandGateway.executeAsync(createCommand);

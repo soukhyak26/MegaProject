@@ -3,14 +3,11 @@ package com.affaince.subscription.product.web.request;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.product.vo.ProductPricingCategory;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Map;
 
-/**
- * Created by rbsavaliya on 19-07-2015.
- */
 public class RegisterProductRequest {
 
     @NotNull
@@ -30,6 +27,9 @@ public class RegisterProductRequest {
     private String [] substitutes;
     private String [] complements;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    @NotNull
+    private ProductPricingCategory productPricingCategory;
+
 
     public String getCategoryId() {
         return categoryId;
@@ -101,5 +101,13 @@ public class RegisterProductRequest {
 
     public void setSensitiveTo(Map<SensitivityCharacteristic, Double> sensitiveTo) {
         this.sensitiveTo = sensitiveTo;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 }

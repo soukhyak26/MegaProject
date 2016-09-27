@@ -34,11 +34,19 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     private double creditPoints;
     private double variableExpenseSlope;
 
-    public ProductAccount() {
+    public ProductAccount(String productId, ProductPricingCategory productPricingCategory) {
         activePriceBuckets = new TreeMap<>();
         taggedPriceVersions = new TreeSet<>();
         fixedExpenseVersions= new TreeSet<>();
         variableExpenseVersions= new TreeSet<>();
+        this.productPricingCategory = productPricingCategory;
+        if (productPricingCategory == ProductPricingCategory.NO_COMMITMENT) {
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            LocalDateTime currentDate = LocalDateTime.now();
+            final String priceBucketId = productId + currentDate.toString(format);
+            PriceBucket nonCommittedPriceBucket = new PriceBucket(productId, priceBucketId);
+            activePriceBuckets.put(currentDate, nonCommittedPriceBucket);
+        }
     }
 
 
@@ -66,23 +74,28 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
         //LocalDateTime fromDate = LocalDateTime.now();
-        if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
-            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
+        if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestPriceBucket().getOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
             String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
-            PriceBucket newPriceBucket = new PriceBucketForNoneCommitment(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
+            //assumption is that for non commitment a single price bucket will exist in map.
+            PriceBucket priceBucket = this.activePriceBuckets.entrySet().iterator().next().getValue();
+            priceBucket.setTaggedPriceVersion(taggedPriceVersion);
+            priceBucket.setOfferedPriceOrPercentDiscountPerUnit(offeredPriceOrPercent);
+            priceBucket.setEntityStatus(entityStatus);
+            priceBucket.setFromDate(fromDate);
             //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
-            return newPriceBucket;
-        } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
-            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
+            return priceBucket;
+        } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
             String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
-            PriceBucket newPriceBucket = new PriceBucketForPercentDiscountCommitment(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
+            PriceBucket newPriceBucket = new PriceBucket(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
             return newPriceBucket;
 
-        } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPricePerUnit() != offeredPriceOrPercent) {
-            DateTimeFormatter fmt = DateTimeFormat.forPattern("MM-dd-yyyy-HH-mm-sss");
+        } else if (this.getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT && getLatestPriceBucket().getOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
             String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
-            PriceBucket newPriceBucket = new PriceBucketForPriceCommitment(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
+            PriceBucket newPriceBucket = new PriceBucket(productId, priceBucketId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             //activePriceBuckets.put(LocalDate.now(),newPriceBucket);
             return newPriceBucket;
         } else {
@@ -220,7 +233,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         LocalDateTime toDate = priceBucket.getToDate();
         double fixedExpensePerUnit= this.findLatestFixedExpensePerUnitInDateRange(fromDate,toDate);
         double variableExpensePerUnit= this.findLatestVariableExpensePerUnitInDateRange(fromDate,toDate);
-        double profit = priceBucket.getNumberOfExistingSubscriptions()*priceBucket.getOfferedPricePerUnit()
+        double profit = priceBucket.getNumberOfExistingSubscriptions() * priceBucket.getOfferedPriceOrPercentDiscountPerUnit()
                 -(priceBucket.getNumberOfExistingSubscriptions()*(priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit())
                 + fixedExpensePerUnit + variableExpensePerUnit );
         return profit;

@@ -29,7 +29,7 @@ public class ProfitGrowthBasedOnDemandGrowthPriceCalculator extends AbstractPric
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
                 minusOnePriceBucket.getTotalProfit() > minusTwoPriceBucket.getTotalProfit() &&
-                minusOnePriceBucket.getOfferedPricePerUnit() < minusTwoPriceBucket.getOfferedPricePerUnit() &&
+                minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit() < minusTwoPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() &&
                 (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions())) {
             double y2 = minusOnePriceBucket.recalculateOfferedPriceBasedOnActualDemand();
             double y1 = minusTwoPriceBucket.recalculateOfferedPriceBasedOnActualDemand();
@@ -52,7 +52,7 @@ public class ProfitGrowthBasedOnDemandGrowthPriceCalculator extends AbstractPric
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
-            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 

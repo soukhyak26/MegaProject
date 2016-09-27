@@ -35,7 +35,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
         if (bucketsWithSamePurchasePrice.size() > 20) {
             Map<Double, Double> historicalPriceVsDemand = new HashMap<>();
-            bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historicalPriceVsDemand.put(priceBucket.getOfferedPricePerUnit(), Long.valueOf(priceBucket.getNumberOfNewSubscriptions()).doubleValue()));
+            bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historicalPriceVsDemand.put(priceBucket.getOfferedPriceOrPercentDiscountPerUnit(), Long.valueOf(priceBucket.getNumberOfNewSubscriptions()).doubleValue()));
             FunctionCoefficients functionCoefficients = regressionBasedDemandFunctionProcessor.processFunction(historicalPriceVsDemand);
             List<Double> historyOfSubscriptions = new ArrayList<>();
             bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historyOfSubscriptions.add(Long.valueOf(priceBucket.getNumberOfNewSubscriptions()).doubleValue()));
@@ -47,7 +47,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
-            PriceBucket newPriceBucket = product.createNewPriceBucket(taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(functionCoefficients.getSlope());
             return newPriceBucket;
         }

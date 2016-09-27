@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command.event;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.product.vo.ProductPricingCategory;
 
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,9 @@ public class ProductRegisteredEvent {
     private List<String> substitutes;
     private List<String> complements;
     private Map<SensitivityCharacteristic,Double> sensitiveTo;
+    private ProductPricingCategory productPricingCategory;
 
-    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic,Double> sensitiveTo) {
+    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -31,6 +33,7 @@ public class ProductRegisteredEvent {
         this.substitutes = substitutes;
         this.complements = complements;
         this.sensitiveTo=sensitiveTo;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public ProductRegisteredEvent() {
@@ -70,5 +73,9 @@ public class ProductRegisteredEvent {
 
     public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
         return this.sensitiveTo;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
     }
 }
