@@ -22,13 +22,13 @@ public class ForecastingClient {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = new HashMap<String, String>();
         params.put("productid", productId);
-        restTemplate.put(forecastUrl, params);
+        restTemplate.put(forecastUrl, null, params);
     }
 
     public void initiatePseudoActual(String productId) {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = new HashMap<String, String>();
         params.put("productid", productId);
-        restTemplate.put(pseudoActualUrl, params);
+        restTemplate.put(pseudoActualUrl, null, params);
     }
 }

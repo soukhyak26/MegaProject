@@ -73,14 +73,14 @@ public class ForecastController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predictforecast/{productid}")
-    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable String productId) throws Exception {
+    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable("productid") String productId) throws Exception {
         UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productid}")
-    public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable String productId) throws Exception {
+    public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable("productid") String productId) throws Exception {
         UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
@@ -90,7 +90,7 @@ public class ForecastController {
     @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addForecast(@RequestBody @Valid AddForecastParametersRequest request,
-                                              @PathVariable String productId) throws Exception {
+                                              @PathVariable("productid") String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
@@ -113,7 +113,7 @@ public class ForecastController {
     @RequestMapping(method = RequestMethod.PUT, value = "updateforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateForecast(@RequestBody @Valid UpdateForecastRequest request,
-                                                 @PathVariable String productId) throws Exception {
+                                                 @PathVariable("productid") String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
@@ -140,7 +140,7 @@ public class ForecastController {
     @RequestMapping(method = RequestMethod.PUT, value = "addstepforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addPseudoActuals(@RequestBody @Valid AddForecastParametersRequest request,
-                                                   @PathVariable String productId) throws Exception {
+                                                   @PathVariable("productid") String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
@@ -164,7 +164,7 @@ public class ForecastController {
     @RequestMapping(method = RequestMethod.PUT, value = "updatestepforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> updatePseudoActuals(@RequestBody @Valid UpdateForecastRequest request,
-                                                      @PathVariable String productId) throws Exception {
+                                                      @PathVariable("productid") String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
@@ -189,7 +189,7 @@ public class ForecastController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{productid}")
-    public String findProductForecastByProductId(@PathVariable String productId) throws JsonProcessingException {
+    public String findProductForecastByProductId(@PathVariable("productid") String productId) throws JsonProcessingException {
         final List<ProductForecastView> productForecastViews = new ArrayList<>();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         productForecastViewRepository.findByProductVersionId_ProductId(productId, sort).forEach
@@ -201,7 +201,7 @@ public class ForecastController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "setnextcalendar/forecast/{productid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable String productId) {
+    public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable("productid") String productId) {
         ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
         productConfigurationView.setNextForecastDate(request.getNextForecastDate());
         this.productConfigurationViewRepository.save(productConfigurationView);
