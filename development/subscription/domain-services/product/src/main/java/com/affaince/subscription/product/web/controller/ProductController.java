@@ -2,6 +2,7 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
@@ -15,7 +16,6 @@ import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +90,7 @@ public class ProductController {
                 request.getCurrentPurchasePrice(),
                 request.getCurrentMRP(),
                 request.getCurrentStockInUnits(),
-                LocalDateTime.now()
+                SysDateTime.now()
         );
         try {
             this.commandGateway.executeAsync(command);

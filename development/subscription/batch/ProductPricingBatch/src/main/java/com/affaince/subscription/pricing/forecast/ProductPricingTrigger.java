@@ -2,6 +2,7 @@ package com.affaince.subscription.pricing.forecast;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.pricing.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
@@ -29,7 +30,7 @@ public class ProductPricingTrigger {
 
     public ProductDemandTrend triggerProductPricing(String productId, double[] interpolatedForecastOnTotalSubscriptions) {
         boolean doTriggerPrice = false;
-        final LocalDateTime currentDate = LocalDateTime.now();
+        final LocalDateTime currentDate = SysDateTime.now();
         final ProductVersionId productVersionId = new ProductVersionId(productId, currentDate);
         //find the threshold percentage chane between interpolated forecast and actuals that should trigger price
         final double changeThresholdForPriceChange =

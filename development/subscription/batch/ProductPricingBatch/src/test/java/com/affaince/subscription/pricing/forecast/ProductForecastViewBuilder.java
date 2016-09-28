@@ -26,9 +26,6 @@ public class ProductForecastViewBuilder {
     private LocalDateTime localDate;
 
     public void buildProductForecast() throws Exception {
-
-
-        //LocalDateTime localDate = LocalDateTime.now();
         localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),

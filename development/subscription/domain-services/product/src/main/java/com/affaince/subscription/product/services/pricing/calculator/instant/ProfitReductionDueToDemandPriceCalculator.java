@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.pricing.calculator.instant;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
@@ -49,7 +50,7 @@ public class ProfitReductionDueToDemandPriceCalculator extends AbstractPriceCalc
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            LocalDateTime currentDate = LocalDateTime.now();
+            LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);

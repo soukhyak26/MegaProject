@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.OfferedPriceChangedEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
@@ -37,7 +38,7 @@ public class OfferedPriceChangedEventListener {
         priceBucketViewRepository.save(newPriceBucket);
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
         //set next forecast date as current date + configured duration for repeating forecast
-        productConfigurationView.setNextForecastDate(LocalDateTime.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));
+        productConfigurationView.setNextForecastDate(SysDateTime.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));
         productConfigurationViewRepository.save(productConfigurationView);
     }
 

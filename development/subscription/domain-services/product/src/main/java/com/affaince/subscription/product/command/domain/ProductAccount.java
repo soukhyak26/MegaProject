@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
 import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
 import com.affaince.subscription.product.command.UpdateProductSubscriptionCommand;
@@ -42,7 +43,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         this.productPricingCategory = productPricingCategory;
         if (productPricingCategory == ProductPricingCategory.NO_COMMITMENT) {
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            LocalDateTime currentDate = LocalDateTime.now();
+            LocalDateTime currentDate = SysDateTime.now();
             final String priceBucketId = productId + currentDate.toString(format);
             PriceBucket nonCommittedPriceBucket = new PriceBucket(productId, priceBucketId);
             activePriceBuckets.put(currentDate, nonCommittedPriceBucket);
@@ -73,7 +74,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
-        //LocalDateTime fromDate = LocalDateTime.now();
         if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestPriceBucket().getOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
             String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
@@ -162,7 +162,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command) {
-        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), LocalDateTime.now(), command.getOperationExpense()));
+        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), SysDateTime.now(), command.getOperationExpense()));
     }
 
     public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {

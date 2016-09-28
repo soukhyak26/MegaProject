@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.pricing.calculator.historybas
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
@@ -43,7 +44,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             double expectedDemand = demandForecasterChain.forecast(productId, historyOfSubscriptions).get(0);
             double offeredPrice = calculateOfferedPrice(functionCoefficients.getIntercept(), functionCoefficients.getSlope(), expectedDemand);
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            LocalDateTime currentDate = LocalDateTime.now();
+            LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
