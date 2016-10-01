@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,7 +56,16 @@ public class DemandForecasterChain {
     }
 
 
-    public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList) {
-        return initialForecaster.forecast(dataIdentifier, historicalDataList);
+    public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList, List<Double> forecast, int forecastSize) {
+        //one has to return forecast for next periods=historicalDataList/2
+        if (null == forecast) {
+            forecast = new ArrayList<>();
+        }
+        forecast.addAll(initialForecaster.forecast(dataIdentifier, historicalDataList));
+        if (forecast.size() < forecastSize) {
+            historicalDataList.addAll(forecast);
+            this.forecast(dataIdentifier, historicalDataList, forecast, forecastSize);
+        }
+        return forecast;
     }
 }

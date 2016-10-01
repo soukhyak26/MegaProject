@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
+import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDateTime;
@@ -13,6 +15,8 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
     private LocalDateTime nextForecastDate;
+    //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
+    private Period demandCurvePeriod;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -61,5 +65,55 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
 
     public void setNextForecastDate(LocalDateTime nextForecastDate) {
         this.nextForecastDate = nextForecastDate;
+    }
+
+    public Period getDemandCurvePeriod() {
+        return demandCurvePeriod;
+    }
+
+    public void setDemandCurvePeriod(Period demandCurvePeriod) {
+        this.demandCurvePeriod = demandCurvePeriod;
+    }
+
+    public double getDemandCurvePeriodInDays() {
+        if (demandCurvePeriod.getUnit() == PeriodUnit.DAY) {
+            return demandCurvePeriod.getValue();
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.MONTH) {
+            return demandCurvePeriod.getValue() * 30;
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.WEEK) {
+            return demandCurvePeriod.getValue() * 7;
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.YEAR) {
+            return demandCurvePeriod.getValue() * 365;
+        } else {
+            return -1;
+        }
+    }
+
+    public double getDemandCurvePeriodInWeeks() {
+        if (demandCurvePeriod.getUnit() == PeriodUnit.DAY) {
+            return demandCurvePeriod.getValue() / 7;
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.MONTH) {
+            return demandCurvePeriod.getValue() / 4.5;
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.WEEK) {
+            return demandCurvePeriod.getValue();
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.YEAR) {
+            return demandCurvePeriod.getValue() / 54;
+        } else {
+            return -1;
+        }
+    }
+
+    public double getDemandCurvePeriodInMonths() {
+        if (demandCurvePeriod.getUnit() == PeriodUnit.DAY) {
+            return demandCurvePeriod.getValue() / 30;
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.MONTH) {
+            return demandCurvePeriod.getValue();
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.WEEK) {
+            return demandCurvePeriod.getValue() / 4.5;
+        } else if (demandCurvePeriod.getUnit() == PeriodUnit.YEAR) {
+            return demandCurvePeriod.getValue() / 12;
+        } else {
+            return -1;
+        }
     }
 }

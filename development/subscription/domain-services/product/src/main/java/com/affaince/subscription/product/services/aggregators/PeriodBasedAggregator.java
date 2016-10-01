@@ -22,13 +22,14 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductActualsVi
 
         List<ProductActualsView> aggregateViewList = new ArrayList<>();
         //are product actuals view sorted??
-
         Collections.sort(historicalData, new ProductAcualsViewReversedComparatorOnLocalDate());
         if (period == 1) {
             return historicalData;
         }
+        //outer for- creating chunks of daily data according to chunk period
         for (int periodIndex = 1; periodIndex <= historicalData.size() / period; periodIndex++) {
             ProductActualsView aggregatedView = null;
+            //inner for-aggregating the chunks into single number
             for (int index = (period * periodIndex - 1); index >= period * (periodIndex - 1); index--) {
                 ProductActualsView productActualsView = historicalData.get(index);
                 if (null == productId) {

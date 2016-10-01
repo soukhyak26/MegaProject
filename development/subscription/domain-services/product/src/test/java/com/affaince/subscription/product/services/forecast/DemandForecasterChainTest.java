@@ -76,6 +76,7 @@ public class DemandForecasterChainTest {
                 actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);
+                System.out.println("historicalData: " + readings[i][0] + ":" + readings[i][1]);
             }
 
             String productId = "1";
@@ -88,7 +89,10 @@ public class DemandForecasterChainTest {
             Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
 
             List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
-            chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
+            List<Double> forecast = chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList, null, historicalDailySubscriptionCountList.size() / 2);
+            for (Double forecastValue : forecast) {
+                System.out.println("::::forecast::::" + forecastValue);
+            }
         } finally {
             fileReader.close();
         }
@@ -114,6 +118,7 @@ public class DemandForecasterChainTest {
                 actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
                 productActualMetricsViewList.add(actualMetrics);
+                System.out.println("historicalData: " + readings[i][0] + ":" + readings[i][1]);
             }
 
             String productId = "1";
@@ -125,7 +130,10 @@ public class DemandForecasterChainTest {
             Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
             Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
             List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
-            chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
+            List<Double> forecast = chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList, null, historicalDailySubscriptionCountList.size() / 2);
+            for (Double forecastValue : forecast) {
+                System.out.println("::::forecast::::" + forecastValue);
+            }
         } finally {
             fileReader.close();
         }

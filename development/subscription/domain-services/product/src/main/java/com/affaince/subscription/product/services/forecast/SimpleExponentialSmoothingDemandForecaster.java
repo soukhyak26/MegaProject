@@ -81,6 +81,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
             }
             System.out.println("SEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
+            //only last predication.
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;
 

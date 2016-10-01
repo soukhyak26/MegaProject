@@ -1,9 +1,11 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -22,18 +24,30 @@ public class ProductDemandForecastBuilder {
     @Autowired
     private ProductActualsViewRepository productActualsViewRepository;
 
-    public DemandGrowthAndChurnForecast buildForecast(String productId, int chunkAggregationPeriod) {
-        List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductId(productId);
+    public DemandGrowthAndChurnForecast buildForecast(String productId, int chunkAggregationPeriod, double demandCurvePeriod) {
+        LocalDate currentDate = SysDate.now();
+        LocalDate startDate = currentDate.minusDays(Double.valueOf(demandCurvePeriod).intValue());
+        List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndDateBetween(productId, startDate, currentDate);
         List<ProductActualsView> aggregatedActualsViewList = periodBasedAggregator.aggregate(productActualsViewList, chunkAggregationPeriod);
-        List<Double> historicalSubscriptionCountList = aggregatedActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+        List<Double> historicalNewSubscriptionCountList = aggregatedActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
         List<Double> historicalSubscriptionChurnCountList = aggregatedActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getChurnedSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+        List<Double> historicalTotalSubscriptionCountList = aggregatedActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getTotalNumberOfExistingSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
 
-        List<Double> forecastNewSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionCountList);
-        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList);
+        //List<Double> forecastNewSubscriptions = demandForecasterChain.forecast(productId, historicalNewSubscriptionCountList);
+        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, historicalSubscriptionChurnCountList.size() / 2);
+        List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, historicalTotalSubscriptionCountList.size() / 2);
+        List<Double> forecastNewSubscriptions = new ArrayList<Double>(forecastTotalSubscriptions.size());
+        double previousTotalSubscriptionCount = 0;
+        //derive new subscription from current and previous total subscription counts
+        for (int i = 0; i < forecastTotalSubscriptions.size(); i++) {
+            double newSubscriptionCount = forecastTotalSubscriptions.get(i) - previousTotalSubscriptionCount;
+            forecastNewSubscriptions.add(newSubscriptionCount);
+            previousTotalSubscriptionCount = forecastTotalSubscriptions.get(i);
+        }
         return new DemandGrowthAndChurnForecast(
-                Double.valueOf(forecastNewSubscriptions.get(0)).longValue(),
-                Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue(),
-                aggregatedActualsViewList.get(0).getTotalNumberOfExistingSubscriptions() + Double.valueOf(forecastNewSubscriptions.get(0)).longValue() - Double.valueOf(forecastChurnedSubscriptions.get(0)).longValue(),
+                forecastNewSubscriptions,
+                forecastChurnedSubscriptions,
+                forecastTotalSubscriptions,
                 aggregatedActualsViewList.get(0).getEndDate().plusDays(1),
                 aggregatedActualsViewList.get(0).getEndDate().plusDays(chunkAggregationPeriod));
     }

@@ -41,7 +41,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             List<Double> historyOfSubscriptions = new ArrayList<>();
             bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historyOfSubscriptions.add(Long.valueOf(priceBucket.getNumberOfNewSubscriptions()).doubleValue()));
             //NEED TO VERIFY IF BELOW STEP IS CORRECT???
-            double expectedDemand = demandForecasterChain.forecast(productId, historyOfSubscriptions).get(0);
+            double expectedDemand = demandForecasterChain.forecast(productId, historyOfSubscriptions, null, historyOfSubscriptions.size() / 2).get(0);
             double offeredPrice = calculateOfferedPrice(functionCoefficients.getIntercept(), functionCoefficients.getSlope(), expectedDemand);
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             LocalDateTime currentDate = SysDateTime.now();

@@ -84,6 +84,7 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
 
             System.out.println("TEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
+            //only last prediction.
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;
 

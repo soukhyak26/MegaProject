@@ -2,17 +2,19 @@ package com.affaince.subscription.product.vo;
 
 import org.joda.time.LocalDateTime;
 
+import java.util.List;
+
 /**
  * Created by mandar on 06-07-2016.
  */
 public class DemandGrowthAndChurnForecast {
-    private final long forecastedNewSubscriptionCount;
-    private final long forecastedChurnedSubscriptionCount;
-    private final long forecastedTotalSubscriptionCount;
+    private final List<Double> forecastedNewSubscriptionCount;
+    private final List<Double> forecastedChurnedSubscriptionCount;
+    private final List<Double> forecastedTotalSubscriptionCount;
     private final LocalDateTime forecastStartDate;
     private final LocalDateTime forecastEndDate;
 
-    public DemandGrowthAndChurnForecast(long forecastedNewSubscriptionCount, long forecastedChurnedSubscriptionCount, long forecastedTotalSubscriptionCount, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
+    public DemandGrowthAndChurnForecast(List<Double> forecastedNewSubscriptionCount, List<Double> forecastedChurnedSubscriptionCount, List<Double> forecastedTotalSubscriptionCount, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
         this.forecastedNewSubscriptionCount = forecastedNewSubscriptionCount;
         this.forecastedChurnedSubscriptionCount = forecastedChurnedSubscriptionCount;
         this.forecastedTotalSubscriptionCount = forecastedTotalSubscriptionCount;
@@ -20,15 +22,15 @@ public class DemandGrowthAndChurnForecast {
         this.forecastEndDate = forecastEndDate;
     }
 
-    public long getForecastedNewSubscriptionCount() {
+    public List<Double> getForecastedNewSubscriptionCount() {
         return forecastedNewSubscriptionCount;
     }
 
-    public long getForecastedChurnedSubscriptionCount() {
+    public List<Double> getForecastedChurnedSubscriptionCount() {
         return forecastedChurnedSubscriptionCount;
     }
 
-    public long getForecastedTotalSubscriptionCount() {
+    public List<Double> getForecastedTotalSubscriptionCount() {
         return forecastedTotalSubscriptionCount;
     }
 

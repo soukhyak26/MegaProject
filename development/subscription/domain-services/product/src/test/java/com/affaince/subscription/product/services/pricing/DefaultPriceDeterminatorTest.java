@@ -67,7 +67,7 @@ public class DefaultPriceDeterminatorTest {
 
         Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
 
-        builder.buildForecast(product.getProductId(), 1);
+        builder.buildForecast(product.getProductId(), 1, 730);
 
     }
 }

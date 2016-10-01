@@ -53,6 +53,7 @@ public class ARIMABasedDemandForecaster implements TimeSeriesBasedForecaster {
                 forecastedSubscriptionCounts.add(forecastedValue);
                 System.out.println("ARIMA $$$$$forecast of next 20 observations: " + forecastedValue);
             }
+            //return all predictions elements
             return forecastedSubscriptionCounts;
         } else {
             return null;

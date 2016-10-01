@@ -65,6 +65,7 @@ public class SimpleMovingAverageDemandForecaster implements TimeSeriesBasedForec
             }
             System.out.println("SMA: $$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
+            //only last element
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;
 

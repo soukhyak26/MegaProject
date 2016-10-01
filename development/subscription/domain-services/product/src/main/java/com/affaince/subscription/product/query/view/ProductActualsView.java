@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by mandar on 10-07-2016.
+ * ActualsView represents daily actual data
  */
 @Document(collection = "ProductActualsView")
 public class ProductActualsView implements Comparable<ProductActualsView>, AggregationVisitor<ProductActualsView> {
@@ -68,6 +69,8 @@ public class ProductActualsView implements Comparable<ProductActualsView>, Aggre
     public ProductActualsView visit(ProductActualsView aggregatedView) {
         aggregatedView.setNewSubscriptions(aggregatedView.getNewSubscriptions() + this.getNewSubscriptions());
         aggregatedView.setChurnedSubscriptions(aggregatedView.getChurnedSubscriptions() + this.getChurnedSubscriptions());
+        aggregatedView.setTotalNumberOfExistingSubscriptions(this.getTotalNumberOfExistingSubscriptions());
+        // aggregatedView.setEndDate(this.getEndDate());
         return aggregatedView;
     }
 }
