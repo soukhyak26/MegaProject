@@ -3,6 +3,10 @@ package com.affaince.subscription.compiler;
 import com.affaince.subscription.BenefitsRulesSetGrammarBaseListener;
 import com.affaince.subscription.BenefitsRulesSetGrammarParser;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
 
@@ -53,11 +57,22 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
 
     @Override
     public void exitEligibility_condition(BenefitsRulesSetGrammarParser.Eligibility_conditionContext ctx) {
-        /*String eligibilityCondition = "";
-        for (TerminalNode terminalNode: ctx.){
-            eligibilityCondition = eligibilityCondition + terminalNode.getText();
-        }*/
-        rule.setEligibilityCondition(ctx.getText());
+        String eligibilityCondition = ctx.logical_expr().getText();
+        eligibilityCondition = eligibilityCondition.replace("or", " or ");
+        eligibilityCondition = eligibilityCondition.replace("and", " and ");
+        rule.setEligibilityCondition(eligibilityCondition);
+    }
+
+    private List<ParseTree> createList(List<ParseTree> parseTrees) {
+        List<ParseTree> newList = new ArrayList<>();
+        for (ParseTree parseTree : parseTrees) {
+            if (parseTree.getChildCount() <= 1) {
+                System.out.println(parseTree.getText());
+            } else {
+                newList.add(parseTree);
+            }
+        }
+        return newList;
     }
 
     @Override public void exitConvert_expr(BenefitsRulesSetGrammarParser.Convert_exprContext ctx) {
