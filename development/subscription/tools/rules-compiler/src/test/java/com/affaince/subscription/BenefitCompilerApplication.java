@@ -15,12 +15,12 @@ public class BenefitCompilerApplication {
         compiler.compile("given " +
                     "1000 currency and 2 month = 3 point " +
                 "configure as " +
-                    "() " +
+                "(totalSubscriptionAmount/subscriptionValue/subscriptionPeriod)*totalSubscriptionPeriod " +
                 "eligible when " +
                     "total_subscription_amount = 1000 " +
                     "and (current_subscription_period > 50 or total_loyalty_period > 36) " +
                 "apply as " +
-                    "monthly_incremental;");
+                "incremental;");
         // JSON serialization
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
