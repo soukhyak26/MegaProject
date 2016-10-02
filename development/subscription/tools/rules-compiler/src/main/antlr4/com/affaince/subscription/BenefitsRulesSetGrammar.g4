@@ -27,15 +27,15 @@ DELIVERY : 'delivery';
 SUBSCRIPTION : 'subscription';
 OFFER: 'offer';
 
-TOTALSUBSCRIPTIONAMOUNT: 'total_subscription_amount';
-CURRENTSUBSCRIPTIONAMOUNT: 'current_subscription_amount';
-TOTALSUBSCRIPTIONPROFIT: 'total_subscription_profit';
+TOTALSUBSCRIPTIONAMOUNT: 'totalSubscriptionAmount';
+CURRENTSUBSCRIPTIONAMOUNT: 'currentSubscriptionAmount';
+TOTALSUBSCRIPTIONPROFIT: 'totalSubscriptionProfit';
 
-TOTALLOYALTYPERIOD: 'total_loyalty_period';
-CURRENTSUBSCRIPTIONPERIOD: 'current_subscription_period';
+TOTALLOYALTYPERIOD: 'totalLoyaltyPeriod';
+CURRENTSUBSCRIPTIONPERIOD: 'currentSubscriptionPeriod';
 
-MONTHLY_INCREMENTAL: 'monthly_incremental';
-WITH_EACH_PAYMENT: 'with_each_payment';
+INCREMENTAL: 'incremental';
+WITH_EACH_DELIVERY: 'ondeliverysize';
 
 
 IS : 'is';
@@ -180,7 +180,7 @@ conclusion:
     benefit_pay_method;
 
 //payment_percent: DECIMAL;
-benefit_pay_method: MONTHLY_INCREMENTAL | WITH_EACH_PAYMENT;
+benefit_pay_method: INCREMENTAL | WITH_EACH_DELIVERY;
 //which_delivey: EACH | ALTERNATE | LAST;
 //option: DELIVERY | SUBSCRIPTION;
 

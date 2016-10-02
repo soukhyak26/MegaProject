@@ -17,8 +17,8 @@ public class BenefitCompilerApplication {
                 "configure as " +
                 "(totalSubscriptionAmount/subscriptionValue/subscriptionPeriod)*totalSubscriptionPeriod " +
                 "eligible when " +
-                    "total_subscription_amount = 1000 " +
-                    "and (current_subscription_period > 50 or total_loyalty_period > 36) " +
+                "totalSubscriptionAmount = 1000 " +
+                "and (currentSubscriptionPeriod > 50 or totalLoyaltyPeriod > 36) " +
                 "apply as " +
                 "incremental;");
         // JSON serialization
