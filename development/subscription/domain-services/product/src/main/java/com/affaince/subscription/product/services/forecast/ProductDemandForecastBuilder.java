@@ -26,7 +26,7 @@ public class ProductDemandForecastBuilder {
 
     public List<DemandGrowthAndChurnForecast> buildForecast(String productId, LocalDate currentDate, int chunkAggregationPeriod, double demandCurvePeriod) {
         LocalDate startDate = currentDate.minusDays(Double.valueOf(demandCurvePeriod).intValue());
-        List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndDateBetween(productId, startDate, currentDate);
+        List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, startDate, currentDate);
         List<ProductActualsView> aggregatedActualsViewList = periodBasedAggregator.aggregate(productActualsViewList, chunkAggregationPeriod);
 
         List<Double> historicalSubscriptionChurnCountList = aggregatedActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getChurnedSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
@@ -37,16 +37,20 @@ public class ProductDemandForecastBuilder {
         List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, historicalSubscriptionChurnCountList.size() / 2);
         List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, historicalTotalSubscriptionCountList.size() / 2);
 
-        List<Double> forecastNewSubscriptions = new ArrayList<Double>(forecastTotalSubscriptions.size());
         List<DemandGrowthAndChurnForecast> forecasts = new ArrayList<>(forecastTotalSubscriptions.size());
         double previousTotalSubscriptionCount = 0;
+        LocalDateTime lastHistoricalEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
+        LocalDateTime newForecastStartDate = lastHistoricalEndDate;
         //derive new subscription from current and previous total subscription counts
         for (int i = 0; i < forecastTotalSubscriptions.size(); i++) {
             //Please verify if this calculation is right without considering churns
             double newSubscriptionCount = forecastTotalSubscriptions.get(i) - previousTotalSubscriptionCount + forecastChurnedSubscriptions.get(i);
-            DemandGrowthAndChurnForecast forecast = new DemandGrowthAndChurnForecast(newSubscriptionCount, forecastChurnedSubscriptions.get(i), forecastTotalSubscriptions.get(i), historicalEndDates.get(i).plusDays(1), historicalEndDates.get(i).plusDays(chunkAggregationPeriod));
+            newForecastStartDate = newForecastStartDate.plusDays(1);
+            LocalDateTime newForecastEndDate = newForecastStartDate.plusDays(chunkAggregationPeriod);
+            DemandGrowthAndChurnForecast forecast = new DemandGrowthAndChurnForecast(newSubscriptionCount, forecastChurnedSubscriptions.get(i), forecastTotalSubscriptions.get(i), newForecastStartDate, newForecastEndDate);
             forecasts.add(forecast);
             previousTotalSubscriptionCount = forecastTotalSubscriptions.get(i);
+            newForecastStartDate = newForecastEndDate;
         }
         return forecasts;
     }
