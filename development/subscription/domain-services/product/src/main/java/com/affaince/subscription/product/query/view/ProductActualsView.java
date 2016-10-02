@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.product.services.aggregators.AggregationVisitor;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * ActualsView represents daily actual data
  */
 @Document(collection = "ProductActualsView")
-public class ProductActualsView implements Comparable<ProductActualsView>, AggregationVisitor<ProductActualsView> {
+public class ProductActualsView implements Comparable<ProductActualsView> {
     @Id
     private final ProductVersionId productVersionId;
     private LocalDateTime endDate;
@@ -65,12 +64,4 @@ public class ProductActualsView implements Comparable<ProductActualsView>, Aggre
         return this.getProductVersionId().compareTo(o.getProductVersionId());
     }
 
-    @Override
-    public ProductActualsView visit(ProductActualsView aggregatedView) {
-        aggregatedView.setNewSubscriptions(aggregatedView.getNewSubscriptions() + this.getNewSubscriptions());
-        aggregatedView.setChurnedSubscriptions(aggregatedView.getChurnedSubscriptions() + this.getChurnedSubscriptions());
-        aggregatedView.setTotalNumberOfExistingSubscriptions(this.getTotalNumberOfExistingSubscriptions());
-        // aggregatedView.setEndDate(this.getEndDate());
-        return aggregatedView;
-    }
 }

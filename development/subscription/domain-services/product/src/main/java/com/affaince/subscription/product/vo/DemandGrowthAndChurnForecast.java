@@ -2,19 +2,17 @@ package com.affaince.subscription.product.vo;
 
 import org.joda.time.LocalDateTime;
 
-import java.util.List;
-
 /**
  * Created by mandar on 06-07-2016.
  */
 public class DemandGrowthAndChurnForecast {
-    private final List<Double> forecastedNewSubscriptionCount;
-    private final List<Double> forecastedChurnedSubscriptionCount;
-    private final List<Double> forecastedTotalSubscriptionCount;
+    private final Double forecastedNewSubscriptionCount;
+    private final Double forecastedChurnedSubscriptionCount;
+    private final Double forecastedTotalSubscriptionCount;
     private final LocalDateTime forecastStartDate;
     private final LocalDateTime forecastEndDate;
 
-    public DemandGrowthAndChurnForecast(List<Double> forecastedNewSubscriptionCount, List<Double> forecastedChurnedSubscriptionCount, List<Double> forecastedTotalSubscriptionCount, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
+    public DemandGrowthAndChurnForecast(Double forecastedNewSubscriptionCount, Double forecastedChurnedSubscriptionCount, Double forecastedTotalSubscriptionCount, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
         this.forecastedNewSubscriptionCount = forecastedNewSubscriptionCount;
         this.forecastedChurnedSubscriptionCount = forecastedChurnedSubscriptionCount;
         this.forecastedTotalSubscriptionCount = forecastedTotalSubscriptionCount;
@@ -22,15 +20,15 @@ public class DemandGrowthAndChurnForecast {
         this.forecastEndDate = forecastEndDate;
     }
 
-    public List<Double> getForecastedNewSubscriptionCount() {
+    public Double getForecastedNewSubscriptionCount() {
         return forecastedNewSubscriptionCount;
     }
 
-    public List<Double> getForecastedChurnedSubscriptionCount() {
+    public Double getForecastedChurnedSubscriptionCount() {
         return forecastedChurnedSubscriptionCount;
     }
 
-    public List<Double> getForecastedTotalSubscriptionCount() {
+    public Double getForecastedTotalSubscriptionCount() {
         return forecastedTotalSubscriptionCount;
     }
 

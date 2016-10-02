@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.pricing;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
@@ -67,7 +68,7 @@ public class DefaultPriceDeterminatorTest {
 
         Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
 
-        builder.buildForecast(product.getProductId(), 1, 730);
+        builder.buildForecast(product.getProductId(), SysDate.now(), 1, 730);
 
     }
 }

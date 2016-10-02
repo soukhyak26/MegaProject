@@ -250,29 +250,33 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
-/*
-        apply(new SubscriptionForecastUpdatedEvent(productId,
-                forecast.getForecastStartDate(),
-                forecast.getForecastEndDate(),
-                forecast.getForecastedNewSubscriptionCount(),
-                forecast.getForecastedChurnedSubscriptionCount(),
-                forecast.getForecastedTotalSubscriptionCount()));
-*/
+        List<DemandGrowthAndChurnForecast> forecasts = builder.buildForecast(productId, forecastDate, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
+
+        for (int i = 0; i < forecasts.size(); i++) {
+            //why same start/end dates to all events??
+            apply(new SubscriptionForecastUpdatedEvent(productId,
+                    forecasts.get(i).getForecastStartDate(),
+                    forecasts.get(i).getForecastEndDate(),
+                    Double.valueOf(forecasts.get(i).getForecastedNewSubscriptionCount()).longValue(),
+                    Double.valueOf(forecasts.get(i).getForecastedChurnedSubscriptionCount()).longValue(),
+                    Double.valueOf(forecasts.get(i).getForecastedTotalSubscriptionCount()).longValue()));
+        }
+
     }
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        DemandGrowthAndChurnForecast forecast = builder.buildForecast(productId, 1, getProductConfiguration().getDemandCurvePeriodInDays());
-/*
-        apply(new SubscriptionPseudoActualsUpdatedEvent(
-                productId,
-                forecast.getForecastStartDate(),
-                forecast.getForecastEndDate(),
-                forecast.getForecastedNewSubscriptionCount(),
-                forecast.getForecastedChurnedSubscriptionCount(),
-                forecast.getForecastedTotalSubscriptionCount()));
-*/
+        List<DemandGrowthAndChurnForecast> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
+        //THIS LOOP SHOULD ITERATE SINGLE TIME
+        for (int i = 0; i < forecasts.size(); i++) {
+            //why same start/end dates to all events??
+            apply(new SubscriptionForecastUpdatedEvent(productId,
+                    forecasts.get(i).getForecastStartDate(),
+                    forecasts.get(i).getForecastEndDate(),
+                    Double.valueOf(forecasts.get(i).getForecastedNewSubscriptionCount()).longValue(),
+                    Double.valueOf(forecasts.get(i).getForecastedChurnedSubscriptionCount()).longValue(),
+                    Double.valueOf(forecasts.get(i).getForecastedTotalSubscriptionCount()).longValue()));
+        }
     }
 
     public Map<LocalDateTime, PriceBucket> getActivePriceBuckets() {
