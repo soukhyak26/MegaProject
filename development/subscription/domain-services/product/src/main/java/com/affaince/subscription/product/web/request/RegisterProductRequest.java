@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class RegisterProductRequest {
 
-    @NotNull
-    private String productId;
+    //should not come from request.. but generated from aggregate creation.
+    //private String productId;
 
     @NotNull
     private String productName;
@@ -45,14 +45,6 @@ public class RegisterProductRequest {
 
     public void setSubCategoryId(String subCategoryId) {
         this.subCategoryId = subCategoryId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     public String getProductName() {

@@ -5,6 +5,7 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDateTime;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class ProductForecastViewRepositoryTest {
     private LocalDateTime localDate;
     @Before
     public void init() throws FileNotFoundException {
-        productForecastViewRepository.deleteAll();
+        // productForecastViewRepository.deleteAll();
 
         localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
         ProductForecastView productForecastView1 = new ProductForecastView(
@@ -97,9 +98,8 @@ public class ProductForecastViewRepositoryTest {
         assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));
     }
 
-    /*@After
+    @After
     public void shutdown () {
-        ProductVersionId productVersionId = new ProductVersionId("1", SysDate.now().plusDays(52));
-        productForecastViewRepository.delete(productVersionId);
-    }*/
+        productForecastViewRepository.deleteAll();
+    }
 }

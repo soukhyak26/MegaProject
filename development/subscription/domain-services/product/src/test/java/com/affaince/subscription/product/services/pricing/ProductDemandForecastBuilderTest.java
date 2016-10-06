@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by mandar on 29-06-2016.
  */
-public class DefaultPriceDeterminatorTest {
+public class ProductDemandForecastBuilderTest {
     @Mock
     private static ProductViewRepository productViewRepository;
     @Mock

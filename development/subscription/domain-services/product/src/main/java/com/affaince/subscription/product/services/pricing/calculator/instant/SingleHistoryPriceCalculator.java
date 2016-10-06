@@ -6,10 +6,8 @@ import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,12 +21,14 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         final PriceBucket latestPriceBucket = product.getLatestPriceBucket();
         String productId = product.getProductId();
-
+        PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
 
         final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
         final PriceBucket minusTwoPriceBucket = product.findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
-
+        if (pricingStrategyType != PricingStrategyType.DEFAULT_PRICING_STRATEGY && bucketsWithSamePurchasePrice.size() > maxHistoryCountforDefaultPricing) {
+            return getNextCalculator().calculatePrice(product, productDemandTrend);
+        }
         if (null != minusOnePriceBucket && null == minusTwoPriceBucket && latestPriceBucket.getEntityStatus() == EntityStatus.ACTIVE) {
 
             double y2 = minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit();
@@ -38,7 +38,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1);
             double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
             double expectedDemand = 0;
-            //BIG QUESTION MARK HOW TO EXTRAPOLATE?
+            //BIG QUESTION MARK HOW TO EXTRAPOLATE?FORECASTED DEMAND FOR NEXT HOW MANY DAYS TO BE CONSIDERED?
             //currently taking the forecast of current month(when batch is executing)
             //double expectedDemandedQuantity= productForecastMetricsView.getTotalNumberOfExistingSubscriptions();
             //final double expectedDemand = calculateExpectedDemand(productForecastView, productActualsView);
@@ -49,12 +49,15 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             }
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
+/*
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
-            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+*/
+            LocalDateTime currentDate = SysDateTime.now();
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 

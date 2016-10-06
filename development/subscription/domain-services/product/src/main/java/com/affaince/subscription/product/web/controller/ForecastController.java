@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.product.command.AddManualForecastCommand;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
@@ -23,6 +24,7 @@ import com.affaince.subscription.product.web.request.NextCalendarRequest;
 import com.affaince.subscription.product.web.request.UpdateForecastRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +99,8 @@ public class ForecastController {
         }
 
         ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
+        LocalDateTime firstStartDate = null;
+        LocalDateTime lastEndDate = null;
         for (ProductForecastParameter parameter : forecastParameters) {
             List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
             //forecast should not be newly added if it already exists in the view
@@ -105,7 +109,13 @@ public class ForecastController {
             }
             ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions(), ProductForecastStatus.ACTIVE);
             productForecastViewRepository.save(productForecastView);
+            if (null == firstStartDate) {
+                firstStartDate = parameter.getStartDate();
+            }
+            lastEndDate = parameter.getEndDate();
         }
+        AddManualForecastCommand command = new AddManualForecastCommand(productId, firstStartDate, lastEndDate);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 

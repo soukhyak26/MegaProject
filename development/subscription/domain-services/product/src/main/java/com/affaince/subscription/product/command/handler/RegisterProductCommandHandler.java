@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.handler;
 
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.domain.Product;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -27,7 +28,6 @@ public class RegisterProductCommandHandler {
     @CommandHandler
     public void handle(RegisterProductCommand command) {
         Product product = new Product(
-                command.getProductId(),
                 command.getProductName(),
                 command.getCategoryId(),
                 command.getSubCategoryId(),
@@ -39,6 +39,6 @@ public class RegisterProductCommandHandler {
                 command.getProductPricingCategory()
         );
         repository.add(product);
-        LOGGER.info("Product added to write repository with id: " + command.getProductId());
+        LOGGER.info("Product added to write repository with Name: " + command.getProductName() + " category:" + command.getCategoryId() + " subcategory: " + command.getSubCategoryId() + " on date: " + SysDate.now());
     }
 }

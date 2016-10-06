@@ -7,9 +7,12 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDateTime;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
-    //private Period demandCurvePeriod;
+    private String productId;
     //whether to aggregate daily actuals for daily/weekly/monthly/quarterly Forecast
     private int actualsAggregationPeriodForTargetForecast = 30;
+    //does merchant want to leverage price recommendation or not.
+    private boolean isPriceRecommendationOn;
+    //percent difference in acutal and forecasted demand which should trigger price calculation
     private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
@@ -18,6 +21,18 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
+
+
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, boolean isPriceRecommendationOn, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
+        this.productId = productId;
+        this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
+        this.demandCurvePeriod = demandCurvePeriod;
+        this.isPriceRecommendationOn = isPriceRecommendationOn;
+        this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
+        this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
+        this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
+        this.pricingStrategyType = pricingStrategyType;
+    }
 
     public int getActualsAggregationPeriodForTargetForecast() {
         return actualsAggregationPeriodForTargetForecast;
@@ -116,4 +131,6 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
             return -1;
         }
     }
+
+
 }

@@ -5,7 +5,7 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
+import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -44,13 +44,13 @@ public class ProductDemandForecastBuilderTest {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
             for (List<String> value : values) {
-                ProductActualsView actualView = new ProductActualsView(
+                ProductActualsView productActualsView = new ProductActualsView(
                         new ProductVersionId(value.get(0), LocalDateTime.parse(value.get(1), formatter)),
                         LocalDateTime.parse(value.get(2), formatter));
-                actualView.setNewSubscriptions(Long.parseLong(value.get(3)));
-                actualView.setChurnedSubscriptions(Long.parseLong(value.get(4)));
-                actualView.setTotalNumberOfExistingSubscriptions(Long.parseLong(value.get(5)));
-                productActualsViews.add(actualView);
+                productActualsView.setNewSubscriptions(Long.parseLong(value.get(3)));
+                productActualsView.setChurnedSubscriptions(Long.parseLong(value.get(4)));
+                productActualsView.setTotalNumberOfExistingSubscriptions(Long.parseLong(value.get(5)));
+                productActualsViews.add(productActualsView);
 
             }
             productActualsViewRepository.save(productActualsViews);
@@ -64,13 +64,13 @@ public class ProductDemandForecastBuilderTest {
 
     @Test
     public void testForeast() {
-        List<DemandGrowthAndChurnForecast> forecasts = builder.buildForecast("1", SysDate.now(), 30, 730);
-        for (DemandGrowthAndChurnForecast forecast : forecasts) {
-            System.out.println("New subscriptions: " + forecast.getForecastedNewSubscriptionCount());
-            System.out.println("churned subscriptions: " + forecast.getForecastedChurnedSubscriptionCount());
-            System.out.println("total subscriptions: " + forecast.getForecastedTotalSubscriptionCount());
-            System.out.println("start date: " + forecast.getForecastStartDate());
-            System.out.println("end date: " + forecast.getForecastEndDate());
+        List<ProductForecastView> forecasts = builder.buildForecast("1", SysDate.now(), 30, 730);
+        for (ProductForecastView forecast : forecasts) {
+            System.out.println("New subscriptions: " + forecast.getNewSubscriptions());
+            System.out.println("churned subscriptions: " + forecast.getChurnedSubscriptions());
+            System.out.println("total subscriptions: " + forecast.getTotalNumberOfExistingSubscriptions());
+            System.out.println("start date: " + forecast.getProductVersionId().getFromDate());
+            System.out.println("end date: " + forecast.getEndDate());
             System.out.println("___________________________________________________________________");
         }
     }

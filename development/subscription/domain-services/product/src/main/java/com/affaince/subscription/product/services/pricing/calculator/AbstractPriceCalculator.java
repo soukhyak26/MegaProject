@@ -8,6 +8,7 @@ import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.*;
 
@@ -15,6 +16,8 @@ import java.util.*;
  * Created by mandark on 27-03-2016.
  */
 public abstract class AbstractPriceCalculator {
+    @Value("${pricing.calculator.pricehistorycount.max.fordefaultpricing}")
+    protected int maxHistoryCountforDefaultPricing;
     private AbstractPriceCalculator nextCalculator;
     private BreakEvenPriceCalculator breakEvenPriceCalculator;
 

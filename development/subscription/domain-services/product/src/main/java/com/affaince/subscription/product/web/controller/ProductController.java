@@ -2,6 +2,7 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
@@ -29,9 +30,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.util.*;
 
-/**
- * Created by rbsavaliya on 19-07-2015.
- */
 @RestController
 @RequestMapping(value = "/product")
 @Component
@@ -58,7 +56,6 @@ public class ProductController {
             receivedSensitivityCharactersistic.put(SensitivityCharacteristic.NONE, 1.0);
         }
         RegisterProductCommand createCommand = new RegisterProductCommand(
-                request.getProductId(),
                 request.getProductName(),
                 request.getCategoryId(),
                 request.getSubCategoryId(),
@@ -74,8 +71,8 @@ public class ProductController {
         } catch (Exception e) {
             throw e;
         }
-        ProductController.LOGGER.info("Create product command send to Command gateway with Id: " + createCommand.getProductId());
-        return new ResponseEntity<Object>(ImmutableMap.of("id", request.getProductId()), HttpStatus.CREATED);
+        ProductController.LOGGER.info("Create product command send to Command gateway with product name: " + createCommand.getProductName() + " category:" + request.getCategoryId() + " subcategory: " + request.getSubCategoryId() + " on date: " + SysDate.now());
+        return new ResponseEntity<Object>(ImmutableMap.of("product name: ", request.getProductName()), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")

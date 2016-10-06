@@ -1,18 +1,16 @@
 package com.affaince.subscription.product.command.domain;
 
-import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.common.type.QuantityUnit;
-import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
-import com.affaince.subscription.product.vo.DemandGrowthAndChurnForecast;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.ProductPricingCategory;
+import com.affaince.subscription.repository.DefaultIdGenerator;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -22,12 +20,16 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
+    @Autowired
+    DefaultIdGenerator defaultIdGenerator;
     @AggregateIdentifier
     private String productId;
     private String productName;
@@ -37,18 +39,20 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
-
     @EventSourcedMember
     private ProductConfiguration productConfiguration;
     @EventSourcedMember
     private ProductAccount productAccount;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    private List<ProductStatus> productActivationStatusList;
 
     public Product() {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
+    public Product(String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
+        String IDString = productName + "$" + categoryId + "$" + subCategoryId + "$" + netQuantity;
+        final String productId = defaultIdGenerator.generator(IDString);
         apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory));
     }
 
@@ -107,10 +111,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     //for product administrator to configure product
     public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) {
-        apply(new ProductPricingConfigurationSetEvent(this.productId,
-                command.getTargetChangeThresholdForPriceChange(),
-                command.isCrossPriceElasticityConsidered(),
-                command.isAdvertisingExpensesConsidered()));
+        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.isPriceRecommendationOn(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingStrategyType(), command.getDemandCurvePeriod()));
     }
 
 
@@ -125,8 +126,21 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.substitutes = event.getSubstitutes();
         this.complements = event.getComplements();
         this.sensitiveTo = event.getSensitiveTo();
+        this.productActivationStatusList = new ArrayList<>();
+        this.productActivationStatusList.add(ProductStatus.PRODUCT_REGISTERED);
         this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
     }
+
+    //Event for setting product configuration
+    @EventSourcingHandler
+    public void on(ProductPricingConfigurationSetEvent event) {
+        if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_CONFIGURED)) {
+            this.productConfiguration = new ProductConfiguration(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getDemandCurvePeriod(), event.isPriceRecommendationOn(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType());
+            this.productActivationStatusList.add(ProductStatus.PRODUCT_CONFIGURED);
+        }
+
+    }
+
 
     //When the new actual offer price is recommended
     //Expire current price bucket and register a new price bucket
@@ -178,18 +192,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    //Event for setting product configuration
-    @EventSourcingHandler
-    public void on(ProductPricingConfigurationSetEvent event) {
-        this.productId = event.getProductId();
-        final ProductConfiguration productConfiguration = new ProductConfiguration();
-        // productConfiguration.setDemandCurvePeriod(event.getDemandCurvePeriod());
-        productConfiguration.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
-        productConfiguration.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
-        productConfiguration.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
-        // productConfiguration.setDemandWiseProfitSharingRules(event.getDemandWiseProfitSharingRules());
-        this.productConfiguration = productConfiguration;
-    }
 
     //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler
     @EventSourcingHandler
@@ -239,6 +241,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return getProductConfiguration().getTargetChangeThresholdForPriceChange();
     }
 
+
     public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
         return getProductAccount().createNewPriceBucket(productId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
     }
@@ -250,32 +253,33 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        List<DemandGrowthAndChurnForecast> forecasts = builder.buildForecast(productId, forecastDate, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
+        List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
 
         for (int i = 0; i < forecasts.size(); i++) {
             //why same start/end dates to all events??
             apply(new SubscriptionForecastUpdatedEvent(productId,
-                    forecasts.get(i).getForecastStartDate(),
-                    forecasts.get(i).getForecastEndDate(),
-                    Double.valueOf(forecasts.get(i).getForecastedNewSubscriptionCount()).longValue(),
-                    Double.valueOf(forecasts.get(i).getForecastedChurnedSubscriptionCount()).longValue(),
-                    Double.valueOf(forecasts.get(i).getForecastedTotalSubscriptionCount()).longValue()));
+                    forecasts.get(i).getProductVersionId().getFromDate(),
+                    forecasts.get(i).getEndDate(),
+                    forecasts.get(i).getNewSubscriptions(),
+                    forecasts.get(i).getChurnedSubscriptions(),
+                    forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
         }
+
 
     }
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        List<DemandGrowthAndChurnForecast> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
+        List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
         //THIS LOOP SHOULD ITERATE SINGLE TIME
         for (int i = 0; i < forecasts.size(); i++) {
             //why same start/end dates to all events??
             apply(new SubscriptionForecastUpdatedEvent(productId,
-                    forecasts.get(i).getForecastStartDate(),
-                    forecasts.get(i).getForecastEndDate(),
-                    Double.valueOf(forecasts.get(i).getForecastedNewSubscriptionCount()).longValue(),
-                    Double.valueOf(forecasts.get(i).getForecastedChurnedSubscriptionCount()).longValue(),
-                    Double.valueOf(forecasts.get(i).getForecastedTotalSubscriptionCount()).longValue()));
+                    forecasts.get(i).getProductVersionId().getFromDate(),
+                    forecasts.get(i).getEndDate(),
+                    forecasts.get(i).getNewSubscriptions(),
+                    forecasts.get(i).getChurnedSubscriptions(),
+                    forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
         }
     }
 
@@ -293,11 +297,19 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
+    @EventSourcingHandler
+    public void on(ManualForecastAddedEvent manualForecastAddedEvent) {
+        this.productActivationStatusList.add(ProductStatus.PRODUCT_FORECASTED);
+    }
     public void calculatePrice(DefaultPriceDeterminator defaultPriceDeterminator, ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
         apply(new OfferedPriceChangedEvent(productId, priceBucket.getTaggedPriceVersion(), priceBucket.getOfferedPriceOrPercentDiscountPerUnit(), priceBucket.getEntityStatus(), priceBucket.getFromDate()));
 
     }
 
-
+    public void registerManualForecast() {
+        if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
+            apply(new ManualForecastAddedEvent(productId));
+        }
+    }
 }

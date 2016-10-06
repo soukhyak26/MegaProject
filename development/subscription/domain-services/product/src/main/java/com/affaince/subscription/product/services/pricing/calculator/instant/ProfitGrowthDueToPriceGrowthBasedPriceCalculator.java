@@ -6,10 +6,8 @@ import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,9 +22,12 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
         final PriceBucket latestPriceBucket = product.getLatestPriceBucket();
         String productId = product.getProductId();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
-
+        final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
         final PriceBucket minusTwoPriceBucket = product.findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
+        if (pricingStrategyType != PricingStrategyType.DEFAULT_PRICING_STRATEGY && bucketsWithSamePurchasePrice.size() > maxHistoryCountforDefaultPricing) {
+            return getNextCalculator().calculatePrice(product, productDemandTrend);
+        }
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
                 minusOnePriceBucket.getTotalProfit() > minusTwoPriceBucket.getTotalProfit() &&
@@ -51,16 +52,18 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
             }
 
             double offeredPrice = calculateOfferedPrice(intercept, slope, expectedDemand);
+/*
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
+            //Tagged price version should not be created new but to be obtained from Product aggregate.THE BELOW IS WRONG
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
-            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+        */
+            LocalDateTime currentDate = SysDateTime.now();
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
-
-
         } else {
             return getNextCalculator().calculatePrice(product, productDemandTrend);
 
