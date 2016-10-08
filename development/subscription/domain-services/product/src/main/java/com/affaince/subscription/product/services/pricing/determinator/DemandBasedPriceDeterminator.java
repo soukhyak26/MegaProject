@@ -61,7 +61,7 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
         newPriceBucket.setTaggedPriceVersion(taggedPriceVersion);
         //newPriceBucket.setSlope(0.0);//slope to be calculated WIP
         newPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
-        newPriceBucket.setOfferedPricePerUnit(offeredPrice);
+        newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(offeredPrice);
         return newPriceBucket;
 
     }

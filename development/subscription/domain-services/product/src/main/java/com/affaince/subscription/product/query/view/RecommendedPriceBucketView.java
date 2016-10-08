@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 @Document
-public class PriceBucketView  implements Comparable<PriceBucketView>{
+public class RecommendedPriceBucketView implements Comparable<RecommendedPriceBucketView> {
     @Id
     private final ProductVersionId productVersionId;
     private PriceTaggedWithProduct taggedPriceVersion;
@@ -28,14 +28,14 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     private double totalProfit;
     private double slope;
 
-    public PriceBucketView(ProductVersionId productVersionId) {
+    public RecommendedPriceBucketView(ProductVersionId productVersionId) {
         this.productVersionId = productVersionId;
     }
 
-    public static PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
-        PriceBucketView latestPriceBucketView = null;
+    public static RecommendedPriceBucketView getLatestPriceBucket(List<RecommendedPriceBucketView> activePriceBuckets) {
+        RecommendedPriceBucketView latestPriceBucketView = null;
         LocalDateTime max = activePriceBuckets.get(0).getFromDate();
-        for (PriceBucketView priceBucketView : activePriceBuckets) {
+        for (RecommendedPriceBucketView priceBucketView : activePriceBuckets) {
             if (priceBucketView.getFromDate().compareTo(max) > 0) {
                 latestPriceBucketView = priceBucketView;
             }
@@ -136,14 +136,14 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     }
 
     @Override
-    public int compareTo(PriceBucketView o) {
+    public int compareTo(RecommendedPriceBucketView o) {
         return this.getFromDate().compareTo(o.getFromDate());
     }
 
-    public double recalculateOfferedPriceBasedOnActualDemand(){
-        if(slope!= 0){
-            return ( taggedPriceVersion.getMRP()+ slope*numberOfExistingCustomersAssociatedWithAPrice);
-        }else{
+    public double recalculateOfferedPriceBasedOnActualDemand() {
+        if (slope != 0) {
+            return (taggedPriceVersion.getMRP() + slope * numberOfExistingCustomersAssociatedWithAPrice);
+        } else {
             return offeredPriceOrPercentDiscountPerUnit;
         }
 

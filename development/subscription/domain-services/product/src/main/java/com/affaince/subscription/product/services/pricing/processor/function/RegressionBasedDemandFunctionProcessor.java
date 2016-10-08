@@ -54,7 +54,7 @@ public class RegressionBasedDemandFunctionProcessor implements FunctionProcessor
         double totalExistingSubscriptions = new Double(priceBucketJustBeforePurchasePriceChange.getNumberOfExistingCustomersAssociatedWithAPrice());
         for (PriceBucketView priceBucketView: priceBucketsWithSamePurchasePrice) {
             totalExistingSubscriptions = totalExistingSubscriptions + priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice();
-            offerPriceVersesSubscriptionMapping.put(priceBucketView.getOfferedPricePerUnit(), totalExistingSubscriptions);
+            offerPriceVersesSubscriptionMapping.put(priceBucketView.getOfferedPriceOrPercentDiscountPerUnit(), totalExistingSubscriptions);
         }
         return offerPriceVersesSubscriptionMapping;
     }

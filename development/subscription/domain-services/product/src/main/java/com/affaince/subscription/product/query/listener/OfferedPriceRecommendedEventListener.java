@@ -3,10 +3,10 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.OfferedPriceRecommendedEvent;
-import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
-import com.affaince.subscription.product.query.view.PriceBucketView;
+import com.affaince.subscription.product.query.repository.RecommendedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
+import com.affaince.subscription.product.query.view.RecommendedPriceBucketView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +17,29 @@ import org.springframework.stereotype.Component;
  * Created by mandar on 15-09-2016.
  */
 @Component
-public class OfferedPriceChangedEventListener {
+public class OfferedPriceRecommendedEventListener {
 
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
-    private final PriceBucketViewRepository priceBucketViewRepository;
+    private final RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository;
 
     @Autowired
-    public OfferedPriceChangedEventListener(ProductConfigurationViewRepository productConfigurationViewRepository, PriceBucketViewRepository priceBucketViewRepository) {
+    public OfferedPriceRecommendedEventListener(ProductConfigurationViewRepository productConfigurationViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository) {
         this.productConfigurationViewRepository = productConfigurationViewRepository;
-        this.priceBucketViewRepository = priceBucketViewRepository;
+        this.recommendedPriceBucketViewRepository = recommendedPriceBucketViewRepository;
     }
 
     @EventHandler
     public void on(OfferedPriceRecommendedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(event.getProductId(), event.getCurrentPriceDate()));
+        RecommendedPriceBucketView latestPriceBucket = recommendedPriceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
+        RecommendedPriceBucketView newPriceBucket = new RecommendedPriceBucketView(new ProductVersionId(event.getProductId(), event.getCurrentPriceDate()));
         newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPricePerUnit());
         newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
         newPriceBucket.setEntityStatus(event.getEntityStatus());
         newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
         latestPriceBucket.setToDate(event.getCurrentPriceDate());
-        priceBucketViewRepository.save(latestPriceBucket);
-        priceBucketViewRepository.save(newPriceBucket);
+        recommendedPriceBucketViewRepository.save(latestPriceBucket);
+        recommendedPriceBucketViewRepository.save(newPriceBucket);
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
         //set next forecast date as current date + configured duration for repeating forecast
         productConfigurationView.setNextForecastDate(SysDateTime.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));

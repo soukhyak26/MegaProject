@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
 
-public class OfferedPriceChangedEvent {
+public class OfferedPriceRecommendedEvent {
     private String productId;
     private PriceTaggedWithProduct taggedPriceVersion;
     private double offeredPricePerUnit;
@@ -12,10 +12,10 @@ public class OfferedPriceChangedEvent {
     private LocalDateTime currentPriceDate;
 
 
-    public OfferedPriceChangedEvent() {
+    public OfferedPriceRecommendedEvent() {
     }
 
-    public OfferedPriceChangedEvent(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime currentPriceDate) {
+    public OfferedPriceRecommendedEvent(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPricePerUnit, EntityStatus entityStatus, LocalDateTime currentPriceDate) {
         this.productId = productId;
         this.taggedPriceVersion = taggedPriceVersion;
         this.offeredPricePerUnit = offeredPricePerUnit;

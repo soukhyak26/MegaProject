@@ -19,7 +19,7 @@ import java.util.List;
 public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
-        final PriceBucket latestPriceBucket = product.getLatestPriceBucket();
+        final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
         String productId = product.getProductId();
         PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
