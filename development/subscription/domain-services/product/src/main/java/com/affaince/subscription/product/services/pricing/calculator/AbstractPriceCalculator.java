@@ -10,7 +10,9 @@ import com.affaince.subscription.product.services.pricing.calculator.breakevenpr
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mandark on 27-03-2016.
@@ -29,15 +31,6 @@ public abstract class AbstractPriceCalculator {
         this.nextCalculator = nextCalculator;
     }
 
-    protected double calculateBreakEvenPrice(double purchasePrice, double fixedOperatingExpensePerUnit, double variableExpensePerUnit) {
-        //We will include merchant's profit if required...not now
-        Map<String, Double> bePriceContributors = new HashMap<>();
-        bePriceContributors.put("purchasePrice", purchasePrice);
-        bePriceContributors.put("fixedOperatingExpense", fixedOperatingExpensePerUnit);
-        bePriceContributors.put("variableOperatingExpense", variableExpensePerUnit);
-        final double breakEvenPrice = breakEvenPriceCalculator.calculateBreakEvenPrice(bePriceContributors);
-        return breakEvenPrice;
-    }
 
     protected double calculateSlopeOfDemandCurve(double latestDemand, double demandAssociatedWithEarlierPrice, double latestPrice, double earlierPrice) {
         return ((latestPrice - earlierPrice) / (latestDemand - demandAssociatedWithEarlierPrice));

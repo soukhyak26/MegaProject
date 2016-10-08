@@ -301,6 +301,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void on(ManualForecastAddedEvent manualForecastAddedEvent) {
         this.productActivationStatusList.add(ProductStatus.PRODUCT_FORECASTED);
     }
+
+    @EventSourcingHandler
+    public void on(ManualStepForecastAddedEvent manualStepForecastAddedEvent) {
+        this.productActivationStatusList.add(ProductStatus.PRODUCT_STEPFORECAST_CREATED);
+    }
+
     public void calculatePrice(DefaultPriceDeterminator defaultPriceDeterminator, ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
         apply(new OfferedPriceChangedEvent(productId, priceBucket.getTaggedPriceVersion(), priceBucket.getOfferedPriceOrPercentDiscountPerUnit(), priceBucket.getEntityStatus(), priceBucket.getFromDate()));
@@ -310,6 +316,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void registerManualForecast() {
         if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             apply(new ManualForecastAddedEvent(productId));
+        }
+    }
+
+    public void registerManualStepForecast() {
+        if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_STEPFORECAST_CREATED)) {
+            apply(new ManualStepForecastAddedEvent(productId));
         }
     }
 }
