@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.command.AcceptRecommendedPriceCommand;
 import com.affaince.subscription.product.command.CalculatePriceOfAProductCommand;
+import com.affaince.subscription.product.command.ContinueCurrentPriceCommand;
 import com.affaince.subscription.product.command.OverrideRecommendedPriceCommand;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.RecommendedPriceBucketViewRepository;
@@ -41,6 +42,7 @@ public class PricingController {
         this.recommendedPriceBucketViewRepository = recommendedPriceBucketViewRepository;
     }
 
+    //should be calculated only by the pricing batch as a background job.
     @RequestMapping(method = RequestMethod.PUT, value = "/calculate/{productid}/{productdemandtrend}")
     @Consumes("application/json")
     public ResponseEntity<String> calculatePrice(@PathVariable("productid") String productId, @PathVariable("productdemandtrend") String productDemandTrend) throws Exception {
@@ -49,6 +51,7 @@ public class PricingController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
+    //should be exposed only if the prompting price option is selected by merchant
     @RequestMapping(method = RequestMethod.GET, value = "/recommend/{productid}")
     @Consumes("application/json")
     public String recommendPriceChange(@PathVariable("productid") String productId) throws JsonProcessingException {
@@ -60,13 +63,13 @@ public class PricingController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/register/{productid}")
     @Consumes("application/json")
-    public ResponseEntity<String> registerPriceChange(@PathVariable("productid") String productId, @RequestBody RegisterPriceChoiceRequest request) throws Exception {
+    public ResponseEntity<String> registerMerchantPriceSelection(@PathVariable("productid") String productId, @RequestBody RegisterPriceChoiceRequest request) throws Exception {
         PricingChoiceType pricingChoiceType = request.getPricingChoiceType();
         if (pricingChoiceType == PricingChoiceType.ACCEPT_RECOMMENDATION) {
             AcceptRecommendedPriceCommand command = new AcceptRecommendedPriceCommand(productId);
             commandGateway.executeAsync(command);
         } else if (pricingChoiceType == PricingChoiceType.CONTINUE_CURRENT_PRICE) {
-            //do nothing
+            ContinueCurrentPriceCommand command = new ContinueCurrentPriceCommand(productId);
         } else if (pricingChoiceType == PricingChoiceType.OVERRIDE_RECOMMENDATION) {
             OverrideRecommendedPriceCommand command = new OverrideRecommendedPriceCommand(productId, request.getPricingValue());
             commandGateway.executeAsync(command);

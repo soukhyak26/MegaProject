@@ -112,8 +112,10 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         this.activePriceBuckets = activePriceBuckets;
     }
 
-    public void addNewPriceBucket(LocalDateTime date, PriceBucket forecastedPriceBucket) {
-        activePriceBuckets.put(date, forecastedPriceBucket);
+    public void addNewPriceBucket(LocalDateTime date, PriceBucket priceBucket) {
+        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        closePriceBucketForSubscription(latestPriceBucket, date);
+        activePriceBuckets.put(date, priceBucket);
     }
 
     public void addNewPriceRecommendation(LocalDateTime date, PriceBucket forecastedPriceBucket) {
@@ -311,6 +313,11 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
 
         return earlierPriceBucket;
+    }
+
+    //remove recommended price bucket when recommendation has served its purpose;
+    public void removeRecommendedPriceBucket(PriceBucket priceBucket) {
+        recommendedPriceBuckets.remove(priceBucket.getFromDate());
     }
 
     public void closePriceBucketForSubscription(PriceBucket priceBucket, LocalDateTime endDate) {

@@ -10,6 +10,7 @@ import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.ProductPricingCategory;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -147,14 +148,19 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(OfferedPriceRecommendedEvent event) {
         this.productId = event.getProductId();
-        PriceBucket latestPriceBucket = this.getLatestRecommendedPriceBucket();
+        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
         double newOfferedPrice = event.getOfferedPricePerUnit();
         //Change price ONLY if difference between latest price and new price is more than 0.5 money
         if (Math.abs(latestPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() - newOfferedPrice) > 0.5) {
             PriceBucket newPriceBucket = createNewPriceBucket(event.getProductId(), event.getTaggedPriceVersion(), event.getOfferedPricePerUnit(), event.getEntityStatus(), event.getCurrentPriceDate());
             //cannot do expiration of latest pricebucket as this is just a recommended price bucket.
             //latestPriceBucket.setToDate(event.getCurrentPriceDate());
-            this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
+            if (productConfiguration.getPricingOptions() == PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
+                //shall we keep the same date as mentioned in recommended bucket?? for now....yes
+                getProductAccount().addNewPriceBucket(newPriceBucket.getFromDate(), newPriceBucket);
+            } else {
+                this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
+            }
         }
     }
 
@@ -339,12 +345,14 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         PriceBucket latestRecommendedPriceBucket = getLatestRecommendedPriceBucket();
         //shall we keep the same date as mentioned in recommended bucket?? for now....yes
         getProductAccount().addNewPriceBucket(latestRecommendedPriceBucket.getFromDate(), latestRecommendedPriceBucket);
+        getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
     }
 
     @EventSourcingHandler
     public void on(RecommendedPriceOverriddenEvent event) {
         this.productId = event.getProductId();
         PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        PriceBucket latestRecommendedPriceBucket = this.getLatestRecommendedPriceBucket();
         double overriddenPriceOrPercent = event.getOverriddenPriceOrPercent();
 
         //Change price ONLY if difference between latest price and new price is more than 0.5 money? BUT WHAT ABOUT PERCENT DICOUNT.. NEEDS CORRECTION
@@ -353,7 +361,17 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             //cannot do expiration of latest pricebucket as this is just a recommended price bucket.
             //latestPriceBucket.setToDate(event.getCurrentPriceDate());
             this.getProductAccount().addNewPriceBucket(event.getFromDate(), newPriceBucket);
-            getProductAccount().closePriceBucketForSubscription(latestPriceBucket, event.getFromDate());
+            getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
         }
+    }
+
+    public void continueCurrentPrice() {
+        apply(new CurrentPriceContinuedEvent(productId));
+    }
+
+    @EventSourcingHandler
+    public void handle(CurrentPriceContinuedEvent event) {
+        PriceBucket latestRecommendedPriceBucket = this.getLatestRecommendedPriceBucket();
+        getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
     }
 }
