@@ -28,6 +28,7 @@ public class RegisterProductCommandHandler {
     @CommandHandler
     public void handle(RegisterProductCommand command) {
         Product product = new Product(
+                command.getProductId(),
                 command.getProductName(),
                 command.getCategoryId(),
                 command.getSubCategoryId(),

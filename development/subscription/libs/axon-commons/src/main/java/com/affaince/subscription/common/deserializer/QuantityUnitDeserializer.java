@@ -1,6 +1,6 @@
-package com.affaince.subscription.product.converters;
+package com.affaince.subscription.common.deserializer;
 
-import com.affaince.subscription.product.vo.PricingChoiceType;
+import com.affaince.subscription.common.type.QuantityUnit;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -11,18 +11,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 
 /**
- * Created by mandar on 08-10-2016.
+ * Created by mandar on 09-10-2016.
  */
-public class PricingChoiceTypeDeserliazer extends JsonDeserializer<PricingChoiceType> {
+public class QuantityUnitDeserializer extends JsonDeserializer<QuantityUnit> {
     @Override
-    public PricingChoiceType deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public QuantityUnit deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
-
         if (node == null) {
             return null;
         }
-        int value = node.intValue();
-        return PricingChoiceType.valueOf(value);
+        String value = node.textValue();
+        return QuantityUnit.valueOf(value);
     }
+
 }

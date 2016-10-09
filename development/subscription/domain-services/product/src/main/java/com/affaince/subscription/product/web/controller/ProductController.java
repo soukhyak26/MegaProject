@@ -14,6 +14,7 @@ import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddCurrentOfferedPriceRequest;
 import com.affaince.subscription.product.web.request.RegisterProductRequest;
 import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
+import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
@@ -41,6 +42,9 @@ public class ProductController {
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
 
     @Autowired
+    DefaultIdGenerator defaultIdGenerator;
+
+    @Autowired
     public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository) {
         this.commandGateway = commandGateway;
         this.productViewRepository = productViewRepository;
@@ -55,7 +59,10 @@ public class ProductController {
             receivedSensitivityCharactersistic = new HashMap<>();
             receivedSensitivityCharactersistic.put(SensitivityCharacteristic.NONE, 1.0);
         }
+        String IDString = request.getProductName() + "$" + request.getCategoryId() + "$" + request.getSubCategoryId() + "$" + request.getQuantity();
+        final String productId = defaultIdGenerator.generator(IDString);
         RegisterProductCommand createCommand = new RegisterProductCommand(
+                productId,
                 request.getProductName(),
                 request.getCategoryId(),
                 request.getSubCategoryId(),
@@ -105,7 +112,7 @@ public class ProductController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(productId, request.getCurrentOfferedPrice());
+        AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(productId, request.getCurrentOfferedPriceOrPercent());
         try {
             this.commandGateway.executeAsync(command);
         } catch (Exception e) {

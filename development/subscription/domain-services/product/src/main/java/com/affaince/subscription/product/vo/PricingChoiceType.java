@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.vo;
 
-import com.affaince.subscription.product.converters.PricingChoiceTypeDeserliazer;
+import com.affaince.subscription.product.converters.PricingChoiceTypeDeserializer;
 import com.affaince.subscription.product.converters.PricingChoiceTypeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * Created by mandar on 08-10-2016.
  */
 @JsonSerialize(using = PricingChoiceTypeSerializer.class)
-@JsonDeserialize(using = PricingChoiceTypeDeserliazer.class)
+@JsonDeserialize(using = PricingChoiceTypeDeserializer.class)
 public enum PricingChoiceType {
     ACCEPT_RECOMMENDATION(0), CONTINUE_CURRENT_PRICE(1), OVERRIDE_RECOMMENDATION(2);
 

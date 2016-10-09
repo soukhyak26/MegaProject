@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.command.event.CurrentOfferedPriceAddedEvent;
+import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class CurrentOfferedPriceAddedEventListener {
     public void on(CurrentOfferedPriceAddedEvent event) {
         ProductView productView = itemRepository.findOne(event.getProductId());
 /*
-        productView.getPriceParameters().setCurrentOfferedPrice(event.getCurrentOfferedPrice());
+        productView.getPriceParameters().setCurrentOfferedPriceOrPercent(event.getCurrentOfferedPriceOrPercent());
         itemRepository.save(productView);
 */
     }

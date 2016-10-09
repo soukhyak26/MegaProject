@@ -11,7 +11,6 @@ import java.util.Map;
  * Created by rbsavaliya on 19-07-2015.
  */
 public class ProductRegisteredEvent {
-
     private String productId;
     private String productName;
     private String categoryId;

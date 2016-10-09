@@ -11,7 +11,6 @@ import com.affaince.subscription.product.services.forecast.ProductDemandForecast
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.ProductPricingCategory;
-import com.affaince.subscription.repository.DefaultIdGenerator;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -21,7 +20,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +27,6 @@ import java.util.Map;
 
 public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
-    @Autowired
-    DefaultIdGenerator defaultIdGenerator;
     @AggregateIdentifier
     private String productId;
     private String productName;
@@ -51,9 +47,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public Product(String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
-        String IDString = productName + "$" + categoryId + "$" + subCategoryId + "$" + netQuantity;
-        final String productId = defaultIdGenerator.generator(IDString);
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
         apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory));
     }
 
@@ -124,6 +118,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ProductRegisteredEvent event) {
         this.productId = event.getProductId();
+        this.productName = event.getProductName();
         this.categoryId = event.getCategoryId();
         this.subCategoryId = event.getSubCategoryId();
         this.netQuantity = event.getQuantity();

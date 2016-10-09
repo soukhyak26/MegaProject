@@ -14,6 +14,7 @@ import java.util.Map;
 public class RegisterProductCommand {
 
     @TargetAggregateIdentifier
+    private String productId;
     private String productName;
     private String categoryId;
     private String subCategoryId;
@@ -24,7 +25,8 @@ public class RegisterProductCommand {
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
     private ProductPricingCategory productPricingCategory;
 
-    public RegisterProductCommand(String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
+    public RegisterProductCommand(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
+        this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
@@ -37,6 +39,10 @@ public class RegisterProductCommand {
     }
 
     public RegisterProductCommand() {
+    }
+
+    public String getProductId() {
+        return productId;
     }
 
     public String getProductName() {

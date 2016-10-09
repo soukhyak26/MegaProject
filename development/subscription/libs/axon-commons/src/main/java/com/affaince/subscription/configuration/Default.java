@@ -2,7 +2,9 @@ package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
-import com.affaince.subscription.common.idconverter.*;
+import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.affaince.subscription.monitoring.TrackingAsynchronousCluster;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
@@ -12,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.CommandBus;
@@ -35,6 +39,7 @@ import org.axonframework.saga.spring.SpringResourceInjector;
 import org.axonframework.serializer.SerializedType;
 import org.axonframework.serializer.Serializer;
 import org.axonframework.serializer.json.JacksonSerializer;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -149,8 +154,13 @@ public class Default {
                 return result == null ? name : result;
             }
         };
-        serializer.getObjectMapper().registerModule(new SimpleModule("Axon").addDeserializer(MetaData.class, new MetadataDeserializer()));
+        SimpleModule simpleModule = new SimpleModule("Axon");
+        simpleModule.addDeserializer(MetaData.class, new MetadataDeserializer());
+        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+        simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
+        serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
+
         return serializer;
     }
 
