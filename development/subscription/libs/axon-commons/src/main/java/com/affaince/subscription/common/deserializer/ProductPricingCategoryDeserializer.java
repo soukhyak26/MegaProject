@@ -16,7 +16,7 @@ public class ProductPricingCategoryDeserializer extends JsonDeserializer<Product
     @Override
     public ProductPricingCategory deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonToken currentToken = jsonParser.getCurrentToken();
-        if (currentToken == JsonToken.VALUE_STRING) {
+        if (currentToken == JsonToken.VALUE_NUMBER_INT) {
             int index = jsonParser.getIntValue();
             for (ProductPricingCategory category : ProductPricingCategory.values()) {
                 if (category.getIndex() == index) {
