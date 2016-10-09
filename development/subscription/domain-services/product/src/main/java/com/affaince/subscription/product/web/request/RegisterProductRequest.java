@@ -1,9 +1,9 @@
 package com.affaince.subscription.product.web.request;
 
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.product.vo.ProductPricingCategory;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;

@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
@@ -11,7 +12,6 @@ import com.affaince.subscription.product.command.event.FixedExpenseUpdatedToProd
 import com.affaince.subscription.product.command.event.ProductSubscriptionUpdatedEvent;
 import com.affaince.subscription.product.vo.FixedExpensePerProduct;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.vo.ProductPricingCategory;
 import com.affaince.subscription.product.vo.VariableExpensePerProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;

@@ -1,8 +1,8 @@
 package com.affaince.subscription.product.command.event;
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.product.vo.ProductPricingCategory;
 
 import java.util.List;
 import java.util.Map;
