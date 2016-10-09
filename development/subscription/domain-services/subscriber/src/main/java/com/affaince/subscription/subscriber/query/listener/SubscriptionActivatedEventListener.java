@@ -24,6 +24,6 @@ public class SubscriptionActivatedEventListener {
     @EventHandler
     public void on(SubscriptionActivatedEvent event) {
         SubscriptionView subscriptionView = subscriptionViewRepository.findOne(event.getSubscriptionId());
-        subscriptionView.setConsumerBasketStatus(ConsumerBasketActivationStatus.ACTIVATED);
+        subscriptionView.setConsumerBasketActivationStatus(ConsumerBasketActivationStatus.ACTIVATED);
     }
 }

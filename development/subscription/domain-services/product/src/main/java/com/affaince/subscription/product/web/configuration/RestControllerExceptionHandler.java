@@ -27,7 +27,6 @@ public class RestControllerExceptionHandler {
     @ResponseBody
     @ExceptionHandler({ProductNotFoundException.class, HttpMessageNotReadableException.class})
     protected Object handleResourceNotFoundException(Exception exception) {
-        System.out.println("in handleResourceNotFoundException @@@@@@@");
         HttpStatus status = HttpStatus.NOT_FOUND;
         Map body = buildErrorAttributes(exception.getMessage());
         return new ResponseEntity<Map<String, Object>>(body, status);

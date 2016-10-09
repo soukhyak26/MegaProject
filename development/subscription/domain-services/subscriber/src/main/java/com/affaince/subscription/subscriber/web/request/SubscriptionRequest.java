@@ -11,18 +11,18 @@ import javax.validation.constraints.NotNull;
 public class SubscriptionRequest {
 
     @NotNull
-    private String userId;
+    private String subscriberId;
     @Valid
     private ContactDetails contactDetails;
     private double totalAmount;
     private double totalAmountAfterDiscount;
 
-    public String getUserId() {
-        return userId;
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setSubscriberId(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 
     public ContactDetails getContactDetails() {

@@ -1,6 +1,6 @@
 import io.gatling.core.Predef._
-import io.gatling.http.Predef._
 import io.gatling.core.session.el._
+import io.gatling.http.Predef._
 
 import scala.util.Random
 
@@ -23,7 +23,7 @@ class Product extends BaseSimulator {
 object RegisterProduct {
 
   val createProductUrl="http://localhost:8082/product"
-  val feeder = csv ("product.csv").queue
+  // val feeder = csv ("product.csv").queue
 
   val registerProduct = exec(session => session.set("randomProductId", Random.nextInt(20000)))
     .exec(
@@ -33,7 +33,6 @@ object RegisterProduct {
           StringBody(
             """
               |{
-              |   "productId":${randomProductId},
               |    "productName":"Toothpaste",
               |    "categoryId":"cat01",
               |    "subCategoryId":"subcat01",

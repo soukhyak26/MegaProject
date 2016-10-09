@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.subscriber.command.UpdateBasketDispatchStatusCommand;
+import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -12,17 +13,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UpdateBasketDispatchStatusCommandHandler {
-    private final Repository<Subscription> repository;
+    private final Repository<Subscriber> repository;
 
     @Autowired
-    public UpdateBasketDispatchStatusCommandHandler(Repository<Subscription> repository) {
+    public UpdateBasketDispatchStatusCommandHandler(Repository<Subscriber> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle(UpdateBasketDispatchStatusCommand updateBasketDispatchStatusCommand) {
-        final Subscription subscription = repository.load(updateBasketDispatchStatusCommand.getBasketId());
-        subscription.updateBasketStatus(updateBasketDispatchStatusCommand.getDispatchStatusCode(), updateBasketDispatchStatusCommand.getReasonCode(), updateBasketDispatchStatusCommand.getDispatchDate());
+    public void handle(UpdateBasketDispatchStatusCommand command) {
+        final Subscriber subscriber = repository.load(command.getSubscriberId());
+        final Subscription subscription = subscriber.getSubscription();
+        subscription.updateBasketStatus(command.getDispatchStatusCode(), command.getReasonCode(), command.getDispatchDate());
 
     }
 }

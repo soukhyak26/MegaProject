@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.subscriber.command.AddContactDetailsCommand;
+import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -13,16 +14,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddContactDetailsCommandHandler {
 
-    private final Repository<Subscription> repository;
+    private final Repository<Subscriber> repository;
 
     @Autowired
-    public AddContactDetailsCommandHandler(Repository<Subscription> repository) {
+    public AddContactDetailsCommandHandler(Repository<Subscriber> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
     public void handle(AddContactDetailsCommand command) {
-        Subscription subscription = repository.load(command.getSubscriptionId());
+        final Subscriber subscriber = repository.load(command.getSubscriberId());
+        Subscription subscription = subscriber.getSubscription();
         subscription.updateContactDetails(command.getEmail(), command.getMobileNumber(), command.getAlternativeNumber());
     }
 }

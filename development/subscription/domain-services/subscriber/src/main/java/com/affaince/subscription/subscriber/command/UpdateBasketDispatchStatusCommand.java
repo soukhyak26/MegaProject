@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class UpdateBasketDispatchStatusCommand {
     @TargetAggregateIdentifier
-    private String basketId;
+    private String subscriberId;
     private Date dispatchDate;
     private int dispatchStatusCode;
     private int reasonCode;
@@ -17,19 +17,19 @@ public class UpdateBasketDispatchStatusCommand {
     public UpdateBasketDispatchStatusCommand() {
     }
 
-    public UpdateBasketDispatchStatusCommand(String basketId, Date dispatchDate, int dispatchStatusCode, int reasonCode) {
-        this.basketId = basketId;
+    public UpdateBasketDispatchStatusCommand(String subscriberId, Date dispatchDate, int dispatchStatusCode, int reasonCode) {
+        this.subscriberId = subscriberId;
         this.dispatchDate = dispatchDate;
         this.dispatchStatusCode = dispatchStatusCode;
         this.reasonCode = reasonCode;
     }
 
-    public String getBasketId() {
-        return this.basketId;
+    public String getSubscriberId() {
+        return this.subscriberId;
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
+    public void setSubscriberId(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 
     public Date getDispatchDate() {

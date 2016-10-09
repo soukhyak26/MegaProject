@@ -18,7 +18,7 @@ public class SubscriptionView {
     @Id
     private String subscriptionId;
     private String subscriberId;
-    private ConsumerBasketActivationStatus consumerBasketStatus;
+    private ConsumerBasketActivationStatus consumerBasketActivationStatus;
     private List<SubscriptionItemView> subscriptionItemViews;
     private Address shippingAddress;
     private Address billingAddress;
@@ -27,10 +27,10 @@ public class SubscriptionView {
     private LocalDate basketCreatedDate;
     private LocalDate basketExpiredDate;
 
-    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketStatus, List<SubscriptionItemView> subscriptionItemViews, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
+    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItemView> subscriptionItemViews, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
-        this.consumerBasketStatus = consumerBasketStatus;
+        this.consumerBasketActivationStatus = consumerBasketActivationStatus;
         this.subscriptionItemViews = subscriptionItemViews;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
@@ -56,12 +56,12 @@ public class SubscriptionView {
         this.subscriberId = subscriberId;
     }
 
-    public ConsumerBasketActivationStatus getConsumerBasketStatus() {
-        return consumerBasketStatus;
+    public ConsumerBasketActivationStatus getConsumerBasketActivationStatus() {
+        return consumerBasketActivationStatus;
     }
 
-    public void setConsumerBasketStatus(ConsumerBasketActivationStatus consumerBasketStatus) {
-        this.consumerBasketStatus = consumerBasketStatus;
+    public void setConsumerBasketActivationStatus(ConsumerBasketActivationStatus consumerBasketActivationStatus) {
+        this.consumerBasketActivationStatus = consumerBasketActivationStatus;
     }
 
     public List<SubscriptionItemView> getSubscriptionItemViews() {

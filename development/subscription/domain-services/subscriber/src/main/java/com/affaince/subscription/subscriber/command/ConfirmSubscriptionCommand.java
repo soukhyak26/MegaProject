@@ -7,13 +7,13 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
  */
 public class ConfirmSubscriptionCommand {
     @TargetAggregateIdentifier
-    private final String subscriptionId;
+    private final String subscriberId;
 
-    public ConfirmSubscriptionCommand(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public ConfirmSubscriptionCommand(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 
-    public String getSubscriptionId() {
-        return subscriptionId;
+    public String getSubscriberId() {
+        return subscriberId;
     }
 }

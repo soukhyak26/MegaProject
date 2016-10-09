@@ -8,23 +8,17 @@ import org.joda.time.LocalDate;
  */
 public class PaymentReceivedFromSourceCommand {
     @TargetAggregateIdentifier
-    private String subscriptionId;
     private String subscriberId;
     private double paymentAmount;
     private LocalDate paymentDate;
 
     public PaymentReceivedFromSourceCommand(String subscriptionId, String subscriberId, double paymentAmount, LocalDate paymentDate) {
-        this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
         this.paymentAmount = paymentAmount;
         this.paymentDate = paymentDate;
     }
 
     public PaymentReceivedFromSourceCommand() {
-    }
-
-    public String getSubscriptionId() {
-        return subscriptionId;
     }
 
     public String getSubscriberId() {

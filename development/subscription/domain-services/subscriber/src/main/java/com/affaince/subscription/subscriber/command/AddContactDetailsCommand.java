@@ -7,13 +7,13 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
  */
 public class AddContactDetailsCommand {
     @TargetAggregateIdentifier
-    private String subscriptionId;
+    private String subscriberId;
     private String email;
     private String mobileNumber;
     private String alternativeNumber;
 
-    public AddContactDetailsCommand(String subscriptionId, String email, String mobileNumber, String alternativeNumber) {
-        this.subscriptionId = subscriptionId;
+    public AddContactDetailsCommand(String subscriberId, String email, String mobileNumber, String alternativeNumber) {
+        this.subscriberId = subscriberId;
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.alternativeNumber = alternativeNumber;
@@ -22,35 +22,19 @@ public class AddContactDetailsCommand {
     public AddContactDetailsCommand() {
     }
 
-    public String getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getMobileNumber() {
         return mobileNumber;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
     public String getAlternativeNumber() {
         return alternativeNumber;
-    }
-
-    public void setAlternativeNumber(String alternativeNumber) {
-        this.alternativeNumber = alternativeNumber;
     }
 }

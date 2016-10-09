@@ -7,20 +7,20 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
  */
 public class SubscriptionActivationCommand {
     @TargetAggregateIdentifier
-    private String subscriptionId;
+    private String subscriberId;
 
-    public SubscriptionActivationCommand(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public SubscriptionActivationCommand(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 
     public SubscriptionActivationCommand() {
     }
 
-    public String getSubscriptionId() {
-        return subscriptionId;
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public void setSubscriberId(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 }

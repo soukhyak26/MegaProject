@@ -8,8 +8,7 @@ import com.affaince.subscription.subscriber.command.AddAddressToSubscriptionComm
 import com.affaince.subscription.subscriber.command.AddItemToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.PaymentReceivedFromSourceCommand;
 import com.affaince.subscription.subscriber.command.event.*;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
@@ -20,11 +19,9 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
-public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
+public class Subscription extends AbstractAnnotatedEntity {
 
-    @AggregateIdentifier
     private String subscriptionId;
-    private String subscriberId;
     private ConsumerBasketActivationStatus consumerBasketStatus;
     private List<SubscriptionItem> subscriptionItems;
     private Address shippingAddress;
@@ -52,7 +49,6 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(SubscriptionCreatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();
-        this.subscriberId = event.getSubscriberId();
         this.subscriptionCreatedDate = event.getBasketCreatedDate();
         this.subscriptionExpiredDate = event.getBasketExpiredDate();
         this.consumerBasketStatus = event.getConsumerBasketStatus();
@@ -179,10 +175,6 @@ public class Subscription extends AbstractAnnotatedAggregateRoot<String> {
 
     public String getSubscriptionId() {
         return subscriptionId;
-    }
-
-    public String getSubscriberId() {
-        return subscriberId;
     }
 
     public List<SubscriptionItem> getSubscriptionItems() {

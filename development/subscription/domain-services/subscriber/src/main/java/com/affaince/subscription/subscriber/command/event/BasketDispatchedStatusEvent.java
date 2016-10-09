@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by mandark on 21-08-2015.
  */
 public class BasketDispatchedStatusEvent {
-    private String basketId;
+    private String subscriberId;
     private Date dispatchDate;
     private int dispactchStatusCode;
     private int reasonCode;
@@ -14,12 +14,12 @@ public class BasketDispatchedStatusEvent {
     public BasketDispatchedStatusEvent() {
     }
 
-    public String getBasketId() {
-        return this.basketId;
+    public String getSubscriberId() {
+        return this.subscriberId;
     }
 
-    public void setBasketId(String basketId) {
-        this.basketId = basketId;
+    public void setSubscriberId(String subscriberId) {
+        this.subscriberId = subscriberId;
     }
 
     public Date getDispatchDate() {

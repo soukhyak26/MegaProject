@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.subscriber.command.AddItemToSubscriptionCommand;
+import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.Subscription;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -13,16 +14,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddItemToSubscriptionCommandHandler {
 
-    private final Repository<Subscription> repository;
+    private final Repository<Subscriber> repository;
 
     @Autowired
-    public AddItemToSubscriptionCommandHandler(Repository<Subscription> repository) {
+    public AddItemToSubscriptionCommandHandler(Repository<Subscriber> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
     public void handle(AddItemToSubscriptionCommand command) {
-        Subscription subscription = repository.load(command.getSubscriptionId());
+        final Subscriber subscriber = repository.load(command.getSubscriberId());
+        Subscription subscription = subscriber.getSubscription();
         subscription.addItemToBasket(command);
     }
 }

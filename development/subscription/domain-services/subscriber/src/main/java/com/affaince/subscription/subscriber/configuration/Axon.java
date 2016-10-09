@@ -1,7 +1,10 @@
 package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.ActiveMQConfiguration;
-import com.affaince.subscription.subscriber.command.domain.*;
+import com.affaince.subscription.subscriber.command.domain.BasketRule;
+import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
+import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
+import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.event.BenefitAddedEvent;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -23,13 +26,6 @@ public class Axon extends ActiveMQConfiguration {
     public Repository<Subscriber> createRepository(DisruptorCommandBus commandBus) {
 
         Repository<Subscriber> repository = commandBus.createRepository(new GenericAggregateFactory<>(Subscriber.class));
-        return repository;
-    }
-
-    @Bean
-    public Repository<Subscription> createSubscriptionRepository(DisruptorCommandBus commandBus) {
-
-        Repository<Subscription> repository = commandBus.createRepository(new GenericAggregateFactory<>(Subscription.class));
         return repository;
     }
 

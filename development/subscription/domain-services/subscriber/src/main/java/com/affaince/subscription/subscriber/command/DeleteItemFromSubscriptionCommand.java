@@ -7,30 +7,22 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
  */
 public class DeleteItemFromSubscriptionCommand {
     @TargetAggregateIdentifier
-    private String subscriptionId;
+    private String subscriberId;
     private String itemId;
 
-    public DeleteItemFromSubscriptionCommand(String subscriptionId, String itemId) {
-        this.subscriptionId = subscriptionId;
+    public DeleteItemFromSubscriptionCommand(String subscriberId, String itemId) {
+        this.subscriberId = subscriberId;
         this.itemId = itemId;
     }
 
     public DeleteItemFromSubscriptionCommand() {
     }
 
-    public String getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getItemId() {
         return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
     }
 }

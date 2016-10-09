@@ -1,6 +1,6 @@
 import io.gatling.core.Predef._
-import io.gatling.http.Predef._
 import io.gatling.core.session.el._
+import io.gatling.http.Predef._
 
 import scala.util.Random
 
@@ -8,7 +8,6 @@ import scala.util.Random
   * Created by rbsavaliya on 04-03-2016.
   */
 class Subscriber extends BaseSimulator {
-
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
       .repeat(1) {
         CreateSubscriber.setPassword
@@ -18,6 +17,9 @@ class Subscriber extends BaseSimulator {
     }
     .repeat(5) {
       CreateSubscriber.addItemToSubscription
+    }
+    .repeat(1) {
+      CreateSubscriber.confirmSubscription
     }
 
 
@@ -31,7 +33,7 @@ object CreateSubscriber {
 
   val createSubscriberUrl="http://localhost:8081/subscriber"
   val createSubscriptionUrl = "http://localhost:8081/subscription"
-  val feeder = csv ("subscriber.csv").queue
+  //val feeder = csv ("subscriber.csv").queue
 
   val createSubscriber = exec(session => session.set("randomeName", Random.nextInt(5)))
       .exec(
@@ -83,18 +85,18 @@ object CreateSubscriber {
           StringBody(
             """
               |{
-              | "userId":"${subscriberId}"
+              | "subscriberId":"${subscriberId}"
               |}
             """.stripMargin
           )
         ).asJSON
-        .check(jsonPath("$.id").saveAs("subscriptionId"))
+        .check(jsonPath("$.id").saveAs("subscriberId"))
     )
 
-  val addItemToSubscription = feed (feeder)
-    .exec(
+  val addItemToSubscription = //feed (feeder)
+    exec(
       http("Add Item To Subscription")
-        .put ((createSubscriptionUrl + "/additem/${subscriptionId}").el[String])
+        .put((createSubscriptionUrl + "/additem/${subscriberId}").el[String])
         .body(
           StringBody (
             """
@@ -109,5 +111,11 @@ object CreateSubscriber {
             """.stripMargin
           )
         ).asJSON
+    )
+
+  val confirmSubscription =
+    exec(
+      http("Confirm Subscription")
+        .put((createSubscriptionUrl + "/confirmsubscription/${subscriberId}").el[String])
     )
 }

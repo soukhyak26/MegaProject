@@ -18,6 +18,7 @@ import com.affaince.subscription.subscriber.services.benefit.context.BenefitResu
 import com.affaince.subscription.subscriber.services.encoder.Base64Encoder;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
@@ -51,6 +52,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     private double totalSubscriptionAmount;
     private int totalLoyaltyPeriod;
     private LocalDate lastDeliveryDate;
+    @EventSourcedMember
+    private Subscription subscription;
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
@@ -231,15 +234,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return deliveries;
     }
 
-    public void confirmSubscription(Subscription subscription, DeliveryChargesRule deliveryChargesRule) {
+    public void confirmSubscription(Subscription subscription) {
         final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
         BenefitResult benefitResult = calculateBenefits(subscription, deliveries);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
-            delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
             delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
-            apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), subscription.getSubscriberId(), subscription.getSubscriptionId(),
+            apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                     delivery.getTotalWeight()));
         }
@@ -256,6 +258,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
         BenefitResult benefitResult = benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
         return benefitResult;
+    }
+
+    public void setActiveSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
     }
 }
 

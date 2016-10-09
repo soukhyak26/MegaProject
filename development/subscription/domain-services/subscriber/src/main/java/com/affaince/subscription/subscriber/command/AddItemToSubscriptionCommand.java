@@ -8,7 +8,7 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
  */
 public class AddItemToSubscriptionCommand {
     @TargetAggregateIdentifier
-    private String subscriptionId;
+    private String subscriberId;
     private String productId;
     private int countPerPeriod;
     private Period period;
@@ -17,8 +17,8 @@ public class AddItemToSubscriptionCommand {
     private int noOfCycles;
     private double weightInGrms;
 
-    public AddItemToSubscriptionCommand(String subscriptionId, String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
-        this.subscriptionId = subscriptionId;
+    public AddItemToSubscriptionCommand(String subscriberId, String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
+        this.subscriberId = subscriberId;
         this.productId = productId;
         this.countPerPeriod = countPerPeriod;
         this.period = period;
@@ -28,11 +28,8 @@ public class AddItemToSubscriptionCommand {
         this.weightInGrms = weightInGrms;
     }
 
-    public AddItemToSubscriptionCommand() {
-    }
-
-    public String getSubscriptionId() {
-        return subscriptionId;
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getProductId() {

@@ -27,7 +27,6 @@ public class RestControllerExceptionHandler {
     @ResponseBody
     @ExceptionHandler({SubscriberNotFoundException.class, ConsumerBasketNotFoundException.class, BasketNotFoundException.class})
     protected Object handleResourceNotFoundException(Exception exception) {
-        System.out.println("in handleResourceNotFoundException @@@@@@@");
         HttpStatus status = HttpStatus.NOT_FOUND;
         Map body = buildErrorAttributes(exception.getMessage());
         return new ResponseEntity<Map<String, Object>>(body, status);
@@ -36,7 +35,6 @@ public class RestControllerExceptionHandler {
     @ResponseBody
     @ExceptionHandler({MethodArgumentNotValidException.class})
     protected Object handleInvalidRequestArgumentHandler(MethodArgumentNotValidException exception) {
-        System.out.println("in handleInvalidRequestArgumentHandler @@@@@@@");
         HttpStatus status = HttpStatus.BAD_REQUEST;
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         ModelMap map = new ModelMap();
