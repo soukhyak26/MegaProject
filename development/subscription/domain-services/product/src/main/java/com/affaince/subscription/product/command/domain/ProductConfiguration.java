@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.joda.time.LocalDateTime;
@@ -10,8 +11,6 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private String productId;
     //whether to aggregate daily actuals for daily/weekly/monthly/quarterly Forecast
     private int actualsAggregationPeriodForTargetForecast = 30;
-    //does merchant want to leverage price recommendation or not.
-    private boolean isPriceRecommendationOn;
     //percent difference in acutal and forecasted demand which should trigger price calculation
     private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
@@ -20,17 +19,18 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private LocalDateTime nextForecastDate;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
+    private PricingOptions pricingOptions;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
 
-    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, boolean isPriceRecommendationOn, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.demandCurvePeriod = demandCurvePeriod;
-        this.isPriceRecommendationOn = isPriceRecommendationOn;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
+        this.pricingOptions = pricingOptions;
         this.pricingStrategyType = pricingStrategyType;
     }
 
@@ -88,6 +88,15 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
 
     public void setDemandCurvePeriod(Period demandCurvePeriod) {
         this.demandCurvePeriod = demandCurvePeriod;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
     }
 
     public double getDemandCurvePeriodInDays() {

@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.event;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 
 
@@ -8,23 +9,22 @@ public class ProductPricingConfigurationSetEvent {
     private String productId;
     //whether to aggregate daily actuals for daily/weekly/monthly/quarterly Forecast
     private int actualsAggregationPeriodForTargetForecast = 30;
-    //does merchant want to leverage price recommendation or not.
-    private boolean isPriceRecommendationOn;
     //percent difference in acutal and forecasted demand which should trigger price calculation
     private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private PricingOptions pricingOptions;
     private PricingStrategyType pricingStrategyType;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
 
-    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, boolean isPriceRecommendationOn, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, Period demandCurvePeriod) {
+    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
-        this.isPriceRecommendationOn = isPriceRecommendationOn;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
+        this.pricingOptions = pricingOptions;
         this.pricingStrategyType = pricingStrategyType;
         this.demandCurvePeriod = demandCurvePeriod;
     }
@@ -35,10 +35,6 @@ public class ProductPricingConfigurationSetEvent {
 
     public int getActualsAggregationPeriodForTargetForecast() {
         return actualsAggregationPeriodForTargetForecast;
-    }
-
-    public boolean isPriceRecommendationOn() {
-        return isPriceRecommendationOn;
     }
 
     public double getTargetChangeThresholdForPriceChange() {
@@ -59,5 +55,9 @@ public class ProductPricingConfigurationSetEvent {
 
     public Period getDemandCurvePeriod() {
         return demandCurvePeriod;
+    }
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
     }
 }

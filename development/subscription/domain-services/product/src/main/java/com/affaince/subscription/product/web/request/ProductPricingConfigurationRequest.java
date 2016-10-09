@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.web.request;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 
 /**
@@ -9,12 +10,11 @@ import com.affaince.subscription.product.vo.PricingStrategyType;
 public class ProductPricingConfigurationRequest {
     //whether to aggregate daily actuals for daily/weekly/monthly/quarterly Forecast
     private int actualsAggregationPeriodForTargetForecast;
-    //does merchant want to leverage price recommendation or not.
-    private boolean isPriceRecommendationOn;
     //percent difference in acutal and forecasted demand which should trigger price calculation
     private double targetChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
+    private PricingOptions pricingOptions;
     private PricingStrategyType pricingStrategyType;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
@@ -47,15 +47,31 @@ public class ProductPricingConfigurationRequest {
         return actualsAggregationPeriodForTargetForecast;
     }
 
-    public boolean isPriceRecommendationOn() {
-        return isPriceRecommendationOn;
+    public void setActualsAggregationPeriodForTargetForecast(int actualsAggregationPeriodForTargetForecast) {
+        this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
     }
 
     public PricingStrategyType getPricingStrategyType() {
         return pricingStrategyType;
     }
 
+    public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
+        this.pricingStrategyType = pricingStrategyType;
+    }
+
     public Period getDemandCurvePeriod() {
         return demandCurvePeriod;
+    }
+
+    public void setDemandCurvePeriod(Period demandCurvePeriod) {
+        this.demandCurvePeriod = demandCurvePeriod;
+    }
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
+    }
+
+    public void setPricingOptions(PricingOptions pricingOptions) {
+        this.pricingOptions = pricingOptions;
     }
 }

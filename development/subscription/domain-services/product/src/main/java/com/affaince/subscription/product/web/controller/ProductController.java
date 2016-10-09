@@ -14,7 +14,7 @@ import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddCurrentOfferedPriceRequest;
 import com.affaince.subscription.product.web.request.RegisterProductRequest;
 import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
-import com.affaince.subscription.repository.DefaultIdGenerator;
+import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
@@ -42,7 +42,7 @@ public class ProductController {
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
 
     @Autowired
-    DefaultIdGenerator defaultIdGenerator;
+    IdGenerator defaultIdGenerator;
 
     @Autowired
     public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository) {
