@@ -213,6 +213,14 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
     }
 
+    @EventSourcingHandler
+    public void on(ProductSubscriptionUpdatedEvent event) {
+        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        latestPriceBucket.setNumberOfNewSubscriptions(latestPriceBucket.getNumberOfNewSubscriptions() + event.getSubscriptionCount());
+        double expectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(latestPriceBucket);
+        latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
+
+    }
     public double findLatestFixedExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
         FixedExpensePerProduct latestFixedExpense = null;
         for (FixedExpensePerProduct fixedExp : fixedExpenseVersions) {
@@ -264,11 +272,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
 
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
-        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
-        latestPriceBucket.setNumberOfNewSubscriptions(latestPriceBucket.getNumberOfNewSubscriptions() + command.getProductSubscriptionCount());
-        double expectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(latestPriceBucket);
-        latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
-        apply(new ProductSubscriptionUpdatedEvent(command.getProductId(), command.getProductSubscriptionCount(), command.getSubscriptionActivateDate(), expectedProfitPerPriceBucket));
+        apply(new ProductSubscriptionUpdatedEvent(command.getProductId(), command.getProductSubscriptionCount(), command.getSubscriptionActivateDate()));
     }
 
     public PriceBucket findEarlierPriceBucketInActivePriceBuckets(PriceBucket priceBucket) {

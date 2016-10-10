@@ -2,16 +2,16 @@ package com.affaince.subscription.product.command.event;
 
 import com.affaince.subscription.product.command.domain.PriceBucket;
 
-public class OfferedPriceRecommendedEvent {
-    private String productId;
-    private PriceBucket newPriceBucket;
+/**
+ * Created by mandar on 10-10-2016.
+ */
+public class OfferedPriceChangedEvent {
+    private final String productId;
+    private final PriceBucket newPriceBucket;
 
-    public OfferedPriceRecommendedEvent() {
-    }
-
-    public OfferedPriceRecommendedEvent(String productId, PriceBucket priceBucket) {
+    public OfferedPriceChangedEvent(String productId, PriceBucket newPriceBucket) {
         this.productId = productId;
-        this.newPriceBucket = priceBucket;
+        this.newPriceBucket = newPriceBucket;
     }
 
     public String getProductId() {

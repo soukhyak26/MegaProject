@@ -160,4 +160,15 @@ public class PriceBucket extends AbstractAnnotatedEntity {
 
     }
 
+    public void addSubscriptionToPriceBucket(int subscriptionCount) {
+        this.numberOfNewSubscriptions += subscriptionCount;
+        //SHALL WE UPDATE TOTALSUBSCRIPTION COUNT ALSO?
+        this.numberOfExistingSubscriptions += subscriptionCount;
+    }
+
+    public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
+        this.numberOfChurnedSubscriptions -= subscriptionCount;
+        //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
+        this.numberOfExistingSubscriptions -= subscriptionCount;
+    }
 }

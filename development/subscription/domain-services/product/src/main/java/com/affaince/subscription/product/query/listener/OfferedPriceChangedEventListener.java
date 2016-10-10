@@ -2,7 +2,7 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.event.OfferedPriceRecommendedEvent;
+import com.affaince.subscription.product.command.event.OfferedPriceChangedEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
@@ -29,15 +29,15 @@ public class OfferedPriceChangedEventListener {
     }
 
     @EventHandler
-    public void on(OfferedPriceRecommendedEvent event) {
+    public void on(OfferedPriceChangedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(event.getProductId(), event.getCurrentPriceDate()));
-        newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPricePerUnit());
-        newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
-        newPriceBucket.setEntityStatus(event.getEntityStatus());
+        PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(event.getProductId(), event.getNewPriceBucket().getFromDate()));
+        newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getNewPriceBucket().getOfferedPriceOrPercentDiscountPerUnit());
+        newPriceBucket.setTaggedPriceVersion(event.getNewPriceBucket().getTaggedPriceVersion());
+        newPriceBucket.setEntityStatus(event.getNewPriceBucket().getEntityStatus());
         newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
-        latestPriceBucket.setToDate(event.getCurrentPriceDate());
+        latestPriceBucket.setToDate(event.getNewPriceBucket().getToDate());
         priceBucketViewRepository.save(latestPriceBucket);
         priceBucketViewRepository.save(newPriceBucket);
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());

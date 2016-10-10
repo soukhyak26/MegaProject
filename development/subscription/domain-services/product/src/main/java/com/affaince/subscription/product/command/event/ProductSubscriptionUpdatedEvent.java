@@ -9,13 +9,11 @@ public class ProductSubscriptionUpdatedEvent {
     private final String productId;
     private final int subscriptionCount;
     private final LocalDate subscriptionActivationDate;
-    private double expectedProfitPerPriceBucket;
 
-    public ProductSubscriptionUpdatedEvent(String productId, int productSubscriptionCount,LocalDate subscriptionActivationDate,double expectedProfitPerPriceBucket) {
+    public ProductSubscriptionUpdatedEvent(String productId, int productSubscriptionCount, LocalDate subscriptionActivationDate) {
         this.productId = productId;
         this.subscriptionCount = productSubscriptionCount;
         this.subscriptionActivationDate = subscriptionActivationDate;
-        this.expectedProfitPerPriceBucket= expectedProfitPerPriceBucket;
     }
 
     public String getProductId() {
@@ -30,7 +28,4 @@ public class ProductSubscriptionUpdatedEvent {
         return subscriptionActivationDate;
     }
 
-    public double getExpectedProfitPerPriceBucket() {
-        return expectedProfitPerPriceBucket;
-    }
 }

@@ -32,7 +32,7 @@ public class ProductSubscriptionUpdatedEventListener {
         productActualMetricsView.setTotalNumberOfExistingSubscriptions(subscribedProductCount + event.getSubscriptionCount());
         productActualMetricsViewRepository.save(productActualMetricsView);
         PriceBucketView latestPriceBucket= PriceBucketView.getLatestPriceBucket(priceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId()));
-        latestPriceBucket.setTotalProfit(event.getExpectedProfitPerPriceBucket());
+        //latestPriceBucket.setTotalProfit(event.getExpectedProfitPerPriceBucket());
         priceBucketViewRepository.save(latestPriceBucket);
     }
 }
