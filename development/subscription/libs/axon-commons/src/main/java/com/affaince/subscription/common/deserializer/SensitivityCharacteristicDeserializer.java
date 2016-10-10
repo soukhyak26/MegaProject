@@ -3,10 +3,9 @@ package com.affaince.subscription.common.deserializer;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
@@ -16,14 +15,17 @@ import java.io.IOException;
 public class SensitivityCharacteristicDeserializer extends JsonDeserializer<SensitivityCharacteristic> {
     @Override
     public SensitivityCharacteristic deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        ObjectCodec oc = jsonParser.getCodec();
-        JsonNode node = oc.readTree(jsonParser);
-
-        if (node == null) {
-            return null;
+        JsonToken currentToken = jsonParser.getCurrentToken();
+        if (currentToken == JsonToken.VALUE_STRING) {
+            int characteristicNumber = jsonParser.getIntValue();
+            for (SensitivityCharacteristic sensitivityCharacteristic : SensitivityCharacteristic.values()) {
+                if (sensitivityCharacteristic.getCharacteristicNumber() == characteristicNumber) {
+                    return sensitivityCharacteristic;
+                }
+            }
         }
-        int value = node.intValue();
-        return SensitivityCharacteristic.valueOf(value);
+        return null;
+
     }
 
 }
