@@ -21,10 +21,10 @@ public class ProductConfigurationView {
     private PricingOptions pricingOptions;
     private LocalDateTime nextForecastDate;
 
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions) {
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
-        this.targetChangeThresholdForPriceChange = changeThresholdForPriceChange;
+        this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
         this.pricingStrategyType = pricingStrategyType;

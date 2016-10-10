@@ -9,4 +9,8 @@ public class ManualForecastAddedEvent {
     public ManualForecastAddedEvent(String productId) {
         this.productId = productId;
     }
+
+    public String getProductId() {
+        return productId;
+    }
 }
