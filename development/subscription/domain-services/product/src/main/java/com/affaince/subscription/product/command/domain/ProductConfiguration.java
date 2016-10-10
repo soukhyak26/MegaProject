@@ -140,6 +140,4 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
             return -1;
         }
     }
-
-
 }

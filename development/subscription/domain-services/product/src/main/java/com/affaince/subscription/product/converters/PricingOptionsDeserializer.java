@@ -3,10 +3,9 @@ package com.affaince.subscription.product.converters;
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
@@ -17,14 +16,16 @@ public class PricingOptionsDeserializer extends JsonDeserializer<PricingOptions>
 
     @Override
     public PricingOptions deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        ObjectCodec oc = jsonParser.getCodec();
-        JsonNode node = oc.readTree(jsonParser);
-
-        if (node == null) {
-            return null;
+        JsonToken currentToken = jsonParser.getCurrentToken();
+        if (currentToken == JsonToken.VALUE_NUMBER_INT) {
+            int pricingOptionValue = jsonParser.getIntValue();
+            for (PricingOptions pricingOptions : PricingOptions.values()) {
+                if (pricingOptions.getPricingOptionValue() == pricingOptionValue) {
+                    return pricingOptions;
+                }
+            }
         }
-        int value = node.intValue();
-        return PricingOptions.valueOf(value);
+        return null;
     }
 
 
