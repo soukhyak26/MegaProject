@@ -28,12 +28,19 @@ public class ProductPricingConfigurationSetEventListener {
 
     @EventSourcingHandler
     public void on(ProductPricingConfigurationSetEvent event) throws InvalidProductStatusException, ProductNotFoundException {
-        //final ProductConfigurationView productConfigurationView = new ProductConfigurationView();
-        final ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
-        productConfigurationView.setProductId(event.getProductId());
-        productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
-        productConfigurationView.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
-        productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
+
+        ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
+        if (null == productConfigurationView) {
+            productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType(), event.getPricingOptions());
+        } else {
+            productConfigurationView.setProductId(event.getProductId());
+            productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
+            productConfigurationView.setCrossPriceElasticityConsidered(event.isCrossPriceElasticityConsidered());
+            productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
+            productConfigurationView.setActualsAggregationPeriodForTargetForecast(event.getActualsAggregationPeriodForTargetForecast());
+            productConfigurationView.setPricingOptions(event.getPricingOptions());
+            productConfigurationView.setPricingStrategyType(event.getPricingStrategyType());
+        }
         productConfigurationViewRepository.save(productConfigurationView);
         final ProductActivationStatusView productActivationStatusView = productActivationStatusViewRepository.findByProductId(event.getProductId());
         if(productActivationStatusView == null) {

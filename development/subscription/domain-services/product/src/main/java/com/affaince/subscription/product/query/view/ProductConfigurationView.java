@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
+import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
@@ -17,15 +18,17 @@ public class ProductConfigurationView {
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
+    private PricingOptions pricingOptions;
     private LocalDateTime nextForecastDate;
 
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType) {
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double changeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = changeThresholdForPriceChange;
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
         this.pricingStrategyType = pricingStrategyType;
+        this.pricingOptions = pricingOptions;
     }
 
     public String getProductId() {
@@ -82,5 +85,13 @@ public class ProductConfigurationView {
 
     public void setNextForecastDate(LocalDateTime nextForecastDate) {
         this.nextForecastDate = nextForecastDate;
+    }
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
+    }
+
+    public void setPricingOptions(PricingOptions pricingOptions) {
+        this.pricingOptions = pricingOptions;
     }
 }
