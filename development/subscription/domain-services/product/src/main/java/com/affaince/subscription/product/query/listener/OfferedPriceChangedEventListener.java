@@ -37,7 +37,7 @@ public class OfferedPriceChangedEventListener {
         newPriceBucket.setTaggedPriceVersion(event.getNewPriceBucket().getTaggedPriceVersion());
         newPriceBucket.setEntityStatus(event.getNewPriceBucket().getEntityStatus());
         newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
-        latestPriceBucket.setToDate(event.getNewPriceBucket().getToDate());
+        latestPriceBucket.setToDate(event.getNewPriceBucket().getToDate().minusMillis(1));
         priceBucketViewRepository.save(latestPriceBucket);
         priceBucketViewRepository.save(newPriceBucket);
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());

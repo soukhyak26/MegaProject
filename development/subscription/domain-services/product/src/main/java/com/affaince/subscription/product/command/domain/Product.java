@@ -138,18 +138,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.getProductConfiguration().setNextForecastDate(event.getForecastEndDate().plusDays(1));
     }
 
-    @EventSourcingHandler
-    public void on(RecommendedPriceAcceptedEvent event) {
-        PriceBucket latestRecommendedPriceBucket = getLatestRecommendedPriceBucket();
-        //shall we keep the same date as mentioned in recommended bucket?? for now....yes
-        getProductAccount().addNewPriceBucket(latestRecommendedPriceBucket.getFromDate(), latestRecommendedPriceBucket);
-
-    }
-
-    @EventSourcingHandler
-    public void on(RecommendedPriceOverriddenEvent event) {
-    }
-
 
     @EventSourcingHandler
     public void on(ManualForecastAddedEvent manualForecastAddedEvent) {

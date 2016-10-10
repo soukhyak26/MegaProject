@@ -34,7 +34,7 @@ public class ProductConfigurationController {
         this.productViewRepository = productViewRepository;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/pricingconfig/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> setProductPricingConfiguration(@PathVariable String productId, @RequestBody @Valid ProductPricingConfigurationRequest request) throws Exception {
         final ProductView productView = this.productViewRepository.findOne(productId);

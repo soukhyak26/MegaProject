@@ -114,7 +114,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public void addNewPriceBucket(LocalDateTime date, PriceBucket priceBucket) {
         PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
-        closePriceBucketForSubscription(latestPriceBucket, date);
+        closePriceBucketForSubscription(latestPriceBucket, date.minusMillis(1));
         activePriceBuckets.put(date, priceBucket);
     }
 
