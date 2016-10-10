@@ -1,6 +1,7 @@
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
 import io.gatling.http.Predef._
+import org.joda.time.LocalDateTime
 
 import scala.util.Random
 
@@ -10,7 +11,7 @@ import scala.util.Random
 class Product extends BaseSimulator {
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct)
-    .repeat(1) {
+    .repeat(10) {
       AddProjectionParameter.addProjectionParameter
     }
     .repeat(1) {
@@ -22,12 +23,14 @@ class Product extends BaseSimulator {
 
 object RegisterProduct {
 
-  val createProductUrl="http://localhost:8082/product"
+  val createProductUrl = "http://localhost:8082/product"
+  val createProductConfigUrl = "http://localhost:8082/productconfig"
+  val createProjectionUrl = "http://localhost:8082/forecast"
   val feeder = csv("product.csv").queue
 
   val registerProduct = exec(session => session.set("randomProductId", Random.nextInt(20000)))
     .exec(
-      http ("Register Product")
+      http("Register Product")
         .post(createProductUrl)
         .body(
           StringBody(
@@ -45,51 +48,54 @@ object RegisterProduct {
             """.stripMargin
           )
         ).asJSON
-        .check (jsonPath("$.id").saveAs("productId"))
+        .check(jsonPath("$.id").saveAs("productId"))
     )
 }
 
 object AddProjectionParameter {
-
-  val addProjectionParameter = exec (
-    http("Add Projection Parameter to Product")
-      .put((RegisterProduct.createProductUrl + "/addprojectionparameters/${productId}").el[String])
-      .body(
-        StringBody(
-          """
-            |{
-            |    "forecastedPriceParameter":{
-            |        "purchasePricePerUnit":"30",
-            |        "MRP":"40",
-            |        "numberOfNewCustomersAssociatedWithAPrice":"1000",
-            |        "numberOfChurnedCustomersAssociatedWithAPrice":"50"
-            |    },
-            |    "demandDensity":"1.2",
-            |    "averageDemandPerSubscriber":"2",
-            |    "totalDeliveriesPerPeriod":"1",
-            |    "averageWeightPerDelivery":"500"
-            |}
-          """.stripMargin
-        )
-      ).asJSON
-  )
+  val feeder1 = csv("projectionparameter.csv").queue
+  val localDateTime = LocalDateTime.now().plusDays(30).toString("yyyy-MM-dd HH:mm:ss")
+  val localEndDateTime = LocalDateTime.now().plusDays(30).plusYears(1000).toString("yyyy-MM-dd")
+  val addProjectionParameter =
+    feed(feeder1).exec(session => session.set("localDateTime", LocalDateTime.now().plusDays(30).toString("yyyy-MM-dd")))
+      //exec(session => session.set("localEndDateTime", LocalDateTime.now().plusDays(30).plusYears(1000).toString("dd-MM-yyyy HH:mm:ss")))
+      .exec(
+      http("Add Projection Parameter to Product")
+        .put((RegisterProduct.createProjectionUrl + "/addforecast/${productId}").el[String])
+        .body(
+          StringBody(
+            """
+              |{
+              |    "productForecastParameters":[{"startDate":"2016-10-10", "endDate":"2016-10-10",
+              |    "purchasePricePerUnit":${purchasePricePerUnit},"MRP":${MRP},
+              |    "numberofNewSubscriptions":${numberofNewSubscriptions},
+              |    "numberOfChurnedSubscriptions":${numberOfChurnedSubscriptions},
+              |    "numberOfTotalSubscriptions":${numberOfTotalSubscriptions},
+              |    "productForecastStatus":1}]
+              |}
+            """.
+              stripMargin
+          )
+        ).asJSON
+    )
 }
 
 object AddConfigurationParameters {
 
-  val addConfigurationParameters = exec (
+  val addConfigurationParameters = exec(
     http("Add Configuration Parameters to Product")
-      .put((RegisterProduct.createProductUrl + "/setproductconfig/${productId}").el[String])
+      .put((RegisterProduct.createProductConfigUrl + "/${productId}").el[String])
       .body(
         StringBody(
           """
             |{
-            |    "demandCurvePeriod":{"value":"1","unit":"MONTH"},
-            |    "revenueChangeThresholdForPriceChange":"10",
-            |    "isCrossPriceElasticityConsidered":"true",
-            |    "isAdvertisingExpensesConsidered":"true",
-            |    "demandWiseProfitSharingRules":[{"demandDensityPercentage":"10","sharedProfitPercentage":"20"},
-            |    {"demandDensityPercentage":"15","sharedProfitPercentage":"30"}]
+            |    "demandCurvePeriod":{"value":"1","unit":"YEAR"},
+            |    "targetChangeThresholdForPriceChange":0.1,
+            |    "isCrossPriceElasticityConsidered":"false",
+            |    "isAdvertisingExpensesConsidered":"false",
+            |    "actualsAggregationPeriodForTargetForecast":30,
+            |    "pricingOptions":1,
+            |    "pricingStrategyType":1
             |}
           """.stripMargin
         )
