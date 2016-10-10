@@ -16,7 +16,7 @@ public class SensitivityCharacteristicSerializer extends JsonSerializer<Sensitiv
     public void serialize(SensitivityCharacteristic sensitivityCharacteristic, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException,
             JsonProcessingException {
         generator.writeStartObject();
-        generator.writeFieldName("characteristicNumber");
+        generator.writeFieldName("SensitivityCharacteristic");
         generator.writeNumber(sensitivityCharacteristic.getCharacteristicNumber());
         generator.writeEndObject();
     }

@@ -16,7 +16,7 @@ public class QuantityUnitSerializer extends JsonSerializer<QuantityUnit> {
     public void serialize(QuantityUnit quantityUnit, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException,
             JsonProcessingException {
         generator.writeStartObject();
-        generator.writeFieldName("unitName");
+        generator.writeFieldName("QuantityUnit");
         generator.writeString(quantityUnit.getUnitName());
         generator.writeEndObject();
     }

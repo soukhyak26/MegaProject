@@ -16,7 +16,7 @@ public class PricingChoiceTypeSerializer extends JsonSerializer<PricingChoiceTyp
     public void serialize(PricingChoiceType pricingChoiceType, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException,
             JsonProcessingException {
         generator.writeStartObject();
-        generator.writeFieldName("choiceValue");
+        generator.writeFieldName("PricingChoiceType");
         generator.writeNumber(pricingChoiceType.getChoiceValue());
         generator.writeEndObject();
     }

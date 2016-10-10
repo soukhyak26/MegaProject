@@ -12,7 +12,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonDeserialize(using = QuantityUnitDeserializer.class)
 public enum QuantityUnit {
     GM("gram"), KG("kilogram"), LT("Litre"), ml("millilitre");
+
     private String unitName;
+
     private QuantityUnit(String name) {
         this.unitName = name;
     }
@@ -20,4 +22,5 @@ public enum QuantityUnit {
     public String getUnitName() {
         return unitName;
     }
+
 }
