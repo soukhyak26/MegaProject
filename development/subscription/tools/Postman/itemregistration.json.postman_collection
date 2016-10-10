@@ -54,7 +54,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"rawModeData": "{\n    \"batchId\":\"123\",\n    \"categoryId\":\"cat01\",\n    \"categoryName\":\"Computer\",\n    \"subCategoryId\":\"subcat01\",\n    \"getSubCategoryNmae\":\"memorycard\",\n    \"productId\":\"123\",\n    \"currentMRP\":\"400\",\n    \"currentOfferedPrice\":\"100.5\",\n    \"currentStockInUnits\":\"200\",\n    \"currentPriceDate\":\"25/07/2015\"\n}"
+			"rawModeData": "{\n    \"batchId\":\"123\",\n    \"categoryId\":\"cat01\",\n    \"categoryName\":\"Computer\",\n    \"subCategoryId\":\"subcat01\",\n    \"getSubCategoryNmae\":\"memorycard\",\n    \"productId\":\"123\",\n    \"currentMRP\":\"400\",\n    \"currentOfferedPriceOrPercent\":\"100.5\",\n    \"currentStockInUnits\":\"200\",\n    \"currentPriceDate\":\"25/07/2015\"\n}"
 		},
 		{
 			"id": "6355315f-4c26-29e9-cd11-ced555f0c607",
@@ -94,7 +94,7 @@
 			"description": "create item first time",
 			"collectionId": "90e3750c-bb04-93eb-046d-dd8861a7dcb4",
 			"responses": [],
-			"rawModeData": "{\n    \"batchId\":\"123\",\n    \"categoryId\":\"cat01\",\n    \"categoryName\":\"Computer\",\n    \"subCategoryId\":\"subcat01\",\n    \"subCategoryName\":\"memorycard\",\n    \"productId\":\"123\",\n    \"currentPurchasePricePerUnit\":\"300\",\n    \"currentMRP\":\"400\",\n    \"currentOfferedPrice\":\"380\",\n    \"currentStockInUnits\":\"200\"\n}"
+			"rawModeData": "{\n    \"batchId\":\"123\",\n    \"categoryId\":\"cat01\",\n    \"categoryName\":\"Computer\",\n    \"subCategoryId\":\"subcat01\",\n    \"subCategoryName\":\"memorycard\",\n    \"productId\":\"123\",\n    \"currentPurchasePricePerUnit\":\"300\",\n    \"currentMRP\":\"400\",\n    \"currentOfferedPriceOrPercent\":\"380\",\n    \"currentStockInUnits\":\"200\"\n}"
 		},
 		{
 			"id": "ad2450c0-6222-8cd3-4fa9-975c477208a0",

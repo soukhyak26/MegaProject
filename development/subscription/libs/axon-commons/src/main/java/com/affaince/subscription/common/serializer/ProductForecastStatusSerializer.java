@@ -16,7 +16,7 @@ public class ProductForecastStatusSerializer extends JsonSerializer<ProductForec
     public void serialize(ProductForecastStatus productForecastStatus, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException,
             JsonProcessingException {
         generator.writeStartObject();
-        generator.writeFieldName("ProductForecastStatus");
+        generator.writeFieldName("productForecastStatus");
         generator.writeNumber(productForecastStatus.getForecastStatusValue());
         generator.writeEndObject();
     }
