@@ -1,7 +1,6 @@
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
 import io.gatling.http.Predef._
-import org.joda.time.LocalDateTime
 
 import scala.util.Random
 
@@ -54,11 +53,8 @@ object RegisterProduct {
 
 object AddProjectionParameter {
   val feeder1 = csv("projectionparameter.csv").queue
-  val localDateTime = LocalDateTime.now().plusDays(30).toString("yyyy-MM-dd HH:mm:ss")
-  val localEndDateTime = LocalDateTime.now().plusDays(30).plusYears(1000).toString("yyyy-MM-dd")
   val addProjectionParameter =
-    feed(feeder1).exec(session => session.set("localDateTime", LocalDateTime.now().plusDays(30).toString("yyyy-MM-dd")))
-      //exec(session => session.set("localEndDateTime", LocalDateTime.now().plusDays(30).plusYears(1000).toString("dd-MM-yyyy HH:mm:ss")))
+    feed(feeder1)
       .exec(
       http("Add Projection Parameter to Product")
         .put((RegisterProduct.createProjectionUrl + "/addforecast/${productId}").el[String])
@@ -66,7 +62,8 @@ object AddProjectionParameter {
           StringBody(
             """
               |{
-              |    "productForecastParameters":[{"startDate":"2016-10-10", "endDate":"2016-10-10",
+              |    "productForecastParameters":[{"startDate":"${startDate}",
+              |    "endDate":"${endDate}",
               |    "purchasePricePerUnit":${purchasePricePerUnit},"MRP":${MRP},
               |    "numberofNewSubscriptions":${numberofNewSubscriptions},
               |    "numberOfChurnedSubscriptions":${numberOfChurnedSubscriptions},
