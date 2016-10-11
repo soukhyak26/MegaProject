@@ -9,4 +9,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface DeliveryChargesRuleViewRepository extends CrudRepository<DeliveryChargesRuleView, DeliveryChargesRuleType> {
     DeliveryChargesRuleView findByRuleId (DeliveryChargesRuleType ruleId);
+
+    DeliveryChargesRuleView findFirstByRuleIdOrderByEffectiveDateDesc(DeliveryChargesRuleType ruleId);
 }

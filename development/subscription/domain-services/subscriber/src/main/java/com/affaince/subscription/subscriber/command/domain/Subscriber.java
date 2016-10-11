@@ -234,12 +234,13 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return deliveries;
     }
 
-    public void confirmSubscription(Subscription subscription) {
+    public void confirmSubscription(Subscription subscription, DeliveryChargesRule deliveryChargesRule) {
         final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
-        BenefitResult benefitResult = calculateBenefits(subscription, deliveries);
+        final BenefitResult benefitResult = calculateBenefits(subscription, deliveries);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
+            delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
             delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
             apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),

@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.query.repository;
 
 import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.Application;
 import com.affaince.subscription.subscriber.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.subscriber.vo.RangeRule;
@@ -42,7 +43,8 @@ public class DeliveryChargesRuleViewRepositoryTest {
             rangeRules.add(rangeRule);
         }
 
-        deliveryChargesRuleViewRepository.save(new DeliveryChargesRuleView(DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT, rangeRules));
+        deliveryChargesRuleViewRepository.save(new DeliveryChargesRuleView(
+                DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT, rangeRules, SysDate.now()));
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.subscriber.vo.RangeRule;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,10 +20,13 @@ public class DeliveryChargesRuleView {
     private List <RangeRule> rangeRules;
     @Autowired
     private Currency currency;
+    private LocalDate effectiveDate;
 
-    public DeliveryChargesRuleView(DeliveryChargesRuleType ruleId, List<RangeRule> rangeRules) {
+
+    public DeliveryChargesRuleView(DeliveryChargesRuleType ruleId, List<RangeRule> rangeRules, LocalDate effectiveDate) {
         this.ruleId = ruleId;
         this.rangeRules = rangeRules;
+        this.effectiveDate = effectiveDate;
     }
 
     public DeliveryChargesRuleType getRuleId() {
@@ -43,5 +47,17 @@ public class DeliveryChargesRuleView {
 
     public Currency getCurrency() {
         return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public LocalDate getEffectiveDate() {
+        return effectiveDate;
+    }
+
+    public void setEffectiveDate(LocalDate effectiveDate) {
+        this.effectiveDate = effectiveDate;
     }
 }

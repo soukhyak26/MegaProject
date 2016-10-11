@@ -2,7 +2,7 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.DeliveryChargesRuleType;
-import com.affaince.subscription.subscriber.command.AddDeliveryChargesRuleCommand;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.query.repository.DeliveryChargesRuleViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.subscriber.web.request.DeliveryChargesRulesRequest;
@@ -40,9 +40,13 @@ public class DeliveryChargesRuleController {
     @Consumes("application/json")
     public ResponseEntity<Object> setDeliveryChargesRules(@RequestBody @Valid DeliveryChargesRulesRequest request) throws Exception {
 
-        final AddDeliveryChargesRuleCommand addDeliveryChargesRuleCommand = new
+        /*final AddDeliveryChargesRuleCommand addDeliveryChargesRuleCommand = new
                 AddDeliveryChargesRuleCommand (request.getRuleId(), Arrays.asList(request.getDeliveryChargesRules() ));
-        commandGateway.send(addDeliveryChargesRuleCommand);
+        commandGateway.send(addDeliveryChargesRuleCommand);*/
+        final DeliveryChargesRuleView deliveryChargesRuleView = new
+                DeliveryChargesRuleView(DeliveryChargesRuleType.valueOf(request.getRuleId()),
+                Arrays.asList(request.getDeliveryChargesRules()), SysDate.now());
+        deliveryChargesRuleViewRepository.save(deliveryChargesRuleView);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
