@@ -38,14 +38,14 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110
         );
         productForecastViewRepository.save(productForecastView1);
 
         ProductForecastView productForecastView2 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(31)),
                 localDate.plusDays(51),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110
         );
 
         productForecastViewRepository.save(productForecastView2);
@@ -53,7 +53,7 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView3 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(52)),
                 localDate.plusDays(74),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110
         );
 
         productForecastViewRepository.save(productForecastView3);
@@ -72,7 +72,7 @@ public class ProductForecastViewRepositoryTest {
             for (int i = 0; i < readings.length; i++) {
                 LocalDateTime newDate = localDate.plusDays(i + 1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ACTIVE);
+                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000);
                 productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }

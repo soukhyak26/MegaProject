@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * ActualsView represents daily actual data
  */
 @Document(collection = "ProductActualsView")
-public class ProductActualsView implements Comparable<ProductActualsView> {
+public class ProductActualsView implements ProductSubscriptionMetricsView, Comparable<ProductActualsView> {
     @Id
     private final ProductVersionId productVersionId;
     private LocalDateTime endDate;
@@ -18,9 +18,20 @@ public class ProductActualsView implements Comparable<ProductActualsView> {
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
 
+/*
     public ProductActualsView(ProductVersionId productVersionId, LocalDateTime endDate) {
         this.productVersionId=productVersionId;
         this.endDate=endDate;
+    }
+*/
+
+    public ProductActualsView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+        this.productVersionId = productVersionId;
+        this.endDate = endDate;
+        this.newSubscriptions = newSubscriptions;
+        this.churnedSubscriptions = churnedSubscriptions;
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
+        //this.productForecastStatus = productForecastStatus;
     }
 
     public ProductVersionId getProductVersionId() {

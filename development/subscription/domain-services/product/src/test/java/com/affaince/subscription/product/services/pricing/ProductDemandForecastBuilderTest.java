@@ -44,20 +44,20 @@ public class ProductDemandForecastBuilderTest {
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
 
-        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
-        view1.setNewSubscriptions(500);
+        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0), 500, 20, 480);
+        //view1.setNewSubscriptions(500);
         productActualsViewList.add(view1);
 
-        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
-        view2.setNewSubscriptions(750);
+        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0), 750, 20, 1210);
+        //view2.setNewSubscriptions(750);
         productActualsViewList.add(view2);
 
-        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
-        view3.setNewSubscriptions(1000);
+        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0), 1000, 20, 2190);
+        //view3.setNewSubscriptions(1000);
         productActualsViewList.add(view3);
 
-        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
-        view4.setNewSubscriptions(1250);
+        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0), 1250, 20, 3420);
+        //view4.setNewSubscriptions(1250);
         productActualsViewList.add(view4);
         // Mockito.when(productViewRepository.findOne(productId)).thenReturn(product);
         String productId = "1";

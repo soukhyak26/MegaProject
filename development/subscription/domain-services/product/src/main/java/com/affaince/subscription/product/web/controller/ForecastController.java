@@ -107,7 +107,7 @@ public class ForecastController {
             if (null != existingForecastViews && existingForecastViews.size() > 0) {
                 throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
             }
-            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions(), ProductForecastStatus.ACTIVE);
+            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions());
             productForecastViewRepository.save(productForecastView);
             if (null == firstStartDate) {
                 firstStartDate = parameter.getStartDate();
@@ -136,7 +136,7 @@ public class ForecastController {
                 //this.productForecastViewRepository.delete(eachView);
                 eachView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
                 this.productForecastViewRepository.save(eachView);
-                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions(), ProductForecastStatus.ACTIVE);
+                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions());
             }
         } else {
             throw ProductForecastModificationException.build(productId, request.getStartDate(), request.getEndDate());

@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Created by mandar on 10-07-2016.
  */
 @Document(collection = "ProductForecastView")
-public class ProductForecastView {
+public class ProductForecastView implements ProductSubscriptionMetricsView, Comparable<ProductForecastView> {
     @Id
     private final ProductVersionId productVersionId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -24,6 +24,8 @@ public class ProductForecastView {
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ProductForecastStatus productForecastStatus;
+
+/*
     public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
@@ -31,6 +33,16 @@ public class ProductForecastView {
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
         this.productForecastStatus = productForecastStatus;
+    }
+*/
+
+    public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+        this.productVersionId = productVersionId;
+        this.endDate = endDate;
+        this.newSubscriptions = newSubscriptions;
+        this.churnedSubscriptions = churnedSubscriptions;
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
+        this.productForecastStatus = ProductForecastStatus.ACTIVE;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -75,5 +87,9 @@ public class ProductForecastView {
 
     public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
         this.productForecastStatus = productForecastStatus;
+    }
+
+    public int compareTo(ProductForecastView o) {
+        return this.getProductVersionId().compareTo(o.getProductVersionId());
     }
 }

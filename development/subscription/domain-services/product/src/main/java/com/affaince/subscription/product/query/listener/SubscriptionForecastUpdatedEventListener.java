@@ -41,8 +41,7 @@ public class SubscriptionForecastUpdatedEventListener {
                 event.getForecastEndDate(),
                 event.getNewSubscriptionForecast(),
                 event.getChurnedSubscriptionForecast(),
-                event.getForecastedTotalSubscriptionCount(),
-                ProductForecastStatus.ACTIVE);
+                event.getForecastedTotalSubscriptionCount());
 
         productForecastViewRepository.save(productForecastView);
     }

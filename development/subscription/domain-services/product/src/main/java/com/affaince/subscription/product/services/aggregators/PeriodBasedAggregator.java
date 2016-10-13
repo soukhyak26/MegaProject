@@ -1,20 +1,24 @@
 package com.affaince.subscription.product.services.aggregators;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
-import com.affaince.subscription.product.query.view.ProductForecastView;
+import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mandar on 23-07-2016.
  */
-public class PeriodBasedAggregator implements MetricsAggregator<ProductForecastView> {
+public class PeriodBasedAggregator<T extends ProductSubscriptionMetricsView> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PeriodBasedAggregator.class);
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
-    public List<ProductForecastView> aggregate(List<ProductForecastView> historicalData, int period) {
-        List<ProductForecastView> aggregateViewList = new ArrayList<>();
+    public List<T> aggregate(List<T> historicalData, int period) {
+        List<T> aggregateViewList = new ArrayList<>();
         //are product actuals view sorted??
         if (period == 1) {
             return historicalData;
@@ -24,21 +28,29 @@ public class PeriodBasedAggregator implements MetricsAggregator<ProductForecastV
             String productId = null;
             LocalDateTime startDate = null;
             LocalDateTime endDate = null;
-            ProductForecastView firstView = historicalData.get(0);
-            //create dummy forecastView and fill the details in for loop.
-            ProductForecastView aggregatedView = new ProductForecastView(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0, ProductForecastStatus.ACTIVE);
-            //inner for-aggregating the chunks into single number
-            for (int index = period * (periodIndex - 1); index < period * periodIndex; index++) {
-                ProductForecastView productForecastView = historicalData.get(index);
-                startDate = productForecastView.getProductVersionId().getFromDate();
-                endDate = productForecastView.getEndDate();
-                aggregatedView.getProductVersionId().setFromDate(startDate);
-                aggregatedView.setEndDate(endDate);
-                aggregatedView.setNewSubscriptions(aggregatedView.getNewSubscriptions() + productForecastView.getNewSubscriptions());
-                aggregatedView.setChurnedSubscriptions(aggregatedView.getChurnedSubscriptions() + productForecastView.getChurnedSubscriptions());
-                aggregatedView.setTotalNumberOfExistingSubscriptions(productForecastView.getTotalNumberOfExistingSubscriptions());
+            T firstView = historicalData.get(0);
+            //create dummy forecastView/actualsView and fill the details in for loop.
+            try {
+                T aggregatedView = (T) this.getClass()
+                        .getTypeParameters()[0]
+                        .getClass()
+                        .getDeclaredConstructor(ProductVersionId.class, LocalDateTime.class, Long.class, Long.class, Long.class)
+                        .newInstance(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0);
+                //inner for-aggregating the chunks into single number
+                for (int index = period * (periodIndex - 1); index < period * periodIndex; index++) {
+                    T productForecastView = historicalData.get(index);
+                    startDate = productForecastView.getProductVersionId().getFromDate();
+                    endDate = productForecastView.getEndDate();
+                    aggregatedView.getProductVersionId().setFromDate(startDate);
+                    aggregatedView.setEndDate(endDate);
+                    aggregatedView.setNewSubscriptions(aggregatedView.getNewSubscriptions() + productForecastView.getNewSubscriptions());
+                    aggregatedView.setChurnedSubscriptions(aggregatedView.getChurnedSubscriptions() + productForecastView.getChurnedSubscriptions());
+                    aggregatedView.setTotalNumberOfExistingSubscriptions(productForecastView.getTotalNumberOfExistingSubscriptions());
+                }
+                aggregateViewList.add(aggregatedView);
+            } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException ex) {
+                LOGGER.error("Cannot construct object of generic type using reflection: " + ex.getMessage());
             }
-            aggregateViewList.add(aggregatedView);
         }
         return aggregateViewList;
     }

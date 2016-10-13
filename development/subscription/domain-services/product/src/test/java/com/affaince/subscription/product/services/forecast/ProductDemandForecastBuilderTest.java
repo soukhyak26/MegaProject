@@ -44,12 +44,12 @@ public class ProductDemandForecastBuilderTest {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
             for (List<String> value : values) {
-                ProductActualsView productActualsView = new ProductActualsView(
-                        new ProductVersionId(value.get(0), LocalDateTime.parse(value.get(1), formatter)),
-                        LocalDateTime.parse(value.get(2), formatter));
-                productActualsView.setNewSubscriptions(Long.parseLong(value.get(3)));
-                productActualsView.setChurnedSubscriptions(Long.parseLong(value.get(4)));
-                productActualsView.setTotalNumberOfExistingSubscriptions(Long.parseLong(value.get(5)));
+                ProductVersionId productVersionId = new ProductVersionId(value.get(0), LocalDateTime.parse(value.get(1), formatter));
+                LocalDateTime endDate = LocalDateTime.parse(value.get(2), formatter);
+                long newSubscriptionCount = Long.parseLong(value.get(3));
+                long churnedSubscriptionCount = Long.parseLong(value.get(4));
+                long totalNumberOfExistingSubscriptionCount = Long.parseLong(value.get(5));
+                ProductActualsView productActualsView = new ProductActualsView(productVersionId, endDate, newSubscriptionCount, churnedSubscriptionCount, totalNumberOfExistingSubscriptionCount);
                 productActualsViews.add(productActualsView);
 
             }

@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.services.forecast;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
@@ -59,8 +58,7 @@ public class ProductDemandForecastBuilder {
                     newForecastEndDate,
                     Double.valueOf(newSubscriptionCount).longValue(),
                     Double.valueOf(forecastChurnedSubscriptions.get(i)).longValue(),
-                    Double.valueOf(forecastTotalSubscriptions.get(i)).longValue(),
-                    ProductForecastStatus.ACTIVE);
+                    Double.valueOf(forecastTotalSubscriptions.get(i)).longValue());
             forecasts.add(forecast);
             previousTotalSubscriptionCount = forecastTotalSubscriptions.get(i);
             newForecastStartDate = newForecastEndDate;
