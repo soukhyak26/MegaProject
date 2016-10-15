@@ -2,7 +2,6 @@ package com.affaince.subscription.product.converters;
 
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -15,7 +14,7 @@ import java.io.IOException;
 public class PricingOptionsDeserializer extends JsonDeserializer<PricingOptions> {
 
     @Override
-    public PricingOptions deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public PricingOptions deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonToken currentToken = jsonParser.getCurrentToken();
         if (currentToken == JsonToken.VALUE_NUMBER_INT) {
             int pricingOptionValue = jsonParser.getIntValue();

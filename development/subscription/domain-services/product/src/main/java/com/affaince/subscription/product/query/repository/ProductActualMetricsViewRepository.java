@@ -2,10 +2,7 @@ package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.vo.ProductMonthlyVersionId;
-import org.joda.time.LocalDate;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -15,8 +12,10 @@ import java.util.List;
  */
 public interface ProductActualMetricsViewRepository extends CrudRepository<ProductActualMetricsView, com.affaince.subscription.common.vo.ProductVersionId> {
     //List<ProductActualMetricsView> findByProductId(String productId);
-    public List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId);
-    public List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId,Sort sort);
-    public List<ProductActualMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
+    List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId);
+
+    List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId, Sort sort);
+
+    List<ProductActualMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
 
 }

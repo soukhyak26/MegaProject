@@ -68,7 +68,7 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
             while (it.hasNext()) {
                 // Check that the results are within specified tolerance
                 //  of the expected values
-                DataPoint fc = (DataPoint) it.next();
+                DataPoint fc = it.next();
                 double newSubscriptionCount = fc.getDependentValue();
                 double time = fc.getIndependentValue("t");
                 for (ActualVsPredictionEvaluator placeholder : predictionsSet) {

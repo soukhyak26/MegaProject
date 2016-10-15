@@ -13,19 +13,21 @@ import java.util.List;
  */
 
 public interface ProductPseudoActualsViewRepository extends CrudRepository<ProductPseudoActualsView, ProductVersionId> {
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId);
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId, Sort sort);
-    public List<ProductPseudoActualsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId);
 
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateGreaterThan(String productId, LocalDateTime fromDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId, Sort sort);
 
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateLessThan(String productId, LocalDateTime fromDate);
+    List<ProductPseudoActualsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
 
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateGreaterThan(String productId, LocalDateTime fromDate);
 
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateGreaterThan(String productId, LocalDateTime endDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateLessThan(String productId, LocalDateTime fromDate);
 
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
 
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateGreaterThan(String productId, LocalDateTime endDate);
+
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate);
+
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
 }

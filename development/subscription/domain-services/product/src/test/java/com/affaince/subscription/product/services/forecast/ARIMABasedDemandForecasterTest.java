@@ -33,7 +33,7 @@ public class ARIMABasedDemandForecasterTest {
 
     }
     @Test
-    public void testPrecisePrediction() throws FileNotFoundException,IOException{
+    public void testPrecisePrediction() throws IOException {
         productActualMetricsViewList= new ArrayList<>();
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));

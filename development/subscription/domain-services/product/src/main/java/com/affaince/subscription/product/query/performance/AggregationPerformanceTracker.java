@@ -1,6 +1,6 @@
-package com.affaince.subscription.product.command.domain;
+package com.affaince.subscription.product.query.performance;
 
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import com.affaince.subscription.product.command.domain.PriceBucket;
 import org.joda.time.YearMonth;
 
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by mandark on 02-01-2016.
  */
-public class AggregationPerformanceTracker extends AbstractAnnotatedEntity {
+public class AggregationPerformanceTracker {
     private YearMonth monthOfYear;
     private double expectedMerchantProfitPercentage;
     private double grossMargin;

@@ -8,5 +8,5 @@ import com.affaince.subscription.product.vo.FunctionCoefficients;
  */
 @Deprecated
 public interface FunctionProcessor<ProductView> {
-    public FunctionCoefficients processFunction(ProductView productView);
+    FunctionCoefficients processFunction(ProductView productView);
 }

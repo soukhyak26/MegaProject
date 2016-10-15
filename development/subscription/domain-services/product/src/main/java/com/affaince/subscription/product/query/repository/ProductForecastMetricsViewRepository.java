@@ -2,10 +2,8 @@ package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
-import com.affaince.subscription.product.vo.ProductMonthlyVersionId;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.RepositoryDefinition;
 
 import java.util.List;
 
@@ -14,8 +12,10 @@ import java.util.List;
  */
 
 public interface ProductForecastMetricsViewRepository extends CrudRepository<ProductForecastMetricsView, com.affaince.subscription.common.vo.ProductVersionId> {
-    public List<ProductForecastMetricsView> findByProductVersionId_ProductId(String productId);
-    public List<ProductForecastMetricsView> findByProductVersionId_ProductId(String productId,Sort sort);
-    public List<ProductForecastMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
+    List<ProductForecastMetricsView> findByProductVersionId_ProductId(String productId);
+
+    List<ProductForecastMetricsView> findByProductVersionId_ProductId(String productId, Sort sort);
+
+    List<ProductForecastMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
 
 }

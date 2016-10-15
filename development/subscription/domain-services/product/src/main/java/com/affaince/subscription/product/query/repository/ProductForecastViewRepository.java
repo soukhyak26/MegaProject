@@ -14,21 +14,25 @@ import java.util.List;
  */
 
 public interface ProductForecastViewRepository extends CrudRepository<ProductForecastView, ProductVersionId> {
-    public List<ProductForecastView> findByProductVersionId_ProductId(String productId);
-    public List<ProductForecastView> findByProductVersionId_ProductId(String productId, Sort sort);
-    public List<ProductForecastView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
-    public ProductForecastView findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc (String productId);
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
+    List<ProductForecastView> findByProductVersionId_ProductId(String productId);
 
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateGreaterThan(String productId, LocalDateTime fromDate);
+    List<ProductForecastView> findByProductVersionId_ProductId(String productId, Sort sort);
 
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateLessThan(String productId, LocalDateTime fromDate);
+    List<ProductForecastView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
 
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
+    ProductForecastView findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc(String productId);
 
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateGreaterThan(String productId, LocalDateTime endDate);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
 
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateGreaterThan(String productId, LocalDateTime fromDate);
 
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateLessThan(String productId, LocalDateTime fromDate);
+
+    List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
+
+    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateGreaterThan(String productId, LocalDateTime endDate);
+
+    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate);
+
+    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
 }

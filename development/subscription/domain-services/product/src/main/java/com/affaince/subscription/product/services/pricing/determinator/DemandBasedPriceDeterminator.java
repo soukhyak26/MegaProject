@@ -119,7 +119,7 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
 
     private List<Double> extrapolateDemand(List<Double> totalQuantitySubscribedWithSamePurchasePrice, int periodPerYear) {
         MathsProcessingService mathService = new MathsProcessingService();
-        double[] forecastedQuantities = mathService.processForecastUsingTripleExponentialTimeSeries(totalQuantitySubscribedWithSamePurchasePrice.stream().mapToDouble(d -> d).toArray(), periodPerYear);
+        double[] forecastedQuantities = MathsProcessingService.processForecastUsingTripleExponentialTimeSeries(totalQuantitySubscribedWithSamePurchasePrice.stream().mapToDouble(d -> d).toArray(), periodPerYear);
         ArrayList<Double> forecastedQuantitiesList = new ArrayList<Double>(forecastedQuantities.length);
         return Arrays.asList(ArrayUtils.toObject(forecastedQuantities));
     }

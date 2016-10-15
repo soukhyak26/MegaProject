@@ -15,7 +15,7 @@ public enum PricingChoiceType {
 
     private int choiceValue;
 
-    private PricingChoiceType(int choiceValue) {
+    PricingChoiceType(int choiceValue) {
         this.choiceValue = choiceValue;
     }
 

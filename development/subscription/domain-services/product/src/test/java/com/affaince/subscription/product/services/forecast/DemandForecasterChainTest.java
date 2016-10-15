@@ -56,7 +56,7 @@ public class DemandForecasterChainTest {
     }
 
     @Test
-    public void testForecastFor4HistoricalLinearRecords() throws FileNotFoundException, IOException {
+    public void testForecastFor4HistoricalLinearRecords() throws IOException {
 
         List<ProductActualMetricsView> productActualMetricsViewList;
         productActualMetricsViewList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class DemandForecasterChainTest {
     }
 
     @Test
-    public void testForecastFor40HistoricalLinearRecords() throws FileNotFoundException, IOException {
+    public void testForecastFor40HistoricalLinearRecords() throws IOException {
         List<ProductActualMetricsView> productActualMetricsViewList;
         productActualMetricsViewList = new ArrayList<>();
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
