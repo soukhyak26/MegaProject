@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.ActiveMQConfiguration;
+import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
@@ -45,7 +45,7 @@ import java.util.Map;
 @EnableAutoConfiguration(exclude = {EmbeddedServletContainerFactory.class})
 @ComponentScan("com.affaince")
 @EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, Axon.HistoryMaxSizeConstraints.class})
-public class Axon extends ActiveMQConfiguration {
+public class Axon extends RabbitMQConfiguration {
 
     @Autowired
     HistoryMinSizeConstraints historyMinSizeConstraints;

@@ -1,17 +1,21 @@
 package com.affaince.subscription.subscriber.configuration;
 
-import com.affaince.subscription.configuration.ActiveMQConfiguration;
+import com.affaince.subscription.configuration.RabbitMQConfiguration;
 import com.affaince.subscription.subscriber.command.domain.BasketRule;
 import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.event.BenefitAddedEvent;
 import com.affaince.subscription.subscriber.command.event.OfferedPriceChangedEvent;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
+import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +24,7 @@ import java.util.Map;
  * Created by rbsavaliya on 19-07-2015.
  */
 @Configuration
-public class Axon extends ActiveMQConfiguration {
+public class Axon extends RabbitMQConfiguration {
 
     @Bean
     public Repository<Subscriber> createRepository(DisruptorCommandBus commandBus) {
@@ -39,6 +43,11 @@ public class Axon extends ActiveMQConfiguration {
     public Repository<LatestPriceBucket> createLatestPriceBucketRepository(DisruptorCommandBus commandBus) {
         Repository<LatestPriceBucket> repository = commandBus.createRepository(new GenericAggregateFactory<>(LatestPriceBucket.class));
         return repository;
+    }
+
+    @Bean
+    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
+        return new SimpleMongoDbFactory(mongo, dbName);
     }
 
     @Override

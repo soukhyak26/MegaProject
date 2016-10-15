@@ -3,12 +3,16 @@ package com.affaince.subscription.business.configuration;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
 import com.affaince.subscription.business.command.event.*;
-import com.affaince.subscription.configuration.ActiveMQConfiguration;
+import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.jms.annotation.EnableJms;
 
 import java.util.HashMap;
@@ -19,7 +23,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends ActiveMQConfiguration {
+public class Axon extends RabbitMQConfiguration {
 
 
     @Bean
@@ -34,6 +38,10 @@ public class Axon extends ActiveMQConfiguration {
         return repository;
     }
 
+    @Bean
+    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
+        return new SimpleMongoDbFactory(mongo, dbName);
+    }
 
     @Override
     protected Map<String, String> types() {
