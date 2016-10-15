@@ -16,8 +16,6 @@ import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +46,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
         apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory));
     }
-
 
 
     //When product is "first time " registered by product administrator
@@ -93,40 +90,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(OfferedPriceRecommendedEvent event) {
         getProductAccount().addNewPriceRecommendation(event.getNewPriceBucket().getFromDate(), event.getNewPriceBucket());
-
-    }
-
-    //Only for actuals
-    //Product status should be received from main application.
-    //when the purchase price is changed --it should update new taggedPriceVersion and make all price buckets point to it.
-    @EventSourcingHandler
-    public void on(ProductStatusReceivedEvent event) {
-        this.productId = event.getProductId();
-
-        if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
-            this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
-        }
-        this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
-    }
-
-    //Only for actuals
-    //Product status should be received from main application.
-    //when the purchase price is changed --it should create new price bucket,by stalling all existing price buckets
-
-    @EventSourcingHandler
-    public void on(ProductStatusUpdatedEvent event) {
-        this.productId = event.getProductId();
-        PriceBucket latestPriceBucket = getProductAccount().getLatestActivePriceBucket();
-        if (this.getProductAccount().getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
-            this.getProductAccount().addNewTaggedPriceVersion(newtaggedPrice);
-        }
-        this.getProductAccount().setCurrentStockInUnits(event.getCurrentStockInUnits());
 
     }
 
@@ -219,14 +182,15 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod()));
     }
 
-    //Product status should be received from main application
-    public void updateProductStatus(UpdateProductStatusCommand command) {
-        apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
-    }
 
     //for receipt from main application thru integration
     public void receiveProductStatus(ReceiveProductStatusCommand command) {
-        apply(new ProductStatusUpdatedEvent(this.productId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
+        this.getProductAccount().receiveProductStatus(command);
+    }
+
+    //Product status should be received from main application
+    public void updateProductStatus(UpdateProductStatusCommand command) {
+        this.getProductAccount().updateProductStatus(command);
     }
 
     public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {

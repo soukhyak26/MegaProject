@@ -1,6 +1,8 @@
 package com.affaince.subscription.product.query.performance;
 
 import com.affaince.subscription.product.command.domain.PriceBucket;
+import com.affaince.subscription.product.query.exception.OutOfMonthAggregationException;
+import org.joda.time.LocalDateTime;
 import org.joda.time.YearMonth;
 
 import java.util.Map;
@@ -37,6 +39,15 @@ public class AggregationPerformanceTracker {
     private double salesAndMarketingExpenses;
 
 
+    public AggregationPerformanceTracker calculateMetrics(String productId, LocalDateTime aggregationStartDate, LocalDateTime aggrgationEndDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions) throws OutOfMonthAggregationException {
+        if (aggregationStartDate.monthOfYear() != aggrgationEndDate.monthOfYear()) {
+            throw OutOfMonthAggregationException.build(productId, aggregationStartDate, aggrgationEndDate);
+        }
+        this.monthOfYear = new YearMonth(aggregationStartDate);
+        //TODO:how to obtain latest breakeven price?
+        return null;
+
+    }
     public long getNetNewCustomers() {
         return netNewCustomers;
     }

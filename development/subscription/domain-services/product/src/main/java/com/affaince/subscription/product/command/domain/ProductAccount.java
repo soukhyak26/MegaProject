@@ -4,12 +4,8 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
-import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
-import com.affaince.subscription.product.command.UpdateProductSubscriptionCommand;
-import com.affaince.subscription.product.command.event.DeliveryExpenseUpdatedToProductEvent;
-import com.affaince.subscription.product.command.event.FixedExpenseUpdatedToProductEvent;
-import com.affaince.subscription.product.command.event.ProductSubscriptionUpdatedEvent;
+import com.affaince.subscription.product.command.*;
+import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.vo.FixedExpensePerProduct;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.VariableExpensePerProduct;
@@ -192,35 +188,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         apply(new FixedExpenseUpdatedToProductEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
     }
 
-    @EventSourcingHandler
-    public void on(DeliveryExpenseUpdatedToProductEvent event) {
-        //get latest deliveryExpense
-        VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
-        if (latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()) {
-            VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
-            variableExpenseVersions.add(newVariableExpenseVersion);
-        }
-    }
-
-
-    @EventSourcingHandler
-    public void on(FixedExpenseUpdatedToProductEvent event) {
-        //get latest deliveryExpense
-        FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
-        if (latestFixedExpense.getFixedOperatingExpPerUnit() != event.getOperationExpense()) {
-            FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(event.getOperationExpense(), SysDate.now());
-            fixedExpenseVersions.add(newFixedExpenseVersion);
-        }
-    }
-
-    @EventSourcingHandler
-    public void on(ProductSubscriptionUpdatedEvent event) {
-        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
-        latestPriceBucket.setNumberOfNewSubscriptions(latestPriceBucket.getNumberOfNewSubscriptions() + event.getSubscriptionCount());
-        double expectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(latestPriceBucket);
-        latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
-
-    }
     public double findLatestFixedExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
         FixedExpensePerProduct latestFixedExpense = null;
         for (FixedExpensePerProduct fixedExp : fixedExpenseVersions) {
@@ -273,6 +240,16 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
         apply(new ProductSubscriptionUpdatedEvent(command.getProductId(), command.getProductSubscriptionCount(), command.getSubscriptionActivateDate()));
+    }
+
+    //Product status should be received from main application
+    public void updateProductStatus(UpdateProductStatusCommand command) {
+        apply(new ProductStatusUpdatedEvent(command.getProductId(), command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
+    }
+
+    //for receipt from main application thru integration
+    public void receiveProductStatus(ReceiveProductStatusCommand command) {
+        apply(new ProductStatusUpdatedEvent(command.getProductId(), command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
     }
 
     public PriceBucket findEarlierPriceBucketInActivePriceBuckets(PriceBucket priceBucket) {
@@ -331,4 +308,68 @@ public class ProductAccount extends AbstractAnnotatedEntity {
                 .collect(Collectors.toMap((p) -> p.getKey(), (entry) -> entry.getValue())).entrySet();
         latestPriceBuckets.iterator().next().getValue().setToDate(endDate);
     }
+
+    @EventSourcingHandler
+    public void on(DeliveryExpenseUpdatedToProductEvent event) {
+        //get latest deliveryExpense
+        VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
+        if (latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()) {
+            VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
+            variableExpenseVersions.add(newVariableExpenseVersion);
+        }
+    }
+
+
+    @EventSourcingHandler
+    public void on(FixedExpenseUpdatedToProductEvent event) {
+        //get latest deliveryExpense
+        FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
+        if (latestFixedExpense.getFixedOperatingExpPerUnit() != event.getOperationExpense()) {
+            FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(event.getOperationExpense(), SysDate.now());
+            fixedExpenseVersions.add(newFixedExpenseVersion);
+        }
+    }
+
+    @EventSourcingHandler
+    public void on(ProductSubscriptionUpdatedEvent event) {
+        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        latestPriceBucket.setNumberOfNewSubscriptions(latestPriceBucket.getNumberOfNewSubscriptions() + event.getSubscriptionCount());
+        double expectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(latestPriceBucket);
+        latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
+
+    }
+
+    //Only for actuals
+    //Product status should be received from main application.
+    //when the purchase price is changed --it should update new taggedPriceVersion and make all price buckets point to it.
+    @EventSourcingHandler
+    public void on(ProductStatusReceivedEvent event) {
+        final String productId = event.getProductId();
+        final PriceTaggedWithProduct currentTaggedPriceVersion = this.getLatestTaggedPriceVersion();
+        if (currentTaggedPriceVersion.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            currentTaggedPriceVersion.setTaggedEndDate(SysDateTime.now());
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
+            this.addNewTaggedPriceVersion(newtaggedPrice);
+        }
+        this.setCurrentStockInUnits(event.getCurrentStockInUnits());
+    }
+
+    //Only for actuals
+    //Product status should be received from main application.
+    //when the purchase price is changed --it should create new price bucket,by stalling all existing price buckets
+    @EventSourcingHandler
+    public void on(ProductStatusUpdatedEvent event) {
+        String productId = event.getProductId();
+        //PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        if (this.getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
+            this.addNewTaggedPriceVersion(newtaggedPrice);
+        }
+        this.setCurrentStockInUnits(event.getCurrentStockInUnits());
+    }
+
 }

@@ -44,5 +44,9 @@ public class SubscriptionForecastUpdatedEventListener {
                 event.getForecastedTotalSubscriptionCount());
 
         productForecastViewRepository.save(productForecastView);
+
+        //Create Calcuate MetricsCommand and fire it
+        //NO NO.. directly call Metrics tracker
+
     }
 }
