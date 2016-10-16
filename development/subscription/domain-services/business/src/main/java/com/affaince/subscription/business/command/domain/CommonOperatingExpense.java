@@ -1,10 +1,14 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.command.event.CommonExpenseCreatedEvent;
+import com.affaince.subscription.business.command.event.FixedExpenseUpdatedToProductEvent;
 import com.affaince.subscription.business.command.event.OperatingExpenseUpdatedEvent;
 import com.affaince.subscription.business.command.event.PastCommonExpenseTypesRemovedEvent;
+import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
+import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -56,6 +60,12 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
             monthOfYear = monthOfYear.plusMonths(i);
             rollingExpenseForecast.put(monthOfYear, event.getAmount());
         }
+        OperatingExpensesDeterminator operatingExpensesDeterminator =
+                new DefaultOperatingExpensesDeterminator();
+        Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
+        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
+                new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
+        ));
     }
 
 
