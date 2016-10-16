@@ -7,7 +7,7 @@ import org.apache.camel.dataformat.bindy.annotation.DataField;
  * Created by mandark on 07-09-2015.
  */
 @CsvRecord(separator = ",", skipFirstLine = true)
-public class ProductReceivedForRegistrationEvent {
+public class ProductRegisteredEvent {
     @DataField(name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
 
@@ -18,7 +18,7 @@ public class ProductReceivedForRegistrationEvent {
     @DataField(name = "SUBCATEGORY_ID", pos = 4, trim = true)
     private String subCategoryId;
 
-    public ProductReceivedForRegistrationEvent() {
+    public ProductRegisteredEvent() {
     }
 
     public String getProductName() {

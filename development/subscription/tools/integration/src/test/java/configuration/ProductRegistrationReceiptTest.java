@@ -1,6 +1,6 @@
 package configuration;
 
-import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
+import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductRegisteredEvent;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -41,7 +41,7 @@ public class ProductRegistrationReceiptTest {
                 @Override
                 public void configure() throws Exception {
                     from("file://src/test/resources?noop=true&fileName=ProductsForRegistration.in").
-                            unmarshal().bindy(BindyType.Csv, ProductReceivedForRegistrationEvent.class).
+                            unmarshal().bindy(BindyType.Csv, ProductRegisteredEvent.class).
                             split(body().tokenize("\n")).streaming()
                             .to("mock:queue.csv");
                 }
@@ -52,7 +52,7 @@ public class ProductRegistrationReceiptTest {
     @DirtiesContext
     @Test
     public void testPositive() throws Exception {
-        ProductReceivedForRegistrationEvent event = new ProductReceivedForRegistrationEvent();
+        ProductRegisteredEvent event = new ProductRegisteredEvent();
         event.setCategoryId("1111");
         event.setSubCategoryId("23");
         event.setProductId("TOOTHPSTCOLGT");

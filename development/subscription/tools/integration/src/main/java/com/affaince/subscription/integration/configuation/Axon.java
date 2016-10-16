@@ -9,7 +9,7 @@ import com.affaince.subscription.integration.command.event.forecast.ProductForec
 import com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent;
 import com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
-import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent;
+import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductRegisteredEvent;
 import com.affaince.subscription.integration.command.event.stockdemand.ProductStockDemandGeneratedEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -58,7 +58,7 @@ public class Axon extends RabbitMQConfiguration {
 
                 //INT_01: retreive products for registration
                 from("${product.registration.source}").
-                        unmarshal().bindy(BindyType.Csv, ProductReceivedForRegistrationEvent.class).
+                        unmarshal().bindy(BindyType.Csv, ProductRegisteredEvent.class).
                         split(body().tokenize("\n")).streaming().
                         to("${product.registration.destination}");
 

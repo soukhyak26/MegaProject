@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.ActiveMQConfiguration;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
@@ -45,7 +45,7 @@ import java.util.Map;
 @EnableAutoConfiguration(exclude = {EmbeddedServletContainerFactory.class})
 @ComponentScan("com.affaince")
 @EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, Axon.HistoryMaxSizeConstraints.class})
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends ActiveMQConfiguration {
 
     @Autowired
     HistoryMinSizeConstraints historyMinSizeConstraints;
@@ -84,7 +84,7 @@ public class Axon extends RabbitMQConfiguration {
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.product.command.event.*", "");
-            put("com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductReceivedForRegistrationEvent", ProductRegisteredEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductRegisteredEvent", ProductRegisteredEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent", ProductForecastReceivedEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
