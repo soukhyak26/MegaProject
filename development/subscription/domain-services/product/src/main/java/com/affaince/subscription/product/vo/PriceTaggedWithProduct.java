@@ -8,6 +8,7 @@ import org.joda.time.LocalDateTime;
 public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduct> {
     private String taggedPriceVersionId;
     private double purchasePricePerUnit;
+    private double breakEvenrPrice;
     private double MRP;
     private LocalDateTime taggedStartDate;
     private LocalDateTime taggedEndDate;
@@ -31,12 +32,24 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         return purchasePricePerUnit;
     }
 
+    public void setPurchasePricePerUnit(double purchasePricePerUnit) {
+        this.purchasePricePerUnit = purchasePricePerUnit;
+    }
+
     public double getMRP() {
         return MRP;
     }
 
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
+    }
+
     public LocalDateTime getTaggedStartDate() {
         return taggedStartDate;
+    }
+
+    public void setTaggedStartDate(LocalDateTime taggedStartDate) {
+        this.taggedStartDate = taggedStartDate;
     }
 
     public LocalDateTime getTaggedEndDate() {
@@ -45,6 +58,22 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
 
     public void setTaggedEndDate(LocalDateTime taggedEndDate) {
         this.taggedEndDate = taggedEndDate;
+    }
+
+    public String getTaggedPriceVersionId() {
+        return taggedPriceVersionId;
+    }
+
+    public void setTaggedPriceVersionId(String taggedPriceVersionId) {
+        this.taggedPriceVersionId = taggedPriceVersionId;
+    }
+
+    public double getBreakEvenrPrice() {
+        return breakEvenrPrice;
+    }
+
+    public void setBreakEvenrPrice(double breakEvenrPrice) {
+        this.breakEvenrPrice = breakEvenrPrice;
     }
 
     @Override

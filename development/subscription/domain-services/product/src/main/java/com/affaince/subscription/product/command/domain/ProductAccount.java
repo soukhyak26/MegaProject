@@ -6,9 +6,8 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.command.event.*;
-import com.affaince.subscription.product.vo.FixedExpensePerProduct;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.vo.VariableExpensePerProduct;
+import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
+import com.affaince.subscription.product.vo.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
@@ -318,9 +317,22 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void on(DeliveryExpenseUpdatedToProductEvent event) {
         //get latest deliveryExpense
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
-        if (latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()) {
+        if (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()) {
             VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
             variableExpenseVersions.add(newVariableExpenseVersion);
+            List<CostHeader> costHeaders = new ArrayList<>(3);
+            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+            CostHeader purchasePriceHeader = new CostHeader(CostHeaderType.PURCHASE_PRICE_PER_UNIT, "purchase price per unit", latestTaggedPriceVersion.getPurchasePricePerUnit(), CostHeaderApplicability.ABSOLUTE);
+            costHeaders.add(purchasePriceHeader);
+            FixedExpensePerProduct latestFixedOperatingExpensePerUnit = getLatestFixedExpenseVersion();
+            CostHeader fixedExpenseHeader = new CostHeader(CostHeaderType.FIXED_EXPENSE_PER_UNIT, "fixed expense per unit", latestFixedOperatingExpensePerUnit.getFixedOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
+            costHeaders.add(fixedExpenseHeader);
+            CostHeader variableExpenseHeader = new CostHeader(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT, "variable expense per unit", newVariableExpenseVersion.getVariableOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
+            costHeaders.add(variableExpenseHeader);
+            BreakEvenPriceCalculator breakEvenPriceCalculator = new BreakEvenPriceCalculator();
+            double breakEvenrPrice = breakEvenPriceCalculator.calculateBreakEvenPrice(costHeaders);
+            latestTaggedPriceVersion.setBreakEvenrPrice(breakEvenrPrice);
+
         }
     }
 
@@ -369,6 +381,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         String productId = event.getProductId();
         //PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
         if (this.getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
             PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());

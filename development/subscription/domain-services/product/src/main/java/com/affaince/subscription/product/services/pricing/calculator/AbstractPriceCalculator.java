@@ -6,7 +6,6 @@ import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -21,7 +20,6 @@ public abstract class AbstractPriceCalculator {
     @Value("${pricing.calculator.pricehistorycount.max.fordefaultpricing}")
     protected int maxHistoryCountforDefaultPricing;
     private AbstractPriceCalculator nextCalculator;
-    private BreakEvenPriceCalculator breakEvenPriceCalculator;
 
     public AbstractPriceCalculator getNextCalculator() {
         return this.nextCalculator;
