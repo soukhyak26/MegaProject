@@ -99,13 +99,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-
     @EventSourcingHandler
     public void on(OfferedPriceRecommendedEvent event) {
         getProductAccount().addNewPriceRecommendation(event.getNewPriceBucket().getFromDate(), event.getNewPriceBucket());
 
     }
-
 
     //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler
     @EventSourcingHandler
@@ -130,6 +128,16 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void on(CurrentPriceContinuedEvent event) {
         PriceBucket latestRecommendedPriceBucket = this.getLatestRecommendedPriceBucket();
         getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
+    }
+
+
+    @EventSourcingHandler
+    public void on(OpeningPriceOrPercentRegisteredEvent event) {
+        PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
+        final LocalDateTime currentDate = SysDateTime.now();
+        PriceBucket newPriceBucket = createNewPriceBucket(event.getProductId(), latestTaggedPriceVersion, event.getOpeningPriceOrPercent(), EntityStatus.CREATED, currentDate);
+        this.getProductAccount().addNewPriceBucket(currentDate, newPriceBucket);
+        this.productActivationStatusList.add(ProductStatus.PRODUCT_PRICE_ASSIGNED);
     }
 
 
@@ -349,10 +357,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         //Change price ONLY if difference between latest price and new price is more than 0.5 money? BUT WHAT ABOUT PERCENT DICOUNT.. NEEDS CORRECTION
         if (Math.abs(latestPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() - overriddenPriceOrPercent) > 0.5) {
             PriceBucket newPriceBucket = createNewPriceBucket(productId, latestRecommendedPriceBucket.getTaggedPriceVersion(), overriddenPriceOrPercent, latestRecommendedPriceBucket.getEntityStatus(), latestRecommendedPriceBucket.getFromDate());
-            //cannot do expiration of latest pricebucket as this is just a recommended price bucket.
-            //latestPriceBucket.setToDate(event.getCurrentPriceDate());
-            //  this.getProductAccount().addNewPriceBucket(event.getFromDate(), newPriceBucket);
-            //getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
             apply(new OfferedPriceChangedEvent(productId, newPriceBucket));
         }
     }

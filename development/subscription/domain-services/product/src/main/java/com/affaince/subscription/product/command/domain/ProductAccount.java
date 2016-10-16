@@ -377,11 +377,4 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
 
-    @EventSourcingHandler
-    public void on(OpeningPriceOrPercentRegisteredEvent event) {
-        PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
-        final LocalDateTime currentDate = SysDateTime.now();
-        PriceBucket newPriceBucket = createNewPriceBucket(event.getProductId(), latestTaggedPriceVersion, event.getOpeningPriceOrPercent(), EntityStatus.CREATED, currentDate);
-        this.addNewPriceBucket(currentDate, newPriceBucket);
-    }
 }

@@ -15,6 +15,7 @@ public final class ProductConfigurationValidator {
         boolean configured = false;
         boolean forecasted = false;
         boolean stepForecasted = false;
+        boolean priceAssigned = false;
         boolean activated = false;
         ProductStatus nextProductStatus = null;
         if (!productActivationStatusList.contains(ProductStatus.PRODUCT_DEACTIVATED)) {
@@ -51,8 +52,18 @@ public final class ProductConfigurationValidator {
                         }
                         break;
 
+                    case PRODUCT_PRICE_ASSIGNED:
+                        if (registered) {
+                            priceAssigned = true;
+                        } else {
+                            throw InvalidProductStatusException.build(productId,
+                                    productStatus,
+                                    ProductStatus.PRODUCT_REGISTERED);
+                        }
+                        break;
+
                     case PRODUCT_ACTIVATED:
-                        if (registered && configured && forecasted && stepForecasted) {
+                        if (registered && configured && forecasted && stepForecasted && priceAssigned) {
                             activated = true;
                         } else {
                             throw InvalidProductStatusException.build(productId,

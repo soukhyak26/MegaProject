@@ -17,7 +17,7 @@ public enum ProductStatus {
     PRODUCT_STEPFORECAST_CREATED(4),
 
     //opening price has been assigned.
-    PRODUCT_OPENINGPRICE_ASSIGNED(5),
+    PRODUCT_PRICE_ASSIGNED(5),
 
     PRODUCT_ACTIVATED(6),
 
