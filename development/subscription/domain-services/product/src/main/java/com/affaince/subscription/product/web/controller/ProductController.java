@@ -78,7 +78,7 @@ public class ProductController {
             throw e;
         }
         ProductController.LOGGER.info("Create product command send to Command gateway with product name: " + createCommand.getProductName() + " category:" + request.getCategoryId() + " subcategory: " + request.getSubCategoryId() + " on date: " + SysDate.now());
-        return new ResponseEntity<Object>(ImmutableMap.of("product name: ", request.getProductName()), HttpStatus.CREATED);
+        return new ResponseEntity<Object>(ImmutableMap.of("id", productId), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
