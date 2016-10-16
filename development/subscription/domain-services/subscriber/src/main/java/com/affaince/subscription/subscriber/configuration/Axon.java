@@ -7,6 +7,7 @@ import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.event.BenefitAddedEvent;
 import com.affaince.subscription.subscriber.command.event.OfferedPriceChangedEvent;
 import com.affaince.subscription.subscriber.command.event.PaymentReceivedFromSourceEvent;
+import com.affaince.subscription.subscriber.command.event.ProductActivatedEvent;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -57,6 +58,7 @@ public class Axon extends RabbitMQConfiguration {
             put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedFromSourceEvent.class.getName());
             put("com.affaince.subscription.benefits.command.event.BenefitAddedEvent", BenefitAddedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.OfferedPriceChangedEvent", OfferedPriceChangedEvent.class.getName());
+            put("com.affaince.subscription.product.command.event.ProductActivatedEvent", ProductActivatedEvent.class.getName());
         }};
     }
 }
