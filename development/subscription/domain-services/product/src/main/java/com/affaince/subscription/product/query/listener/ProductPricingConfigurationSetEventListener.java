@@ -46,7 +46,7 @@ public class ProductPricingConfigurationSetEventListener {
         if(productActivationStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        boolean result = productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
+        productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
         productActivationStatusViewRepository.save(productActivationStatusView);
     }
 }

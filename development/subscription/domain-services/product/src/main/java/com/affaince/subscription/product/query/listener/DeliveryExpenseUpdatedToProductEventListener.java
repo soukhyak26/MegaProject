@@ -18,6 +18,7 @@ public class DeliveryExpenseUpdatedToProductEventListener {
         this.priceBucketViewRepository = priceBucketViewRepository;
     }
 
+    //WHAT IS THIS????It is wrong....
     @EventHandler
     public void on (DeliveryExpenseUpdatedToProductEvent event) {
         final ProductVersionId productVersionId = new ProductVersionId(event.getProductId(), event.getFromDate());

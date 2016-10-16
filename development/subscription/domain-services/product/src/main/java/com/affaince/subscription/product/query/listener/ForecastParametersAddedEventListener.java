@@ -2,8 +2,8 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.command.event.ForecastParametersAddedEvent;
-import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
+import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -28,7 +28,7 @@ public class ForecastParametersAddedEventListener {
         if(productActivationStatusView == null) {
             throw ProductNotFoundException.build(event.getProductId());
         }
-        boolean result = productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
+        productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
         productActivationStatusViewRepository.save(productActivationStatusView);
     }
 }

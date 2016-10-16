@@ -5,24 +5,29 @@ import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
+import com.affaince.subscription.product.validator.ProductConfigurationValidator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Product extends AbstractAnnotatedAggregateRoot<String> {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(Product.class);
     @AggregateIdentifier
     private String productId;
     private String productName;
@@ -114,7 +119,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
 
     @EventSourcingHandler
-    public void handle(CurrentPriceContinuedEvent event) {
+    public void on(CurrentPriceContinuedEvent event) {
         PriceBucket latestRecommendedPriceBucket = this.getLatestRecommendedPriceBucket();
         getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
     }
@@ -178,8 +183,16 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     //for product administrator to configure product
-    public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) {
+    public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) throws InvalidProductStatusException, ProductDeactivatedException {
         apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod()));
+        final ProductConfigurationValidator validator = new ProductConfigurationValidator();
+        try {
+            if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
+                apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
+            }
+        } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
+            LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
+        }
     }
 
 
@@ -205,12 +218,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return getProductAccount().findEarlierPriceBucketTo(priceBucket, priceBuckets);
     }
 
-    //When current offered price are set/overriden by product administrator.
-    //Ideally it should update latest price bucket with merchant overriden price.
-    //Some work is needed to be done on this API
-    public void addCurrentOfferedPrice(double currentOfferedPrice) {
-        apply(new CurrentOfferedPriceAddedEvent(this.productId, currentOfferedPrice));
-    }
 
     public PriceTaggedWithProduct getLatestTaggedPriceVersion() {
         return getProductAccount().getLatestTaggedPriceVersion();
@@ -296,12 +303,31 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             apply(new ManualForecastAddedEvent(productId));
         }
+        final ProductConfigurationValidator validator = new ProductConfigurationValidator();
+        try {
+            if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
+                apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
+            }
+        } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
+            LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
+        }
+
     }
 
     public void registerManualStepForecast() {
         if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_STEPFORECAST_CREATED)) {
             apply(new ManualStepForecastAddedEvent(productId));
         }
+
+        final ProductConfigurationValidator validator = new ProductConfigurationValidator();
+        try {
+            if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
+                apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
+            }
+        } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
+            LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
+        }
+
     }
 
     public void acceptRecommendedPrice() {

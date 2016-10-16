@@ -1,8 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.ProductStatus;
-import com.affaince.subscription.product.validator.ProductConfigurationValidator;
-import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -45,15 +43,9 @@ public class ProductActivationStatusView {
         productStatuses.clear();
     }
 
-    public boolean addProductStatus(ProductStatus productStatus) {
-        try {
+    public void addProductStatus(ProductStatus productStatus) {
             productStatuses.add(productStatus);
-            ProductConfigurationValidator.validateProductConfiguration(this);
-            return true;
-        } catch (InvalidProductStatusException e) {
-            productStatuses.remove(productStatuses.size() - 1);
-            return false;
-        }
+
     }
 
 }

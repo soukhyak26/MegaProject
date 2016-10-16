@@ -2,9 +2,9 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.command.event.ProductRegisteredEvent;
+import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
-import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -44,7 +44,7 @@ public class ProductRegisteredEventListener {
         );
         itemRepository.save(productView);
         final ProductActivationStatusView productActivationStatusView = new ProductActivationStatusView(event.getProductId(), new ArrayList<>());
-        boolean result = productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
+        productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
         productActivationStatusViewRepository.save(productActivationStatusView);
     }
 }

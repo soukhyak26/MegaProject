@@ -4,14 +4,12 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.AddCurrentOfferedPriceCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
-import com.affaince.subscription.product.web.request.AddCurrentOfferedPriceRequest;
 import com.affaince.subscription.product.web.request.RegisterProductRequest;
 import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
 import com.affaince.subscription.repository.IdGenerator;
@@ -35,7 +33,6 @@ import java.util.*;
 @RequestMapping(value = "/product")
 @Component
 public class ProductController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository productViewRepository;
@@ -96,23 +93,6 @@ public class ProductController {
                 request.getCurrentStockInUnits(),
                 SysDateTime.now()
         );
-        try {
-            this.commandGateway.executeAsync(command);
-        } catch (Exception e) {
-            throw e;
-        }
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
-
-
-    @RequestMapping(method = RequestMethod.PUT, value = "/setcurrentofferedprice/{productId}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> setCurrentOfferedPrice(@PathVariable String productId, @RequestBody @Valid AddCurrentOfferedPriceRequest request) throws Exception {
-        ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.build(productId);
-        }
-        AddCurrentOfferedPriceCommand command = new AddCurrentOfferedPriceCommand(productId, request.getCurrentOfferedPriceOrPercent());
         try {
             this.commandGateway.executeAsync(command);
         } catch (Exception e) {
