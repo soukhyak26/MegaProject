@@ -62,7 +62,7 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
         }
         OperatingExpensesDeterminator operatingExpensesDeterminator =
                 new DefaultOperatingExpensesDeterminator();
-        Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
+        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
         perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
                 new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
         ));
@@ -78,6 +78,12 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
                 rollingExpenseForecast.put(monthOfYear, event.getExpenseAmount());
             }
         }
+        OperatingExpensesDeterminator operatingExpensesDeterminator =
+                new DefaultOperatingExpensesDeterminator();
+        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
+        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
+                new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
+        ));
     }
 
     @EventSourcingHandler
