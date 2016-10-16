@@ -2,14 +2,12 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.product.command.AcceptRecommendedPriceCommand;
-import com.affaince.subscription.product.command.CalculatePriceOfAProductCommand;
-import com.affaince.subscription.product.command.ContinueCurrentPriceCommand;
-import com.affaince.subscription.product.command.OverrideRecommendedPriceCommand;
+import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.RecommendedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.RecommendedPriceBucketView;
 import com.affaince.subscription.product.vo.PricingChoiceType;
+import com.affaince.subscription.product.web.request.RegisterOpeningPriceRequest;
 import com.affaince.subscription.product.web.request.RegisterPriceChoiceRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +38,16 @@ public class PricingController {
         this.commandGateway = commandGateway;
         this.productViewRepository = productViewRepository;
         this.recommendedPriceBucketViewRepository = recommendedPriceBucketViewRepository;
+    }
+
+
+    //should be calculated only by the pricing batch as a background job.
+    @RequestMapping(method = RequestMethod.PUT, value = "/openprice/{productid}")
+    @Consumes("application/json")
+    public ResponseEntity<String> registerOpeningPrice(@PathVariable("productid") String productId, @RequestBody RegisterOpeningPriceRequest request) throws Exception {
+        RegisterOpeningPriceCommand command = new RegisterOpeningPriceCommand(productId, request.getOpeningPrice());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
     //should be calculated only by the pricing batch as a background job.

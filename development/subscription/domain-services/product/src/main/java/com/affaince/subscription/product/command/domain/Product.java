@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.*;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
@@ -19,6 +20,8 @@ import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +51,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory));
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, double purchasePrice, double MRP) {
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory, purchasePrice, MRP));
     }
 
 
@@ -68,6 +71,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productActivationStatusList = new ArrayList<>();
         this.productActivationStatusList.add(ProductStatus.PRODUCT_REGISTERED);
         this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
+        DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+        final LocalDateTime currentDate = SysDateTime.now();
+        final String taggedPriceVersionId = productId + currentDate.toString(format);
+        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, event.getPurchasePrice(), event.getMRP(), currentDate);
+        this.productAccount.addNewTaggedPriceVersion(taggedPriceVersion);
     }
 
     //Event for setting product configuration
@@ -353,4 +361,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new CurrentPriceContinuedEvent(productId));
     }
 
+    public void registerOpeningPrice(double openingPriceOrPercent) {
+        this.getProductAccount().registerOpeningPrice(productId, openingPriceOrPercent);
+    }
 }

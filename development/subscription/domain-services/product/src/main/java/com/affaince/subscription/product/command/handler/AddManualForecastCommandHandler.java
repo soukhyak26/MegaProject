@@ -15,7 +15,6 @@ public class AddManualForecastCommandHandler {
     private final Repository<Product> repository;
 
     @Autowired
-
     public AddManualForecastCommandHandler(Repository<Product> repository) {
         this.repository = repository;
     }

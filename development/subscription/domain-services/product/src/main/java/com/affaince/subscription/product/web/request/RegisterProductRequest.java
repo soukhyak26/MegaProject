@@ -29,6 +29,9 @@ public class RegisterProductRequest {
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
     @NotNull
     private ProductPricingCategory productPricingCategory;
+    private double purchasePrice;
+    private double MRP;
+
 
 
     public String getCategoryId() {
@@ -101,5 +104,21 @@ public class RegisterProductRequest {
 
     public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
         this.productPricingCategory = productPricingCategory;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getMRP() {
+        return MRP;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
     }
 }

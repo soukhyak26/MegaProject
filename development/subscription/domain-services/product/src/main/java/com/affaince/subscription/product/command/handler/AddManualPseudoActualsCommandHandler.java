@@ -5,10 +5,12 @@ import com.affaince.subscription.product.command.domain.Product;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 07-10-2016.
  */
+@Component
 public class AddManualPseudoActualsCommandHandler {
     private final Repository<Product> repository;
 

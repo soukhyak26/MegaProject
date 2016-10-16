@@ -13,12 +13,16 @@ public enum ProductStatus {
 
     //dependent upon registration
     PRODUCT_FORECASTED(3),
-
+    //manual pseudoActuals for next day are assigned
     PRODUCT_STEPFORECAST_CREATED(4),
 
-    PRODUCT_ACTIVATED(5),
+    //opening price has been assigned.
+    PRODUCT_OPENINGPRICE_ASSIGNED(5),
 
-    PRODUCT_DEACTIVATED(6);
+    PRODUCT_ACTIVATED(6),
+
+    //If product is deactivated due to any exception or through forceful deactivation( taking our product from subscription business)
+    PRODUCT_DEACTIVATED(7);
 
     private int statusCode;
 

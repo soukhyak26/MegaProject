@@ -37,7 +37,9 @@ public class RegisterProductCommandHandler {
                 command.getSubstitutes(),
                 command.getComplements(),
                 command.getSensitiveTo(),
-                command.getProductPricingCategory()
+                command.getProductPricingCategory(),
+                command.getPurchasePrice(),
+                command.getMRP()
         );
         repository.add(product);
         LOGGER.info("Product added to write repository with Name: " + command.getProductName() + " category:" + command.getCategoryId() + " subcategory: " + command.getSubCategoryId() + " on date: " + SysDate.now());
