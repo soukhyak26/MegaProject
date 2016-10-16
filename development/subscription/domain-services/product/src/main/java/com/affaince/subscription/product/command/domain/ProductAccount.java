@@ -180,11 +180,11 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command) {
-        apply(new DeliveryExpenseUpdatedToProductEvent(command.getProductId(), SysDateTime.now(), command.getOperationExpense()));
+        apply(new VariableExpenseChangedEvent(command.getProductId(), SysDateTime.now(), command.getOperationExpense()));
     }
 
     public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
-        apply(new FixedExpenseUpdatedToProductEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
+        apply(new FixedExpenseChangedEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
     }
 
     public double findLatestFixedExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
@@ -234,6 +234,26 @@ public class ProductAccount extends AbstractAnnotatedEntity {
                 - (priceBucket.getNumberOfExistingSubscriptions() * (priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit())
                 + fixedExpensePerUnit + variableExpensePerUnit);
         return profit;
+    }
+
+    public double calculatedBreakEvenPriceUponChangeOfPriceOrExpenses() {
+        List<CostHeader> costHeaders = new ArrayList<>(3);
+        PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+        CostHeader purchasePriceHeader = new CostHeader(CostHeaderType.PURCHASE_PRICE_PER_UNIT, "purchase price per unit", latestTaggedPriceVersion.getPurchasePricePerUnit(), CostHeaderApplicability.ABSOLUTE);
+        costHeaders.add(purchasePriceHeader);
+
+        FixedExpensePerProduct latestFixedOperatingExpensePerUnit = getLatestFixedExpenseVersion();
+        CostHeader fixedExpenseHeader = new CostHeader(CostHeaderType.FIXED_EXPENSE_PER_UNIT, "fixed expense per unit", latestFixedOperatingExpensePerUnit.getFixedOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
+        costHeaders.add(fixedExpenseHeader);
+
+        VariableExpensePerProduct latestVariableExpensePerProduct = getLatestVariableExpenseVersion();
+        CostHeader variableExpenseHeader = new CostHeader(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT, "variable expense per unit", latestVariableExpensePerProduct.getVariableOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
+        costHeaders.add(variableExpenseHeader);
+
+        BreakEvenPriceCalculator breakEvenPriceCalculator = new BreakEvenPriceCalculator();
+        return breakEvenPriceCalculator.calculateBreakEvenPrice(costHeaders);
+        //latestTaggedPriceVersion.setBreakEvenrPrice(breakEvenrPrice);
+
     }
 
     public void registerOpeningPrice(String productId, double openingPriceOrPercent) {
@@ -314,36 +334,27 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     @EventSourcingHandler
-    public void on(DeliveryExpenseUpdatedToProductEvent event) {
+    public void on(VariableExpenseChangedEvent event) {
         //get latest deliveryExpense
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
         if (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()) {
             VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
             variableExpenseVersions.add(newVariableExpenseVersion);
-            List<CostHeader> costHeaders = new ArrayList<>(3);
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            CostHeader purchasePriceHeader = new CostHeader(CostHeaderType.PURCHASE_PRICE_PER_UNIT, "purchase price per unit", latestTaggedPriceVersion.getPurchasePricePerUnit(), CostHeaderApplicability.ABSOLUTE);
-            costHeaders.add(purchasePriceHeader);
-            FixedExpensePerProduct latestFixedOperatingExpensePerUnit = getLatestFixedExpenseVersion();
-            CostHeader fixedExpenseHeader = new CostHeader(CostHeaderType.FIXED_EXPENSE_PER_UNIT, "fixed expense per unit", latestFixedOperatingExpensePerUnit.getFixedOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
-            costHeaders.add(fixedExpenseHeader);
-            CostHeader variableExpenseHeader = new CostHeader(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT, "variable expense per unit", newVariableExpenseVersion.getVariableOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
-            costHeaders.add(variableExpenseHeader);
-            BreakEvenPriceCalculator breakEvenPriceCalculator = new BreakEvenPriceCalculator();
-            double breakEvenrPrice = breakEvenPriceCalculator.calculateBreakEvenPrice(costHeaders);
-            latestTaggedPriceVersion.setBreakEvenrPrice(breakEvenrPrice);
-
+            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
     }
 
 
     @EventSourcingHandler
-    public void on(FixedExpenseUpdatedToProductEvent event) {
+    public void on(FixedExpenseChangedEvent event) {
         //get latest deliveryExpense
         FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
         if (latestFixedExpense.getFixedOperatingExpPerUnit() != event.getOperationExpense()) {
             FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(event.getOperationExpense(), SysDate.now());
             fixedExpenseVersions.add(newFixedExpenseVersion);
+            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
     }
 
@@ -369,6 +380,8 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
             PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.addNewTaggedPriceVersion(newtaggedPrice);
+            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
@@ -386,6 +399,8 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
             PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.addNewTaggedPriceVersion(newtaggedPrice);
+            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }

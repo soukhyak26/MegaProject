@@ -1,26 +1,29 @@
 package com.affaince.subscription.product.command.event;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
-public class DeliveryExpenseUpdatedToProductEvent {
+/**
+ * Created by mandar on 16-10-2016.
+ */
+public class FixedExpenseChangedEvent {
     private String productId;
-    private LocalDateTime fromDate;
+    private LocalDate fromDate;
     private double operationExpense;
 
-    public DeliveryExpenseUpdatedToProductEvent(String productId, LocalDateTime fromDate, double operationExpense) {
+    public FixedExpenseChangedEvent() {
+    }
+
+    public FixedExpenseChangedEvent(String productId, LocalDate fromDate, double operationExpense) {
         this.productId = productId;
         this.fromDate = fromDate;
         this.operationExpense = operationExpense;
-    }
-
-    public DeliveryExpenseUpdatedToProductEvent() {
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public LocalDateTime getFromDate() {
+    public LocalDate getFromDate() {
         return fromDate;
     }
 

@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
+import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
@@ -217,6 +218,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.getProductAccount().receiveProductStatus(command);
     }
 
+    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
+        getProductAccount().updateFixedExpenses(command);
+    }
     //Product status should be received from main application
     public void updateProductStatus(UpdateProductStatusCommand command) {
         this.getProductAccount().updateProductStatus(command);
