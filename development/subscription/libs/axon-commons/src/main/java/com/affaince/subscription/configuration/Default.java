@@ -2,9 +2,12 @@ package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
+import com.affaince.subscription.common.deserializer.QuantityUnitDeserializer;
 import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
+import com.affaince.subscription.common.serializer.QuantityUnitSerializer;
+import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.monitoring.TrackingAsynchronousCluster;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
@@ -43,6 +46,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.integration.handler.LoggingHandler;
@@ -59,6 +63,9 @@ import static java.util.concurrent.Executors.newScheduledThreadPool;
 /**
  * Created by NIKUNJ on 7/12/2015.
  */
+@Import(
+        {RabbitMQConfiguration.class, ActiveMQConfiguration.class}
+)
 public class Default {
     //  private static final int DEFAULT_JGROUPS_PORT = 12001;
     //private static final Logger = getLogger (Default.class);
@@ -158,6 +165,8 @@ public class Default {
         simpleModule.addDeserializer(MetaData.class, new MetadataDeserializer());
         simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
+        simpleModule.addSerializer(QuantityUnit.class, new QuantityUnitSerializer());
+        simpleModule.addDeserializer(QuantityUnit.class, new QuantityUnitDeserializer());
         serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
 

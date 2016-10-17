@@ -1,6 +1,6 @@
 package com.affaince.subscription.simulation.configuation;
 
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.simulation.command.event.GenericEventPublisher;
 import com.affaince.subscription.simulation.command.event.basketdispatch.BasketDispatchedStatusEvent;
 import org.apache.camel.CamelContext;
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by mandark on 19-07-2015.
  */
 @Configuration
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
 
     private static final String CAMEL_URL_MAPPING = "/camel/*";

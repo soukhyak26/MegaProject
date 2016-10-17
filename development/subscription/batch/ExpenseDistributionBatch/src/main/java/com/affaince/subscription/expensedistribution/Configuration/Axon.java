@@ -1,7 +1,7 @@
 package com.affaince.subscription.expensedistribution.Configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.ActiveMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
 import com.affaince.subscription.expensedistribution.processor.CalculatePerUnitExpense;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by mandark on 19-07-2015.
  */
 @Configuration
-public class Axon extends ActiveMQConfiguration {
+public class Axon extends Default {
 
     @Bean
     public GenericEventPublisher publisher(EventTemplate template) {

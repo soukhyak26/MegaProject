@@ -9,22 +9,31 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.serializer.Serializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.jms.SubscribableJmsChannel;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MessagingMessageConverter;
 import org.springframework.messaging.SubscribableChannel;
 import org.springframework.util.ErrorHandler;
 
+import javax.annotation.Resource;
 import javax.jms.ConnectionFactory;
 import javax.jms.Session;
+import java.util.Map;
 
 /**
  * Created by rsavaliya on 9/1/16.
  */
 /*@EnableAutoConfiguration
 @Configuration*/
-public class ActiveMQConfiguration extends Default {
+@Configuration
+@ConditionalOnProperty(name = "subscription.ActiveMQConfiguration", havingValue = "true", matchIfMissing = true)
+public class ActiveMQConfiguration {
+
+    @Resource(name = "types")
+    Map<String, String> types;
 
     @Bean
     public JmsTemplate jmsTemplate(@Value("${axon.eventBus.topicName}") String topicName, ConnectionFactory connectionFactory) {
@@ -44,7 +53,9 @@ public class ActiveMQConfiguration extends Default {
 
 
     @Bean
-    public ListenerContainerFactory listenerContainerFactory(@Value("${axon.eventBus.queueName}") String queueName, ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
+    public ListenerContainerFactory listenerContainerFactory(
+            @Value("${axon.eventBus.queueName}") String queueName,
+            ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
         System.out.println("@@Queue Name:" + queueName);
         ListenerContainerFactory containerFactory = new ListenerContainerFactory();
         containerFactory.setDestinationName(queueName);
@@ -54,7 +65,7 @@ public class ActiveMQConfiguration extends Default {
         containerFactory.setIdleConsumerLimit(10);
         containerFactory.setAnnotation(EventHandler.class);
         containerFactory.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
-        containerFactory.setConsumedEventTypes(types());
+        containerFactory.setConsumedEventTypes(types);
         return containerFactory;
 
     }

@@ -1,6 +1,6 @@
 package com.affaince.subscription.payments.configuration;
 
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.payments.command.domain.Payment;
 import com.affaince.subscription.payments.command.event.*;
 import com.mongodb.Mongo;
@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
 
     @Bean
@@ -37,6 +37,7 @@ public class Axon extends RabbitMQConfiguration {
     }
 
     @Override
+    @Bean(name = "types")
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());

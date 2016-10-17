@@ -1,7 +1,7 @@
 package com.affaince.subscription.benefits.configuration;
 
 import com.affaince.subscription.benefits.command.domain.Benefit;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
     @Bean
     public Repository<Benefit> createRepository(DisruptorCommandBus commandBus) {
@@ -36,6 +36,7 @@ public class Axon extends RabbitMQConfiguration {
     }
 
     @Override
+    @Bean(name = "types")
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.benefits.command.event.*", "");

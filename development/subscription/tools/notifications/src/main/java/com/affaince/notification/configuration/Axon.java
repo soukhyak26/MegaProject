@@ -2,7 +2,7 @@ package com.affaince.notification.configuration;
 
 import com.affaince.notification.events.PaymentProcessedEvent;
 import com.affaince.notification.publisher.GenericMailEventPublisher;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Configuration
 @EnableAutoConfiguration
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
     @Autowired
     CamelContext camelContext;
@@ -50,6 +50,7 @@ public class Axon extends RabbitMQConfiguration {
     }
 
     @Override
+    @Bean(name = "types")
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.notification.events.PaymentProcessedEvent", PaymentProcessedEvent.class.getName());

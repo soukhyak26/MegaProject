@@ -1,7 +1,7 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.ActiveMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.pricing.determine.PricingClient;
 import com.affaince.subscription.pricing.forecast.ForecastingClient;
 import com.affaince.subscription.pricing.forecast.ForecastingTrigger;
@@ -34,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableJms
 @ComponentScan("com.affaince")
-public class Axon extends ActiveMQConfiguration {
+public class Axon extends Default {
 
     @Autowired
     private CamelContext camelContext;

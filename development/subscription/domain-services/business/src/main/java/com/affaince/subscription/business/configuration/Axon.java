@@ -3,7 +3,7 @@ package com.affaince.subscription.business.configuration;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
 import com.affaince.subscription.business.command.event.*;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
 
     @Bean
@@ -44,6 +44,7 @@ public class Axon extends RabbitMQConfiguration {
     }
 
     @Override
+    @Bean(name = "types")
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent", OperatingExpenseUpdatedEvent.class.getName());

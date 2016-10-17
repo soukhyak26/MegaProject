@@ -1,7 +1,7 @@
 package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.RabbitMQConfiguration;
+import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by mandark on 19-07-2015.
  */
 @Configuration
-public class Axon extends RabbitMQConfiguration {
+public class Axon extends Default {
 
 
     public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
