@@ -21,7 +21,7 @@ public class PaymentInitiatedEventListener {
 
     @EventHandler
     public void on(PaymentInitiatedEvent event) {
-        SubscriptionPaymentView subscriptionPaymentView = subscriptionPaymentViewRepository.findById(event.getSubscriptionId());
+        SubscriptionPaymentView subscriptionPaymentView = subscriptionPaymentViewRepository.findBySubscriptionId(event.getSubscriptionId());
         if(subscriptionPaymentView == null) {
             subscriptionPaymentView = new SubscriptionPaymentView(event.getSubscriptionId(), event.getTotalBalance());
         }

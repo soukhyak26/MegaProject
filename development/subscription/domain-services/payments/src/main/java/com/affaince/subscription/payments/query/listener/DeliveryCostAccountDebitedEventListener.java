@@ -21,7 +21,7 @@ public class DeliveryCostAccountDebitedEventListener {
 
     @EventHandler
     public void on(DeliveryCostAccountDebitedEvent event) {
-        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findById(event.getId());
+        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findByDeliveryId(event.getId());
         deliveryCostView.getDeliveryCostAccount().debit(event.getAmountToDebit());
         deliveryCostViewRepository.save(deliveryCostView);
     }

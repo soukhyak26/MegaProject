@@ -17,7 +17,8 @@ public class DeliveryCreatedEventListener {
     @Autowired
     private SubscriptionCommandGateway commandGateway;
 
-    public DeliveryCreatedEventListener(DeliveryCostViewRepository deliveryCostViewRepository) {
+    //TODO: check why we fire command from event listener
+    public DeliveryCreatedEventListener() {
     }
 
     @EventHandler

@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by anayonkar on 21/8/16.
  */
 public interface SubscriptionPaymentViewRepository extends CrudRepository<SubscriptionPaymentView, String> {
-    SubscriptionPaymentView findById(String subscriptionId);
+    SubscriptionPaymentView findBySubscriptionId(String subscriptionId);
 }

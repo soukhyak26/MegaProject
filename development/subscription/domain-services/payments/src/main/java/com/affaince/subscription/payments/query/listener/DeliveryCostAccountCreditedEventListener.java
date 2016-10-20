@@ -21,7 +21,7 @@ public class DeliveryCostAccountCreditedEventListener {
 
     @EventHandler
     public void on(DeliveryCostAccountCreditedEvent event) {
-        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findById(event.getId());
+        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findByDeliveryId(event.getId());
         deliveryCostView.getDeliveryCostAccount().credit(event.getAmountToCredit());
         deliveryCostViewRepository.save(deliveryCostView);
     }

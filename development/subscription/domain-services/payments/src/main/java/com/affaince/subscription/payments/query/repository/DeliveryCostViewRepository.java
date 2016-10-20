@@ -9,6 +9,6 @@ import java.util.List;
  * Created by anayonkar on 21/8/16.
  */
 public interface DeliveryCostViewRepository extends CrudRepository<DeliveryCostView, String> {
-    DeliveryCostView findById(String deliveryId);
+    DeliveryCostView findByDeliveryId(String deliveryId);
     List<DeliveryCostView> findBySubscriptionId(String subscriptionId);
 }

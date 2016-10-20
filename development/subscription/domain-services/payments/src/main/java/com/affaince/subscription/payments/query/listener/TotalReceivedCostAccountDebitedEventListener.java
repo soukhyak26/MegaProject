@@ -21,7 +21,7 @@ public class TotalReceivedCostAccountDebitedEventListener {
 
     @EventHandler
     public void on(TotalReceivedCostAccountDebitedEvent event) {
-        SubscriptionPaymentView subscriptionPaymentView = subscriptionPaymentViewRepository.findById(event.getId());
+        SubscriptionPaymentView subscriptionPaymentView = subscriptionPaymentViewRepository.findBySubscriptionId(event.getId());
         subscriptionPaymentView.getTotalReceivedCostAccount().debit(event.getAmountToDebit());
         subscriptionPaymentViewRepository.save(subscriptionPaymentView);
     }

@@ -21,7 +21,7 @@ public class DeliveryInitiatedEventListener {
 
     @EventHandler
     public void on(DeliveryInitiatedEvent event) {
-        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findById(event.getDeliveryId());
+        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findByDeliveryId(event.getDeliveryId());
         if(deliveryCostView == null) {
             deliveryCostView = new DeliveryCostView(event.getDeliveryId(), event.getSubscriptionId(), 0);
         }

@@ -21,7 +21,7 @@ public class TotalReceivedCostAccountCreditedEventListener {
 
     @EventHandler
     public void on(TotalReceivedCostAccountCreditedEvent event) {
-        SubscriptionPaymentView subscriptionPaymentView = subscriptionPaymentViewRepository.findById(event.getId());
+        SubscriptionPaymentView subscriptionPaymentView = subscriptionPaymentViewRepository.findBySubscriptionId(event.getId());
         subscriptionPaymentView.getTotalReceivedCostAccount().credit(event.getAmountToCredit());
         subscriptionPaymentViewRepository.save(subscriptionPaymentView);
     }
