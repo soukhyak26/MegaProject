@@ -8,6 +8,7 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.subscriber.command.AddDeliveryToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
@@ -201,7 +202,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription) {
+    private Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription) {
         final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
         final Map<Integer, Delivery> deliveries = new HashMap<>();
         int weekOfYear = SysDate.now().getWeekOfWeekyear();
@@ -257,8 +258,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
         BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
-        BenefitResult benefitResult = benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
-        return benefitResult;
+        return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
     }
 
     public void setActiveSubscription(Subscription subscription) {
@@ -267,6 +267,25 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public Subscription getSubscription() {
         return subscription;
+    }
+
+    public void addDelivery(AddDeliveryToSubscriptionCommand command, DeliveryChargesRule deliveryChargesRule) {
+        final Delivery delivery = new Delivery(command.getDeliveryId(), new ArrayList<>(),
+                command.getDeliveryDate(), null, DeliveryStatus.CREATED);
+        // TODO: Calculate weight remaining
+        command.getDeliveryItems().forEach(deliveryItem -> {
+            for (int i = 0; i < deliveryItem.getQuantity(); i++) {
+                delivery.getDeliveryItems().add(new DeliveryItem(deliveryItem.getDeliveryItemId(),
+                        DeliveryStatus.CREATED, 0.0, 0.0));
+            }
+        });
+        delivery.calculateTotalWeightInGrams();
+        delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
+        // TODO: Calculation remaining
+        //delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
+        apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
+                delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
+                delivery.getTotalWeight()));
     }
 }
 
