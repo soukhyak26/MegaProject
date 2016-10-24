@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.AddDeliveryToSubscriptionCommand;
+import com.affaince.subscription.subscriber.command.DeleteDeliveryCommand;
 import com.affaince.subscription.subscriber.web.request.AddDeliveryRequest;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class DeliveryController {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping(value = "add/{subscriberId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "add/{subscriberId}", method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> addDelivery(@PathVariable String subscriberId, AddDeliveryRequest request) throws Exception {
         final String deliveryId = request.getDeliveryDate().getWeekOfWeekyear() + request.getDeliveryDate().getYear() + "";
@@ -38,5 +39,14 @@ public class DeliveryController {
         );
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.CREATED);
+    }
+
+
+    @RequestMapping(value = "delete/{subscriberId}/{deliveryId}", method = RequestMethod.DELETE)
+    @Consumes("application/json")
+    public ResponseEntity<Object> deleteDelivery(@PathVariable String subscriberId, @PathVariable String deliveryId) throws Exception {
+        final DeleteDeliveryCommand command = new DeleteDeliveryCommand(subscriberId, deliveryId);
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
     }
 }

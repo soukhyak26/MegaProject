@@ -158,6 +158,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 event.getStatus()));
     }
 
+    @EventSourcingHandler
+    public void on(DeliveryDeletedEvent event) {
+        deliveries.remove(event.getDeliveryId());
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
@@ -286,6 +291,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                 delivery.getTotalWeight()));
+    }
+
+    public void deleteDelivery(String deliveryId) {
+        apply(new DeliveryDeletedEvent(this.subscriberId, deliveryId));
     }
 }
 
