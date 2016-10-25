@@ -3,7 +3,9 @@ package com.affaince.subscription.subscriber.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.subscriber.command.AddDeliveryToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.DeleteDeliveryCommand;
+import com.affaince.subscription.subscriber.command.UpdateDeliveryCommand;
 import com.affaince.subscription.subscriber.web.request.AddDeliveryRequest;
+import com.affaince.subscription.subscriber.web.request.UpdateDeliveryRequest;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,16 @@ public class DeliveryController {
     @Consumes("application/json")
     public ResponseEntity<Object> deleteDelivery(@PathVariable String subscriberId, @PathVariable String deliveryId) throws Exception {
         final DeleteDeliveryCommand command = new DeleteDeliveryCommand(subscriberId, deliveryId);
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "update/{subscriberId}/{deliveryId}", method = RequestMethod.PUT)
+    @Consumes("application/json")
+    public ResponseEntity<Object> updateDelivery(@PathVariable String subscriberId, @PathVariable String deliveryId,
+                                                 UpdateDeliveryRequest request) throws Exception {
+        final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, deliveryId, request.getDeliveryDate(),
+                Arrays.asList(request.getDeliveryItems()));
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
     }

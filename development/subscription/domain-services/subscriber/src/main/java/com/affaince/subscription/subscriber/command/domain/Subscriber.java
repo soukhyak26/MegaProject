@@ -8,7 +8,6 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.subscriber.command.AddDeliveryToSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
@@ -274,11 +273,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return subscription;
     }
 
-    public void addDelivery(AddDeliveryToSubscriptionCommand command, DeliveryChargesRule deliveryChargesRule) {
-        final Delivery delivery = new Delivery(command.getDeliveryId(), new ArrayList<>(),
-                command.getDeliveryDate(), null, DeliveryStatus.CREATED);
+    public void addDelivery(String deliveryId, LocalDate deliveryDate,
+                            List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule) {
+        final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
+                deliveryDate, null, DeliveryStatus.CREATED);
         // TODO: Calculate weight remaining
-        command.getDeliveryItems().forEach(deliveryItem -> {
+        deliveryItems.forEach(deliveryItem -> {
             for (int i = 0; i < deliveryItem.getQuantity(); i++) {
                 delivery.getDeliveryItems().add(new DeliveryItem(deliveryItem.getDeliveryItemId(),
                         DeliveryStatus.CREATED, 0.0, 0.0));
