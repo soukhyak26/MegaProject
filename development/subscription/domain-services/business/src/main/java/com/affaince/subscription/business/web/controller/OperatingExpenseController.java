@@ -4,11 +4,8 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.business.command.AddCommonOperatingExpenseCommand;
 import com.affaince.subscription.business.query.repository.CommonOperatingExpenseViewRepository;
 import com.affaince.subscription.business.query.repository.DeliveryChargesRuleViewRepository;
-import com.affaince.subscription.business.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.business.vo.OperatingExpenseVO;
-import com.affaince.subscription.business.vo.RangeRule;
 import com.affaince.subscription.business.web.request.CommonOperatingExpensesRequest;
-import com.affaince.subscription.business.web.request.DeliveryChargesRulesRequest;
 import com.affaince.subscription.common.type.PeriodUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +39,7 @@ public class OperatingExpenseController {
 
     @RequestMapping(method = RequestMethod.POST, value = "common")
     @Consumes("application/json")
-    public ResponseEntity<Object> setOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
+    public ResponseEntity<Object> setCommonOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
         String commonExpenseId = UUID.randomUUID().toString();
         double amount = 0;
         for (OperatingExpenseVO expense : request.getExpenses()) {
@@ -64,6 +61,7 @@ public class OperatingExpenseController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+/*
     @RequestMapping(method = RequestMethod.POST, value = "deliverychargerules")
     @Consumes("application/json")
     public ResponseEntity<Object> setDeliveryChargesRules(@RequestBody @Valid DeliveryChargesRulesRequest request) throws Exception {
@@ -76,5 +74,6 @@ public class OperatingExpenseController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+*/
 
 }

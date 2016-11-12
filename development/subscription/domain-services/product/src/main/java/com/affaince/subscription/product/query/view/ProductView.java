@@ -30,8 +30,6 @@ public class ProductView {
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
-
-
     private double currentOperatingExpensePerUnit;
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;

@@ -62,10 +62,10 @@ object AddProjectionParameter {
           StringBody(
             """
               |{
-              |    "productForecastParameters":[{"startDate":"${startDate}",
-              |    "endDate":"${endDate}",
+              |    "productForecastParameters":[{"forecastStartDate":"${forecastStartDate}",
+              |    "forecastEndDate":"${forecastEndDate}",
               |    "purchasePricePerUnit":${purchasePricePerUnit},"MRP":${MRP},
-              |    "numberofNewSubscriptions":${numberofNewSubscriptions},
+              |    "numberOfNewSubscriptions":${numberOfNewSubscriptions},
               |    "numberOfChurnedSubscriptions":${numberOfChurnedSubscriptions},
               |    "numberOfTotalSubscriptions":${numberOfTotalSubscriptions},
               |    "productForecastStatus":1}]

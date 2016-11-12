@@ -1,4 +1,4 @@
-startDate,endDate,purchasePricePerUnit,MRP,numberofNewSubscriptions,numberOfChurnedSubscriptions,numberOfTotalSubscriptions
+forecastStartDate,forecastEndDate,purchasePricePerUnit,MRP,numberOfNewSubscriptions,numberOfChurnedSubscriptions,numberOfTotalSubscriptions
 2016-10-11,9999-12-31,100,150,1000,10,990
 2016-11-11,9999-12-31,100,150,1000,10,990
 2016-12-11,9999-12-31,100,150,1000,10,990

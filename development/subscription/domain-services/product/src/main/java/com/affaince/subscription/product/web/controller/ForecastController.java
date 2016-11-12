@@ -7,20 +7,16 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.AddManualForecastCommand;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
-import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
-import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ProductConfigurationView;
-import com.affaince.subscription.product.query.view.ProductForecastView;
-import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
-import com.affaince.subscription.product.query.view.ProductView;
+import com.affaince.subscription.product.query.repository.*;
+import com.affaince.subscription.product.query.view.*;
 import com.affaince.subscription.product.vo.ProductForecastParameter;
+import com.affaince.subscription.product.vo.ProductTargetParameters;
 import com.affaince.subscription.product.web.exception.ProductForecastAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductForecastModificationException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddForecastParametersRequest;
 import com.affaince.subscription.product.web.request.NextCalendarRequest;
+import com.affaince.subscription.product.web.request.SetTargetParameterRequest;
 import com.affaince.subscription.product.web.request.UpdateForecastRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,14 +48,16 @@ public class ForecastController {
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
+    private final TargetSettingViewRepository targetSettingViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, SubscriptionCommandGateway commandGateway) {
+    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, SubscriptionCommandGateway commandGateway) {
         this.productViewRepository = productViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
         this.productConfigurationViewRepository = productConfigurationViewRepository;
+        this.targetSettingViewRepository = targetSettingViewRepository;
         this.commandGateway = commandGateway;
     }
 
@@ -114,8 +112,41 @@ public class ForecastController {
             }
             lastEndDate = parameter.getEndDate();
         }
+        AddManualForecastCommand command = new AddManualForecastCommand(productId, forecastParameters, firstStartDate, lastEndDate);
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    //API to add forecast manually
+    @RequestMapping(method = RequestMethod.PUT, value = "settargets/{productid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setTargets(@RequestBody @Valid SetTargetParameterRequest request,
+                                             @PathVariable("productid") String productId) throws Exception {
+        ProductView productView = this.productViewRepository.findOne(productId);
+        if (productView == null) {
+            throw ProductNotFoundException.build(productId);
+        }
+
+        ProductTargetParameters[] targetParameters = request.getProductTargetParameters();
+        LocalDateTime firstStartDate = null;
+        LocalDateTime lastEndDate = null;
+        for (ProductTargetParameters parameter : targetParameters) {
+            List<TargetSettingView> existingTargetViews = this.targetSettingViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
+            //forecast should not be newly added if it already exists in the view
+            if (null != existingTargetViews && existingTargetViews.size() > 0) {
+                throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
+            }
+            TargetSettingView targetSettingView = new TargetSettingView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions(), parameter.getFixedExpensesPerPeriod(), parameter.getVariableExpensesPerPeriod());
+            targetSettingViewRepository.save(targetSettingView);
+            if (null == firstStartDate) {
+                firstStartDate = parameter.getStartDate();
+            }
+            lastEndDate = parameter.getEndDate();
+        }
+/*
         AddManualForecastCommand command = new AddManualForecastCommand(productId, firstStartDate, lastEndDate);
         commandGateway.executeAsync(command);
+*/
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -197,6 +228,7 @@ public class ForecastController {
         productPseudoActualsViewRepository.save(modifiedView);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/{productid}")
     public String findProductForecastByProductId(@PathVariable("productid") String productId) throws JsonProcessingException {

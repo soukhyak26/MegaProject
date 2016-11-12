@@ -252,7 +252,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
         BreakEvenPriceCalculator breakEvenPriceCalculator = new BreakEvenPriceCalculator();
         return breakEvenPriceCalculator.calculateBreakEvenPrice(costHeaders);
-        //latestTaggedPriceVersion.setBreakEvenrPrice(breakEvenrPrice);
+        //latestTaggedPriceVersion.setBreakEvenPrice(breakEvenrPrice);
 
     }
 
@@ -341,7 +341,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
             variableExpenseVersions.add(newVariableExpenseVersion);
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
+            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
     }
 
@@ -354,7 +354,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(event.getOperationExpense(), SysDate.now());
             fixedExpenseVersions.add(newFixedExpenseVersion);
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
+            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
     }
 
@@ -381,7 +381,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.addNewTaggedPriceVersion(newtaggedPrice);
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
+            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
@@ -400,7 +400,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.addNewTaggedPriceVersion(newtaggedPrice);
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenrPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
+            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
         }
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }

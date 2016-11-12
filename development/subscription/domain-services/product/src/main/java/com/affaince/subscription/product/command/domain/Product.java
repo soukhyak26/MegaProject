@@ -14,6 +14,7 @@ import com.affaince.subscription.product.services.pricing.determinator.DefaultPr
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.product.vo.ProductForecastParameter;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -319,9 +320,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public void registerManualForecast() {
+    public void registerManualForecast(ProductForecastParameter[] productForecastParameters, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
         if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
-            apply(new ManualForecastAddedEvent(productId));
+            for (ProductForecastParameter forecastParameter : productForecastParameters) {
+                apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberofNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
+            }
         }
         final ProductConfigurationValidator validator = new ProductConfigurationValidator();
         try {

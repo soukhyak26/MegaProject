@@ -1,11 +1,11 @@
 package com.affaince.subscription.business.query.view;
 
+import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by mandark on 26-01-2016.
@@ -16,18 +16,21 @@ public class ProductView {
     private String productId;
     private double purchasePrice;
     private double MRP;
-    private double offeredPrice;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
-    private long totalMonthlySubscriptions;
-    private double totalMonthlySaleAmount;
+    private ProductStatus productStatus;
+
+    /*
+        private long totalMonthlySubscriptions;
+        private double totalMonthlySaleAmount;
+    */
     private double currentOperatingExpensePerUnit;
 
-    public ProductView(String productId, double purchasePrice, double MRP, double offeredPrice, int sensitiveTo, double sensitivityWeight, long totalMonthlySubscriptions) {
+    public ProductView(String productId, Map<SensitivityCharacteristic, Double> sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
         this.productId = productId;
+        this.sensitiveTo = sensitiveTo;
         this.purchasePrice = purchasePrice;
         this.MRP = MRP;
-        this.offeredPrice = offeredPrice;
-        this.sensitiveTo = new TreeMap<>();
+/*
         switch (sensitiveTo) {
             case 0:
                 this.sensitiveTo.put(SensitivityCharacteristic.NONE, 1.0);
@@ -44,8 +47,12 @@ public class ProductView {
                 break;
 
         }
+*/
+        this.productStatus = productStatus;
+/*
         this.totalMonthlySubscriptions = totalMonthlySubscriptions;
         this.totalMonthlySaleAmount = this.totalMonthlySubscriptions * this.MRP;
+*/
     }
 
 
@@ -57,30 +64,6 @@ public class ProductView {
         this.productId = productId;
     }
 
-    public double getPurchasePrice() {
-        return this.purchasePrice;
-    }
-
-    public void setPurchasePrice(double purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public double getMRP() {
-        return this.MRP;
-    }
-
-    public void setMRP(double MRP) {
-        this.MRP = MRP;
-    }
-
-    public double getOfferedPrice() {
-        return this.offeredPrice;
-    }
-
-    public void setOfferedPrice(double offeredPrice) {
-        this.offeredPrice = offeredPrice;
-    }
-
     public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
         return this.sensitiveTo;
     }
@@ -89,27 +72,27 @@ public class ProductView {
         this.sensitiveTo = sensitiveTo;
     }
 
-    public long getTotalMonthlySubscriptions() {
-        return this.totalMonthlySubscriptions;
-    }
-
-    public void setTotalMonthlySubscriptions(long totalMonthlySubscriptions) {
-        this.totalMonthlySubscriptions = totalMonthlySubscriptions;
-    }
-
-    public double getTotalMonthlySaleAmount() {
-        return this.totalMonthlySaleAmount;
-    }
-
-    public void setTotalMonthlySaleAmount(double totalMonthlySaleAmount) {
-        this.totalMonthlySaleAmount = totalMonthlySaleAmount;
-    }
-
     public double getCurrentOperatingExpensePerUnit() {
         return this.currentOperatingExpensePerUnit;
     }
 
     public void setCurrentOperatingExpensePerUnit(double currentOperatingExpensePerUnit) {
         this.currentOperatingExpensePerUnit = currentOperatingExpensePerUnit;
+    }
+
+    public ProductStatus getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public double getMRP() {
+        return MRP;
     }
 }

@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command;
 
+import com.affaince.subscription.product.vo.ProductForecastParameter;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.joda.time.LocalDateTime;
 
@@ -9,11 +10,13 @@ import org.joda.time.LocalDateTime;
 public class AddManualForecastCommand {
     @TargetAggregateIdentifier
     private final String productId;
+    private final ProductForecastParameter[] productForecastParameters;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
 
-    public AddManualForecastCommand(String productId, LocalDateTime startDate, LocalDateTime endDate) {
+    public AddManualForecastCommand(String productId, ProductForecastParameter[] productForecastParameters, LocalDateTime startDate, LocalDateTime endDate) {
         this.productId = productId;
+        this.productForecastParameters = productForecastParameters;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -28,5 +31,9 @@ public class AddManualForecastCommand {
 
     public LocalDateTime getEndDate() {
         return endDate;
+    }
+
+    public ProductForecastParameter[] getProductForecastParameters() {
+        return productForecastParameters;
     }
 }
