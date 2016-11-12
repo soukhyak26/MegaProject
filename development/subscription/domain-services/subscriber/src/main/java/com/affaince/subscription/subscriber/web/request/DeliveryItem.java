@@ -6,6 +6,8 @@ package com.affaince.subscription.subscriber.web.request;
 public class DeliveryItem {
     private String deliveryItemId;
     private int quantity;
+    private long quantityInGrms;
+    private double deliveryItemOfferedPrice;
 
     public String getDeliveryItemId() {
         return deliveryItemId;
@@ -21,5 +23,21 @@ public class DeliveryItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public long getQuantityInGrms() {
+        return quantityInGrms;
+    }
+
+    public void setQuantityInGrms(long quantityInGrms) {
+        this.quantityInGrms = quantityInGrms;
+    }
+
+    public double getDeliveryItemOfferedPrice() {
+        return deliveryItemOfferedPrice;
+    }
+
+    public void setDeliveryItemOfferedPrice(double deliveryItemOfferedPrice) {
+        this.deliveryItemOfferedPrice = deliveryItemOfferedPrice;
     }
 }

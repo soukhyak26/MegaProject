@@ -277,11 +277,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                             List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule) {
         final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
                 deliveryDate, null, DeliveryStatus.CREATED);
-        // TODO: Calculate weight remaining
         deliveryItems.forEach(deliveryItem -> {
             for (int i = 0; i < deliveryItem.getQuantity(); i++) {
                 delivery.getDeliveryItems().add(new DeliveryItem(deliveryItem.getDeliveryItemId(),
-                        DeliveryStatus.CREATED, 0.0, 0.0));
+                        DeliveryStatus.CREATED, deliveryItem.getQuantityInGrms(), deliveryItem.getDeliveryItemOfferedPrice()));
             }
         });
         delivery.calculateTotalWeightInGrams();
