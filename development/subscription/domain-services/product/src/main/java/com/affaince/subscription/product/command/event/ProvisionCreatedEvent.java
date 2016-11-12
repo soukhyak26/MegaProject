@@ -1,11 +1,11 @@
-package com.affaince.subscription.business.command.event;
+package com.affaince.subscription.product.command.event;
 
 import org.joda.time.LocalDate;
 
 /**
  * Created by anayonkar on 29/4/16.
  */
-public class CreateProvisionEvent {
+public class ProvisionCreatedEvent {
     private String businessAccountId;
     private double provisionForPurchaseCost;
     private double provisionForLosses;
@@ -16,18 +16,18 @@ public class CreateProvisionEvent {
     private double provisionForSubscriptionSpecificExpenses;
     private LocalDate provisionDate;
 
-    public CreateProvisionEvent() {
+    public ProvisionCreatedEvent() {
     }
 
-    public CreateProvisionEvent(String businessAccountId,
-                                double provisionForPurchaseCost,
-                                double provisionForLosses,
-                                double provisionForBenefits,
-                                double provisionForTaxes,
-                                double provisionForOthers,
-                                double provisionForCommonExpenses,
-                                double provisionForSubscriptionSpecificExpenses,
-                                LocalDate provisionDate) {
+    public ProvisionCreatedEvent(String businessAccountId,
+                                 double provisionForPurchaseCost,
+                                 double provisionForLosses,
+                                 double provisionForBenefits,
+                                 double provisionForTaxes,
+                                 double provisionForOthers,
+                                 double provisionForCommonExpenses,
+                                 double provisionForSubscriptionSpecificExpenses,
+                                 LocalDate provisionDate) {
         this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;

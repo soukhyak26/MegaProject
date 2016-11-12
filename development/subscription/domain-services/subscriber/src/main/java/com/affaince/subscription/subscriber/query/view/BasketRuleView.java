@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by rbsavaliya on 27-09-2015.
  */
-@Document(collection = "BasketRule")
+@Document(collection = "SubscriptionRule")
 public class BasketRuleView {
     @Id
     private String basketRuleId;

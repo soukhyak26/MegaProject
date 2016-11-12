@@ -27,6 +27,9 @@ public class ProductForecastParameter {
         this.endDate = endDate;
     }
 
+    public ProductForecastParameter() {
+    }
+
     public double getPurchasePricePerUnit() {
         return this.purchasePricePerUnit;
     }

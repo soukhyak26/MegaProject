@@ -1,23 +1,25 @@
 package com.affaince.subscription.product.command.event;
 
+import com.affaince.subscription.product.command.domain.PriceBucket;
+
 /**
  * Created by mandar on 16-10-2016.
  */
 public class OpeningPriceOrPercentRegisteredEvent {
 
-    private String productId;
-    private double openingPriceOrPercent;
+    private final String productId;
+    private final PriceBucket priceBucket;
 
-    public OpeningPriceOrPercentRegisteredEvent(String productId, double openingPriceOrPercent) {
+    public OpeningPriceOrPercentRegisteredEvent(String productId, PriceBucket priceBucket) {
         this.productId = productId;
-        this.openingPriceOrPercent = openingPriceOrPercent;
+        this.priceBucket = priceBucket;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public double getOpeningPriceOrPercent() {
-        return openingPriceOrPercent;
+    public PriceBucket getPriceBucket() {
+        return priceBucket;
     }
 }

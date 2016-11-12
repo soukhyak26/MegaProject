@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.query.listener;
 
 import com.affaince.subscription.business.accounting.*;
-import com.affaince.subscription.business.command.event.CreateProvisionEvent;
+import com.affaince.subscription.business.command.event.ProvisionCreatedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -21,7 +21,7 @@ public class CreateProvisionEventListener {
     }
 
     @EventHandler
-    public void on(CreateProvisionEvent event) {
+    public void on(ProvisionCreatedEvent event) {
         BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
         if(businessAccountView == null) {
             businessAccountView = new BusinessAccountView(event.getBusinessAccountId(), event.getProvisionDate());

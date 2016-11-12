@@ -257,7 +257,11 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void registerOpeningPrice(String productId, double openingPriceOrPercent) {
-        apply(new OpeningPriceOrPercentRegisteredEvent(productId, openingPriceOrPercent));
+        PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
+        final LocalDateTime currentDate = SysDateTime.now();
+        PriceBucket newPriceBucket = createNewPriceBucket(productId, latestTaggedPriceVersion, openingPriceOrPercent, EntityStatus.CREATED, currentDate);
+
+        apply(new OpeningPriceOrPercentRegisteredEvent(productId, newPriceBucket));
     }
 
 
@@ -404,5 +408,13 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
+
+    @EventSourcingHandler
+    public void on(OpeningPriceOrPercentRegisteredEvent event) {
+        PriceBucket newPriceBucket = event.getPriceBucket();
+        this.addNewPriceBucket(newPriceBucket.getFromDate(), newPriceBucket);
+        //this.productActivationStatusList.add(ProductStatus.PRODUCT_PRICE_ASSIGNED);
+    }
+
 
 }

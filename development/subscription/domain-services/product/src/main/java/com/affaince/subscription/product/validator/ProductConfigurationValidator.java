@@ -1,82 +1,49 @@
 package com.affaince.subscription.product.validator;
 
+import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
-import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
-import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by anayonkar on 28/2/16.
  */
 public final class ProductConfigurationValidator {
-    public static boolean isProductReadyForActivation(String productId, List<ProductStatus> productActivationStatusList) throws InvalidProductStatusException, ProductDeactivatedException {
-        boolean registered = false;
-        boolean configured = false;
-        boolean forecasted = false;
-        boolean stepForecasted = false;
-        boolean priceAssigned = false;
-        boolean activated = false;
+    public static Set<ProductReadinessStatus> getProductReadinessStatus(List<ProductStatus> productActivationStatusList) {
+        final Set<ProductReadinessStatus> productReadinessStatuses = new HashSet<>();
         ProductStatus nextProductStatus = null;
         if (!productActivationStatusList.contains(ProductStatus.PRODUCT_DEACTIVATED)) {
             for (ProductStatus productStatus : productActivationStatusList) {
                 switch (productStatus) {
+                    case SUBSCRIPTION_RULES_CONFIGURED:
+                        productReadinessStatuses.add(ProductReadinessStatus.REGISTERABLE);
                     case PRODUCT_REGISTERED:
-                        registered = true;
+                        productReadinessStatuses.add(ProductReadinessStatus.CONFIGURABLE);
+                        productReadinessStatuses.add(ProductReadinessStatus.SUBSCRIPTION_RULES_CONFIGURABLE);
                         break;
                     case PRODUCT_CONFIGURED:
-                        if (registered) {
-                            configured = true;
-                        } else {
-                            throw InvalidProductStatusException.build(productId,
-                                    productStatus,
-                                    ProductStatus.PRODUCT_REGISTERED);
-                        }
+                        productReadinessStatuses.add(ProductReadinessStatus.FORECASTABLE);
+                        productReadinessStatuses.add(ProductReadinessStatus.STEPFORECASTABLE);
                         break;
                     case PRODUCT_FORECASTED:
-                        if (registered) {
-                            forecasted = true;
-                        } else {
-                            throw InvalidProductStatusException.build(productId,
-                                    productStatus,
-                                    ProductStatus.PRODUCT_REGISTERED);
-                        }
+                        productReadinessStatuses.add(ProductReadinessStatus.STEPFORECASTABLE);
+                        productReadinessStatuses.add(ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE);
                         break;
                     case PRODUCT_STEPFORECAST_CREATED:
-                        if (registered) {
-                            stepForecasted = true;
-                        } else {
-                            throw InvalidProductStatusException.build(productId,
-                                    productStatus,
-                                    ProductStatus.PRODUCT_REGISTERED);
-                        }
+                        productReadinessStatuses.add(ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE);
                         break;
-
+                    case BUSINESS_PROVISIONED:
+                        productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
+                        break;
                     case PRODUCT_PRICE_ASSIGNED:
-                        if (registered) {
-                            priceAssigned = true;
-                        } else {
-                            throw InvalidProductStatusException.build(productId,
-                                    productStatus,
-                                    ProductStatus.PRODUCT_REGISTERED);
-                        }
-                        break;
-
-                    case PRODUCT_ACTIVATED:
-                        if (registered && configured && forecasted && stepForecasted && priceAssigned) {
-                            activated = true;
-                        } else {
-                            throw InvalidProductStatusException.build(productId,
-                                    productStatus,
-                                    ProductStatus.PRODUCT_REGISTERED);
-                        }
+                        productReadinessStatuses.add(ProductReadinessStatus.ACTIVABLE);
                         break;
                 }
             }
-            return activated;
-        } else {
-            throw ProductDeactivatedException.build(productId, ProductStatus.PRODUCT_DEACTIVATED);
+            return productReadinessStatuses;
         }
+        return null;
     }
-
 }

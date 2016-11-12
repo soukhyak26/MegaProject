@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @JsonSerialize(using = ProductPricingCategorySerializer.class)
 @JsonDeserialize(using = ProductPricingCategoryDeserializer.class)
-
 public enum ProductPricingCategory {
 
     NO_COMMITMENT(0), PRICE_COMMITMENT(1), DISCOUNT_COMMITMENT(2);

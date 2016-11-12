@@ -5,14 +5,14 @@ import com.affaince.subscription.common.type.Discount;
 /**
  * Created by rbsavaliya on 26-09-2015.
  */
-public class BasketRuleAddedEvent {
+public class SubscriptionRuleAddedEvent {
     private String basketRuleId;
     private double maximumPermissibleAmount;
     private double minimumAmountForDiscountEligibility;
     private Discount maximumPermissibleDiscount;
     private int minimumAmountEligibleForFreeShipping;
 
-    public BasketRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping) {
+    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping) {
         this.basketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
@@ -20,7 +20,7 @@ public class BasketRuleAddedEvent {
         this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
     }
 
-    public BasketRuleAddedEvent() {
+    public SubscriptionRuleAddedEvent() {
     }
 
     public String getBasketRuleId() {

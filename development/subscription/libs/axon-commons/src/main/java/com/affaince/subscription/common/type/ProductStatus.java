@@ -5,6 +5,7 @@ package com.affaince.subscription.common.type;
  */
 public enum ProductStatus {
 
+
     //after product registration
     PRODUCT_REGISTERED(1),
 
@@ -16,13 +17,17 @@ public enum ProductStatus {
     //manual pseudoActuals for next day are assigned
     PRODUCT_STEPFORECAST_CREATED(4),
 
-    //opening price has been assigned.
-    PRODUCT_PRICE_ASSIGNED(5),
+    BUSINESS_PROVISIONED(5),
 
-    PRODUCT_ACTIVATED(6),
+    //opening price has been assigned.
+    PRODUCT_PRICE_ASSIGNED(6),
+
+    SUBSCRIPTION_RULES_CONFIGURED(7),
+
+    PRODUCT_ACTIVATED(8),
 
     //If product is deactivated due to any exception or through forceful deactivation( taking our product from subscription business)
-    PRODUCT_DEACTIVATED(7);
+    PRODUCT_DEACTIVATED(9);
 
     private int statusCode;
 

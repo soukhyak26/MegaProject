@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.accounting.*;
-import com.affaince.subscription.business.command.event.CreateProvisionEvent;
+import com.affaince.subscription.business.command.event.ProvisionCreatedEvent;
 import com.affaince.subscription.business.exception.ProvisionNotCreatedException;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.TimeBoundMoney;
@@ -92,7 +92,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                            double provisionForSubscriptionSpecificExpenses,
                            LocalDate provisionDate) {
 
-        apply(new CreateProvisionEvent(id,
+        apply(new ProvisionCreatedEvent(id,
                 provisionForPurchaseCost,
                 provisionForLosses,
                 provisionForBenefits,
@@ -159,7 +159,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on(CreateProvisionEvent event) {
+    public void on(ProvisionCreatedEvent event) {
         this.id = event.getBusinessAccountId();
 
         this.dateForProvision = event.getProvisionDate();

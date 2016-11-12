@@ -5,7 +5,7 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 /**
  * Created by rbsavaliya on 26-09-2015.
  */
-public class AddBasketRulesCommand {
+public class AddSubscriptionRulesCommand {
     @TargetAggregateIdentifier
     private String BasketRuleId;
     private double maximumPermissibleAmount;
@@ -14,7 +14,7 @@ public class AddBasketRulesCommand {
     private int maximumPermissibleDiscountUnit;
     private int minimumAmountEligibleForFreeShipping;
 
-    public AddBasketRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping) {
+    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping) {
         BasketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
@@ -23,7 +23,7 @@ public class AddBasketRulesCommand {
         this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
     }
 
-    public AddBasketRulesCommand() {
+    public AddSubscriptionRulesCommand() {
     }
 
     public String getBasketRuleId() {

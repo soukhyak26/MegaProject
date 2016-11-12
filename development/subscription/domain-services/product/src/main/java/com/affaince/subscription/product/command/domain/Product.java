@@ -11,7 +11,6 @@ import com.affaince.subscription.product.command.exception.ProductDeactivatedExc
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
-import com.affaince.subscription.product.validator.ProductConfigurationValidator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.ProductForecastParameter;
@@ -27,7 +26,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +45,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private ProductAccount productAccount;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
-    private List<ProductStatus> productActivationStatusList;
+    //private List<ProductStatus> productActivationStatusList;
+    private boolean isProductActivated = false;
 
     public Product() {
 
@@ -70,8 +69,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.substitutes = event.getSubstitutes();
         this.complements = event.getComplements();
         this.sensitiveTo = event.getSensitiveTo();
-        this.productActivationStatusList = new ArrayList<>();
+        /*this.productActivationStatusList = new ArrayList<>();
         this.productActivationStatusList.add(ProductStatus.PRODUCT_REGISTERED);
+        */
         this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
         DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
         final LocalDateTime currentDate = SysDateTime.now();
@@ -81,14 +81,14 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     //Event for setting product configuration
-    @EventSourcingHandler
+    /*@EventSourcingHandler
     public void on(ProductPricingConfigurationSetEvent event) {
         if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_CONFIGURED)) {
             this.productConfiguration = new ProductConfiguration(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getDemandCurvePeriod(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingOptions(), event.getPricingStrategyType());
             this.productActivationStatusList.add(ProductStatus.PRODUCT_CONFIGURED);
         }
 
-    }
+    }*/
 
     //When the new actual offer price is recommended
     //Expire current price bucket and register a new price bucket
@@ -115,7 +115,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
 
-    @EventSourcingHandler
+    /*@EventSourcingHandler
     public void on(ManualForecastAddedEvent manualForecastAddedEvent) {
         this.productActivationStatusList.add(ProductStatus.PRODUCT_FORECASTED);
     }
@@ -123,8 +123,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(ManualStepForecastAddedEvent manualStepForecastAddedEvent) {
         this.productActivationStatusList.add(ProductStatus.PRODUCT_STEPFORECAST_CREATED);
-    }
-
+    }*/
 
     @EventSourcingHandler
     public void on(CurrentPriceContinuedEvent event) {
@@ -132,16 +131,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
     }
 
-
-    @EventSourcingHandler
-    public void on(OpeningPriceOrPercentRegisteredEvent event) {
-        PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
-        final LocalDateTime currentDate = SysDateTime.now();
-        PriceBucket newPriceBucket = createNewPriceBucket(event.getProductId(), latestTaggedPriceVersion, event.getOpeningPriceOrPercent(), EntityStatus.CREATED, currentDate);
-        this.getProductAccount().addNewPriceBucket(currentDate, newPriceBucket);
-        this.productActivationStatusList.add(ProductStatus.PRODUCT_PRICE_ASSIGNED);
+    public void on(ProductActivatedEvent event) {
+        this.productId = event.getProductId();
+        this.isProductActivated = true;
     }
-
 
     public String getProductId() {
         return this.productId;
@@ -203,14 +196,14 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     //for product administrator to configure product
     public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) throws InvalidProductStatusException, ProductDeactivatedException {
         apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod()));
-        final ProductConfigurationValidator validator = new ProductConfigurationValidator();
+        /*final ProductConfigurationValidator validator = new ProductConfigurationValidator();
         try {
             if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
                 apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
             }
         } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
             LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
-        }
+        }*/
     }
 
 
@@ -222,6 +215,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
         getProductAccount().updateFixedExpenses(command);
     }
+
     //Product status should be received from main application
     public void updateProductStatus(UpdateProductStatusCommand command) {
         this.getProductAccount().updateProductStatus(command);
@@ -321,7 +315,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void registerManualForecast(ProductForecastParameter[] productForecastParameters, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
-        if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
+        for (ProductForecastParameter forecastParameter : productForecastParameters) {
+            apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberofNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
+        }
+        /*if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             for (ProductForecastParameter forecastParameter : productForecastParameters) {
                 apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberofNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
             }
@@ -333,14 +330,13 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             }
         } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
             LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
-        }
+        }*/
 
     }
 
     public void registerManualStepForecast() {
-        if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_STEPFORECAST_CREATED)) {
-            apply(new ManualStepForecastAddedEvent(productId));
-        }
+        apply(new ManualStepForecastAddedEvent(productId));
+/*
 
         final ProductConfigurationValidator validator = new ProductConfigurationValidator();
         try {
@@ -350,6 +346,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
             LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
         }
+*/
 
     }
 
@@ -374,5 +371,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void registerOpeningPrice(double openingPriceOrPercent) {
         this.getProductAccount().registerOpeningPrice(productId, openingPriceOrPercent);
+    }
+
+    public void activateProduct() {
+        apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId,
+                this.subCategoryId, this.substitutes, this.complements,
+                this.sensitiveTo, this.netQuantity, quantityUnit));
     }
 }

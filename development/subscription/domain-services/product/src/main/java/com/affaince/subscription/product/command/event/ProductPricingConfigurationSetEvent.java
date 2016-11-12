@@ -29,35 +29,70 @@ public class ProductPricingConfigurationSetEvent {
         this.demandCurvePeriod = demandCurvePeriod;
     }
 
+    public ProductPricingConfigurationSetEvent() {
+    }
+
     public String getProductId() {
         return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public int getActualsAggregationPeriodForTargetForecast() {
         return actualsAggregationPeriodForTargetForecast;
     }
 
+    public void setActualsAggregationPeriodForTargetForecast(int actualsAggregationPeriodForTargetForecast) {
+        this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
+    }
+
     public double getTargetChangeThresholdForPriceChange() {
         return targetChangeThresholdForPriceChange;
+    }
+
+    public void setTargetChangeThresholdForPriceChange(double targetChangeThresholdForPriceChange) {
+        this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
     }
 
     public boolean isCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;
     }
 
+    public void setCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
+        isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;
+    }
+
     public boolean isAdvertisingExpensesConsidered() {
         return isAdvertisingExpensesConsidered;
+    }
+
+    public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
+        isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    }
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
+    }
+
+    public void setPricingOptions(PricingOptions pricingOptions) {
+        this.pricingOptions = pricingOptions;
     }
 
     public PricingStrategyType getPricingStrategyType() {
         return pricingStrategyType;
     }
 
+    public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
+        this.pricingStrategyType = pricingStrategyType;
+    }
+
     public Period getDemandCurvePeriod() {
         return demandCurvePeriod;
     }
 
-    public PricingOptions getPricingOptions() {
-        return pricingOptions;
+    public void setDemandCurvePeriod(Period demandCurvePeriod) {
+        this.demandCurvePeriod = demandCurvePeriod;
     }
 }

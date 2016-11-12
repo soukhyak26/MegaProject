@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.subscriber.command.AddBasketRulesCommand;
+import com.affaince.subscription.subscriber.command.AddSubscriptionRulesCommand;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.web.request.BasketRulesRequest;
 import com.google.common.collect.ImmutableMap;
@@ -31,7 +31,7 @@ public class BasketRulesController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> addBasketRules(@RequestBody BasketRulesRequest request) throws Exception {
         final String basketRulesId = UUID.randomUUID().toString();
-        final AddBasketRulesCommand command = new AddBasketRulesCommand(basketRulesId,
+        final AddSubscriptionRulesCommand command = new AddSubscriptionRulesCommand(basketRulesId,
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
                 request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
                 request.getMinimumAmountEligibleForFreeShipping());
@@ -46,7 +46,7 @@ public class BasketRulesController {
     @RequestMapping(method = RequestMethod.PUT, value = "update/{basketRuleId}")
     public ResponseEntity<Object> updateBasketRules(@RequestBody BasketRulesRequest request,
                                                     @PathVariable String basketRuleId) throws Exception {
-        final AddBasketRulesCommand command = new AddBasketRulesCommand(basketRuleId,
+        final AddSubscriptionRulesCommand command = new AddSubscriptionRulesCommand(basketRuleId,
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
                 request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
                 request.getMinimumAmountEligibleForFreeShipping());
