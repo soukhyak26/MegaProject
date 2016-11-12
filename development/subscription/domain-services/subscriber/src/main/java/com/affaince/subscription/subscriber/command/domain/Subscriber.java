@@ -239,9 +239,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return deliveries;
     }
 
-    public void confirmSubscription(Subscription subscription, DeliveryChargesRule deliveryChargesRule) {
+    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule) {
         final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
-        final BenefitResult benefitResult = calculateBenefits(subscription, deliveries);
+        final BenefitResult benefitResult = calculateBenefits(deliveries);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
@@ -253,12 +253,32 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    private BenefitResult calculateBenefits(Subscription subscription, Map<Integer, Delivery> deliveries) {
+    private BenefitResult calculateBenefits(Map<Integer, Delivery> deliveries) {
         final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
         benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount());
         benefitCalculationRequest.setDeliveryAmounts(deliveries.values().stream().collect(Collectors.toMap(
                 Delivery::getDeliveryId, Delivery::getTotalDeliveryPrice
         )));
+        benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
+        benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
+        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
+        return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
+    }
+
+    private BenefitResult calculateBenefitsInCaseOfEditDelivery(Map<Integer, Delivery> deliveries,
+                                                                double currentSubscriptionAmountDifference) {
+        final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
+        benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount()
+                + currentSubscriptionAmountDifference);
+        benefitCalculationRequest.setDeliveryAmounts(deliveries.values().stream().filter(delivery ->
+                !delivery.getStatus().equals(DeliveryStatus.DELIVERED)
+                        && delivery.getDispatchDate().isAfter(SysDate.now())).collect(Collectors.toMap(
+                Delivery::getDeliveryId, Delivery::getTotalDeliveryPrice
+        )));
+        benefitCalculationRequest.setRewardPointAdjustment(deliveries.values().stream().filter(delivery ->
+                !delivery.getStatus().equals(DeliveryStatus.DELIVERED)
+                        && delivery.getDispatchDate().isAfter(SysDate.now())).mapToDouble(delivery -> delivery.getRewardPoints()).sum()
+        );
         benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
         BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();

@@ -12,6 +12,7 @@ public class BenefitCalculationRequest {
     private double totalLoyaltyPeriod;
     private double currentSubscriptionPeriod;
     private double advancePaymentPercent;
+    private double rewardPointAdjustment;
     private Map<String, Double> deliveryAmounts;
 
     public double getTotalSubscriptionAmount() {
@@ -68,5 +69,13 @@ public class BenefitCalculationRequest {
 
     public void setDeliveryAmounts(Map<String, Double> deliveryAmounts) {
         this.deliveryAmounts = deliveryAmounts;
+    }
+
+    public double getRewardPointAdjustment() {
+        return rewardPointAdjustment;
+    }
+
+    public void setRewardPointAdjustment(double rewardPointAdjustment) {
+        this.rewardPointAdjustment = rewardPointAdjustment;
     }
 }
