@@ -3,7 +3,6 @@ package com.affaince.subscription.subscriber.command.handler;
 import com.affaince.subscription.subscriber.command.ConfirmSubscriptionCommand;
 import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
-import com.affaince.subscription.subscriber.command.domain.Subscription;
 import com.affaince.subscription.subscriber.services.deliverychargesrule.DeliveryChargesRulesService;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -27,8 +26,7 @@ public class ConfirmSubscriptionCommandHandler {
     @CommandHandler
     public void handler(ConfirmSubscriptionCommand command) {
         final Subscriber subscriber = subscriberRepository.load(command.getSubscriberId());
-        final Subscription subscription = subscriber.getSubscription();
         final DeliveryChargesRule deliveryChargesRule = deliveryChargesRulesService.findActiveDeliveryChargesRule();
-        subscriber.confirmSubscription(subscription, deliveryChargesRule);
+        subscriber.confirmSubscription(deliveryChargesRule);
     }
 }
