@@ -159,7 +159,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(DeliveryDeletedEvent event) {
+        Delivery tempDelivery = deliveries.get(event.getDeliveryId());
         deliveries.remove(event.getDeliveryId());
+
+        final BenefitResult benefitResult = calculateBenefits(tempDelivery.getTotalDeliveryPrice() * (-1));
+        for (String deliveryId : benefitResult.getRewardPointsDistribution().keySet()) {
+            Delivery delivery = deliveries.get(deliveryId);
+            delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryId));
+        }
     }
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
@@ -241,7 +248,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void confirmSubscription(DeliveryChargesRule deliveryChargesRule) {
         final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
-        final BenefitResult benefitResult = calculateBenefits(deliveries);
+        // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
+        final BenefitResult benefitResult = calculateBenefits(0.0);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
@@ -253,7 +261,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    private BenefitResult calculateBenefits(Map<Integer, Delivery> deliveries) {
+    /*private BenefitResult calculateBenefits(Map<Integer, Delivery> deliveries) {
         final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
         benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount());
         benefitCalculationRequest.setDeliveryAmounts(deliveries.values().stream().collect(Collectors.toMap(
@@ -263,21 +271,20 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
         BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
         return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
-    }
+    }*/
 
-    private BenefitResult calculateBenefitsInCaseOfEditDelivery(Map<Integer, Delivery> deliveries,
-                                                                double currentSubscriptionAmountDifference) {
+    private BenefitResult calculateBenefits(double currentSubscriptionAmountDifference) {
         final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
         benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount()
                 + currentSubscriptionAmountDifference);
         benefitCalculationRequest.setDeliveryAmounts(deliveries.values().stream().filter(delivery ->
                 !delivery.getStatus().equals(DeliveryStatus.DELIVERED)
-                        && delivery.getDispatchDate().isAfter(SysDate.now())).collect(Collectors.toMap(
+                        && delivery.getDeliveryDate().isAfter(SysDate.now())).collect(Collectors.toMap(
                 Delivery::getDeliveryId, Delivery::getTotalDeliveryPrice
         )));
         benefitCalculationRequest.setRewardPointAdjustment(deliveries.values().stream().filter(delivery ->
                 !delivery.getStatus().equals(DeliveryStatus.DELIVERED)
-                        && delivery.getDispatchDate().isAfter(SysDate.now())).mapToDouble(delivery -> delivery.getRewardPoints()).sum()
+                        && delivery.getDeliveryDate().isAfter(SysDate.now())).mapToDouble(delivery -> delivery.getRewardPoints()).sum()
         );
         benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
@@ -305,8 +312,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         });
         delivery.calculateTotalWeightInGrams();
         delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
-        // TODO: Calculation remaining
-        //delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
+        // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
+        final BenefitResult benefitResult = calculateBenefits(delivery.getTotalDeliveryPrice());
+        delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(delivery.getDeliveryId()));
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                 delivery.getTotalWeight()));
