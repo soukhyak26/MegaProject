@@ -1,19 +1,11 @@
-package com.affaince.subscription.pricing.configuration;
+package com.affaince.subscription.forecast.configuration;
 
-import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.pricing.determine.PricingClient;
-import com.affaince.subscription.pricing.build.ProductPricingTrigger;
-import com.affaince.subscription.pricing.build.ProductsRetriever;
-import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
-import com.affaince.subscription.pricing.build.interpolate.Interpolator;
+import com.affaince.subscription.forecast.build.interpolate.Interpolator;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
-import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
-import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +20,6 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.web.client.RestTemplate;
 
-import static org.apache.camel.builder.PredicateBuilder.or;
-
 /**
  * Created by mandark on 19-07-2015.
  */
@@ -40,11 +30,6 @@ public class Axon extends Default {
 
     @Autowired
     private CamelContext camelContext;
-
-    @Bean
-    public GenericEventPublisher publisher(EventTemplate template) {
-        return new GenericEventPublisher(template);
-    }
 
     @Bean
     public RestTemplate restTemplate() {
@@ -68,27 +53,6 @@ public class Axon extends Default {
 
 
     @Bean
-    public PricingClient pricingClient() {
-        return new PricingClient();
-    }
-
-    @Bean
-    public ProductsRetriever productsRetriever() {
-        return new ProductsRetriever();
-    }
-
-
-    @Bean
-    public ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder() {
-        return new ForecastInterpolatedSubscriptionCountFinder();
-    }
-
-    @Bean
-    public ProductPricingTrigger productPricingTrigger() {
-        return new ProductPricingTrigger();
-    }
-
-    @Bean
     public Interpolator interpolator() {
         return new Interpolator();
     }
@@ -98,11 +62,33 @@ public class Axon extends Default {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
+                //job for calculating build  and pseudoActuals for eligible products.
+                from("{{subscription.build.timer.expression}}")
+                        .routeId("productsRetriever")
+                        .to("bean:productsRetriever")
+                        .split(body())
+                        .to("{{subscription.build.poston}}")
+                        .multicast().to("direct:forecaster", "direct:stepForecaster");
+/*
+                from("{{subscription.build.poston}}")
+                        .routeId("forecaster")
+*/
+                from("direct:forecaster")
+                        .to("bean:forecastingTrigger")
+                        .choice().when()
+                        .simple("${body} != null")
+                        .to("bean:forecastingClient?method=initiateForecast")
+                        .endChoice();
 
+                from("direct:stepForecaster")
+                        .to("bean:forecastingClient?method=initiatePseudoActual");
+
+
+/*
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
                 //job for calculating pseudoActuals for each product.
 
-                from("{{subscription.pricing.timer.expression}}")
+                from("{{subscription.build.timer.expression}}")
                         .routeId("PriceDeterminator")
                         .to("bean:forecastInterpolatedSubscriptionCountFinder")
                         .to("bean:productPricingTrigger")
@@ -110,6 +96,7 @@ public class Axon extends Default {
                         .when(demandTrendChecker)
                         .to("bean:pricingClient")
                         .endChoice();
+*/
 
             }
         };

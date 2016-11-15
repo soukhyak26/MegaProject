@@ -1,9 +1,9 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.pricing.Application;
-import com.affaince.subscription.pricing.build.ProductConfigurationViewBuilder;
-import com.affaince.subscription.pricing.build.ProductForecastViewBuilder;
-import com.affaince.subscription.pricing.build.ProductViewBuilder;
+import com.affaince.subscription.pricing.forecast.ProductConfigurationViewBuilder;
+import com.affaince.subscription.pricing.forecast.ProductForecastViewBuilder;
+import com.affaince.subscription.pricing.product.ProductViewBuilder;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;

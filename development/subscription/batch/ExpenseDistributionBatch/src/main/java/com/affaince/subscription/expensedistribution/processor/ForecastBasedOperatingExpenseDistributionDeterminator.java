@@ -160,7 +160,7 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
                     productWiseDeliveryStats.addUnitSold(productForecastView.getTotalNumberOfExistingSubscriptions());
                 }
             } catch (IOException e) {
-                LOGGER.info("Cannot create product stats from forecast data: " + e.getMessage());
+                LOGGER.info("Cannot create product stats from build data: " + e.getMessage());
             }
         });
 

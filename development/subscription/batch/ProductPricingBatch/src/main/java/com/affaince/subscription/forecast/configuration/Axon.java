@@ -1,16 +1,16 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.pricing.determine.PricingClient;
-import com.affaince.subscription.pricing.build.ProductPricingTrigger;
-import com.affaince.subscription.pricing.build.ProductsRetriever;
-import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
-import com.affaince.subscription.pricing.build.interpolate.Interpolator;
+import com.affaince.subscription.pricing.forecast.ForecastingClient;
+import com.affaince.subscription.pricing.forecast.ForecastingTrigger;
+import com.affaince.subscription.pricing.forecast.ProductPricingTrigger;
+import com.affaince.subscription.pricing.forecast.ProductsRetriever;
+import com.affaince.subscription.pricing.forecast.interpolate.ForecastInterpolatedSubscriptionCountFinder;
+import com.affaince.subscription.pricing.forecast.interpolate.Interpolator;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
-import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.axonframework.eventhandling.EventTemplate;
@@ -27,8 +27,6 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.web.client.RestTemplate;
-
-import static org.apache.camel.builder.PredicateBuilder.or;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -66,6 +64,10 @@ public class Axon extends Default {
         return converter;
     }
 
+    @Bean
+    public ForecastingClient forecastingClient() {
+        return new ForecastingClient();
+    }
 
     @Bean
     public PricingClient pricingClient() {
@@ -77,6 +79,10 @@ public class Axon extends Default {
         return new ProductsRetriever();
     }
 
+    @Bean
+    public ForecastingTrigger forecastingTrigger() {
+        return new ForecastingTrigger();
+    }
 
     @Bean
     public ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder() {
@@ -98,7 +104,29 @@ public class Axon extends Default {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
+                //job for calculating build  and pseudoActuals for eligible products.
+                from("{{subscription.build.timer.expression}}")
+                        .routeId("productsRetriever")
+                        .to("bean:productsRetriever")
+                        .split(body())
+                        .to("{{subscription.build.poston}}")
+                        .multicast().to("direct:forecaster", "direct:stepForecaster");
+/*
+                from("{{subscription.build.poston}}")
+                        .routeId("forecaster")
+*/
+                from("direct:forecaster")
+                        .to("bean:forecastingTrigger")
+                        .choice().when()
+                        .simple("${body} != null")
+                        .to("bean:forecastingClient?method=initiateForecast")
+                        .endChoice();
 
+                from("direct:stepForecaster")
+                        .to("bean:forecastingClient?method=initiatePseudoActual");
+
+
+/*
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
                 //job for calculating pseudoActuals for each product.
 
@@ -110,6 +138,7 @@ public class Axon extends Default {
                         .when(demandTrendChecker)
                         .to("bean:pricingClient")
                         .endChoice();
+*/
 
             }
         };

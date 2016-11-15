@@ -58,7 +58,7 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
         this.sensitivityCharacteristic = event.getSensitivityCharacteristic();
         for (int i = 0; i <= 11; i++) {
             monthOfYear = monthOfYear.plusMonths(i);
-            //put total common operating expense forecast for each month in rolling forecast
+            //put total common operating expense build for each month in rolling build
             rollingExpenseForecast.put(monthOfYear, event.getAmount());
         }
         //Here the assumption is that common operating expense are going to remain the same through out year independent of business dynamics..
