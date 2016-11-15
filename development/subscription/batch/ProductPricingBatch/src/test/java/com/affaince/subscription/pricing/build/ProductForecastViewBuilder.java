@@ -1,9 +1,9 @@
-package com.affaince.subscription.forecast.forecast;
+package com.affaince.subscription.pricing.build;
 
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.forecast.query.repository.ProductForecastViewRepository;
-import com.affaince.subscription.forecast.query.view.ProductForecastView;
+import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
+import com.affaince.subscription.pricing.query.view.ProductForecastView;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
