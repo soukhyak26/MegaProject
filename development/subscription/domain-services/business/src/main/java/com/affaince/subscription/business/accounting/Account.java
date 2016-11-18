@@ -9,7 +9,8 @@ import org.joda.time.LocalDate;
 /**
  * Created by anayonkar on 29/4/16.
  */
-public abstract class Account extends AbstractAnnotatedEntity {
+@Deprecated
+public abstract class Account  {
     private double startAmount;
     private double currentAmount;
     private LocalDate startDate;

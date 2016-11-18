@@ -1,7 +1,7 @@
 package com.affaince.subscription.forecast.forecast;
 
-import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
-import com.affaince.subscription.pricing.query.view.ProductConfigurationView;
+import com.affaince.subscription.forecast.query.repository.ProductConfigurationViewRepository;
+import com.affaince.subscription.forecast.query.view.ProductConfigurationView;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
