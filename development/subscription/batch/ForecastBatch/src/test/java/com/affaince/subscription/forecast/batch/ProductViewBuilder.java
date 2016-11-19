@@ -1,8 +1,7 @@
 package com.affaince.subscription.forecast.batch;
 
-import com.affaince.subscription.common.type.QuantityUnit;
-import com.affaince.subscription.forecast.query.repository.ProductViewRepository;
-import com.affaince.subscription.forecast.query.view.ProductView;
+import com.affaince.subscription.forecast.product.ProductRegistrationClient;
+import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mandar on 18-09-2016.
@@ -20,11 +17,12 @@ import java.util.List;
 @Component
 public class ProductViewBuilder {
     @Autowired
-    private ProductViewRepository productViewRepository;
+    //private ProductViewRepository productViewRepository;
+    private ProductRegistrationClient productRegistrationClient;
 
     public void buildProductView() throws Exception {
 
-        final List<ProductView> productViews = new ArrayList<>();
+//        final List<Map> productViews = new ArrayList<>();
 
         final BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/product.csv"))));
 
@@ -37,18 +35,31 @@ public class ProductViewBuilder {
                     List<String> compliments = Arrays.asList(line.substring(
                             line.lastIndexOf("[") + 1, line.lastIndexOf("]")
                     ).split(","));
+/*
                     productViews.add(new ProductView(
                             tokens[0], tokens[1], tokens[2], tokens[3],
                             Long.parseLong(tokens[4]), QuantityUnit.GM,
                             substitutes, compliments, null
+
                     ));
+*/
+                    Map<String, String> productView = new HashMap<>();
+                    productView.put("productName", tokens[1]);
+                    productView.put("categoryId", tokens[2]);
+                    productView.put("subCategoryId", tokens[3]);
+                    productView.put("quantityUnit", "gram");
+                    productView.put("productPricingCategory","1");
+                    productView.put("quantity",tokens[4] );
+                    productRegistrationClient.registerProduct(productView);
                 }
         );
-        productViewRepository.save(productViews);
+        //  productViewRepository.save(productViews);
 
     }
-
     public void clearAll() {
+/*
+        reposit
         productViewRepository.deleteAll();
+*/
     }
 }

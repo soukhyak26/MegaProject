@@ -38,11 +38,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @MockEndpoints()
 @WebAppConfiguration
 @ComponentScan
-//@Ignore
+@Ignore
 public class CamelRouteTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:catchRetrievedProducts")
     protected MockEndpoint catchRetrievedProducts;
+
     @Autowired
     ProductViewBuilder productViewBuilder;
     @Autowired
