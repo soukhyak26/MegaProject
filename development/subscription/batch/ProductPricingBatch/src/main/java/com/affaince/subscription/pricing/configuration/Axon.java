@@ -28,6 +28,9 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.apache.camel.builder.PredicateBuilder.or;
 
 /**
@@ -54,6 +57,11 @@ public class Axon extends Default {
     @Bean
     public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
         return new SimpleMongoDbFactory(mongo, dbName);
+    }
+    @Override
+    @Bean(name = "types")
+    protected Map<String, String> types() {
+        return new HashMap<String, String>();
     }
 
     @Bean
@@ -104,6 +112,8 @@ public class Axon extends Default {
 
                 from("{{subscription.pricing.timer.expression}}")
                         .routeId("PriceDeterminator")
+                        .to("bean:productsRetriever")
+                        .split(body())
                         .to("bean:forecastInterpolatedSubscriptionCountFinder")
                         .to("bean:productPricingTrigger")
                         .choice()

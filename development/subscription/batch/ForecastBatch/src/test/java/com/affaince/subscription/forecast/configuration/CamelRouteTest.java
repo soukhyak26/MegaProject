@@ -1,9 +1,9 @@
 package com.affaince.subscription.forecast.configuration;
 
-import com.affaince.subscription.forecast.build.ProductConfigurationViewBuilder;
-import com.affaince.subscription.forecast.build.ProductForecastViewBuilder;
 import com.affaince.subscription.forecast.Application;
-import com.affaince.subscription.forecast.product.ProductViewBuilder;
+import com.affaince.subscription.forecast.batch.ProductConfigurationViewBuilder;
+import com.affaince.subscription.forecast.batch.ProductForecastViewBuilder;
+import com.affaince.subscription.forecast.batch.ProductViewBuilder;
 import com.affaince.subscription.forecast.query.repository.ProductConfigurationViewRepository;
 import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;
@@ -38,7 +38,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @MockEndpoints()
 @WebAppConfiguration
 @ComponentScan
-@Ignore
+//@Ignore
 public class CamelRouteTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:catchRetrievedProducts")
@@ -68,7 +68,7 @@ public class CamelRouteTest extends CamelTestSupport {
                 // mock the for testing
                 context.stopRoute("productsRetriever");
                 replaceFromWith("direct:start");
-                interceptSendToEndpoint("{{subscription.build.poston}}")
+                interceptSendToEndpoint("{{subscription.forecast.poston}}")
                         .skipSendToOriginalEndpoint()
                         .to("mock:catchRetrievedProducts");
             }

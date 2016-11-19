@@ -68,7 +68,7 @@ public class CamelRouteTest extends CamelTestSupport {
                 // mock the for testing
                 context.stopRoute("productsRetriever");
                 replaceFromWith("direct:start");
-                interceptSendToEndpoint("{{subscription.build.poston}}")
+                interceptSendToEndpoint("{{subscription.pricing.poston}}")
                         .skipSendToOriginalEndpoint()
                         .to("mock:catchRetrievedProducts");
             }

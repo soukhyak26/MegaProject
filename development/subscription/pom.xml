@@ -18,13 +18,13 @@
         <module>domain-services/benefits</module>
         <module>domain-services/product</module>
         <module>domain-services/business</module>
+        <module>domain-services/payments</module>
         <module>tools/notifications</module>
         <module>batch/ProductPricingBatch</module>
         <module>batch/ExpenseDistributionBatch</module>
         <module>batch/ForecastBatch</module>
         <module>tools/user-journey</module>
         <module>libs/sysdate</module>
-        <module>domain-services/payments</module>
     </modules>
     <dependencies>
 <!--

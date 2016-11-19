@@ -1,7 +1,9 @@
 package com.affaince.subscription.forecast.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.forecast.build.interpolate.Interpolator;
+import com.affaince.subscription.forecast.build.ForecastingClient;
+import com.affaince.subscription.forecast.build.ForecastingTrigger;
+import com.affaince.subscription.forecast.build.ProductsRetriever;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -19,6 +21,9 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -51,23 +56,37 @@ public class Axon extends Default {
         return converter;
     }
 
-
-    @Bean
-    public Interpolator interpolator() {
-        return new Interpolator();
+    @Override
+    @Bean(name = "types")
+    protected Map<String, String> types() {
+        return new HashMap<String, String>();
     }
 
+    @Bean
+    public ProductsRetriever productsRetriever() {
+        return new ProductsRetriever();
+    }
+
+    @Bean
+    public ForecastingTrigger forecastingTrigger(){
+        return new ForecastingTrigger();
+    }
+
+    @Bean
+     public ForecastingClient forecastingClient(){
+        return new ForecastingClient();
+    }
     @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
                 //job for calculating build  and pseudoActuals for eligible products.
-                from("{{subscription.build.timer.expression}}")
+                from("{{subscription.forecast.timer.expression}}")
                         .routeId("productsRetriever")
                         .to("bean:productsRetriever")
                         .split(body())
-                        .to("{{subscription.build.poston}}")
+                        .to("{{subscription.forecast.poston}}")
                         .multicast().to("direct:forecaster", "direct:stepForecaster");
 /*
                 from("{{subscription.build.poston}}")
