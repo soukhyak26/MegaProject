@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.command.PaymentReceivedCommand;
-import com.affaince.subscription.payments.command.domain.Payment;
+import com.affaince.subscription.payments.command.domain.PaymentAccount;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.axonframework.repository.Repository;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PaymentReceivedCommandHandler {
-    private final Repository<Payment> repository;
+    private final Repository<PaymentAccount> repository;
 
     @Autowired
-    public PaymentReceivedCommandHandler(Repository<Payment> repository) {
+    public PaymentReceivedCommandHandler(Repository<PaymentAccount> repository) {
         this.repository = repository;
     }
 
@@ -30,12 +30,12 @@ public class PaymentReceivedCommandHandler {
             payment.handlePartialPayment(command.getPaidAmount());
         }*/
         //TODO : check if creation and updation of aggregate can be split
-        Payment payment;
+        PaymentAccount payment;
         try {
             payment = repository.load(command.getSubscriptionId());
             payment.handlePartialPayment(command.getPaidAmount());
         } catch (AggregateNotFoundException anfe) {
-            payment = new Payment(command.getSubscriptionId(), command.getPaidAmount());
+            payment = new PaymentAccount(command.getSubscriptionId(), command.getPaidAmount());
             repository.add(payment);
         }
     }

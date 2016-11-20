@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
-import com.affaince.subscription.payments.command.domain.Payment;
+import com.affaince.subscription.payments.command.domain.PaymentAccount;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +12,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DeliveryCreatedCommandHandler {
-    private final Repository<Payment> repository;
+    private final Repository<PaymentAccount> repository;
 
     @Autowired
-    public DeliveryCreatedCommandHandler(Repository<Payment> repository) {
+    public DeliveryCreatedCommandHandler(Repository<PaymentAccount> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
     public void handle(DeliveryCreatedCommand command) {
-        Payment payment = repository.load(command.getSubscriptionId());
+        PaymentAccount payment = repository.load(command.getSubscriptionId());
         payment.handleDeliveryCreatedCommand(command);
     }
 }

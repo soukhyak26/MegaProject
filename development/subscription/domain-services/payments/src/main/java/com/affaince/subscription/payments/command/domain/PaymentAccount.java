@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by anayonkar on 21/8/16.
  */
-public class Payment extends AbstractAnnotatedAggregateRoot<String> {
+public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     @AggregateIdentifier
     private String subscriptionId;
@@ -41,10 +41,10 @@ public class Payment extends AbstractAnnotatedAggregateRoot<String> {
 
     //TODO: What about subscriber id (i.e. same subscriber and multiple subscriptions) - will there be repository for that too?
 
-    public Payment() {
+    public PaymentAccount() {
     }
 
-    public Payment(String subscriptionId, Double totalBalance) {
+    public PaymentAccount(String subscriptionId, Double totalBalance) {
         apply(new PaymentInitiatedEvent(subscriptionId, totalBalance));
     }
 
