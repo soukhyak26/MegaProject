@@ -11,17 +11,16 @@ public class ProductForecastParameter {
     private LocalDateTime endDate;
     private double purchasePricePerUnit;
     private double MRP;
-    private long numberofNewSubscriptions;
+    private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
-    private long numberOfTotalSubscriptions;
+  //  private long numberOfTotalSubscriptions;
     private ProductForecastStatus productForecastStatus;
 
-    public ProductForecastParameter(LocalDateTime startDate, LocalDateTime endDate, double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscritptions, long numberOfTotalSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastParameter(LocalDateTime startDate, LocalDateTime endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
-        this.numberofNewSubscriptions = numberofNewSubscriptions;
-        this.numberOfChurnedSubscriptions = numberOfChurnedSubscritptions;
-        this.numberOfTotalSubscriptions = numberOfTotalSubscriptions;
+        this.numberOfNewSubscriptions = numberOfNewSubscriptions;
+        this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
         this.productForecastStatus = productForecastStatus;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -46,12 +45,12 @@ public class ProductForecastParameter {
         this.MRP = MRP;
     }
 
-    public long getNumberofNewSubscriptions() {
-        return this.numberofNewSubscriptions;
+    public long getNumberOfNewSubscriptions() {
+        return this.numberOfNewSubscriptions;
     }
 
-    public void setNumberofNewSubscriptions(long numberofNewSubscriptions) {
-        this.numberofNewSubscriptions = numberofNewSubscriptions;
+    public void setNumberOfNewSubscriptions(long numberOfNewSubscriptions) {
+        this.numberOfNewSubscriptions = numberOfNewSubscriptions;
     }
 
     public long getNumberOfChurnedSubscriptions() {
@@ -61,7 +60,6 @@ public class ProductForecastParameter {
     public void setNumberOfChurnedSubscriptions(long numberOfChurnedSubscriptions) {
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
     }
-
 
     public LocalDateTime getStartDate() {
         return startDate;
@@ -77,10 +75,6 @@ public class ProductForecastParameter {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public long getNumberOfTotalSubscriptions() {
-        return numberOfTotalSubscriptions;
     }
 
     public ProductForecastStatus getProductForecastStatus() {

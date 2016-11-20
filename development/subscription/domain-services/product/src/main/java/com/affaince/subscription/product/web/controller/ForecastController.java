@@ -5,6 +5,7 @@ import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.AddManualForecastCommand;
+import com.affaince.subscription.product.command.AddManualPseudoActualsCommand;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
 import com.affaince.subscription.product.query.repository.*;
@@ -99,20 +100,25 @@ public class ForecastController {
         ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
         LocalDateTime firstStartDate = null;
         LocalDateTime lastEndDate = null;
+        Sort endDateSort=new Sort(Sort.Direction.DESC, "endDate");
+        long totalSubscriptions=0;
         for (ProductForecastParameter parameter : forecastParameters) {
             List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
             //forecast should not be newly added if it already exists in the view
             if (null != existingForecastViews && existingForecastViews.size() > 0) {
                 throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
             }
-            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions());
+            //find forecasts entered earlier to current forecast entry
+            List<ProductForecastView> earlierForecastViews=this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId,parameter.getEndDate(),endDateSort);
+            totalSubscriptions=earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions()+ parameter.getNumberOfNewSubscriptions()-parameter.getNumberOfChurnedSubscriptions();
+            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(),totalSubscriptions);
             productForecastViewRepository.save(productForecastView);
             if (null == firstStartDate) {
                 firstStartDate = parameter.getStartDate();
             }
             lastEndDate = parameter.getEndDate();
         }
-        AddManualForecastCommand command = new AddManualForecastCommand(productId, forecastParameters, firstStartDate, lastEndDate);
+        AddManualForecastCommand command = new AddManualForecastCommand(productId, forecastParameters,totalSubscriptions, firstStartDate, lastEndDate);
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
@@ -187,16 +193,30 @@ public class ForecastController {
             throw ProductNotFoundException.build(productId);
         }
         ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
+        LocalDateTime firstStartDate = null;
+        LocalDateTime lastEndDate = null;
+        Sort endDateSort=new Sort(Sort.Direction.DESC, "endDate");
+        long totalSubscriptions=0;
         for (ProductForecastParameter parameter : forecastParameters) {
             List<ProductPseudoActualsView> existingPseudoActualsViews = this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
             //forecast should not be newly added if it already exists in the view
             if (null != existingPseudoActualsViews && existingPseudoActualsViews.size() > 0) {
                 throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
             }
-            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberofNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), parameter.getNumberOfTotalSubscriptions());
+            List<ProductPseudoActualsView> earlierPseudoActualsViews=this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId,parameter.getEndDate(),endDateSort);
+            totalSubscriptions=earlierPseudoActualsViews.get(0).getTotalNumberOfExistingSubscriptions()+ parameter.getNumberOfNewSubscriptions()-parameter.getNumberOfChurnedSubscriptions();
+            if (null == firstStartDate) {
+                firstStartDate = parameter.getStartDate();
+            }
+            lastEndDate = parameter.getEndDate();
+
+            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions);
             productPseudoActualsView.setProductForecastStatus(ProductForecastStatus.ACTIVE);
             productPseudoActualsViewRepository.save(productPseudoActualsView);
         }
+        AddManualPseudoActualsCommand command = new AddManualPseudoActualsCommand(productId, forecastParameters,totalSubscriptions, firstStartDate, lastEndDate);
+        commandGateway.executeAsync(command);
+
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 

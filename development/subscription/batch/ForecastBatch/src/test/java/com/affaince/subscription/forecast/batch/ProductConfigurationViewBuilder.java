@@ -57,7 +57,7 @@ public class ProductConfigurationViewBuilder {
                     productConfigView.put("pricingStrategyType","0");
                     String IDString = tokens[1] + "$" + tokens[2] + "$" + tokens[3] + "$" + tokens[4];
                     final String productId = defaultIdGenerator.generator(IDString);
-                    productConfigurationClient.configureProduct(productConfigView);
+                    productConfigurationClient.configureProduct(productId,productConfigView);
                 }
         );
 /*

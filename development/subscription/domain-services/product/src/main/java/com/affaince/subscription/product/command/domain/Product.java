@@ -316,11 +316,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void registerManualForecast(ProductForecastParameter[] productForecastParameters, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
         for (ProductForecastParameter forecastParameter : productForecastParameters) {
-            apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberofNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
+            apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberOfNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
         }
         /*if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             for (ProductForecastParameter forecastParameter : productForecastParameters) {
-                apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberofNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
+                apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberOfNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
             }
         }
         final ProductConfigurationValidator validator = new ProductConfigurationValidator();

@@ -11,12 +11,14 @@ public class AddManualForecastCommand {
     @TargetAggregateIdentifier
     private final String productId;
     private final ProductForecastParameter[] productForecastParameters;
+    private final long totalNumberOfSubscriptions;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
 
-    public AddManualForecastCommand(String productId, ProductForecastParameter[] productForecastParameters, LocalDateTime startDate, LocalDateTime endDate) {
+    public AddManualForecastCommand(String productId, ProductForecastParameter[] productForecastParameters,long totalNumberOfSubscriptions, LocalDateTime startDate, LocalDateTime endDate) {
         this.productId = productId;
         this.productForecastParameters = productForecastParameters;
+        this.totalNumberOfSubscriptions=totalNumberOfSubscriptions;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -31,6 +33,10 @@ public class AddManualForecastCommand {
 
     public LocalDateTime getEndDate() {
         return endDate;
+    }
+
+    public long getTotalNumberOfSubscriptions() {
+        return totalNumberOfSubscriptions;
     }
 
     public ProductForecastParameter[] getProductForecastParameters() {

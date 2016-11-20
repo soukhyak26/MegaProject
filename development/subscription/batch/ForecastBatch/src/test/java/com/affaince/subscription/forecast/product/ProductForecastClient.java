@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by mandar on 19-11-2016.
+ * Created by mandar on 20-11-2016.
  */
-public class ProductConfigurationClient {
-    @Value("${subscription.forecast.configureproducts.url}")
-    private String configureProductsUrl;
+public class ProductForecastClient {
+    @Value("${subscription.forecast.forecastproducts.url}")
+    private String forecastProductsUrl;
 
-    public void configureProduct(String productId,Map productAttributesMap){
+    public void configureProduct(String productId,Map<String,String> productAttributesMap){
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
@@ -28,9 +28,9 @@ public class ProductConfigurationClient {
 */
         Map<String, String> uriParams = new HashMap<String, String>();
         uriParams.put("productId", productId);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(configureProductsUrl);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(forecastProductsUrl);
 
-        System.out.println("$$$$$$$$$$$$$$configureProductsUrl: " + configureProductsUrl);
+        System.out.println("$$$$$$$$$$$$$$forecastProductsUrl: " + forecastProductsUrl);
         restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), null, productAttributesMap);
 
     }

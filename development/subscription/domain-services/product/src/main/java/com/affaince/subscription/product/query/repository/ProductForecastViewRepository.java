@@ -30,9 +30,9 @@ public interface ProductForecastViewRepository extends CrudRepository<ProductFor
 
     List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateGreaterThan(String productId, LocalDateTime endDate);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateGreaterThan(String productId, LocalDateTime endDate,Sort sort);
 
-    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate,Sort sort);
 
     List<ProductForecastView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
 }

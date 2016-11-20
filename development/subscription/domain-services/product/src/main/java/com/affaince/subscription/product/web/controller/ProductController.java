@@ -48,7 +48,7 @@ public class ProductController {
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value="register")
     @Consumes("application/json")
     public ResponseEntity<Object> registerProduct(@RequestBody @Valid RegisterProductRequest request) throws Exception {
         Map<SensitivityCharacteristic, Double> receivedSensitivityCharactersistic = request.getSensitiveTo();
@@ -81,7 +81,7 @@ public class ProductController {
         return new ResponseEntity<Object>(ImmutableMap.of("id", productId), HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "updatestatus/{productId}")
     @Consumes("application/json")
     public ResponseEntity<Object> updateProductStatus(@RequestBody @Valid UpdateProductStatusRequest request, @PathVariable String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);

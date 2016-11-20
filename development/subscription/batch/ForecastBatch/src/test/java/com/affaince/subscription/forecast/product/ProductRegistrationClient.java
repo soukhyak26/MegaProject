@@ -29,6 +29,5 @@ public class ProductRegistrationClient {
 */
         System.out.println("$$$$$$$$$$$$$$registerProductsUrl: " + registerProductsUrl);
         restTemplate.put(registerProductsUrl, null, productAttributesMap);
-
     }
 }
