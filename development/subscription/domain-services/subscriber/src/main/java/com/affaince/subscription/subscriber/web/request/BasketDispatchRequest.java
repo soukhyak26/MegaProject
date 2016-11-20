@@ -8,6 +8,7 @@ public class BasketDispatchRequest {
     private int basketDeliveryStatus;
     private ItemStatusRequest[] itemStatusRequest;
     private String dispatchDate;
+    private String reasonCode;
 
     public int getBasketDeliveryStatus() {
         return basketDeliveryStatus;
@@ -31,5 +32,13 @@ public class BasketDispatchRequest {
 
     public void setDispatchDate(String dispatchDate) {
         this.dispatchDate = dispatchDate;
+    }
+
+    public String getReasonCode() {
+        return reasonCode;
+    }
+
+    public void setReasonCode(String reasonCode) {
+        this.reasonCode = reasonCode;
     }
 }

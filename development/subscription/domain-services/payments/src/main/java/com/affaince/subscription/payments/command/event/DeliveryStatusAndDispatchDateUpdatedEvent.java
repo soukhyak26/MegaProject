@@ -1,6 +1,7 @@
 package com.affaince.subscription.payments.command.event;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.type.DeliveryStatus;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private String subscriptionId;
     private String basketId;
-    private int basketDeliveryStatus;
+    private DeliveryStatus basketDeliveryStatus;
     private String dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
     private double deliveryCharges;
     private double totalDeliveryPrice;
 
-    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
+    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
@@ -45,11 +46,11 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
         this.basketId = basketId;
     }
 
-    public int getBasketDeliveryStatus() {
+    public DeliveryStatus getBasketDeliveryStatus() {
         return basketDeliveryStatus;
     }
 
-    public void setBasketDeliveryStatus(int basketDeliveryStatus) {
+    public void setBasketDeliveryStatus(DeliveryStatus basketDeliveryStatus) {
         this.basketDeliveryStatus = basketDeliveryStatus;
     }
 

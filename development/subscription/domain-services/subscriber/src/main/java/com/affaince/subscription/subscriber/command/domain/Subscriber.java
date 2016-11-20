@@ -116,18 +116,19 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void on(DeliveryStatusAndDispatchDateUpdatedEvent event) {
         this.subscriberId = event.getSubscriptionId();
 
-        Delivery delivery = this.deliveries.get(event.getBasketId());
+        Delivery delivery = this.deliveries.get(event.getDeliveryId());
         delivery.setDispatchDate(new LocalDate(event.getDispatchDate()));
-        delivery.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
+        delivery.setStatus(event.getDeliveryStatus());
         List<DeliveryItem> deliveryItems = delivery.getDeliveryItems();
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
             DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId());
             deliveryItem = deliveryItems.get(deliveryItems.indexOf(deliveryItem));
-            deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
+            deliveryItem.setDeliveryStatus(itemDispatchStatus.getItemDeliveryStatus());
         }
-        if (DeliveryStatus.DELIVERED.getDeliveryStatusCode() == event.getBasketDeliveryStatus()) {
+        if (DeliveryStatus.DELIVERED.equals(event.getDeliveryStatus())) {
             setSubscriberLevelParameters(delivery);
         }
+        delivery.setReasonCode(event.getReasonCode());
     }
 
     private void setSubscriberLevelParameters(Delivery delivery) {
@@ -193,11 +194,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void updateStatusAndDispatchDate(UpdateDeliveryStatusAndDispatchDateCommand command) {
-        Delivery delivery = this.deliveries.get(command.getBasketId());
-        apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getBasketId(),
-                command.getBasketDeliveryStatus(), command.getDispatchDate(),
+        Delivery delivery = this.deliveries.get(command.getDeliveryId());
+        apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getDeliveryId(),
+                command.getDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses(), delivery.getDeliveryCharges(),
-                delivery.getTotalDeliveryPrice()));
+                delivery.getTotalDeliveryPrice(), command.getReasonCode()));
     }
 
     public void deleteBasket(DeleteBasketCommand command) {

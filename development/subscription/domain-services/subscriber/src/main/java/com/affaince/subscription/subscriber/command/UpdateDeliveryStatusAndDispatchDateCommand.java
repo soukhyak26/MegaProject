@@ -1,6 +1,8 @@
 package com.affaince.subscription.subscriber.command;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ReasonCode;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.List;
@@ -11,32 +13,34 @@ import java.util.List;
 public class UpdateDeliveryStatusAndDispatchDateCommand {
     @TargetAggregateIdentifier
     private String subscriberId;
-    private String basketId;
-    private int basketDeliveryStatus;
+    private String deliveryId;
+    private DeliveryStatus deliveryStatus;
     private String dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
-
-    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriberId, String basketId, int basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses) {
-        this.subscriberId = subscriberId;
-        this.basketId = basketId;
-        this.basketDeliveryStatus = basketDeliveryStatus;
-        this.dispatchDate = dispatchDate;
-        this.itemDispatchStatuses = itemDispatchStatuses;
-    }
+    private ReasonCode reasonCode;
 
     public UpdateDeliveryStatusAndDispatchDateCommand() {
+    }
+
+    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriberId, String deliveryId, DeliveryStatus deliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, ReasonCode reasonCode) {
+        this.subscriberId = subscriberId;
+        this.deliveryId = deliveryId;
+        this.deliveryStatus = deliveryStatus;
+        this.dispatchDate = dispatchDate;
+        this.itemDispatchStatuses = itemDispatchStatuses;
+        this.reasonCode = reasonCode;
     }
 
     public String getSubscriberId() {
         return subscriberId;
     }
 
-    public String getBasketId() {
-        return basketId;
+    public String getDeliveryId() {
+        return deliveryId;
     }
 
-    public int getBasketDeliveryStatus() {
-        return basketDeliveryStatus;
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
     }
 
     public String getDispatchDate() {
@@ -45,5 +49,9 @@ public class UpdateDeliveryStatusAndDispatchDateCommand {
 
     public List<ItemDispatchStatus> getItemDispatchStatuses() {
         return itemDispatchStatuses;
+    }
+
+    public ReasonCode getReasonCode() {
+        return reasonCode;
     }
 }

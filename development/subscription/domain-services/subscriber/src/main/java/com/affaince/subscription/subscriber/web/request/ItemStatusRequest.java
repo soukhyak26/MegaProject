@@ -1,12 +1,14 @@
 package com.affaince.subscription.subscriber.web.request;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
+
 /**
  * Created by rbsavaliya on 04-10-2015.
  */
 public class ItemStatusRequest {
 
     private String itemId;
-    private int itemDeliveryStatus;
+    private DeliveryStatus itemDeliveryStatus;
 
     public String getItemId() {
         return itemId;
@@ -16,11 +18,11 @@ public class ItemStatusRequest {
         this.itemId = itemId;
     }
 
-    public int getItemDeliveryStatus() {
+    public DeliveryStatus getItemDeliveryStatus() {
         return itemDeliveryStatus;
     }
 
-    public void setItemDeliveryStatus(int itemDeliveryStatus) {
+    public void setItemDeliveryStatus(DeliveryStatus itemDeliveryStatus) {
         this.itemDeliveryStatus = itemDeliveryStatus;
     }
 }

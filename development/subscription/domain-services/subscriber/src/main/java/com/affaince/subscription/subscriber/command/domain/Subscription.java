@@ -13,7 +13,6 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -145,10 +144,6 @@ public class Subscription extends AbstractAnnotatedEntity {
         apply(new ItemAddedToSubscriptionEvent(this.subscriptionId, command.getProductId(),
                 command.getCountPerPeriod(), command.getPeriod(), command.getDiscountedOfferedPrice(),
                 command.getOfferedPriceWithBasketLevelDiscount(), command.getNoOfCycles(), command.getWeightInGrms()));
-    }
-
-    public void updateBasketStatus(int statusCode, int reasonCode, Date dispatchDate) {
-        apply(new BasketDispatchStatusUpdatedEvent(subscriptionId, dispatchDate, statusCode, reasonCode));
     }
 
     public void deleteItem(String itemId) {

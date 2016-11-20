@@ -1,6 +1,5 @@
 package com.affaince.subscription.payments.command.domain;
 
-import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
 import com.affaince.subscription.payments.command.DeliveryStatusAndDispatchDateUpdatedCommand;
 import com.affaince.subscription.payments.command.accounting.*;
@@ -66,7 +65,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void handleDeliveryStatusAndDispatchDateUpdatedCommand(DeliveryStatusAndDispatchDateUpdatedCommand command) {
-        switch (DeliveryStatus.valueOf(command.getBasketDeliveryStatus())) {
+        switch (command.getBasketDeliveryStatus()) {
             case CREATED:
                 this.totalSubscriptionCostAccount.fireCreditedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());
                 this.totalReceivableCostAccount.fireCreditedEvent(command.getSubscriptionId(), command.getDeliveryCharges() + command.getTotalDeliveryPrice());

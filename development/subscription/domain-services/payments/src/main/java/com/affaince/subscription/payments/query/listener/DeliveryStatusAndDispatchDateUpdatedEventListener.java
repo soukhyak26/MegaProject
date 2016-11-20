@@ -21,7 +21,10 @@ public class DeliveryStatusAndDispatchDateUpdatedEventListener {
 
     @EventHandler
     public void on(DeliveryStatusAndDispatchDateUpdatedEvent event) throws Exception {
-        DeliveryStatusAndDispatchDateUpdatedCommand command = new DeliveryStatusAndDispatchDateUpdatedCommand(event.getSubscriptionId(), event.getBasketId(), event.getBasketDeliveryStatus(), event.getDispatchDate(), event.getItemDispatchStatuses(), event.getDeliveryCharges(), event.getTotalDeliveryPrice());
+        DeliveryStatusAndDispatchDateUpdatedCommand command =
+                new DeliveryStatusAndDispatchDateUpdatedCommand(event.getSubscriptionId(), event.getBasketId(),
+                        event.getBasketDeliveryStatus(), event.getDispatchDate(), event.getItemDispatchStatuses(),
+                        event.getDeliveryCharges(), event.getTotalDeliveryPrice());
         commandGateway.executeAsync(command);
     }
 }

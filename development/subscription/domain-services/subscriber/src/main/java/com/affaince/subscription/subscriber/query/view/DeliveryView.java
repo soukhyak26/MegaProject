@@ -3,6 +3,7 @@ package com.affaince.subscription.subscriber.query.view;
 import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ReasonCode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -28,6 +29,7 @@ public class DeliveryView {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate dispatchDate;
     private DeliveryStatus status;
+    private ReasonCode reasonCode;
 
     public DeliveryView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status) {
         this.deliveryId = deliveryId;
@@ -92,5 +94,13 @@ public class DeliveryView {
 
     public void setStatus(DeliveryStatus status) {
         this.status = status;
+    }
+
+    public ReasonCode getReasonCode() {
+        return reasonCode;
+    }
+
+    public void setReasonCode(ReasonCode reasonCode) {
+        this.reasonCode = reasonCode;
     }
 }

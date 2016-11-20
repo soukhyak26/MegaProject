@@ -1,14 +1,16 @@
 package com.affaince.subscription.command;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
+
 /**
  * Created by rbsavaliya on 04-10-2015.
  */
 public class ItemDispatchStatus {
 
     private String itemId;
-    private int itemDeliveryStatus;
+    private DeliveryStatus itemDeliveryStatus;
 
-    public ItemDispatchStatus(String itemId, int itemDeliveryStatus) {
+    public ItemDispatchStatus(String itemId, DeliveryStatus itemDeliveryStatus) {
         this.itemId = itemId;
         this.itemDeliveryStatus = itemDeliveryStatus;
     }
@@ -24,11 +26,11 @@ public class ItemDispatchStatus {
         this.itemId = itemId;
     }
 
-    public int getItemDeliveryStatus() {
+    public DeliveryStatus getItemDeliveryStatus() {
         return itemDeliveryStatus;
     }
 
-    public void setItemDeliveryStatus(int itemDeliveryStatus) {
+    public void setItemDeliveryStatus(DeliveryStatus itemDeliveryStatus) {
         this.itemDeliveryStatus = itemDeliveryStatus;
     }
 }

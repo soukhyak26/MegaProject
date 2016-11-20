@@ -2,6 +2,8 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ReasonCode;
 import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
@@ -32,19 +34,20 @@ public class BasketController {
         this.repository = repository;
     }
 
-    @RequestMapping(value = "updatestatusanddispatchdate/{subscriberId}/{basketId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "updatestatusanddispatchdate/{subscriberId}/{subscriptionId}/{deliveryId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateStatusAndDispatchDate(@RequestBody BasketDispatchRequest request,
-                                                              @PathVariable String basketId,
-                                                              @PathVariable String subscriberId) throws Exception {
-        final DeliveryView deliveryView = repository.findOne(basketId);
+                                                              @PathVariable String subscriberId,
+                                                              @PathVariable String subscriptionId,
+                                                              @PathVariable String deliveryId) throws Exception {
+        final DeliveryView deliveryView = repository.findOne(deliveryId);
         if (deliveryView == null) {
-            throw BasketNotFoundException.build(basketId);
+            throw BasketNotFoundException.build(deliveryId);
         }
         final UpdateDeliveryStatusAndDispatchDateCommand command = new UpdateDeliveryStatusAndDispatchDateCommand(
-                subscriberId, basketId, request.getBasketDeliveryStatus(), request.getDispatchDate(),
-                Arrays.stream(request.getItemStatusRequest()).map(itemStatus -> new ItemDispatchStatus(itemStatus.getItemId(),
-                        itemStatus.getItemDeliveryStatus())).collect(Collectors.toList())
-        );
+                subscriberId, subscriberId, DeliveryStatus.valueOf(request.getBasketDeliveryStatus()), request.getDispatchDate(),
+                Arrays.stream(request.getItemStatusRequest()).map(itemStatusRequest -> new ItemDispatchStatus(
+                        itemStatusRequest.getItemId(), itemStatusRequest.getItemDeliveryStatus()
+                )).collect(Collectors.toList()), ReasonCode.valueOf(request.getReasonCode()));
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

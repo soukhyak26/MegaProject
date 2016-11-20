@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
-import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryItem;
@@ -15,25 +14,26 @@ import org.springframework.stereotype.Component;
  * Created by rbsavaliya on 10-10-2015.
  */
 @Component
-public class StatusAndDispatchDateUpdatedEventListener {
+public class DeliveryStatusAndDispatchDateUpdatedEventListener {
 
     private final DeliveryViewRepository deliveryViewRepository;
 
     @Autowired
-    public StatusAndDispatchDateUpdatedEventListener(DeliveryViewRepository deliveryViewRepository) {
+    public DeliveryStatusAndDispatchDateUpdatedEventListener(DeliveryViewRepository deliveryViewRepository) {
         this.deliveryViewRepository = deliveryViewRepository;
     }
 
     @EventHandler
     public void on(DeliveryStatusAndDispatchDateUpdatedEvent event) {
-        DeliveryView deliveryView = deliveryViewRepository.findOne(event.getBasketId());
+        DeliveryView deliveryView = deliveryViewRepository.findOne(event.getDeliveryId());
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
             DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId());
             deliveryItem = deliveryView.getDeliveryItems().get(deliveryView.getDeliveryItems().indexOf(deliveryItem));
-            deliveryItem.setDeliveryStatus(DeliveryStatus.valueOf(itemDispatchStatus.getItemDeliveryStatus()));
+            deliveryItem.setDeliveryStatus(itemDispatchStatus.getItemDeliveryStatus());
         }
         deliveryView.setDispatchDate(new LocalDate(event.getDispatchDate()));
-        deliveryView.setStatus(DeliveryStatus.valueOf(event.getBasketDeliveryStatus()));
+        deliveryView.setStatus(event.getDeliveryStatus());
+        deliveryView.setReasonCode(event.getReasonCode());
         deliveryViewRepository.save(deliveryView);
     }
 }

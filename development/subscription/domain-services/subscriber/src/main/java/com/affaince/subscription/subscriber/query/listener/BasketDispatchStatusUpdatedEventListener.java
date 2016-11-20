@@ -1,6 +1,6 @@
 package com.affaince.subscription.subscriber.query.listener;
 
-import com.affaince.subscription.subscriber.command.event.BasketDispatchStatusUpdatedEvent;
+import com.affaince.subscription.subscriber.command.event.DeliveryDispatchStatusUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,7 @@ public class BasketDispatchStatusUpdatedEventListener {
     }
 
     @EventHandler
-    public void on(BasketDispatchStatusUpdatedEvent basketDispatchStatusUpdatedEvent) {
-        System.out.println("@@@@@BasketDispatchStatusUpdatdEventListener ID: " + basketDispatchStatusUpdatedEvent.getBasketId());
-        System.out.println("@@@@@@@BasketDispatchStatusUpdatdEventListener status code: " + basketDispatchStatusUpdatedEvent.getDispactchStatusCode());
-        System.out.println("@@@@@@BasketDispatchStatusUpdatdEventListener dispatch date: " + basketDispatchStatusUpdatedEvent.getDispatchDate());
-        System.out.println("@@@@@@@BasketDispatchStatusUpdatdEventListener reason code: " + basketDispatchStatusUpdatedEvent.getReasonCode());
+    public void on(DeliveryDispatchStatusUpdatedEvent deliveryDispatchStatusUpdatedEvent) {
 
     }
 

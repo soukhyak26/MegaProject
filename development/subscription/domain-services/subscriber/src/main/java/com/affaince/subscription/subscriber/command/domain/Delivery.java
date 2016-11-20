@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ReasonCode;
 import com.affaince.subscription.subscriber.vo.RangeRule;
 import org.joda.time.LocalDate;
 
@@ -20,6 +21,7 @@ public class Delivery {
     private double totalWeight;
     private double totalDeliveryPrice;
     private double rewardPoints;
+    private ReasonCode reasonCode;
 
     public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
         this.deliveryId = deliveryId;
@@ -105,6 +107,14 @@ public class Delivery {
 
     public void setRewardPoints(double rewardPoints) {
         this.rewardPoints = rewardPoints;
+    }
+
+    public void setReasonCode(ReasonCode reasonCode) {
+        this.reasonCode = reasonCode;
+    }
+
+    public ReasonCode getReasonCode() {
+        return reasonCode;
     }
 
     public void calculateTotalWeightInGrams() {
