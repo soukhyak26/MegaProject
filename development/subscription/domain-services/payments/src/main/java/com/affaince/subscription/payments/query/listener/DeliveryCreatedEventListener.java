@@ -18,6 +18,7 @@ public class DeliveryCreatedEventListener {
     private SubscriptionCommandGateway commandGateway;
 
     //TODO: check why we fire command from event listener
+    //looks like this is proper way
     public DeliveryCreatedEventListener() {
     }
 

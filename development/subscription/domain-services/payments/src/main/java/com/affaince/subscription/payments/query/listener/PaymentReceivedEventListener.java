@@ -20,6 +20,7 @@ public class PaymentReceivedEventListener {
 
     @EventHandler
     public void on(PaymentReceivedEvent event) throws Exception {
+        //TODO: check if we are making changes to SubscriptionPaymentViewRepository if necessary
         PaymentReceivedCommand paymentReceivedCommand = new PaymentReceivedCommand(event.getSusbcriberId(),
                 event.getSubscriptionId(),
                 event.getPaidAmount(),

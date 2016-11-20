@@ -11,4 +11,5 @@ import java.util.List;
 public interface DeliveryCostViewRepository extends CrudRepository<DeliveryCostView, String> {
     DeliveryCostView findByDeliveryId(String deliveryId);
     List<DeliveryCostView> findBySubscriptionId(String subscriptionId);
+    //TODO: introduce method to look for DeliveryCostView by subscription id AND delivery id
 }

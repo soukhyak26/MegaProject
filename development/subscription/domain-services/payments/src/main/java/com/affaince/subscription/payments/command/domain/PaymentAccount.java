@@ -1,8 +1,10 @@
 package com.affaince.subscription.payments.command.domain;
 
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
+import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
 import com.affaince.subscription.payments.command.DeliveryStatusAndDispatchDateUpdatedCommand;
 import com.affaince.subscription.payments.command.accounting.*;
+import com.affaince.subscription.payments.command.event.DeliveryDestroyedEvent;
 import com.affaince.subscription.payments.command.event.DeliveryInitiatedEvent;
 import com.affaince.subscription.payments.command.event.PaymentInitiatedEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -83,9 +85,22 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new DeliveryInitiatedEvent(command.getDeliveryId(), command.getSubscriptionId()));
     }
 
+    public void handleDeliveryDeletedCommand(DeliveryDeletedCommand command) {
+        apply(new DeliveryDestroyedEvent(command.getDeliveryId(), command.getSubscriberId()));
+    }
+
     @EventSourcingHandler
     public void on(DeliveryInitiatedEvent event) {
+        //TODO: change 0 to actual amount for delivery cost account
         this.deliveryCostAccountMap.put(event.getDeliveryId(), new DeliveryCostAccount(0));
+        this.totalReceivableCostAccount.fireCreditedEvent(event.getSubscriptionId(), 0);
+    }
+
+    @EventSourcingHandler
+    public void on(DeliveryDestroyedEvent event) {
+        //TODO: change 0 to actual amount
+        this.deliveryCostAccountMap.remove(event.getDeliveryId());
+        this.totalReceivableCostAccount.fireDebitedEvent(event.getSubscriptionId(), 0);
     }
 
     public String getSubscriptionId() {
