@@ -25,6 +25,10 @@ public class DeliveryInitiatedEventListener {
         if(deliveryCostView == null) {
             deliveryCostView = new DeliveryCostView(event.getDeliveryId(), event.getSubscriptionId(), 0);
         }
+        /*else {
+            get delivery cost from event and update
+            //TODO: check if this should happen in this event or other
+        }*/
         deliveryCostViewRepository.save(deliveryCostView);
     }
 }

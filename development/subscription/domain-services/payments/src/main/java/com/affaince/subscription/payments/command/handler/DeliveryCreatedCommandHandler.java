@@ -21,7 +21,7 @@ public class DeliveryCreatedCommandHandler {
 
     @CommandHandler
     public void handle(DeliveryCreatedCommand command) {
-        PaymentAccount payment = repository.load(command.getSubscriptionId());
-        payment.handleDeliveryCreatedCommand(command);
+        PaymentAccount paymentAccount = repository.load(command.getSubscriptionId());
+        paymentAccount.handleDeliveryCreatedCommand(command);
     }
 }

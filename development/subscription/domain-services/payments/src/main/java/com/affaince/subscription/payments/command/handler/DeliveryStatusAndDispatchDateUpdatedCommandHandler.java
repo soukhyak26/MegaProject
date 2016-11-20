@@ -21,8 +21,8 @@ public class DeliveryStatusAndDispatchDateUpdatedCommandHandler {
 
     @CommandHandler
     public void handle(DeliveryStatusAndDispatchDateUpdatedCommand command) {
-        PaymentAccount payment = repository.load(command.getSubscriptionId());
-        payment.handleDeliveryStatusAndDispatchDateUpdatedCommand(command);
+        PaymentAccount paymentAccount = repository.load(command.getSubscriptionId());
+        paymentAccount.handleDeliveryStatusAndDispatchDateUpdatedCommand(command);
     }
 
 }

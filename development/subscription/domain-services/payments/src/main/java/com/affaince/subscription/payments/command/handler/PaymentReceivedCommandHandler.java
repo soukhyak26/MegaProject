@@ -30,13 +30,13 @@ public class PaymentReceivedCommandHandler {
             payment.handlePartialPayment(command.getPaidAmount());
         }*/
         //TODO : check if creation and updation of aggregate can be split
-        PaymentAccount payment;
+        PaymentAccount paymentAccount;
         try {
-            payment = repository.load(command.getSubscriptionId());
-            payment.handlePartialPayment(command.getPaidAmount());
+            paymentAccount = repository.load(command.getSubscriptionId());
+            paymentAccount.handlePartialPayment(command.getPaidAmount());
         } catch (AggregateNotFoundException anfe) {
-            payment = new PaymentAccount(command.getSubscriptionId(), command.getPaidAmount());
-            repository.add(payment);
+            paymentAccount = new PaymentAccount(command.getSubscriptionId(), command.getPaidAmount());
+            repository.add(paymentAccount);
         }
     }
 }
