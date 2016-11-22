@@ -12,5 +12,18 @@
 
     <artifactId>CreateDeliveryFile</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>axon-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -7,7 +7,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,6 +27,6 @@ public class ProductRegistrationClient {
         params.put("productid", productId);
 */
         System.out.println("$$$$$$$$$$$$$$registerProductsUrl: " + registerProductsUrl);
-        restTemplate.put(registerProductsUrl, null, productAttributesMap);
+        restTemplate.postForObject(registerProductsUrl, productAttributesMap, String.class);
     }
 }

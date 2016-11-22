@@ -4,6 +4,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 /**
  * Created by mandar on 19-11-2016.
  */
+@Component
 public class ProductConfigurationClient {
     @Value("${subscription.forecast.configureproducts.url}")
     private String configureProductsUrl;
@@ -31,7 +33,8 @@ public class ProductConfigurationClient {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(configureProductsUrl);
 
         System.out.println("$$$$$$$$$$$$$$configureProductsUrl: " + configureProductsUrl);
-        restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), null, productAttributesMap);
+        //restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), null, productAttributesMap);
+        restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), productAttributesMap, uriParams);
 
     }
 

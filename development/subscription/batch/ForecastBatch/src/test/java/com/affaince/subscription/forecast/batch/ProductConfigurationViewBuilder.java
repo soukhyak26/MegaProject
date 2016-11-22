@@ -1,11 +1,7 @@
 package com.affaince.subscription.forecast.batch;
 
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.forecast.product.ProductConfigurationClient;
-import com.affaince.subscription.forecast.query.repository.ProductConfigurationViewRepository;
-import com.affaince.subscription.forecast.query.view.ProductConfigurationView;
 import com.affaince.subscription.repository.IdGenerator;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +9,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mandar on 25-09-2016.
@@ -48,11 +45,11 @@ public class ProductConfigurationViewBuilder {
                             tokens[0], 30, 0.05, false, false
                     ));
   */
-                    Map<String, String> productConfigView = new HashMap<>();
-                    productConfigView.put("actualsAggregationPeriodForTargetForecast","30");
-                    productConfigView.put("targetChangeThresholdForPriceChange","0.05");
-                    productConfigView.put("isCrossPriceElasticityConsidered","false");
-                    productConfigView.put("isAdvertisingExpensesConsidered","false");
+                    Map<String, Object> productConfigView = new HashMap<>();
+                    productConfigView.put("actualsAggregationPeriodForTargetForecast", 30);
+                    productConfigView.put("targetChangeThresholdForPriceChange", 0.05);
+                    productConfigView.put("isCrossPriceElasticityConsidered", false);
+                    productConfigView.put("isAdvertisingExpensesConsidered", false);
                     productConfigView.put("pricingOptions","1");
                     productConfigView.put("pricingStrategyType","0");
                     String IDString = tokens[1] + "$" + tokens[2] + "$" + tokens[3] + "$" + tokens[4];

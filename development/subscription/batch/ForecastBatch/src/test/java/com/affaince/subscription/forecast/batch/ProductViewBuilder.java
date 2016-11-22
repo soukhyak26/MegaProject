@@ -1,7 +1,6 @@
 package com.affaince.subscription.forecast.batch;
 
 import com.affaince.subscription.forecast.product.ProductRegistrationClient;
-import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +8,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mandar on 18-09-2016.
@@ -43,13 +45,18 @@ public class ProductViewBuilder {
 
                     ));
 */
-                    Map<String, String> productView = new HashMap<>();
+                    Map<String, Object> productView = new HashMap<>();
+                    //ProductView productView1 = new ProductView();
                     productView.put("productName", tokens[1]);
                     productView.put("categoryId", tokens[2]);
                     productView.put("subCategoryId", tokens[3]);
                     productView.put("quantityUnit", "gram");
-                    productView.put("productPricingCategory","1");
+                    productView.put("productPricingCategory", 1);
                     productView.put("quantity",tokens[4] );
+                    productView.put("substitutes", new String[]{"2", "3"});
+                    productView.put("complements", new String[]{"2", "3"});
+                    productView.put("purchasePrice", 200);
+                    productView.put("MRP", 300);
                     productRegistrationClient.registerProduct(productView);
                 }
         );
