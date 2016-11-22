@@ -1,20 +1,17 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.command.event.ProductRegisteredEvent;
 import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.validator.ProductConfigurationValidator;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rbsavaliya on 19-07-2015.
@@ -34,11 +31,11 @@ public class ProductRegisteredEventListener {
 
     @EventHandler
     public void on(ProductRegisteredEvent event) throws ProductReadinessException {
-        final List<ProductStatus> productStatuses = productActivationStatusViewRepository.
+        /*final List<ProductStatus> productStatuses = productActivationStatusViewRepository.
                 findByProductId(event.getProductId()).getProductStatuses();
         if (ProductConfigurationValidator.getProductReadinessStatus(productStatuses).contains(
                 ProductReadinessStatus.REGISTERABLE
-        )) {
+        )) {*/
             final ProductView productView = new ProductView(
                     event.getProductId(),
                     event.getProductName(),
@@ -54,8 +51,8 @@ public class ProductRegisteredEventListener {
             final ProductActivationStatusView productActivationStatusView = new ProductActivationStatusView(event.getProductId(), new ArrayList<>());
             productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
             productActivationStatusViewRepository.save(productActivationStatusView);
-        } else {
+    } /*else {
             throw ProductReadinessException.build(event.getProductId(), ProductStatus.PRODUCT_REGISTERED);
-        }
-    }
+        }*/
+    //}
 }
