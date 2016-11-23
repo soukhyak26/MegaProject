@@ -22,7 +22,7 @@ public class ProductForecastClient {
     @Value("${subscription.stepforecast.forecastproducts.url}")
     private String stepForecastProductsUrl;
 
-    public void addForecast(String productId,Map<String,String> productAttributesMap){
+    public void addForecast(String productId,Map<String,Object> productAttributesMap){
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
@@ -36,10 +36,10 @@ public class ProductForecastClient {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(forecastProductsUrl);
 
         System.out.println("$$$$$$$$$$$$$$forecastProductsUrl: " + forecastProductsUrl);
-        restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), null, productAttributesMap);
+        restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), productAttributesMap, uriParams);
     }
 
-    public void addStepForecast(String productId,Map<String,String> productAttributesMap){
+    public void addStepForecast(String productId,Map<String,Object> productAttributesMap){
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
@@ -53,7 +53,7 @@ public class ProductForecastClient {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(stepForecastProductsUrl);
 
         System.out.println("$$$$$$$$$$$$$$forecastProductsUrl: " + stepForecastProductsUrl);
-        restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), null, productAttributesMap);
+        restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(),productAttributesMap,uriParams);
     }
 
 

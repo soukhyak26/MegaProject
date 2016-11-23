@@ -74,25 +74,57 @@ public class ProductForecastViewBuilder {
 
     public void buildProductForecast() throws Exception {
         localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
-        try (final BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/product.csv"))))) {
+        try (final BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demand2.csv"))))) {
             fileReader.lines().forEach(
                     line -> {
                         String[] tokens = line.split(",");
                         String IDString = tokens[1] + "$" + tokens[2] + "$" + tokens[3] + "$" + tokens[4];
                         final String productId = defaultIdGenerator.generator(IDString);
-                        Map<String, String> forecastAttributeMapPerProduct = new HashMap<>();
+                        Map<String, Object> forecastAttributeMapPerProduct = new HashMap<>();
                         try (BufferedReader fileReader2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))))) {
                             long[][] readings = fileReader2.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
                             for (int i = 0; i < readings.length; i++) {
                                 LocalDateTime[] newForecastDates = forecastDatesProvider.deriveStartAndEndDatesForAMonth(localDate, i);
-                                forecastAttributeMapPerProduct.put("startDate", newForecastDates[0].toString());
-                                forecastAttributeMapPerProduct.put("endDate", newForecastDates[1].toString());
-                                forecastAttributeMapPerProduct.put("numberOfNewSubscriptions", String.valueOf(readings[i][0]));
-                                forecastAttributeMapPerProduct.put("numberOfChurnedSubscriptions", String.valueOf(readings[i][1]));
+                                forecastAttributeMapPerProduct.put("startDate", newForecastDates[0]);
+                                forecastAttributeMapPerProduct.put("endDate", newForecastDates[1]);
+                                forecastAttributeMapPerProduct.put("numberOfNewSubscriptions", readings[i][0]);
+                                forecastAttributeMapPerProduct.put("numberOfChurnedSubscriptions", readings[i][1]);
                                 forecastAttributeMapPerProduct.put("productForecastStatus", ProductForecastStatus.ACTIVE.toString());
                             }
                             productForecastClient.addForecast(productId, forecastAttributeMapPerProduct);
+                        } catch (IOException ex2) {
+                            ex2.printStackTrace();
+                        }
+                    }
+            );
+
+        } catch (IOException ex2) {
+            ex2.printStackTrace();
+        }
+    }
+
+    public void buildProductStepForecast() throws Exception {
+        localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
+        try (final BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/stepdemand.csv"))))) {
+            fileReader.lines().forEach(
+                    line -> {
+                        String[] tokens = line.split(",");
+                        String IDString = tokens[1] + "$" + tokens[2] + "$" + tokens[3] + "$" + tokens[4];
+                        final String productId = defaultIdGenerator.generator(IDString);
+                        Map<String, Object> forecastAttributeMapPerProduct = new HashMap<>();
+                        try (BufferedReader fileReader2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))))) {
+                            long[][] readings = fileReader2.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
+
+                            for (int i = 0; i < readings.length; i++) {
+                                LocalDateTime[] newForecastDates = forecastDatesProvider.deriveStartAndEndDatesForAMonth(localDate, i);
+                                forecastAttributeMapPerProduct.put("startDate", newForecastDates[0]);
+                                forecastAttributeMapPerProduct.put("endDate", newForecastDates[1]);
+                                forecastAttributeMapPerProduct.put("numberOfNewSubscriptions", readings[i][0]);
+                                forecastAttributeMapPerProduct.put("numberOfChurnedSubscriptions", readings[i][1]);
+                                forecastAttributeMapPerProduct.put("productForecastStatus", ProductForecastStatus.ACTIVE.toString());
+                            }
+                            productForecastClient.addStepForecast(productId, forecastAttributeMapPerProduct);
                         } catch (IOException ex2) {
                             ex2.printStackTrace();
                         }
