@@ -8,6 +8,8 @@ import com.affaince.subscription.pricing.build.interpolate.Interpolator;
 import com.affaince.subscription.pricing.determine.PricingClient;
 import com.affaince.subscription.pricing.determine.ProductPricingTrigger;
 import com.affaince.subscription.pricing.determine.ProductsRetriever;
+import com.affaince.subscription.pricing.forecast.ForecastDateSenderClient;
+import com.affaince.subscription.pricing.forecast.NextForecastDateFinder;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Predicate;
@@ -58,6 +60,7 @@ public class Axon extends Default {
     public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
         return new SimpleMongoDbFactory(mongo, dbName);
     }
+
     @Override
     @Bean(name = "types")
     protected Map<String, String> types() {
@@ -102,10 +105,18 @@ public class Axon extends Default {
     }
 
     @Bean
+    public NextForecastDateFinder nextForecastDateFinder(){
+        return new NextForecastDateFinder();
+    }
+
+    @Bean
+    public ForecastDateSenderClient forecastDateSenderClient(){
+        return forecastDateSenderClient();
+    }
+    @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() throws Exception {
-
 
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
                 //job for calculating pseudoActuals for each product.
@@ -114,36 +125,20 @@ public class Axon extends Default {
                         .routeId("PriceDeterminator")
                         .to("bean:productsRetriever")
                         .split(body())
-                        .to("bean:forecastInterpolatedSubscriptionCountFinder")
-                        .to("bean:productPricingTrigger")
+                        .to("bean:forecastInterpolatedSubscriptionCountFinder") //interpolate monthly forecasted values to daily valules
+                        .to("bean:productPricingTrigger")       // compare interpolated daily forecast with daily actuals
                         .choice()
                         .when(demandTrendChecker)
-                        .to("bean:pricingClient")
+                        .multicast()
+                        .to("direct:forecaster", "bean:pricingClient")
                         .endChoice();
+
+                from("direct:forecaster").to("bean:nextForecastDateFinder").to("bean:forecastDateSenderClient");//add actuals aggregation number in current date to obtain next forecast date for a product.
 
             }
         };
     }
-/*
-    @Bean
-    public RouteBuilder routes() {
-        return new RouteBuilder() {
-            public void configure() {
-                from("timer://foo?repeatCount=1").choice()
-                        .to("bean:operatingExpenseStrategyDeterminator?decideOperatingExpenseStrategy()")
-                        .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.DEFAULT_STRATEGY}"))
-                        .to("bean:defaultOperatingExpenseDistributionDeterminator")
-                        .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.EXTRAPOLATION_BASED_STRATEGY}"))
-                        .to("bean:extraPolationBasedOperatingExpenseDistributionDeterminator")
-                        .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.FORECAST_BASED_STRATEGY}"))
-                        .to("bean:forecastBasedOperatingExpenseDistributionDeterminator")
-                       // .multicast(AggregationStrategies.bean(ProductWiseDeliveryStatsAggregation.class))
-                        .to ("bean:calculatePerUnitExpense")
-                        .to("bean:publisher");
-            }
-        };
-    }
-*/
+
 
     @Bean
     CamelContextConfiguration contextConfiguration() {

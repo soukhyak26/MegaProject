@@ -32,15 +32,12 @@ public class ProductPricingTrigger {
         boolean doTriggerPrice = false;
         final LocalDateTime currentDate = SysDateTime.now();
         final ProductVersionId productVersionId = new ProductVersionId(productId, currentDate);
-        //find the threshold percentage chane between interpolated build and actuals that should trigger price
-        final double changeThresholdForPriceChange =
-                productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
 
         //get the actuals data from first to last in ascending order
         final Sort sort1 = new Sort(Sort.Direction.ASC, "productVersionId.fromDate");
         final List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort1);
 
-        //Get latest value of Pseudo actuals( build for tomorrow) so as to add it to list of actuals.
+        //Get latest value of Pseudo actuals( forecast for tomorrow) so as to add it to list of actuals.
         final Sort sort2 = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         ProductPseudoActualsView latestProductPseudoActualsView = productPseudoActualsViewRepository.findByProductVersionId_ProductId(productId, sort2).get(0);
 
@@ -51,11 +48,23 @@ public class ProductPricingTrigger {
         System.arraycopy(totalSubscriptionsList, 0, newTotalsubscriptionList, 0, totalSubscriptionsList.length);
         newTotalsubscriptionList[newTotalsubscriptionList.length - 1] = latestProductPseudoActualsView.getTotalNumberOfExistingSubscriptions();
 
-        //Create similar array of interpolated total subscriptioncount per day/half day from the weekly/monthly/quarterly build value
+        //Create similar array of interpolated total subscription count per day/half day from the weekly/monthly/quarterly build value
         double[] balancedInterpolatedForecastedTotalSubscriptionCount = new double[newTotalsubscriptionList.length];
         System.arraycopy(interpolatedForecastOnTotalSubscriptions, 0, balancedInterpolatedForecastedTotalSubscriptionCount, 0, newTotalsubscriptionList.length);
         double[][] observations = {balancedInterpolatedForecastedTotalSubscriptionCount, newTotalsubscriptionList};
 
+        final boolean rejectNullHypothesis=executeAnnovaTest(observations) ;
+        return determineDemandTrend(productId,rejectNullHypothesis,balancedInterpolatedForecastedTotalSubscriptionCount,newTotalsubscriptionList);
+    }
+
+    private double findMean(double[] array) {
+        double sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            sum += array[i];
+        }
+        return sum / array.length;
+    }
+    private boolean executeAnnovaTest(double[][] observations){
         final List<double[]> classes = new ArrayList<double[]>();
         for (int i = 0; i < observations.length; i++) {
             classes.add(observations[i]);
@@ -68,13 +77,20 @@ public class ProductPricingTrigger {
         System.out.println("p-value:" + pValue);
         boolean rejectNullHypothesis = anova.anovaTest(classes, SIGNIFICANCE_LEVEL);
         System.out.println("reject null hipothesis " + (100 - SIGNIFICANCE_LEVEL * 100) + "% = " + rejectNullHypothesis);
+        return rejectNullHypothesis;
+    }
 
-        //If null hipothesis is rejected it means that target is different than actual.. so need to trigger build
+    private ProductDemandTrend determineDemandTrend(String productId,boolean rejectNullHypothesis,double[] interpolatedDailyDemand, double[] actualDailyDemand){
+        //find the threshold percentage change between interpolated forecast and actuals that should trigger price
+        final double changeThresholdForPriceChange =
+                productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
+
+        //If null hypothesis is rejected it means that target is different than actual.. so need to trigger build
         if (rejectNullHypothesis) {
-            double interpolatedForecastMean = findMean(balancedInterpolatedForecastedTotalSubscriptionCount);
-            double actualsMean = findMean(newTotalsubscriptionList);
+            double interpolatedForecastMean = findMean(interpolatedDailyDemand);
+            double actualsMean = findMean(actualDailyDemand);
             double percentageMeanVariation = ((actualsMean - interpolatedForecastMean) / interpolatedForecastMean) * 100;
-            //if difference is the mean values of actual subscription counts and interpolated+forecasted subscription counts is beyong the threshold value
+            //if difference is the mean values of actual subscription counts and interpolated+forecasted subscription counts is beyond the threshold value
             // then the build should be triggered for the product.
             if (interpolatedForecastMean > actualsMean && Math.abs(percentageMeanVariation) > changeThresholdForPriceChange) {
                 return ProductDemandTrend.DOWNWARD;
@@ -86,13 +102,6 @@ public class ProductPricingTrigger {
         } else {
             return ProductDemandTrend.NOCHANGE;
         }
-    }
 
-    private double findMean(double[] array) {
-        double sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            sum += array[i];
-        }
-        return sum / array.length;
     }
 }

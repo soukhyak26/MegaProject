@@ -123,7 +123,7 @@ public class ForecastController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    //API to add forecast manually
+    //API to add Targets manually
     @RequestMapping(method = RequestMethod.PUT, value = "settargets/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> setTargets(@RequestBody @Valid SetTargetParameterRequest request,
@@ -261,7 +261,7 @@ public class ForecastController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "setnextcalendar/forecast/{productid}")
+    @RequestMapping(method = RequestMethod.PUT, value = "setnextforecastdate/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable("productid") String productId) {
         ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);

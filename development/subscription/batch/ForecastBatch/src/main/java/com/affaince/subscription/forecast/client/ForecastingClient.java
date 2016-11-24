@@ -1,4 +1,4 @@
-package com.affaince.subscription.forecast.build;
+package com.affaince.subscription.forecast.client;
 
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +26,7 @@ public class ForecastingClient {
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, Object> params = new HashMap<>();
         params.put("productid", productId);
         System.out.println("$$$$$$$$$$$$$$forecastUrl: " + forecastUrl);
         restTemplate.put(forecastUrl, null, params);

@@ -1,7 +1,7 @@
 package com.affaince.subscription.forecast.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.forecast.build.ForecastingClient;
+import com.affaince.subscription.forecast.client.ForecastingClient;
 import com.affaince.subscription.forecast.build.ForecastingTrigger;
 import com.affaince.subscription.forecast.build.ProductsRetriever;
 import com.mongodb.Mongo;
