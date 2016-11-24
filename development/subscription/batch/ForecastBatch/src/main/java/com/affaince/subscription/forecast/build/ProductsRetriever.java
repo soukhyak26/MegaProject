@@ -1,7 +1,8 @@
 package com.affaince.subscription.forecast.build;
 
-import com.affaince.subscription.forecast.query.repository.ProductViewRepository;
-import com.affaince.subscription.forecast.query.view.ProductView;
+import com.affaince.subscription.common.type.ProductStatus;
+import com.affaince.subscription.forecast.query.repository.ProductActivationStatusViewRepository;
+import com.affaince.subscription.forecast.query.view.ProductActivationStatusView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -12,13 +13,17 @@ import java.util.List;
  */
 public class ProductsRetriever {
     @Autowired
-    private ProductViewRepository productViewRepository;
+    private ProductActivationStatusViewRepository productActivationStatusViewRepository;
 
     public List<String> retrieveProductIds() {
         System.out.println("in ProductsRetriever###############");
-        Iterable<ProductView> allProducts = productViewRepository.findAll();
-        List<String> allProductIds = new ArrayList<>();
-        allProducts.forEach(productView -> allProductIds.add(productView.getProductId()));
-        return allProductIds;
+        Iterable<ProductActivationStatusView> allProducts = productActivationStatusViewRepository.findAll();
+        List<String> allActiveProductIds = new ArrayList<>();
+        allProducts.forEach(productActivationStatusView -> {
+            if (productActivationStatusView.getProductStatuses().contains(ProductStatus.PRODUCT_ACTIVATED)) {
+                allActiveProductIds.add(productActivationStatusView.getProductId());
+            }
+        });
+        return allActiveProductIds;
     }
 }

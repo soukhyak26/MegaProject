@@ -16,7 +16,7 @@ import java.util.List;
 public class ForecastInterpolatedSubscriptionCountFinder {
 
     @Autowired
-    Interpolator interpolator;
+    private Interpolator interpolator;
 
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
