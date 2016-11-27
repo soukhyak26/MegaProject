@@ -13,14 +13,16 @@ public class AddSubscriptionRulesCommand {
     private float maximumPermissibleDiscount;
     private int maximumPermissibleDiscountUnit;
     private int minimumAmountEligibleForFreeShipping;
+    private int diffBetweenDeliveryPreparationAndDispatchDate;
 
-    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping) {
+    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate) {
         BasketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
         this.maximumPermissibleDiscount = maximumPermissibleDiscount;
         this.maximumPermissibleDiscountUnit = maximumPermissibleDiscountUnit;
         this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
+        this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
     }
 
     public AddSubscriptionRulesCommand() {
@@ -48,5 +50,9 @@ public class AddSubscriptionRulesCommand {
 
     public int getMinimumAmountEligibleForFreeShipping() {
         return minimumAmountEligibleForFreeShipping;
+    }
+
+    public int getDiffBetweenDeliveryPreparationAndDispatchDate() {
+        return diffBetweenDeliveryPreparationAndDispatchDate;
     }
 }

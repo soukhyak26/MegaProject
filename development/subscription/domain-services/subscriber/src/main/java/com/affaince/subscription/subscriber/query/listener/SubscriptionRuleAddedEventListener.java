@@ -1,8 +1,9 @@
+
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.subscriber.command.event.SubscriptionRuleAddedEvent;
-import com.affaince.subscription.subscriber.query.repository.BasketRuleViewRepository;
-import com.affaince.subscription.subscriber.query.view.BasketRuleView;
+import com.affaince.subscription.subscriber.query.repository.SubscriptionRuleViewRepository;
+import com.affaince.subscription.subscriber.query.view.SubscriptionRuleView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,18 +14,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class SubscriptionRuleAddedEventListener {
 
-    private final BasketRuleViewRepository basketRuleViewRepository;
+    private final SubscriptionRuleViewRepository subscriptionRuleViewRepository;
 
     @Autowired
-    public SubscriptionRuleAddedEventListener(BasketRuleViewRepository basketRuleViewRepository) {
-        this.basketRuleViewRepository = basketRuleViewRepository;
+    public SubscriptionRuleAddedEventListener(SubscriptionRuleViewRepository subscriptionRuleViewRepository) {
+        this.subscriptionRuleViewRepository = subscriptionRuleViewRepository;
     }
 
     @EventHandler
     public void on(SubscriptionRuleAddedEvent event) {
-        BasketRuleView basketRuleView = new BasketRuleView(event.getBasketRuleId(),
+        SubscriptionRuleView subscriptionRuleView = new SubscriptionRuleView(event.getBasketRuleId(),
                 event.getMaximumPermissibleAmount(), event.getMinimumAmountForDiscountEligibility(),
-                event.getMaximumPermissibleDiscount(), event.getMinimumAmountEligibleForFreeShipping());
-        basketRuleViewRepository.save(basketRuleView);
+                event.getMaximumPermissibleDiscount(), event.getMinimumAmountEligibleForFreeShipping(),
+                event.getDiffBetweenDeliveryPreparationAndDispatchDate());
+        subscriptionRuleViewRepository.save(subscriptionRuleView);
     }
 }

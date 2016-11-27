@@ -11,13 +11,15 @@ public class SubscriptionRuleAddedEvent {
     private double minimumAmountForDiscountEligibility;
     private Discount maximumPermissibleDiscount;
     private int minimumAmountEligibleForFreeShipping;
+    private int diffBetweenDeliveryPreparationAndDispatchDate;
 
-    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping) {
+    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate) {
         this.basketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
         this.maximumPermissibleDiscount = maximumPermissibleDiscount;
         this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
+        this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
     }
 
     public SubscriptionRuleAddedEvent() {
@@ -41,5 +43,9 @@ public class SubscriptionRuleAddedEvent {
 
     public int getMinimumAmountEligibleForFreeShipping() {
         return minimumAmountEligibleForFreeShipping;
+    }
+
+    public int getDiffBetweenDeliveryPreparationAndDispatchDate() {
+        return diffBetweenDeliveryPreparationAndDispatchDate;
     }
 }

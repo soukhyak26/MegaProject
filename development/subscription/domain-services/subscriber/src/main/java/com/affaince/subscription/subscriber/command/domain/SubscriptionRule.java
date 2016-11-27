@@ -17,13 +17,20 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
     private double minimumAmountForDiscountEligibility;
     private Discount maximumPermissibleDiscount;
     private int minimumAmountEligibleForFreeShipping;
+    private int diffBetweenDeliveryPreparationAndDispatchDate;
 
     public SubscriptionRule() {
     }
 
-    public SubscriptionRule(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping) {
-        apply(new SubscriptionRuleAddedEvent(basketRuleId, maximumPermissibleAmount, minimumAmountForDiscountEligibility, maximumPermissibleDiscount, minimumAmountEligibleForFreeShipping));
-
+    public SubscriptionRule(String basketRuleId,
+                            double maximumPermissibleAmount,
+                            double minimumAmountForDiscountEligibility,
+                            Discount maximumPermissibleDiscount,
+                            int minimumAmountEligibleForFreeShipping,
+                            int diffBetweenDeliveryPreparationAndDispatchDate) {
+        apply(new SubscriptionRuleAddedEvent(basketRuleId, maximumPermissibleAmount,
+                minimumAmountForDiscountEligibility, maximumPermissibleDiscount,
+                minimumAmountEligibleForFreeShipping, diffBetweenDeliveryPreparationAndDispatchDate));
     }
 
     @EventSourcingHandler
@@ -32,5 +39,6 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
         this.maximumPermissibleAmount = event.getMaximumPermissibleAmount();
         this.minimumAmountForDiscountEligibility = event.getMinimumAmountForDiscountEligibility();
         this.maximumPermissibleDiscount = event.getMaximumPermissibleDiscount();
+        this.diffBetweenDeliveryPreparationAndDispatchDate = event.getDiffBetweenDeliveryPreparationAndDispatchDate();
     }
 }

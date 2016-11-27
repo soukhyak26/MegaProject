@@ -27,7 +27,9 @@ public class AddSubscriptionRulesCommandHandler {
         final Discount discount = new Discount(command.getMaximumPermissibleDiscount(),
                 DiscountUnit.valueOf(command.getMaximumPermissibleDiscountUnit()));
         final SubscriptionRule subscriptionRule = new SubscriptionRule(command.getBasketRuleId(), command.getMaximumPermissibleAmount(),
-                command.getMinimumAmountForDiscountEligibility(), discount, command.getMinimumAmountEligibleForFreeShipping());
+                command.getMinimumAmountForDiscountEligibility(),
+                discount, command.getMinimumAmountEligibleForFreeShipping(),
+                command.getDiffBetweenDeliveryPreparationAndDispatchDate());
         basketRuleRepository.add(subscriptionRule);
     }
 }
