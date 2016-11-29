@@ -11,6 +11,7 @@
     <modules>
         <module>libs/logback-commons</module>
         <module>libs/axon-commons</module>
+        <module>libs/sysdate</module>
         <module>tools/rules-compiler</module>
         <module>domain-services/subscriber</module>
         <module>tools/integration</module>
@@ -23,8 +24,7 @@
         <module>batch/ProductPricingBatch</module>
         <module>batch/ExpenseDistributionBatch</module>
         <module>batch/ForecastBatch</module>
-        <module>tools/user-journey</module>
-        <module>libs/sysdate</module>
+        <module>batch/PrepareDeliveryForDispatchBatch</module>
     </modules>
     <dependencies>
 <!--
