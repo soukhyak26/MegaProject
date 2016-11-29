@@ -1,7 +1,9 @@
 package com.affaince.subscription.delivery.configuration;
 
 import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.delivery.build.DeliveryRetriever;
 import com.mongodb.Mongo;
+import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -34,8 +36,25 @@ public class Axon extends Default {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversionsForProductVersionId());
-        // converter.setCustomConversions(customConversionsForEndDate());
         return converter;
+    }
+
+    @Bean
+    public DeliveryRetriever deliveryRetriever() {
+        return new DeliveryRetriever();
+    }
+
+    @Bean
+    public RouteBuilder routes() {
+        return new RouteBuilder() {
+            public void configure() throws Exception {
+
+                //job for calculating build  and pseudoActuals for eligible products.
+                from("timer:start?repeatCount=1")
+                        .routeId("deliveryRetriever")
+                        .to("bean:deliveryRetriever");
+            }
+        };
     }
 
     @Override
