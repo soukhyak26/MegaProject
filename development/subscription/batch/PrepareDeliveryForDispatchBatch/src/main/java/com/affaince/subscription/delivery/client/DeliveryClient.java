@@ -30,7 +30,7 @@ public class DeliveryClient {
         uriParams.put("deliveryId", deliveryId);
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(deliveryPrepareForDispatchUrl);
 
-        restTemplate.put(deliveryPrepareForDispatchUrl, uriParams);
+        restTemplate.put(deliveryPrepareForDispatchUrl, null, uriParams);
 
     }
 }
