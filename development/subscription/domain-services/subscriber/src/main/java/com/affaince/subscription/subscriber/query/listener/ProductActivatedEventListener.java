@@ -22,7 +22,8 @@ public class ProductActivatedEventListener {
     public void on(ProductActivatedEvent event) {
         final ProductView productView = new ProductView(event.getProductId(),
                 event.getProductName(), event.getCategoryId(), event.getSubCategoryId(),
-                event.getNetQuantity(), event.getQuantityUnit(), event.getSubstitutes(), event.getComplements());
+                event.getNetQuantity(), event.getQuantityUnit(), event.getSubstitutes(), event.getComplements(),
+                event.getProductPricingCategory());
         productViewRepository.save(productView);
     }
 }

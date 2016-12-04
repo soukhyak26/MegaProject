@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 
@@ -19,11 +20,12 @@ public class ProductActivatedEvent {
     private List<String> substitutes;
     private List<String> complements;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    private ProductPricingCategory productPricingCategory;
 
     public ProductActivatedEvent() {
     }
 
-    public ProductActivatedEvent(String productId, String productName, String categoryId, String subCategoryId, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, long netQuantity, QuantityUnit quantityUnit) {
+    public ProductActivatedEvent(String productId, String productName, String categoryId, String subCategoryId, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, long netQuantity, QuantityUnit quantityUnit, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -33,77 +35,46 @@ public class ProductActivatedEvent {
         this.quantityUnit = quantityUnit;
         this.substitutes = substitutes;
         this.complements = complements;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
     public String getProductName() {
         return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public String getSubCategoryId() {
         return subCategoryId;
-    }
-
-    public void setSubCategoryId(String subCategoryId) {
-        this.subCategoryId = subCategoryId;
     }
 
     public long getNetQuantity() {
         return netQuantity;
     }
 
-    public void setNetQuantity(long netQuantity) {
-        this.netQuantity = netQuantity;
-    }
-
     public QuantityUnit getQuantityUnit() {
         return quantityUnit;
-    }
-
-    public void setQuantityUnit(QuantityUnit quantityUnit) {
-        this.quantityUnit = quantityUnit;
     }
 
     public List<String> getSubstitutes() {
         return substitutes;
     }
 
-    public void setSubstitutes(List<String> substitutes) {
-        this.substitutes = substitutes;
-    }
-
     public List<String> getComplements() {
         return complements;
-    }
-
-    public void setComplements(List<String> complements) {
-        this.complements = complements;
     }
 
     public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
         return sensitiveTo;
     }
 
-    public void setSensitiveTo(Map<SensitivityCharacteristic, Double> sensitiveTo) {
-        this.sensitiveTo = sensitiveTo;
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
     }
 }

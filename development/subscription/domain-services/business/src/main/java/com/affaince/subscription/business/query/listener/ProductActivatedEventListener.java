@@ -26,6 +26,5 @@ public class ProductActivatedEventListener {
         final ProductView productView = productViewRepository.findByProductId(event.getProductId());
         productView.setProductStatus(ProductStatus.PRODUCT_ACTIVATED);
         productViewRepository.save(productView);
-
     }
 }

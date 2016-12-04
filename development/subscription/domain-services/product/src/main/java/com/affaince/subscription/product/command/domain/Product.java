@@ -376,6 +376,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void activateProduct() {
         apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId,
                 this.subCategoryId, this.substitutes, this.complements,
-                this.sensitiveTo, this.netQuantity, quantityUnit));
+                this.sensitiveTo, this.netQuantity, quantityUnit, this.productAccount.getProductPricingCategory()));
     }
 }

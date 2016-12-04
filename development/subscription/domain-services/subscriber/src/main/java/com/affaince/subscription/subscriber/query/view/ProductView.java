@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.query.view;
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,8 +21,9 @@ public class ProductView {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
+    private ProductPricingCategory productPricingCategory;
 
-    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements) {
+    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -30,6 +32,7 @@ public class ProductView {
         this.quantityUnit = quantityUnit;
         this.substitutes = substitutes;
         this.complements = complements;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public String getProductId() {
@@ -94,5 +97,13 @@ public class ProductView {
 
     public void setComplements(List<String> complements) {
         this.complements = complements;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 }
