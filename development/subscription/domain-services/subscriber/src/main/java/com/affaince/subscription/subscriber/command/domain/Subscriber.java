@@ -171,6 +171,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
+    @EventSourcingHandler
+    public void on(DeliveryPreparedForDispatchEvent event) {
+        this.subscriberId = event.getSubscriberId();
+    }
+
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
     }
@@ -334,6 +339,19 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void deleteDelivery(String deliveryId) {
         apply(new DeliveryDeletedEvent(this.subscriberId, deliveryId));
+    }
+
+    public void prepareDeliveryForDispatch(String deliveryId, PriceBucketService priceBucketService) {
+        final Delivery delivery = deliveries.get(deliveryId);
+        delivery.setStatus(DeliveryStatus.READYFORDELIVERY);
+        delivery.getDeliveryItems().forEach(deliveryItem -> {
+            LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(deliveryItem.getDeliveryItemId());
+            deliveryItem.setPriceBucketId(latestPriceBucket.getPriceBucketId());
+            deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
+        });
+        final DeliveryPreparedForDispatchEvent event = new DeliveryPreparedForDispatchEvent(
+                this.subscriberId, deliveryId
+        );
     }
 }
 

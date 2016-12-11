@@ -5,10 +5,7 @@ import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.ReasonCode;
-import com.affaince.subscription.subscriber.command.AddDeliveryToSubscriptionCommand;
-import com.affaince.subscription.subscriber.command.DeleteDeliveryCommand;
-import com.affaince.subscription.subscriber.command.UpdateDeliveryCommand;
-import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
+import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
 import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
@@ -146,10 +143,10 @@ public class DeliveryController {
 
     @RequestMapping(value = "prepare/{subscriberId}/{deliveryId}")
     public ResponseEntity<Object> prepareDeliveryForDispatch(@PathVariable String subscriberId,
-                                                             @PathVariable String deliveryId) {
+                                                             @PathVariable String deliveryId) throws Exception {
 
-        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
-
+        final PrepareDeliveryForDispatchCommand command = new PrepareDeliveryForDispatchCommand(subscriberId, deliveryId);
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }
