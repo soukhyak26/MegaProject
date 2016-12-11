@@ -51,7 +51,7 @@ public class DeliveryViewRepositoryTest {
                     DeliveryItem deliveryItem = new DeliveryItem();
                     Product product = products.get(randomObj.ints(1,50).findFirst().getAsInt());
                     deliveryItem.setWeightInGrms(product.getWeightInGrms());
-                    deliveryItem.setOfferedPriceWithBasketLevelDiscount(product.getOfferedPriceWithBasketLevelDiscount());
+                    deliveryItem.setOfferedPricePerUnit(product.getOfferedPriceWithBasketLevelDiscount());
                     deliveryItem.setDeliveryItemId(product.getDeliveryItemId());
                     deliveryItems.add(deliveryItem);
                 }
@@ -79,13 +79,13 @@ public class DeliveryViewRepositoryTest {
         double totalDeliveryPrice = 0;
         for (DeliveryItem deliveryItem: deliveryView.getDeliveryItems()) {
             totalWeight += deliveryItem.getWeightInGrms();
-            totalDeliveryPrice += deliveryItem.getOfferedPriceWithBasketLevelDiscount();
+            totalDeliveryPrice += deliveryItem.getOfferedPricePerUnit();
         }
         totalWeight = totalWeight/1000;
         double totalDeliveryCharges = weightWiseDeliveryCharges.get(totalWeight);
 
         for (DeliveryItem item: deliveryView.getDeliveryItems()) {
-            item.setDeliveryCharges((item.getOfferedPriceWithBasketLevelDiscount()*totalDeliveryCharges)/totalDeliveryPrice);
+            item.setDeliveryCharges((item.getOfferedPricePerUnit() * totalDeliveryCharges) / totalDeliveryPrice);
         }
     }
 

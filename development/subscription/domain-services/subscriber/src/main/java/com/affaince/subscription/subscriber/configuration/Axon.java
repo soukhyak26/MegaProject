@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.SubscriptionRule;
 import com.affaince.subscription.subscriber.command.event.BenefitAddedEvent;
@@ -37,12 +36,6 @@ public class Axon extends Default {
     @Bean
     public Repository<SubscriptionRule> createBasketRuleRepository(DisruptorCommandBus commandBus) {
         Repository<SubscriptionRule> repository = commandBus.createRepository(new GenericAggregateFactory<>(SubscriptionRule.class));
-        return repository;
-    }
-
-    @Bean
-    public Repository<LatestPriceBucket> createLatestPriceBucketRepository(DisruptorCommandBus commandBus) {
-        Repository<LatestPriceBucket> repository = commandBus.createRepository(new GenericAggregateFactory<>(LatestPriceBucket.class));
         return repository;
     }
 

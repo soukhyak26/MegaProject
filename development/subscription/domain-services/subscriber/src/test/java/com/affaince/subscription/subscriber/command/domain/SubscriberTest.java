@@ -87,7 +87,7 @@ class Subscriber1 {
                     DeliveryItem deliveryItem = new DeliveryItem();
                     deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
                     deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
-                    deliveryItem.setOfferedPriceWithBasketLevelDiscount(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
+                    deliveryItem.setOfferedPricePerUnit(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
                     deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
                     weeklyDelivery.getDeliveryItems().add(deliveryItem);
                 }

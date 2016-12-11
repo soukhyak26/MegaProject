@@ -1,9 +1,8 @@
 package com.affaince.subscription.subscriber.query.listener;
 
-import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.subscriber.command.UpdateLatestPriceBucketCommand;
 import com.affaince.subscription.subscriber.command.event.OfferedPriceChangedEvent;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
+import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,20 +14,18 @@ import org.springframework.stereotype.Component;
 public class OfferedPriceChangedEventListener {
 
     private final LatestPriceBucketViewRepository latestPriceBucketViewRepository;
-    private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public OfferedPriceChangedEventListener(LatestPriceBucketViewRepository latestPriceBucketViewRepository, SubscriptionCommandGateway commandGateway) {
+    public OfferedPriceChangedEventListener(LatestPriceBucketViewRepository latestPriceBucketViewRepository) {
         this.latestPriceBucketViewRepository = latestPriceBucketViewRepository;
-        this.commandGateway = commandGateway;
     }
 
     @EventHandler
-    public void on(OfferedPriceChangedEvent offeredPriceChangedEvent) {
-        final UpdateLatestPriceBucketCommand command = new UpdateLatestPriceBucketCommand(
-                offeredPriceChangedEvent.getProductId(), offeredPriceChangedEvent.getPriceBucketId(),
-                offeredPriceChangedEvent.getOfferedPricePerUnit(), offeredPriceChangedEvent.getCurrentPriceDate()
+    public void on(OfferedPriceChangedEvent event) {
+        final LatestPriceBucketView latestPriceBucketView = new LatestPriceBucketView(
+                event.getProductId(), event.getPriceBucketId(),
+                event.getOfferedPricePerUnit(), event.getCurrentPriceDate()
         );
-        commandGateway.send(command);
+        latestPriceBucketViewRepository.save(latestPriceBucketView);
     }
 }

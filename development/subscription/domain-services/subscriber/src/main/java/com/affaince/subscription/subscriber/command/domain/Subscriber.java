@@ -16,6 +16,7 @@ import com.affaince.subscription.subscriber.services.benefit.context.BenefitCalc
 import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import com.affaince.subscription.subscriber.services.benefit.context.BenefitResult;
 import com.affaince.subscription.subscriber.services.encoder.Base64Encoder;
+import com.affaince.subscription.subscriber.services.pricebucket.PriceBucketService;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
@@ -214,7 +215,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    private Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription) {
+    private Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription, PriceBucketService priceBucketService) {
         final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
         final Map<Integer, Delivery> deliveries = new HashMap<>();
         int weekOfYear = SysDate.now().getWeekOfWeekyear();
@@ -235,11 +236,16 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                     deliveries.put(nextDeliveryWeek, weeklyDelivery);
                 }
                 for (int j = 0; j < subscriptionItem.getCountPerPeriod(); j++) {
+                    final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
+                            subscriptionItem.getProductId()
+                    );
                     DeliveryItem deliveryItem = new DeliveryItem();
                     deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
                     deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
-                    deliveryItem.setOfferedPriceWithBasketLevelDiscount(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
+                    deliveryItem.setOfferedPricePerUnit(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
                     deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
+                    deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
+                    deliveryItem.setPriceBucketId(latestPriceBucket.getPriceBucketId());
                     weeklyDelivery.getDeliveryItems().add(deliveryItem);
                 }
             }
@@ -247,8 +253,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return deliveries;
     }
 
-    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule) {
-        final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription);
+    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService) {
+        final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription, priceBucketService);
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
         final BenefitResult benefitResult = calculateBenefits(0.0);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
@@ -302,13 +308,20 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void addDelivery(String deliveryId, LocalDate deliveryDate,
-                            List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule) {
+                            List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
+                            DeliveryChargesRule deliveryChargesRule,
+                            PriceBucketService priceBucketService) {
         final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
                 deliveryDate, null, DeliveryStatus.CREATED);
         deliveryItems.forEach(deliveryItem -> {
             for (int i = 0; i < deliveryItem.getQuantity(); i++) {
+                final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
+                        deliveryItem.getDeliveryItemId()
+                );
                 delivery.getDeliveryItems().add(new DeliveryItem(deliveryItem.getDeliveryItemId(),
-                        DeliveryStatus.CREATED, deliveryItem.getQuantityInGrms(), deliveryItem.getDeliveryItemOfferedPrice()));
+                        DeliveryStatus.CREATED, deliveryItem.getQuantityInGrms(), 0.0,
+                        latestPriceBucket.getPriceBucketId(),
+                        latestPriceBucket.getOfferedPricePerUnit()));
             }
         });
         delivery.calculateTotalWeightInGrams();

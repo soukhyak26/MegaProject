@@ -133,8 +133,8 @@ public class Delivery {
             }
         }
         for (DeliveryItem item: deliveryItems) {
-            totalDeliveryPrice = totalDeliveryPrice + item.getOfferedPriceWithBasketLevelDiscount() ;
-            item.setDeliveryCharges((item.getOfferedPriceWithBasketLevelDiscount()*deliveryCharges)/totalDeliveryPrice);
+            totalDeliveryPrice = totalDeliveryPrice + item.getOfferedPricePerUnit();
+            item.setDeliveryCharges((item.getOfferedPricePerUnit() * deliveryCharges) / totalDeliveryPrice);
         }
     }
 }

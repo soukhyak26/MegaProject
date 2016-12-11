@@ -142,4 +142,13 @@ public class DeliveryController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "prepare/{subscriberId}/{deliveryId}")
+    public ResponseEntity<Object> prepareDeliveryForDispatch(@PathVariable String subscriberId,
+                                                             @PathVariable String deliveryId) {
+
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
+
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
 }

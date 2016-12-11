@@ -1,18 +1,13 @@
 package com.affaince.subscription.subscriber.command.domain;
 
-import com.affaince.subscription.subscriber.command.UpdateLatestPriceBucketCommand;
-import com.affaince.subscription.subscriber.command.event.LatestPriceBucketUpdatedEvent;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.joda.time.LocalDateTime;
 
 
 /**
  * Created by rbsavaliya on 04-09-2016.
  */
-public class LatestPriceBucket extends AbstractAnnotatedAggregateRoot<String> {
+public class LatestPriceBucket {
 
-    @AggregateIdentifier
     private String productId;
     private String priceBucketId;
     private double offeredPricePerUnit;
@@ -23,18 +18,21 @@ public class LatestPriceBucket extends AbstractAnnotatedAggregateRoot<String> {
         this.priceBucketId = priceBucketId;
         this.offeredPricePerUnit = offeredPricePerUnit;
         this.currentPriceDate = currentPriceDate;
-
-        apply(new LatestPriceBucketUpdatedEvent(productId, priceBucketId, offeredPricePerUnit, currentPriceDate));
     }
 
-    public LatestPriceBucket() {
+    public String getProductId() {
+        return productId;
     }
 
-    public void update(UpdateLatestPriceBucketCommand command) {
-        this.priceBucketId = priceBucketId;
-        this.offeredPricePerUnit = offeredPricePerUnit;
-        this.currentPriceDate = currentPriceDate;
+    public String getPriceBucketId() {
+        return priceBucketId;
+    }
 
-        apply(new LatestPriceBucketUpdatedEvent(productId, priceBucketId, offeredPricePerUnit, currentPriceDate));
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
+    }
+
+    public LocalDateTime getCurrentPriceDate() {
+        return currentPriceDate;
     }
 }

@@ -12,13 +12,16 @@ public class DeliveryItem {
     private DeliveryStatus deliveryStatus;
     private double weightInGrms;
     private double deliveryCharges;
-    private double offeredPriceWithBasketLevelDiscount;
+    private String priceBucketId;
+    private double offeredPricePerUnit;
 
-    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double offeredPriceWithBasketLevelDiscount) {
+    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit) {
         this.deliveryItemId = deliveryItemId;
         this.deliveryStatus = deliveryStatus;
         this.weightInGrms = weightInGrms;
-        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+        this.deliveryCharges = deliveryCharges;
+        this.priceBucketId = priceBucketId;
+        this.offeredPricePerUnit = offeredPricePerUnit;
     }
 
     public DeliveryItem() {
@@ -60,12 +63,20 @@ public class DeliveryItem {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public double getOfferedPriceWithBasketLevelDiscount() {
-        return offeredPriceWithBasketLevelDiscount;
+    public String getPriceBucketId() {
+        return priceBucketId;
     }
 
-    public void setOfferedPriceWithBasketLevelDiscount(double offeredPriceWithBasketLevelDiscount) {
-        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+    public void setPriceBucketId(String priceBucketId) {
+        this.priceBucketId = priceBucketId;
+    }
+
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
+    }
+
+    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
+        this.offeredPricePerUnit = offeredPricePerUnit;
     }
 
     @Override
