@@ -1,5 +1,7 @@
 package com.affaince.subscription.subscriber.web.request;
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
+
 /**
  * Created by rbsavaliya on 23-10-2016.
  */
@@ -8,6 +10,7 @@ public class DeliveryItem {
     private int quantity;
     private long quantityInGrms;
     private double deliveryItemOfferedPrice;
+    private ProductPricingCategory productPricingCategory;
 
     public String getDeliveryItemId() {
         return deliveryItemId;
@@ -39,5 +42,13 @@ public class DeliveryItem {
 
     public void setDeliveryItemOfferedPrice(double deliveryItemOfferedPrice) {
         this.deliveryItemOfferedPrice = deliveryItemOfferedPrice;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 }

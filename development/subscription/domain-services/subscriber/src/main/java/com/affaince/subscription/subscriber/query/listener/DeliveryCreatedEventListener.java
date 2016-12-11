@@ -29,7 +29,8 @@ public class DeliveryCreatedEventListener {
         event.getDeliveryItems().forEach(deliveryItem -> deliveryItems.add(
                 new DeliveryItem(deliveryItem.getDeliveryItemId(), deliveryItem.getDeliveryStatus(),
                         deliveryItem.getWeightInGrms(), deliveryItem.getDeliveryCharges(),
-                        deliveryItem.getPriceBucketId(), deliveryItem.getOfferedPricePerUnit())
+                        deliveryItem.getPriceBucketId(), deliveryItem.getOfferedPricePerUnit(),
+                        deliveryItem.getProductPricingCategory())
         ));
         final DeliveryView deliveryView = new DeliveryView(event.getDeliveryId(), event.getSubscriberId(),
                 event.getSubscriptionId(),deliveryItems , event.getDeliveryDate(), event.getStatus());

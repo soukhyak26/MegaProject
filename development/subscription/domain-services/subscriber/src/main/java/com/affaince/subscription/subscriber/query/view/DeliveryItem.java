@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
  * Created by rbsavaliya on 02-10-2015.
@@ -13,6 +14,7 @@ public class DeliveryItem {
     private double deliveryCharges;
     private String priceBucketId;
     private double offeredPricePerUnit;
+    private ProductPricingCategory productPricingCategory;
 
     public DeliveryItem(String deliveryItemId) {
         this.deliveryItemId = deliveryItemId;
@@ -21,13 +23,22 @@ public class DeliveryItem {
     public DeliveryItem() {
     }
 
-    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit) {
+    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit, ProductPricingCategory productPricingCategory) {
         this.deliveryItemId = deliveryItemId;
         this.deliveryStatus = deliveryStatus;
         this.weightInGrms = weightInGrms;
         this.deliveryCharges = deliveryCharges;
         this.priceBucketId = priceBucketId;
         this.offeredPricePerUnit = offeredPricePerUnit;
+        this.productPricingCategory = productPricingCategory;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 
     public String getDeliveryItemId() {

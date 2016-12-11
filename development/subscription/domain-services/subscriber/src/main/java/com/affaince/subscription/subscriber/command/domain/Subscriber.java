@@ -239,13 +239,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                     final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
                             subscriptionItem.getProductId()
                     );
-                    DeliveryItem deliveryItem = new DeliveryItem();
-                    deliveryItem.setDeliveryItemId(subscriptionItem.getProductId());
-                    deliveryItem.setWeightInGrms(subscriptionItem.getWeightInGrms());
-                    deliveryItem.setOfferedPricePerUnit(subscriptionItem.getOfferedPriceWithBasketLevelDiscount());
-                    deliveryItem.setDeliveryStatus(DeliveryStatus.CREATED);
-                    deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
-                    deliveryItem.setPriceBucketId(latestPriceBucket.getPriceBucketId());
+                    final DeliveryItem deliveryItem = new DeliveryItem(subscriptionItem.getProductId(),
+                            DeliveryStatus.CREATED, subscriptionItem.getWeightInGrms(), 0.0,
+                            latestPriceBucket.getPriceBucketId(), latestPriceBucket.getOfferedPricePerUnit(),
+                            subscriptionItem.getProductPricingCategory());
                     weeklyDelivery.getDeliveryItems().add(deliveryItem);
                 }
             }
@@ -321,7 +318,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 delivery.getDeliveryItems().add(new DeliveryItem(deliveryItem.getDeliveryItemId(),
                         DeliveryStatus.CREATED, deliveryItem.getQuantityInGrms(), 0.0,
                         latestPriceBucket.getPriceBucketId(),
-                        latestPriceBucket.getOfferedPricePerUnit()));
+                        latestPriceBucket.getOfferedPricePerUnit(),
+                        deliveryItem.getProductPricingCategory()));
             }
         });
         delivery.calculateTotalWeightInGrams();

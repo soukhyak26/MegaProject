@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 
 
 /**
@@ -14,21 +15,23 @@ public class DeliveryItem {
     private double deliveryCharges;
     private String priceBucketId;
     private double offeredPricePerUnit;
+    private ProductPricingCategory productPricingCategory;
 
-    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit) {
+    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit, ProductPricingCategory productPricingCategory) {
         this.deliveryItemId = deliveryItemId;
         this.deliveryStatus = deliveryStatus;
         this.weightInGrms = weightInGrms;
         this.deliveryCharges = deliveryCharges;
         this.priceBucketId = priceBucketId;
         this.offeredPricePerUnit = offeredPricePerUnit;
-    }
-
-    public DeliveryItem() {
+        this.productPricingCategory = productPricingCategory;
     }
 
     public DeliveryItem(String deliveryItemId) {
         this.deliveryItemId = deliveryItemId;
+    }
+
+    public DeliveryItem() {
     }
 
     public String getDeliveryItemId() {
@@ -77,6 +80,14 @@ public class DeliveryItem {
 
     public void setOfferedPricePerUnit(double offeredPricePerUnit) {
         this.offeredPricePerUnit = offeredPricePerUnit;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 
     @Override

@@ -71,6 +71,7 @@ public class DeliveryController {
 
             deliveryItem.setDeliveryItemOfferedPrice(latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId())
                     .getOfferedPricePerUnit());
+            deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
         final AddDeliveryToSubscriptionCommand command = new AddDeliveryToSubscriptionCommand(
                 subscriberId, deliveryId, request.getDeliveryDate(), Arrays.asList(request.getDeliveryItems())
@@ -111,9 +112,9 @@ public class DeliveryController {
                 productQuantityInGrms = productQuantity;
             }
             deliveryItem.setQuantityInGrms(productQuantityInGrms);
-
             deliveryItem.setDeliveryItemOfferedPrice(latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId())
                     .getOfferedPricePerUnit());
+            deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
         final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, deliveryId, request.getDeliveryDate(),
                 Arrays.asList(request.getDeliveryItems()));

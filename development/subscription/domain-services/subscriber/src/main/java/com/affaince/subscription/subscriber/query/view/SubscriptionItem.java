@@ -1,11 +1,12 @@
 package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
  * Created by rbsavaliya on 09-08-2015.
  */
-public class SubscriptionItemView {
+public class SubscriptionItem {
     private String productId;
     private int countPerPeriod;
     private Period period;
@@ -13,8 +14,9 @@ public class SubscriptionItemView {
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
     private double weightInGrms;
+    private ProductPricingCategory productPricingCategory;
 
-    public SubscriptionItemView(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
+    public SubscriptionItem(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.countPerPeriod = countPerPeriod;
         this.period = period;
@@ -22,6 +24,7 @@ public class SubscriptionItemView {
         this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
         this.noOfCycles = noOfCycles;
         this.weightInGrms = weightInGrms;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public String getProductId() {
@@ -78,5 +81,13 @@ public class SubscriptionItemView {
 
     public void setWeightInGrms(double weightInGrms) {
         this.weightInGrms = weightInGrms;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 }

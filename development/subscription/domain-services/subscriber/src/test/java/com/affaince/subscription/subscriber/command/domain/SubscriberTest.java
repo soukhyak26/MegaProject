@@ -3,6 +3,7 @@ package com.affaince.subscription.subscriber.command.domain;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import org.junit.Test;
 
@@ -23,13 +24,13 @@ public class SubscriberTest {
     public void testMakeDeliveries() {
         Subscription1 subscription = new Subscription1();
         SubscriptionItem subscriptionItem1 = new SubscriptionItem(
-                "1", 100, 2, new Period(1, PeriodUnit.MONTH), 200, 180, 10
+                "1", 100, 2, new Period(1, PeriodUnit.MONTH), 200, 180, 10, ProductPricingCategory.PRICE_COMMITMENT
         );
         SubscriptionItem subscriptionItem2 = new SubscriptionItem(
-                "2", 100, 2, new Period(2, PeriodUnit.WEEK), 200, 170, 10
+                "2", 100, 2, new Period(2, PeriodUnit.WEEK), 200, 170, 10, ProductPricingCategory.DISCOUNT_COMMITMENT
         );
         SubscriptionItem subscriptionItem3 = new SubscriptionItem(
-                "3", 100, 2, new Period(1, PeriodUnit.WEEK), 200, 170, 10
+                "3", 100, 2, new Period(1, PeriodUnit.WEEK), 200, 170, 10, ProductPricingCategory.NO_COMMITMENT
         );
 
         List<SubscriptionItem> subscriptionItems = new ArrayList<>();

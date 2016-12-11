@@ -93,7 +93,7 @@ public class Subscription extends AbstractAnnotatedEntity {
     public void on(ItemAddedToSubscriptionEvent event) {
         final SubscriptionItem subscriptionItem = new SubscriptionItem(event.getItemId(),
                 event.getWeightInGrms(), event.getCountPerPeriod(), event.getPeriod(), event.getDiscountedOfferedPrice(),
-                event.getOfferedPriceWithBasketLevelDiscount(), event.getNoOfCycles());
+                event.getOfferedPriceWithBasketLevelDiscount(), event.getNoOfCycles(), event.getProductPricingCategory());
         if (subscriptionItems == null) {
             subscriptionItems = new ArrayList<>();
         }
@@ -143,7 +143,8 @@ public class Subscription extends AbstractAnnotatedEntity {
     public void addItemToBasket(AddItemToSubscriptionCommand command) {
         apply(new ItemAddedToSubscriptionEvent(this.subscriptionId, command.getProductId(),
                 command.getCountPerPeriod(), command.getPeriod(), command.getDiscountedOfferedPrice(),
-                command.getOfferedPriceWithBasketLevelDiscount(), command.getNoOfCycles(), command.getWeightInGrms()));
+                command.getOfferedPriceWithBasketLevelDiscount(), command.getNoOfCycles(), command.getWeightInGrms(),
+                command.getProductPricingCategory()));
     }
 
     public void deleteItem(String itemId) {

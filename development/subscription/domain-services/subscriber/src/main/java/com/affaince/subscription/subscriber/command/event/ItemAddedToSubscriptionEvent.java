@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.event;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
  * Created by rbsavaliya on 23-08-2015.
@@ -14,8 +15,9 @@ public class ItemAddedToSubscriptionEvent {
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
     private double weightInGrms;
+    private ProductPricingCategory productPricingCategory;
 
-    public ItemAddedToSubscriptionEvent(String subscriptionId, String itemId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
+    public ItemAddedToSubscriptionEvent(String subscriptionId, String itemId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms, ProductPricingCategory productPricingCategory) {
         this.subscriptionId = subscriptionId;
         this.itemId = itemId;
         this.countPerPeriod = countPerPeriod;
@@ -24,6 +26,7 @@ public class ItemAddedToSubscriptionEvent {
         this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
         this.noOfCycles = noOfCycles;
         this.weightInGrms = weightInGrms;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public ItemAddedToSubscriptionEvent() {
@@ -59,5 +62,9 @@ public class ItemAddedToSubscriptionEvent {
 
     public double getWeightInGrms() {
         return weightInGrms;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
     }
 }

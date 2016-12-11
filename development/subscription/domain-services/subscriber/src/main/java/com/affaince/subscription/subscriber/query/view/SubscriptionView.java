@@ -19,7 +19,7 @@ public class SubscriptionView {
     private String subscriptionId;
     private String subscriberId;
     private ConsumerBasketActivationStatus consumerBasketActivationStatus;
-    private List<SubscriptionItemView> subscriptionItemViews;
+    private List<SubscriptionItem> subscriptionItems;
     private Address shippingAddress;
     private Address billingAddress;
     private ContactDetails contactDetails;
@@ -27,11 +27,11 @@ public class SubscriptionView {
     private LocalDate basketCreatedDate;
     private LocalDate basketExpiredDate;
 
-    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItemView> subscriptionItemViews, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
+    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItem> subscriptionItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
         this.consumerBasketActivationStatus = consumerBasketActivationStatus;
-        this.subscriptionItemViews = subscriptionItemViews;
+        this.subscriptionItems = subscriptionItems;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
         this.contactDetails = contactDetails;
@@ -64,12 +64,12 @@ public class SubscriptionView {
         this.consumerBasketActivationStatus = consumerBasketActivationStatus;
     }
 
-    public List<SubscriptionItemView> getSubscriptionItemViews() {
-        return subscriptionItemViews;
+    public List<SubscriptionItem> getSubscriptionItems() {
+        return subscriptionItems;
     }
 
-    public void setSubscriptionItemViews(List<SubscriptionItemView> subscriptionItemViews) {
-        this.subscriptionItemViews = subscriptionItemViews;
+    public void setSubscriptionItems(List<SubscriptionItem> subscriptionItems) {
+        this.subscriptionItems = subscriptionItems;
     }
 
     public Address getShippingAddress() {

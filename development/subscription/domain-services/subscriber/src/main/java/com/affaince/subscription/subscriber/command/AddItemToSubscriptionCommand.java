@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command;
 
 import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**
@@ -16,8 +17,9 @@ public class AddItemToSubscriptionCommand {
     private double offeredPriceWithBasketLevelDiscount;
     private int noOfCycles;
     private double weightInGrms;
+    private ProductPricingCategory productPricingCategory;
 
-    public AddItemToSubscriptionCommand(String subscriberId, String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms) {
+    public AddItemToSubscriptionCommand(String subscriberId, String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms, ProductPricingCategory productPricingCategory) {
         this.subscriberId = subscriberId;
         this.productId = productId;
         this.countPerPeriod = countPerPeriod;
@@ -26,6 +28,7 @@ public class AddItemToSubscriptionCommand {
         this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
         this.noOfCycles = noOfCycles;
         this.weightInGrms = weightInGrms;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public String getSubscriberId() {
@@ -58,5 +61,9 @@ public class AddItemToSubscriptionCommand {
 
     public double getWeightInGrms() {
         return weightInGrms;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
     }
 }

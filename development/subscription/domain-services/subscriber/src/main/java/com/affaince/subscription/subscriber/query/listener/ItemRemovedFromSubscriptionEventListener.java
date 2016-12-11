@@ -23,7 +23,7 @@ public class ItemRemovedFromSubscriptionEventListener {
     @EventHandler
     public void on(ItemRemovedFromSubscriptionEvent event) {
         SubscriptionView subscriptionView = repository.findOne(event.getSubscriptionId());
-        subscriptionView.getSubscriptionItemViews().removeIf(item -> item.getProductId().equals(event.getItemId()));
+        subscriptionView.getSubscriptionItems().removeIf(item -> item.getProductId().equals(event.getItemId()));
         repository.save(subscriptionView);
     }
 }
