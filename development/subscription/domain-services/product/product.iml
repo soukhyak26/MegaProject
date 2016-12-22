@@ -10,7 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.slf4j:log4j-over-slf4j:1.7.12" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016" level="project" />

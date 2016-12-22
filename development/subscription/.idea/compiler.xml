@@ -22,76 +22,43 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="item-registration" />
-      </profile>
-      <profile default="false" name="Annotation profile for subscriber" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="subscriber" />
-      </profile>
-      <profile default="false" name="Annotation profile for rules-compiler" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="rules-compiler" />
-      </profile>
-      <profile default="false" name="Annotation profile for application-simulator" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
         <module name="application-simulator" />
-      </profile>
-      <profile default="false" name="Annotation profile for benefits" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="benefits" />
-      </profile>
-      <profile default="false" name="Annotation profile for product" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="product" />
-      </profile>
-      <profile default="false" name="Annotation profile for integration" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="integration" />
-      </profile>
-      <profile default="false" name="Annotation profile for axon-commons" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
         <module name="axon-commons" />
-      </profile>
-      <profile default="false" name="Annotation profile for logback-commons" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
+        <module name="benefits" />
+        <module name="business" />
+        <module name="ExpenseDistributionBatch" />
+        <module name="ForecastBatch" />
+        <module name="integration" />
+        <module name="item-registration" />
         <module name="logback-commons" />
+        <module name="notifications" />
+        <module name="payments" />
+        <module name="PrepareDeliveryForDispatchBatch" />
+        <module name="product" />
+        <module name="ProductPricingBatch" />
+        <module name="rules-compiler" />
+        <module name="subscriber" />
+        <module name="sysdate" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="application-simulator" target="1.8" />
       <module name="axon-commons" target="1.8" />
       <module name="benefits" target="1.8" />
+      <module name="business" target="1.8" />
+      <module name="ExpenseDistributionBatch" target="1.8" />
+      <module name="ForecastBatch" target="1.8" />
       <module name="integration" target="1.8" />
-      <module name="item-registration" target="1.5" />
       <module name="logback-commons" target="1.8" />
+      <module name="notifications" target="1.8" />
+      <module name="payments" target="1.8" />
+      <module name="PrepareDeliveryForDispatchBatch" target="1.8" />
       <module name="product" target="1.8" />
+      <module name="ProductPricingBatch" target="1.8" />
       <module name="rules-compiler" target="1.8" />
       <module name="subscriber" target="1.8" />
-      <module name="subscription" target="1.5" />
+      <module name="subscription" target="1.8" />
+      <module name="sysdate" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
