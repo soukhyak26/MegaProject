@@ -10,20 +10,25 @@ public class Product {
 	private String categoryId;
 	private String subCategoryId;
 	private int quantity;
-	private int quantityUnit;
+	private String quantityUnit;
 	private List<String> substitute = new ArrayList<>();
 	private List<String> complements =  new ArrayList<>();
-	
-	
-	public Product(String productId, String categoryId, String subCategoryId) {
-		super();
+	private boolean isBranded;
+	private int minProfitMargin;
+	private int maxProfitMargin;
+	private int minPrice;
+	private int maxPrice;
+
+
+	public Product(String productId, String ProductName, String categoryId, String subCategoryId) {
 		this.productId = productId;
+		this.productName = productName;
 		this.categoryId = categoryId;
 		this.subCategoryId = subCategoryId;
 	}
 	
 	public Product(String productId, String productName, String categoryId, String subCategoryId, int quantity,
-			int quantityUnit) {
+				   String quantityUnit) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -83,12 +88,12 @@ public class Product {
 	}
 
 
-	public int getQuantityUnit() {
+	public String getQuantityUnit() {
 		return quantityUnit;
 	}
 
 
-	public void setQuantityUnit(int quantityUnit) {
+	public void setQuantityUnit(String quantityUnit) {
 		this.quantityUnit = quantityUnit;
 	}
 
@@ -126,5 +131,44 @@ public class Product {
 	public void addComplementList(List<String> productList){
 		this.complements.addAll(productList);
 	}
-	
+
+	public boolean isBranded() {
+		return isBranded;
+	}
+
+	public void setBranded(boolean branded) {
+		isBranded = branded;
+	}
+
+	public int getMinProfitMargin() {
+		return minProfitMargin;
+	}
+
+	public void setMinProfitMargin(int minProfitMargin) {
+		this.minProfitMargin = minProfitMargin;
+	}
+
+	public int getMaxProfitMargin() {
+		return maxProfitMargin;
+	}
+
+	public void setMaxProfitMargin(int maxProfitMargin) {
+		this.maxProfitMargin = maxProfitMargin;
+	}
+
+	public int getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public int getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
+	}
 }
