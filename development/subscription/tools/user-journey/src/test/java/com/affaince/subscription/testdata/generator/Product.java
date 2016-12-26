@@ -20,7 +20,7 @@ public class Product {
 	private int maxPrice;
 
 
-	public Product(String productId, String ProductName, String categoryId, String subCategoryId) {
+	public Product(String productId, String productName, String categoryId, String subCategoryId) {
 		this.productId = productId;
 		this.productName = productName;
 		this.categoryId = categoryId;

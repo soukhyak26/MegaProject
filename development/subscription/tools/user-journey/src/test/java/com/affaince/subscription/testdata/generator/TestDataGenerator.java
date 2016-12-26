@@ -24,9 +24,9 @@ public class TestDataGenerator {
 			String categoryId = TestDataUtility.getRandomCaegoryId();
 			String subCategoryId = TestDataUtility.getRandomSubCategoryId();
 			int quantity = TestDataUtility.getRandomQuantity();
-			int quantityUnit = TestDataUtility.getRandomQuantityUnit();
+			int quantityUnit = TestDataUtility.getRandomQuantityUnit() ;
 			
-			productList.add(new Product(productId, productName, categoryId, subCategoryId, quantity, quantityUnit));
+			productList.add(new Product(productId, productName, categoryId, subCategoryId, quantity, quantityUnit+""));
 			
 		}
 		

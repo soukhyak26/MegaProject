@@ -55,7 +55,7 @@ public class ProductBuilder {
                 forEach(product -> map.computeIfAbsent(product.getCategoryId(),
                         k -> new ArrayList<>()).add(product.getProductId()));
         products.forEach(product -> {
-            product.setSubstitute(map.get(product.getCategoryId()));
+            product.setComplements(map.get(product.getCategoryId()));
         });
         return this;
     }
@@ -117,5 +117,9 @@ public class ProductBuilder {
         ProductBuilder.buildProducts(100).substitutes().complements().branded();
         products.forEach(product -> System.out.println(product.getProductId() +
                 "  " + product.getCategoryId() + " " + product.getSubCategoryId()));
+    }
+
+    public List<Product> build() {
+        return products;
     }
 }
