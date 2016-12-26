@@ -32,8 +32,8 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
                 minusOnePriceBucket.getTotalProfit() > minusTwoPriceBucket.getTotalProfit() &&
                 minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit() > minusTwoPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() &&
-                (minusOnePriceBucket.getNumberOfExistingSubscriptions() < minusTwoPriceBucket.getNumberOfExistingSubscriptions()) ||
-                (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions())
+                ((minusOnePriceBucket.getNumberOfExistingSubscriptions() < minusTwoPriceBucket.getNumberOfExistingSubscriptions()) ||
+                (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions()))
                 ) {
             double y2 = minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit();
             double y1 = latestPriceBucket.getTaggedPriceVersion().getMRP();//markPrice.getOfferedPrice();

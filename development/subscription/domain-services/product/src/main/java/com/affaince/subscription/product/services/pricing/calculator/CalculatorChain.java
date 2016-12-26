@@ -47,7 +47,7 @@ public class CalculatorChain {
             } else if (prefix.equals("ProfitGrowthBasedOnDemandGrowth")) {
                 this.addCalculator(profitGrowthBasedOnDemandGrowthPriceCalculator);
             } else if (prefix.equals("ProfitGrowthDueToPriceGrowth")) {
-                this.addCalculator(profitReductionDueToDemandPriceCalculator);
+                this.addCalculator(profitGrowthDueToPriceGrowthBasedPriceCalculator);
             } else if (prefix.equals("ProfitReductionAfterDemandGrowth")) {
                 this.addCalculator(profitReductionAfterDemandGrowthPriceCalculator);
             } else if (prefix.equals("ProfitReductionDueToDemand")) {

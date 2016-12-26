@@ -310,8 +310,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 apply(new OfferedPriceRecommendedEvent(this.productId, newPriceBucket));
             }
         }
-
-
     }
 
     public void registerManualForecast(ProductForecastParameter[] productForecastParameters, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
