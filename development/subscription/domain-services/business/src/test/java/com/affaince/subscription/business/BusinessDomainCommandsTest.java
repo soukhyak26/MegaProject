@@ -5,6 +5,7 @@ import com.affaince.subscription.business.command.*;
 import com.affaince.subscription.business.configuration.Axon;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.common.type.ExpenseType;
+import com.affaince.subscription.date.SysDate;
 import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class BusinessDomainCommandsTest {
                 10000.0,
                 10000.0,
                 50000.0,
-                LocalDate.parse("2016-07-31"));
+                SysDate.now());
         try {
             commandGateway.executeAsync(createProvisionCommand);
             Assert.assertTrue(true);
