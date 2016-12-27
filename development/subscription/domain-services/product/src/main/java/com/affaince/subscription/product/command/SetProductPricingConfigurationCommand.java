@@ -20,9 +20,10 @@ public class SetProductPricingConfigurationCommand {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
+    private double tentativePercentageChangeInProductDemand;
 
 
-    public SetProductPricingConfigurationCommand(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod) {
+    public SetProductPricingConfigurationCommand(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -31,6 +32,7 @@ public class SetProductPricingConfigurationCommand {
         this.pricingOptions = pricingOptions;
         this.pricingStrategyType = pricingStrategyType;
         this.demandCurvePeriod = demandCurvePeriod;
+        this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
     }
 
     public String getProductId() {
@@ -67,4 +69,7 @@ public class SetProductPricingConfigurationCommand {
     }
 
 
+    public double getTentativePercentageChangeInProductDemand() {
+        return tentativePercentageChangeInProductDemand;
+    }
 }

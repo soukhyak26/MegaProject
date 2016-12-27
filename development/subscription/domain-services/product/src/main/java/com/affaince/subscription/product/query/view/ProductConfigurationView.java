@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
+import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
@@ -20,8 +21,11 @@ public class ProductConfigurationView {
     private PricingStrategyType pricingStrategyType;
     private PricingOptions pricingOptions;
     private LocalDateTime nextForecastDate;
+    //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
+    private Period demandCurvePeriod;
+    private double tentativePercentageChangeInProductDemand;
 
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions) {
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -29,6 +33,8 @@ public class ProductConfigurationView {
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
         this.pricingStrategyType = pricingStrategyType;
         this.pricingOptions = pricingOptions;
+        this.demandCurvePeriod=demandCurvePeriod;
+        this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
     }
 
     public String getProductId() {
@@ -93,5 +99,21 @@ public class ProductConfigurationView {
 
     public void setPricingOptions(PricingOptions pricingOptions) {
         this.pricingOptions = pricingOptions;
+    }
+
+    public Period getDemandCurvePeriod() {
+        return demandCurvePeriod;
+    }
+
+    public void setDemandCurvePeriod(Period demandCurvePeriod) {
+        this.demandCurvePeriod = demandCurvePeriod;
+    }
+
+    public double getTentativePercentageChangeInProductDemand() {
+        return tentativePercentageChangeInProductDemand;
+    }
+
+    public void setTentativePercentageChangeInProductDemand(double tentativePercentageChangeInProductDemand) {
+        this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
     }
 }

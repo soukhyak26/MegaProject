@@ -195,7 +195,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     //for product administrator to configure product
     public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) throws InvalidProductStatusException, ProductDeactivatedException {
-        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod()));
+        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod(),command.getTentativePercentageChangeInProductDemand()));
         /*final ProductConfigurationValidator validator = new ProductConfigurationValidator();
         try {
             if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {

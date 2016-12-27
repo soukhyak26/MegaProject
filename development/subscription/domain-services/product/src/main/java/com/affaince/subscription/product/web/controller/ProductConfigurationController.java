@@ -43,7 +43,7 @@ public class ProductConfigurationController {
         }
 
         SetProductPricingConfigurationCommand command = new SetProductPricingConfigurationCommand(
-                productId, request.getActualsAggregationPeriodForTargetForecast(), request.getTargetChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(), request.getPricingOptions(), request.getPricingStrategyType(), request.getDemandCurvePeriod());
+                productId, request.getActualsAggregationPeriodForTargetForecast(), request.getTargetChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(), request.getPricingOptions(), request.getPricingStrategyType(), request.getDemandCurvePeriod(),request.getTentativePercentageChangeInProductDemand());
         try {
             this.commandGateway.executeAsync(command);
         } catch (Exception e) {

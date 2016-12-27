@@ -40,7 +40,7 @@ public class ProductPricingConfigurationSetEventListener {
         )) {
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
             if (null == productConfigurationView) {
-                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType(), event.getPricingOptions());
+                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType(), event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand());
             } else {
                 productConfigurationView.setProductId(event.getProductId());
                 productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
@@ -48,7 +48,9 @@ public class ProductPricingConfigurationSetEventListener {
                 productConfigurationView.setAdvertisingExpensesConsidered(event.isAdvertisingExpensesConsidered());
                 productConfigurationView.setActualsAggregationPeriodForTargetForecast(event.getActualsAggregationPeriodForTargetForecast());
                 productConfigurationView.setPricingOptions(event.getPricingOptions());
+                productConfigurationView.setDemandCurvePeriod(event.getDemandCurvePeriod());
                 productConfigurationView.setPricingStrategyType(event.getPricingStrategyType());
+                productConfigurationView.setTentativePercentageChangeInProductDemand(event.getTentativePercentageChangeInProductDemand());
             }
             productConfigurationViewRepository.save(productConfigurationView);
             final ProductActivationStatusView productActivationStatusView = productActivationStatusViewRepository.findByProductId(event.getProductId());

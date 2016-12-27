@@ -18,6 +18,8 @@ public class ProductPricingConfigurationRequest {
     private PricingStrategyType pricingStrategyType;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
+    private double tentativePercentageChangeInProductDemand;
+
 
     public double getTargetChangeThresholdForPriceChange() {
         return targetChangeThresholdForPriceChange;
@@ -73,5 +75,13 @@ public class ProductPricingConfigurationRequest {
 
     public void setPricingOptions(PricingOptions pricingOptions) {
         this.pricingOptions = pricingOptions;
+    }
+
+    public double getTentativePercentageChangeInProductDemand() {
+        return tentativePercentageChangeInProductDemand;
+    }
+
+    public void setTentativePercentageChangeInProductDemand(double tentativePercentageChangeInProductDemand) {
+        this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
     }
 }

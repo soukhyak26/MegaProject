@@ -20,10 +20,12 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private PricingOptions pricingOptions;
+    //while doing linear forecasting we need how much percent product demand will change( increase or decrease)
+    private double tentativePercentageChangeInProductDemand;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
 
-    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType) {
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.demandCurvePeriod = demandCurvePeriod;
@@ -32,6 +34,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
         this.pricingOptions = pricingOptions;
         this.pricingStrategyType = pricingStrategyType;
+        this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
     }
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -97,6 +100,22 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
 
     public PricingOptions getPricingOptions() {
         return pricingOptions;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public void setPricingOptions(PricingOptions pricingOptions) {
+        this.pricingOptions = pricingOptions;
+    }
+
+    public double getTentativePercentageChangeInProductDemand() {
+        return tentativePercentageChangeInProductDemand;
+    }
+
+    public void setTentativePercentageChangeInProductDemand(double tentativePercentageChangeInProductDemand) {
+        this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
     }
 
     public double getDemandCurvePeriodInDays() {

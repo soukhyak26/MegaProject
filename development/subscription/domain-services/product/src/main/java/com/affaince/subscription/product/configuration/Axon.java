@@ -191,10 +191,19 @@ public class Axon extends Default {
     }
     @ConfigurationProperties(prefix= "forecaster.threshold_min")
     public static class HistoryMinSizeConstraints {
+        private int slf;
         private int sma;
         private int sema;
         private int tema;
         private int arima;
+
+        public int getSlf() {
+            return slf;
+        }
+
+        public void setSlf(int slf) {
+            this.slf = slf;
+        }
 
         public int getSma() {
             return sma;
@@ -231,10 +240,19 @@ public class Axon extends Default {
 
     @ConfigurationProperties(prefix = "forecaster.threshold_max")
     public static class HistoryMaxSizeConstraints {
+        private int slf;
         private int sma;
         private int sema;
         private int tema;
         private int arima;
+
+        public int getSlf() {
+            return slf;
+        }
+
+        public void setSlf(int slf) {
+            this.slf = slf;
+        }
 
         public int getSma() {
             return sma;

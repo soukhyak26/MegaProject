@@ -17,8 +17,9 @@ public class ProductPricingConfigurationSetEvent {
     private PricingStrategyType pricingStrategyType;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
+    private double tentativePercentageChangeInProductDemand;
 
-    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod) {
+    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -27,6 +28,7 @@ public class ProductPricingConfigurationSetEvent {
         this.pricingOptions = pricingOptions;
         this.pricingStrategyType = pricingStrategyType;
         this.demandCurvePeriod = demandCurvePeriod;
+        this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
     }
 
     public ProductPricingConfigurationSetEvent() {
@@ -94,5 +96,9 @@ public class ProductPricingConfigurationSetEvent {
 
     public void setDemandCurvePeriod(Period demandCurvePeriod) {
         this.demandCurvePeriod = demandCurvePeriod;
+    }
+
+    public double getTentativePercentageChangeInProductDemand() {
+        return tentativePercentageChangeInProductDemand;
     }
 }

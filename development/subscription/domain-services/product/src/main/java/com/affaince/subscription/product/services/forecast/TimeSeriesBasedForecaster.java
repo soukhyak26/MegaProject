@@ -7,6 +7,5 @@ import java.util.List;
  */
 public interface TimeSeriesBasedForecaster {
     List<Double> forecast(String dataIdentifier, List<Double> varList);
-
     void addNextForecaster(TimeSeriesBasedForecaster forecaster);
 }
