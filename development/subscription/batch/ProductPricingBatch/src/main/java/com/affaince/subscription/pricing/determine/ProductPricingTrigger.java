@@ -3,6 +3,7 @@ package com.affaince.subscription.pricing.determine;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDateTime;
+import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
 import com.affaince.subscription.pricing.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
@@ -28,6 +29,32 @@ public class ProductPricingTrigger {
     @Autowired
     private ProductConfigurationViewRepository productConfigurationViewRepository;
 
+    @Autowired
+    private ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder;
+
+    public ProductDemandTrend triggerProductPricingNew(String productId, double[] interpolatedForecastOnTotalSubscriptions){
+        //get the actuals data from last to first in descending order
+        final Sort sort1 = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort1).get(0);
+        final double totalActualSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+
+        //Get latest value of interpolated forecast.
+        final double totalInterpolatedForecastSubscriptionCountAsOfCurrentDate=forecastInterpolatedSubscriptionCountFinder.getDailyInterpolatedTotalSubscriptionCountAsOnDate(productId,SysDateTime.now());
+        final double changeOfActualDemandAgainstForecast = (totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate)/totalInterpolatedForecastSubscriptionCountAsOfCurrentDate;
+        final double changeThresholdForPriceChange =productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
+
+        if(totalActualSubscriptionCount > totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
+            return ProductDemandTrend.UPWARD;
+        }else if(totalActualSubscriptionCount < totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
+            return ProductDemandTrend.DOWNWARD;
+        }else{
+            return ProductDemandTrend.NOCHANGE;
+        }
+    }
+
+    //THIS METHOD MAY GET DEPRECATED -BUT FOR NOW KEEPING IT BECAUSE I AM NOT SURE IF ABOVE METHOD IS YET PROVEN
+    //*****DO NOT REMOVE ANYTHING AS OF NOW*************************///
+/*
     public ProductDemandTrend triggerProductPricing(String productId, double[] interpolatedForecastOnTotalSubscriptions) {
         boolean doTriggerPrice = false;
         final LocalDateTime currentDate = SysDateTime.now();
@@ -104,4 +131,5 @@ public class ProductPricingTrigger {
         }
 
     }
+*/
 }

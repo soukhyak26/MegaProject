@@ -21,4 +21,6 @@ public interface ProductActualsViewRepository extends CrudRepository<ProductActu
 
     @Query("{productVersionId.productId:?0,productVersionId.startDate:{$gte:?1},endDate:{$lte:?2}}")
     public List<ProductActualsView> findByProductVersionId_ProductIdAndDateBetween(String productId, LocalDate startDate, LocalDate endDate);
+
+
 }

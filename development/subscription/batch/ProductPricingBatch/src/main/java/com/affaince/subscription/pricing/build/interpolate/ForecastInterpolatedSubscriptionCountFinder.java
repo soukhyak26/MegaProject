@@ -21,19 +21,19 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
 
-    public double[] findInterpolatedTotalSubscriptionCountOnCurrentDate(String productId) {
+    public double[] getDailyInterpolatedTotalSubscriptionCounts(String productId) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        List<ProductForecastView> previousValues = productForecastViewRepository.
+        List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
                         (productId, ProductForecastStatus.ACTIVE);
-        ProductForecastView firstForecastView = previousValues.get(previousValues.size() - 1);
+        ProductForecastView firstForecastView = registeredForecastValues.get(registeredForecastValues.size() - 1);
         LocalDateTime dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
-        double[] x = new double[previousValues.size()];     //day on which interpolated value has been taken
-        double[] y = new double[previousValues.size()];     //interpolated value of toal subscription
+        double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
+        double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
         int count = 0;
-        for (ProductForecastView previousView : previousValues) {
+        for (ProductForecastView previousView : registeredForecastValues) {
             LocalDateTime endDate = previousView.getEndDate();
-            int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //should we add/subtract 1 in the value?
+            int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //TODO- should we add/subtract 1 in the value?
             x[count] = day;
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
         }
@@ -44,6 +44,27 @@ public class ForecastInterpolatedSubscriptionCountFinder {
 */
         return interpolatedTotalSubscriptionsPerDay;
 
+    }
+
+    public double getDailyInterpolatedTotalSubscriptionCountAsOnDate(String productId,LocalDateTime date) {
+        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
+                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
+                        (productId, ProductForecastStatus.ACTIVE);
+        ProductForecastView firstForecastView = registeredForecastValues.get(registeredForecastValues.size() - 1);
+        LocalDateTime dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
+        double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
+        double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
+        int count = 0;
+        for (ProductForecastView previousView : registeredForecastValues) {
+            LocalDateTime endDate = previousView.getEndDate();
+            int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //TODO- should we add/subtract 1 in the value?
+            x[count] = day;
+            y[count] = previousView.getTotalNumberOfExistingSubscriptions();
+        }
+        double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
+        int expectedDay = Days.daysBetween(dateOfPlatformBeginning, date).getDays();
+        return interpolatedTotalSubscriptionsPerDay[expectedDay];
     }
 
 }
