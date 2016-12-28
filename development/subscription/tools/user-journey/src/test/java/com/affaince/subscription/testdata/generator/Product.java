@@ -18,6 +18,8 @@ public class Product {
 	private int maxProfitMargin;
 	private int minPrice;
 	private int maxPrice;
+	private int minPercentageIncreaseInForecast;
+	private int maxPercentageIncreaseInForecast;
 
 
 	public Product(String productId, String productName, String categoryId, String subCategoryId) {
@@ -170,5 +172,21 @@ public class Product {
 
 	public void setMaxPrice(int maxPrice) {
 		this.maxPrice = maxPrice;
+	}
+
+	public int getMinPercentageIncreaseInForecast() {
+		return minPercentageIncreaseInForecast;
+	}
+
+	public void setMinPercentageIncreaseInForecast(int minPercentageIncreaseInForecast) {
+		this.minPercentageIncreaseInForecast = minPercentageIncreaseInForecast;
+	}
+
+	public int getMaxPercentageIncreaseInForecast() {
+		return maxPercentageIncreaseInForecast;
+	}
+
+	public void setMaxPercentageIncreaseInForecast(int maxPercentageIncreaseInForecast) {
+		this.maxPercentageIncreaseInForecast = maxPercentageIncreaseInForecast;
 	}
 }

@@ -2,7 +2,7 @@ import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 import javax.jms._
 
 import Configuration.jmsConfig
-import com.affaince.subscription.testdata.generator.com.affaince.subscription.benefits.command.event.BenefitAddedEvent
+import event.BenefitAddedEvent
 import io.gatling.core.Predef._
 import io.gatling.jms.Predef._
 

@@ -19,7 +19,7 @@ public class ProductBuilder {
         ProductBuilder productBuilder = new ProductBuilder(size);
         for (int i = 0; i < size; i++) {
             Product product = new Product(
-                    "product" + i,
+                     i + "",
                     "productName" + i,
                     "cat" + i % 20,
                     "subcat" + (i % 20 % (new Random().nextInt(5) + 3))
@@ -96,7 +96,7 @@ public class ProductBuilder {
             if (product.isBranded()) {
                 product.setMinProfitMargin(10);
             } else {
-                product.setMinPrice(30);
+                product.setMinProfitMargin(30);
             }
         });
         return this;
@@ -108,6 +108,28 @@ public class ProductBuilder {
                 product.setMaxProfitMargin(40);
             } else {
                 product.setMaxProfitMargin(100);
+            }
+        });
+        return this;
+    }
+
+    public ProductBuilder minPercentageIncreaseInForecast() {
+        products.forEach(product -> {
+            if (product.isBranded()) {
+                product.setMinPercentageIncreaseInForecast(10);
+            } else {
+                product.setMaxPercentageIncreaseInForecast(20);
+            }
+        });
+        return this;
+    }
+
+    public ProductBuilder maxPercentageIncreaseInForecast() {
+        products.forEach(product -> {
+            if (product.isBranded()) {
+                product.setMaxPercentageIncreaseInForecast(50);
+            } else {
+                product.setMaxPercentageIncreaseInForecast(100);
             }
         });
         return this;
