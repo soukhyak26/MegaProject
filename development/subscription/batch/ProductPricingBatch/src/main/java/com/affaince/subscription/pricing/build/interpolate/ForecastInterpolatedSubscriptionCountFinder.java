@@ -36,6 +36,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
             int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //TODO- should we add/subtract 1 in the value?
             x[count] = day;
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
+            count++;
         }
         double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
 /*
