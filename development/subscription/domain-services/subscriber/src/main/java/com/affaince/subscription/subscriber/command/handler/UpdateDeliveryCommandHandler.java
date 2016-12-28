@@ -34,7 +34,7 @@ public class UpdateDeliveryCommandHandler {
         final Subscriber subscriber = subscriberRepository.load(command.getSubscriberId());
         final DeliveryChargesRule deliveryChargesRule = deliveryChargesRulesService.findActiveDeliveryChargesRule();
         subscriber.deleteDelivery(command.getDeliveryId());
-        subscriber.addDelivery(command.getDeliveryId(), command.getDeliveryDate(),
+        subscriber.updateDelivery(command.getDeliveryId(), command.getDeliveryDate(),
                 command.getDeliveryItems(), deliveryChargesRule, priceBucketService);
     }
 }

@@ -169,6 +169,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             Delivery delivery = deliveries.get(deliveryId);
             delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryId));
         }
+        createSubscriptionSummaryEvent(tempDelivery,false);
     }
 
     @EventSourcingHandler
@@ -267,6 +268,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                     delivery.getTotalWeight()));
+            createSubscriptionSummaryEvent(delivery, true);
         }
     }
 
@@ -335,6 +337,43 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                 delivery.getTotalWeight()));
+
+        createSubscriptionSummaryEvent(delivery, true);
+    }
+
+    private void createSubscriptionSummaryEvent(Delivery delivery, boolean added) {
+        Map <String, Map<String, Integer>> itemSubscribed = new HashMap<>();
+        delivery.getDeliveryItems().forEach(deliveryItem -> {
+            if (itemSubscribed.containsKey(deliveryItem.getDeliveryItemId())) {
+                Map <String,Integer> priceBucketMap = itemSubscribed.get(deliveryItem.getDeliveryItemId());
+                if (priceBucketMap.containsKey(deliveryItem.getPriceBucketId())) {
+                    String priceBucketId = deliveryItem.getPriceBucketId();
+                    if (added) {
+                        priceBucketMap.put(priceBucketId, priceBucketMap.get(priceBucketId).intValue() + 1);
+                    } else {
+                        priceBucketMap.put(priceBucketId, priceBucketMap.get(priceBucketId).intValue() - 1);
+                    }
+                } else {
+                    if (added) {
+                        priceBucketMap.put(deliveryItem.getPriceBucketId(), 1);
+                    } else {
+                        priceBucketMap.put(deliveryItem.getPriceBucketId(), -1);
+                    }
+                }
+            } else {
+                Map <String,Integer> priceBucketMap = new HashMap<>();
+                if (added) {
+                    priceBucketMap.put(deliveryItem.getPriceBucketId(), 1);
+                } else {
+                    priceBucketMap.put(deliveryItem.getPriceBucketId(), -1);
+                }
+
+                itemSubscribed.put(deliveryItem.getDeliveryItemId(),priceBucketMap);
+            }
+        });
+        itemSubscribed.keySet().forEach(productId -> {
+            apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId)));
+        });
     }
 
     public void deleteDelivery(String deliveryId) {
@@ -352,6 +391,56 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         final DeliveryPreparedForDispatchEvent event = new DeliveryPreparedForDispatchEvent(
                 this.subscriberId, deliveryId
         );
+    }
+
+    public void updateDelivery(String deliveryId, LocalDate deliveryDate, List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService) {
+        Map <String, Map<String, Integer>> itemSubscribed = findDeferenceOfDeliveryItems(deliveryId, deliveryItems, priceBucketService);
+        deleteDelivery(deliveryId);
+        addDelivery(deliveryId, deliveryDate,
+                deliveryItems, deliveryChargesRule, priceBucketService);
+        itemSubscribed.keySet().forEach(productId -> {
+            apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId)));
+        });
+    }
+
+    private Map <String, Map<String, Integer>> findDeferenceOfDeliveryItems(String deliveryId,
+                                              List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
+                                              PriceBucketService priceBucketService) {
+        Delivery delivery = deliveries.get(deliveryId);
+        Map <String, Map<String, Integer>> itemSubscribed = new HashMap<>();
+        delivery.getDeliveryItems().forEach(deliveryItem -> {
+            if (itemSubscribed.containsKey(deliveryItem.getDeliveryItemId())) {
+                Map <String,Integer> priceBucketMap = itemSubscribed.get(deliveryItem.getDeliveryItemId());
+                if (priceBucketMap.containsKey(deliveryItem.getPriceBucketId())) {
+                    String priceBucketId = deliveryItem.getPriceBucketId();
+                    priceBucketMap.put(priceBucketId, priceBucketMap.get(priceBucketId).intValue() - 1);
+                } else {
+                    priceBucketMap.put(deliveryItem.getPriceBucketId(), -1);
+                }
+            } else {
+                Map <String,Integer> priceBucketMap = new HashMap<>();
+                priceBucketMap.put(deliveryItem.getPriceBucketId(), -1);
+                itemSubscribed.put(deliveryItem.getDeliveryItemId(),priceBucketMap);
+            }
+        });
+
+        deliveryItems.forEach(deliveryItem -> {
+            if (itemSubscribed.containsKey(deliveryItem.getDeliveryItemId())) {
+                Map <String,Integer> priceBucketMap = itemSubscribed.get(deliveryItem.getDeliveryItemId());
+                String priceBucketId = priceBucketService.fetchLatestPriceBucket(deliveryItem.getDeliveryItemId()).getPriceBucketId();
+                if (priceBucketMap.containsKey(priceBucketId)) {
+                    priceBucketMap.put(priceBucketId, priceBucketMap.get(priceBucketId).intValue() + deliveryItem.getQuantity());
+                } else {
+                    priceBucketMap.put(priceBucketId, deliveryItem.getQuantity());
+                }
+            } else {
+                Map <String,Integer> priceBucketMap = new HashMap<>();
+                String priceBucketId = priceBucketService.fetchLatestPriceBucket(deliveryItem.getDeliveryItemId()).getPriceBucketId();
+                priceBucketMap.put(priceBucketId, deliveryItem.getQuantity());
+                itemSubscribed.put(deliveryItem.getDeliveryItemId(),priceBucketMap);
+            }
+        });
+        return itemSubscribed;
     }
 }
 
