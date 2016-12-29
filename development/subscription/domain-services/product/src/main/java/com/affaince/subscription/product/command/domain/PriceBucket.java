@@ -3,6 +3,7 @@ package com.affaince.subscription.product.command.domain;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -170,5 +171,10 @@ public class PriceBucket extends AbstractAnnotatedEntity {
         this.numberOfChurnedSubscriptions -= subscriptionCount;
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
         this.numberOfExistingSubscriptions -= subscriptionCount;
+    }
+
+
+    public void expirePriceBucket() {
+        this.setEntityStatus(EntityStatus.EXPIRED);
     }
 }

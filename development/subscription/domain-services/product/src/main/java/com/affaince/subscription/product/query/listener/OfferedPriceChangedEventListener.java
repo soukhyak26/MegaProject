@@ -7,6 +7,7 @@ import com.affaince.subscription.product.query.repository.PriceBucketViewReposit
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
+import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class OfferedPriceChangedEventListener {
     @EventHandler
     public void on(OfferedPriceChangedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(event.getProductId(), event.getNewPriceBucket().getFromDate()));
+        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
+        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getNewPriceBucket().getPriceBucketId()));
         newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getNewPriceBucket().getOfferedPriceOrPercentDiscountPerUnit());
         newPriceBucket.setTaggedPriceVersion(event.getNewPriceBucket().getTaggedPriceVersion());
         newPriceBucket.setEntityStatus(event.getNewPriceBucket().getEntityStatus());

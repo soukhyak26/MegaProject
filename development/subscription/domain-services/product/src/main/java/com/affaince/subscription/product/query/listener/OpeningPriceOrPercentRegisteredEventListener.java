@@ -2,7 +2,6 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ProductActivateCommand;
 import com.affaince.subscription.product.command.event.OpeningPriceOrPercentRegisteredEvent;
@@ -14,6 +13,7 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
+import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;
@@ -42,7 +42,7 @@ public class OpeningPriceOrPercentRegisteredEventListener {
     @EventHandler
     public void on(OpeningPriceOrPercentRegisteredEvent event) throws PriceInitializationNotAllowedException, ProductReadinessException {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
+        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
         if (null != latestPriceBucket) {
             throw PriceInitializationNotAllowedException.build(event.getProductId());
         }
@@ -52,7 +52,7 @@ public class OpeningPriceOrPercentRegisteredEventListener {
         if (ProductConfigurationValidator.getProductReadinessStatus(productActivationStatusView.getProductStatuses()).contains(
                 ProductReadinessStatus.PRICEASSIGNABLE
         )) {
-            PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(event.getProductId(), event.getPriceBucket().getFromDate()));
+            PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucket().getPriceBucketId()));
             newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getPriceBucket().getOfferedPriceOrPercentDiscountPerUnit());
             newPriceBucket.setTaggedPriceVersion(event.getPriceBucket().getTaggedPriceVersion());
             newPriceBucket.setEntityStatus(event.getPriceBucket().getEntityStatus());

@@ -2,10 +2,7 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
-import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
-import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
-import com.affaince.subscription.product.command.UpdateProductStatusCommand;
+import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
 import com.affaince.subscription.product.query.view.ProductForecastView;
@@ -375,5 +372,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId,
                 this.subCategoryId, this.substitutes, this.complements,
                 this.sensitiveTo, this.netQuantity, quantityUnit, this.productAccount.getProductPricingCategory()));
+    }
+
+    public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command) {
+        this.getProductAccount().calculateExpectedProfitPerPriceBucket(command);
     }
 }

@@ -212,6 +212,14 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     }
 
+    public PriceBucket findActivePriceBucketByPriceBucketId(String priceBucketId){
+       return activePriceBuckets.values().stream().filter(item->item.getPriceBucketId().equals(priceBucketId)).collect(Collectors.toList()).get(0);
+    }
+
+    public PriceBucket findRecommendedPriceBucketByPriceBucketId(String priceBucketId){
+        return recommendedPriceBuckets.values().stream().filter(item->item.getPriceBucketId().equals(priceBucketId)).collect(Collectors.toList()).get(0);
+    }
+
     public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
         //final PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
         List<PriceBucket> bucketsWithSamePurchasePrice = new ArrayList<PriceBucket>();
@@ -266,7 +274,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
 
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
-        apply(new ProductSubscriptionUpdatedEvent(command.getProductId(), command.getProductSubscriptionCount(), command.getSubscriptionActivateDate()));
+        apply(new ProductSubscriptionUpdatedEvent(command.getProductId(), command.getPriceBucketWiseSubscriptionCount()));
     }
 
     //Product status should be received from main application
@@ -362,13 +370,42 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
     }
 
+    public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command ){
+        double newExpectedProfitPerPriceBucket=this.calculateExpectedProfitForPriceBucket(this.findActivePriceBucketByPriceBucketId(command.getPriceBucketId()));
+        apply(new PriceBucketWiseProfitCalculatedEvent(command.getProductId(),command.getPriceBucketId(),newExpectedProfitPerPriceBucket));
+
+    }
+    @EventSourcingHandler
+    public void on(PriceBucketWiseProfitCalculatedEvent event){
+        PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
+        activePriceBucket.setExpectedProfit(event.getProfitAmountPerPriceBucket());
+    }
     @EventSourcingHandler
     public void on(ProductSubscriptionUpdatedEvent event) {
-        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
-        latestPriceBucket.setNumberOfNewSubscriptions(latestPriceBucket.getNumberOfNewSubscriptions() + event.getSubscriptionCount());
-        double expectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(latestPriceBucket);
-        latestPriceBucket.setExpectedProfit(expectedProfitPerPriceBucket);
+        final Map<String,Integer> priceBucketWiseSubscriptionCount=event.getPriceBucketWiseSubscriptionCount();
+        priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId->{
+            final PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(priceBucketId);
+            final int subscriptionCount=priceBucketWiseSubscriptionCount.get(priceBucketId);
+            if(subscriptionCount>0){
+                activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount);
+            }else{
+                activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
+                if(activePriceBucket.getNumberOfExistingSubscriptions()==0){
+                    apply(new PriceBucketExpiredEvent(event.getProductId(),priceBucketId));
+                }
+            }
+        });
+    }
 
+    @EventSourcingHandler
+    public void on(PriceBucketExpiredEvent event){
+        PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
+        activePriceBucket.expirePriceBucket();
+        this.removeExpiredPriceBucket(activePriceBucket);
+    }
+
+    private void removeExpiredPriceBucket(PriceBucket activePriceBucket) {
+        this.activePriceBuckets.remove(activePriceBucket.getFromDate());
     }
 
     //Only for actuals

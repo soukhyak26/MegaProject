@@ -23,7 +23,7 @@ public class RegressionBasedDemandFunctionProcessor implements FunctionProcessor
 
     @Override
     public FunctionCoefficients processFunction(ProductView productView) {
-        List<PriceBucketView> priceBucketStats = priceBucketViewRepository.findByProductVersionId_ProductId(productView.getProductId());
+        List<PriceBucketView> priceBucketStats = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(productView.getProductId());
 
         final List<PriceBucketView> priceBucketsWithSamePurchasePrice=findBucketsWithSamePurchasePrice(priceBucketStats);
         Collections.sort(priceBucketsWithSamePurchasePrice);
@@ -51,9 +51,9 @@ public class RegressionBasedDemandFunctionProcessor implements FunctionProcessor
 
     private Map<Double, Double> offerPriceVersesSubscriptionMapping(List<PriceBucketView> priceBucketsWithSamePurchasePrice, PriceBucketView priceBucketJustBeforePurchasePriceChange) {
         Map <Double, Double> offerPriceVersesSubscriptionMapping = new HashMap<>(priceBucketsWithSamePurchasePrice.size() + 1);
-        double totalExistingSubscriptions = new Double(priceBucketJustBeforePurchasePriceChange.getNumberOfExistingCustomersAssociatedWithAPrice());
+        double totalExistingSubscriptions = new Double(priceBucketJustBeforePurchasePriceChange.getNumberOfExistingSubscriptionsAssociatedWithAPrice());
         for (PriceBucketView priceBucketView: priceBucketsWithSamePurchasePrice) {
-            totalExistingSubscriptions = totalExistingSubscriptions + priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice();
+            totalExistingSubscriptions = totalExistingSubscriptions + priceBucketView.getNumberOfExistingSubscriptionsAssociatedWithAPrice();
             offerPriceVersesSubscriptionMapping.put(priceBucketView.getOfferedPriceOrPercentDiscountPerUnit(), totalExistingSubscriptions);
         }
         return offerPriceVersesSubscriptionMapping;

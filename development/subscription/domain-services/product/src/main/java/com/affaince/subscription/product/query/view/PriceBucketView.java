@@ -1,8 +1,8 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,20 +16,21 @@ import java.util.List;
 @Document
 public class PriceBucketView  implements Comparable<PriceBucketView>{
     @Id
-    private final ProductVersionId productVersionId;
+    private final ProductwisePriceBucketId productwisePriceBucketId;
     private PriceTaggedWithProduct taggedPriceVersion;
+    private LocalDateTime fromDate;
     private LocalDateTime toDate;
     private double offeredPriceOrPercentDiscountPerUnit;
     //private double percentDiscountPerUnit;
-    private long numberOfNewCustomersAssociatedWithAPrice;
-    private long numberOfChurnedCustomersAssociatedWithAPrice;
-    private long numberOfExistingCustomersAssociatedWithAPrice;
+    private long numberOfNewSubscriptionsAssociatedWithAPrice;
+    private long numberOfChurnedSubscriptionsAssociatedWithAPrice;
+    private long numberOfExistingSubscriptionsAssociatedWithAPrice;
     private EntityStatus entityStatus;
     private double totalProfit;
     private double slope;
 
-    public PriceBucketView(ProductVersionId productVersionId) {
-        this.productVersionId = productVersionId;
+    public PriceBucketView(ProductwisePriceBucketId productwisePriceBucketId) {
+        this.productwisePriceBucketId = productwisePriceBucketId;
     }
 
     public static PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
@@ -44,19 +45,15 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     }
 
     public String getProductId() {
-        return productVersionId.getProductId();
+        return productwisePriceBucketId.getProductId();
     }
 
-    public void setProductId(String productId) {
-        this.productVersionId.setProductId(productId);
+    public ProductwisePriceBucketId getProductwisePriceBucketId() {
+        return productwisePriceBucketId;
     }
 
     public LocalDateTime getFromDate() {
-        return this.productVersionId.getFromDate();
-    }
-
-    public void setFromDate(LocalDateTime fromDate) {
-        this.productVersionId.setFromDate(fromDate);
+        return fromDate;
     }
 
     public LocalDateTime getToDate() {
@@ -75,32 +72,28 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
     }
 
-    public long getNumberOfNewCustomersAssociatedWithAPrice() {
-        return this.numberOfNewCustomersAssociatedWithAPrice;
+    public long getNumberOfNewSubscriptionsAssociatedWithAPrice() {
+        return this.numberOfNewSubscriptionsAssociatedWithAPrice;
     }
 
-    public void setNumberOfNewCustomersAssociatedWithAPrice(long numberOfNewCustomersAssociatedWithAPrice) {
-        this.numberOfNewCustomersAssociatedWithAPrice = numberOfNewCustomersAssociatedWithAPrice;
+    public void setNumberOfNewSubscriptionsAssociatedWithAPrice(long numberOfNewSubscriptionsAssociatedWithAPrice) {
+        this.numberOfNewSubscriptionsAssociatedWithAPrice = numberOfNewSubscriptionsAssociatedWithAPrice;
     }
 
-    public long getNumberOfChurnedCustomersAssociatedWithAPrice() {
-        return this.numberOfChurnedCustomersAssociatedWithAPrice;
+    public long getNumberOfChurnedSubscriptionsAssociatedWithAPrice() {
+        return this.numberOfChurnedSubscriptionsAssociatedWithAPrice;
     }
 
-    public void setNumberOfChurnedCustomersAssociatedWithAPrice(long numberOfChurnedCustomersAssociatedWithAPrice) {
-        this.numberOfChurnedCustomersAssociatedWithAPrice = numberOfChurnedCustomersAssociatedWithAPrice;
+    public void setNumberOfChurnedSubscriptionsAssociatedWithAPrice(long numberOfChurnedSubscriptionsAssociatedWithAPrice) {
+        this.numberOfChurnedSubscriptionsAssociatedWithAPrice = numberOfChurnedSubscriptionsAssociatedWithAPrice;
     }
 
-    public long getNumberOfExistingCustomersAssociatedWithAPrice() {
-        return this.numberOfExistingCustomersAssociatedWithAPrice;
+    public long getNumberOfExistingSubscriptionsAssociatedWithAPrice() {
+        return this.numberOfExistingSubscriptionsAssociatedWithAPrice;
     }
 
-    public void setNumberOfExistingCustomersAssociatedWithAPrice(long numberOfExistingCustomersAssociatedWithAPrice) {
-        this.numberOfExistingCustomersAssociatedWithAPrice = numberOfExistingCustomersAssociatedWithAPrice;
-    }
-
-    public ProductVersionId getProductVersionId() {
-        return this.productVersionId;
+    public void setNumberOfExistingSubscriptionsAssociatedWithAPrice(long numberOfExistingSubscriptionsAssociatedWithAPrice) {
+        this.numberOfExistingSubscriptionsAssociatedWithAPrice = numberOfExistingSubscriptionsAssociatedWithAPrice;
     }
 
     public EntityStatus getEntityStatus() {
@@ -142,10 +135,19 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
 
     public double recalculateOfferedPriceBasedOnActualDemand(){
         if(slope!= 0){
-            return ( taggedPriceVersion.getMRP()+ slope*numberOfExistingCustomersAssociatedWithAPrice);
+            return ( taggedPriceVersion.getMRP()+ slope* numberOfExistingSubscriptionsAssociatedWithAPrice);
         }else{
             return offeredPriceOrPercentDiscountPerUnit;
         }
+    }
 
+    public void addToNewSubscriptions(int subscriptionCount){
+        this.numberOfNewSubscriptionsAssociatedWithAPrice=this.numberOfNewSubscriptionsAssociatedWithAPrice+subscriptionCount;
+        this.numberOfExistingSubscriptionsAssociatedWithAPrice +=subscriptionCount;
+    }
+
+    public void addToChurnedSubscriptions( int subscriptionCount){
+        this.numberOfChurnedSubscriptionsAssociatedWithAPrice=this.numberOfChurnedSubscriptionsAssociatedWithAPrice + subscriptionCount;
+        this.numberOfExistingSubscriptionsAssociatedWithAPrice -=subscriptionCount;
     }
 }

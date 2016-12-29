@@ -43,16 +43,16 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
         FunctionCoefficients costFunctionCoefficients = demandAndCostFunctionCoefficients.stream().filter(coefficient -> coefficient.getType().equals(CoefficientsType.COST_FUNCTION_COEFFICIENT)).findFirst().get();
 
         final String productId = demandFunctionCoeffiecients.getProductId();
-        List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductVersionId_ProductId(productId);
+        List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId((productId));
         PriceBucketView latestPriceBucket = getLatestPriceBucket(activePriceBuckets);
 
         List<PriceBucketView> bucketsWithSamePurchasePrice = findBucketsWithSamePurchasePrice(productId, activePriceBuckets);
-        List<Double> totalQuantitySubscribedWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucketView -> new Long(priceBucketView.getNumberOfExistingCustomersAssociatedWithAPrice()).doubleValue()).collect(Collectors.toList());
+        List<Double> totalQuantitySubscribedWithSamePurchasePrice = bucketsWithSamePurchasePrice.stream().map(priceBucketView -> new Long(priceBucketView.getNumberOfExistingSubscriptionsAssociatedWithAPrice()).doubleValue()).collect(Collectors.toList());
         //first and foremost : find if the demand is going up or it is going down for a product using extrapolation
         List<Double> forecastedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
-        double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingCustomersAssociatedWithAPrice(), forecastedDemands);
+        double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingSubscriptionsAssociatedWithAPrice(), forecastedDemands);
         LocalDateTime currentDate = SysDateTime.now();
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductVersionId(latestPriceBucket.getProductVersionId().getProductId(), currentDate));
+        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(latestPriceBucket.getProductwisePriceBucketId().getProductId(), ""+latestPriceBucket.getProductwisePriceBucketId().getProductId()+"_"+ currentDate));
         DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
 
         final String taggedPriceVersionId = productId + currentDate.toString(format);

@@ -308,4 +308,15 @@ public class ProductActualMetricsView {
         }
         return latestTaggedPriceVersion;
     }
+
+    public void addToNewSubscriptions(int subscriptionCount){
+        this.newSubscriptions=this.newSubscriptions+subscriptionCount;
+        this.totalNumberOfExistingSubscriptions +=subscriptionCount;
+    }
+
+    public void addToChurnedSubscriptions( int subscriptionCount){
+        this.churnedSubscriptions=this.churnedSubscriptions + subscriptionCount;
+        this.totalNumberOfExistingSubscriptions -=subscriptionCount;
+    }
+
 }
