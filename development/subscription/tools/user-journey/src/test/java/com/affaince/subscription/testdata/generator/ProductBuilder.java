@@ -118,7 +118,7 @@ public class ProductBuilder {
             if (product.isBranded()) {
                 product.setMinPercentageIncreaseInForecast(10);
             } else {
-                product.setMaxPercentageIncreaseInForecast(20);
+                product.setMinPercentageIncreaseInForecast(20);
             }
         });
         return this;
@@ -131,6 +131,13 @@ public class ProductBuilder {
             } else {
                 product.setMaxPercentageIncreaseInForecast(100);
             }
+        });
+        return this;
+    }
+
+    public ProductBuilder actualsAggregationPeriodForTargetForecast () {
+        products.forEach(product -> {
+            product.setActualsAggregationPeriodForTargetForecast(30);
         });
         return this;
     }

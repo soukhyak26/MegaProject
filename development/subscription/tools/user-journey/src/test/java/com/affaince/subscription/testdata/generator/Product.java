@@ -20,6 +20,7 @@ public class Product {
 	private int maxPrice;
 	private int minPercentageIncreaseInForecast;
 	private int maxPercentageIncreaseInForecast;
+	private int actualsAggregationPeriodForTargetForecast=30;
 
 
 	public Product(String productId, String productName, String categoryId, String subCategoryId) {
@@ -188,5 +189,13 @@ public class Product {
 
 	public void setMaxPercentageIncreaseInForecast(int maxPercentageIncreaseInForecast) {
 		this.maxPercentageIncreaseInForecast = maxPercentageIncreaseInForecast;
+	}
+
+	public int getActualsAggregationPeriodForTargetForecast() {
+		return actualsAggregationPeriodForTargetForecast;
+	}
+
+	public void setActualsAggregationPeriodForTargetForecast(int actualsAggregationPeriodForTargetForecast) {
+		this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
 	}
 }
