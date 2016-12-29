@@ -110,7 +110,11 @@ public class ForecastController {
             }
             //find forecasts entered earlier to current forecast entry
             List<ProductForecastView> earlierForecastViews=this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId,parameter.getEndDate(),endDateSort);
-            totalSubscriptions=earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions()+ parameter.getNumberOfNewSubscriptions()-parameter.getNumberOfChurnedSubscriptions();
+            if (earlierForecastViews.isEmpty()) {
+                totalSubscriptions=parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
+            } else {
+                totalSubscriptions = earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions() + parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
+            }
             ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(),totalSubscriptions);
             productForecastViewRepository.save(productForecastView);
             if (null == firstStartDate) {

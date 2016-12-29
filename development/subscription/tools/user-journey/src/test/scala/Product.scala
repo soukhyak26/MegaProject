@@ -10,7 +10,7 @@ import scala.util.Random
 class Product extends BaseSimulator {
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct)
-    .repeat(10) {
+    .repeat(1) {
       AddProjectionParameter.addProjectionParameter
     }
     .repeat(1) {
@@ -22,12 +22,12 @@ class Product extends BaseSimulator {
 
 object RegisterProduct {
 
-  val createProductUrl = "http://localhost:8082/product"
+  val createProductUrl = "http://localhost:8082/product/register"
   val createProductConfigUrl = "http://localhost:8082/productconfig"
   val createProjectionUrl = "http://localhost:8082/forecast"
-  val feeder = csv("product.csv").queue
+  val feeder = csv("productdetails.csv").queue
 
-  val registerProduct = exec(session => session.set("randomProductId", Random.nextInt(20000)))
+  val registerProduct = feed(feeder)
     .exec(
       http("Register Product")
         .post(createProductUrl)
@@ -35,13 +35,13 @@ object RegisterProduct {
           StringBody(
             """
               |{
-              |    "productName":"Toothpaste",
-              |    "categoryId":"cat01",
-              |    "subCategoryId":"subcat01",
-              |    "quantity":"500",
-              |    "quantityUnit":"gram",
-              |    "substitutes":["23","34","54"],
-              |    "complements":["44","36","78"],
+              |    "productName":"${productName}",
+              |    "categoryId":"${categoryID}",
+              |    "subCategoryId":"${subCategoryId}",
+              |    "quantity":"${quantity}",
+              |    "quantityUnit":"${quantityUnit}",
+              |    "substitutes":${substitutes},
+              |    "complements":${complements},
               |    "productPricingCategory":0
               |}
             """.stripMargin
@@ -62,12 +62,11 @@ object AddProjectionParameter {
           StringBody(
             """
               |{
-              |    "productForecastParameters":[{"forecastStartDate":"${forecastStartDate}",
-              |    "forecastEndDate":"${forecastEndDate}",
+              |    "productForecastParameters":[{"startDate":"${forecastStartDate}",
+              |    "endDate":"${forecastEndDate}",
               |    "purchasePricePerUnit":${purchasePricePerUnit},"MRP":${MRP},
               |    "numberOfNewSubscriptions":${numberOfNewSubscriptions},
               |    "numberOfChurnedSubscriptions":${numberOfChurnedSubscriptions},
-              |    "numberOfTotalSubscriptions":${numberOfTotalSubscriptions},
               |    "productForecastStatus":1}]
               |}
             """.

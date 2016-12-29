@@ -1,13 +1,21 @@
 package com.affaince.subscription.product.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandark on 01-01-2016.
  */
 public class ProductForecastParameter {
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime startDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime endDate;
     private double purchasePricePerUnit;
     private double MRP;
@@ -79,5 +87,9 @@ public class ProductForecastParameter {
 
     public ProductForecastStatus getProductForecastStatus() {
         return productForecastStatus;
+    }
+
+    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
+        this.productForecastStatus = productForecastStatus;
     }
 }

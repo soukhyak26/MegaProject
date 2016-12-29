@@ -1,8 +1,6 @@
 package com.affaince.subscription.events;
 
-import com.affaince.subscription.query.view.CommonView;
 import org.axonframework.domain.EventMessage;
-import org.axonframework.domain.MetaData;
 import org.axonframework.eventhandling.Cluster;
 import org.axonframework.eventhandling.EventBusTerminal;
 import org.axonframework.eventhandling.io.EventMessageReader;
@@ -18,7 +16,6 @@ import org.springframework.messaging.support.GenericMessage;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.springframework.integration.jms.JmsHeaders.TYPE;
 
@@ -43,18 +40,10 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
         for (EventMessage event : eventMessages) {
             try {
                 System.out.println("@@@@Inside EventMessageTerminal publish" + event);
-                //Map<String, String> metadataMap = new HashMap<>();
+                Map<String, String> metadataMap = new HashMap<>();
                 System.out.println("@@@@Inside EventMessageTerminal payload type metadata" + event.getPayloadType().getName());
-                /*metadataMap.put(TYPE, event.getPayloadType().getName());
-                metadataMap.put(MetadataFilter.FLOW_ID, UUID.randomUUID().toString());
-                metadataMap.put(MetadataFilter.TIMESTAMP, event.getTimestamp().toString());*/
-                //TODO: Verify if this is proper place to create metadata and flows. I think it should be at first command creation.
-                CommonView commonView = new CommonView(UUID.randomUUID().toString(), "someFlowName");
-                Map<String, Object> items = new HashMap<>();
-                items.put(TYPE, event.getPayloadType().getName());
-                items.put(CommonView.METADATA, commonView);
-                MetaData metadata = new MetaData(items);
-                event = event.andMetaData(metadata);
+                metadataMap.put(TYPE, event.getPayloadType().getName());
+                event = event.andMetaData(metadataMap);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 EventMessageWriter out = new EventMessageWriter(new DataOutputStream(outputStream), serializer);
                 out.writeEventMessage(event);
@@ -77,7 +66,9 @@ public class SubscriptionEventBusTerminal implements EventBusTerminal {
                     EventMessageReader reader = new EventMessageReader(new DataInputStream(new ByteArrayInputStream(
                             (byte[]) message.getPayload())), serializer);
                     cluster.publish(reader.readEventMessage());
-                } catch (UnknownSerializedTypeException | IOException ex) {
+                } catch (UnknownSerializedTypeException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }

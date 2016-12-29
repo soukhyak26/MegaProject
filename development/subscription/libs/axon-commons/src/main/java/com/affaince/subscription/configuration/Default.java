@@ -8,7 +8,6 @@ import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConver
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.affaince.subscription.common.serializer.QuantityUnitSerializer;
 import com.affaince.subscription.common.type.QuantityUnit;
-import com.affaince.subscription.monitoring.TrackingAsynchronousCluster;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.transformation.MetadataDeserializer;
@@ -32,6 +31,7 @@ import org.axonframework.commandhandling.interceptors.BeanValidationInterceptor;
 import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.domain.MetaData;
 import org.axonframework.eventhandling.*;
+import org.axonframework.eventhandling.async.AsynchronousCluster;
 import org.axonframework.eventhandling.async.SequentialPerAggregatePolicy;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.eventstore.mongo.DefaultMongoTemplate;
@@ -129,7 +129,7 @@ public class Default {
                                 @Value("${asyncCluster.identifier}") String asyncClusterIdentifier) {
         ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
                 .setNameFormat("asyncCluster-%d").build();
-        return new TrackingAsynchronousCluster(asyncClusterIdentifier,
+        return new AsynchronousCluster(asyncClusterIdentifier,
                 newScheduledThreadPool(maximumPoolSize, threadFactory), new SequentialPerAggregatePolicy());
     }
 
