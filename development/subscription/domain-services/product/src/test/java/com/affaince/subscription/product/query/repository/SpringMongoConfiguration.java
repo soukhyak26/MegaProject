@@ -4,6 +4,8 @@ import com.affaince.subscription.common.idconverter.LocalDateReadingConverter;
 import com.affaince.subscription.common.idconverter.LocalDateWritingConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
+import com.affaince.subscription.product.converters.ProductwisePriceBucketIdReaderConverter;
+import com.affaince.subscription.product.converters.ProductwisePricebucketIdWriterConverter;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;

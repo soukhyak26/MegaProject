@@ -4,6 +4,8 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.converters.ProductwisePriceBucketIdReaderConverter;
+import com.affaince.subscription.product.converters.ProductwisePricebucketIdWriterConverter;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
@@ -26,15 +28,19 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.jms.annotation.EnableJms;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,11 +77,19 @@ public class Axon extends Default {
     }
 
     @Bean
+    public CustomConversions customConversionsForProductwisePriceBucketId(){
+        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new ProductwisePriceBucketIdReaderConverter());
+        converters.add(new ProductwisePricebucketIdWriterConverter());
+        return new CustomConversions(converters);
+    }
+    @Bean
     public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversionsForProductVersionId());
+        converter.setCustomConversions(customConversionsForProductwisePriceBucketId());
         // converter.setCustomConversions(customConversionsForEndDate());
         return converter;
     }
