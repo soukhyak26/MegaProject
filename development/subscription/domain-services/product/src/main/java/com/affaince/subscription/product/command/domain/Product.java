@@ -312,10 +312,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public void registerManualForecast(ProductForecastParameter[] productForecastParameters, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
-        for (ProductForecastParameter forecastParameter : productForecastParameters) {
-            apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberOfNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
-        }
+    public void registerManualForecast(ProductForecastParameter[] productForecastParameters) {
+        //for (ProductForecastParameter forecastParameter : productForecastParameters) {
+            apply(new ManualForecastAddedEvent(productId, productForecastParameters));
+        //}
         /*if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             for (ProductForecastParameter forecastParameter : productForecastParameters) {
                 apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberOfNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));

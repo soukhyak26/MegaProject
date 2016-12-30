@@ -7,12 +7,15 @@ import com.affaince.subscription.product.command.domain.PriceBucket;
  */
 public class OpeningPriceOrPercentRegisteredEvent {
 
-    private final String productId;
-    private final PriceBucket priceBucket;
+    private String productId;
+    private PriceBucket priceBucket;
 
     public OpeningPriceOrPercentRegisteredEvent(String productId, PriceBucket priceBucket) {
         this.productId = productId;
         this.priceBucket = priceBucket;
+    }
+
+    public OpeningPriceOrPercentRegisteredEvent() {
     }
 
     public String getProductId() {

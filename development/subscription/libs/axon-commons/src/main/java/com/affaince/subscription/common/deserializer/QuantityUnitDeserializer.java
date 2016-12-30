@@ -26,5 +26,4 @@ public class QuantityUnitDeserializer extends JsonDeserializer<QuantityUnit> {
         }
         return null;
     }
-
 }

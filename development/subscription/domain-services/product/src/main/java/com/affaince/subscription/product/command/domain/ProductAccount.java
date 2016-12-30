@@ -119,7 +119,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public PriceBucket getLatestActivePriceBucket() {
         Set<LocalDateTime> timeBasedKeys = activePriceBuckets.keySet();
-        LocalDateTime max = null;
+        LocalDateTime max = timeBasedKeys.iterator().next();
         for (LocalDateTime time : timeBasedKeys) {
             if (time.compareTo(max) > 0) {
                 max = time;

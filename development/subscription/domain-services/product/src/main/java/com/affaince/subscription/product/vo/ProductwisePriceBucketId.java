@@ -1,9 +1,11 @@
 package com.affaince.subscription.product.vo;
 
+import java.io.Serializable;
+
 /**
  * Created by mandar on 29-12-2016.
  */
-public class ProductwisePriceBucketId {
+public class ProductwisePriceBucketId implements Serializable{
     private final String productId;
     private final String priceBucketId;
 

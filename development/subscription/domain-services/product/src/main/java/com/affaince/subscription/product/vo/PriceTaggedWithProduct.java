@@ -28,6 +28,9 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         this.taggedEndDate = taggedEndDate;
     }
 
+    public PriceTaggedWithProduct() {
+    }
+
     public double getPurchasePricePerUnit() {
         return purchasePricePerUnit;
     }

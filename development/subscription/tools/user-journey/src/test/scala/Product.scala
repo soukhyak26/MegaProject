@@ -10,14 +10,17 @@ import scala.util.Random
 class Product extends BaseSimulator {
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct)
+    .repeat(1) {
+      AddConfigurationParameters.addConfigurationParameters
+    }
     .repeat(6) {
       AddProjectionParameter.addProjectionParameter
     }
     .repeat(1) {
-      AddConfigurationParameters.addConfigurationParameters
+      RegisterOpeningPrice.registerPrice
     }
 
-  setUp(scn.inject(atOnceUsers(5)).protocols(http))
+  setUp(scn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
@@ -25,6 +28,7 @@ object RegisterProduct {
   val createProductUrl = "http://localhost:8082/product/register"
   val createProductConfigUrl = "http://localhost:8082/productconfig"
   val createProjectionUrl = "http://localhost:8082/forecast"
+  val registerOpeningPriceUrl = "http://localhost:8082/pricing/openprice"
   val productDetailsJsonFeeder = jsonFile("productdetails.json")
 
   val registerProduct = feed(productDetailsJsonFeeder)
@@ -52,9 +56,9 @@ object RegisterProduct {
 }
 
 object AddProjectionParameter {
-  val jsonFileFeeder = jsonFile("stepforecast.json");
+  val stepforecastJsonFileFeeder = jsonFile("stepforecast.json");
   val addProjectionParameter =
-    feed(jsonFileFeeder)
+    feed(stepforecastJsonFileFeeder)
       .exec(
       http("Add Projection Parameter to Product")
         .put((RegisterProduct.createProjectionUrl + "/addforecast/${productId}").el[String])
@@ -91,6 +95,27 @@ object AddConfigurationParameters {
             |    "actualsAggregationPeriodForTargetForecast":30,
             |    "pricingOptions":1,
             |    "pricingStrategyType":1
+            |}
+          """.stripMargin
+        )
+      ).asJSON
+  )
+}
+
+object RegisterOpeningPrice {
+
+  val openingPriceJsonFeeder = jsonFile("openingpricedetails.json")
+  val registerPrice = feed(openingPriceJsonFeeder)
+      .exec(
+    http("Register opening price to Product")
+      .put((RegisterProduct.registerOpeningPriceUrl + "/${productId}").el[String])
+      .body(
+        StringBody(
+          """
+            |{
+            |    "openingPrice":${openingPrice},
+            |    "purchasePrice":${purchasePrice},
+            |    "MRP":${mrp}
             |}
           """.stripMargin
         )

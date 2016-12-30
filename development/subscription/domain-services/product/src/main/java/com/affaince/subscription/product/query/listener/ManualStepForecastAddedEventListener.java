@@ -2,7 +2,7 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
-import com.affaince.subscription.product.command.event.ManualForecastAddedEvent;
+import com.affaince.subscription.product.command.event.ManualStepForecastAddedEvent;
 import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
@@ -26,15 +26,17 @@ public class ManualStepForecastAddedEventListener {
     }
 
     @EventHandler
-    public void on(ManualForecastAddedEvent event) {
+    public void on(ManualStepForecastAddedEvent event) {
         final List<ProductStatus> productStatuses = productActivationStatusViewRepository.
                 findByProductId(event.getProductId()).getProductStatuses();
         if (ProductConfigurationValidator.getProductReadinessStatus(productStatuses).contains(
                 ProductReadinessStatus.STEPFORECASTABLE
         )) {
             ProductActivationStatusView view = productActivationStatusViewRepository.findOne(event.getProductId());
-            view.addProductStatus(ProductStatus.PRODUCT_STEPFORECAST_CREATED);
-            productActivationStatusViewRepository.save(view);
+            if (!view.getProductStatuses().contains(ProductStatus.PRODUCT_STEPFORECAST_CREATED)) {
+                view.addProductStatus(ProductStatus.PRODUCT_STEPFORECAST_CREATED);
+                productActivationStatusViewRepository.save(view);
+            }
         } else {
             ProductReadinessException.build(event.getProductId(), ProductStatus.PRODUCT_STEPFORECAST_CREATED);
         }

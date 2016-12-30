@@ -95,33 +95,7 @@ public class ForecastController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-
-        ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
-        LocalDateTime firstStartDate = null;
-        LocalDateTime lastEndDate = null;
-        Sort endDateSort=new Sort(Sort.Direction.DESC, "endDate");
-        long totalSubscriptions=0;
-        for (ProductForecastParameter parameter : forecastParameters) {
-            List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
-            //forecast should not be newly added if it already exists in the view
-            if (null != existingForecastViews && existingForecastViews.size() > 0) {
-                throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
-            }
-            //find forecasts entered earlier to current forecast entry
-            List<ProductForecastView> earlierForecastViews=this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId,parameter.getEndDate(),endDateSort);
-            if (earlierForecastViews.isEmpty()) {
-                totalSubscriptions=parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
-            } else {
-                totalSubscriptions = earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions() + parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
-            }
-            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(productId, parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(),totalSubscriptions);
-            productForecastViewRepository.save(productForecastView);
-            if (null == firstStartDate) {
-                firstStartDate = parameter.getStartDate();
-            }
-            lastEndDate = parameter.getEndDate();
-        }
-        AddManualForecastCommand command = new AddManualForecastCommand(productId, forecastParameters,totalSubscriptions, firstStartDate, lastEndDate);
+        AddManualForecastCommand command = new AddManualForecastCommand(productId, request.getProductForecastParameters());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

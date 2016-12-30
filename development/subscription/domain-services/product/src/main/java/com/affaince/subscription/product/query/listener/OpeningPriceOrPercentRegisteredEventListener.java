@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by rbsavaliya on 12-11-2016.
  */
@@ -42,8 +44,8 @@ public class OpeningPriceOrPercentRegisteredEventListener {
     @EventHandler
     public void on(OpeningPriceOrPercentRegisteredEvent event) throws PriceInitializationNotAllowedException, ProductReadinessException {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
-        if (null != latestPriceBucket) {
+        List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort);
+        if (!activePriceBuckets.isEmpty()) {
             throw PriceInitializationNotAllowedException.build(event.getProductId());
         }
 
