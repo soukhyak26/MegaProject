@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.configuration;
 
+import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
+import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.command.domain.Product;
@@ -77,8 +79,10 @@ public class Axon extends Default {
     }
 
     @Bean
-    public CustomConversions customConversionsForProductwisePriceBucketId(){
+    public CustomConversions customConversions(){
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new ProductVersionIdReaderConverter());
+        converters.add(new ProductVersionIdWriterConverter());
         converters.add(new ProductwisePriceBucketIdReaderConverter());
         converters.add(new ProductwisePricebucketIdWriterConverter());
         return new CustomConversions(converters);
@@ -88,8 +92,8 @@ public class Axon extends Default {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
-        converter.setCustomConversions(customConversionsForProductVersionId());
-        converter.setCustomConversions(customConversionsForProductwisePriceBucketId());
+        converter.setCustomConversions(customConversions());
+        //converter.setCustomConversions(customConversionsForProductwisePriceBucketId());
         // converter.setCustomConversions(customConversionsForEndDate());
         return converter;
     }
