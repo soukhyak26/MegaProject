@@ -1,5 +1,7 @@
 package com.affaince.subscription.testdata.generator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,12 +34,12 @@ public class ProductTestDataGenerator {
     }
 
     private static void generateProductDetailsCsvFile() throws IOException {
-        File file = new File("d:/productdetails.csv");
+        File file = new File("d:/productdetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            fileOutputStream.write(("productId,productName,categoryID,subCategoryId,quantity,quantityUnit,substitutes,complements\n").getBytes());
+            //fileOutputStream.write(("productId,productName,categoryID,subCategoryId,quantity,quantityUnit,substitutes,complements\n").getBytes());
             products.forEach(product -> {
                 try {
-                    fileOutputStream.write(
+                    /*fileOutputStream.write(
                             (product.getProductId() + "," +
                                     product.getProductName() + "," +
                                     product.getCategoryId() + "," +
@@ -48,7 +50,15 @@ public class ProductTestDataGenerator {
                                     product.getComplements().toString() + "\n").getBytes()
 
 
+                    );*/
+                    ProductDetails productDetails = new ProductDetails(
+                            product.getProductId(),product.getProductName(),product.getCategoryId(),
+                            product.getSubCategoryId(),product.getQuantity(),product.getQuantityUnit(),
+                            product.getSubstitute(),product.getComplements()
                     );
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    fileOutputStream.write(objectMapper.writeValueAsBytes(productDetails));
+                    fileOutputStream.write(("\n").getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
