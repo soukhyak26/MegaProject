@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Created by mandark on 30-04-2016.
  */
-@Deprecated
 public interface ProductPseudoActualsViewRepository extends CrudRepository<ProductPseudoActualsView, ProductVersionId> {
     public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId);
 

@@ -134,6 +134,10 @@ public class Axon extends Default {
     }
 
     @Bean
+    public SimpleLinearForecaster simpleLinearForecaster(){
+        return new SimpleLinearForecaster();
+    }
+    @Bean
     public SimpleMovingAverageDemandForecaster smaForecaster() {
         return new SimpleMovingAverageDemandForecaster();
     }

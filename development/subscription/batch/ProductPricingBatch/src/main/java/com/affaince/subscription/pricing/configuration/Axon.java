@@ -125,8 +125,8 @@ public class Axon extends Default {
                         .routeId("PriceDeterminator")
                         .to("bean:productsRetriever")
                         .split(body())
-                        .to("bean:forecastInterpolatedSubscriptionCountFinder") //interpolate monthly forecasted values to daily valules
-                        .to("bean:productPricingTrigger")       // compare interpolated daily forecast with daily actuals
+                        //.to("bean:forecastInterpolatedSubscriptionCountFinder") //interpolate monthly forecasted values to daily valules
+                        .to("bean:productPricingTrigger?method=triggerProductPricing2")       // compare interpolated daily forecast with daily actuals
                         .choice()
                         .when(demandTrendChecker)
                         .multicast()

@@ -15,6 +15,8 @@ import java.util.List;
 public class DemandForecasterChain {
 
     @Autowired
+    SimpleLinearForecaster simpleLinearForecaster;
+    @Autowired
     SimpleMovingAverageDemandForecaster simpleMovingAverageDemandForecaster;
     @Autowired
     SimpleExponentialSmoothingDemandForecaster simpleExponentialSmoothingDemandForecaster;
@@ -34,7 +36,9 @@ public class DemandForecasterChain {
         List<String> forecasterPrefixes = Arrays.asList(forecasterChainElements.split(","));
         for (String prefix : forecasterPrefixes) {
 
-            if (prefix.equals("sma")) {
+            if(prefix.equals("slf")) {
+                this.addForecaster(simpleLinearForecaster);
+            }else if (prefix.equals("sma")) {
                 this.addForecaster(simpleMovingAverageDemandForecaster);
             } else if (prefix.equals("sema")) {
                 this.addForecaster(simpleExponentialSmoothingDemandForecaster);

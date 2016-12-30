@@ -4,12 +4,8 @@ import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.configuration.Axon;
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
-import com.affaince.subscription.product.query.view.ProductView;
+import com.affaince.subscription.product.query.repository.*;
+import com.affaince.subscription.product.query.view.*;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,9 +38,9 @@ public class DemandForecasterChainTest {
     @Mock
     private ProductViewRepository productViewRepository;
     @Mock
-    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private ProductActualsViewRepository productActualsViewRepository;
     @Mock
-    private ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private ProductForecastViewRepository productForecastViewRepository;
     @InjectMocks
     @Autowired
     private DemandForecasterChain chain;
@@ -58,25 +54,29 @@ public class DemandForecasterChainTest {
     @Test
     public void testForecastFor4HistoricalLinearRecords() throws IOException {
 
-        List<ProductActualMetricsView> productActualMetricsViewList;
-        productActualMetricsViewList = new ArrayList<>();
+        List<ProductActualsView> productActualsViewList;
+        productActualsViewList = new ArrayList<>();
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
-        forecastView.setTotalNumberOfExistingSubscriptions(1250);
-        List<ProductForecastMetricsView> forecasts = new ArrayList<>();
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),1250,0,1250);
+        //forecastView.setTotalNumberOfExistingSubscriptions(1250);
+        List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         try {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
-
+            long earlierTotalSubscriptionCount= 1250;
             for (int i = 0; i < 4; i++) {
-                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
+                long totalSubscriptionCount =earlierTotalSubscriptionCount + readings[i][0] - readings[i][1] ;
+                ProductActualsView actuals = new ProductActualsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),readings[i][0],readings[i][1],totalSubscriptionCount);
                 //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+/*
                 actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
-                productActualMetricsViewList.add(actualMetrics);
+*/
+                productActualsViewList.add(actuals);
                 System.out.println("historicalData: " + readings[i][0] + ":" + readings[i][1]);
+                earlierTotalSubscriptionCount=totalSubscriptionCount;
             }
 
             String productId = "1";
@@ -85,10 +85,10 @@ public class DemandForecasterChainTest {
             allProducts.add(product);
 
             Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-            Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
-            Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
+            Mockito.when(productForecastViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+            Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
 
-            List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+            List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
             List<Double> forecast = chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList, null, historicalDailySubscriptionCountList.size() / 2);
             for (Double forecastValue : forecast) {
                 System.out.println("::::forecast::::" + forecastValue);
@@ -100,24 +100,27 @@ public class DemandForecasterChainTest {
 
     @Test
     public void testForecastFor40HistoricalLinearRecords() throws IOException {
-        List<ProductActualMetricsView> productActualMetricsViewList;
-        productActualMetricsViewList = new ArrayList<>();
+        List<ProductActualsView> productActualsViewList;
+        productActualsViewList = new ArrayList<>();
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
-        forecastView.setTotalNumberOfExistingSubscriptions(1250);
-        List<ProductForecastMetricsView> forecasts = new ArrayList<>();
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),1250,0,1250);
+        //forecastView.setTotalNumberOfExistingSubscriptions(1250);
+        List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         try {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
-
+            long totalSubscriptionCount=0;
             for (int i = 0; i < readings.length; i++) {
-                ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
+                totalSubscriptionCount = totalSubscriptionCount + readings[i][0] - readings[i][1];
+                ProductActualsView actuals = new ProductActualsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),readings[i][0], readings[i][1],totalSubscriptionCount);
                 //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
+/*
                 actualMetrics.setNewSubscriptions(readings[i][0]);
                 actualMetrics.setChurnedSubscriptions(readings[i][1]);
-                productActualMetricsViewList.add(actualMetrics);
+*/
+                productActualsViewList.add(actuals);
                 System.out.println("historicalData: " + readings[i][0] + ":" + readings[i][1]);
             }
 
@@ -127,9 +130,9 @@ public class DemandForecasterChainTest {
             allProducts.add(product);
 
             Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-            Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
-            Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
-            List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+            Mockito.when(productForecastViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+            Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
+            List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
             List<Double> forecast = chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList, null, historicalDailySubscriptionCountList.size() / 2);
             for (Double forecastValue : forecast) {
                 System.out.println("::::forecast::::" + forecastValue);

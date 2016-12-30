@@ -79,15 +79,12 @@ public class ForecastController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
-    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
-/*
     @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productid}")
     public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable("productid") String productId) throws Exception {
         UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
-*/
 
     //API to add forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")
