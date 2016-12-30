@@ -270,6 +270,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
+/*
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
         List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
@@ -284,6 +285,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                     forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
         }
     }
+*/
 
     public Map<LocalDateTime, PriceBucket> getActivePriceBuckets() {
         return this.getProductAccount().getActivePriceBuckets();
@@ -329,8 +331,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
+    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
+/*
     public void registerManualStepForecast() {
         apply(new ManualStepForecastAddedEvent(productId));
+*/
 /*
 
         final ProductConfigurationValidator validator = new ProductConfigurationValidator();
@@ -341,9 +346,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
             LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
         }
-*/
+*//*
+
 
     }
+*/
 
     public void acceptRecommendedPrice() {
         apply(new OfferedPriceChangedEvent(productId, getLatestRecommendedPriceBucket()));

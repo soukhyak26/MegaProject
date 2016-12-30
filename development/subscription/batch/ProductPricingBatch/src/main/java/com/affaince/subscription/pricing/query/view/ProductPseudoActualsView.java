@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 10-07-2016.
  */
+@Deprecated
 @Document(collection = "ProductPseudoActualsView")
 public class ProductPseudoActualsView {
     @Id

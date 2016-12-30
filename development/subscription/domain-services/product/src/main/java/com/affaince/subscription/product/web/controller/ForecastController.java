@@ -5,7 +5,6 @@ import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.AddManualForecastCommand;
-import com.affaince.subscription.product.command.AddManualPseudoActualsCommand;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
 import com.affaince.subscription.product.query.repository.*;
@@ -47,16 +46,16 @@ public class ForecastController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final ProductViewRepository productViewRepository;
     private final ProductForecastViewRepository productForecastViewRepository;
-    private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
+    //private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, SubscriptionCommandGateway commandGateway) {
+    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, SubscriptionCommandGateway commandGateway) {
         this.productViewRepository = productViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
-        this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
+        //this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
         this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.commandGateway = commandGateway;
@@ -80,12 +79,15 @@ public class ForecastController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
+    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
+/*
     @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productid}")
     public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable("productid") String productId) throws Exception {
         UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
+*/
 
     //API to add forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")
@@ -187,6 +189,8 @@ public class ForecastController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
+/*
     //API to add immediate forecasts manually
     @RequestMapping(method = RequestMethod.PUT, value = "addstepforecast/{productid}")
     @Consumes("application/json")
@@ -223,8 +227,11 @@ public class ForecastController {
 
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+*/
 
 
+    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
+/*
     //API to override existing  immediate forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "updatestepforecast/{productid}")
     @Consumes("application/json")
@@ -252,6 +259,7 @@ public class ForecastController {
         productPseudoActualsViewRepository.save(modifiedView);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+*/
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/{productid}")
