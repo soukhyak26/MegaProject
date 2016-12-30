@@ -1,11 +1,13 @@
 package com.affaince.subscription.testdata.generator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -36,21 +38,9 @@ public class ProductTestDataGenerator {
     private static void generateProductDetailsCsvFile() throws IOException {
         File file = new File("d:/productdetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            //fileOutputStream.write(("productId,productName,categoryID,subCategoryId,quantity,quantityUnit,substitutes,complements\n").getBytes());
+            fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
                 try {
-                    /*fileOutputStream.write(
-                            (product.getProductId() + "," +
-                                    product.getProductName() + "," +
-                                    product.getCategoryId() + "," +
-                                    product.getSubCategoryId() + "," +
-                                    product.getQuantity() + "," +
-                                    product.getQuantityUnit() + "," +
-                                    product.getSubstitute().toString() + "," +
-                                    product.getComplements().toString() + "\n").getBytes()
-
-
-                    );*/
                     ProductDetails productDetails = new ProductDetails(
                             product.getProductId(),product.getProductName(),product.getCategoryId(),
                             product.getSubCategoryId(),product.getQuantity(),product.getQuantityUnit(),
@@ -58,18 +48,22 @@ public class ProductTestDataGenerator {
                     );
                     ObjectMapper objectMapper = new ObjectMapper();
                     fileOutputStream.write(objectMapper.writeValueAsBytes(productDetails));
+                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
+                        fileOutputStream.write((",").getBytes());
+                    }
                     fileOutputStream.write(("\n").getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
+            fileOutputStream.write(("]").getBytes());
         }
     }
 
     private static void generatePriceDetails () throws IOException {
-        File file = new File("d:/openingpricedetails.csv");
+        File file = new File("d:/openingpricedetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            fileOutputStream.write(("productId,openingPrice,purchasePrice,MRP\n").getBytes());
+            fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
                 int purchasePrice = new Random().nextInt(product.getMaxPrice()-product.getMinPrice()) +
                         product.getMinPrice();
@@ -78,25 +72,31 @@ public class ProductTestDataGenerator {
                 int MRP = purchasePrice + (purchasePrice*profitMargin)/100;
                 int openingPrice = new Random().nextInt(MRP - purchasePrice) + purchasePrice;
                 try {
-                    fileOutputStream.write((product.getProductId()+","+openingPrice + "," + purchasePrice + "," + MRP + "\n").getBytes());
+                    PriceDetails priceDetails = new PriceDetails(openingPrice,purchasePrice,MRP);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    fileOutputStream.write(objectMapper.writeValueAsBytes(priceDetails));
+                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
+                        fileOutputStream.write((",").getBytes());
+                    }
+                    fileOutputStream.write(("\n").getBytes());
                 } catch (IOException e) {
 
                 }
             });
+            fileOutputStream.write(("]").getBytes());
         }
     }
 
     private static void generateStepForecast () throws IOException {
-        File file = new File("d:/stepforecast.csv");
+        File file = new File("d:/stepforecast.json");
+        final DateTimeFormatter formatter =
+                DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            fileOutputStream.write(("productId,stepForecast1,stepForecast2,stepForecast3,stepForecast4,stepForecast5,stepForecast6\n").getBytes());
+            fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
-                try {
-                    fileOutputStream.write((product.getProductId()+",").getBytes());
-                } catch (IOException e) {
-                }
-                LocalDate startDate = LocalDate.now();
-                LocalDate endDate = LocalDate.now();
+
+                LocalDateTime startDate = LocalDateTime.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
+                LocalDateTime endDate = LocalDateTime.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
                 int newSubscription = 500;
                 int churnSubscription = 20;
                 int purchasePrice = new Random().nextInt(product.getMaxPrice()-product.getMinPrice()) +
@@ -110,26 +110,20 @@ public class ProductTestDataGenerator {
                     endDate = startDate.plusDays(product.getActualsAggregationPeriodForTargetForecast());
                     newSubscription = newSubscription + (newSubscription*(new Random().nextInt(product.getMaxPercentageIncreaseInForecast()
                         - product.getMinPercentageIncreaseInForecast())+product.getMinPercentageIncreaseInForecast()))/newSubscription;
+                    Forecast forecast = new Forecast(startDate, endDate, purchasePrice, MRP, newSubscription, churnSubscription);
+                    ObjectMapper objectMapper = new ObjectMapper();
                     try {
-                        fileOutputStream.write((
-                                "["+startDate+","+
-                                endDate+","+
-                                purchasePrice+","+
-                                MRP+","+
-                                newSubscription+","+
-                                churnSubscription+"]").getBytes());
-                        if (i!=6) {
-                            fileOutputStream.write((",").getBytes());
+                        fileOutputStream.write(objectMapper.writeValueAsBytes(forecast));
+                        if (Integer.parseInt(product.getProductId())-1 != products.size()) {
+                                fileOutputStream.write((",").getBytes());
                         }
+                        fileOutputStream.write(("\n").getBytes());
                     } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
-                try {
-                    fileOutputStream.write(("\n").getBytes());
-                } catch (IOException e) {
-
-                }
             });
+            fileOutputStream.write(("]").getBytes());
         }
     }
 

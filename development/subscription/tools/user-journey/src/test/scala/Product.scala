@@ -10,9 +10,9 @@ import scala.util.Random
 class Product extends BaseSimulator {
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct)
-    /*.repeat(2) {
+    .repeat(6) {
       AddProjectionParameter.addProjectionParameter
-    }*/
+    }
     .repeat(1) {
       AddConfigurationParameters.addConfigurationParameters
     }
@@ -52,7 +52,7 @@ object RegisterProduct {
 }
 
 object AddProjectionParameter {
-  val jsonFileFeeder = jsonFile("projectionparameter.json");
+  val jsonFileFeeder = jsonFile("stepforecast.json");
   val addProjectionParameter =
     feed(jsonFileFeeder)
       .exec(
