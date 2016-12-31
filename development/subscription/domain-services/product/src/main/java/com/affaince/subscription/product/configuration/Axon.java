@@ -117,7 +117,7 @@ public class Axon extends Default {
             put("com.affaince.subscription.business.command.event.ProvisionCreatedEvent", ProvisionCreatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.SubscriptionRuleAddedEvent", SubscriptionRuleAddedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.SubscriptionActivitySummaryEvent", SubscriptionActivitySummaryEvent.class.getName());
-
+            put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
         }};
     }
 

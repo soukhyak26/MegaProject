@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
  * Created by mandark on 22-08-2015.
  */
 @Component
-public class DeliveryDispatchedStatusListener {
+public class DeliveryDispatchStatusUpdatedEventListener {
 
     private final CommandGateway commandGateway;
 
     @Autowired
-    public DeliveryDispatchedStatusListener(CommandGateway gateway) {
+    public DeliveryDispatchStatusUpdatedEventListener(CommandGateway gateway) {
         this.commandGateway = gateway;
     }
 

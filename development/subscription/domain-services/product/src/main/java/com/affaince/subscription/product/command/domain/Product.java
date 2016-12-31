@@ -380,4 +380,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command) {
         this.getProductAccount().calculateExpectedProfitPerPriceBucket(command);
     }
+
+    public PriceBucket findPriceBucketByPriceBucketId (final String priceBucketId) {
+        return this.getProductAccount().findActivePriceBucketByPriceBucketId(priceBucketId);
+    }
 }

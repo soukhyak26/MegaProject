@@ -15,6 +15,7 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     private long numberOfExistingSubscriptions;
+    private long numberOfDeliveredSubscriptions;
     private double expectedProfit;
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
@@ -51,7 +52,13 @@ public class PriceBucket extends AbstractAnnotatedEntity {
         this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
     }
 
+    public long getNumberOfDeliveredSubscriptions() {
+        return numberOfDeliveredSubscriptions;
+    }
 
+    public void setNumberOfDeliveredSubscriptions(long numberOfDeliveredSubscriptions) {
+        this.numberOfDeliveredSubscriptions = numberOfDeliveredSubscriptions;
+    }
 
     public String getPriceBucketId() {
         return priceBucketId;
@@ -161,6 +168,13 @@ public class PriceBucket extends AbstractAnnotatedEntity {
             return getOfferedPriceOrPercentDiscountPerUnit();
         }
 
+    }
+
+    public void addDeliveredSubscriptionsAssociatedWithAPriceBucket(int subscriptionCount) {
+        long numberOfDeliveredSubscriptions = this.numberOfDeliveredSubscriptions + subscriptionCount;
+        if(this.numberOfDeliveredSubscriptions==this.numberOfExistingSubscriptions){
+            this.entityStatus=EntityStatus.EXPIRED;
+        }
     }
 
     public void addSubscriptionToPriceBucket(int subscriptionCount) {

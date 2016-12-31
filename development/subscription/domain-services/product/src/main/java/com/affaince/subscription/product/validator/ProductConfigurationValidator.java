@@ -29,14 +29,10 @@ public final class ProductConfigurationValidator {
                         break;
                     case PRODUCT_FORECASTED:
                         productReadinessStatuses.add(ProductReadinessStatus.STEPFORECASTABLE);
-                        //TODO: It should only be added after BUSINESS_PROVISION_CONFIGURABLE. Need to change after implementation of Business Provisioning
-                        productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
                         productReadinessStatuses.add(ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE);
                         break;
                     case PRODUCT_STEPFORECAST_CREATED:
                         productReadinessStatuses.add(ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE);
-                        //TODO: It should only be added after BUSINESS_PROVISION_CONFIGURABLE. Need to change after implementation of Business Provisioning
-                        productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
                         break;
                     case BUSINESS_PROVISIONED:
                         productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
