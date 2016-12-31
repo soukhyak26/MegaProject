@@ -20,7 +20,10 @@ class Product extends BaseSimulator {
       RegisterOpeningPrice.registerPrice
     }
 
-  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
+
+  Thread.sleep(1000)
+  setUp(scn2.inject(atOnceUsers(1)).protocols(http), scn.inject(atOnceUsers(2)).protocols(http))
 }
 
 object RegisterProduct {
@@ -29,6 +32,9 @@ object RegisterProduct {
   val createProductConfigUrl = "http://localhost:8082/productconfig"
   val createProjectionUrl = "http://localhost:8082/forecast"
   val registerOpeningPriceUrl = "http://localhost:8082/pricing/openprice"
+  val businessProvisionUrl = "http://localhost:8085/businessacount/setProvision"
+
+
   val productDetailsJsonFeeder = jsonFile("productdetails.json")
 
   val registerProduct = feed(productDetailsJsonFeeder)
@@ -121,4 +127,27 @@ object RegisterOpeningPrice {
         )
       ).asJSON
   )
+}
+
+object BusinessProvision {
+  val SetProvosion = exec(
+      http("Set Business Provisioning")
+        .post((RegisterProduct.businessProvisionUrl).el[String])
+        .body(
+          StringBody(
+            """
+              |{
+              |    "provisionForPurchaseCost":"100000.0",
+              |    "provisionForLosses":"50000.0",
+              |    "provisionForBenefits":"25000.0",
+              |    "provisionForTaxes":"20000.0",
+              |    "provisionForOthers":"10000.0",
+              |    "provisionForCommonExpenses":"10000.0",
+              |    "provisionForSubscriptionSpecificExpenses":"50000.0",
+              |    "provisionDate":"2016-04-29"
+              |}
+            """.stripMargin
+          )
+        ).asJSON
+    )
 }
