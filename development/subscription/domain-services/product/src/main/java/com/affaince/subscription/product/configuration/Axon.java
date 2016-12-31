@@ -8,6 +8,8 @@ import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.converters.ProductwisePriceBucketIdReaderConverter;
 import com.affaince.subscription.product.converters.ProductwisePricebucketIdWriterConverter;
+import com.affaince.subscription.product.converters.ProductwiseTaggedPriceVersionIdReaderConverter;
+import com.affaince.subscription.product.converters.ProductwiseTaggedPriceVersionIdWriterConverter;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
@@ -85,6 +87,8 @@ public class Axon extends Default {
         converters.add(new ProductVersionIdWriterConverter());
         converters.add(new ProductwisePriceBucketIdReaderConverter());
         converters.add(new ProductwisePricebucketIdWriterConverter());
+        converters.add(new ProductwiseTaggedPriceVersionIdReaderConverter());
+        converters.add(new ProductwiseTaggedPriceVersionIdWriterConverter());
         return new CustomConversions(converters);
     }
     @Bean
