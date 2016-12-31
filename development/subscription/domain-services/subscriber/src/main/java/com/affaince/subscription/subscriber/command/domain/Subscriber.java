@@ -202,6 +202,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateStatusAndDispatchDate(UpdateDeliveryStatusAndDispatchDateCommand command) {
         Delivery delivery = this.deliveries.get(command.getDeliveryId());
+        command.getItemDispatchStatuses().forEach(itemDispatchStatus -> itemDispatchStatus.setPriceBucketId(
+                delivery.getDeliveryItems().get(delivery.getDeliveryItems().indexOf(
+        new DeliveryItem(itemDispatchStatus.getItemId()))).getPriceBucketId()
+        ));
         apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getDeliveryId(),
                 command.getDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses(), delivery.getDeliveryCharges(),
