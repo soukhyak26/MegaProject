@@ -9,10 +9,12 @@ import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 06-07-2016.
  */
+@Component
 public class SubscriptionForecastUpdatedEventListener {
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductConfigurationViewRepository productConfigurationViewRepository;

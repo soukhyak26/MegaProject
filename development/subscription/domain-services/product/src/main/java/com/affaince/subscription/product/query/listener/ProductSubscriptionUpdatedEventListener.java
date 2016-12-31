@@ -11,10 +11,12 @@ import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 19-06-2016.
  */
+@Component
 public class ProductSubscriptionUpdatedEventListener {
     private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;

@@ -11,10 +11,12 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by rbsavaliya on 25-07-2015.
  */
+@Component
 public class ProductStatusUpdatedEventListener {
 
     private final ProductViewRepository productViewRepository;

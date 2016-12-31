@@ -20,6 +20,9 @@ public class ProductStatusUpdatedEvent {
         this.currentPriceDate = currentPrizeDate;
     }
 
+    public ProductStatusUpdatedEvent() {
+    }
+
     public String getProductId() {
         return this.productId;
     }

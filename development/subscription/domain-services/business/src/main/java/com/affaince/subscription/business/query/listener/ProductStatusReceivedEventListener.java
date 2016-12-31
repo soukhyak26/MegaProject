@@ -26,7 +26,7 @@ public class ProductStatusReceivedEventListener {
         BusinessAccountView businessAccountView = businessAccountViewRepository.findById(
                 Integer.valueOf(productStatusReceivedEvent.getCurrentPriceDate().getYear()).toString());
         businessAccountView.debitPurchaseCost(currentPurchasePrice);*/
-        ProductStatusReceivedCommand command = new ProductStatusReceivedCommand(event.getProductId(), event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentStockInUnits(), event.getCurrentPriceDate());
+        ProductStatusReceivedCommand command = new ProductStatusReceivedCommand(event.getProductId(), event.getCurrentPurchasePricePerUnit(), event.getCurrentMRP(), event.getCurrentStockInUnits(), event.getCurrentPriceDate());
         commandGateway.executeAsync(command);
     }
 }

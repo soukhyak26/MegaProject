@@ -1,6 +1,6 @@
 package com.affaince.subscription.business.command;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by anayonkar on 8/5/16.
@@ -10,9 +10,9 @@ public class ProductStatusReceivedCommand {
     private Double currentPurchasePrice;
     private Double currentMRP;
     private Integer currentStockInUnits;
-    private LocalDate currentPriceDate;
+    private LocalDateTime currentPriceDate;
 
-    public ProductStatusReceivedCommand(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits, LocalDate currentPriceDate) {
+    public ProductStatusReceivedCommand(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits, LocalDateTime currentPriceDate) {
         this.productId = productId;
         this.currentPurchasePrice = currentPurchasePrice;
         this.currentMRP = currentMRP;
@@ -57,11 +57,11 @@ public class ProductStatusReceivedCommand {
         this.currentStockInUnits = currentStockInUnits;
     }
 
-    public LocalDate getCurrentPriceDate() {
+    public LocalDateTime getCurrentPriceDate() {
         return currentPriceDate;
     }
 
-    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+    public void setCurrentPriceDate(LocalDateTime currentPriceDate) {
         this.currentPriceDate = currentPriceDate;
     }
 

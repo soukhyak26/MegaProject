@@ -2,15 +2,8 @@ package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.integration.command.event.basketdispatch.request.BasketDispatchRequestGeneratedEvent;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
-import com.affaince.subscription.integration.command.event.dailyquotes.ProductDailyQuoteGeneratedEvent;
-import com.affaince.subscription.integration.command.event.forecast.ProductForecastReceivedEvent;
-import com.affaince.subscription.integration.command.event.operatingexpense.OperatingExpenseReceivedEvent;
-import com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
-import com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductRegisteredEvent;
-import com.affaince.subscription.integration.command.event.stockdemand.ProductStockDemandGeneratedEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -20,6 +13,9 @@ import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -43,14 +39,14 @@ public class Axon extends Default {
         return new RouteBuilder() {
             public void configure() {
                 //INT_02: retreive subscriptioable items details from main application
-                from("${product.status.feed.source}").
+                from("file:D://abc?fileName=productStatusFeed.in&preMove=inprogress&move=backup/${date:now:yyyyMMdd}/${file:name}&idempotent=true").
                         unmarshal().bindy(BindyType.Csv, ProductStatusReceivedEvent.class).
-                        split(body().tokenize("\n")).streaming().
-                        to("${product.status.feed.destination}");
+                        split(body())
+                        .to("bean:publisher");
 
                 JacksonDataFormat df = new JacksonDataFormat(objectMapper(), BasketDispatchedStatusEvent.class);
 
-                //INT_05: update status of targetted dispatches every day
+               /* //INT_05: update status of targetted dispatches every day
                 from("${basket.dispatch.status.source}").
                         unmarshal().bindy(BindyType.Csv, BasketDispatchedStatusEvent.class).
                         split(body().tokenize("\n")).streaming().
@@ -93,7 +89,7 @@ public class Axon extends Default {
                 from("${operatingexpense.info.source}").
                         marshal().bindy(BindyType.Csv, OperatingExpenseReceivedEvent.class).
                         to("${operatingexpense.info.destination}");
-
+*/
             }
         };
     }
@@ -108,4 +104,9 @@ public class Axon extends Default {
         };
     }
 
+    @Override
+    @Bean(name = "types")
+    protected Map<String, String> types() {
+        return new HashMap<>();
+    }
 }

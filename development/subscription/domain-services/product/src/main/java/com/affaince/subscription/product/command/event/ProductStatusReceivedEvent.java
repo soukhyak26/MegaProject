@@ -7,36 +7,51 @@ import org.joda.time.LocalDateTime;
  */
 public class ProductStatusReceivedEvent {
     private String productId;
-    private double currentPurchasePrice;
+    private String categoryId;
+    private String subCategoryId;
+    private double currentPurchasePricePerUnit;
     private double currentMRP;
     private int currentStockInUnits;
     private LocalDateTime currentPriceDate;
 
-    public ProductStatusReceivedEvent(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDateTime currentPrizeDate) {
+    public ProductStatusReceivedEvent(String productId, String categoryId, String subCategoryId, double currentPurchasePricePerUnit, double currentMRP, int currentStockInUnits, LocalDateTime currentPriceDate) {
         this.productId = productId;
-        this.currentPurchasePrice = currentPurchasePrice;
+        this.categoryId = categoryId;
+        this.subCategoryId = subCategoryId;
+        this.currentPurchasePricePerUnit = currentPurchasePricePerUnit;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
-        this.currentPriceDate = currentPrizeDate;
+        this.currentPriceDate = currentPriceDate;
+    }
+
+    public ProductStatusReceivedEvent() {
     }
 
     public String getProductId() {
-        return this.productId;
+        return productId;
     }
 
-    public double getCurrentPurchasePrice() {
-        return this.currentPurchasePrice;
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public String getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public double getCurrentPurchasePricePerUnit() {
+        return currentPurchasePricePerUnit;
     }
 
     public double getCurrentMRP() {
-        return this.currentMRP;
+        return currentMRP;
     }
 
     public int getCurrentStockInUnits() {
-        return this.currentStockInUnits;
+        return currentStockInUnits;
     }
 
     public LocalDateTime getCurrentPriceDate() {
-        return this.currentPriceDate;
+        return currentPriceDate;
     }
 }

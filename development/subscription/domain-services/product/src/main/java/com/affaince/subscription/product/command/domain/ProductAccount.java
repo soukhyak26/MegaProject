@@ -415,11 +415,11 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void on(ProductStatusReceivedEvent event) {
         final String productId = event.getProductId();
         final PriceTaggedWithProduct currentTaggedPriceVersion = this.getLatestTaggedPriceVersion();
-        if (currentTaggedPriceVersion.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+        if (currentTaggedPriceVersion.getPurchasePricePerUnit() != event.getCurrentPurchasePricePerUnit()) {
             currentTaggedPriceVersion.setTaggedEndDate(SysDateTime.now());
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
+            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePricePerUnit(), event.getCurrentMRP(), event.getCurrentPriceDate());
             this.addNewTaggedPriceVersion(newtaggedPrice);
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
             latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());

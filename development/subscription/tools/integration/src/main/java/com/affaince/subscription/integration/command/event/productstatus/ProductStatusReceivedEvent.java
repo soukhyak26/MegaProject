@@ -1,9 +1,9 @@
 package com.affaince.subscription.integration.command.event.productstatus;
 
-import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.date.SysDateTime;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandark on 18-07-2015.
@@ -14,7 +14,7 @@ public class ProductStatusReceivedEvent {
     @DataField(name = "PRODUCT_ID", pos = 1, trim = true)
     private String productId;
     @DataField(name = "CATEGORY_ID", pos = 2, trim = true)
-    private String categroyId;
+    private String categoryId;
     @DataField(name = "SUBCATEGORY_ID", pos = 3, trim = true)
     private String subCategoryId;
     @DataField(name = "CURRENT_PURCHASE_PRICE_PER_UNIT", pos = 4, trim = true)
@@ -24,7 +24,7 @@ public class ProductStatusReceivedEvent {
     @DataField(name = "CURRENT_STOCK", pos = 6, trim = true)
     private int currentStockInUnits;
 
-    private LocalDate currentPriceDate = SysDate.now();
+    private LocalDateTime currentPriceDate = SysDateTime.now();
 
     public ProductStatusReceivedEvent() {
     }
@@ -38,11 +38,11 @@ public class ProductStatusReceivedEvent {
     }
 
     public String getCategoryId() {
-        return categroyId;
+        return categoryId;
     }
 
     public void setCategoryId(String categroyId) {
-        this.categroyId = categroyId;
+        this.categoryId = categroyId;
     }
 
     public String getProductId() {
@@ -77,11 +77,11 @@ public class ProductStatusReceivedEvent {
         this.currentStockInUnits = currentStockInUnits;
     }
 
-    public LocalDate getCurrentPriceDate() {
+    public LocalDateTime getCurrentPriceDate() {
         return this.currentPriceDate;
     }
 
-    public void setCurrentPriceDate(LocalDate currentPriceDate) {
+    public void setCurrentPriceDate(LocalDateTime currentPriceDate) {
         this.currentPriceDate = currentPriceDate;
     }
 
@@ -90,7 +90,7 @@ public class ProductStatusReceivedEvent {
     public String toString() {
         return "ProductStatusReceivedEvent{" +
                 "productId='" + productId + '\'' +
-                ", categroyId='" + categroyId + '\'' +
+                ", categoryId='" + categoryId + '\'' +
                 ", subCategoryId='" + subCategoryId + '\'' +
                 ", currentPurchasePricePerUnit=" + currentPurchasePricePerUnit +
                 ", currentMRP=" + currentMRP +
