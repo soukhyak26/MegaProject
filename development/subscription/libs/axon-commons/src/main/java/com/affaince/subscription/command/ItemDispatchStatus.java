@@ -9,6 +9,7 @@ public class ItemDispatchStatus {
 
     private String itemId;
     private DeliveryStatus itemDeliveryStatus;
+    private String priceBucketId;
 
     public ItemDispatchStatus(String itemId, DeliveryStatus itemDeliveryStatus) {
         this.itemId = itemId;
@@ -32,5 +33,13 @@ public class ItemDispatchStatus {
 
     public void setItemDeliveryStatus(DeliveryStatus itemDeliveryStatus) {
         this.itemDeliveryStatus = itemDeliveryStatus;
+    }
+
+    public String getPriceBucketId() {
+        return priceBucketId;
+    }
+
+    public void setPriceBucketId(String priceBucketId) {
+        this.priceBucketId = priceBucketId;
     }
 }
