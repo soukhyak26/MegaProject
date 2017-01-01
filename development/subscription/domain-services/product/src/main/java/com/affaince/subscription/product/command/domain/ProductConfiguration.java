@@ -24,7 +24,6 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private double tentativePercentageChangeInProductDemand;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
-
     public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;

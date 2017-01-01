@@ -41,6 +41,8 @@ public class BusinessAccountProvisionController {
                 request.getProvisionForOthers(),
                 request.getProvisionForCommonExpenses(),
                 request.getProvisionForSubscriptionSpecificExpenses(),
+                request.getDefaultPercentFixedExpensePerUnitPrice(),
+                request.getDefaultPercentVariableExpensePerUnitPrice(),
                 request.getProvisionDate());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);

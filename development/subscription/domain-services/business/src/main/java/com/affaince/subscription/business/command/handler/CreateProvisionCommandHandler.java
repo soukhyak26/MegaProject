@@ -39,6 +39,8 @@ public class CreateProvisionCommandHandler {
                 command.getProvisionForOthers(),
                 command.getProvisionForCommonExpenses(),
                 command.getProvisionForSubscriptionSpecificExpenses(),
+                command.getDefaultPercentFixedExpensePerUnitPrice(),
+                command.getDefaultPercentVariableExpensePerUnitPrice(),
                 command.getProvisionDate());
         repository.add(businessAccount);
     }

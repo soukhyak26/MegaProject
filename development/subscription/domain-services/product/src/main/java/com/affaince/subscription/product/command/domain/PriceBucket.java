@@ -1,8 +1,14 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.date.SysDateTime;
+import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucket;
+import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPriceBucketEvent;
+import com.affaince.subscription.product.command.event.PriceBucketExpiredEvent;
+import com.affaince.subscription.product.command.event.SubscriptionDeductedFromPriceBucketEvent;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -170,25 +176,47 @@ public class PriceBucket extends AbstractAnnotatedEntity {
 
     }
 
-    public void addDeliveredSubscriptionsAssociatedWithAPriceBucket(int subscriptionCount) {
-        long numberOfDeliveredSubscriptions = this.numberOfDeliveredSubscriptions + subscriptionCount;
-        if(this.numberOfDeliveredSubscriptions==this.numberOfExistingSubscriptions){
-            this.entityStatus=EntityStatus.EXPIRED;
+    public void addDeliveredSubscriptionsAssociatedWithAPriceBucket(String productId,long subscriptionCount) {
+        long deliveredSubscriptionCount=this.getNumberOfDeliveredSubscriptions() + subscriptionCount;
+        if(deliveredSubscriptionCount==this.numberOfExistingSubscriptions){
+            apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
         }
+        apply( new DeliveredSubscriptionCountAddedToPriceBucket(productId,this.priceBucketId,deliveredSubscriptionCount) );
     }
 
-    public void addSubscriptionToPriceBucket(int subscriptionCount) {
-        this.numberOfNewSubscriptions += subscriptionCount;
+    @EventSourcingHandler
+    public void on(DeliveredSubscriptionCountAddedToPriceBucket event){
+        this.setNumberOfDeliveredSubscriptions(event.getDeliveredSubscriptionCount());
+    }
+
+
+    public void addSubscriptionToPriceBucket(long subscriptionCount) {
+        long revisedNewSubscriptionCount=this.getNumberOfNewSubscriptions()+subscriptionCount;
+        long revisedTotalSubscriptionCount=this.getNumberOfExistingSubscriptions()+subscriptionCount;
+        apply(new NewSubscriptionAddedToPriceBucketEvent(productId,priceBucketId,revisedNewSubscriptionCount,revisedTotalSubscriptionCount));
+    }
+
+    @EventSourcingHandler
+    public void on(NewSubscriptionAddedToPriceBucketEvent event){
+        this.numberOfNewSubscriptions = event.getNewSubscriptionCount();
         //SHALL WE UPDATE TOTALSUBSCRIPTION COUNT ALSO?
-        this.numberOfExistingSubscriptions += subscriptionCount;
+        this.numberOfExistingSubscriptions = event.getTotalSubscriptionCount();
     }
 
     public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
-        this.numberOfChurnedSubscriptions -= subscriptionCount;
+        long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions +subscriptionCount;
+        long revisedTotalSubscriptionCount = this.numberOfExistingSubscriptions - subscriptionCount;
+        if(revisedTotalSubscriptionCount==0){
+            apply(new PriceBucketExpiredEvent(productId,priceBucketId,SysDateTime.now()));
+        }
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        this.numberOfExistingSubscriptions -= subscriptionCount;
+        apply(new SubscriptionDeductedFromPriceBucketEvent(productId,priceBucketId,revisedChurnedSubscriptionCount,revisedTotalSubscriptionCount));
     }
 
+    public void on(SubscriptionDeductedFromPriceBucketEvent event){
+            this.numberOfChurnedSubscriptions=event.getRevisedChurnedSubscriptionCount();
+            this.numberOfExistingSubscriptions=event.getRevisedTotalSubscriptionCount();
+    }
 
     public void expirePriceBucket() {
         this.setEntityStatus(EntityStatus.EXPIRED);

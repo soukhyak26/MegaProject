@@ -1,8 +1,11 @@
 package com.affaince.subscription.business.query.listener;
 
+import com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseCreditedEvent;
 import com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseDebitedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.repository.VariableExpenseAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
+import com.affaince.subscription.business.query.view.VariableExpenseAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,17 +15,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SubscriptionSpecificExpenseDebitedEventListener {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final VariableExpenseAccountViewRepository variableExpenseAccountViewRepository;
 
     @Autowired
-    public SubscriptionSpecificExpenseDebitedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public SubscriptionSpecificExpenseDebitedEventListener(VariableExpenseAccountViewRepository variableExpenseAccountViewRepository) {
+        this.variableExpenseAccountViewRepository = variableExpenseAccountViewRepository;
     }
 
     @EventHandler
     public void on(SubscriptionSpecificExpenseDebitedEvent event) {
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
-        businessAccountView.getProvisoinalSubscriptionSpecificExpensesAccount().debit(event.getAmountToDebit());
-        businessAccountViewRepository.save(businessAccountView);
+        VariableExpenseAccountView variableExpenseAccountView = variableExpenseAccountViewRepository.findOne(event.getYear());
+        variableExpenseAccountView.debit(event.getAmountToDebit());
+        variableExpenseAccountViewRepository.save(variableExpenseAccountView);
     }
 }

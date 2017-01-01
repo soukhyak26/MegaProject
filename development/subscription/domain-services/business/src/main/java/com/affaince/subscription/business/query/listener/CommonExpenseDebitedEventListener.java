@@ -1,8 +1,11 @@
 package com.affaince.subscription.business.query.listener;
 
+import com.affaince.subscription.business.command.event.CommonExpenseCreditedEvent;
 import com.affaince.subscription.business.command.event.CommonExpenseDebitedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.repository.CommonExpenseAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
+import com.affaince.subscription.business.query.view.CommonExpenseAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,17 +15,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CommonExpenseDebitedEventListener {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final CommonExpenseAccountViewRepository commonExpenseAccountViewRepository;
 
     @Autowired
-    public CommonExpenseDebitedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public CommonExpenseDebitedEventListener(CommonExpenseAccountViewRepository commonExpenseAccountViewRepository) {
+        this.commonExpenseAccountViewRepository = commonExpenseAccountViewRepository;
     }
 
     @EventHandler
     public void on(CommonExpenseDebitedEvent event) {
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
-        businessAccountView.getProvisionalCommonExpensesAccount().debit(event.getAmountToDebit());
-        businessAccountViewRepository.save(businessAccountView);
+        CommonExpenseAccountView commonExpenseAccountView = commonExpenseAccountViewRepository.findOne(event.getYear());
+        commonExpenseAccountView.debit(event.getAmountToDebit());
+        commonExpenseAccountViewRepository.save(commonExpenseAccountView);
     }
 }

@@ -73,10 +73,12 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private InterestsAccount interestsGainAccount;
 
-
     private LocalDate dateForProvision;
 
     private static final String INIT_ERROR_MESSAGE = "Please make sure that BusinessAccount aggregate is properly created via CreateProvisionEvent";
+
+    private double defaultPercentFixedExpensePerUnitPrice =1.0;
+    private double defaultPercentVariableExpensePerUnitPrice=1.0;
 
     public BusinessAccount() {
 
@@ -90,6 +92,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                            double provisionForOthers,
                            double provisionForCommonExpenses,
                            double provisionForSubscriptionSpecificExpenses,
+                           double defaultPercentFixedExpensePerUnitPrice,
+                           double defaultPercentVariableExpensePerUnitPrice,
                            LocalDate provisionDate) {
 
         apply(new ProvisionCreatedEvent(id,
@@ -100,6 +104,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                 provisionForOthers,
                 provisionForCommonExpenses,
                 provisionForSubscriptionSpecificExpenses,
+                defaultPercentFixedExpensePerUnitPrice,
+                defaultPercentVariableExpensePerUnitPrice,
                 provisionDate));
     }
 
@@ -184,6 +190,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
         this.revenueAccount = new RevenueAccount(0, dateForProvision);
         this.interestsGainAccount = new InterestsAccount(0, dateForProvision);
+        this.defaultPercentFixedExpensePerUnitPrice=defaultPercentFixedExpensePerUnitPrice;
+        this.defaultPercentVariableExpensePerUnitPrice=defaultPercentVariableExpensePerUnitPrice;
     }
 
     /*private void validateInitialization(Object... inputs) {

@@ -13,6 +13,8 @@ public class ProvisionRequest {
     private double provisionForOthers;
     private double provisionForCommonExpenses;
     private double provisionForSubscriptionSpecificExpenses;
+    private double defaultPercentFixedExpensePerUnitPrice;
+    private double defaultPercentVariableExpensePerUnitPrice;
     private LocalDate provisionDate;
 
     public ProvisionRequest() {
@@ -26,6 +28,8 @@ public class ProvisionRequest {
                             double provisionForOthers,
                             double provisionForCommonExpenses,
                             double provisionForSubscriptionSpecificExpenses,
+                            double defaultPercentFixedExpensePerUnitPrice,
+                            double defaultPercentVariableExpensePerUnitPrice,
                             LocalDate provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
@@ -34,6 +38,8 @@ public class ProvisionRequest {
         this.provisionForOthers = provisionForOthers;
         this.provisionForCommonExpenses = provisionForCommonExpenses;
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
+        this.defaultPercentFixedExpensePerUnitPrice=defaultPercentFixedExpensePerUnitPrice;
+        this.defaultPercentVariableExpensePerUnitPrice=defaultPercentVariableExpensePerUnitPrice;
         this.provisionDate = provisionDate;
     }
 
@@ -99,6 +105,23 @@ public class ProvisionRequest {
 
     public void setProvisionDate(LocalDate provisionDate) {
         this.provisionDate = provisionDate;
+    }
+
+
+    public double getDefaultPercentFixedExpensePerUnitPrice() {
+        return defaultPercentFixedExpensePerUnitPrice;
+    }
+
+    public void setDefaultPercentFixedExpensePerUnitPrice(double defaultPercentFixedExpensePerUnitPrice) {
+        this.defaultPercentFixedExpensePerUnitPrice = defaultPercentFixedExpensePerUnitPrice;
+    }
+
+    public double getDefaultPercentVariableExpensePerUnitPrice() {
+        return defaultPercentVariableExpensePerUnitPrice;
+    }
+
+    public void setDefaultPercentVariableExpensePerUnitPrice(double defaultPercentVariableExpensePerUnitPrice) {
+        this.defaultPercentVariableExpensePerUnitPrice = defaultPercentVariableExpensePerUnitPrice;
     }
 
     @Override

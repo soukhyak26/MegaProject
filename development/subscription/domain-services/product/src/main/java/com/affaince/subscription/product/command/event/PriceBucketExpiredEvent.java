@@ -7,13 +7,13 @@ import org.joda.time.LocalDateTime;
  * Created by mandar on 29-12-2016.
  */
 public class PriceBucketExpiredEvent {
-    String productId;
-    String priceBucketId;
-    LocalDateTime expiryTime;
-    public PriceBucketExpiredEvent(String productId, String priceBucketId) {
+    private String productId;
+    private String priceBucketId;
+    private LocalDateTime expiryTime;
+    public PriceBucketExpiredEvent(String productId, String priceBucketId,LocalDateTime expiryTime) {
         this.productId=productId;
         this.priceBucketId=priceBucketId;
-        this.expiryTime= SysDateTime.now();
+        this.expiryTime= expiryTime;
     }
 
     public String getProductId() {

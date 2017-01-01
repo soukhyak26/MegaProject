@@ -35,6 +35,7 @@ public class BusinessDomainCommandsTest {
                 10000.0,
                 10000.0,
                 50000.0,
+                0.1,0.1,
                 SysDate.now());
         try {
             commandGateway.executeAsync(createProvisionCommand);

@@ -391,7 +391,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             }else{
                 activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
                 if(activePriceBucket.getNumberOfExistingSubscriptions()==0){
-                    apply(new PriceBucketExpiredEvent(event.getProductId(),priceBucketId));
+                    apply(new PriceBucketExpiredEvent(event.getProductId(),priceBucketId,SysDateTime.now()));
                 }
             }
         });

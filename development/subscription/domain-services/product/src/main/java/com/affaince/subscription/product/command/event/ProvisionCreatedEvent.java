@@ -14,6 +14,9 @@ public class ProvisionCreatedEvent {
     private double provisionForOthers;
     private double provisionForCommonExpenses;
     private double provisionForSubscriptionSpecificExpenses;
+    private double defaultPercentFixedExpensePerUnitPrice;
+    private double defaultPercentVariableExpensePerUnitPrice;
+
     private LocalDate provisionDate;
 
     public ProvisionCreatedEvent() {
@@ -27,6 +30,8 @@ public class ProvisionCreatedEvent {
                                  double provisionForOthers,
                                  double provisionForCommonExpenses,
                                  double provisionForSubscriptionSpecificExpenses,
+                                 double defaultPercentFixedExpensePerUnitPrice,
+                                 double defaultPercentVariableExpensePerUnitPrice,
                                  LocalDate provisionDate) {
         this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;
@@ -36,6 +41,8 @@ public class ProvisionCreatedEvent {
         this.provisionForOthers = provisionForOthers;
         this.provisionForCommonExpenses = provisionForCommonExpenses;
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
+        this.defaultPercentFixedExpensePerUnitPrice=defaultPercentFixedExpensePerUnitPrice;
+        this.defaultPercentVariableExpensePerUnitPrice=defaultPercentVariableExpensePerUnitPrice;
         this.provisionDate = provisionDate;
     }
 
@@ -109,5 +116,13 @@ public class ProvisionCreatedEvent {
 
     public void setProvisionForSubscriptionSpecificExpenses(double provisionForSubscriptionSpecificExpenses) {
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
+    }
+
+    public double getDefaultPercentFixedExpensePerUnitPrice() {
+        return defaultPercentFixedExpensePerUnitPrice;
+    }
+
+    public double getDefaultPercentVariableExpensePerUnitPrice() {
+        return defaultPercentVariableExpensePerUnitPrice;
     }
 }

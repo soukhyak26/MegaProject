@@ -2,7 +2,9 @@ package com.affaince.subscription.business.query.listener;
 
 import com.affaince.subscription.business.command.event.CommonExpenseCreditedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.repository.CommonExpenseAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
+import com.affaince.subscription.business.query.view.CommonExpenseAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,17 +14,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CommonExpenseCreditedEventListener {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final CommonExpenseAccountViewRepository commonExpenseAccountViewRepository;
 
     @Autowired
-    public CommonExpenseCreditedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public CommonExpenseCreditedEventListener(CommonExpenseAccountViewRepository commonExpenseAccountViewRepository) {
+        this.commonExpenseAccountViewRepository = commonExpenseAccountViewRepository;
     }
 
     @EventHandler
     public void on(CommonExpenseCreditedEvent event) {
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
-        businessAccountView.getCommonExpensesAccount().credit(event.getAmountToCredit());
-        businessAccountViewRepository.save(businessAccountView);
+        CommonExpenseAccountView commonExpenseAccountView = commonExpenseAccountViewRepository.findOne(event.getYear());
+        commonExpenseAccountView.credit(event.getAmountToCredit());
+        commonExpenseAccountViewRepository.save(commonExpenseAccountView);
     }
 }

@@ -1,5 +1,7 @@
 package com.affaince.subscription.business.command.event;
 
+import org.joda.time.YearMonth;
+
 /**
  * Created by anayonkar on 9/5/16.
  */
@@ -9,8 +11,8 @@ public abstract class CreditedEvent extends AccountingEvent {
     public CreditedEvent() {
     }
 
-    protected CreditedEvent(String businessAccountId, double amountToCredit) {
-        super(businessAccountId);
+    protected CreditedEvent(String year, double amountToCredit) {
+        super(year);
         this.amountToCredit = amountToCredit;
     }
 

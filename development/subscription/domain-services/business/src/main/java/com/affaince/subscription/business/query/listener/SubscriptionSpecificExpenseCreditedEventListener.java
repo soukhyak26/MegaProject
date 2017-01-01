@@ -2,7 +2,9 @@ package com.affaince.subscription.business.query.listener;
 
 import com.affaince.subscription.business.command.event.SubscriptionSpecificExpenseCreditedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.repository.VariableExpenseAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
+import com.affaince.subscription.business.query.view.VariableExpenseAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,17 +14,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SubscriptionSpecificExpenseCreditedEventListener {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final VariableExpenseAccountViewRepository variableExpenseAccountViewRepository;
 
     @Autowired
-    public SubscriptionSpecificExpenseCreditedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public SubscriptionSpecificExpenseCreditedEventListener(VariableExpenseAccountViewRepository variableExpenseAccountViewRepository) {
+        this.variableExpenseAccountViewRepository = variableExpenseAccountViewRepository;
     }
 
     @EventHandler
     public void on(SubscriptionSpecificExpenseCreditedEvent event) {
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
-        businessAccountView.getSubscriptionSpecificExpensesAccount().credit(event.getAmountToCredit());
-        businessAccountViewRepository.save(businessAccountView);
+        VariableExpenseAccountView variableExpenseAccountView = variableExpenseAccountViewRepository.findOne(event.getYear());
+        variableExpenseAccountView.credit(event.getAmountToCredit());
+        variableExpenseAccountViewRepository.save(variableExpenseAccountView);
     }
 }

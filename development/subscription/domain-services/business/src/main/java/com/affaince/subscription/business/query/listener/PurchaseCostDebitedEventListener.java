@@ -1,8 +1,11 @@
 package com.affaince.subscription.business.query.listener;
 
+import com.affaince.subscription.business.command.event.PurchaseCostCreditedEvent;
 import com.affaince.subscription.business.command.event.PurchaseCostDebitedEvent;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.repository.PurchaseCostAccountViewRepository;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
+import com.affaince.subscription.business.query.view.PurchaseCostAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,17 +15,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PurchaseCostDebitedEventListener {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final PurchaseCostAccountViewRepository purchaseCostAccountViewRepository;
 
     @Autowired
-    public PurchaseCostDebitedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public PurchaseCostDebitedEventListener(PurchaseCostAccountViewRepository purchaseCostAccountViewRepository) {
+        this.purchaseCostAccountViewRepository = purchaseCostAccountViewRepository;
     }
 
     @EventHandler
     public void on(PurchaseCostDebitedEvent event) {
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
-        businessAccountView.getProvisionalPurchaseCostAccount().debit(event.getAmountToDebit());
-        businessAccountViewRepository.save(businessAccountView);
+        PurchaseCostAccountView purchaseCostAccountView = purchaseCostAccountViewRepository.findOne(event.getYear());
+        purchaseCostAccountView.debit(event.getAmountToDebit());
+        purchaseCostAccountViewRepository.save(purchaseCostAccountView);
     }
 }

@@ -13,6 +13,8 @@ public class CreateProvisionCommand {
     private Double provisionForOthers;
     private Double provisionForCommonExpenses;
     private Double provisionForSubscriptionSpecificExpenses;
+    private double defaultPercentFixedExpensePerUnitPrice;
+    private double defaultPercentVariableExpensePerUnitPrice;
     private LocalDate provisionDate;
     private String businessAccountId;
 
@@ -23,6 +25,8 @@ public class CreateProvisionCommand {
                                   Double provisionForOthers,
                                   Double provisionForCommonExpenses,
                                   Double provisionForSubscriptionSpecificExpenses,
+                                  double defaultPercentFixedExpensePerUnitPrice,
+                                  double defaultPercentVariableExpensePerUnitPrice,
                                   LocalDate provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
@@ -31,6 +35,8 @@ public class CreateProvisionCommand {
         this.provisionForOthers = provisionForOthers;
         this.provisionForCommonExpenses = provisionForCommonExpenses;
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
+        this.defaultPercentFixedExpensePerUnitPrice=defaultPercentFixedExpensePerUnitPrice;
+        this.defaultPercentVariableExpensePerUnitPrice=defaultPercentVariableExpensePerUnitPrice;
         this.provisionDate = provisionDate;
         businessAccountId = Integer.valueOf(provisionDate.getYear()).toString();
     }
@@ -101,5 +107,13 @@ public class CreateProvisionCommand {
 
     public void setProvisionForSubscriptionSpecificExpenses(Double provisionForSubscriptionSpecificExpenses) {
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
+    }
+
+    public double getDefaultPercentFixedExpensePerUnitPrice() {
+        return defaultPercentFixedExpensePerUnitPrice;
+    }
+
+    public double getDefaultPercentVariableExpensePerUnitPrice() {
+        return defaultPercentVariableExpensePerUnitPrice;
     }
 }

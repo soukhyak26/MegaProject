@@ -1,7 +1,10 @@
 package com.affaince.subscription.business.query.listener;
 
+import com.affaince.subscription.business.command.event.BenefitCreditedEvent;
 import com.affaince.subscription.business.command.event.BenefitDebitedEvent;
+import com.affaince.subscription.business.query.repository.BenefitAccountViewRepository;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.view.BenefitAccountView;
 import com.affaince.subscription.business.query.view.BusinessAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +15,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BenefitDebitedEventListener {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final BenefitAccountViewRepository benefitAccountViewRepository;
 
     @Autowired
-    public BenefitDebitedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public BenefitDebitedEventListener(BenefitAccountViewRepository benefitAccountViewRepository) {
+        this.benefitAccountViewRepository = benefitAccountViewRepository;
     }
 
     @EventHandler
     public void on(BenefitDebitedEvent event) {
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findById(event.getBusinessAccountId());
-        businessAccountView.getProvisionalBenefitsAccount().debit(event.getAmountToDebit());
-        businessAccountViewRepository.save(businessAccountView);
+        BenefitAccountView benefitAccountView = benefitAccountViewRepository.findOne(event.getYear());
+        benefitAccountView.debit(event.getAmountToDebit());
+        benefitAccountViewRepository.save(benefitAccountView);
     }
 }
