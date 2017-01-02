@@ -9,8 +9,8 @@ import com.affaince.subscription.product.query.repository.ProductForecastViewRep
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
-import com.affaince.subscription.product.vo.ProductForecastParameter;
-import com.affaince.subscription.product.web.exception.ProductForecastAlreadyExistsException;
+import com.affaince.subscription.common.vo.ProductForecastParameter;
+import com.affaince.subscription.query.exception.ProductForecastAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;

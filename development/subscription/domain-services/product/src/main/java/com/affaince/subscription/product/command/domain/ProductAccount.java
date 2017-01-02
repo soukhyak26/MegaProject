@@ -274,7 +274,16 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
 
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
-        apply(new ProductSubscriptionUpdatedEvent(command.getProductId(), command.getPriceBucketWiseSubscriptionCount()));
+        final Map<String,Integer> priceBucketWiseSubscriptionCount=command.getPriceBucketWiseSubscriptionCount();
+        priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId->{
+            final PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(priceBucketId);
+            final int subscriptionCount=priceBucketWiseSubscriptionCount.get(priceBucketId);
+            if(subscriptionCount>0){
+                activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount);
+            }else{
+                activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
+            }
+        });
     }
 
     //Product status should be received from main application
@@ -379,22 +388,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void on(PriceBucketWiseProfitCalculatedEvent event){
         PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
         activePriceBucket.setExpectedProfit(event.getProfitAmountPerPriceBucket());
-    }
-    @EventSourcingHandler
-    public void on(ProductSubscriptionUpdatedEvent event) {
-        final Map<String,Integer> priceBucketWiseSubscriptionCount=event.getPriceBucketWiseSubscriptionCount();
-        priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId->{
-            final PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(priceBucketId);
-            final int subscriptionCount=priceBucketWiseSubscriptionCount.get(priceBucketId);
-            if(subscriptionCount>0){
-                activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount);
-            }else{
-                activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
-                if(activePriceBucket.getNumberOfExistingSubscriptions()==0){
-                    apply(new PriceBucketExpiredEvent(event.getProductId(),priceBucketId,SysDateTime.now()));
-                }
-            }
-        });
     }
 
     @EventSourcingHandler

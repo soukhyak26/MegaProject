@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.command;
 
-import com.affaince.subscription.product.vo.ProductForecastParameter;
+import com.affaince.subscription.common.vo.ProductForecastParameter;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**

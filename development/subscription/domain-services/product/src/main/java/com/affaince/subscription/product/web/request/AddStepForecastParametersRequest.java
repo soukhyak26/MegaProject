@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.web.request;
 
-import com.affaince.subscription.product.vo.ProductForecastParameter;
+import com.affaince.subscription.common.vo.ProductForecastParameter;
 
 /**
  * Created by mandar on 13-09-2016.

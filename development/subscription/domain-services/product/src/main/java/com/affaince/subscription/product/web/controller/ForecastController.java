@@ -9,9 +9,8 @@ import com.affaince.subscription.product.command.UpdateForecastFromActualsComman
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
-import com.affaince.subscription.product.vo.ProductForecastParameter;
 import com.affaince.subscription.product.vo.ProductTargetParameters;
-import com.affaince.subscription.product.web.exception.ProductForecastAlreadyExistsException;
+import com.affaince.subscription.query.exception.ProductForecastAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductForecastModificationException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.AddForecastParametersRequest;

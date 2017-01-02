@@ -1,5 +1,6 @@
 package com.affaince.subscription.business.command.event;
 
+import com.affaince.subscription.common.vo.ProductForecastParameter;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -7,55 +8,23 @@ import org.joda.time.LocalDateTime;
  */
 public class ManualForecastAddedEvent {
     private String productId;
-    private double purchasePricePerUnit;
-    private double mrp;
-    private long numberOfNewSubscriptions;
-    private long numberOfChurnedSubscriptions;
-    private long numberOfTotalSubscriptions;
-    private LocalDateTime forecastStartDate;
-    private LocalDateTime forecastEndDate;
+    private ProductForecastParameter[] productForecastParameters;
 
-    public ManualForecastAddedEvent(String productId, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfTotalSubscriptions, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate) {
+
+    public ManualForecastAddedEvent(String productId, ProductForecastParameter[] productForecastParameters) {
         this.productId = productId;
-        this.purchasePricePerUnit = purchasePricePerUnit;
-        this.mrp = mrp;
-        this.numberOfNewSubscriptions = numberOfNewSubscriptions;
-        this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
-        this.numberOfTotalSubscriptions = numberOfTotalSubscriptions;
-        this.forecastStartDate = forecastStartDate;
-        this.forecastEndDate = forecastEndDate;
+        this.productForecastParameters = productForecastParameters;
     }
 
-    public double getPurchasePricePerUnit() {
-        return purchasePricePerUnit;
-    }
-
-    public double getMrp() {
-        return mrp;
-    }
-
-    public long getNumberOfNewSubscriptions() {
-        return numberOfNewSubscriptions;
-    }
-
-    public long getNumberOfChurnedSubscriptions() {
-        return numberOfChurnedSubscriptions;
-    }
-
-    public long getNumberOfTotalSubscriptions() {
-        return numberOfTotalSubscriptions;
-    }
-
-    public LocalDateTime getForecastStartDate() {
-        return forecastStartDate;
-    }
-
-    public LocalDateTime getForecastEndDate() {
-        return forecastEndDate;
+    public ManualForecastAddedEvent() {
     }
 
     public String getProductId() {
         return productId;
+    }
+
+    public ProductForecastParameter[] getProductForecastParameters() {
+        return productForecastParameters;
     }
 
 }

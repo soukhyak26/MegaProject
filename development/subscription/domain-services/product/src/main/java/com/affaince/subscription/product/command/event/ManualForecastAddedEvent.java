@@ -1,13 +1,13 @@
 package com.affaince.subscription.product.command.event;
 
-import com.affaince.subscription.product.vo.ProductForecastParameter;
+import com.affaince.subscription.common.vo.ProductForecastParameter;
 
 /**
  * Created by mandar on 06-10-2016.
  */
 public class ManualForecastAddedEvent {
     private String productId;
-    ProductForecastParameter[] productForecastParameters;
+    private ProductForecastParameter[] productForecastParameters;
 
 
     public ManualForecastAddedEvent(String productId, ProductForecastParameter[] productForecastParameters) {

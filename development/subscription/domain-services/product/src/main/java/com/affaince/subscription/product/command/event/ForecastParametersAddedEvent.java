@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
-import com.affaince.subscription.product.vo.ProductForecastParameter;
+import com.affaince.subscription.common.vo.ProductForecastParameter;
 
 /**
  * Created by rbsavaliya on 26-07-2015.

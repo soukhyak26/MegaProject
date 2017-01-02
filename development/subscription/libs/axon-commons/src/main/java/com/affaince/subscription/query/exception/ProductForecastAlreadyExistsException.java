@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.web.exception;
+package com.affaince.subscription.query.exception;
 
 import org.joda.time.LocalDateTime;
 
