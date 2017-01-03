@@ -30,13 +30,15 @@ public final class ProductConfigurationValidator {
                     case PRODUCT_FORECASTED:
                         productReadinessStatuses.add(ProductReadinessStatus.STEPFORECASTABLE);
                         productReadinessStatuses.add(ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE);
+                        productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
                         break;
                     case PRODUCT_STEPFORECAST_CREATED:
                         productReadinessStatuses.add(ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE);
-                        break;
-                    case BUSINESS_PROVISIONED:
                         productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
                         break;
+                    /*case BUSINESS_PROVISIONED:
+                        productReadinessStatuses.add(ProductReadinessStatus.PRICEASSIGNABLE);
+                        break;*/
                     case PRODUCT_PRICE_ASSIGNED:
                         productReadinessStatuses.add(ProductReadinessStatus.ACTIVABLE);
                         break;
