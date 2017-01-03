@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 
 /**
@@ -8,12 +9,14 @@ import com.affaince.subscription.product.command.domain.PriceBucket;
 public class OfferedPriceChangedEvent {
     private String productId;
     private PriceBucket newPriceBucket;
+    private ProductDemandTrend productDemandTrend;
 
     public OfferedPriceChangedEvent() {
     }
-    public OfferedPriceChangedEvent(String productId, PriceBucket newPriceBucket) {
+    public OfferedPriceChangedEvent(String productId, PriceBucket newPriceBucket,ProductDemandTrend productDemandTrend) {
         this.productId = productId;
         this.newPriceBucket = newPriceBucket;
+        this.productDemandTrend=productDemandTrend;
     }
 
     public String getProductId() {
@@ -22,5 +25,9 @@ public class OfferedPriceChangedEvent {
 
     public PriceBucket getNewPriceBucket() {
         return newPriceBucket;
+    }
+
+    public ProductDemandTrend getProductDemandTrend() {
+        return productDemandTrend;
     }
 }

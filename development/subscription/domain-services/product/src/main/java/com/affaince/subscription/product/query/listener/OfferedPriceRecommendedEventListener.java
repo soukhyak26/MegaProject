@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.listener;
 
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.OfferedPriceRecommendedEvent;

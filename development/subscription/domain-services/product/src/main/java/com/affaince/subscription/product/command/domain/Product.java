@@ -44,6 +44,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
     //private List<ProductStatus> productActivationStatusList;
     private boolean isProductActivated = false;
+    private ProductDemandTrend productDemandTrend;
 
     public Product() {
 
@@ -100,6 +101,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(OfferedPriceRecommendedEvent event) {
+        this.productDemandTrend=event.getProductDemandTrend();
         getProductAccount().addNewPriceRecommendation(event.getNewPriceBucket().getFromDate(), event.getNewPriceBucket());
 
     }
@@ -128,6 +130,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().removeRecommendedPriceBucket(latestRecommendedPriceBucket);
     }
 
+    @EventSourcingHandler
     public void on(ProductActivatedEvent event) {
         this.productId = event.getProductId();
         this.isProductActivated = true;
@@ -179,6 +182,14 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public QuantityUnit getQuantityUnit() {
         return this.quantityUnit;
+    }
+
+    public boolean isProductActivated() {
+        return isProductActivated;
+    }
+
+    public ProductDemandTrend getProductDemandTrend() {
+        return productDemandTrend;
     }
 
     public double getLatestPurchasePrice() {
@@ -304,10 +315,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             //latestPriceBucket.setToDate(event.getCurrentPriceDate());
             if (productConfiguration.getPricingOptions() == PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
                 //shall we keep the same date as mentioned in recommended bucket?? for now....yes
-                apply(new OfferedPriceChangedEvent(this.productId, newPriceBucket));
+                apply(new OfferedPriceChangedEvent(this.productId, newPriceBucket,productDemandTrend));
             } else {
                 //this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
-                apply(new OfferedPriceRecommendedEvent(this.productId, newPriceBucket));
+                apply(new OfferedPriceRecommendedEvent(this.productId, newPriceBucket,productDemandTrend));
             }
         }
     }
@@ -349,7 +360,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void acceptRecommendedPrice() {
-        apply(new OfferedPriceChangedEvent(productId, getLatestRecommendedPriceBucket()));
+        apply(new OfferedPriceChangedEvent(productId, getLatestRecommendedPriceBucket(),this.productDemandTrend));
     }
 
     public void overrideRecommendedPrice(double overriddenPriceOrPercent) {
@@ -359,7 +370,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         //Change price ONLY if difference between latest price and new price is more than 0.5 money? BUT WHAT ABOUT PERCENT DICOUNT.. NEEDS CORRECTION
         if (Math.abs(latestPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() - overriddenPriceOrPercent) > 0.5) {
             PriceBucket newPriceBucket = createNewPriceBucket(productId, latestRecommendedPriceBucket.getTaggedPriceVersion(), overriddenPriceOrPercent, latestRecommendedPriceBucket.getEntityStatus(), latestRecommendedPriceBucket.getFromDate());
-            apply(new OfferedPriceChangedEvent(productId, newPriceBucket));
+            apply(new OfferedPriceChangedEvent(productId, newPriceBucket,this.productDemandTrend));
         }
     }
 
