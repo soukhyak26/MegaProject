@@ -3,15 +3,11 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.command.RecalculateOfferPriceCommand;
 import com.affaince.subscription.product.command.event.ProductStatusUpdatedEvent;
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.TaggedPriceVersionsViewRepository;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.query.view.TaggedPriceVersionsView;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -19,6 +15,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 25-07-2015.
@@ -49,8 +47,10 @@ public class ProductStatusUpdatedEventListener {
         //if purchase price in incoming event and that of latest price bucket are same do nothing,as there is no change;Else create new price bucket and set new purchase price/MRP in it.
         //ProductActualsView latestView = productActualsViewRepository.findByProductVersionId_ProductId(event.getProductId(),sort).get(0);
 
-        TaggedPriceVersionsView latestTaggedPriceVersionsView = taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(event.getProductId(),sort).get(0);
-        if (latestTaggedPriceVersionsView.getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
+
+        List<TaggedPriceVersionsView> latestTaggedPriceVersionsViews = taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(event.getProductId(),sort);
+        if (latestTaggedPriceVersionsViews.isEmpty() ||
+                (latestTaggedPriceVersionsViews.get(0).getPurchasePricePerUnit() != event.getCurrentPurchasePrice())) {
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             final String taggedPriceVersionId = event.getProductId() + event.getCurrentPriceDate().toString(format);
             TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(event.getProductId(),taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate(),new LocalDateTime(9999,12,31,0,0,0));
@@ -58,6 +58,5 @@ public class ProductStatusUpdatedEventListener {
             RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate(),new LocalDateTime(9999,12,31,0,0,0));
             commandGateway.executeAsync(command);
         }
-
     }
 }
