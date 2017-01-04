@@ -7,7 +7,7 @@ public class BenefitDebitedEvent extends DebitedEvent {
     public BenefitDebitedEvent() {
     }
 
-    public BenefitDebitedEvent(String businessAccountId, double amountToDebit) {
+    public BenefitDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

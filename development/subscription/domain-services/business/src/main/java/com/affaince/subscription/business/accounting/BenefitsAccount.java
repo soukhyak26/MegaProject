@@ -4,11 +4,9 @@ import com.affaince.subscription.business.command.event.BenefitCreditedEvent;
 import com.affaince.subscription.business.command.event.BenefitDebitedEvent;
 import com.affaince.subscription.business.command.event.CreditedEvent;
 import com.affaince.subscription.business.command.event.DebitedEvent;
-import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonth;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by anayonkar on 9/5/16.
@@ -17,14 +15,14 @@ public class BenefitsAccount extends AbstractAnnotatedEntity {
 
     private double startAmount;
     private double currentAmount;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public BenefitsAccount(double startAmount, LocalDate endDate) {
+    public BenefitsAccount(double startAmount, LocalDateTime endDate) {
         this.startAmount = startAmount;
         this.endDate = endDate;
         this.currentAmount = startAmount;
-        this.startDate = SysDate.now();
+        this.startDate = LocalDateTime.now();
 
     }
     public void debit(double amount) {
@@ -45,11 +43,11 @@ public class BenefitsAccount extends AbstractAnnotatedEntity {
         return currentAmount;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -61,11 +59,11 @@ public class BenefitsAccount extends AbstractAnnotatedEntity {
         debit(event.getAmountToDebit());
     }
 
-    public void fireCreditedEvent(String businessAccountId, double amountToCredit) {
+    public void fireCreditedEvent(Integer businessAccountId, double amountToCredit) {
         apply(new BenefitCreditedEvent(businessAccountId, amountToCredit));
     }
 
-    public void fireDebitedEvent(String businessAccountId, double amountToDebit) {
+    public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
         apply(new BenefitDebitedEvent(businessAccountId, amountToDebit));
     }
 

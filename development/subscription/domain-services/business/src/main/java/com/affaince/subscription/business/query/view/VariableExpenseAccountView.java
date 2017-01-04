@@ -7,16 +7,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 31-12-2016.
  */
-@Document(collection="VariableExpenseAccount")
+@Document(collection="VariableExpenseAccountView")
 public class VariableExpenseAccountView {
     @Id
-    private String year;
+    private Integer year;
     private double startAmount;
     private double currentAmount;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public VariableExpenseAccountView(String year, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
+    public VariableExpenseAccountView(Integer year, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.year = year;
         this.startAmount = startAmount;
         this.currentAmount = currentAmount;
@@ -24,11 +24,11 @@ public class VariableExpenseAccountView {
         this.endDate = endDate;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

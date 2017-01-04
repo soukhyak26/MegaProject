@@ -7,7 +7,7 @@ public class PurchaseCostDebitedEvent extends DebitedEvent {
     public PurchaseCostDebitedEvent() {
     }
 
-    public PurchaseCostDebitedEvent(String businessAccountId, double amountToDebit) {
+    public PurchaseCostDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

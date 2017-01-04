@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 31-12-2016.
  */
-@Document(collection = "RevenueAccount")
+@Document(collection = "RevenueAccountView")
 public class RevenueAccountView {
     @Id
     private String year;

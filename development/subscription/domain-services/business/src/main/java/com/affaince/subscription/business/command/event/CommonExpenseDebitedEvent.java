@@ -7,7 +7,7 @@ public class CommonExpenseDebitedEvent extends OperatingExpenseDebitedEvent {
     public CommonExpenseDebitedEvent() {
     }
 
-    public CommonExpenseDebitedEvent(String businessAccountId, double amountToDebit) {
+    public CommonExpenseDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

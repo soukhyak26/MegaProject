@@ -7,7 +7,7 @@ public class NodalAccountDebitedEvent extends DebitedEvent {
     public NodalAccountDebitedEvent() {
     }
 
-    public NodalAccountDebitedEvent(String businessAccountId, double amountToDebit) {
+    public NodalAccountDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

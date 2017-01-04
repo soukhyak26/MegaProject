@@ -7,7 +7,7 @@ public class BookingAmountCreditedEvent extends CreditedEvent {
     public BookingAmountCreditedEvent() {
     }
 
-    public BookingAmountCreditedEvent(String businessAccountId, double amountToCredit) {
+    public BookingAmountCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

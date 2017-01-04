@@ -7,7 +7,7 @@ public class NodalAccountCreditedEvent extends CreditedEvent {
     public NodalAccountCreditedEvent() {
     }
 
-    public NodalAccountCreditedEvent(String businessAccountId, double amountToCredit) {
+    public NodalAccountCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

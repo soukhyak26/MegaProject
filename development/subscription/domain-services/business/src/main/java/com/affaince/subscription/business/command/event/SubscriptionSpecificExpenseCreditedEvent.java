@@ -7,7 +7,7 @@ public class SubscriptionSpecificExpenseCreditedEvent extends OperatingExpenseCr
     public SubscriptionSpecificExpenseCreditedEvent() {
     }
 
-    public SubscriptionSpecificExpenseCreditedEvent(String businessAccountId, double amountToCredit) {
+    public SubscriptionSpecificExpenseCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

@@ -6,7 +6,7 @@ import com.affaince.subscription.business.configuration.Axon;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.date.SysDate;
-import org.joda.time.LocalDate;
+import com.affaince.subscription.date.SysDateTime;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,17 +28,18 @@ public class BusinessDomainCommandsTest {
     private BusinessAccountViewRepository businessAccountViewRepository;
 
     private void testCreateProvisionCommand() {
-        CreateProvisionCommand createProvisionCommand = new CreateProvisionCommand(10000.0,
+        CreateProvisionCommand createProvisionCommand = new CreateProvisionCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                10000.0,
                 50000.0,
                 25000.0,
                 20000.0,
                 10000.0,
                 10000.0,
                 50000.0,
-                0.1,0.1,
-                SysDate.now());
+                0.1,0.1, SysDateTime.now());
         try {
-            commandGateway.executeAsync(createProvisionCommand);
+            commandGateway.sendAndWait(createProvisionCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +58,7 @@ public class BusinessDomainCommandsTest {
     public void testCommonExpenseReceivedCommand() {
         OperatingExpenseReceivedCommand commonOperatingExpense = new OperatingExpenseReceivedCommand(ExpenseType.COMMON_EXPENSE, 1000.0);
         try {
-            commandGateway.executeAsync(commonOperatingExpense);
+            commandGateway.sendAndWait(commonOperatingExpense);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,7 +70,7 @@ public class BusinessDomainCommandsTest {
     public void testDeliveryStatusAndDispatchDateUpdatedCommand() {
         DeliveryStatusAndDispatchDateUpdatedCommand deliveryStatusAndDispatchDateUpdatedCommand = new DeliveryStatusAndDispatchDateUpdatedCommand(5.0, 1000.0);
         try {
-            commandGateway.executeAsync(deliveryStatusAndDispatchDateUpdatedCommand);
+            commandGateway.sendAndWait(deliveryStatusAndDispatchDateUpdatedCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,7 +82,7 @@ public class BusinessDomainCommandsTest {
     public void testPaymentProcessedCommand() {
         PaymentProcessedCommand paymentProcessedCommand = new PaymentProcessedCommand(1000.0);
         try {
-            commandGateway.executeAsync(paymentProcessedCommand);
+            commandGateway.sendAndWait(paymentProcessedCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +94,7 @@ public class BusinessDomainCommandsTest {
     public void testProductStatusReceivedCommand() {
         ProductStatusReceivedCommand productStatusReceivedCommand = new ProductStatusReceivedCommand(1000.0, 10000);
         try {
-            commandGateway.executeAsync(productStatusReceivedCommand);
+            commandGateway.sendAndWait(productStatusReceivedCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,7 +106,7 @@ public class BusinessDomainCommandsTest {
     public void testSubscriptionActivatedCommand() {
         SubscriptionActivatedCommand subscriptionActivatedCommand = new SubscriptionActivatedCommand(10.0);
         try {
-            commandGateway.executeAsync(subscriptionActivatedCommand);
+            commandGateway.sendAndWait(subscriptionActivatedCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +118,7 @@ public class BusinessDomainCommandsTest {
     public void testSubscriptionSpecificExpenseReceivedCommand() {
         OperatingExpenseReceivedCommand subscriptionSpecificOperatingExpense = new OperatingExpenseReceivedCommand(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, 1000.0);
         try {
-            commandGateway.executeAsync(subscriptionSpecificOperatingExpense);
+            commandGateway.sendAndWait(subscriptionSpecificOperatingExpense);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();

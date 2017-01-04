@@ -7,7 +7,7 @@ public abstract class OperatingExpenseDebitedEvent extends DebitedEvent {
     public OperatingExpenseDebitedEvent() {
     }
 
-    protected OperatingExpenseDebitedEvent(String businessAccountId, double amountToDebit) {
+    protected OperatingExpenseDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

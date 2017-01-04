@@ -7,7 +7,7 @@ public class PurchaseCostCreditedEvent extends CreditedEvent {
     public PurchaseCostCreditedEvent() {
     }
 
-    public PurchaseCostCreditedEvent(String businessAccountId, double amountToCredit) {
+    public PurchaseCostCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

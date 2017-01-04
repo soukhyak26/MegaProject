@@ -6,6 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by anayonkar on 29/4/16.
  */
-public interface BusinessAccountViewRepository extends CrudRepository<BusinessAccountView, String> {
-    BusinessAccountView findById(String id);
+public interface BusinessAccountViewRepository extends CrudRepository<BusinessAccountView, Integer> {
 }

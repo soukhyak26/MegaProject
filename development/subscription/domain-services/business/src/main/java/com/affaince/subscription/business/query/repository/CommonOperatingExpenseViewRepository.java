@@ -9,6 +9,6 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 16-01-2016.
  */
-public interface CommonOperatingExpenseViewRepository extends CrudRepository<CommonOperatingExpenseView, String> {
+public interface CommonOperatingExpenseViewRepository extends CrudRepository<CommonOperatingExpenseView, Integer> {
     List<CommonOperatingExpenseView> findByExpenseHeaderAndMonthOfYear(String expenseHeader, YearMonth monthOfYear);
 }

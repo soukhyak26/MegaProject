@@ -1,11 +1,14 @@
 package com.affaince.subscription.business.command;
 
-import org.joda.time.LocalDate;
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by anayonkar on 29/4/16.
  */
 public class CreateProvisionCommand {
+    @TargetAggregateIdentifier
+    private Integer businessAccountId;
     private Double provisionForPurchaseCost;
     private Double provisionForLosses;
     private Double provisionForBenefits;
@@ -15,19 +18,10 @@ public class CreateProvisionCommand {
     private Double provisionForSubscriptionSpecificExpenses;
     private double defaultPercentFixedExpensePerUnitPrice;
     private double defaultPercentVariableExpensePerUnitPrice;
-    private LocalDate provisionDate;
-    private String businessAccountId;
+    private LocalDateTime provisionDate;
 
-    public CreateProvisionCommand(Double provisionForPurchaseCost,
-                                  Double provisionForLosses,
-                                  Double provisionForBenefits,
-                                  Double provisionForTaxes,
-                                  Double provisionForOthers,
-                                  Double provisionForCommonExpenses,
-                                  Double provisionForSubscriptionSpecificExpenses,
-                                  double defaultPercentFixedExpensePerUnitPrice,
-                                  double defaultPercentVariableExpensePerUnitPrice,
-                                  LocalDate provisionDate) {
+    public CreateProvisionCommand(Integer businessAccountId, Double provisionForPurchaseCost, Double provisionForLosses, Double provisionForBenefits, Double provisionForTaxes, Double provisionForOthers, Double provisionForCommonExpenses, Double provisionForSubscriptionSpecificExpenses, double defaultPercentFixedExpensePerUnitPrice, double defaultPercentVariableExpensePerUnitPrice, LocalDateTime provisionDate) {
+        this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
         this.provisionForBenefits = provisionForBenefits;
@@ -35,78 +29,44 @@ public class CreateProvisionCommand {
         this.provisionForOthers = provisionForOthers;
         this.provisionForCommonExpenses = provisionForCommonExpenses;
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
-        this.defaultPercentFixedExpensePerUnitPrice=defaultPercentFixedExpensePerUnitPrice;
-        this.defaultPercentVariableExpensePerUnitPrice=defaultPercentVariableExpensePerUnitPrice;
+        this.defaultPercentFixedExpensePerUnitPrice = defaultPercentFixedExpensePerUnitPrice;
+        this.defaultPercentVariableExpensePerUnitPrice = defaultPercentVariableExpensePerUnitPrice;
         this.provisionDate = provisionDate;
-        businessAccountId = Integer.valueOf(provisionDate.getYear()).toString();
     }
 
-    public Double getProvisionForLosses() {
-        return provisionForLosses;
+    public CreateProvisionCommand() {
     }
 
-    public void setProvisionForLosses(double provisionForLosses) {
-        this.provisionForLosses = provisionForLosses;
+    public Integer getBusinessAccountId() {
+        return businessAccountId;
     }
 
     public Double getProvisionForPurchaseCost() {
         return provisionForPurchaseCost;
     }
 
-    public LocalDate getProvisionDate() {
-        return provisionDate;
-    }
-
-    public void setProvisionForPurchaseCost(Double provisionForPurchaseCost) {
-        this.provisionForPurchaseCost = provisionForPurchaseCost;
-    }
-
-    public void setProvisionDate(LocalDate provisionDate) {
-        this.provisionDate = provisionDate;
-    }
-
-    public String getBusinessAccountId() {
-        return businessAccountId;
+    public Double getProvisionForLosses() {
+        return provisionForLosses;
     }
 
     public Double getProvisionForBenefits() {
         return provisionForBenefits;
     }
 
-    public void setProvisionForBenefits(Double provisionForBenefits) {
-        this.provisionForBenefits = provisionForBenefits;
-    }
-
     public Double getProvisionForTaxes() {
         return provisionForTaxes;
-    }
-
-    public void setProvisionForTaxes(Double provisionForTaxes) {
-        this.provisionForTaxes = provisionForTaxes;
     }
 
     public Double getProvisionForOthers() {
         return provisionForOthers;
     }
 
-    public void setProvisionForOthers(Double provisionForOthers) {
-        this.provisionForOthers = provisionForOthers;
-    }
-
     public Double getProvisionForCommonExpenses() {
         return provisionForCommonExpenses;
     }
 
-    public void setProvisionForCommonExpenses(Double provisionForCommonExpenses) {
-        this.provisionForCommonExpenses = provisionForCommonExpenses;
-    }
-
     public Double getProvisionForSubscriptionSpecificExpenses() {
         return provisionForSubscriptionSpecificExpenses;
-    }
-
-    public void setProvisionForSubscriptionSpecificExpenses(Double provisionForSubscriptionSpecificExpenses) {
-        this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
     }
 
     public double getDefaultPercentFixedExpensePerUnitPrice() {
@@ -115,5 +75,9 @@ public class CreateProvisionCommand {
 
     public double getDefaultPercentVariableExpensePerUnitPrice() {
         return defaultPercentVariableExpensePerUnitPrice;
+    }
+
+    public LocalDateTime getProvisionDate() {
+        return provisionDate;
     }
 }

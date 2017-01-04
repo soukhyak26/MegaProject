@@ -34,7 +34,9 @@ public class BusinessAccountProvisionController {
     @RequestMapping(method = RequestMethod.POST, value = "setProvision")
     @Consumes("application/json")
     public ResponseEntity<Object> setProvision(@RequestBody @Valid ProvisionRequest request) throws Exception {
-        CreateProvisionCommand command = new CreateProvisionCommand(request.getProvisionForPurchaseCost(),
+        CreateProvisionCommand command = new CreateProvisionCommand(
+                request.getProvisionDate().getYear(),
+                request.getProvisionForPurchaseCost(),
                 request.getProvisionForLosses(),
                 request.getProvisionForBenefits(),
                 request.getProvisionForTaxes(),

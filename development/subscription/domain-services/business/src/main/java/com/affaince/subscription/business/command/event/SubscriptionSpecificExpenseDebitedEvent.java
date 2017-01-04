@@ -7,7 +7,7 @@ public class SubscriptionSpecificExpenseDebitedEvent extends OperatingExpenseDeb
     public SubscriptionSpecificExpenseDebitedEvent() {
     }
 
-    public SubscriptionSpecificExpenseDebitedEvent(String businessAccountId, double amountToDebit) {
+    public SubscriptionSpecificExpenseDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

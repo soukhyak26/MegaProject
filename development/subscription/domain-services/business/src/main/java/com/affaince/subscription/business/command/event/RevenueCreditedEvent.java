@@ -7,7 +7,7 @@ public class RevenueCreditedEvent extends CreditedEvent {
     public RevenueCreditedEvent() {
     }
 
-    public RevenueCreditedEvent(String businessAccountId, double amountToCredit) {
+    public RevenueCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

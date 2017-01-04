@@ -7,7 +7,7 @@ public class InterestsGainCreditedEvent extends CreditedEvent {
     public InterestsGainCreditedEvent() {
     }
 
-    public InterestsGainCreditedEvent(String businessAccountId, double amountToCredit) {
+    public InterestsGainCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

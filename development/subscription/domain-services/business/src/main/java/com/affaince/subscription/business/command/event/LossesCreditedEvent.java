@@ -7,7 +7,7 @@ public class LossesCreditedEvent extends CreditedEvent {
     public LossesCreditedEvent() {
     }
 
-    public LossesCreditedEvent(String businessAccountId, double amountToCredit) {
+    public LossesCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

@@ -7,7 +7,7 @@ public class BookingAmountDebitedEvent extends DebitedEvent {
     public BookingAmountDebitedEvent() {
     }
 
-    public BookingAmountDebitedEvent(String businessAccountId, double amountToDebit) {
+    public BookingAmountDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

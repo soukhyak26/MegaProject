@@ -2,9 +2,8 @@ package com.affaince.subscription.business.accounting;
 
 import com.affaince.subscription.business.command.event.CreditedEvent;
 import com.affaince.subscription.business.command.event.DebitedEvent;
-import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by anayonkar on 9/5/16.
@@ -12,14 +11,14 @@ import org.joda.time.LocalDate;
 public class TaxesAccount extends AbstractAnnotatedEntity {
     private double startAmount;
     private double currentAmount;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public TaxesAccount(double startAmount, LocalDate endDate) {
+    public TaxesAccount(double startAmount, LocalDateTime endDate) {
         this.startAmount = startAmount;
         this.endDate = endDate;
         this.currentAmount = startAmount;
-        this.startDate = SysDate.now();
+        this.startDate = LocalDateTime.now();
 
     }
     public void debit(double amount) {
@@ -40,11 +39,11 @@ public class TaxesAccount extends AbstractAnnotatedEntity {
         return currentAmount;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 

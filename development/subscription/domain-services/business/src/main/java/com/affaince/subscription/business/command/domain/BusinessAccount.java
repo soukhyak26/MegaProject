@@ -9,14 +9,14 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by rsavaliya on 17/1/16.
  */
 public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
-    private String id;
+    private Integer id;
     private TimeBoundMoney commonOperationExpensesDemand;
     private TimeBoundMoney subscriptionSpecificOperatingExpensesDemand;
     private TimeBoundMoney salesAndMarketingExpensesDemand;
@@ -73,7 +73,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private InterestsAccount interestsGainAccount;
 
-    private LocalDate dateForProvision;
+    private LocalDateTime dateForProvision;
 
     private static final String INIT_ERROR_MESSAGE = "Please make sure that BusinessAccount aggregate is properly created via CreateProvisionEvent";
 
@@ -84,7 +84,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public BusinessAccount(String id,
+    public BusinessAccount(Integer id,
                            double provisionForPurchaseCost,
                            double provisionForLosses,
                            double provisionForBenefits,
@@ -94,7 +94,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
                            double provisionForSubscriptionSpecificExpenses,
                            double defaultPercentFixedExpensePerUnitPrice,
                            double defaultPercentVariableExpensePerUnitPrice,
-                           LocalDate provisionDate) {
+                           LocalDateTime provisionDate) {
 
         apply(new ProvisionCreatedEvent(id,
                 provisionForPurchaseCost,
@@ -205,7 +205,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         }
     }*/
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -281,7 +281,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         return interestsGainAccount;
     }
 
-    public LocalDate getDateForProvision() {
+    public LocalDateTime getDateForProvision() {
         return dateForProvision;
     }
 

@@ -7,7 +7,7 @@ public class LossesDebitedEvent extends DebitedEvent {
     public LossesDebitedEvent() {
     }
 
-    public LossesDebitedEvent(String businessAccountId, double amountToDebit) {
+    public LossesDebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId, amountToDebit);
     }
 }

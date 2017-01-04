@@ -7,7 +7,7 @@ public abstract class OperatingExpenseCreditedEvent extends CreditedEvent {
     public OperatingExpenseCreditedEvent() {
     }
 
-    protected OperatingExpenseCreditedEvent(String businessAccountId, double amountToCredit) {
+    protected OperatingExpenseCreditedEvent(Integer businessAccountId, double amountToCredit) {
         super(businessAccountId, amountToCredit);
     }
 }

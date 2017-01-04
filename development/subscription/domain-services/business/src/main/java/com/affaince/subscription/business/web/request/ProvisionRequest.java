@@ -1,6 +1,6 @@
 package com.affaince.subscription.business.web.request;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by anayonkar on 29/4/16.
@@ -15,7 +15,7 @@ public class ProvisionRequest {
     private double provisionForSubscriptionSpecificExpenses;
     private double defaultPercentFixedExpensePerUnitPrice;
     private double defaultPercentVariableExpensePerUnitPrice;
-    private LocalDate provisionDate;
+    private LocalDateTime provisionDate;
 
     public ProvisionRequest() {
 
@@ -30,7 +30,7 @@ public class ProvisionRequest {
                             double provisionForSubscriptionSpecificExpenses,
                             double defaultPercentFixedExpensePerUnitPrice,
                             double defaultPercentVariableExpensePerUnitPrice,
-                            LocalDate provisionDate) {
+                            LocalDateTime provisionDate) {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
         this.provisionForBenefits = provisionForBenefits;
@@ -99,11 +99,11 @@ public class ProvisionRequest {
         this.provisionForSubscriptionSpecificExpenses = provisionForSubscriptionSpecificExpenses;
     }
 
-    public LocalDate getProvisionDate() {
+    public LocalDateTime getProvisionDate() {
         return provisionDate;
     }
 
-    public void setProvisionDate(LocalDate provisionDate) {
+    public void setProvisionDate(LocalDateTime provisionDate) {
         this.provisionDate = provisionDate;
     }
 

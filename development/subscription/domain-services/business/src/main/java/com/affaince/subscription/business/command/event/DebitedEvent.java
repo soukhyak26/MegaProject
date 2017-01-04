@@ -9,7 +9,7 @@ public abstract class DebitedEvent extends AccountingEvent {
     protected DebitedEvent() {
     }
 
-    protected DebitedEvent(String businessAccountId, double amountToDebit) {
+    protected DebitedEvent(Integer businessAccountId, double amountToDebit) {
         super(businessAccountId);
         this.amountToDebit = amountToDebit;
     }
