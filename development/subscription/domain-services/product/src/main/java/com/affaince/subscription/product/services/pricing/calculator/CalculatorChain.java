@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class CalculatorChain {
     @Autowired
-    RegressionBasedPriceCalculator regressionBasedPriceCalculator;
+    private RegressionBasedPriceCalculator regressionBasedPriceCalculator;
     private AbstractPriceCalculator initialCalculator;
     @Value("${pricing.calculator.chain.list}")
     private String pricingCalculatorChainElements;

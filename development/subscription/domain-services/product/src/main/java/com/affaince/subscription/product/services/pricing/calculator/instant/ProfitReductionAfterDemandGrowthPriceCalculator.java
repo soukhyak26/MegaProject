@@ -6,6 +6,7 @@ import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
@@ -21,8 +22,8 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
-        String productId = product.getProductId();
-
+        final String productId = product.getProductId();
+        final PriceTaggedWithProduct latestTaggedPriceVersion= product.getLatestTaggedPriceVersion();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
         final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
@@ -36,7 +37,7 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
                 minusOnePriceBucket.getTotalProfit() < minusTwoPriceBucket.getTotalProfit() &&
                 minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions()) {
             double slope = minusOnePriceBucket.getSlope() - (minusOnePriceBucket.getSlope() * calculateWeightedAverage(product.getActivePriceBuckets().values()) / 100);
-            double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
+            double intercept = latestTaggedPriceVersion.getMRP();
             double expectedDemand = 0;
             //double expectedDemandedQuantity = productForecastView.getTotalNumberOfExistingSubscriptions();
             if (productDemandTrend == ProductDemandTrend.DOWNWARD) {

@@ -6,6 +6,7 @@ import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,8 @@ public class ProfitReductionDueToDemandPriceCalculator extends AbstractPriceCalc
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
-        String productId = product.getProductId();
+        final String productId = product.getProductId();
+        final PriceTaggedWithProduct latestTaggedPriceVersion= product.getLatestTaggedPriceVersion();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
         final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
@@ -38,7 +40,7 @@ public class ProfitReductionDueToDemandPriceCalculator extends AbstractPriceCalc
             double x2 = minusOnePriceBucket.getNumberOfNewSubscriptions();
             double x1 = minusTwoPriceBucket.getNumberOfNewSubscriptions();
 
-            double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
+            double intercept = latestTaggedPriceVersion.getMRP();
             double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1);
             double expectedDemand = 0;
             //double expectedDemandedQuantity= productForecastMetricsView.getTotalNumberOfExistingSubscriptions();

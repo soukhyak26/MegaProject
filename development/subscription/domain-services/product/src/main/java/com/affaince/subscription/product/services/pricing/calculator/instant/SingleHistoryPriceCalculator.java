@@ -6,6 +6,7 @@ import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,9 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
-        String productId = product.getProductId();
-        PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
+        final PriceTaggedWithProduct latestTaggedPriceVersion= product.getLatestTaggedPriceVersion();
+        final String productId = product.getProductId();
+        final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
 
         final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
@@ -36,7 +38,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             double x2 = latestPriceBucket.getNumberOfNewSubscriptions();
             double x1 = 0;//mark quantity
             double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1);
-            double intercept = latestPriceBucket.getTaggedPriceVersion().getMRP();
+            double intercept = latestTaggedPriceVersion.getMRP();
             double expectedDemand = 0;
             //BIG QUESTION MARK HOW TO EXTRAPOLATE?FORECASTED DEMAND FOR NEXT HOW MANY DAYS TO BE CONSIDERED?
             //currently taking the forecast of current month(when batch is executing)

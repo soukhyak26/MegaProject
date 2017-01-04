@@ -49,7 +49,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toString(format);
-            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
+            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, product.getLatestTaggedPriceVersion().getPurchasePricePerUnit(), product.getLatestTaggedPriceVersion().getMRP(), currentDate);
             PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(functionCoefficients.getSlope());
             return newPriceBucket;
