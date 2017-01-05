@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
+import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
@@ -88,7 +89,7 @@ public class ProductController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        UpdateProductStatusCommand command = new UpdateProductStatusCommand(
+        ReceiveProductStatusCommand command = new ReceiveProductStatusCommand(
                 productId,
                 request.getCurrentPurchasePrice(),
                 request.getCurrentMRP(),

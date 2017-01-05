@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
+import com.affaince.subscription.product.vo.FixedExpensePerProduct;
 import org.joda.time.LocalDate;
 
 /**
@@ -8,15 +9,16 @@ import org.joda.time.LocalDate;
 public class FixedExpenseChangedEvent {
     private String productId;
     private LocalDate fromDate;
-    private double operationExpense;
-
+    private FixedExpensePerProduct fixedExpensePerProduct;
+    private double revisedBreakEvenPrice;
     public FixedExpenseChangedEvent() {
     }
 
-    public FixedExpenseChangedEvent(String productId, LocalDate fromDate, double operationExpense) {
+    public FixedExpenseChangedEvent(String productId, LocalDate fromDate, FixedExpensePerProduct fixedExpensePerProduct,double revisedBreakEvenPrice) {
         this.productId = productId;
         this.fromDate = fromDate;
-        this.operationExpense = operationExpense;
+        this.fixedExpensePerProduct=fixedExpensePerProduct;
+        this.revisedBreakEvenPrice=revisedBreakEvenPrice;
     }
 
     public String getProductId() {
@@ -27,7 +29,11 @@ public class FixedExpenseChangedEvent {
         return fromDate;
     }
 
-    public double getOperationExpense() {
-        return operationExpense;
+    public FixedExpensePerProduct getFixedExpensePerProduct() {
+        return fixedExpensePerProduct;
+    }
+
+    public double getRevisedBreakEvenPrice() {
+        return revisedBreakEvenPrice;
     }
 }

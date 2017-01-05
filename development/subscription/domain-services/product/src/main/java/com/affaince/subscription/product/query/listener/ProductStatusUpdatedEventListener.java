@@ -8,6 +8,7 @@ import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.TaggedPriceVersionsViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.query.view.TaggedPriceVersionsView;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -49,13 +50,13 @@ public class ProductStatusUpdatedEventListener {
 
 
         List<TaggedPriceVersionsView> latestTaggedPriceVersionsViews = taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(event.getProductId(),sort);
+        PriceTaggedWithProduct newTaggedPriceVersion = event.getNewTaggedPrice();
         if (latestTaggedPriceVersionsViews.isEmpty() ||
-                (latestTaggedPriceVersionsViews.get(0).getPurchasePricePerUnit() != event.getCurrentPurchasePrice())) {
+                (latestTaggedPriceVersionsViews.get(0).getPurchasePricePerUnit() != newTaggedPriceVersion.getPurchasePricePerUnit())) {
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            final String taggedPriceVersionId = event.getProductId() + event.getCurrentPriceDate().toString(format);
-            TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(event.getProductId(),taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate(),new LocalDateTime(9999,12,31,0,0,0));
+            TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(), newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
             taggedPriceVersionsViewRepository.save(newTaggedPrice);
-            RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate(),new LocalDateTime(9999,12,31,0,0,0));
+            RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(),newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
             commandGateway.executeAsync(command);
         }
     }

@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -7,39 +8,25 @@ import org.joda.time.LocalDateTime;
  */
 public class ProductStatusUpdatedEvent {
     private String productId;
-    private double currentPurchasePrice;
-    private double currentMRP;
+    private PriceTaggedWithProduct newTaggedPrice;
     private int currentStockInUnits;
-    private LocalDateTime currentPriceDate;
 
-    public ProductStatusUpdatedEvent(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDateTime currentPrizeDate) {
+    public ProductStatusUpdatedEvent(String productId, PriceTaggedWithProduct newTaggedPrice, int currentStockInUnits) {
         this.productId = productId;
-        this.currentPurchasePrice = currentPurchasePrice;
-        this.currentMRP = currentMRP;
+        this.newTaggedPrice = newTaggedPrice;
         this.currentStockInUnits = currentStockInUnits;
-        this.currentPriceDate = currentPrizeDate;
     }
 
     public ProductStatusUpdatedEvent() {
     }
-
     public String getProductId() {
         return this.productId;
     }
-
-    public double getCurrentPurchasePrice() {
-        return this.currentPurchasePrice;
-    }
-
-    public double getCurrentMRP() {
-        return this.currentMRP;
-    }
-
     public int getCurrentStockInUnits() {
         return this.currentStockInUnits;
     }
 
-    public LocalDateTime getCurrentPriceDate() {
-        return this.currentPriceDate;
+    public PriceTaggedWithProduct getNewTaggedPrice() {
+        return newTaggedPrice;
     }
 }

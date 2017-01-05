@@ -12,14 +12,14 @@ public class ReceiveProductStatusCommand {
     private double currentPurchasePrice;
     private double currentMRP;
     private int currentStockInUnits;
-    private LocalDateTime currentPrizeDate;
+    private LocalDateTime currentPriceDate;
 
-    public ReceiveProductStatusCommand(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDateTime currentPrizeDate) {
+    public ReceiveProductStatusCommand(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDateTime currentPriceDate) {
         this.productId = productId;
         this.currentPurchasePrice = currentPurchasePrice;
         this.currentMRP = currentMRP;
         this.currentStockInUnits = currentStockInUnits;
-        this.currentPrizeDate = currentPrizeDate;
+        this.currentPriceDate = currentPriceDate;
     }
 
     public String getProductId() {
@@ -38,7 +38,7 @@ public class ReceiveProductStatusCommand {
         return this.currentStockInUnits;
     }
 
-    public LocalDateTime getCurrentPrizeDate() {
-        return this.currentPrizeDate;
+    public LocalDateTime getCurrentPriceDate() {
+        return this.currentPriceDate;
     }
 }

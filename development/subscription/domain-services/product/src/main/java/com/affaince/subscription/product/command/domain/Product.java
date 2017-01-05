@@ -224,10 +224,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         getProductAccount().updateFixedExpenses(command);
     }
 
-    //Product status should be received from main application
-    public void updateProductStatus(UpdateProductStatusCommand command) {
-        this.getProductAccount().updateProductStatus(command);
-    }
 
     public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
         return getProductAccount().findBucketsWithSamePurchasePrice(priceBucket);

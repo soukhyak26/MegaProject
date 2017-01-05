@@ -180,11 +180,34 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command) {
-        apply(new VariableExpenseChangedEvent(command.getProductId(), SysDateTime.now(), command.getOperationExpense()));
+        VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
+        if (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != command.getOperationExpense()) {
+            VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(command.getOperationExpense(), SysDate.now());
+            //variableExpenseVersions.add(newVariableExpenseVersion);
+            double revisedBreakEvenPrice = calculateBreakEvenPriceUponChangeOfPriceOrExpenses();
+/*
+            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+            latestTaggedPriceVersion.setBreakEvenPrice();
+*/
+            apply(new VariableExpenseChangedEvent(command.getProductId(), SysDateTime.now(), newVariableExpenseVersion, revisedBreakEvenPrice));
+        }
     }
 
     public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
-        apply(new FixedExpenseChangedEvent(command.getProductId(), SysDate.now(), command.getOperationExpense()));
+        //get latest deliveryExpense
+        FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
+        if (latestFixedExpense.getFixedOperatingExpPerUnit() != command.getOperationExpense()) {
+            FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(command.getOperationExpense(), SysDate.now());
+            double revisedBreakEvenPrice = calculateBreakEvenPriceUponChangeOfPriceOrExpenses();
+            //fixedExpenseVersions.add(newFixedExpenseVersion);
+/*
+            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+            latestTaggedPriceVersion.setBreakEvenPrice(calculateBreakEvenPriceUponChangeOfPriceOrExpenses());
+*/
+            apply(new FixedExpenseChangedEvent(command.getProductId(), SysDate.now(), newFixedExpenseVersion, revisedBreakEvenPrice));
+        }
+
+
     }
 
     public double findLatestFixedExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
@@ -212,12 +235,12 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     }
 
-    public PriceBucket findActivePriceBucketByPriceBucketId(String priceBucketId){
-       return activePriceBuckets.values().stream().filter(item->item.getPriceBucketId().equals(priceBucketId)).collect(Collectors.toList()).get(0);
+    public PriceBucket findActivePriceBucketByPriceBucketId(String priceBucketId) {
+        return activePriceBuckets.values().stream().filter(item -> item.getPriceBucketId().equals(priceBucketId)).collect(Collectors.toList()).get(0);
     }
 
-    public PriceBucket findRecommendedPriceBucketByPriceBucketId(String priceBucketId){
-        return recommendedPriceBuckets.values().stream().filter(item->item.getPriceBucketId().equals(priceBucketId)).collect(Collectors.toList()).get(0);
+    public PriceBucket findRecommendedPriceBucketByPriceBucketId(String priceBucketId) {
+        return recommendedPriceBuckets.values().stream().filter(item -> item.getPriceBucketId().equals(priceBucketId)).collect(Collectors.toList()).get(0);
     }
 
     public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
@@ -244,7 +267,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return profit;
     }
 
-    public double calculatedBreakEvenPriceUponChangeOfPriceOrExpenses() {
+    public double calculateBreakEvenPriceUponChangeOfPriceOrExpenses() {
         List<CostHeader> costHeaders = new ArrayList<>(3);
         PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
         CostHeader purchasePriceHeader = new CostHeader(CostHeaderType.PURCHASE_PRICE_PER_UNIT, "purchase price per unit", latestTaggedPriceVersion.getPurchasePricePerUnit(), CostHeaderApplicability.ABSOLUTE);
@@ -274,26 +297,36 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
 
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
-        final Map<String,Integer> priceBucketWiseSubscriptionCount=command.getPriceBucketWiseSubscriptionCount();
-        priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId->{
-            final PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(priceBucketId);
-            final int subscriptionCount=priceBucketWiseSubscriptionCount.get(priceBucketId);
-            if(subscriptionCount>0){
+        final Map<String, Integer> priceBucketWiseSubscriptionCount = command.getPriceBucketWiseSubscriptionCount();
+        priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId -> {
+            final PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(priceBucketId);
+            final int subscriptionCount = priceBucketWiseSubscriptionCount.get(priceBucketId);
+            if (subscriptionCount > 0) {
                 activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount);
-            }else{
+            } else {
                 activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
             }
         });
     }
 
-    //Product status should be received from main application
-    public void updateProductStatus(UpdateProductStatusCommand command) {
-        apply(new ProductStatusUpdatedEvent(command.getProductId(), command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
-    }
 
     //for receipt from main application thru integration
     public void receiveProductStatus(ReceiveProductStatusCommand command) {
-        apply(new ProductStatusUpdatedEvent(command.getProductId(), command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentStockInUnits(), command.getCurrentPrizeDate()));
+        String productId = command.getProductId();
+        //PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+        if (latestTaggedPriceVersion.getPurchasePricePerUnit() != command.getCurrentPurchasePrice()) {
+            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            final String taggedPriceVersionId = productId + command.getCurrentPriceDate().toString(format);
+            PriceTaggedWithProduct newTaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, command.getCurrentPurchasePrice(), command.getCurrentMRP(), command.getCurrentPriceDate());
+            newTaggedPrice.setBreakEvenPrice(calculateBreakEvenPriceUponChangeOfPriceOrExpenses());
+            ///latestTaggedPriceVersion.setTaggedEndDate(SysDateTime.now());
+            //this.addNewTaggedPriceVersion(newtaggedPrice);
+            apply(new ProductStatusUpdatedEvent(command.getProductId(), newTaggedPrice, command.getCurrentStockInUnits()));
+        }
+        //this.setCurrentStockInUnits(event.getCurrentStockInUnits());
+
+
     }
 
 
@@ -356,42 +389,34 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     @EventSourcingHandler
     public void on(VariableExpenseChangedEvent event) {
-        //get latest deliveryExpense
-        VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
-        if (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != event.getOperationExpense()) {
-            VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(event.getOperationExpense(), SysDate.now());
-            variableExpenseVersions.add(newVariableExpenseVersion);
-            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
-        }
+        variableExpenseVersions.add(event.getVariableExpensePerProduct());
+        PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+        latestTaggedPriceVersion.setBreakEvenPrice(event.getRevisedBreakEvenPrice());
     }
 
 
     @EventSourcingHandler
     public void on(FixedExpenseChangedEvent event) {
         //get latest deliveryExpense
-        FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
-        if (latestFixedExpense.getFixedOperatingExpPerUnit() != event.getOperationExpense()) {
-            FixedExpensePerProduct newFixedExpenseVersion = new FixedExpensePerProduct(event.getOperationExpense(), SysDate.now());
-            fixedExpenseVersions.add(newFixedExpenseVersion);
-            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
-        }
+        fixedExpenseVersions.add(event.getFixedExpensePerProduct());
+        PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
+        latestTaggedPriceVersion.setBreakEvenPrice(event.getRevisedBreakEvenPrice());
     }
 
-    public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command ){
-        double newExpectedProfitPerPriceBucket=this.calculateExpectedProfitForPriceBucket(this.findActivePriceBucketByPriceBucketId(command.getPriceBucketId()));
-        apply(new PriceBucketWiseProfitCalculatedEvent(command.getProductId(),command.getPriceBucketId(),newExpectedProfitPerPriceBucket));
+    public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command) {
+        double newExpectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(this.findActivePriceBucketByPriceBucketId(command.getPriceBucketId()));
+        apply(new PriceBucketWiseProfitCalculatedEvent(command.getProductId(), command.getPriceBucketId(), newExpectedProfitPerPriceBucket));
 
     }
+
     @EventSourcingHandler
-    public void on(PriceBucketWiseProfitCalculatedEvent event){
-        PriceBucket activePriceBucket= this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
+    public void on(PriceBucketWiseProfitCalculatedEvent event) {
+        PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
         activePriceBucket.setExpectedProfit(event.getProfitAmountPerPriceBucket());
     }
 
     @EventSourcingHandler
-    public void on(PriceBucketExpiredEvent event){
+    public void on(PriceBucketExpiredEvent event) {
         PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
         activePriceBucket.expirePriceBucket();
         this.removeExpiredPriceBucket(activePriceBucket);
@@ -403,39 +428,13 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     //Only for actuals
     //Product status should be received from main application.
-    //when the purchase price is changed --it should update new taggedPriceVersion and make all price buckets point to it.
-    @EventSourcingHandler
-    public void on(ProductStatusReceivedEvent event) {
-        final String productId = event.getProductId();
-        final PriceTaggedWithProduct currentTaggedPriceVersion = this.getLatestTaggedPriceVersion();
-        if (currentTaggedPriceVersion.getPurchasePricePerUnit() != event.getCurrentPurchasePricePerUnit()) {
-            currentTaggedPriceVersion.setTaggedEndDate(SysDateTime.now());
-            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePricePerUnit(), event.getCurrentMRP(), event.getCurrentPriceDate());
-            this.addNewTaggedPriceVersion(newtaggedPrice);
-            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
-        }
-        this.setCurrentStockInUnits(event.getCurrentStockInUnits());
-    }
-
-    //Only for actuals
-    //Product status should be received from main application.
     //when the purchase price is changed --it should create new price bucket,by stalling all existing price buckets
     @EventSourcingHandler
     public void on(ProductStatusUpdatedEvent event) {
         String productId = event.getProductId();
-        //PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
-        if (this.getLatestTaggedPriceVersion().getPurchasePricePerUnit() != event.getCurrentPurchasePrice()) {
-
-            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            final String taggedPriceVersionId = productId + event.getCurrentPriceDate().toString(format);
-            PriceTaggedWithProduct newtaggedPrice = new PriceTaggedWithProduct(taggedPriceVersionId, event.getCurrentPurchasePrice(), event.getCurrentMRP(), event.getCurrentPriceDate());
-            this.addNewTaggedPriceVersion(newtaggedPrice);
-            PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-            latestTaggedPriceVersion.setBreakEvenPrice(calculatedBreakEvenPriceUponChangeOfPriceOrExpenses());
-        }
+        PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
+        latestTaggedPriceVersion.setTaggedEndDate(SysDateTime.now());
+        this.addNewTaggedPriceVersion(event.getNewTaggedPrice());
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }
 
