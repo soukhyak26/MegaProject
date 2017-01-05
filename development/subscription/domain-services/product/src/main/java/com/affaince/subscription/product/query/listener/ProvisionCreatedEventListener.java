@@ -1,9 +1,10 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.command.event.ProvisionCreatedEvent;
-import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
+import com.affaince.subscription.product.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.product.query.view.BusinessAccountView;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,31 +14,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProvisionCreatedEventListener {
 
-    private final SubscriptionCommandGateway commandGateway;
-    private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
+    private final BusinessAccountViewRepository businessAccountViewRepository;
 
     @Autowired
-    public ProvisionCreatedEventListener(SubscriptionCommandGateway commandGateway, ProductActivationStatusViewRepository productActivationStatusViewRepository) {
-        this.commandGateway = commandGateway;
-        this.productActivationStatusViewRepository = productActivationStatusViewRepository;
+    public ProvisionCreatedEventListener(BusinessAccountViewRepository businessAccountViewRepository) {
+        this.businessAccountViewRepository = businessAccountViewRepository;
     }
 
     @EventHandler
     public void on(ProvisionCreatedEvent event) {
-       /* final List<ProductActivationStatusView> productActivationStatusViews =
-                new ArrayList<>();
-        productActivationStatusViewRepository.findAll().forEach(
-                productActivationStatusView -> productActivationStatusViews.add(productActivationStatusView)
-        );
-        productActivationStatusViews.forEach(productActivationStatusView -> {
-            if (ProductConfigurationValidator.getProductReadinessStatus(productActivationStatusView.getProductStatuses()).contains(
-                    ProductReadinessStatus.BUSINESS_PROVISION_CONFIGURABLE
-            )) {
-                productActivationStatusView.addProductStatus(ProductStatus.BUSINESS_PROVISIONED);
-                productActivationStatusViewRepository.save(productActivationStatusView);
-            } else {
-                ProductReadinessException.build(productActivationStatusView.getProductId(), ProductStatus.BUSINESS_PROVISIONED);
-            }
-        });*/
+
+        final Integer currentYear = event.getProvisionDate().getYear();
+        LocalDateTime startDate = event.getProvisionDate();
+        LocalDateTime endDate = new LocalDateTime(currentYear,12,31,12,59,59);
+
+        businessAccountViewRepository.save(new BusinessAccountView(currentYear, startDate, endDate,
+                event.getDefaultPercentFixedExpensePerUnitPrice(),
+                event.getDefaultPercentVariableExpensePerUnitPrice()));
     }
 }

@@ -1,12 +1,12 @@
 package com.affaince.subscription.product.command.event;
 
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by anayonkar on 29/4/16.
  */
 public class ProvisionCreatedEvent {
-    private String businessAccountId;
+    private Integer businessAccountId;
     private double provisionForPurchaseCost;
     private double provisionForLosses;
     private double provisionForBenefits;
@@ -17,12 +17,12 @@ public class ProvisionCreatedEvent {
     private double defaultPercentFixedExpensePerUnitPrice;
     private double defaultPercentVariableExpensePerUnitPrice;
 
-    private LocalDate provisionDate;
+    private LocalDateTime provisionDate;
 
     public ProvisionCreatedEvent() {
     }
 
-    public ProvisionCreatedEvent(String businessAccountId,
+    public ProvisionCreatedEvent(Integer businessAccountId,
                                  double provisionForPurchaseCost,
                                  double provisionForLosses,
                                  double provisionForBenefits,
@@ -32,7 +32,7 @@ public class ProvisionCreatedEvent {
                                  double provisionForSubscriptionSpecificExpenses,
                                  double defaultPercentFixedExpensePerUnitPrice,
                                  double defaultPercentVariableExpensePerUnitPrice,
-                                 LocalDate provisionDate) {
+                                 LocalDateTime provisionDate) {
         this.businessAccountId = businessAccountId;
         this.provisionForPurchaseCost = provisionForPurchaseCost;
         this.provisionForLosses = provisionForLosses;
@@ -54,11 +54,11 @@ public class ProvisionCreatedEvent {
         this.provisionForLosses = provisionForLosses;
     }
 
-    public String getBusinessAccountId() {
+    public Integer getBusinessAccountId() {
         return businessAccountId;
     }
 
-    public void setBusinessAccountId(String businessAccountId) {
+    public void setBusinessAccountId(Integer businessAccountId) {
         this.businessAccountId = businessAccountId;
     }
 
@@ -70,11 +70,11 @@ public class ProvisionCreatedEvent {
         this.provisionForPurchaseCost = provisionForPurchaseCost;
     }
 
-    public LocalDate getProvisionDate() {
+    public LocalDateTime getProvisionDate() {
         return provisionDate;
     }
 
-    public void setProvisionDate(LocalDate provisionDate) {
+    public void setProvisionDate(LocalDateTime provisionDate) {
         this.provisionDate = provisionDate;
     }
 
