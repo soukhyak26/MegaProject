@@ -1,20 +1,20 @@
 package com.affaince.subscription.product.web.request;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by mandar on 13-09-2016.
  */
 public class UpdateForecastRequest {
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double purchasePricePerUnit;
     private double MRP;
     private long numberofNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     private long numberOfTotalSubscriptions;
 
-    public UpdateForecastRequest(LocalDateTime startDate, LocalDateTime endDate, double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfTotalSubscriptions) {
+    public UpdateForecastRequest(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberofNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfTotalSubscriptions) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.purchasePricePerUnit = purchasePricePerUnit;
@@ -24,19 +24,19 @@ public class UpdateForecastRequest {
         this.numberOfTotalSubscriptions = numberOfTotalSubscriptions;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

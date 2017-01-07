@@ -3,15 +3,14 @@ package com.affaince.subscription.product.web.controller;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
-import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
-import com.affaince.subscription.product.query.repository.ProductViewRepository;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.query.repository.*;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,9 +48,9 @@ public class ForecastControllerTest {
     @Mock
     private static ProductViewRepository productViewRepository;
     @Mock
-    private static ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private static ProductActualsViewRepository productActualsViewRepository;
     @Mock
-    private static ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private static ProductForecastViewRepository productForecastViewRepository;
     final RestTemplate template = new RestTemplate();
     @InjectMocks
     @Autowired
@@ -67,35 +66,35 @@ public class ForecastControllerTest {
     public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
         MockitoAnnotations.initMocks(this);
         //this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-        //chain = chain.buildForecasterChain(productForecastMetricsViewRepository,productActualMetricsViewRepository);
+        //chain = chain.buildForecasterChain(productForecastMetricsViewRepository,ProductActualsViewRepository);
         this.mockMvc=MockMvcBuilders.standaloneSetup(forecastController).build();
     }
 
     @Test
     public void testFindAllProducts() throws Exception{
 
-        List<ProductActualMetricsView> productActualMetricsViewList;
-        productActualMetricsViewList = new ArrayList<>();
+        List<ProductActualsView> ProductActualsViewList;
+        ProductActualsViewList = new ArrayList<>();
 
-        ProductActualMetricsView view1 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view1.setNewSubscriptions(500);
-        productActualMetricsViewList.add(view1);
+        ProductActualsViewList.add(view1);
 
-        ProductActualMetricsView view2 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view2.setNewSubscriptions(750);
-        productActualMetricsViewList.add(view2);
+        ProductActualsViewList.add(view2);
 
-        ProductActualMetricsView view3 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view3.setNewSubscriptions(1000);
-        productActualMetricsViewList.add(view3);
+        ProductActualsViewList.add(view3);
 
-        ProductActualMetricsView view4 = new ProductActualMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         view4.setNewSubscriptions(1250);
-        productActualMetricsViewList.add(view4);
+        ProductActualsViewList.add(view4);
 
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
-        List<ProductForecastMetricsView> forecasts=new ArrayList<>();
+        List<ProductForecastView> forecasts=new ArrayList<>();
         forecasts.add(forecastView);
 
         String productId = "1";
@@ -104,8 +103,8 @@ public class ForecastControllerTest {
         allProducts.add(product);
 
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-        Mockito.when(productForecastMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
-        Mockito.when(productActualMetricsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualMetricsViewList);
+        Mockito.when(productForecastViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+        Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(ProductActualsViewList);
 
         MvcResult result= this.mockMvc.perform(get("/forecast/findall"))
                 .andExpect(status().is(200))

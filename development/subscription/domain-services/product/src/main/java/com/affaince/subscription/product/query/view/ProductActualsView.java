@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductActualsView implements ProductSubscriptionMetricsView, Comparable<ProductActualsView> {
     @Id
     private final ProductVersionId productVersionId;
-    private LocalDateTime endDate;
+    private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
@@ -25,7 +25,15 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
     }
 */
 
-    public ProductActualsView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+    public ProductActualsView(ProductVersionId productVersionId, LocalDate endDate){
+        this.productVersionId = productVersionId;
+        this.endDate = endDate;
+        this.newSubscriptions = 0;
+        this.churnedSubscriptions = 0;
+        this.totalNumberOfExistingSubscriptions = 0;
+
+    }
+    public ProductActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
@@ -38,11 +46,11 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
         return productVersionId;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -70,6 +78,17 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
+    public void addToNewSubscriptionCount(long subscriptionCount){
+        this.newSubscriptions+=subscriptionCount;
+        this.totalNumberOfExistingSubscriptions+=subscriptionCount;
+    }
+    public void addToChurnedSubscriptionCount(long subscriptionCount){
+        this.churnedSubscriptions +=subscriptionCount;
+        this.totalNumberOfExistingSubscriptions-=subscriptionCount;
+    }
+    public void addToTotalSubscriptionCount(long subscriptionCount){
+        this.totalNumberOfExistingSubscriptions+=subscriptionCount;
+    }
     @Override
     public int compareTo(ProductActualsView o) {
         return this.getProductVersionId().compareTo(o.getProductVersionId());

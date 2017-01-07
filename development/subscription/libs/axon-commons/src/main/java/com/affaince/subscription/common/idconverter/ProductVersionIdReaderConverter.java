@@ -2,6 +2,7 @@ package com.affaince.subscription.common.idconverter;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.mongodb.DBObject;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -17,7 +18,7 @@ public class ProductVersionIdReaderConverter implements Converter<DBObject, Prod
         String productId = (String) o.get("productId");
         String fromDate = (String) o.get("fromDate");
 
-        ProductVersionId id = new ProductVersionId(productId, LocalDateTime.parse(fromDate));
+        ProductVersionId id = new ProductVersionId(productId, LocalDate.parse(fromDate));
 
         return id;
     }

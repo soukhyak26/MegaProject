@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucket;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPriceBucketEvent;
@@ -9,6 +10,7 @@ import com.affaince.subscription.product.command.event.SubscriptionDeductedFromP
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -207,7 +209,7 @@ public class PriceBucket extends AbstractAnnotatedEntity {
         long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions +subscriptionCount;
         long revisedTotalSubscriptionCount = this.numberOfExistingSubscriptions - subscriptionCount;
         if(revisedTotalSubscriptionCount==0){
-            apply(new PriceBucketExpiredEvent(productId,priceBucketId,SysDateTime.now()));
+            apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
         }
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
         apply(new SubscriptionDeductedFromPriceBucketEvent(productId,priceBucketId,revisedChurnedSubscriptionCount,revisedTotalSubscriptionCount));

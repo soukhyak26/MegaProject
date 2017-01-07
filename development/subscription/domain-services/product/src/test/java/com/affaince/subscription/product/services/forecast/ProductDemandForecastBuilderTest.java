@@ -6,11 +6,12 @@ import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,8 @@ public class ProductDemandForecastBuilderTest {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
             for (List<String> value : values) {
-                ProductVersionId productVersionId = new ProductVersionId(value.get(0), LocalDateTime.parse(value.get(1), formatter));
-                LocalDateTime endDate = LocalDateTime.parse(value.get(2), formatter);
+                ProductVersionId productVersionId = new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter));
+                LocalDate endDate = LocalDate.parse(value.get(2), formatter);
                 long newSubscriptionCount = Long.parseLong(value.get(3));
                 long churnedSubscriptionCount = Long.parseLong(value.get(4));
                 long totalNumberOfExistingSubscriptionCount = Long.parseLong(value.get(5));

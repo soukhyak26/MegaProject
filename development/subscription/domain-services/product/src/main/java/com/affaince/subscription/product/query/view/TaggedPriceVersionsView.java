@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.product.vo.ProductwiseTaggedPriceVersionId;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,10 +14,10 @@ public class TaggedPriceVersionsView {
     private ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId ;
     private double purchasePricePerUnit;
     private double MRP;
-    private LocalDateTime taggedStartDate;
-    private LocalDateTime taggedEndDate;
+    private LocalDate taggedStartDate;
+    private LocalDate taggedEndDate;
 
-    public TaggedPriceVersionsView(String productId, String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate, LocalDateTime taggedEndDate) {
+    public TaggedPriceVersionsView(String productId, String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
         this.productwiseTaggedPriceVersionId = new ProductwiseTaggedPriceVersionId(productId,taggedPriceVersionId);
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
@@ -49,19 +49,19 @@ public class TaggedPriceVersionsView {
         this.MRP = MRP;
     }
 
-    public LocalDateTime getTaggedStartDate() {
+    public LocalDate getTaggedStartDate() {
         return taggedStartDate;
     }
 
-    public void setTaggedStartDate(LocalDateTime taggedStartDate) {
+    public void setTaggedStartDate(LocalDate taggedStartDate) {
         this.taggedStartDate = taggedStartDate;
     }
 
-    public LocalDateTime getTaggedEndDate() {
+    public LocalDate getTaggedEndDate() {
         return taggedEndDate;
     }
 
-    public void setTaggedEndDate(LocalDateTime taggedEndDate) {
+    public void setTaggedEndDate(LocalDate taggedEndDate) {
         this.taggedEndDate = taggedEndDate;
     }
 }

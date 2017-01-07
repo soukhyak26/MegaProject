@@ -2,6 +2,7 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ProductActivateCommand;
 import com.affaince.subscription.product.command.event.OpeningPriceOrPercentRegisteredEvent;
@@ -63,7 +64,7 @@ public class OpeningPriceOrPercentRegisteredEventListener {
             priceBucketViewRepository.save(newPriceBucket);
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
             //set next forecast date as current date + configured duration for repeating forecast
-            productConfigurationView.setNextForecastDate(SysDateTime.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));
+            productConfigurationView.setNextForecastDate(SysDate.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));
             productConfigurationViewRepository.save(productConfigurationView);
             productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_PRICE_ASSIGNED);
             productActivationStatusViewRepository.save(productActivationStatusView);

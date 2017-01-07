@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.*;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.command.event.*;
@@ -72,7 +73,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         */
         this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
         DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-        final LocalDateTime currentDate = SysDateTime.now();
+        final LocalDate currentDate = SysDate.now();
         final String taggedPriceVersionId = productId + currentDate.toString(format);
         PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, event.getPurchasePrice(), event.getMRP(), currentDate);
         this.productAccount.addNewTaggedPriceVersion(taggedPriceVersion);

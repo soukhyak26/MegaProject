@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -7,13 +8,13 @@ import org.joda.time.LocalDateTime;
  */
 public class SubscriptionPseudoActualsUpdatedEvent {
     private final String productId;
-    private final LocalDateTime forecastStartDate;
+    private final LocalDate forecastStartDate;
     private final LocalDateTime forecastEndDate;
     private final long newSubscriptionForecast;
     private final long churnedSubscriptionForecast;
     private final long forecastedTotalSubscriptionCount;
 
-    public SubscriptionPseudoActualsUpdatedEvent(String productId, LocalDateTime forecastStartDate, LocalDateTime forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
+    public SubscriptionPseudoActualsUpdatedEvent(String productId, LocalDate forecastStartDate, LocalDateTime forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
         this.productId = productId;
         this.forecastStartDate = forecastStartDate;
         this.forecastEndDate = forecastEndDate;
@@ -26,7 +27,7 @@ public class SubscriptionPseudoActualsUpdatedEvent {
         return productId;
     }
 
-    public LocalDateTime getForecastStartDate() {
+    public LocalDate getForecastStartDate() {
         return forecastStartDate;
     }
 

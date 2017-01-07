@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.command.event;
 
-import com.affaince.subscription.date.SysDateTime;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -10,7 +9,7 @@ public class PriceBucketExpiredEvent {
     private String productId;
     private String priceBucketId;
     private LocalDateTime expiryTime;
-    public PriceBucketExpiredEvent(String productId, String priceBucketId,LocalDateTime expiryTime) {
+    public PriceBucketExpiredEvent(String productId, String priceBucketId, LocalDateTime expiryTime) {
         this.productId=productId;
         this.priceBucketId=priceBucketId;
         this.expiryTime= expiryTime;

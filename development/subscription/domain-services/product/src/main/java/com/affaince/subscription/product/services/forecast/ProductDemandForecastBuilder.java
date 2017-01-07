@@ -39,7 +39,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
 
         List<Double> historicalSubscriptionChurnCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getChurnedSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
         List<Double> historicalTotalSubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getTotalNumberOfExistingSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
-        List<LocalDateTime> historicalEndDates = productActualsViewList.stream().map(pamv -> pamv.getEndDate()).collect(Collectors.toCollection((ArrayList<LocalDateTime>::new)));
+        List<LocalDate> historicalEndDates = productActualsViewList.stream().map(pamv -> pamv.getEndDate()).collect(Collectors.toCollection((ArrayList<LocalDate>::new)));
 
 
         List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, historicalSubscriptionChurnCountList.size() / 2);
@@ -47,16 +47,16 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
 
         List<ProductForecastView> forecasts = new ArrayList<>(forecastTotalSubscriptions.size());
         double previousTotalSubscriptionCount = 0;
-        LocalDateTime lastHistoricalEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
-        LocalDateTime newForecastStartDate = lastHistoricalEndDate.plusDays(1);
+        LocalDate lastHistoricalEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
+        LocalDate newForecastStartDate = lastHistoricalEndDate.plusDays(1);
         //derive new subscription from current and previous total subscription counts
         for (int i = 0; i < forecastTotalSubscriptions.size(); i++) {
             //Please verify if this calculation is right without considering churns
             double newSubscriptionCount = forecastTotalSubscriptions.get(i) - previousTotalSubscriptionCount + forecastChurnedSubscriptions.get(i);
             // this needs further treatment- instead of directly adding chunkAggregationPeriod we should find out how many days that month would have and add those many days
-            LocalDateTime dates[] = deriveStartAndEndDates(newForecastStartDate, chunkAggregationPeriod);
+            LocalDate[] dates = deriveStartAndEndDates(newForecastStartDate, chunkAggregationPeriod);
             newForecastStartDate = dates[0];
-            LocalDateTime newForecastEndDate = dates[1];
+            LocalDate newForecastEndDate = dates[1];
             ProductForecastView forecast = new ProductForecastView(new ProductVersionId(productId, newForecastStartDate),
                     newForecastEndDate,
                     Double.valueOf(newSubscriptionCount).longValue(),
@@ -70,7 +70,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         return aggregatedActualsViewList;
     }
 
-    public LocalDateTime[] deriveStartAndEndDates(LocalDateTime startDate, int chunkAggregationPeriod) {
+    public LocalDate[] deriveStartAndEndDates(LocalDate startDate, int chunkAggregationPeriod) {
         if (chunkAggregationPeriod == 30) {
             return getMonthStartEndDates(startDate);
         } else if (chunkAggregationPeriod == 90) {
@@ -82,23 +82,23 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         }
     }
 
-    private LocalDateTime[] getMonthStartEndDates(LocalDateTime localDate) {
-        LocalDateTime[] dates = new LocalDateTime[2];
+    private LocalDate[] getMonthStartEndDates(LocalDate localDate) {
+        LocalDate[] dates = new LocalDate[2];
         dates[0] = localDate.monthOfYear().withMinimumValue();
         dates[1] = localDate.monthOfYear().withMaximumValue();
         return dates;
     }
 
-    private LocalDateTime[] getWeekStartEndDates(LocalDateTime localDate) {
-        LocalDateTime[] dates = new LocalDateTime[2];
+    private LocalDate[] getWeekStartEndDates(LocalDate localDate) {
+        LocalDate[] dates = new LocalDate[2];
         dates[0] = localDate.dayOfWeek().withMinimumValue();
         dates[1] = localDate.dayOfWeek().withMaximumValue();
         return dates;
     }
 
-    private LocalDateTime[] getQuarterStartEndDates(LocalDateTime localDate) {
+    private LocalDate[] getQuarterStartEndDates(LocalDate localDate) {
 
-        LocalDateTime[] dates = new LocalDateTime[2];
+        LocalDate[] dates = new LocalDate[2];
 
         // Get the month of the current date
         int i = localDate.getMonthOfYear();

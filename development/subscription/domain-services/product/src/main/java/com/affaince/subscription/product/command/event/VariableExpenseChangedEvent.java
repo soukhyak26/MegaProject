@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.event;
 
 import com.affaince.subscription.product.vo.VariableExpensePerProduct;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -12,7 +13,7 @@ public class VariableExpenseChangedEvent {
     private VariableExpensePerProduct variableExpensePerProduct;
     private double revisedBreakEvenPrice;
 
-    public VariableExpenseChangedEvent() {
+    public VariableExpenseChangedEvent(String productId, LocalDate now, VariableExpensePerProduct newVariableExpenseVersion, double revisedBreakEvenPrice) {
     }
 
     public VariableExpenseChangedEvent(String productId, LocalDateTime fromDate, VariableExpensePerProduct variableExpensePerProduct,double revisedBreakEvenPrice) {

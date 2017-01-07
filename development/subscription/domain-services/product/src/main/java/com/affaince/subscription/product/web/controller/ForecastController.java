@@ -19,7 +19,7 @@ import com.affaince.subscription.product.web.request.SetTargetParameterRequest;
 import com.affaince.subscription.product.web.request.UpdateForecastRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,8 +110,8 @@ public class ForecastController {
         }
 
         ProductTargetParameters[] targetParameters = request.getProductTargetParameters();
-        LocalDateTime firstStartDate = null;
-        LocalDateTime lastEndDate = null;
+        LocalDate firstStartDate = null;
+        LocalDate lastEndDate = null;
         for (ProductTargetParameters parameter : targetParameters) {
             List<TargetSettingView> existingTargetViews = this.targetSettingViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
             //forecast should not be newly added if it already exists in the view

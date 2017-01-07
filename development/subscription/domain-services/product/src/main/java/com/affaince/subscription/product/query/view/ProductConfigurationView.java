@@ -3,7 +3,7 @@ package com.affaince.subscription.product.query.view;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +20,7 @@ public class ProductConfigurationView {
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
     private PricingOptions pricingOptions;
-    private LocalDateTime nextForecastDate;
+    private LocalDate nextForecastDate;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
@@ -85,11 +85,11 @@ public class ProductConfigurationView {
         this.pricingStrategyType = pricingStrategyType;
     }
 
-    public LocalDateTime getNextForecastDate() {
+    public LocalDate getNextForecastDate() {
         return nextForecastDate;
     }
 
-    public void setNextForecastDate(LocalDateTime nextForecastDate) {
+    public void setNextForecastDate(LocalDate nextForecastDate) {
         this.nextForecastDate = nextForecastDate;
     }
 

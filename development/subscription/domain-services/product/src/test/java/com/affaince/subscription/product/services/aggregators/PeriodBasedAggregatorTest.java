@@ -3,7 +3,7 @@ package com.affaince.subscription.product.services.aggregators;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
@@ -37,16 +37,16 @@ public class PeriodBasedAggregatorTest {
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
             for (List<String> value : values) {
                 ProductForecastView productForecastView = new ProductForecastView(
-                        new ProductVersionId(value.get(0), LocalDateTime.parse(value.get(1), formatter)),
-                        LocalDateTime.parse(value.get(2), formatter),
+                        new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter)),
+                        LocalDate.parse(value.get(2), formatter),
                         Long.parseLong(value.get(3)),
                         Long.parseLong(value.get(4)),
                         Long.parseLong(value.get(5)));
                 productForecastViews.add(productForecastView);
 
                 ProductActualsView productActualsView = new ProductActualsView(
-                        new ProductVersionId(value.get(0), LocalDateTime.parse(value.get(1), formatter)),
-                        LocalDateTime.parse(value.get(2), formatter),
+                        new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter)),
+                        LocalDate.parse(value.get(2), formatter),
                         Long.parseLong(value.get(3)),
                         Long.parseLong(value.get(4)),
                         Long.parseLong(value.get(5)));
@@ -61,8 +61,8 @@ public class PeriodBasedAggregatorTest {
             ProductForecastView firstView = productForecastViews.get(0);
             ProductForecastView aggregateView = new ProductForecastView(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0);
             String productId = null;
-            LocalDateTime startDate = null;
-            LocalDateTime endDate = null;
+            LocalDate startDate = null;
+            LocalDate endDate = null;
             for (int index = period * (periodIndex - 1); index < period * periodIndex; index++) {
                 ProductForecastView view = productForecastViews.get(index);
                 startDate = view.getProductVersionId().getFromDate();
@@ -80,8 +80,8 @@ public class PeriodBasedAggregatorTest {
             ProductActualsView firstView = productActualsViews.get(0);
             ProductActualsView aggregateView = new ProductActualsView(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0);
             String productId = null;
-            LocalDateTime startDate = null;
-            LocalDateTime endDate = null;
+            LocalDate startDate = null;
+            LocalDate endDate = null;
             for (int index = period * (periodIndex - 1); index < period * periodIndex; index++) {
                 ProductActualsView view = productActualsViews.get(index);
                 startDate = view.getProductVersionId().getFromDate();

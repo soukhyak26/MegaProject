@@ -6,6 +6,7 @@ import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.configuration.Axon;
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,8 +57,8 @@ public class DemandForecasterChainTest {
 
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
-        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),1250,0,1250);
+        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
         //forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
@@ -68,7 +69,7 @@ public class DemandForecasterChainTest {
             long earlierTotalSubscriptionCount= 1250;
             for (int i = 0; i < 4; i++) {
                 long totalSubscriptionCount =earlierTotalSubscriptionCount + readings[i][0] - readings[i][1] ;
-                ProductActualsView actuals = new ProductActualsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),readings[i][0],readings[i][1],totalSubscriptionCount);
+                ProductActualsView actuals = new ProductActualsView(productVersionId, new LocalDate(9999, 12, 31),readings[i][0],readings[i][1],totalSubscriptionCount);
                 //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
 /*
                 actualMetrics.setNewSubscriptions(readings[i][0]);
@@ -102,8 +103,8 @@ public class DemandForecasterChainTest {
     public void testForecastFor40HistoricalLinearRecords() throws IOException {
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
-        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),1250,0,1250);
+        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
         //forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
@@ -114,7 +115,7 @@ public class DemandForecasterChainTest {
             long totalSubscriptionCount=0;
             for (int i = 0; i < readings.length; i++) {
                 totalSubscriptionCount = totalSubscriptionCount + readings[i][0] - readings[i][1];
-                ProductActualsView actuals = new ProductActualsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0),readings[i][0], readings[i][1],totalSubscriptionCount);
+                ProductActualsView actuals = new ProductActualsView(productVersionId, new LocalDate(9999, 12, 31),readings[i][0], readings[i][1],totalSubscriptionCount);
                 //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
 /*
                 actualMetrics.setNewSubscriptions(readings[i][0]);

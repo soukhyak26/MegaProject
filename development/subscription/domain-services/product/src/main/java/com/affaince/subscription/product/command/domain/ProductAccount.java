@@ -189,7 +189,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
             latestTaggedPriceVersion.setBreakEvenPrice();
 */
-            apply(new VariableExpenseChangedEvent(command.getProductId(), SysDateTime.now(), newVariableExpenseVersion, revisedBreakEvenPrice));
+            apply(new VariableExpenseChangedEvent(command.getProductId(), SysDate.now(), newVariableExpenseVersion, revisedBreakEvenPrice));
         }
     }
 
@@ -433,7 +433,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void on(ProductStatusUpdatedEvent event) {
         String productId = event.getProductId();
         PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
-        latestTaggedPriceVersion.setTaggedEndDate(SysDateTime.now());
+        latestTaggedPriceVersion.setTaggedEndDate(SysDate.now());
         this.addNewTaggedPriceVersion(event.getNewTaggedPrice());
         this.setCurrentStockInUnits(event.getCurrentStockInUnits());
     }

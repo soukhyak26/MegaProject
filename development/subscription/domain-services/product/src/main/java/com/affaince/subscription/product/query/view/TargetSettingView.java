@@ -5,7 +5,7 @@ import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,7 +23,7 @@ public class TargetSettingView {
     private final ProductVersionId productVersionId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
@@ -31,7 +31,7 @@ public class TargetSettingView {
     private double variableExpensesPerPeriod;
 
 
-    public TargetSettingView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, double fixedExpensesPerPeriod, double variableExpensesPerPeriod) {
+    public TargetSettingView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, double fixedExpensesPerPeriod, double variableExpensesPerPeriod) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
@@ -45,7 +45,7 @@ public class TargetSettingView {
         return productVersionId;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 

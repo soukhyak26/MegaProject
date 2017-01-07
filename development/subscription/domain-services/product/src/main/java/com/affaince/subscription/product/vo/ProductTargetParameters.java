@@ -1,32 +1,32 @@
 package com.affaince.subscription.product.vo;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by mandar on 21-10-2016.
  */
 public class ProductTargetParameters {
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private long numberofNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     private long numberOfTotalSubscriptions;
     private double fixedExpensesPerPeriod;
     private double variableExpensesPerPeriod;
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

@@ -3,20 +3,17 @@ package com.affaince.subscription.business.query.listener;
 import com.affaince.subscription.business.command.event.ManualForecastAddedEvent;
 import com.affaince.subscription.business.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.business.query.view.ProductForecastView;
-import com.affaince.subscription.common.type.ProductReadinessStatus;
-import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.common.vo.ProductForecastParameter;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.query.exception.ProductForecastAlreadyExistsException;
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,8 +32,8 @@ public class ManualForecastAddedEventListener {
     @EventHandler
     public void on(ManualForecastAddedEvent event) throws ProductForecastAlreadyExistsException {
         ProductForecastParameter[] forecastParameters = event.getProductForecastParameters();
-        LocalDateTime firstStartDate = null;
-        LocalDateTime lastEndDate = null;
+        LocalDate firstStartDate = null;
+        LocalDate lastEndDate = null;
         Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
         long totalSubscriptions = 0;
         for (ProductForecastParameter parameter : forecastParameters) {

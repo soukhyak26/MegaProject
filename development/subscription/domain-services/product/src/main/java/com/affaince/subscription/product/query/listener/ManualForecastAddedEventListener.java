@@ -13,7 +13,7 @@ import com.affaince.subscription.common.vo.ProductForecastParameter;
 import com.affaince.subscription.query.exception.ProductForecastAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +45,8 @@ public class ManualForecastAddedEventListener {
                 ProductReadinessStatus.FORECASTABLE
         )) {
             ProductForecastParameter[] forecastParameters = event.getProductForecastParameters();
-            LocalDateTime firstStartDate = null;
-            LocalDateTime lastEndDate = null;
+            LocalDate firstStartDate = null;
+            LocalDate lastEndDate = null;
             Sort endDateSort=new Sort(Sort.Direction.DESC, "endDate");
             long totalSubscriptions=0;
             for (ProductForecastParameter parameter : forecastParameters) {

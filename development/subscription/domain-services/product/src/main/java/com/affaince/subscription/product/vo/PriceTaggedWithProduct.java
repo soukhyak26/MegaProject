@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.vo;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -10,17 +11,17 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
     private double purchasePricePerUnit;
     private double breakEvenPrice;
     private double MRP;
-    private LocalDateTime taggedStartDate;
-    private LocalDateTime taggedEndDate;
+    private LocalDate taggedStartDate;
+    private LocalDate taggedEndDate;
 
-    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate) {
+    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate) {
         this.taggedPriceVersionId = taggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;
     }
 
-    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDateTime taggedStartDate, LocalDateTime taggedEndDate) {
+    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
         this.taggedPriceVersionId = taggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
@@ -47,19 +48,19 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         this.MRP = MRP;
     }
 
-    public LocalDateTime getTaggedStartDate() {
+    public LocalDate getTaggedStartDate() {
         return taggedStartDate;
     }
 
-    public void setTaggedStartDate(LocalDateTime taggedStartDate) {
+    public void setTaggedStartDate(LocalDate taggedStartDate) {
         this.taggedStartDate = taggedStartDate;
     }
 
-    public LocalDateTime getTaggedEndDate() {
+    public LocalDate getTaggedEndDate() {
         return taggedEndDate;
     }
 
-    public void setTaggedEndDate(LocalDateTime taggedEndDate) {
+    public void setTaggedEndDate(LocalDate taggedEndDate) {
         this.taggedEndDate = taggedEndDate;
     }
 

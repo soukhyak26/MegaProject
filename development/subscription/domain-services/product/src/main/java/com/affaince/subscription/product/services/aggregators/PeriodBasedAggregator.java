@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.aggregators;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +27,8 @@ public class PeriodBasedAggregator<T extends ProductSubscriptionMetricsView> {
         //outer for- creating chunks of daily data according to chunk period
         for (int periodIndex = 1; periodIndex <= historicalData.size() / period; periodIndex++) {
             String productId = null;
-            LocalDateTime startDate = null;
-            LocalDateTime endDate = null;
+            LocalDate startDate = null;
+            LocalDate endDate = null;
             T firstView = historicalData.get(0);
             //create dummy forecastView/actualsView and fill the details in for loop.
             try {

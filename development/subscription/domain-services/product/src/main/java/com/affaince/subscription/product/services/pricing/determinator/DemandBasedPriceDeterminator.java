@@ -3,12 +3,14 @@ package com.affaince.subscription.product.services.pricing.determinator;
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.*;
 import org.apache.commons.lang3.ArrayUtils;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -51,7 +53,7 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
         //first and foremost : find if the demand is going up or it is going down for a product using extrapolation
         List<Double> forecastedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
         double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingSubscriptionsAssociatedWithAPrice(), forecastedDemands);
-        LocalDateTime currentDate = SysDateTime.now();
+        LocalDate currentDate = SysDate.now();
         PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(latestPriceBucket.getProductwisePriceBucketId().getProductId(), ""+latestPriceBucket.getProductwisePriceBucketId().getProductId()+"_"+ currentDate));
         DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
 

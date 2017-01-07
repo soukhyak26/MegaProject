@@ -2,8 +2,9 @@ package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
-import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.ProductForecastView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ import java.util.stream.Stream;
 public class ARIMABasedDemandForecasterTest {
     @Autowired
     ARIMABasedDemandForecaster forecaster;
-    private List<ProductActualMetricsView> productActualMetricsViewList;
+    private List<ProductActualsView> ProductActualsViewList;
 
     @Before
     public void setUp(){
@@ -34,23 +35,23 @@ public class ARIMABasedDemandForecasterTest {
     }
     @Test
     public void testPrecisePrediction() throws IOException {
-        productActualMetricsViewList= new ArrayList<>();
+        ProductActualsViewList= new ArrayList<>();
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
-        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0));
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
-        List<ProductForecastMetricsView> forecasts = new ArrayList<>();
+        List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
         for (int i = 0; i < readings.length; i++) {
-            ProductActualMetricsView actualMetrics = new ProductActualMetricsView(productVersionId, new LocalDateTime(9999, 12, 31, 0, 0, 0));
+            ProductActualsView actualMetrics = new ProductActualsView(productVersionId, new LocalDate(9999, 12, 31));
             //actualMetrics.setTotalNumberOfExistingSubscriptions(readings[i][0]);
             actualMetrics.setNewSubscriptions(readings[i][0]);
             actualMetrics.setChurnedSubscriptions(readings[i][1]);
-            productActualMetricsViewList.add(actualMetrics);
+            ProductActualsViewList.add(actualMetrics);
         }
-        List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+        List<Double> historicalDailySubscriptionCountList = ProductActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
 
         List<Double> result = forecaster.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
         System.out.println("ARIMA Precise prediction: " + (result == null ? "null" : result.get(0)));

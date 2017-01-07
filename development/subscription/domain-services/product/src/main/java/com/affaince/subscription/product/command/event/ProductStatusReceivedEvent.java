@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by mandark on 27-12-2015.
@@ -12,9 +12,9 @@ public class ProductStatusReceivedEvent {
     private double currentPurchasePricePerUnit;
     private double currentMRP;
     private int currentStockInUnits;
-    private LocalDateTime currentPriceDate;
+    private LocalDate currentPriceDate;
 
-    public ProductStatusReceivedEvent(String productId, String categoryId, String subCategoryId, double currentPurchasePricePerUnit, double currentMRP, int currentStockInUnits, LocalDateTime currentPriceDate) {
+    public ProductStatusReceivedEvent(String productId, String categoryId, String subCategoryId, double currentPurchasePricePerUnit, double currentMRP, int currentStockInUnits, LocalDate currentPriceDate) {
         this.productId = productId;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
@@ -51,7 +51,7 @@ public class ProductStatusReceivedEvent {
         return currentStockInUnits;
     }
 
-    public LocalDateTime getCurrentPriceDate() {
+    public LocalDate getCurrentPriceDate() {
         return currentPriceDate;
     }
 }

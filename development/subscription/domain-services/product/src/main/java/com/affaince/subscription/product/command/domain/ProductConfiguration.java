@@ -5,7 +5,7 @@ import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
     private String productId;
@@ -16,7 +16,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
-    private LocalDateTime nextForecastDate;
+    private LocalDate nextForecastDate;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private PricingOptions pricingOptions;
@@ -76,11 +76,11 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         this.pricingStrategyType = pricingStrategyType;
     }
 
-    public LocalDateTime getNextForecastDate() {
+    public LocalDate getNextForecastDate() {
         return nextForecastDate;
     }
 
-    public void setNextForecastDate(LocalDateTime nextForecastDate) {
+    public void setNextForecastDate(LocalDate nextForecastDate) {
         this.nextForecastDate = nextForecastDate;
     }
 

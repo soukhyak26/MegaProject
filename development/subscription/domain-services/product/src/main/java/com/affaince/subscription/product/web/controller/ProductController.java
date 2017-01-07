@@ -94,7 +94,7 @@ public class ProductController {
                 request.getCurrentPurchasePrice(),
                 request.getCurrentMRP(),
                 request.getCurrentStockInUnits(),
-                SysDateTime.now()
+                SysDate.now()
         );
         try {
             this.commandGateway.executeAsync(command);

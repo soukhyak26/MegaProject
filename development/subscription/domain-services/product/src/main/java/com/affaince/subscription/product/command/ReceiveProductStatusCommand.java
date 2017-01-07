@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.command;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by mandark on 02-04-2016.
@@ -12,9 +12,9 @@ public class ReceiveProductStatusCommand {
     private double currentPurchasePrice;
     private double currentMRP;
     private int currentStockInUnits;
-    private LocalDateTime currentPriceDate;
+    private LocalDate currentPriceDate;
 
-    public ReceiveProductStatusCommand(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDateTime currentPriceDate) {
+    public ReceiveProductStatusCommand(String productId, double currentPurchasePrice, double currentMRP, int currentStockInUnits, LocalDate currentPriceDate) {
         this.productId = productId;
         this.currentPurchasePrice = currentPurchasePrice;
         this.currentMRP = currentMRP;
@@ -38,7 +38,7 @@ public class ReceiveProductStatusCommand {
         return this.currentStockInUnits;
     }
 
-    public LocalDateTime getCurrentPriceDate() {
+    public LocalDate getCurrentPriceDate() {
         return this.currentPriceDate;
     }
 }

@@ -56,7 +56,7 @@ public class ProductStatusUpdatedEventListener {
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(), newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
             taggedPriceVersionsViewRepository.save(newTaggedPrice);
-            RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(),newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
+            RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(),newTaggedPriceVersion.getTaggedStartDate().toDateTimeAtCurrentTime().toLocalDateTime(),newTaggedPriceVersion.getTaggedEndDate().toDateTimeAtCurrentTime().toLocalDateTime());
             commandGateway.executeAsync(command);
         }
     }

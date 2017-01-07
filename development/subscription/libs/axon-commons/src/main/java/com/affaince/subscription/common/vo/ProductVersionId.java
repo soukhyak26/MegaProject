@@ -1,5 +1,6 @@
 package com.affaince.subscription.common.vo;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
@@ -9,8 +10,8 @@ import java.io.Serializable;
  */
 public class ProductVersionId implements Serializable, Comparable<ProductVersionId> {
     private String productId;
-    private LocalDateTime fromDate;
-    public ProductVersionId(String productId, LocalDateTime fromDate) {
+    private LocalDate fromDate;
+    public ProductVersionId(String productId, LocalDate fromDate) {
         this.productId = productId;
         this.fromDate = fromDate;
     }
@@ -26,11 +27,11 @@ public class ProductVersionId implements Serializable, Comparable<ProductVersion
         this.productId = productId;
     }
 
-    public LocalDateTime getFromDate() {
+    public LocalDate getFromDate() {
         return this.fromDate;
     }
 
-    public void setFromDate(LocalDateTime fromDate) {
+    public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
 

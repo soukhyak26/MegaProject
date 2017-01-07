@@ -5,7 +5,7 @@ import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * Created by mandark on 01-01-2016.
@@ -13,10 +13,10 @@ import org.joda.time.LocalDateTime;
 public class ProductForecastParameter {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
     private double purchasePricePerUnit;
     private double MRP;
     private long numberOfNewSubscriptions;
@@ -24,7 +24,7 @@ public class ProductForecastParameter {
   //  private long numberOfTotalSubscriptions;
     private ProductForecastStatus productForecastStatus;
 
-    public ProductForecastParameter(LocalDateTime startDate, LocalDateTime endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastParameter(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
@@ -69,19 +69,19 @@ public class ProductForecastParameter {
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

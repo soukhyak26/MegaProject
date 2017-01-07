@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,10 +24,10 @@ import java.util.stream.Stream;
 public class ProductForecastViewBuilder {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
-    private LocalDateTime localDate;
+    private LocalDate localDate;
 
     public void buildProductForecast() throws Exception {
-        localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
+        localDate = new LocalDate(2016, 1, 1);
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
@@ -57,9 +58,9 @@ public class ProductForecastViewBuilder {
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
             for (int i = 0; i < readings.length; i++) {
-                LocalDateTime newDate = localDate.plusDays(i + 1);
+                LocalDate newDate = localDate.plusDays(i + 1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ACTIVE);
+                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ACTIVE);
                 productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }

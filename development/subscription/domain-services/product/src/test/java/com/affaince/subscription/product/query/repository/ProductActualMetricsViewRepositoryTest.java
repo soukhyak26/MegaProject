@@ -3,7 +3,9 @@ package com.affaince.subscription.product.query.repository;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
-import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.ProductForecastView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,35 +27,35 @@ import java.util.stream.Stream;
 public class ProductActualMetricsViewRepositoryTest {
     private static final int QTY = 20;
     @Autowired
-    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
+    private ProductActualsViewRepository productActualsViewRepository;
 
     @Before
     public void init() throws FileNotFoundException {
         //MockitoAnnotations.initMocks(this);
-        productActualMetricsViewRepository.deleteAll();
-        List <ProductActualMetricsView> productActualMetricsViewList= new ArrayList<>();
+        productActualsViewRepository.deleteAll();
+        List <ProductActualsView> productActualsViewList= new ArrayList<>();
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
-        ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("1", new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+        ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
         forecastView.setTotalNumberOfExistingSubscriptions(1250);
-        LocalDateTime localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
+        LocalDate localDate = new LocalDate(2016, 1, 1);
         for (int i = 0; i < readings.length; i++) {
             localDate = localDate.plusDays(1);
-            ProductActualMetricsView actualMetrics = new ProductActualMetricsView(new ProductVersionId("1", localDate), new LocalDateTime(9999, 12, 31, 0, 0, 0));
+            ProductActualsView actualMetrics = new ProductActualsView(new ProductVersionId("1", localDate), new LocalDate(9999, 12, 31));
             actualMetrics.setNewSubscriptions(readings[i][0]);
             actualMetrics.setChurnedSubscriptions(readings[i][1]);
-            productActualMetricsViewList.add(actualMetrics);
-            //productForecastMetricsViewRepository.save(actualMetrics);
+            productActualsViewList.add(actualMetrics);
+            //ProductForecastViewRepository.save(actualMetrics);
         }
-        productActualMetricsViewRepository.save(productActualMetricsViewList);
-        //Mockito.when(productForecastMetricsViewRepository.findAll()).thenReturn(testViewList);
+        productActualsViewRepository.save(productActualsViewList);
+        //Mockito.when(ProductForecastViewRepository.findAll()).thenReturn(testViewList);
     }
     @Test
     public void findALLTest(){
-        Iterable<ProductActualMetricsView> forecasts= productActualMetricsViewRepository.findAll();
-        for(ProductActualMetricsView view: forecasts){
+        Iterable<ProductActualsView> forecasts= productActualsViewRepository.findAll();
+        for(ProductActualsView view: forecasts){
             System.out.println("No of existing subscriptions:" + view.getTotalNumberOfExistingSubscriptions());
         }
     }

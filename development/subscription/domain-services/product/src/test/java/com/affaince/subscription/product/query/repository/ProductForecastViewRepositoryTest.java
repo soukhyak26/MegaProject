@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -29,12 +30,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ProductForecastViewRepositoryTest {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
-    private LocalDateTime localDate;
+    private LocalDate localDate;
     @Before
     public void init() throws FileNotFoundException {
         // productForecastViewRepository.deleteAll();
 
-        localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
+        localDate = new LocalDate(2016, 1, 1);
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
@@ -70,9 +71,9 @@ public class ProductForecastViewRepositoryTest {
 */
             //localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
             for (int i = 0; i < readings.length; i++) {
-                LocalDateTime newDate = localDate.plusDays(i + 1);
+                LocalDate newDate = localDate.plusDays(i + 1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000);
+                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000);
                 productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }
