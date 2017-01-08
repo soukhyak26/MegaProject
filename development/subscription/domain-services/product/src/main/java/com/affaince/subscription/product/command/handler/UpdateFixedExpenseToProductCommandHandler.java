@@ -5,6 +5,7 @@ import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +16,7 @@ public class UpdateFixedExpenseToProductCommandHandler {
     private final Repository<Product> repository;
     private final OperatingExpenseService operatingExpenseService;
 
+    @Autowired
     public UpdateFixedExpenseToProductCommandHandler(Repository<Product> repository, OperatingExpenseService operatingExpenseService) {
         this.repository = repository;
         this.operatingExpenseService = operatingExpenseService;
