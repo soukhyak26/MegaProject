@@ -15,23 +15,34 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.YearMonth;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
  */
-public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<String> {
+public class MonthlyCommonOperatingExpense extends AbstractAnnotatedAggregateRoot<String> {
     @AggregateIdentifier
     private String id;
+    YearMonth monthOfYear;
     private String expenseHeader;
-    private Map<YearMonth, Double> rollingExpenseForecast;
+    private double monthlyExpenseAmount;
     private SensitivityCharacteristic sensitivityCharacteristic;
 
-    public CommonOperatingExpense() {
+    public MonthlyCommonOperatingExpense() {
 
     }
 
-    public CommonOperatingExpense(String id, String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
-        apply(new CommonExpenseCreatedEvent(id, expenseHeader, amount, sensitivityCharacteristic, YearMonth.now()));
+    public MonthlyCommonOperatingExpense(String id, YearMonth monthOfYear,String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
+        //Here the assumption is that common operating expense are going to remain the same through out year independent of business dynamics..
+        //at which event we should convey per unit unit expense to the product??????
+        OperatingExpensesDeterminator operatingExpensesDeterminator =
+                new DefaultOperatingExpensesDeterminator();
+        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
+        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
+                new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
+        ));
+
+        apply(new CommonExpenseCreatedEvent(id, monthOfYear, expenseHeader, amount, sensitivityCharacteristic));
     }
 
     public String getId() {
@@ -42,8 +53,8 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
         return this.expenseHeader;
     }
 
-    public Map<YearMonth, Double> getRollingExpenseForecast() {
-        return this.rollingExpenseForecast;
+    public double getMonthlyExpenseAmount() {
+        return monthlyExpenseAmount;
     }
 
     public SensitivityCharacteristic getSensitivityCharacteristic() {
@@ -53,42 +64,32 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
     @EventSourcingHandler
     public void on(CommonExpenseCreatedEvent event) {
         this.id = event.getCommonOperatingExpenseId();
+        this.monthOfYear=event.getMonthOfYear();
         this.expenseHeader = event.getExpenseHeader();
-        YearMonth monthOfYear = event.getMonthOfYear();
         this.sensitivityCharacteristic = event.getSensitivityCharacteristic();
-        for (int i = 0; i <= 11; i++) {
-            monthOfYear = monthOfYear.plusMonths(i);
-            //put total common operating expense build for each month in rolling build
-            rollingExpenseForecast.put(monthOfYear, event.getAmount());
-        }
-        //Here the assumption is that common operating expense are going to remain the same through out year independent of business dynamics..
-        //at which event we should convey per unit unit expense to the product??????
-        OperatingExpensesDeterminator operatingExpensesDeterminator =
-                new DefaultOperatingExpensesDeterminator();
-        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
-        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
-                new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
-        ));
+        this.monthlyExpenseAmount=event.getAmount();
     }
 
 
+    public void updateCommonOperatingExpense(String expenseHeader,double expenseAmount,SensitivityCharacteristic sensitivityCharacteristic){
+            OperatingExpensesDeterminator operatingExpensesDeterminator =
+                    new DefaultOperatingExpensesDeterminator();
+            final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
+            perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
+                    new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
+            ));
+            apply(new OperatingExpenseUpdatedEvent(id, expenseHeader, expenseAmount, sensitivityCharacteristic));
+    }
     @EventSourcingHandler
     public void on(OperatingExpenseUpdatedEvent event) {
-        YearMonth monthOfYear = new YearMonth(event.getForYear(), event.getForMonth());
-        if (event.getExpenseType() == ExpenseType.COMMON_EXPENSE) {
-            for (int i = 0; i <= 11; i++) {
-                monthOfYear = monthOfYear.plusMonths(i);
-                rollingExpenseForecast.put(monthOfYear, event.getExpenseAmount());
-            }
-        }
-        OperatingExpensesDeterminator operatingExpensesDeterminator =
-                new DefaultOperatingExpensesDeterminator();
-        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(this);
-        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
-                new FixedExpenseUpdatedToProductEvent(productId, SysDate.now(), perUnitExpense)
-        ));
+
+        this.id = event.getCommonOperatingExpenseId();
+        this.expenseHeader = event.getExpenseHeader();
+        this.sensitivityCharacteristic = event.getSensitivityCharacteristic();
+        this.monthlyExpenseAmount=event.getExpenseAmount();
     }
 
+/*
     @EventSourcingHandler
     public void on(PastCommonExpenseTypesRemovedEvent event) {
         //Remove past expense details from aggregate;
@@ -97,6 +98,7 @@ public class CommonOperatingExpense extends AbstractAnnotatedAggregateRoot<Strin
                 entry -> entry.getKey().isBefore(monthOfYear)
         );
     }
+*/
 
     public void removePastCommonExpenses(String aggregateId, String expenseHeader, YearMonth monthOfYear) {
         apply(new PastCommonExpenseTypesRemovedEvent(aggregateId, expenseHeader, monthOfYear));

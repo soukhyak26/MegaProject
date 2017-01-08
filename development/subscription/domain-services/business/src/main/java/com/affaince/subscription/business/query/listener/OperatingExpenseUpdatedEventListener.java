@@ -27,16 +27,15 @@ public class OperatingExpenseUpdatedEventListener {
 
     @EventHandler
     public void on(OperatingExpenseUpdatedEvent event) throws Exception {
-        if (event.getExpenseType() == ExpenseType.COMMON_EXPENSE) {
-            final List<CommonOperatingExpenseView> commonOperatingExpenseViews = operatingExpenseViewRepository.findByExpenseHeaderAndMonthOfYear(event.getExpenseHeader(), new YearMonth(event.getForYear(), event.getForMonth())
-            );
+            final List<CommonOperatingExpenseView> commonOperatingExpenseViews = operatingExpenseViewRepository.findByExpenseHeaderAndMonthOfYear(event.getExpenseHeader(), YearMonth.now());
             if (null != commonOperatingExpenseViews && null != commonOperatingExpenseViews.get(0)) {
                 CommonOperatingExpenseView view = commonOperatingExpenseViews.get(0);
                 view.setAmount(event.getExpenseAmount());
                 operatingExpenseViewRepository.save(view);
 
                 //Update same amount for future months
-                YearMonth monthOfYear = new YearMonth(event.getForYear(), event.getForMonth());
+                //YearMonth monthOfYear = new YearMonth(event.getForYear(), event.getForMonth());
+                YearMonth monthOfYear=YearMonth.now();
                 CommonOperatingExpenseView commonExpenseFutureView = null;
                 for (int i = 1; i <= 11; i++) {
                     monthOfYear = monthOfYear.plusMonths(i);
@@ -52,10 +51,7 @@ public class OperatingExpenseUpdatedEventListener {
                     operatingExpenseViewRepository.save(commonExpenseFutureView);
                 }
             }
-            RemovePastCommonExpenseTypesCommand removePastCommonExpenseTypesCommand = new RemovePastCommonExpenseTypesCommand(event.getCommonOperatingExpenseId(), event.getExpenseHeader(), new YearMonth(event.getForYear(), event.getForMonth()));
+            RemovePastCommonExpenseTypesCommand removePastCommonExpenseTypesCommand = new RemovePastCommonExpenseTypesCommand(event.getCommonOperatingExpenseId(), event.getExpenseHeader(), YearMonth.now());
             commandGateway.executeAsync(removePastCommonExpenseTypesCommand);
-
-        }
-
     }
 }

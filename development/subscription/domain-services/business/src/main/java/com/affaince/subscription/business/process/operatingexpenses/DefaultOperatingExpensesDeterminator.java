@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.process.operatingexpenses;
 
 
-import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
+import com.affaince.subscription.business.command.domain.MonthlyCommonOperatingExpense;
 import com.affaince.subscription.business.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.business.query.repository.ProductViewRepository;
 import com.affaince.subscription.business.query.view.ProductForecastView;
@@ -26,17 +26,15 @@ public class DefaultOperatingExpensesDeterminator implements OperatingExpensesDe
     ProductForecastViewRepository productForecastViewRepository;
 
     @Override
-    public Map<String, Double> calculateOperatingExpensesPerProduct(CommonOperatingExpense expense) {
+    public Map<String, Double> calculateOperatingExpensesPerProduct(MonthlyCommonOperatingExpense expense) {
         Iterable<ProductView> allActiveProducts = productViewrepository.findByProductStatus(ProductStatus.PRODUCT_ACTIVATED);
         Map<String, Double> perUnitOperatingExpenses = new HashMap<>();
-        Map<YearMonth, Double> rollingExpenseForecast = expense.getRollingExpenseForecast();
+       // Map<YearMonth, Double> rollingExpenseForecast = expense.getRollingExpenseForecast();
+        double expenseAmountPerMonth=expense.getMonthlyExpenseAmount();
         //double currentOperatingExpense = rollingExpenseForecast.get(YearMonth.now());
         double totalForecastedCommonOperatingExpense = 0;
-        YearMonth lastForecastedMonth = null;
-        for (Map.Entry<YearMonth, Double> entry : rollingExpenseForecast.entrySet()) {
-            totalForecastedCommonOperatingExpense += entry.getValue();
-            lastForecastedMonth = entry.getKey();
-        }
+        YearMonth lastForecastedMonth = YearMonth.now();
+        totalForecastedCommonOperatingExpense = expenseAmountPerMonth*12;
         // double totalMonthlySaleAmount = 0;
         double totalAnnualForecastedRevenueForAllProducts = 0;
         for (ProductView tempProductView : allActiveProducts) {

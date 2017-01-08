@@ -3,25 +3,26 @@ package com.affaince.subscription.business.command.event;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import org.joda.time.YearMonth;
 
+import java.util.Map;
+
 /**
  * Created by mandark on 24-01-2016.
  */
 public class CommonExpenseCreatedEvent {
     private String commonOperatingExpenseId;
+    private YearMonth monthOfYear;
     private String expenseHeader;
     private double amount;
     private SensitivityCharacteristic sensitivityCharacteristic;
-    private YearMonth monthOfYear;
-
     public CommonExpenseCreatedEvent() {
     }
 
-    public CommonExpenseCreatedEvent(String id, String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic, YearMonth monthOfYear) {
+    public CommonExpenseCreatedEvent(String id, YearMonth monthOfYear,String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
         this.commonOperatingExpenseId = id;
+        this.monthOfYear=monthOfYear;
         this.expenseHeader = expenseHeader;
         this.amount = amount;
         this.sensitivityCharacteristic = sensitivityCharacteristic;
-        this.monthOfYear = monthOfYear;
     }
 
     public String getExpenseHeader() {
@@ -36,11 +37,11 @@ public class CommonExpenseCreatedEvent {
         return this.commonOperatingExpenseId;
     }
 
-    public YearMonth getMonthOfYear() {
-        return this.monthOfYear;
-    }
-
     public SensitivityCharacteristic getSensitivityCharacteristic() {
         return this.sensitivityCharacteristic;
+    }
+
+    public YearMonth getMonthOfYear() {
+        return monthOfYear;
     }
 }

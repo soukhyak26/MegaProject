@@ -7,6 +7,7 @@ import com.affaince.subscription.business.query.repository.DeliveryChargesRuleVi
 import com.affaince.subscription.business.vo.OperatingExpenseVO;
 import com.affaince.subscription.business.web.request.CommonOperatingExpensesRequest;
 import com.affaince.subscription.common.type.PeriodUnit;
+import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,22 +41,27 @@ public class OperatingExpenseController {
     @RequestMapping(method = RequestMethod.POST, value = "common")
     @Consumes("application/json")
     public ResponseEntity<Object> setCommonOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
-        String commonExpenseId = UUID.randomUUID().toString();
-        double amount = 0;
+        //String commonExpenseId = UUID.randomUUID().toString();
+        double monthlyCommonExpenseAmount = 0;
         for (OperatingExpenseVO expense : request.getExpenses()) {
             if (expense.getPeriod().getUnit() == PeriodUnit.WEEK) {
-                amount = (expense.getAmount() / expense.getPeriod().getValue()) * 4;
+                monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue()) * 4;
             } else if (expense.getPeriod().getUnit() == PeriodUnit.MONTH) {
-                amount = (expense.getAmount() / expense.getPeriod().getValue());
+                monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue());
             } else if (expense.getPeriod().getUnit() == PeriodUnit.YEAR) {
-                amount = expense.getAmount() / (expense.getPeriod().getValue() * 12);
+                monthlyCommonExpenseAmount = expense.getAmount() / (expense.getPeriod().getValue() * 12);
             }
-
-            final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(commonExpenseId, expense.getExpenseHeader(), amount, expense.getSensitivityCharacteristic());
-            try {
-                commandGateway.executeAsync(command);
-            } catch (Exception e) {
-                throw e;
+            String commonExpensePrefix = "COMMON_EXP_";
+            YearMonth monthOfYear= YearMonth.now();
+            for (int i = 0; i <= 11; i++) {
+                monthOfYear = monthOfYear.plusMonths(i);
+                final String commonExpenseId=commonExpensePrefix + monthOfYear.toString();
+                final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(commonExpenseId, monthOfYear,expense.getExpenseHeader(), monthlyCommonExpenseAmount, expense.getSensitivityCharacteristic());
+                try {
+                    commandGateway.executeAsync(command);
+                } catch (Exception e) {
+                    throw e;
+                }
             }
         }
         return new ResponseEntity<Object>(HttpStatus.OK);

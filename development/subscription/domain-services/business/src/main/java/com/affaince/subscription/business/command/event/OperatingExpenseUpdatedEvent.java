@@ -1,27 +1,22 @@
 package com.affaince.subscription.business.command.event;
 
 import com.affaince.subscription.common.type.ExpenseType;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 
 /**
  * Created by mandark on 24-01-2016.
  */
 public class OperatingExpenseUpdatedEvent {
     private String commonOperatingExpenseId;
-    private ExpenseType expenseType;
     private String expenseHeader;
     private double expenseAmount;
-    private int forMonth;
-    private int forYear;
+    private SensitivityCharacteristic sensitivityCharacteristic;
 
-    public OperatingExpenseUpdatedEvent() {
-    }
-
-    public ExpenseType getExpenseType() {
-        return expenseType;
-    }
-
-    public void setExpenseType(ExpenseType expenseType) {
-        this.expenseType = expenseType;
+    public OperatingExpenseUpdatedEvent(String commonOperatingExpenseId, String expenseHeader, double expenseAmount, SensitivityCharacteristic sensitivityCharacteristic) {
+        this.commonOperatingExpenseId = commonOperatingExpenseId;
+        this.expenseHeader = expenseHeader;
+        this.expenseAmount = expenseAmount;
+        this.sensitivityCharacteristic = sensitivityCharacteristic;
     }
 
     public String getExpenseHeader() {
@@ -40,31 +35,19 @@ public class OperatingExpenseUpdatedEvent {
         this.expenseAmount = expenseAmount;
     }
 
-
-    public int getForMonth() {
-        return this.forMonth;
+    public SensitivityCharacteristic getSensitivityCharacteristic() {
+        return sensitivityCharacteristic;
     }
 
-    public void setForMonth(int forMonth) {
-        this.forMonth = forMonth;
-    }
-
-    public int getForYear() {
-        return this.forYear;
-    }
-
-    public void setForYear(int forYear) {
-        this.forYear = forYear;
+    public void setSensitivityCharacteristic(SensitivityCharacteristic sensitivityCharacteristic) {
+        this.sensitivityCharacteristic = sensitivityCharacteristic;
     }
 
     @Override
     public String toString() {
         return "OperatingExpenseUpdatedEvent{" +
-                "expenseType=" + expenseType +
                 ", expenseHeader='" + expenseHeader + '\'' +
                 ", expenseAmount=" + expenseAmount +
-                ", forMonth=" + forMonth +
-                ", forYear=" + forYear +
                 '}';
     }
 

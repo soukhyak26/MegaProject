@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.command.handler;
 
 import com.affaince.subscription.business.command.RemovePastCommonExpenseTypesCommand;
-import com.affaince.subscription.business.command.domain.CommonOperatingExpense;
+import com.affaince.subscription.business.command.domain.MonthlyCommonOperatingExpense;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by mandark on 24-01-2016.
  */
 public class RemovePastCommonExpenseTypesCommandHandler {
-    private final Repository<CommonOperatingExpense> repository;
+    private final Repository<MonthlyCommonOperatingExpense> repository;
 
     @Autowired
 
-    public RemovePastCommonExpenseTypesCommandHandler(Repository<CommonOperatingExpense> repository) {
+    public RemovePastCommonExpenseTypesCommandHandler(Repository<MonthlyCommonOperatingExpense> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
     public void handle(RemovePastCommonExpenseTypesCommand command) {
-        CommonOperatingExpense expense = repository.load(command.getCommonOperatingExpenseId());
+        MonthlyCommonOperatingExpense expense = repository.load(command.getCommonOperatingExpenseId());
         expense.removePastCommonExpenses(command.getCommonOperatingExpenseId(), command.getExpenseHeader(), command.getMonthOfYear());
     }
 }

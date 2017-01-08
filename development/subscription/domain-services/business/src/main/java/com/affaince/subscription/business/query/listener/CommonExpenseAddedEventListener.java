@@ -4,8 +4,12 @@ import com.affaince.subscription.business.command.event.CommonExpenseCreatedEven
 import com.affaince.subscription.business.query.repository.CommonOperatingExpenseViewRepository;
 import com.affaince.subscription.business.query.view.CommonOperatingExpenseView;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 16-01-2016.
@@ -22,7 +26,9 @@ public class CommonExpenseAddedEventListener {
 
     @EventHandler
     public void on(CommonExpenseCreatedEvent event) {
-        final CommonOperatingExpenseView commonOperatingExpenseView = new CommonOperatingExpenseView(event.getCommonOperatingExpenseId(), event.getExpenseHeader(), event.getAmount(), event.getMonthOfYear());
-        operatingExpenseViewRepository.save(commonOperatingExpenseView);
+            final YearMonth monthOfYear =event.getMonthOfYear();
+            final double commonExpenseAmount=event.getAmount();
+            final CommonOperatingExpenseView commonOperatingExpenseView = new CommonOperatingExpenseView(event.getCommonOperatingExpenseId(),event.getExpenseHeader(),commonExpenseAmount ,monthOfYear );
+            operatingExpenseViewRepository.save(commonOperatingExpenseView);
     }
 }
