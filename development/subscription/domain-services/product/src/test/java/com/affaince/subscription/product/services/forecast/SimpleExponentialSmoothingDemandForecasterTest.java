@@ -4,7 +4,6 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,78 +21,77 @@ import java.util.stream.Collectors;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={Application.class})
 public class SimpleExponentialSmoothingDemandForecasterTest {
-    private List<ProductActualsView> productActualMetricsViewList;
     @Autowired
     private SimpleExponentialSmoothingDemandForecaster forecaster;
+    private List<ProductActualsView> productActualsViewList;
     @Before
     public void setUp(){
-        productActualMetricsViewList= new ArrayList<>();
+        productActualsViewList = new ArrayList<>();
+        long totalSubscriptions=0;
+        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),280,0,280);
+        productActualsViewList.add(view1);
 
-        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view1.setNewSubscriptions(280);
-        productActualMetricsViewList.add(view1);
+        totalSubscriptions=totalSubscriptions+288;
+        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),288,0,totalSubscriptions);
+        productActualsViewList.add(view2);
 
-        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view2.setNewSubscriptions(288);
-        productActualMetricsViewList.add(view2);
+        totalSubscriptions=totalSubscriptions+266;
+        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),266,0,totalSubscriptions);
+        productActualsViewList.add(view3);
 
-        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view3.setNewSubscriptions(266);
-        productActualMetricsViewList.add(view3);
+        totalSubscriptions=totalSubscriptions+295;
+        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),295,0,totalSubscriptions);
+        productActualsViewList.add(view4);
 
-        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view4.setNewSubscriptions(295);
-        productActualMetricsViewList.add(view4);
+        totalSubscriptions=totalSubscriptions+302;
+        ProductActualsView view5 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),302,0,totalSubscriptions);
+        productActualsViewList.add(view5);
 
-        ProductActualsView view5 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view5.setNewSubscriptions(302);
-        productActualMetricsViewList.add(view5);
+        totalSubscriptions=totalSubscriptions+310;
+        ProductActualsView view6 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),310,0,totalSubscriptions);
+        productActualsViewList.add(view6);
 
-        ProductActualsView view6 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view6.setNewSubscriptions(310);
-        productActualMetricsViewList.add(view6);
+        totalSubscriptions=totalSubscriptions+303;
+        ProductActualsView view7 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),303,0,totalSubscriptions);
+        productActualsViewList.add(view7);
 
-        ProductActualsView view7 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view7.setNewSubscriptions(303);
-        productActualMetricsViewList.add(view7);
+        totalSubscriptions=totalSubscriptions+328;
+        ProductActualsView view8 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),328,0,totalSubscriptions);
+        productActualsViewList.add(view8);
 
-        ProductActualsView view8 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view8.setNewSubscriptions(328);
-        productActualMetricsViewList.add(view8);
+        totalSubscriptions=totalSubscriptions+309;
+        ProductActualsView view9 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),309,0,totalSubscriptions);
+        productActualsViewList.add(view9);
 
-        ProductActualsView view9 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view9.setNewSubscriptions(309);
-        productActualMetricsViewList.add(view9);
+        totalSubscriptions=totalSubscriptions+315;
+        ProductActualsView view10 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),315,0,totalSubscriptions);
+        productActualsViewList.add(view10);
 
-        ProductActualsView view10 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view10.setNewSubscriptions(315);
-        productActualMetricsViewList.add(view10);
+        totalSubscriptions=totalSubscriptions+320;
+        ProductActualsView view11 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),320,0,totalSubscriptions);
+        productActualsViewList.add(view11);
 
-        ProductActualsView view11 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view11.setNewSubscriptions(320);
-        productActualMetricsViewList.add(view11);
+        totalSubscriptions=totalSubscriptions+332;
+        ProductActualsView view12 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),332,0,totalSubscriptions);
+        productActualsViewList.add(view12);
 
-        ProductActualsView view12 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view12.setNewSubscriptions(332);
-        productActualMetricsViewList.add(view12);
+        totalSubscriptions=totalSubscriptions+310;
+        ProductActualsView view13 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),310,0,totalSubscriptions);
+        productActualsViewList.add(view13);
 
-        ProductActualsView view13 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view13.setNewSubscriptions(310);
-        productActualMetricsViewList.add(view13);
+        totalSubscriptions=totalSubscriptions+308;
+        ProductActualsView view14 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),308,0,totalSubscriptions);
+        productActualsViewList.add(view14);
 
-        ProductActualsView view14 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view14.setNewSubscriptions(308);
-        productActualMetricsViewList.add(view14);
-
-        ProductActualsView view15 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view15.setNewSubscriptions(320);
-        productActualMetricsViewList.add(view15);
+        totalSubscriptions=totalSubscriptions+320;
+        ProductActualsView view15 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),320,0,totalSubscriptions);
+        productActualsViewList.add(view15);
 
     }
     @Test
     public void testPrecisePrediction(){
         // TimeSeriesBasedForecaster forecaster= new SimpleExponentialSmoothingDemandForecaster();
-        List<Double> historicalDailySubscriptionCountList = productActualMetricsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+        List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
         List<Double> result = forecaster.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
         System.out.println("Precise prediction: "+ (result == null ? "null" : result.get(0)));

@@ -34,7 +34,7 @@ public class OfferedPriceRecommendedEventListener {
     @EventHandler
     public void on(OfferedPriceRecommendedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        RecommendedPriceBucketView latestPriceBucket = recommendedPriceBucketViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
+        RecommendedPriceBucketView latestPriceBucket = recommendedPriceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
         RecommendedPriceBucketView newPriceBucket = new RecommendedPriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getNewPriceBucket().getPriceBucketId()));
         newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getNewPriceBucket().getOfferedPriceOrPercentDiscountPerUnit());
         newPriceBucket.setTaggedPriceVersion(event.getNewPriceBucket().getTaggedPriceVersion());

@@ -17,8 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductForecastView implements ProductSubscriptionMetricsView, Comparable<ProductForecastView> {
     @Id
     private final ProductVersionId productVersionId;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
@@ -36,6 +34,7 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
     }
 */
 
+/*
     public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate){
         this.productVersionId = productVersionId;
         this.endDate = endDate;
@@ -44,6 +43,7 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
         this.totalNumberOfExistingSubscriptions = 0;
         this.productForecastStatus = ProductForecastStatus.ACTIVE;
     }
+*/
     public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;

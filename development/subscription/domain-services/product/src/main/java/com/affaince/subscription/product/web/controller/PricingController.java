@@ -64,7 +64,7 @@ public class PricingController {
     @Consumes("application/json")
     public String recommendPriceChange(@PathVariable("productid") String productId) throws JsonProcessingException {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        RecommendedPriceBucketView recommendedPriceBucketView = recommendedPriceBucketViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
+        RecommendedPriceBucketView recommendedPriceBucketView = recommendedPriceBucketViewRepository.findByProductwisePriceBucketId_ProductId(productId, sort).get(0);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(recommendedPriceBucketView);
     }

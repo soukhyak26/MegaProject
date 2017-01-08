@@ -1,5 +1,6 @@
 package configuration;
 
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
 import org.apache.camel.EndpointInject;
@@ -61,7 +62,7 @@ public class ProductStatusFeedTest {
         event1.setCurrentPurchasePricePerUnit(257.00);
         event1.setCurrentMRP(444);
         event1.setCurrentStockInUnits(500);
-        event1.setCurrentPriceDate(SysDateTime.now());
+        event1.setCurrentPriceDate(SysDate.now());
 
         ProductStatusReceivedEvent event2 = new ProductStatusReceivedEvent();
         event2.setCategoryId("cat0");
@@ -70,7 +71,7 @@ public class ProductStatusFeedTest {
         event2.setCurrentPurchasePricePerUnit(257.00);
         event2.setCurrentMRP(444);
         event2.setCurrentStockInUnits(500);
-        event2.setCurrentPriceDate(SysDateTime.now());
+        event2.setCurrentPriceDate(SysDate.now());
 
         ProductStatusReceivedEvent [] events = new ProductStatusReceivedEvent[2];
         events[0] = event1;

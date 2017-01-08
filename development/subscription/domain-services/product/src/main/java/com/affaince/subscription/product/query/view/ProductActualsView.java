@@ -25,6 +25,8 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
     }
 */
 
+
+/*
     public ProductActualsView(ProductVersionId productVersionId, LocalDate endDate){
         this.productVersionId = productVersionId;
         this.endDate = endDate;
@@ -33,6 +35,7 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
         this.totalNumberOfExistingSubscriptions = 0;
 
     }
+*/
     public ProductActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;

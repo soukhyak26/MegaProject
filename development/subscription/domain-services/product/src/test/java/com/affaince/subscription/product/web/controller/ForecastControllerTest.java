@@ -75,25 +75,24 @@ public class ForecastControllerTest {
 
         List<ProductActualsView> ProductActualsViewList;
         ProductActualsViewList = new ArrayList<>();
+        long totalSubscriptions=500;
 
-        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view1.setNewSubscriptions(500);
+        ProductActualsView view1 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),500,0,500);
         ProductActualsViewList.add(view1);
 
-        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view2.setNewSubscriptions(750);
+        totalSubscriptions=totalSubscriptions+750;
+        ProductActualsView view2 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),750,0,totalSubscriptions);
         ProductActualsViewList.add(view2);
 
-        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view3.setNewSubscriptions(1000);
+        totalSubscriptions=totalSubscriptions+1000;
+        ProductActualsView view3 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),1000,0,totalSubscriptions);
         ProductActualsViewList.add(view3);
 
-        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        view4.setNewSubscriptions(1250);
+        totalSubscriptions=totalSubscriptions+1250;
+        ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),1250,0,totalSubscriptions);
         ProductActualsViewList.add(view4);
 
-        ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-        forecastView.setTotalNumberOfExistingSubscriptions(1250);
+        ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),1250,0,1250);
         List<ProductForecastView> forecasts=new ArrayList<>();
         forecasts.add(forecastView);
 

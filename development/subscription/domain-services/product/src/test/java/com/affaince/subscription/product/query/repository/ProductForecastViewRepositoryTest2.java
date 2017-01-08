@@ -37,14 +37,13 @@ public class ProductForecastViewRepositoryTest2 {
             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
             long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
-            ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("product" + k, new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31));
-            forecastView.setTotalNumberOfExistingSubscriptions(1250);
+            ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("product" + k, new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),1250,0,1250);
             LocalDate localDate = new LocalDate(2016, 1, 1);
+            long totalSubscriptions=1250;
             for (int i = 0; i < readings.length; i++) {
                 localDate = localDate.plusDays(1);
-                ProductForecastView actualMetrics = new ProductForecastView(new ProductVersionId("product" + k, localDate), new LocalDate(9999, 12, 31));
-                actualMetrics.setNewSubscriptions(readings[i][0]);
-                actualMetrics.setChurnedSubscriptions(readings[i][1]);
+                totalSubscriptions=totalSubscriptions+readings[i][0]-readings[i][1];
+                ProductForecastView actualMetrics = new ProductForecastView(new ProductVersionId("product" + k, localDate), new LocalDate(9999, 12, 31),readings[i][0],readings[i][1],totalSubscriptions);
                 productActualMetricsViewList.add(actualMetrics);
                 //ProductForecastViewRepository.save(actualMetrics);
             }
