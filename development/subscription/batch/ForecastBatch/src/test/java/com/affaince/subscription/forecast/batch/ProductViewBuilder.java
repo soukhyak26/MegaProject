@@ -37,14 +37,7 @@ public class ProductViewBuilder {
                     List<String> compliments = Arrays.asList(line.substring(
                             line.lastIndexOf("[") + 1, line.lastIndexOf("]")
                     ).split(","));
-/*
-                    productViews.add(new ProductView(
-                            tokens[0], tokens[1], tokens[2], tokens[3],
-                            Long.parseLong(tokens[4]), QuantityUnit.GM,
-                            substitutes, compliments, null
 
-                    ));
-*/
                     Map<String, Object> productView = new HashMap<>();
                     //ProductView productView1 = new ProductView();
                     productView.put("productName", tokens[1]);

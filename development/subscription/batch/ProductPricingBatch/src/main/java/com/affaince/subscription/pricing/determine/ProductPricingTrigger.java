@@ -38,6 +38,7 @@ public class ProductPricingTrigger {
     public ProductDemandTrend triggerProductPricingNew(String productId){
         //get the actuals data from last to first in descending order
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        //instead of getting ProductActuals view of current day, we are taking latest view in order to eliminate the dependancy of running this job at end of day
         final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
         final double totalActualSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
 
@@ -59,6 +60,7 @@ public class ProductPricingTrigger {
         //get the actuals data from last to first in descending order
         LocalDate currentDay = SysDate.now();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        //instead of getting ProductActuals view of current day, we are taking latest view in order to eliminate the dependancy of running this job at end of day
         final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId( productId,sort).get(0);
         final double totalActualSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
 

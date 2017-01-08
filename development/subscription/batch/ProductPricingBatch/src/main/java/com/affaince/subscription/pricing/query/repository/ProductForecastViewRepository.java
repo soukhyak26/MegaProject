@@ -13,13 +13,5 @@ import java.util.List;
  */
 
 public interface ProductForecastViewRepository extends CrudRepository<ProductForecastView, ProductVersionId> {
-    public List<ProductForecastView> findByProductVersionId_ProductId(String productId);
-
     public List<ProductForecastView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
-
-    public List<ProductForecastView> findByProductVersionId_ProductId(String productId, Sort sort);
-
-    public ProductForecastView findFirstByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
-
-
 }

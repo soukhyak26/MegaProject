@@ -16,19 +16,8 @@ import java.util.List;
 public interface RecommendedPriceBucketViewRepository extends PagingAndSortingRepository<RecommendedPriceBucketView, ProductwisePriceBucketId> {
 
     @Query("{ entityStatus:'1' }")
-    PriceBucketView findOne(Sort sort);
-
-    @Query("{ entityStatus:'1' }")
     List<RecommendedPriceBucketView> findAll(Sort sort);
 
     @Query("{ entityStatus:'1' }")
-    List<PriceBucketView> findByProductwisePriceBucketId_ProductId(String productId);
-
-    @Query("{ entityStatus:'1' }")
     List<RecommendedPriceBucketView> findByProductwisePriceBucketId_ProductId(String productId, Sort sort);
-
-    List<RecommendedPriceBucketView> findByProductwisePriceBucketId_ProductIdAndTaggedPriceVersion_PurchasePricePerUnit(String productId, double purchasePricePerUnit);
-
-    List<RecommendedPriceBucketView> findByProductwisePriceBucketIdAndEntityStatus(ProductwisePriceBucketId productwisePriceBucketId, int entityStatus);
-
 }
