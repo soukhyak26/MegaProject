@@ -142,10 +142,16 @@ public class ProductBuilder {
         return this;
     }
 
+    public ProductBuilder percentageChangeInTrend () {
+        products.forEach(product -> {
+            product.setPercentageChangeInTrend(new Random().nextInt(40)+(-20));
+        });
+        return this;
+    }
+
     public static void main(String[] args) {
-        ProductBuilder.buildProducts(100).substitutes().complements().branded();
-        products.forEach(product -> System.out.println(product.getProductId() +
-                "  " + product.getCategoryId() + " " + product.getSubCategoryId()));
+        ProductBuilder.buildProducts(100).substitutes().complements().branded().percentageChangeInTrend();
+        products.forEach(product -> System.out.println(product.getPercentageChangeInTrend()));
     }
 
     public List<Product> build() {
