@@ -1,17 +1,20 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.*;
+import com.affaince.subscription.common.vo.ProductForecastParameter;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.*;
+import com.affaince.subscription.product.command.CalculateExpectedProfitPerPriceBucketCommand;
+import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
+import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
+import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
+import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingOptions;
-import com.affaince.subscription.common.vo.ProductForecastParameter;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -217,12 +220,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
 
     //for receipt from main application thru integration
-    public void receiveProductStatus(ReceiveProductStatusCommand command) {
-        this.getProductAccount().receiveProductStatus(command);
+    public void receiveProductStatus(ReceiveProductStatusCommand command, OperatingExpenseService operatingExpenseService) {
+        this.getProductAccount().receiveProductStatus(command, operatingExpenseService);
     }
 
-    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command) {
-        getProductAccount().updateFixedExpenses(command);
+    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, OperatingExpenseService operatingExpenseService) {
+        getProductAccount().updateFixedExpenses(command, operatingExpenseService);
     }
 
 
