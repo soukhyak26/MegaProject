@@ -14,10 +14,5 @@ import java.util.List;
  */
 public interface ProductPseudoActualsViewRepository extends CrudRepository<ProductPseudoActualsView, ProductVersionId> {
     public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId);
-
     public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId, Sort sort);
-    public List<ProductPseudoActualsView> findByProductVersionId(ProductVersionId productVersionId);
-    public List<ProductPseudoActualsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
-    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDateTime fromDate, LocalDateTime toDate);
 }

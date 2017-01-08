@@ -59,12 +59,12 @@ public class ProductPricingTrigger {
         //get the actuals data from last to first in descending order
         LocalDate currentDay = SysDate.now();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId( new ProductVersionId(productId,currentDay)).get(0);
+        final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId( productId,sort).get(0);
         final double totalActualSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
 
         //find total subscription count for the current day(day of execution)
         //List<ProductPseudoActualsView> activePseudoActualsViews= productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(productId, ProductForecastStatus.ACTIVE);
-        ProductPseudoActualsView activePseudoActualsView=productPseudoActualsViewRepository.findByProductVersionId(new ProductVersionId(productId,currentDay)).get(0);
+        ProductPseudoActualsView activePseudoActualsView=productPseudoActualsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
 
         //find value of total subscriptions in PseudoActuals on date of execution.
         double  totalPseudoActualSubsctiptionCount=activePseudoActualsView.getTotalNumberOfExistingSubscriptions();

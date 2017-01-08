@@ -16,6 +16,6 @@ public interface ProductPseudoActualsViewRepository extends CrudRepository<Produ
 
     public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId, Sort sort);
 
-    public List<ProductPseudoActualsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
+    public List<ProductPseudoActualsView> findByProductVersionId(ProductVersionId productVersionId);
 
 }
