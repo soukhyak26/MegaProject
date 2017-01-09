@@ -22,6 +22,7 @@ public class Product {
 	private int maxPercentageIncreaseInForecast;
 	private int actualsAggregationPeriodForTargetForecast=30;
 	private int percentageChangeInTrend;
+	private List<Forecast> forecasts;
 
 
 	public Product(String productId, String productName, String categoryId, String subCategoryId) {
@@ -206,5 +207,13 @@ public class Product {
 
 	public void setPercentageChangeInTrend(int percentageChangeInTrend) {
 		this.percentageChangeInTrend = percentageChangeInTrend;
+	}
+
+	public List<Forecast> getForecasts() {
+		return forecasts;
+	}
+
+	public void setForecasts(List<Forecast> forecasts) {
+		this.forecasts = forecasts;
 	}
 }
