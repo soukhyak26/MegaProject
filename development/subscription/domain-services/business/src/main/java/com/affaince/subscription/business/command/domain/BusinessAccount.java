@@ -1,14 +1,17 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.accounting.*;
+import com.affaince.subscription.business.command.event.FixedExpenseUpdatedToProductEvent;
 import com.affaince.subscription.business.command.event.ProvisionCreatedEvent;
 import com.affaince.subscription.business.exception.ProvisionNotCreatedException;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.TimeBoundMoney;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -289,4 +292,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalSubscriptionsRegistered = totalSubscriptionsRegistered;
     }
 
+    public void updateFixedExpenseToProduct(String productId, double distributionAmountPerUnit, LocalDate distributionDate) {
+        apply(new FixedExpenseUpdatedToProductEvent(productId, distributionDate, distributionAmountPerUnit));
+    }
 }
