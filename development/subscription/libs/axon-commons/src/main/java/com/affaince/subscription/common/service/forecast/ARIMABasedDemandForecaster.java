@@ -1,6 +1,7 @@
-package com.affaince.subscription.product.services.forecast;
+package com.affaince.subscription.common.service.forecast;
 
-import com.affaince.subscription.product.configuration.Axon;
+import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
+import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import com.cloudera.sparkts.models.ARIMA;
 import com.cloudera.sparkts.models.ARIMAModel;
 import org.apache.spark.mllib.linalg.Vector;
@@ -16,9 +17,9 @@ import java.util.List;
 public class ARIMABasedDemandForecaster implements TimeSeriesBasedForecaster {
     private TimeSeriesBasedForecaster nextForecaster;
     @Autowired
-    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    private HistoryMinSizeConstraints historyMinSizeConstraints;
     @Autowired
-    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+    private HistoryMaxSizeConstraints historyMaxSizeConstraints;
 
     public ARIMABasedDemandForecaster() {
     }

@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services.forecast;
+package com.affaince.subscription.common.service.forecast;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.web.controller;
 
+import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
@@ -7,11 +8,9 @@ import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

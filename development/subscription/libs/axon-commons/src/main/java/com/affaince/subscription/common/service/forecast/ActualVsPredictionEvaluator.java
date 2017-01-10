@@ -1,4 +1,4 @@
-        package com.affaince.subscription.product.vo;
+        package com.affaince.subscription.common.service.forecast;
 
         import java.util.TreeMap;
 

@@ -1,12 +1,12 @@
-package com.affaince.subscription.product.services.forecast;
+package com.affaince.subscription.common.service.forecast;
 
-import com.affaince.subscription.product.configuration.Axon;
-import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
+import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
+import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.ForecastingModel;
 import net.sourceforge.openforecast.Observation;
-import net.sourceforge.openforecast.models.SimpleExponentialSmoothingModel;
+import net.sourceforge.openforecast.models.TripleExponentialSmoothingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -16,15 +16,15 @@ import java.util.List;
 /**
  * Created by mandar on 31-05-2016.
  */
-public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBasedForecaster {
+public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBasedForecaster {
 
     private TimeSeriesBasedForecaster nextForecaster;
     @Autowired
-    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    private HistoryMinSizeConstraints historyMinSizeConstraints;
     @Autowired
-    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+    private HistoryMaxSizeConstraints historyMaxSizeConstraints;
 
-    public SimpleExponentialSmoothingDemandForecaster() {
+    public TripleExponentialSmoothingDemandForecaster() {
     }
 
 
@@ -37,7 +37,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
     }
 
     public List<Double> forecast(String dataIdentifier, List<Double> historicalDataList) {
-        if (historicalDataList.size() > historyMinSizeConstraints.getSema() && historicalDataList.size() <= historyMaxSizeConstraints.getSema()) {
+        if (historicalDataList.size() > historyMinSizeConstraints.getTema() && historicalDataList.size() <= historyMaxSizeConstraints.getTema()) {
             int i = 0;
             int[] windowSizes = {3};
             DataSet observedData = new DataSet();
@@ -60,7 +60,7 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
                 fcValues.add(dp);
             }
             observedData.setTimeVariable("t");
-            ForecastingModel forecaster = SimpleExponentialSmoothingModel.getBestFitModel(observedData);
+            ForecastingModel forecaster = TripleExponentialSmoothingModel.getBestFitModel(observedData);
 
 
             DataSet results = forecaster.forecast(fcValues);
@@ -77,11 +77,14 @@ public class SimpleExponentialSmoothingDemandForecaster implements TimeSeriesBas
                         placeholder.addPrediction(newSubscriptionCount);
                         break;
                     }
+
                 }
             }
-            System.out.println("SEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
+
+
+            System.out.println("TEMA$$$$$$$$$$$$$$$$Predicted value:" + predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             List<Double> resultSet = new ArrayList<Double>();
-            //only last predication.
+            //only last prediction.
             resultSet.add(predictionsSet.get(predictionsSet.size() - 1).findPrecisePrediction());
             return resultSet;
 

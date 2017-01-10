@@ -7,6 +7,7 @@ import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReade
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
 import com.affaince.subscription.common.serializer.QuantityUnitSerializer;
+import com.affaince.subscription.common.service.forecast.config.Forecast;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
@@ -64,7 +65,7 @@ import static java.util.concurrent.Executors.newScheduledThreadPool;
  * Created by NIKUNJ on 7/12/2015.
  */
 @Import(
-        {RabbitMQConfiguration.class, ActiveMQConfiguration.class}
+        {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Forecast.class}
 )
 public class Default {
     //  private static final int DEFAULT_JGROUPS_PORT = 12001;

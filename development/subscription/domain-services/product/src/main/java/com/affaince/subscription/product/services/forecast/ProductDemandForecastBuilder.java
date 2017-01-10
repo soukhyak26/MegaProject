@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;

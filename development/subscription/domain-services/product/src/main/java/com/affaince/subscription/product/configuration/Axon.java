@@ -54,14 +54,9 @@ import java.util.Map;
 @EnableJms
 @EnableAutoConfiguration(exclude = {EmbeddedServletContainerFactory.class})
 @ComponentScan("com.affaince")
-@EnableConfigurationProperties({Axon.HistoryMinSizeConstraints.class, Axon.HistoryMaxSizeConstraints.class})
+
 public class Axon extends Default {
 
-    @Autowired
-    HistoryMinSizeConstraints historyMinSizeConstraints;
-
-    @Autowired
-    HistoryMaxSizeConstraints historyMaxSizeConstraints;
 
     @Bean
     public EmbeddedServletContainerFactory servletContainerFactory() {
@@ -136,34 +131,6 @@ public class Axon extends Default {
         return new DefaultPriceDeterminator();
     }
 
-    @Bean
-    public DemandForecasterChain demandForecasterChain() {
-        return new DemandForecasterChain();
-    }
-
-    @Bean
-    public SimpleLinearForecaster simpleLinearForecaster(){
-        return new SimpleLinearForecaster();
-    }
-    @Bean
-    public SimpleMovingAverageDemandForecaster smaForecaster() {
-        return new SimpleMovingAverageDemandForecaster();
-    }
-
-    @Bean
-    public SimpleExponentialSmoothingDemandForecaster semaForecaster() {
-        return new SimpleExponentialSmoothingDemandForecaster();
-    }
-
-    @Bean
-    public TripleExponentialSmoothingDemandForecaster temaForecaster() {
-        return new TripleExponentialSmoothingDemandForecaster();
-    }
-
-    @Bean
-    public ARIMABasedDemandForecaster arimaForecaster() {
-        return new ARIMABasedDemandForecaster();
-    }
 
     @Bean
     public RegressionBasedCostFunctionProcessor costFunctionProcessor() {
@@ -217,103 +184,4 @@ public class Axon extends Default {
     PeriodBasedAggregator periodBasedAggregator() {
         return new PeriodBasedAggregator();
     }
-    @ConfigurationProperties(prefix= "forecaster.threshold_min")
-    public static class HistoryMinSizeConstraints {
-        private int slf;
-        private int sma;
-        private int sema;
-        private int tema;
-        private int arima;
-
-        public int getSlf() {
-            return slf;
-        }
-
-        public void setSlf(int slf) {
-            this.slf = slf;
-        }
-
-        public int getSma() {
-            return sma;
-        }
-
-        public void setSma(int sma) {
-            this.sma = sma;
-        }
-
-        public int getSema() {
-            return sema;
-        }
-
-        public void setSema(int sema) {
-            this.sema = sema;
-        }
-
-        public int getTema() {
-            return tema;
-        }
-
-        public void setTema(int tema) {
-            this.tema = tema;
-        }
-
-        public int getArima() {
-            return arima;
-        }
-
-        public void setArima(int arima) {
-            this.arima = arima;
-        }
-    }
-
-    @ConfigurationProperties(prefix = "forecaster.threshold_max")
-    public static class HistoryMaxSizeConstraints {
-        private int slf;
-        private int sma;
-        private int sema;
-        private int tema;
-        private int arima;
-
-        public int getSlf() {
-            return slf;
-        }
-
-        public void setSlf(int slf) {
-            this.slf = slf;
-        }
-
-        public int getSma() {
-            return sma;
-        }
-
-        public void setSma(int sma) {
-            this.sma = sma;
-        }
-
-        public int getSema() {
-            return sema;
-        }
-
-        public void setSema(int sema) {
-            this.sema = sema;
-        }
-
-        public int getTema() {
-            return tema;
-        }
-
-        public void setTema(int tema) {
-            this.tema = tema;
-        }
-
-        public int getArima() {
-            return arima;
-        }
-
-        public void setArima(int arima) {
-            this.arima = arima;
-        }
-    }
-
-
 }

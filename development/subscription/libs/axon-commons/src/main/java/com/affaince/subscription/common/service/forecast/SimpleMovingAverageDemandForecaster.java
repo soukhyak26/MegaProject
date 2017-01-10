@@ -1,7 +1,7 @@
-package com.affaince.subscription.product.services.forecast;
+package com.affaince.subscription.common.service.forecast;
 
-import com.affaince.subscription.product.configuration.Axon;
-import com.affaince.subscription.product.vo.ActualVsPredictionEvaluator;
+import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
+import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ public class SimpleMovingAverageDemandForecaster implements TimeSeriesBasedForec
 
     private TimeSeriesBasedForecaster nextForecaster;
     @Autowired
-    private Axon.HistoryMinSizeConstraints historyMinSizeConstraints;
+    private HistoryMinSizeConstraints historyMinSizeConstraints;
     @Autowired
-    private Axon.HistoryMaxSizeConstraints historyMaxSizeConstraints;
+    private HistoryMaxSizeConstraints historyMaxSizeConstraints;
 
     public SimpleMovingAverageDemandForecaster() {
     }

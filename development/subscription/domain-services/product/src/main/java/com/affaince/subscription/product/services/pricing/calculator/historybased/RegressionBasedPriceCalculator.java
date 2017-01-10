@@ -1,19 +1,17 @@
 package com.affaince.subscription.product.services.pricing.calculator.historybased;
 
+import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
-import com.affaince.subscription.product.services.forecast.DemandForecasterChain;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.FunctionCoefficients;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.exception.PricingEligibilityViolationException;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingStrategyType;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -29,9 +27,9 @@ import java.util.Map;
  */
 public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
     @Autowired
-    RegressionBasedDemandFunctionProcessor regressionBasedDemandFunctionProcessor;
+    private RegressionBasedDemandFunctionProcessor regressionBasedDemandFunctionProcessor;
     @Autowired
-    DemandForecasterChain demandForecasterChain;
+    private DemandForecasterChain demandForecasterChain;
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         String productId = product.getProductId();

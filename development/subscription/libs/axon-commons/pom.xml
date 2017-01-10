@@ -167,5 +167,21 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.23</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.10</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-mllib_2.10</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudera.sparkts</groupId>
+            <artifactId>sparkts</artifactId>
+            <version>${sparkts.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

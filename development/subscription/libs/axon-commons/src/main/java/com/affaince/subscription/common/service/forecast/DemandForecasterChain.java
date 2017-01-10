@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services.forecast;
+package com.affaince.subscription.common.service.forecast;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
