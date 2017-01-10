@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.common.service.forecast.SimpleMovingAverageDemandForecaster;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;

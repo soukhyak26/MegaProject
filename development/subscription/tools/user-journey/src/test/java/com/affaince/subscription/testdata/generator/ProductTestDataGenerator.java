@@ -152,25 +152,26 @@ public class ProductTestDataGenerator {
                         product.getForecasts().get(0).getMRP(),
                         noOfCycle
                 );
-                if (lineNumberTracker.get("d:/abc/subscription"+i+".json")!= null &&
-                        lineNumberTracker.get("d:/abc/subscription"+i+".json").intValue() == 20) {
+                String fileName = "d:/abc/subscription"+i+".json";
+                if (lineNumberTracker.get(fileName)!= null &&
+                        lineNumberTracker.get(fileName).intValue() == 20) {
                     i++;
                     continue;
                 }
                 totalBasketsToBeCreated -= noOfCycle;
                 try {
-                    Files.write(Paths.get("d:/abc/subscription"+i+".json"),
+                    Files.write(Paths.get(fileName),
                             objectMapper.writeValueAsBytes(subscriptionItem),
                             StandardOpenOption.CREATE,StandardOpenOption.WRITE,StandardOpenOption.APPEND);
-                    Files.write(Paths.get("d:/abc/subscription"+i+".json"),
+                    Files.write(Paths.get(fileName),
                             "\n".getBytes(),
                             StandardOpenOption.APPEND);
 
-                    if (lineNumberTracker.containsKey("d:/abc/subscription"+i+".json")) {
-                        lineNumberTracker.put("d:/abc/subscription"+i+".json",
-                                lineNumberTracker.get("d:/abc/subscription"+i+".json").intValue()+1);
+                    if (lineNumberTracker.containsKey(fileName)) {
+                        lineNumberTracker.put(fileName,
+                                lineNumberTracker.get(fileName).intValue()+1);
                     } else {
-                        lineNumberTracker.put("d:/abc/subscription"+i+".json", 1);
+                        lineNumberTracker.put(fileName, 1);
                     }
                     i++;
                 } catch (IOException e) {

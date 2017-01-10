@@ -150,6 +150,7 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
 
         System.out.println("@@@selector output: " + selector());
         container.setMessageSelector(selector());
+        System.out.println(selector());
     }
 
     private String selector() {
@@ -171,6 +172,7 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
         System.out.println("@@@Annotation@@@: " + annotation.getName());
         localTypeScanner.addIncludeFilter(new MethodAnnotationTypeFilter(annotation));
         final Multimap<String, String> reverseMap = invertMap(consumedEventTypes);
+        //final Iterable<String> producedEventTypes = packagesToScan().stream().flatMap(h -> reverseMap.keySet().stream()).collect (Collectors.toSet());
         final Iterable<String> producedEventTypes = from(packagesToScan()).transformAndConcat(toClassName(localTypeScanner)).transformAndConcat(new Function<String, Iterable<String>>() {
             public Iterable<String> apply(String input) {
                 if (reverseMap.containsKey(input)) {
@@ -206,7 +208,7 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
         };
     }
 
-    private Iterable<String> packagesToScan() {
+    private List<String> packagesToScan() {
         if (AutoConfigurationPackages.has(beanFactory)) {
             return AutoConfigurationPackages.get(beanFactory);
         }

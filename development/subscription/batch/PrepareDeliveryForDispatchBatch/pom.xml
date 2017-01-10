@@ -31,6 +31,10 @@
             <version>${camel.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring-javaconfig</artifactId>
             <version>${camel.version}</version>

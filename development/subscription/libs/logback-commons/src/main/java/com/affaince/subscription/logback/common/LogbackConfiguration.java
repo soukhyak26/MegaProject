@@ -6,7 +6,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.Map;
 /**
  * Created by rbsavaliya on 28-11-2015.
  */
-@Configuration
+//@Configuration
 public class LogbackConfiguration {
     public String getLoggerLevel(String loggerName, LoggerContext loggerContext) {
         if (loggerName == null) {

@@ -1,13 +1,16 @@
 package com.affaince.subscription.product.services.forecast;
 
+import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
-import com.affaince.subscription.product.configuration.Axon;
-import com.affaince.subscription.product.query.repository.*;
-import com.affaince.subscription.product.query.view.*;
+import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
+import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
+import com.affaince.subscription.product.query.repository.ProductViewRepository;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.ProductForecastView;
+import com.affaince.subscription.product.query.view.ProductView;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,10 +35,6 @@ import java.util.stream.Stream;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 public class DemandForecasterChainTest {
-    @Autowired
-    Axon.HistoryMinSizeConstraints minSizeConstraints;
-    @Autowired
-    Axon.HistoryMaxSizeConstraints maxSizeConstraints;
     @Mock
     private ProductViewRepository productViewRepository;
     @Mock
