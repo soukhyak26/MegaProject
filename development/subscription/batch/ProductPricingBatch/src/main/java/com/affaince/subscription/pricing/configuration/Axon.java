@@ -4,7 +4,7 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
-import com.affaince.subscription.pricing.build.interpolate.Interpolator;
+import com.affaince.subscription.common.service.interpolate.Interpolator;
 import com.affaince.subscription.pricing.determine.PricingClient;
 import com.affaince.subscription.pricing.determine.ProductPricingTrigger;
 import com.affaince.subscription.pricing.determine.ProductsRetriever;

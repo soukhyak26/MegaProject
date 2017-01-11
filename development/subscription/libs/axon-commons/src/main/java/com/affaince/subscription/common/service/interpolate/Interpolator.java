@@ -1,11 +1,13 @@
-package com.affaince.subscription.pricing.build.interpolate;
+package com.affaince.subscription.common.service.interpolate;
 
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 14-08-2016.
  */
+@Component
 public class Interpolator {
 
     public double[] cubicSplineInterpolate(double[] x, double[] y) {
