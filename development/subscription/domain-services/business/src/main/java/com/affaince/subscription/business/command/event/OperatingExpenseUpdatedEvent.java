@@ -1,18 +1,17 @@
 package com.affaince.subscription.business.command.event;
 
-import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 
 /**
  * Created by mandark on 24-01-2016.
  */
 public class OperatingExpenseUpdatedEvent {
-    private String commonOperatingExpenseId;
+    private Integer commonOperatingExpenseId;
     private String expenseHeader;
     private double expenseAmount;
     private SensitivityCharacteristic sensitivityCharacteristic;
 
-    public OperatingExpenseUpdatedEvent(String commonOperatingExpenseId, String expenseHeader, double expenseAmount, SensitivityCharacteristic sensitivityCharacteristic) {
+    public OperatingExpenseUpdatedEvent(Integer commonOperatingExpenseId, String expenseHeader, double expenseAmount, SensitivityCharacteristic sensitivityCharacteristic) {
         this.commonOperatingExpenseId = commonOperatingExpenseId;
         this.expenseHeader = expenseHeader;
         this.expenseAmount = expenseAmount;
@@ -51,11 +50,11 @@ public class OperatingExpenseUpdatedEvent {
                 '}';
     }
 
-    public String getCommonOperatingExpenseId() {
+    public Integer getCommonOperatingExpenseId() {
         return this.commonOperatingExpenseId;
     }
 
-    public void setCommonOperatingExpenseId(String commonOperatingExpenseId) {
+    public void setCommonOperatingExpenseId(Integer commonOperatingExpenseId) {
         this.commonOperatingExpenseId = commonOperatingExpenseId;
     }
 }

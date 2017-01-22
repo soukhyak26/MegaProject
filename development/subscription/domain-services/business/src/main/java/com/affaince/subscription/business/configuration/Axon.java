@@ -1,7 +1,6 @@
 package com.affaince.subscription.business.configuration;
 
 import com.affaince.subscription.business.command.domain.BusinessAccount;
-import com.affaince.subscription.business.command.domain.MonthlyCommonOperatingExpense;
 import com.affaince.subscription.business.command.event.*;
 import com.affaince.subscription.configuration.Default;
 import com.mongodb.Mongo;
@@ -24,13 +23,6 @@ import java.util.Map;
 @Configuration
 @EnableJms
 public class Axon extends Default {
-
-
-    @Bean
-    public Repository<MonthlyCommonOperatingExpense> createCommonOperatingExpenseRepository(DisruptorCommandBus commandBus) {
-        Repository<MonthlyCommonOperatingExpense> repository = commandBus.createRepository(new GenericAggregateFactory<>(MonthlyCommonOperatingExpense.class));
-        return repository;
-    }
 
     @Bean
     public Repository<BusinessAccount> createBusinessAccountRepository(DisruptorCommandBus commandBus) {

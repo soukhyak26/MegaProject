@@ -17,8 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductForecastView implements Comparable<ProductForecastView> {
     @Id
     private final ProductVersionId productVersionId;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;

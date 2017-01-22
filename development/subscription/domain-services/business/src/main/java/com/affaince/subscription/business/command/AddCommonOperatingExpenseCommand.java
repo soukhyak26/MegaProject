@@ -9,13 +9,13 @@ import org.joda.time.YearMonth;
  */
 public class AddCommonOperatingExpenseCommand {
     @TargetAggregateIdentifier
-    private final String id;
+    private final Integer id;
     private final YearMonth monthOfYear;
     private String expenseHeader;
     private double amount;
     private SensitivityCharacteristic sensitivityCharacteristic;
 
-    public AddCommonOperatingExpenseCommand(String id, YearMonth monthOfYear,String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
+    public AddCommonOperatingExpenseCommand(Integer id, YearMonth monthOfYear, String expenseHeader, double amount, SensitivityCharacteristic sensitivityCharacteristic) {
         this.id = id;
         this.monthOfYear=monthOfYear;
         this.expenseHeader = expenseHeader;
@@ -23,7 +23,7 @@ public class AddCommonOperatingExpenseCommand {
         this.sensitivityCharacteristic = sensitivityCharacteristic;
     }
 
-    public String getId() {
+    public Integer getId() {
         return this.id;
     }
 

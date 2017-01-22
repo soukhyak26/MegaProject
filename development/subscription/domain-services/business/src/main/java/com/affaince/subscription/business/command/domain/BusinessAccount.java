@@ -1,10 +1,11 @@
 package com.affaince.subscription.business.command.domain;
 
-import com.affaince.subscription.business.accounting.*;
-import com.affaince.subscription.business.command.event.FixedExpenseUpdatedToProductEvent;
-import com.affaince.subscription.business.command.event.ProvisionCreatedEvent;
+import com.affaince.subscription.business.command.event.*;
 import com.affaince.subscription.business.exception.ProvisionNotCreatedException;
+import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
+import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
 import com.affaince.subscription.common.type.ExpenseType;
+import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.common.type.TimeBoundMoney;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -14,35 +15,22 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
+import java.util.Map;
+
 /**
  * Created by rsavaliya on 17/1/16.
  */
-public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
+public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     @AggregateIdentifier
     private Integer id;
     private TimeBoundMoney netProfitRegistered;
     private TimeBoundMoney totalRevenueRegistered;
     private long totalSubscriptionsRegistered;
 
-    //EXPENSES
-    @EventSourcedMember
-    private PurchaseCostAccount purchaseCostAccount;
-    @EventSourcedMember
-    private LossesAccount lossesAccount;
-    @EventSourcedMember
-    private BenefitsAccount benefitsAccount;
-    @EventSourcedMember
-    private TaxesAccount taxesAccount;
-    @EventSourcedMember
-    private OthersAccount othersAccount;
-    @EventSourcedMember
-    private CommonExpensesAccount commonExpensesAccount;
     @EventSourcedMember
     private NodalAccount nodalAccount;
     @EventSourcedMember
     private BookingAmountAccount bookingAmountAccount;
-    @EventSourcedMember
-    private SubscriptionSpecificExpensesAccount subscriptionSpecificExpensesAccount;
 
     //PROVISIONS
     @EventSourcedMember
@@ -66,7 +54,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private InterestsAccount interestsGainAccount;
 
-    private LocalDateTime dateForProvision;
+    private LocalDate dateForProvision;
 
     private static final String INIT_ERROR_MESSAGE = "Please make sure that BusinessAccount aggregate is properly created via CreateProvisionEvent";
 
@@ -77,35 +65,13 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public BusinessAccount(Integer id,
-                           double provisionForPurchaseCost,
-                           double provisionForLosses,
-                           double provisionForBenefits,
-                           double provisionForTaxes,
-                           double provisionForOthers,
-                           double provisionForCommonExpenses,
-                           double provisionForSubscriptionSpecificExpenses,
-                           double defaultPercentFixedExpensePerUnitPrice,
-                           double defaultPercentVariableExpensePerUnitPrice,
-                           LocalDateTime provisionDate) {
-
-        apply(new ProvisionCreatedEvent(id,
-                provisionForPurchaseCost,
-                provisionForLosses,
-                provisionForBenefits,
-                provisionForTaxes,
-                provisionForOthers,
-                provisionForCommonExpenses,
-                provisionForSubscriptionSpecificExpenses,
-                defaultPercentFixedExpensePerUnitPrice,
-                defaultPercentVariableExpensePerUnitPrice,
-                provisionDate));
+    public BusinessAccount(Integer id,LocalDate dateOfProvision){
+        apply(new BusinessAccountCreatedEvent(id,dateOfProvision));
     }
 
     public void adjustPurchaseCost(double totalPurchaseCost) {
         try {
             this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
-            this.purchaseCostAccount.fireCreditedEvent(this.id, totalPurchaseCost);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
@@ -116,11 +82,9 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
             switch (expenseType) {
                 case COMMON_EXPENSE:
                     this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                    this.commonExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
                     break;
                 case SUBSCRIPTION_SPECIFIC_EXPENSE:
                     this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                    this.subscriptionSpecificExpensesAccount.fireCreditedEvent(this.id, expenseAmount);
                     break;
                 default:
                     //TODO : error handling
@@ -151,40 +115,27 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void adjustBenefits(double benefitAmount) {
         try {
             this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
-            this.benefitsAccount.fireCreditedEvent(this.id, benefitAmount);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
 
     @EventSourcingHandler
-    public void on(ProvisionCreatedEvent event) {
-        this.id = event.getBusinessAccountId();
+    public void on(BusinessAccountCreatedEvent event) {
+        this.id=event.getId();
+        this.dateForProvision=event.getDateOfProvision();
+        LocalDate endDate=dateForProvision.year().withMaximumValue();
 
-        this.dateForProvision = event.getProvisionDate();
+        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(dateForProvision,endDate);
+        this.provisionalLossesAccount = new LossesAccount(dateForProvision,endDate);
+        this.provisionalBenefitsAccount = new BenefitsAccount(dateForProvision,endDate);
+        this.provisionalTaxesAccount = new TaxesAccount(dateForProvision,endDate);
+        this.provisionalOthersAccount = new OthersAccount(dateForProvision,endDate);
+        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(dateForProvision,endDate);
+        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(dateForProvision,endDate);
 
-        this.purchaseCostAccount = new PurchaseCostAccount(0, dateForProvision);
-        this.lossesAccount = new LossesAccount(0, dateForProvision);
-        this.benefitsAccount = new BenefitsAccount(0, dateForProvision);
-        this.taxesAccount = new TaxesAccount(0, dateForProvision);
-        this.othersAccount = new OthersAccount(0, dateForProvision);
-        this.commonExpensesAccount = new CommonExpensesAccount(0, dateForProvision);
-        this.nodalAccount = new NodalAccount(0, dateForProvision);
-        this.bookingAmountAccount = new BookingAmountAccount(0, dateForProvision);
-        this.subscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(0, dateForProvision);
-
-        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(event.getProvisionForPurchaseCost(), dateForProvision);
-        this.provisionalLossesAccount = new LossesAccount(event.getProvisionForLosses(), dateForProvision);
-        this.provisionalBenefitsAccount = new BenefitsAccount(event.getProvisionForBenefits(), dateForProvision);
-        this.provisionalTaxesAccount = new TaxesAccount(event.getProvisionForTaxes(), dateForProvision);
-        this.provisionalOthersAccount = new OthersAccount(event.getProvisionForOthers(), dateForProvision);
-        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(event.getProvisionForCommonExpenses(), dateForProvision);
-        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(event.getProvisionForSubscriptionSpecificExpenses(), dateForProvision);
-
-        this.revenueAccount = new RevenueAccount(0, dateForProvision);
-        this.interestsGainAccount = new InterestsAccount(0, dateForProvision);
-        this.defaultPercentFixedExpensePerUnitPrice=defaultPercentFixedExpensePerUnitPrice;
-        this.defaultPercentVariableExpensePerUnitPrice=defaultPercentVariableExpensePerUnitPrice;
+        this.revenueAccount = new RevenueAccount(dateForProvision,endDate);
+        this.interestsGainAccount = new InterestsAccount(dateForProvision,endDate);
     }
 
 
@@ -192,29 +143,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         return id;
     }
 
-    public PurchaseCostAccount getPurchaseCostAccount() {
-        return purchaseCostAccount;
-    }
-
-    public LossesAccount getLossesAccount() {
-        return lossesAccount;
-    }
-
-    public BenefitsAccount getBenefitsAccount() {
-        return benefitsAccount;
-    }
-
-    public TaxesAccount getTaxesAccount() {
-        return taxesAccount;
-    }
-
-    public OthersAccount getOthersAccount() {
-        return othersAccount;
-    }
-
-    public CommonExpensesAccount getCommonExpensesAccount() {
-        return commonExpensesAccount;
-    }
 
     public NodalAccount getNodalAccount() {
         return nodalAccount;
@@ -222,10 +150,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     public BookingAmountAccount getBookingAmountAccount() {
         return bookingAmountAccount;
-    }
-
-    public SubscriptionSpecificExpensesAccount getSubscriptionSpecificExpensesAccount() {
-        return subscriptionSpecificExpensesAccount;
     }
 
     public PurchaseCostAccount getProvisionalPurchaseCostAccount() {
@@ -264,7 +188,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
         return interestsGainAccount;
     }
 
-    public LocalDateTime getDateForProvision() {
+    public LocalDate getDateForProvision() {
         return dateForProvision;
     }
 
@@ -294,5 +218,44 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateFixedExpenseToProduct(String productId, double distributionAmountPerUnit, LocalDate distributionDate) {
         apply(new FixedExpenseUpdatedToProductEvent(productId, distributionDate, distributionAmountPerUnit));
+    }
+
+    public void registerProvisionForPurchaseCost(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForPurchaseCostRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+    }
+
+    public void registerProvisionForLosses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForLossesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+    }
+
+    public void registerProvisionForBenefits(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForBenefitsRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+    }
+
+    public void registerProvisionForTaxes(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForTaxesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+    }
+
+    public void registerProvisionForOtherCost(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForOtherCostRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+    }
+
+    public void registerProvisionForCommonExpenses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForCommonExpensesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+
+        OperatingExpensesDeterminator operatingExpensesDeterminator =
+                new DefaultOperatingExpensesDeterminator();
+        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(provisionForPurchaseOfGoods);
+        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
+                new FixedExpenseUpdatedToProductEvent(productId, startDate, perUnitExpense)
+        ));
+    }
+
+    public void registerProvisionForSubscriptionSpecificExpenses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+    }
+
+    public void registerProvisionForNodal(Integer id, LocalDate startDate, LocalDate endDate, double provisionForNodal) {
+        apply(new ProvisionForNodalRegisteredEvent(startDate,endDate,provisionForNodal));
     }
 }

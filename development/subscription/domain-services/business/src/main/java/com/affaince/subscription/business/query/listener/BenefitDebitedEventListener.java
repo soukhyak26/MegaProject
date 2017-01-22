@@ -25,7 +25,7 @@ public class BenefitDebitedEventListener {
     @EventHandler
     public void on(BenefitDebitedEvent event) {
         BenefitAccountView benefitAccountView = benefitAccountViewRepository.findOne(event.getYear());
-        benefitAccountView.debit(event.getAmountToDebit());
+       // benefitAccountView.debit(event.getAmountToDebit());
         benefitAccountViewRepository.save(benefitAccountView);
     }
 }

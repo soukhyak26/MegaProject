@@ -1,17 +1,10 @@
 package com.affaince.subscription.business.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.business.command.AddCommonOperatingExpenseCommand;
-import com.affaince.subscription.business.command.CreateProvisionCommand;
-import com.affaince.subscription.business.command.UpdateFixedExpenseToProductCommand;
-import com.affaince.subscription.business.command.domain.MonthlyCommonOperatingExpense;
-import com.affaince.subscription.business.command.event.FixedExpenseUpdatedToProductEvent;
-import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
-import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
+import com.affaince.subscription.business.command.*;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.business.vo.OperatingExpenseVO;
-import com.affaince.subscription.business.web.request.CommonOperatingExpensesRequest;
-import com.affaince.subscription.business.web.request.ProvisionRequest;
+import com.affaince.subscription.business.web.request.*;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.date.SysDate;
 import org.joda.time.YearMonth;
@@ -27,13 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import java.util.Map;
 
-/**
- * Created by anayonkar on 29/4/16.
- */
 @RestController
-@RequestMapping(value="businessacount")
+@RequestMapping(value = "businessacount")
 public class BusinessAccountProvisionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessAccountProvisionController.class);
     private final SubscriptionCommandGateway commandGateway;
@@ -46,30 +35,79 @@ public class BusinessAccountProvisionController {
         this.businessAccountViewRepository = businessAccountViewRepository;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "setProvision")
+    @RequestMapping(method = RequestMethod.POST, value = "setProvisionForPurchase")
     @Consumes("application/json")
-    public ResponseEntity<Object> setProvision(@RequestBody @Valid ProvisionRequest request) throws Exception {
-        CreateProvisionCommand command = new CreateProvisionCommand(
-                request.getProvisionDate().getYear(),
-                request.getProvisionForPurchaseCost(),
-                request.getProvisionForLosses(),
-                request.getProvisionForBenefits(),
-                request.getProvisionForTaxes(),
-                request.getProvisionForOthers(),
-                request.getProvisionForCommonExpenses(),
-                request.getProvisionForSubscriptionSpecificExpenses(),
-                request.getDefaultPercentFixedExpensePerUnitPrice(),
-                request.getDefaultPercentVariableExpensePerUnitPrice(),
-                request.getProvisionDate());
+    public ResponseEntity<Object> setProvisionForPurchaseCost(@RequestBody PurchaseCostProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForPurchaseCostCommand command = new CreateProvisionForPurchaseCostCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForPurchaseOfGoods());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "common")
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForBenefits")
     @Consumes("application/json")
-    public ResponseEntity<Object> setCommonOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
-        //String commonExpenseId = UUID.randomUUID().toString();
+
+    public ResponseEntity<Object> setProvisionForBenefits (@RequestBody @Valid BenefitsProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForBenefitsCommand command = new CreateProvisionForBenefitsCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForBenefits());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForLosses")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setProvisionForLosses(@RequestBody @Valid LossesProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForLossesCommand command = new CreateProvisionForLossesCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForLosses());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForNodal")
+    @Consumes("application/json")
+
+    public ResponseEntity<Object> setProvisionForNodal(@RequestBody @Valid NodalProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForNodalCommand command = new CreateProvisionForNodalCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForNodal());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForOthers")
+    @Consumes("application/json")
+
+    public ResponseEntity<Object> setProvisionForOthers(@RequestBody @Valid OthersProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForOthersCommand command = new CreateProvisionForOthersCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForOtherCost());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForVariableExpenses")
+    @Consumes("application/json")
+
+    public ResponseEntity<Object> setProvisionForSubscriptionSpecificExpenses(@RequestBody @Valid SubscriptionSpecificExpensesProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForSubscriptionSpecificExpensesCommand command = new CreateProvisionForSubscriptionSpecificExpensesCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForSubscriptionSpecificExpenses());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForCommonExpenses")
+    @Consumes("application/json")
+    public ResponseEntity<Object> setProvisionForCommonOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
         double monthlyCommonExpenseAmount = 0;
+        double yearlyCommonExpenseAmount = 0;
+        YearMonth monthOfYear = YearMonth.now();
+        //need to verify accuracy of this number
+        int remainingMonths = 12 - monthOfYear.getMonthOfYear() + 1;
         for (OperatingExpenseVO expense : request.getExpenses()) {
             if (expense.getPeriod().getUnit() == PeriodUnit.WEEK) {
                 monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue()) * 4;
@@ -78,27 +116,25 @@ public class BusinessAccountProvisionController {
             } else if (expense.getPeriod().getUnit() == PeriodUnit.YEAR) {
                 monthlyCommonExpenseAmount = expense.getAmount() / (expense.getPeriod().getValue() * 12);
             }
-            String commonExpensePrefix = "COMMON_EXP_";
-            YearMonth monthOfYear= YearMonth.now();
-            for (int i = 0; i <= 11; i++) {
-                monthOfYear = monthOfYear.plusMonths(i);
-                final String commonExpenseId=commonExpensePrefix + monthOfYear.toString();
-                //final AddCommonOperatingExpenseCommand command = new AddCommonOperatingExpenseCommand(commonExpenseId, monthOfYear,expense.getExpenseHeader(), monthlyCommonExpenseAmount, expense.getSensitivityCharacteristic());
-                OperatingExpensesDeterminator operatingExpensesDeterminator =
-                        new DefaultOperatingExpensesDeterminator();
-                MonthlyCommonOperatingExpense monthlyCommonOperatingExpense= new MonthlyCommonOperatingExpense(commonExpenseId, monthOfYear,expense.getExpenseHeader(), monthlyCommonExpenseAmount, expense.getSensitivityCharacteristic());
-                final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(monthlyCommonOperatingExpense);
-                perUnitOperatingExpenses.forEach((productId, perUnitExpense) ->{
-                    UpdateFixedExpenseToProductCommand command = new UpdateFixedExpenseToProductCommand(productId, SysDate.now(), perUnitExpense);
-                    try {
-                        commandGateway.executeAsync(command);
-                    }catch(Exception ex){
-                        LOGGER.error("UpdateFixedExpenseToProductCommand could not be executed :" + ex.getMessage());
-                    }
-
-                });
-            }
+            yearlyCommonExpenseAmount += monthlyCommonExpenseAmount * remainingMonths;
         }
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForCommonExpensesCommand command= new CreateProvisionForCommonExpensesCommand(id,SysDate.now(),monthOfYear.plusMonths(remainingMonths).toLocalDate(31),yearlyCommonExpenseAmount);
+        try{
+            commandGateway.executeAsync(command);
+        }catch (Exception ex) {
+            LOGGER.error("UpdateFixedExpenseToProductCommand could not be executed :" + ex.getMessage());
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForVariableExpenses")
+    @Consumes("application/json")
+
+    public ResponseEntity<Object> setProvisionForTaxes(@RequestBody @Valid TaxesProvisionRequest request) throws Exception {
+        Integer id= YearMonth.now().getYear();
+        CreateProvisionForTaxesCommand command = new CreateProvisionForTaxesCommand(id,request.getStartDate(), request.getEndDate(), request.getProvisionForTaxes());
+        commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 

@@ -11,15 +11,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class BenefitAccountView {
     @Id
     private Integer year;
-    private double startAmount;
-    private double currentAmount;
+    private double provisonAmount;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public BenefitAccountView(Integer year, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
+    public BenefitAccountView(Integer year, double provisonAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.year = year;
-        this.startAmount = startAmount;
-        this.currentAmount = currentAmount;
+        this.provisonAmount = provisonAmount;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -32,20 +30,12 @@ public class BenefitAccountView {
         this.year = year;
     }
 
-    public double getStartAmount() {
-        return startAmount;
+    public double getProvisonAmount() {
+        return provisonAmount;
     }
 
-    public void setStartAmount(double startAmount) {
-        this.startAmount = startAmount;
-    }
-
-    public double getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(double currentAmount) {
-        this.currentAmount = currentAmount;
+    public void setProvisonAmount(double provisonAmount) {
+        this.provisonAmount = provisonAmount;
     }
 
     public LocalDateTime getStartDate() {
@@ -64,13 +54,4 @@ public class BenefitAccountView {
         this.endDate = endDate;
     }
 
-    public void debit(double amount) {
-        this.currentAmount -= amount;
-        //transactionList.add(new Transaction(amount, TransactionType.DEBIT, currentAmount));
-    }
-
-    public void credit(double amount) {
-        this.currentAmount += amount;
-        //transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
-    }
 }
