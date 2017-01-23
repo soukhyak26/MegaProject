@@ -69,76 +69,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         apply(new BusinessAccountCreatedEvent(id,dateOfProvision));
     }
 
-    public void adjustPurchaseCost(double totalPurchaseCost) {
-        try {
-            this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
-        } catch (NullPointerException npe) {
-            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
-        }
-    }
-
-    public void adjustOperatingExpenses(ExpenseType expenseType, double expenseAmount) {
-        try {
-            switch (expenseType) {
-                case COMMON_EXPENSE:
-                    this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                    break;
-                case SUBSCRIPTION_SPECIFIC_EXPENSE:
-                    this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
-                    break;
-                default:
-                    //TODO : error handling
-            }
-        } catch (NullPointerException npe) {
-            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
-        }
-    }
-
-    public void adjustBookingAmount(double bookingAmount) {
-        try {
-            this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
-        } catch (NullPointerException npe) {
-            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
-        }
-    }
-
-    public void adjustBasketAndDeliveryAmount(double basketAmount, double deliveryAmount) {
-        try {
-            this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
-            this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
-            adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
-        } catch (NullPointerException npe) {
-            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
-        }
-    }
-
-    public void adjustBenefits(double benefitAmount) {
-        try {
-            this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
-        } catch (NullPointerException npe) {
-            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
-        }
-    }
-
-    @EventSourcingHandler
-    public void on(BusinessAccountCreatedEvent event) {
-        this.id=event.getId();
-        this.dateForProvision=event.getDateOfProvision();
-        LocalDate endDate=dateForProvision.year().withMaximumValue();
-
-        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(dateForProvision,endDate);
-        this.provisionalLossesAccount = new LossesAccount(dateForProvision,endDate);
-        this.provisionalBenefitsAccount = new BenefitsAccount(dateForProvision,endDate);
-        this.provisionalTaxesAccount = new TaxesAccount(dateForProvision,endDate);
-        this.provisionalOthersAccount = new OthersAccount(dateForProvision,endDate);
-        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(dateForProvision,endDate);
-        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(dateForProvision,endDate);
-
-        this.revenueAccount = new RevenueAccount(dateForProvision,endDate);
-        this.interestsGainAccount = new InterestsAccount(dateForProvision,endDate);
-    }
-
-
     public Integer getId() {
         return id;
     }
@@ -216,32 +146,103 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.totalSubscriptionsRegistered = totalSubscriptionsRegistered;
     }
 
+    public void adjustPurchaseCost(double totalPurchaseCost) {
+        try {
+            this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
+    }
+
+    public void adjustOperatingExpenses(ExpenseType expenseType, double expenseAmount) {
+        try {
+            switch (expenseType) {
+                case COMMON_EXPENSE:
+                    this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                    break;
+                case SUBSCRIPTION_SPECIFIC_EXPENSE:
+                    this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                    break;
+                default:
+                    //TODO : error handling
+            }
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
+    }
+
+    public void adjustBookingAmount(double bookingAmount) {
+        try {
+            this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
+    }
+
+    public void adjustBasketAndDeliveryAmount(double basketAmount, double deliveryAmount) {
+        try {
+            this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
+            this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
+            adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
+    }
+
+    public void adjustBenefits(double benefitAmount) {
+        try {
+            this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
+        } catch (NullPointerException npe) {
+            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
+        }
+    }
+
+    @EventSourcingHandler
+    public void on(BusinessAccountCreatedEvent event) {
+        this.id=event.getId();
+        this.dateForProvision=event.getDateOfProvision();
+        LocalDate endDate=dateForProvision.year().withMaximumValue();
+
+        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(dateForProvision,endDate);
+        this.provisionalLossesAccount = new LossesAccount(dateForProvision,endDate);
+        this.provisionalBenefitsAccount = new BenefitsAccount(dateForProvision,endDate);
+        this.provisionalTaxesAccount = new TaxesAccount(dateForProvision,endDate);
+        this.provisionalOthersAccount = new OthersAccount(dateForProvision,endDate);
+        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(dateForProvision,endDate);
+        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(dateForProvision,endDate);
+
+        this.revenueAccount = new RevenueAccount(dateForProvision,endDate);
+        this.interestsGainAccount = new InterestsAccount(dateForProvision,endDate);
+    }
+
+
+    //Evnt listener for register/upgrade fixed expense shoould fire UpdateFixedExpenseTOProducCommand
     public void updateFixedExpenseToProduct(String productId, double distributionAmountPerUnit, LocalDate distributionDate) {
         apply(new FixedExpenseUpdatedToProductEvent(productId, distributionDate, distributionAmountPerUnit));
     }
 
     public void registerProvisionForPurchaseCost(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForPurchaseCostRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForPurchaseCostRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForLosses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForLossesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForLossesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForBenefits(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForBenefitsRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForBenefitsRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForTaxes(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForTaxesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForTaxesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForOtherCost(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForOtherCostRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForOtherCostRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForCommonExpenses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForCommonExpensesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForCommonExpensesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
 
         OperatingExpensesDeterminator operatingExpensesDeterminator =
                 new DefaultOperatingExpensesDeterminator();
@@ -252,10 +253,10 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     }
 
     public void registerProvisionForSubscriptionSpecificExpenses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(startDate,endDate,provisionForPurchaseOfGoods));
+        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForNodal(Integer id, LocalDate startDate, LocalDate endDate, double provisionForNodal) {
-        apply(new ProvisionForNodalRegisteredEvent(startDate,endDate,provisionForNodal));
+        apply(new ProvisionForNodalRegisteredEvent(id,startDate,endDate,provisionForNodal));
     }
 }
