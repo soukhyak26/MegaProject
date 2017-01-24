@@ -35,7 +35,7 @@ public class BusinessAccountProvisionController {
         this.businessAccountViewRepository = businessAccountViewRepository;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "setProvisionForPurchase")
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForPurchase")
     @Consumes("application/json")
     public ResponseEntity<Object> setProvisionForPurchaseCost(@RequestBody PurchaseCostProvisionRequest request) throws Exception {
         Integer id= YearMonth.now().getYear();
@@ -128,7 +128,7 @@ public class BusinessAccountProvisionController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "provisionForVariableExpenses")
+    @RequestMapping(method = RequestMethod.POST, value = "provisionForTaxes")
     @Consumes("application/json")
 
     public ResponseEntity<Object> setProvisionForTaxes(@RequestBody @Valid TaxesProvisionRequest request) throws Exception {

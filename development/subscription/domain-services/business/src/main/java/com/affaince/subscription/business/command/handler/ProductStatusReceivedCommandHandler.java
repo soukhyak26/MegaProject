@@ -22,7 +22,7 @@ public class ProductStatusReceivedCommandHandler {
 
     @CommandHandler
     public void handle(ProductStatusReceivedCommand command) {
-        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()).toString());
+        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()));
         businessAccount.adjustPurchaseCost(command.getTotalPurchaseCost());
     }
 }

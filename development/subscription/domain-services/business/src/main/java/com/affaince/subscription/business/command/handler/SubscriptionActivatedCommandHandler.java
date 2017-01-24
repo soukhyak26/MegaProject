@@ -22,7 +22,7 @@ public class SubscriptionActivatedCommandHandler {
 
     @CommandHandler
     public void handle(SubscriptionActivatedCommand command) {
-        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()).toString());
+        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()));
         businessAccount.adjustBenefits(command.getTotalDiscount());
     }
 }

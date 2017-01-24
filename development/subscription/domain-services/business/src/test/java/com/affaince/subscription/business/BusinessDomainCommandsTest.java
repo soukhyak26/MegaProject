@@ -7,8 +7,10 @@ import com.affaince.subscription.business.query.repository.BusinessAccountViewRe
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
+import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={Axon.class, Application.class})
+@Ignore
 public class BusinessDomainCommandsTest {
     @Autowired
     private SubscriptionCommandGateway commandGateway;
@@ -27,17 +30,125 @@ public class BusinessDomainCommandsTest {
     @Autowired
     private BusinessAccountViewRepository businessAccountViewRepository;
 
-    private void testCreateProvisionCommand() {
-        CreateProvisionCommand createProvisionCommand = new CreateProvisionCommand(
+    @Test
+    public void testCreateProvisionForPurchaseCostCommand() {
+        CreateProvisionForPurchaseCostCommand createProvisionCommand = new CreateProvisionForPurchaseCostCommand(
                 Integer.valueOf(SysDate.now().getYear()),
-                10000.0,
-                50000.0,
-                25000.0,
-                20000.0,
-                10000.0,
-                10000.0,
-                50000.0,
-                0.1,0.1, SysDateTime.now());
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForBenefitsCommand() {
+        CreateProvisionForBenefitsCommand createProvisionCommand = new CreateProvisionForBenefitsCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForLossesCommand() {
+        CreateProvisionForLossesCommand createProvisionCommand = new CreateProvisionForLossesCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForNodalCommand() {
+        CreateProvisionForNodalCommand createProvisionCommand = new CreateProvisionForNodalCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForOthersCommand() {
+        CreateProvisionForOthersCommand createProvisionCommand = new CreateProvisionForOthersCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForSubscriptionSpecificExpensesCommand() {
+        CreateProvisionForSubscriptionSpecificExpensesCommand createProvisionCommand = new CreateProvisionForSubscriptionSpecificExpensesCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForCommonExpensesCommand() {
+        CreateProvisionForCommonExpensesCommand createProvisionCommand = new CreateProvisionForCommonExpensesCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
+        try {
+            commandGateway.sendAndWait(createProvisionCommand);
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testCreateProvisionForTaxesCommand() {
+        CreateProvisionForTaxesCommand createProvisionCommand = new CreateProvisionForTaxesCommand(
+                Integer.valueOf(SysDate.now().getYear()),
+                SysDate.now(),
+                new LocalDate(2017,12,31),
+                10000.0);
         try {
             commandGateway.sendAndWait(createProvisionCommand);
             Assert.assertTrue(true);
@@ -51,7 +162,7 @@ public class BusinessDomainCommandsTest {
     public void init() {
         Assert.assertNotNull(commandGateway);
         Assert.assertNotNull(businessAccountViewRepository);
-        testCreateProvisionCommand();
+        //testCreateProvisionCommand();
     }
 
     @Test

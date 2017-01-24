@@ -22,7 +22,7 @@ public class DeliveryStatusAndDispatchDateUpdatedCommandHandler {
 
     @CommandHandler
     public void handle(DeliveryStatusAndDispatchDateUpdatedCommand command) {
-        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()).toString());
+        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()));
         businessAccount.adjustBasketAndDeliveryAmount(command.getTotalDeliveryPrice(), command.getDeliveryCharges());
     }
 }

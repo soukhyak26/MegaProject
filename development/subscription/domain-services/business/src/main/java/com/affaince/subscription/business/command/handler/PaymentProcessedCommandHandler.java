@@ -22,7 +22,7 @@ public class PaymentProcessedCommandHandler {
 
     @CommandHandler
     public void handle(PaymentProcessedCommand command) {
-        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()).toString());
+        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()));
         businessAccount.adjustBookingAmount(command.getPaymentAmount());
     }
 }
