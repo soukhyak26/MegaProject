@@ -18,41 +18,18 @@ public class ProductView {
     private double MRP;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
     private ProductStatus productStatus;
-
-    /*
-        private long totalMonthlySubscriptions;
-        private double totalMonthlySaleAmount;
-    */
+    private long totalAnticipatedSubscriptions;
     private double currentOperatingExpensePerUnit;
+    private double productPurchaseBudgetedAmount;
 
     public ProductView(String productId, Map<SensitivityCharacteristic, Double> sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
         this.productId = productId;
         this.sensitiveTo = sensitiveTo;
         this.purchasePrice = purchasePrice;
         this.MRP = MRP;
-/*
-        switch (sensitiveTo) {
-            case 0:
-                this.sensitiveTo.put(SensitivityCharacteristic.NONE, 1.0);
-                break;
-            case 1:
-                this.sensitiveTo.put(SensitivityCharacteristic.ELECTRICITY_CONSUMPTION, sensitivityWeight);
-                break;
-            case 2:
-                this.sensitiveTo.put(SensitivityCharacteristic.STORAGE_SPACE_CONSUMPTION, sensitivityWeight);
-                break;
-            default:
-                this.sensitiveTo.put(SensitivityCharacteristic.NONE, 1.0);
-                ;
-                break;
-
-        }
-*/
         this.productStatus = productStatus;
-/*
-        this.totalMonthlySubscriptions = totalMonthlySubscriptions;
-        this.totalMonthlySaleAmount = this.totalMonthlySubscriptions * this.MRP;
-*/
+        this.productPurchaseBudgetedAmount = 0;
+
     }
 
 
@@ -94,5 +71,29 @@ public class ProductView {
 
     public double getMRP() {
         return MRP;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
+    }
+
+    public double getProductPurchaseBudgetedAmount() {
+        return productPurchaseBudgetedAmount;
+    }
+
+    public void setProductPurchaseBudgetedAmount(double productPurchaseBudgetedAmount) {
+        this.productPurchaseBudgetedAmount = productPurchaseBudgetedAmount;
+    }
+
+    public long getTotalAnticipatedSubscriptions() {
+        return totalAnticipatedSubscriptions;
+    }
+
+    public void setTotalAnticipatedSubscriptions(long totalAnticipatedSubscriptions) {
+        this.totalAnticipatedSubscriptions = totalAnticipatedSubscriptions;
     }
 }

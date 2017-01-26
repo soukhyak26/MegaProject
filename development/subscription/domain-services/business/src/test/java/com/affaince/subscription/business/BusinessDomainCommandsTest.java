@@ -6,7 +6,6 @@ import com.affaince.subscription.business.configuration.Axon;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
 import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
@@ -203,9 +202,9 @@ public class BusinessDomainCommandsTest {
 
     @Test
     public void testProductStatusReceivedCommand() {
-        ProductStatusReceivedCommand productStatusReceivedCommand = new ProductStatusReceivedCommand(1000.0, 10000);
+        ChangePurchaseProvisionPerProductCommand changePurchaseProvisionPerProductCommand = new ChangePurchaseProvisionPerProductCommand(SysDate.now().getYear(),1000.0);
         try {
-            commandGateway.sendAndWait(productStatusReceivedCommand);
+            commandGateway.sendAndWait(changePurchaseProvisionPerProductCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();

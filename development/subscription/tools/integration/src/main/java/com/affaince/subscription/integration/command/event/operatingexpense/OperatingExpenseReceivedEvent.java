@@ -5,9 +5,6 @@ import com.affaince.subscription.common.type.Period;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
-/**
- * Created by rsavaliya on 21/1/16.
- */
 @CsvRecord(separator = ",", skipFirstLine = true)
 public class OperatingExpenseReceivedEvent {
     @DataField(name = "EXPENSE_TYPE", pos = 1, trim = true)

@@ -23,6 +23,9 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         this.provisionAmount -= amount;
     }
 
+    public void credit(double amount) {
+        this.provisionAmount += amount;
+    }
 
     public double getProvisionAmount() {
         return provisionAmount;
@@ -54,4 +57,12 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         debit(event.getAmountToDebit());
     }
 
+    public void addToPurchaseCost(Integer id,double amountTobeAdded) {
+        apply(new PurchaseCostCreditedEvent(id,amountTobeAdded));
+    }
+
+    @EventSourcingHandler
+    public void on(PurchaseCostCreditedEvent event){
+        credit(event.getAmountToCredit());
+    }
 }

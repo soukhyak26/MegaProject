@@ -7,9 +7,6 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by anayonkar on 8/5/16.
- */
 @Component
 public class OperatingExpenseReceivedEventListener {
     @Autowired

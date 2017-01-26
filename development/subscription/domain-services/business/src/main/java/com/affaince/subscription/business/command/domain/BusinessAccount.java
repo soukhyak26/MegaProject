@@ -17,9 +17,6 @@ import org.joda.time.LocalDateTime;
 
 import java.util.Map;
 
-/**
- * Created by rsavaliya on 17/1/16.
- */
 public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     @AggregateIdentifier
     private Integer id;
@@ -258,5 +255,13 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     public void registerProvisionForNodal(Integer id, LocalDate startDate, LocalDate endDate, double provisionForNodal) {
         apply(new ProvisionForNodalRegisteredEvent(id,startDate,endDate,provisionForNodal));
+    }
+
+    public void addToPurchaseCostAccount(double amountTobeAdded) {
+        this.provisionalPurchaseCostAccount.addToPurchaseCost(this.getId(),amountTobeAdded);
+    }
+
+    public void reconcilePurchaseCostProvision(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits) {
+
     }
 }
