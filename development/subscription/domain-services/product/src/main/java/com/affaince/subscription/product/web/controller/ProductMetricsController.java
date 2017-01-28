@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.web.controller;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.product.command.CalculateRevenueAndProfitCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsForOpExView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
@@ -28,11 +30,13 @@ import java.util.List;
 @Component
 public class ProductMetricsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+    private final SubscriptionCommandGateway commandGateway;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
 
     @Autowired
-    public ProductMetricsController(ProductForecastMetricsViewRepository productForecastMetricsViewRepository) {
+    public ProductMetricsController(ProductForecastMetricsViewRepository productForecastMetricsViewRepository,SubscriptionCommandGateway commandGateway) {
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
+        this.commandGateway=commandGateway;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/pricebucket/all")
@@ -49,17 +53,6 @@ public class ProductMetricsController {
     }
 
 
-/*
-    @RequestMapping(method = RequestMethod.GET, value = "/pricebucket/all")
-    public ResponseEntity<List<ProductForecastMetricsView>> findAllForecastedPriceBuckets() {
-        final List<ProductForecastMetricsView> forecastedPriceBucketsViews = new ArrayList<>();
-        productForecastMetricsViewRepository.findAll().forEach
-                (productForecastMetricsView -> forecastedPriceBucketsViews.add(productForecastMetricsView));
-        return new ResponseEntity<List<ProductForecastMetricsView>>(forecastedPriceBucketsViews, HttpStatus.OK);
-    }
-*/
-
-    //TO be moved to a New ProductMetricsController
     @RequestMapping(method = RequestMethod.GET, value = "/productforecastmetrics/{productid}")
     public ResponseEntity<List<ProductForecastMetricsView>> findProductForecastMetricsByProductId(@PathVariable String productId) {
         final List<ProductForecastMetricsView> forecastedPriceBucketsViews = new ArrayList<>();
@@ -67,6 +60,13 @@ public class ProductMetricsController {
         productForecastMetricsViewRepository.findByProductVersionId_ProductId(productId, sort).forEach
                 (productForecastMetricsView -> forecastedPriceBucketsViews.add(productForecastMetricsView));
         return new ResponseEntity<List<ProductForecastMetricsView>>(forecastedPriceBucketsViews, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/revenueandprofit/{productid}")
+    public ResponseEntity<Object> calculateRevenueAndProfit(@PathVariable String productId) throws Exception{
+        CalculateRevenueAndProfitCommand command = new CalculateRevenueAndProfitCommand(productId);
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
 }

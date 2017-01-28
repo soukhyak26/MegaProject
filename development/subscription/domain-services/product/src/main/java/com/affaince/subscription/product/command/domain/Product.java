@@ -27,6 +27,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -395,4 +396,5 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public PriceBucket findPriceBucketByPriceBucketId (final String priceBucketId) {
         return this.getProductAccount().findActivePriceBucketByPriceBucketId(priceBucketId);
     }
+
 }

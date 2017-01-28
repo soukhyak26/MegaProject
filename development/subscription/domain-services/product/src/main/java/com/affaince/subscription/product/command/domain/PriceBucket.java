@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucket;
@@ -19,6 +20,7 @@ import org.joda.time.LocalDateTime;
 public class PriceBucket extends AbstractAnnotatedEntity {
     private String productId;
     private String priceBucketId;
+    private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
@@ -34,15 +36,17 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     private double offeredPriceOrPercentDiscountPerUnit;
 
     //Only to be used for product with none commitment
-    public PriceBucket(String productId, String priceBucketId) {
+    public PriceBucket(String productId, String priceBucketId,ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.entityStatus = EntityStatus.CREATED;
+        this.productPricingCategory=productPricingCategory;
     }
 
-    public PriceBucket(String productId, String priceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercentDiscountPerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
+    public PriceBucket(String productId, String priceBucketId, ProductPricingCategory productPricingCategory,PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercentDiscountPerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
+        this.productPricingCategory=productPricingCategory;
         this.taggedPriceVersion = taggedPriceVersion;
         this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
         this.entityStatus = entityStatus;
@@ -203,6 +207,22 @@ public class PriceBucket extends AbstractAnnotatedEntity {
         this.numberOfNewSubscriptions = event.getNewSubscriptionCount();
         //SHALL WE UPDATE TOTALSUBSCRIPTION COUNT ALSO?
         this.numberOfExistingSubscriptions = event.getTotalSubscriptionCount();
+    }
+
+    public double calculateRegisteredPurchaseCost(){
+        return this.numberOfDeliveredSubscriptions*taggedPriceVersion.getPurchasePricePerUnit();
+    }
+    public double calculateRegisteredRevenue(){
+        if(this.productPricingCategory==ProductPricingCategory.PRICE_COMMITMENT) {
+            return this.numberOfDeliveredSubscriptions * offeredPriceOrPercentDiscountPerUnit;
+        }else if(this.productPricingCategory==ProductPricingCategory.DISCOUNT_COMMITMENT){
+            return this.numberOfDeliveredSubscriptions*(taggedPriceVersion.getMRP()-(taggedPriceVersion.getMRP()*this.offeredPriceOrPercentDiscountPerUnit));
+        }else{
+            return this.numberOfDeliveredSubscriptions * offeredPriceOrPercentDiscountPerUnit;
+        }
+    }
+    public double calculateRegisteredProfit(){
+        return calculateRegisteredRevenue()-calculateRegisteredPurchaseCost();
     }
 
     public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
