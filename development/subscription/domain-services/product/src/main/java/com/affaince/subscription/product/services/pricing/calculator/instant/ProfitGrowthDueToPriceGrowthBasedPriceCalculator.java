@@ -8,7 +8,6 @@ import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingStrategyType;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +32,7 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
         }
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
-                minusOnePriceBucket.getTotalProfit() > minusTwoPriceBucket.getTotalProfit() &&
+                minusOnePriceBucket.getRegisteredProfit() > minusTwoPriceBucket.getRegisteredProfit() &&
                 minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit() > minusTwoPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() &&
                 ((minusOnePriceBucket.getNumberOfExistingSubscriptions() < minusTwoPriceBucket.getNumberOfExistingSubscriptions()) ||
                 (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions()))

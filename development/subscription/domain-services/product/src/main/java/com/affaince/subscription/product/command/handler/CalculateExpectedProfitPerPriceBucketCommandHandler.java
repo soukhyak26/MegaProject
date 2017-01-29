@@ -20,6 +20,6 @@ public class CalculateExpectedProfitPerPriceBucketCommandHandler {
     @CommandHandler
     public void handle(CalculateExpectedProfitPerPriceBucketCommand command){
         Product product = repository.load(command.getProductId());
-        product.calculateExpectedProfitPerPriceBucket(command);
+        product.getProductAccount().calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(command.getProductId(),command.getPriceBucketId());
     }
 }

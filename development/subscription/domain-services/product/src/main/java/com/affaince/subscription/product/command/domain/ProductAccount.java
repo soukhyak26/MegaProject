@@ -13,7 +13,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.YearMonth;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -24,18 +23,18 @@ import java.util.stream.Collectors;
  * Created by mandark on 28-11-2015.
  */
 public class ProductAccount extends AbstractAnnotatedEntity {
-    private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
-    private SortedSet<FixedExpensePerProduct> fixedExpenseVersions;
-    private SortedSet<VariableExpensePerProduct> variableExpenseVersions;
-    private Map<LocalDateTime, PriceBucket> recommendedPriceBuckets;
-    private Map<LocalDateTime, PriceBucket> activePriceBuckets;
-    private long currentStockInUnits;
+    private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;// a version should go away when all pricebuckets associated with it are expired.??
+    private SortedSet<FixedExpensePerProduct> fixedExpenseVersions;//should be reset annually. All but the latest one should vanish
+    private SortedSet<VariableExpensePerProduct> variableExpenseVersions;//should be reset annually. All but the latest one should vanish
+    private Map<LocalDateTime, PriceBucket> recommendedPriceBuckets;// taken care of creation and expiration automatically
+    private Map<LocalDateTime, PriceBucket> activePriceBuckets;// taken care of creation and expiration automatically
+    private long currentStockInUnits;// should be adjusted on each delivery made
     private ProductPricingCategory productPricingCategory;
     private double creditPoints;
     private double variableExpenseSlope;
-    private double registeredPurchaseCost;
-    private double registeredRevenue;
-    private double registeredProfit;
+    private double registeredPurchaseCost; //should be reset annually=pc of remaining stock + new purchase cost
+    private double registeredRevenue;// should be reset annually =0;
+    private double registeredProfit; // should be reset annually =0;
 
 
     public ProductAccount(String productId, ProductPricingCategory productPricingCategory) {
@@ -268,15 +267,13 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return bucketsWithSamePurchasePrice;
     }
 
-    public double calculateExpectedProfitForPriceBucket(PriceBucket priceBucket) {
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId) {
+        final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
         LocalDateTime fromDate = priceBucket.getFromDate();
         LocalDateTime toDate = priceBucket.getToDate();
         double fixedExpensePerUnit = this.findLatestFixedExpensePerUnitInDateRange(fromDate, toDate);
         double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
-        double profit = priceBucket.getNumberOfExistingSubscriptions() * priceBucket.getOfferedPriceOrPercentDiscountPerUnit()
-                - (priceBucket.getNumberOfExistingSubscriptions() * (priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit())
-                + fixedExpensePerUnit + variableExpensePerUnit);
-        return profit;
+        priceBucket.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
     }
 
     public double calculateBreakEvenPriceUponChangeOfPriceOrExpenses(OperatingExpenseService operatingExpenseService) {
@@ -294,9 +291,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         } else {
             fixedExpenseHeader = new CostHeader(CostHeaderType.FIXED_EXPENSE_PER_UNIT, "fixed expense per unit", latestFixedOperatingExpensePerUnit.getFixedOperatingExpPerUnit(), CostHeaderApplicability.ABSOLUTE);
         }
-
         costHeaders.add(fixedExpenseHeader);
-
         VariableExpensePerProduct latestVariableExpensePerProduct = getLatestVariableExpenseVersion();
         CostHeader variableExpenseHeader;
         if (latestVariableExpensePerProduct == null) {
@@ -430,14 +425,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         latestTaggedPriceVersion.setBreakEvenPrice(event.getRevisedBreakEvenPrice());
     }
 
-    public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command) {
-        double newExpectedProfitPerPriceBucket = this.calculateExpectedProfitForPriceBucket(this.findActivePriceBucketByPriceBucketId(command.getPriceBucketId()));
-        apply(new PriceBucketWiseProfitCalculatedEvent(command.getProductId(), command.getPriceBucketId(), newExpectedProfitPerPriceBucket));
-
-    }
 
     @EventSourcingHandler
-    public void on(PriceBucketWiseProfitCalculatedEvent event) {
+    public void on(PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent event) {
         PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(event.getPriceBucketId());
         activePriceBucket.setExpectedProfit(event.getProfitAmountPerPriceBucket());
     }
@@ -479,9 +469,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         double registeredRevenue=0;
         double registeredProfit=0;
         for(PriceBucket activePriceBucket: activePriceBuckets){
-            registeredPurchaseCost+= activePriceBucket.calculateRegisteredPurchaseCost();
-            registeredRevenue +=activePriceBucket.calculateRegisteredRevenue();
-            registeredProfit +=activePriceBucket.calculateRegisteredProfit();
+            registeredPurchaseCost+= activePriceBucket.getRegisteredPurchaseCostOfDeliveredUnits();
+            registeredRevenue +=activePriceBucket.getRegisteredRevenue();
+            registeredProfit +=activePriceBucket.getRegisteredProfit();
         }
         apply(new ProductRegisteredPurchaseCostRevenueAndProfitCalculatedEvent(productId, registeredPurchaseCost,registeredRevenue,registeredProfit));
     }

@@ -2,16 +2,11 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucket;
-import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPriceBucketEvent;
-import com.affaince.subscription.product.command.event.PriceBucketExpiredEvent;
-import com.affaince.subscription.product.command.event.SubscriptionDeductedFromPriceBucketEvent;
+import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -30,7 +25,9 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
     private EntityStatus entityStatus;
-    private double totalProfit;
+    private double registeredPurchaseCostOfDeliveredUnits;
+    private double registeredRevenue;
+    private double registeredProfit;
     private double slope;
 
     private double offeredPriceOrPercentDiscountPerUnit;
@@ -149,12 +146,12 @@ public class PriceBucket extends AbstractAnnotatedEntity {
         this.entityStatus = entityStatus;
     }
 
-    public double getTotalProfit() {
-        return totalProfit;
+    public double getRegisteredProfit() {
+        return registeredProfit;
     }
 
-    public void setTotalProfit(double totalProfit) {
-        this.totalProfit = totalProfit;
+    public void setRegisteredProfit(double registeredProfit) {
+        this.registeredProfit = registeredProfit;
     }
 
     public double getSlope() {
@@ -171,6 +168,30 @@ public class PriceBucket extends AbstractAnnotatedEntity {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
+    }
+
+    public double getRegisteredPurchaseCostOfDeliveredUnits() {
+        return registeredPurchaseCostOfDeliveredUnits;
+    }
+
+    public void setRegisteredPurchaseCostOfDeliveredUnits(double registeredPurchaseCostOfDeliveredUnits) {
+        this.registeredPurchaseCostOfDeliveredUnits = registeredPurchaseCostOfDeliveredUnits;
+    }
+
+    public double getRegisteredRevenue() {
+        return registeredRevenue;
+    }
+
+    public void setRegisteredRevenue(double registeredRevenue) {
+        this.registeredRevenue = registeredRevenue;
     }
 
     public double recalculateOfferedPriceBasedOnActualDemand() {
@@ -209,21 +230,6 @@ public class PriceBucket extends AbstractAnnotatedEntity {
         this.numberOfExistingSubscriptions = event.getTotalSubscriptionCount();
     }
 
-    public double calculateRegisteredPurchaseCost(){
-        return this.numberOfDeliveredSubscriptions*taggedPriceVersion.getPurchasePricePerUnit();
-    }
-    public double calculateRegisteredRevenue(){
-        if(this.productPricingCategory==ProductPricingCategory.PRICE_COMMITMENT) {
-            return this.numberOfDeliveredSubscriptions * offeredPriceOrPercentDiscountPerUnit;
-        }else if(this.productPricingCategory==ProductPricingCategory.DISCOUNT_COMMITMENT){
-            return this.numberOfDeliveredSubscriptions*(taggedPriceVersion.getMRP()-(taggedPriceVersion.getMRP()*this.offeredPriceOrPercentDiscountPerUnit));
-        }else{
-            return this.numberOfDeliveredSubscriptions * offeredPriceOrPercentDiscountPerUnit;
-        }
-    }
-    public double calculateRegisteredProfit(){
-        return calculateRegisteredRevenue()-calculateRegisteredPurchaseCost();
-    }
 
     public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
         long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions +subscriptionCount;
@@ -240,6 +246,46 @@ public class PriceBucket extends AbstractAnnotatedEntity {
             this.numberOfExistingSubscriptions=event.getRevisedTotalSubscriptionCount();
     }
 
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, double fixedExpensePeUnit, double variableExpensePerUnit) {
+        LocalDateTime fromDate = this.getFromDate();
+        LocalDateTime toDate = this.getToDate();
+        double purchaseCost=0;
+        double revenue=0;
+        double totalFixedExpense=0;
+        double totalVariableExpense=0;
+        double profit=0;
+
+        if(this.productPricingCategory==ProductPricingCategory.PRICE_COMMITMENT) {
+            revenue=this.getNumberOfDeliveredSubscriptions() * this.getOfferedPriceOrPercentDiscountPerUnit();
+            purchaseCost=this.getNumberOfDeliveredSubscriptions() * (this.getTaggedPriceVersion().getPurchasePricePerUnit());
+            totalFixedExpense=this.getNumberOfDeliveredSubscriptions()*fixedExpensePeUnit;
+            totalVariableExpense=this.getNumberOfDeliveredSubscriptions()*variableExpensePerUnit;
+            profit =revenue -(purchaseCost + totalFixedExpense + totalVariableExpense);
+            apply(new PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
+        }else if(this.productPricingCategory==ProductPricingCategory.DISCOUNT_COMMITMENT){
+            double offeredPrice= (this.getTaggedPriceVersion().getMRP()-(this.getTaggedPriceVersion().getMRP()*this.getOfferedPriceOrPercentDiscountPerUnit())) ;
+            revenue= this.getNumberOfDeliveredSubscriptions()*offeredPrice;
+            purchaseCost=this.getNumberOfDeliveredSubscriptions() * this.getTaggedPriceVersion().getPurchasePricePerUnit();
+            totalFixedExpense=this.getNumberOfDeliveredSubscriptions()*fixedExpensePeUnit;
+            totalVariableExpense=this.getNumberOfDeliveredSubscriptions()*variableExpensePerUnit;
+            profit =revenue -(purchaseCost + totalFixedExpense + totalVariableExpense);
+            apply(new PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
+        }else{
+            revenue=this.getNumberOfDeliveredSubscriptions() * this.getOfferedPriceOrPercentDiscountPerUnit();
+            purchaseCost=this.getNumberOfDeliveredSubscriptions() * (this.getTaggedPriceVersion().getPurchasePricePerUnit());
+            totalFixedExpense=this.getNumberOfDeliveredSubscriptions()*fixedExpensePeUnit;
+            totalVariableExpense=this.getNumberOfDeliveredSubscriptions()*variableExpensePerUnit;
+            profit =revenue -(purchaseCost + totalFixedExpense + totalVariableExpense);
+            apply(new PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
+        }
+    }
+
+    @EventSourcingHandler
+    public void on(PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent event){
+        this.registeredPurchaseCostOfDeliveredUnits=event.getPurchaseCostOfDeliveredUnits();
+        this.registeredRevenue=event.getRevenue();
+        this.registeredProfit=event.getProfitAmountPerPriceBucket();
+    }
     public void expirePriceBucket() {
         this.setEntityStatus(EntityStatus.EXPIRED);
     }

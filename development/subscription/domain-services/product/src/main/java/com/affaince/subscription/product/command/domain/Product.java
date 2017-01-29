@@ -389,10 +389,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 this.sensitiveTo, this.netQuantity, quantityUnit, this.productAccount.getProductPricingCategory()));
     }
 
-    public void calculateExpectedProfitPerPriceBucket(CalculateExpectedProfitPerPriceBucketCommand command) {
-        this.getProductAccount().calculateExpectedProfitPerPriceBucket(command);
-    }
-
     public PriceBucket findPriceBucketByPriceBucketId (final String priceBucketId) {
         return this.getProductAccount().findActivePriceBucketByPriceBucketId(priceBucketId);
     }

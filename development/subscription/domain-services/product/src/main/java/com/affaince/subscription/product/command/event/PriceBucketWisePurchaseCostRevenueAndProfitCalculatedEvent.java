@@ -3,14 +3,18 @@ package com.affaince.subscription.product.command.event;
 /**
  * Created by mandar on 29-12-2016.
  */
-public class PriceBucketWiseProfitCalculatedEvent {
+public class PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent {
     private final String productId;
     private final String priceBucketId;
+    private final double purchaseCostOfDeliveredUnits;
+    private final double revenue;
     private final double profitAmountPerPriceBucket;
 
-    public PriceBucketWiseProfitCalculatedEvent(String productId, String priceBucketId, double profitAmountPerPriceBucket) {
+    public PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(String productId, String priceBucketId, double purchaseCostOfDeliveredUnits, double revenue, double profitAmountPerPriceBucket) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
+        this.purchaseCostOfDeliveredUnits=purchaseCostOfDeliveredUnits;
+        this.revenue=revenue;
         this.profitAmountPerPriceBucket = profitAmountPerPriceBucket;
     }
 
@@ -20,6 +24,14 @@ public class PriceBucketWiseProfitCalculatedEvent {
 
     public String getPriceBucketId() {
         return priceBucketId;
+    }
+
+    public double getPurchaseCostOfDeliveredUnits() {
+        return purchaseCostOfDeliveredUnits;
+    }
+
+    public double getRevenue() {
+        return revenue;
     }
 
     public double getProfitAmountPerPriceBucket() {
