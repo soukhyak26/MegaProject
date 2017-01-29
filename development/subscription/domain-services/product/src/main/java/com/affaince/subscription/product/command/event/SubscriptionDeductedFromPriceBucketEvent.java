@@ -6,11 +6,13 @@ package com.affaince.subscription.product.command.event;
 public class SubscriptionDeductedFromPriceBucketEvent {
     private final String productId;
     private final String priceBucketId;
+    private final long deductedSubscriptionCount;
     private final long revisedChurnedSubscriptionCount;
     private final long revisedTotalSubscriptionCount;
-    public SubscriptionDeductedFromPriceBucketEvent(String productId, String priceBucketId, long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount) {
+    public SubscriptionDeductedFromPriceBucketEvent(String productId, String priceBucketId, long deductedSubscriptionCount,long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount) {
         this.productId=productId;
         this.priceBucketId=priceBucketId;
+        this.deductedSubscriptionCount=deductedSubscriptionCount;
         this.revisedChurnedSubscriptionCount=revisedChurnedSubscriptionCount;
         this.revisedTotalSubscriptionCount=revisedTotalSubscriptionCount;
     }
@@ -29,5 +31,9 @@ public class SubscriptionDeductedFromPriceBucketEvent {
 
     public long getRevisedTotalSubscriptionCount() {
         return revisedTotalSubscriptionCount;
+    }
+
+    public long getDeductedSubscriptionCount() {
+        return deductedSubscriptionCount;
     }
 }

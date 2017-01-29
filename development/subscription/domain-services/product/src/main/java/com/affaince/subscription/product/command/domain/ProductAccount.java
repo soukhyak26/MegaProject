@@ -317,7 +317,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         apply(new OpeningPriceOrPercentRegisteredEvent(productId, newPriceBucket));
     }
 
-
+//should fire productsubscription updated event OR shuld fire two events add/deduct
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
         final Map<String, Integer> priceBucketWiseSubscriptionCount = command.getPriceBucketWiseSubscriptionCount();
         priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId -> {
@@ -473,14 +473,15 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             registeredRevenue +=activePriceBucket.getRegisteredRevenue();
             registeredProfit +=activePriceBucket.getRegisteredProfit();
         }
-        apply(new ProductRegisteredPurchaseCostRevenueAndProfitCalculatedEvent(productId, registeredPurchaseCost,registeredRevenue,registeredProfit));
+        apply(new ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent(productId,(registeredPurchaseCost-this.registeredPurchaseCost),(registeredRevenue-this.registeredRevenue),(registeredProfit-this.registeredProfit)));
     }
 
     @EventSourcingHandler
-    public void on(ProductRegisteredPurchaseCostRevenueAndProfitCalculatedEvent event){
-        this.registeredPurchaseCost=event.getRegisteredPurchaseCost();
-        this.registeredRevenue=event.getRegisteredRevenue();
-        this.registeredProfit=event.getRegisteredProfit();
+    public void on(ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent event){
+
+        this.registeredPurchaseCost+=event.getPurchaseCostContribution();
+        this.registeredRevenue +=event.getRevenueContribution();
+        this.registeredProfit+=event.getProfitContribution();
     }
 
     public void calculateTotalActiveSubscriptions(){

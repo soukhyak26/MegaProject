@@ -15,19 +15,15 @@ import java.util.TreeSet;
 /**
  * Created by mandark on 28-01-2016.
  */
+//MUST be handled at monthly level
 @Document(collection = "ProductActualMetricsView")
 public class ProductActualMetricsView {
     @Id
-   // private final ProductMonthlyVersionId productMonthlyVersionId;
     private final ProductVersionId productVersionId;
     private LocalDateTime endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private double fixedOperatingExpense;
     private double variableOperatingExpense;
-/*
-    private double demandDensity;
-    private double averageDemandPerSubscriber;
-*/
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
@@ -44,6 +40,7 @@ public class ProductActualMetricsView {
     private double percentageMRRChurn;
     private double endingMRR;
     private double netNewMRR;
+    private double purchaseCost;
     private double revenue;
     private double averageRevenuePerNewSubscriber;
     private double averageRevenuePerSubscriber;
@@ -297,6 +294,14 @@ public class ProductActualMetricsView {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public double getPurchaseCost() {
+        return purchaseCost;
+    }
+
+    public void setPurchaseCost(double purchaseCost) {
+        this.purchaseCost = purchaseCost;
     }
 
     public PriceTaggedWithProduct getLatestTaggedPriceVersion(){

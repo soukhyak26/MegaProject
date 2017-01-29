@@ -3,7 +3,6 @@ package com.affaince.subscription.product.command.domain;
 import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.common.vo.ProductForecastParameter;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.product.command.CalculateExpectedProfitPerPriceBucketCommand;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;

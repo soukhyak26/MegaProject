@@ -264,4 +264,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     public void reconcilePurchaseCostProvision(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits) {
 
     }
+
+    public void updatePurchaseCostRevenueAndProfit(double purchaseCostContribution, double revenueContribution, double profitContribution) {
+        //TODO:
+    }
 }

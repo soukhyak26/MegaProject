@@ -220,7 +220,7 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     public void addSubscriptionToPriceBucket(long subscriptionCount) {
         long revisedNewSubscriptionCount=this.getNumberOfNewSubscriptions()+subscriptionCount;
         long revisedTotalSubscriptionCount=this.getNumberOfExistingSubscriptions()+subscriptionCount;
-        apply(new NewSubscriptionAddedToPriceBucketEvent(productId,priceBucketId,revisedNewSubscriptionCount,revisedTotalSubscriptionCount));
+        apply(new NewSubscriptionAddedToPriceBucketEvent(productId,priceBucketId,subscriptionCount,revisedNewSubscriptionCount,revisedTotalSubscriptionCount));
     }
 
     @EventSourcingHandler
@@ -238,7 +238,7 @@ public class PriceBucket extends AbstractAnnotatedEntity {
             apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
         }
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromPriceBucketEvent(productId,priceBucketId,revisedChurnedSubscriptionCount,revisedTotalSubscriptionCount));
+        apply(new SubscriptionDeductedFromPriceBucketEvent(productId,priceBucketId,subscriptionCount,revisedChurnedSubscriptionCount,revisedTotalSubscriptionCount));
     }
 
     public void on(SubscriptionDeductedFromPriceBucketEvent event){

@@ -26,7 +26,10 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     private long numberOfChurnedSubscriptionsAssociatedWithAPrice;
     private long numberOfExistingSubscriptionsAssociatedWithAPrice;
     private EntityStatus entityStatus;
-    private double totalProfit;
+    private double registeredPurchaseCost;
+    private double registeredRevenue;
+    private double registeredProfit;
+
     private double slope;
 
     public PriceBucketView(ProductwisePriceBucketId productwisePriceBucketId) {
@@ -112,12 +115,12 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.taggedPriceVersion = taggedPriceVersion;
     }
 
-    public double getTotalProfit() {
-        return totalProfit;
+    public double getRegisteredProfit() {
+        return registeredProfit;
     }
 
-    public void setTotalProfit(double totalProfit) {
-        this.totalProfit = totalProfit;
+    public void setRegisteredProfit(double registeredProfit) {
+        this.registeredProfit = registeredProfit;
     }
 
     public double getSlope() {
@@ -126,6 +129,26 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
 
     public void setSlope(double slope) {
         this.slope = slope;
+    }
+
+    public void setFromDate(LocalDateTime fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public double getRegisteredPurchaseCost() {
+        return registeredPurchaseCost;
+    }
+
+    public void setRegisteredPurchaseCost(double registeredPurchaseCost) {
+        this.registeredPurchaseCost = registeredPurchaseCost;
+    }
+
+    public double getRegisteredRevenue() {
+        return registeredRevenue;
+    }
+
+    public void setRegisteredRevenue(double registeredRevenue) {
+        this.registeredRevenue = registeredRevenue;
     }
 
     @Override
