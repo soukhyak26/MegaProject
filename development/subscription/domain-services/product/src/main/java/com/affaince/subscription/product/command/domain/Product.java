@@ -105,7 +105,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(OfferedPriceRecommendedEvent event) {
-        this.productDemandTrend=event.getProductDemandTrend();
+        this.productDemandTrend = event.getProductDemandTrend();
         getProductAccount().addNewPriceRecommendation(event.getNewPriceBucket().getFromDate(), event.getNewPriceBucket());
 
     }
@@ -207,7 +207,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     //for product administrator to configure product
     public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) throws InvalidProductStatusException, ProductDeactivatedException {
-        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod(),command.getTentativePercentageChangeInProductDemand()));
+        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod(), command.getTentativePercentageChangeInProductDemand()));
         /*final ProductConfigurationValidator validator = new ProductConfigurationValidator();
         try {
             if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
@@ -283,7 +283,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
 
-        if(this.getActivePriceBuckets().size()>=1 && this.getLatestActivePriceBucket().getNumberOfExistingSubscriptions()>=1) {
+        if (this.getActivePriceBuckets().size() >= 1 && this.getLatestActivePriceBucket().getNumberOfExistingSubscriptions() >= 1) {
             //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
             List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
             //THIS LOOP SHOULD ITERATE SINGLE TIME
@@ -315,17 +315,17 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             //latestPriceBucket.setToDate(event.getCurrentPriceDate());
             if (productConfiguration.getPricingOptions() == PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
                 //shall we keep the same date as mentioned in recommended bucket?? for now....yes
-                apply(new OfferedPriceChangedEvent(this.productId, newPriceBucket,productDemandTrend));
+                apply(new OfferedPriceChangedEvent(this.productId, newPriceBucket, productDemandTrend));
             } else {
                 //this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
-                apply(new OfferedPriceRecommendedEvent(this.productId, newPriceBucket,productDemandTrend));
+                apply(new OfferedPriceRecommendedEvent(this.productId, newPriceBucket, productDemandTrend));
             }
         }
     }
 
     public void registerManualForecast(ProductForecastParameter[] productForecastParameters) {
         //for (ProductForecastParameter forecastParameter : productForecastParameters) {
-            apply(new ManualForecastAddedEvent(productId, productForecastParameters));
+        apply(new ManualForecastAddedEvent(productId, productForecastParameters));
         //}
         /*if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             for (ProductForecastParameter forecastParameter : productForecastParameters) {
@@ -360,7 +360,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void acceptRecommendedPrice() {
-        apply(new OfferedPriceChangedEvent(productId, getLatestRecommendedPriceBucket(),this.productDemandTrend));
+        apply(new OfferedPriceChangedEvent(productId, getLatestRecommendedPriceBucket(), this.productDemandTrend));
     }
 
     public void overrideRecommendedPrice(double overriddenPriceOrPercent) {
@@ -370,7 +370,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         //Change price ONLY if difference between latest price and new price is more than 0.5 money? BUT WHAT ABOUT PERCENT DICOUNT.. NEEDS CORRECTION
         if (Math.abs(latestPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() - overriddenPriceOrPercent) > 0.5) {
             PriceBucket newPriceBucket = createNewPriceBucket(productId, latestRecommendedPriceBucket.getTaggedPriceVersion(), overriddenPriceOrPercent, latestRecommendedPriceBucket.getEntityStatus(), latestRecommendedPriceBucket.getFromDate());
-            apply(new OfferedPriceChangedEvent(productId, newPriceBucket,this.productDemandTrend));
+            apply(new OfferedPriceChangedEvent(productId, newPriceBucket, this.productDemandTrend));
         }
     }
 
@@ -388,8 +388,36 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 this.sensitiveTo, this.netQuantity, quantityUnit, this.productAccount.getProductPricingCategory()));
     }
 
-    public PriceBucket findPriceBucketByPriceBucketId (final String priceBucketId) {
+    public PriceBucket findPriceBucketByPriceBucketId(final String priceBucketId) {
         return this.getProductAccount().findActivePriceBucketByPriceBucketId(priceBucketId);
     }
+
+    public void donateToNodalAccount(double weight) {
+        if (weight > 0) {
+            final double offeredPriceOrPercent = getLatestActivePriceBucket().getOfferedPriceOrPercentDiscountPerUnit();
+            final double MRP = getLatestActivePriceBucket().getTaggedPriceVersion().getMRP();
+            final double latestPurchasePrice = getLatestPurchasePrice();
+            final double fixedExpensePerUnit = this.getProductAccount().getLatestFixedExpenseVersion().getFixedOperatingExpPerUnit();
+            final double variableExpensePerUnit = this.getProductAccount().getLatestVariableExpenseVersion().getVariableOperatingExpPerUnit();
+            double excessProfit = 0;
+            if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT) {
+                excessProfit = (weight * offeredPriceOrPercent) - ((weight * latestPurchasePrice) + weight * (fixedExpensePerUnit + variableExpensePerUnit));
+                apply(new ExcessProfitDonatedToNodalAccountEvent(this.productId, excessProfit));
+            } else if (this.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT) {
+                double offeredPrice = MRP - (MRP * offeredPriceOrPercent);
+                excessProfit = (weight * offeredPrice) - ((weight * latestPurchasePrice) + weight * (fixedExpensePerUnit + variableExpensePerUnit));
+                apply(new ExcessProfitDonatedToNodalAccountEvent(this.productId, excessProfit));
+            } else {
+                excessProfit = (weight * offeredPriceOrPercent) - ((weight * latestPurchasePrice) + weight * (fixedExpensePerUnit + variableExpensePerUnit));
+                apply(new ExcessProfitDonatedToNodalAccountEvent(this.productId, excessProfit));
+            }
+
+        } else if (weight < 0) {
+            //LET'S THINK WHAT TO DO WHEN ACTUAL SUBSCRIPTIONS ARE LESSER THAT ANTICIAPTED ONES.
+        } else {
+            //do nothing
+        }
+    }
+
 
 }

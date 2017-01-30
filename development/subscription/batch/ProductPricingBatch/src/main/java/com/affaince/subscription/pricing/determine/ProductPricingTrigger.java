@@ -2,6 +2,7 @@ package com.affaince.subscription.pricing.determine;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.WeightedProductDemandTrend;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
@@ -35,7 +36,7 @@ public class ProductPricingTrigger {
     @Autowired
     private ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder;
 
-    public ProductDemandTrend triggerProductPricingNew(String productId){
+    public WeightedProductDemandTrend triggerProductPricingNew(String productId){
         //get the actuals data from last to first in descending order
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         //instead of getting ProductActuals view of current day, we are taking latest view in order to eliminate the dependancy of running this job at end of day
@@ -48,11 +49,11 @@ public class ProductPricingTrigger {
         final double changeThresholdForPriceChange =productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
 
         if(totalActualSubscriptionCount > totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
-            return ProductDemandTrend.UPWARD;
+            return new WeightedProductDemandTrend(ProductDemandTrend.UPWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate));
         }else if(totalActualSubscriptionCount < totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
-            return ProductDemandTrend.DOWNWARD;
+            return new WeightedProductDemandTrend(ProductDemandTrend.DOWNWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate));
         }else{
-            return ProductDemandTrend.NOCHANGE;
+            return new WeightedProductDemandTrend(ProductDemandTrend.NOCHANGE,0);
         }
     }
 

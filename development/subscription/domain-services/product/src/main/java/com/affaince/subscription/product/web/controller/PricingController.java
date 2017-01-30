@@ -7,6 +7,7 @@ import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.RecommendedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.RecommendedPriceBucketView;
 import com.affaince.subscription.product.vo.PricingChoiceType;
+import com.affaince.subscription.product.web.request.CalculatePriceRequest;
 import com.affaince.subscription.product.web.request.RegisterOpeningPriceRequest;
 import com.affaince.subscription.product.web.request.RegisterPriceChoiceRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,11 +52,15 @@ public class PricingController {
     }
 
     //should be calculated only by the pricing batch as a background job.
-    @RequestMapping(method = RequestMethod.PUT, value = "/calculate/{productid}/{productdemandtrend}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/calculate/{productid}")
     @Consumes("application/json")
-    public ResponseEntity<String> calculatePrice(@PathVariable("productid") String productId, @PathVariable("productdemandtrend") String productDemandTrend) throws Exception {
-        CalculatePriceOfAProductCommand command = new CalculatePriceOfAProductCommand(productId, ProductDemandTrend.valueOf(Integer.parseInt(productDemandTrend)));
+    public ResponseEntity<String> calculatePrice(@PathVariable("productid") String productId, @RequestBody CalculatePriceRequest request) throws Exception {
+        ProductDemandTrend productDemandTrend = request.getProductDemandTrend();
+        double weight =request.getWeight();
+        CalculatePriceOfAProductCommand command = new CalculatePriceOfAProductCommand(productId, productDemandTrend);
         commandGateway.executeAsync(command);
+        DonateToNodalAccountCommand donateToNodalAccountCommand = new DonateToNodalAccountCommand(productId,weight);
+        commandGateway.executeAsync(donateToNodalAccountCommand);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 

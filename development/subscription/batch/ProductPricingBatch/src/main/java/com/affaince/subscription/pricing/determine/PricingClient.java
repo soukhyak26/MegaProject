@@ -1,6 +1,7 @@
 package com.affaince.subscription.pricing.determine;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.common.type.WeightedProductDemandTrend;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,12 +18,13 @@ public class PricingClient {
     @Value("${subscription.pricing.url}")
     private String pricingUrl;
 
-    public void calculatePrice(String productId, ProductDemandTrend trend) {
+    public void calculatePrice(String productId, WeightedProductDemandTrend trend) {
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<String> result = restTemplate.getForObject(findProductsUrl, ArrayList.class);
         Map<String, String> params = new HashMap<String, String>();
         params.put("productid", productId);
-        params.put("productdemandtrend", "" + trend.getTrendCode());
+        params.put("productdemandtrend", "" + trend.getProductDemandTrend());
+        params.put("weight", "" + trend.getWeight());
         restTemplate.put(pricingUrl, params);
     }
 }

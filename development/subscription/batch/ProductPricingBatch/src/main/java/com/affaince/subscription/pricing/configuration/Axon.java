@@ -118,7 +118,7 @@ public class Axon extends Default {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
-                Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
+                Predicate demandTrendChecker = or(simple("${body.productDemandTrend}==ProductDemandTrend.UPWARD"), simple("${body.productDemandTrend}==ProductDemandTrend.DOWNWARD"));
                 //job for calculating pseudoActuals for each product.
 
                 from("{{subscription.pricing.timer.expression}}")

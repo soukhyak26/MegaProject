@@ -20,7 +20,9 @@ import java.util.Map;
 public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     @AggregateIdentifier
     private Integer id;
-    private TimeBoundMoney netProfitRegistered;
+
+    @EventSourcedMember
+    private ProfitAccount profitAccount;
     private TimeBoundMoney totalRevenueRegistered;
     private long totalSubscriptionsRegistered;
 
@@ -119,14 +121,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         return dateForProvision;
     }
 
-    public TimeBoundMoney getNetProfitRegistered() {
-        return netProfitRegistered;
-    }
-
-    public void setNetProfitRegistered(TimeBoundMoney netProfitRegistered) {
-        this.netProfitRegistered = netProfitRegistered;
-    }
-
     public TimeBoundMoney getTotalRevenueRegistered() {
         return totalRevenueRegistered;
     }
@@ -210,6 +204,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
         this.revenueAccount = new RevenueAccount(dateForProvision,endDate);
         this.interestsGainAccount = new InterestsAccount(dateForProvision,endDate);
+        this.profitAccount= new ProfitAccount(dateForProvision,endDate);
     }
 
 
@@ -267,5 +262,15 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     public void updatePurchaseCostRevenueAndProfit(double purchaseCostContribution, double revenueContribution, double profitContribution) {
         //TODO:
+    }
+
+    public void addToNodalAccount(String productId, double excessProfit) {
+        apply(new ExcessProfitAddedToNodalAccountEvent(productId,excessProfit));
+    }
+
+    @EventSourcingHandler
+    public void on(ExcessProfitAddedToNodalAccountEvent event){
+        this.nodalAccount.credit(event.getExcessProfit());
+        this.profitAccount.addToExcessProfitToDebit(new ProfitDebitAccount(event.getProductId(),event.getExcessProfit(),SysDate.now()));
     }
 }
