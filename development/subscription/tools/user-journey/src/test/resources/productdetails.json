@@ -1,0 +1,6 @@
+[{"productId":"0","productName":"productName0","categoryId":"cat0","subCategoryId":"subcat0","quantity":2974,"quantityUnit":"gram","substitute":["0"],"complements":["0"]},
+{"productId":"1","productName":"productName1","categoryId":"cat1","subCategoryId":"subcat1","quantity":852,"quantityUnit":"gram","substitute":["1"],"complements":["1"]},
+{"productId":"2","productName":"productName2","categoryId":"cat2","subCategoryId":"subcat2","quantity":3704,"quantityUnit":"gram","substitute":["2"],"complements":["2"]},
+{"productId":"3","productName":"productName3","categoryId":"cat3","subCategoryId":"subcat0","quantity":3831,"quantityUnit":"gram","substitute":["3"],"complements":["3"]},
+{"productId":"4","productName":"productName4","categoryId":"cat4","subCategoryId":"subcat0","quantity":4530,"quantityUnit":"gram","substitute":["4"],"complements":["4"]}
+]
