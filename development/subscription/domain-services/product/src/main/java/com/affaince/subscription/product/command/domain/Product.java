@@ -413,7 +413,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             }
 
         } else if (weight < 0) {
-            //LET'S THINK WHAT TO DO WHEN ACTUAL SUBSCRIPTIONS ARE LESSER THAT ANTICIAPTED ONES.
+            //LET'S THINK WHAT TO DO WHEN ACTUAL SUBSCRIPTIONS ARE LESSER THAT ANTICIPATED ONES.
         } else {
             //do nothing
         }

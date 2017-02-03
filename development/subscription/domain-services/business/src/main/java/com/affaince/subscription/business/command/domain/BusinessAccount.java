@@ -23,7 +23,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     @EventSourcedMember
     private ProfitAccount profitAccount;
-    private TimeBoundMoney totalRevenueRegistered;
     private long totalSubscriptionsRegistered;
 
     @EventSourcedMember
@@ -119,14 +118,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     public LocalDate getDateForProvision() {
         return dateForProvision;
-    }
-
-    public TimeBoundMoney getTotalRevenueRegistered() {
-        return totalRevenueRegistered;
-    }
-
-    public void setTotalRevenueRegistered(TimeBoundMoney totalRevenueRegistered) {
-        this.totalRevenueRegistered = totalRevenueRegistered;
     }
 
     public long getTotalSubscriptionsRegistered() {
@@ -261,7 +252,17 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     }
 
     public void updatePurchaseCostRevenueAndProfit(double purchaseCostContribution, double revenueContribution, double profitContribution) {
-        //TODO:
+        //this.addToPurchaseCostAccount(purchaseCostContribution);
+        this.addToRevenueAccount(revenueContribution);
+        this.addToProfitAccount(profitContribution);
+    }
+
+    private void addToProfitAccount(double profitContribution) {
+        this.profitAccount.addProfitToProfitAccount(this.id,profitContribution);
+    }
+
+    private void addToRevenueAccount(double revenueContribution) {
+        this.revenueAccount.addRevenue(this.id, revenueContribution);
     }
 
     public void addToNodalAccount(String productId, double excessProfit) {

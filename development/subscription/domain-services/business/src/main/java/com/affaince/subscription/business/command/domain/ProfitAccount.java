@@ -1,7 +1,9 @@
 package com.affaince.subscription.business.command.domain;
 
+import com.affaince.subscription.business.command.event.ProfitCreditedEvent;
 import org.apache.avro.generic.GenericData;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -30,7 +32,15 @@ public class ProfitAccount extends AbstractAnnotatedEntity {
         return (accumulatedProfitAmount - excessProfitToDebitAmount);
     }
 
-    public void addProfitToProfitAccount(double profitAmount){
+    public void addProfitToProfitAccount(Integer businessAccountId,double amountToBeCredited){
+        apply( new ProfitCreditedEvent(businessAccountId,amountToBeCredited));
+    }
+
+    @EventSourcingHandler
+    public void on(ProfitCreditedEvent event){
+        credit(event.getAmountToBeCredited());
+    }
+    public void credit(double profitAmount){
         this.accumulatedProfitAmount +=profitAmount;
     }
     public List<ProfitDebitAccount> getExcessProfitsToDebit() {
