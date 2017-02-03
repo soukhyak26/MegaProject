@@ -20,10 +20,11 @@ class Product extends BaseSimulator {
       RegisterOpeningPrice.registerPrice
     }
 
-  var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
+  //var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
 
-  Thread.sleep(1000)
-  setUp(scn2.inject(atOnceUsers(1)).protocols(http), scn.inject(atOnceUsers(1)).protocols(http))
+    Thread.sleep(1000)
+  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  //, scn2.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
