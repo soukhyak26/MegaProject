@@ -1,6 +1,7 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.command.event.*;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
@@ -37,8 +38,8 @@ public class BenefitsAccount extends AbstractAnnotatedEntity {
         return endDate;
     }
 
-    public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
-        apply(new BenefitDebitedEvent(businessAccountId, amountToDebit));
+    public void issueBenefitsAmountToBeneficiary(Integer businessAccountId, String contributorId,double amountToDebit) {
+        apply(new BenefitDebitedEvent(businessAccountId, contributorId,amountToDebit, SysDate.now()));
     }
 
     @EventSourcingHandler

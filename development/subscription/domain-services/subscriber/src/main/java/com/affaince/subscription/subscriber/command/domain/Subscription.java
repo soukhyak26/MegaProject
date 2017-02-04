@@ -26,8 +26,15 @@ public class Subscription extends AbstractAnnotatedEntity {
     private Address shippingAddress;
     private Address billingAddress;
     private ContactDetails contactDetails;
+    //TODO: Need to be removed as the total Subscription amount  with/without discount may not be fixed for non-committed/discount committed products
+    //TODO: may be update only after last delivery calculation
     private double totalSubscriptionAmount;
+    //TODO: Need to be removed as the discount amount may not be fixed for non-committed/discount committed products
+    //TODO:may be update only after last delivery calculation
+    private double subscriptionLevelDiscount;
     private double totalProfit;
+    //TODO: Need to be removed as the total Subscription amount  with/without discount may not be fixed for non-committed/discount committed products
+    //TODO: may be update only after last delivery calculation
     private double totalSubscriptionAmountAfterDiscount;
     private double totalPaymentReceived;
     private LocalDate subscriptionCreatedDate;
@@ -152,8 +159,7 @@ public class Subscription extends AbstractAnnotatedEntity {
     }
 
     public void activateSubscription() {
-        apply(new SubscriptionActivatedEvent(this.subscriptionId, this.totalSubscriptionAmountAfterDiscount,
-                this.totalSubscriptionAmount-this.totalSubscriptionAmountAfterDiscount));
+        apply(new SubscriptionActivatedEvent(this.subscriptionId));
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             apply(new ProductSubscriptionActivatedEvent(subscriptionItem.getProductId(),
                     subscriptionItem.getNoOfCycles() * subscriptionItem.getCountPerPeriod(),

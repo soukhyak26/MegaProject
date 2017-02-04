@@ -38,8 +38,8 @@ public class RevenueAccount extends AbstractAnnotatedEntity {
     }
 
 
-    public void fireCreditedEvent(Integer businessAccountId, double amountToCredit) {
-        apply(new RevenueCreditedEvent(businessAccountId, amountToCredit));
+    public void creditToRevenue(Integer businessAccountId, String contributorId,double amountToCredit) {
+        apply(new RevenueCreditedEvent(businessAccountId, contributorId,amountToCredit));
     }
 
     @EventSourcingHandler
@@ -47,7 +47,7 @@ public class RevenueAccount extends AbstractAnnotatedEntity {
         credit(event.getAmountToCredit());
     }
 
-    public void addRevenue(Integer businessAccountId,double revenueContribution) {
-        apply(new RevenueCreditedEvent(businessAccountId, revenueContribution));
+    public void addRevenue(Integer businessAccountId,String contributorId,double revenueContribution) {
+        apply(new RevenueCreditedEvent(businessAccountId, contributorId,revenueContribution));
     }
 }

@@ -21,6 +21,6 @@ public class AddProductContributionToPurchaseCostRevenueAndProfitCommandHandler 
     @CommandHandler
     public void handle(AddProductContributionToPurchaseCostRevenueAndProfitCommand command){
         BusinessAccount businessAccount=repository.load(command.getBusinessAccountId());
-        businessAccount.updatePurchaseCostRevenueAndProfit(command.getPurchaseCostContribution(),command.getRevenueContribution(),command.getProfitContribution());
+        businessAccount.updatePurchaseCostRevenueAndProfit(command.getProductId(),command.getPurchaseCostContribution(),command.getRevenueContribution(),command.getProfitContribution());
     }
 }

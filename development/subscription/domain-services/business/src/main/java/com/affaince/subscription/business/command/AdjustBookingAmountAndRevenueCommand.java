@@ -4,10 +4,7 @@ import com.affaince.subscription.command.ItemDispatchStatus;
 
 import java.util.List;
 
-/**
- * Created by anayonkar on 17/5/16.
- */
-public class DeliveryStatusAndDispatchDateUpdatedCommand {
+public class AdjustBookingAmountAndRevenueCommand {
     private String subscriptionId;
     private String basketId;
     private Integer basketDeliveryStatus;
@@ -16,7 +13,7 @@ public class DeliveryStatusAndDispatchDateUpdatedCommand {
     private Double deliveryCharges;
     private Double totalDeliveryPrice;
 
-    public DeliveryStatusAndDispatchDateUpdatedCommand(String subscriptionId, String basketId, Integer basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, Double deliveryCharges, Double totalDeliveryPrice) {
+    public AdjustBookingAmountAndRevenueCommand(String subscriptionId, String basketId, Integer basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, Double deliveryCharges, Double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
@@ -26,7 +23,7 @@ public class DeliveryStatusAndDispatchDateUpdatedCommand {
         this.totalDeliveryPrice = totalDeliveryPrice;
     }
 
-    public DeliveryStatusAndDispatchDateUpdatedCommand(Double deliveryCharges, Double totalDeliveryPrice) {
+    public AdjustBookingAmountAndRevenueCommand(Double deliveryCharges, Double totalDeliveryPrice) {
         this.deliveryCharges = deliveryCharges;
         this.totalDeliveryPrice = totalDeliveryPrice;
     }

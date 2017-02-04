@@ -4,6 +4,7 @@ import com.affaince.subscription.business.command.event.BookingAmountCreditedEve
 import com.affaince.subscription.business.command.event.BookingAmountDebitedEvent;
 import com.affaince.subscription.business.command.event.CreditedEvent;
 import com.affaince.subscription.business.command.event.DebitedEvent;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
@@ -45,12 +46,12 @@ public class BookingAmountAccount extends AbstractAnnotatedEntity {
     }
 
 
-    public void fireCreditedEvent(Integer businessAccountId, double amountToCredit) {
+    public void creditToBookingAmount(Integer businessAccountId, double amountToCredit) {
         apply(new BookingAmountCreditedEvent(businessAccountId, amountToCredit));
     }
 
-    public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
-        apply(new BookingAmountDebitedEvent(businessAccountId, amountToDebit));
+    public void debitFromBookingAmount(Integer businessAccountId, String contributorId,double amountToDebit) {
+        apply(new BookingAmountDebitedEvent(businessAccountId, contributorId,amountToDebit, SysDate.now()));
     }
 
     @EventSourcingHandler

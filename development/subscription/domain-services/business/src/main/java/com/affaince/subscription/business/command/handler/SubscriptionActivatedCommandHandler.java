@@ -8,9 +8,6 @@ import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by anayonkar on 8/5/16.
- */
 @Component
 public class SubscriptionActivatedCommandHandler {
     private final Repository<BusinessAccount> repository;
@@ -22,7 +19,6 @@ public class SubscriptionActivatedCommandHandler {
 
     @CommandHandler
     public void handle(SubscriptionActivatedCommand command) {
-        BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()));
-        businessAccount.adjustBenefits(command.getTotalDiscount());
+        //TODO: THIS command coming from Subscriber domain may be useless as at the time of subscription exact benefits amount may not be calculated.
     }
 }

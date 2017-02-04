@@ -1,13 +1,16 @@
 package com.affaince.subscription.business.command.event;
 
-/**
- * Created by anayonkar on 8/5/16.
- */
 public class RevenueCreditedEvent extends CreditedEvent {
+    private String contributorId;
     public RevenueCreditedEvent() {
     }
 
-    public RevenueCreditedEvent(Integer businessAccountId, double amountToCredit) {
+    public RevenueCreditedEvent(Integer businessAccountId,String contributorId,double amountToCredit) {
         super(businessAccountId, amountToCredit);
+        this.contributorId=contributorId;
+    }
+
+    public String getContributorId() {
+        return contributorId;
     }
 }

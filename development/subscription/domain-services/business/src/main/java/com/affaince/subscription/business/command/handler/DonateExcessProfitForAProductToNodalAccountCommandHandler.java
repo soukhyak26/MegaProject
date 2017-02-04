@@ -2,6 +2,7 @@ package com.affaince.subscription.business.command.handler;
 
 import com.affaince.subscription.business.command.DonateExcessProfitForAProductToNodalAccountCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 
@@ -18,7 +19,7 @@ public class DonateExcessProfitForAProductToNodalAccountCommandHandler {
     @CommandHandler
     public void handle(DonateExcessProfitForAProductToNodalAccountCommand command) {
         BusinessAccount businessAccount = repository.load(command.getBusinessAccountId());
-        businessAccount.addToNodalAccount(command.getProductId(),command.getExcessProfit());
+        businessAccount.addToNodalAccount(command.getProductId(),command.getExcessProfit(), SysDate.now());
     }
 }
 

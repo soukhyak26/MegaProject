@@ -1,6 +1,6 @@
 package com.affaince.subscription.business.command.handler;
 
-import com.affaince.subscription.business.command.DeliveryStatusAndDispatchDateUpdatedCommand;
+import com.affaince.subscription.business.command.AdjustBookingAmountAndRevenueCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -12,17 +12,17 @@ import org.springframework.stereotype.Component;
  * Created by anayonkar on 17/5/16.
  */
 @Component
-public class DeliveryStatusAndDispatchDateUpdatedCommandHandler {
+public class AdjustBookingAmountAndRevenueCommandHandler {
     private final Repository<BusinessAccount> repository;
 
     @Autowired
-    public DeliveryStatusAndDispatchDateUpdatedCommandHandler(Repository<BusinessAccount> repository) {
+    public AdjustBookingAmountAndRevenueCommandHandler(Repository<BusinessAccount> repository) {
         this.repository = repository;
     }
 
     @CommandHandler
-    public void handle(DeliveryStatusAndDispatchDateUpdatedCommand command) {
+    public void handle(AdjustBookingAmountAndRevenueCommand command) {
         BusinessAccount businessAccount = repository.load(Integer.valueOf(SysDate.now().getYear()));
-        businessAccount.adjustBasketAndDeliveryAmount(command.getTotalDeliveryPrice(), command.getDeliveryCharges());
+        businessAccount.transferFromBookingAmountToRevenue(command.getSubscriptionId(),command.getTotalDeliveryPrice(), command.getDeliveryCharges());
     }
 }

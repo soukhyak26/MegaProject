@@ -33,7 +33,7 @@ public class SubscriptionSpecificExpensesAccount extends AbstractAnnotatedEntity
         return endDate;
     }
 
-    public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
+    public void debitFromSubscriptionSpecificExpenses(Integer businessAccountId, double amountToDebit) {
         apply(new SubscriptionSpecificExpenseDebitedEvent(businessAccountId, amountToDebit));
     }
 

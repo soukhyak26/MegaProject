@@ -1,15 +1,14 @@
 package com.affaince.subscription.business.query.view;
 
-import org.apache.spark.sql.catalyst.expressions.In;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by mandar on 31-12-2016.
+ * Created by mandar on 03-02-2017.
  */
-@Document(collection = "RevenueAccountView")
-public class RevenueAccountView {
+@Document(collection = "ProfitAccountView")
+public class ProfitAccountView {
     @Id
     private Integer year;
     private double startAmount;
@@ -17,7 +16,7 @@ public class RevenueAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public RevenueAccountView(Integer year, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
+    public ProfitAccountView(Integer year, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.year = year;
         this.startAmount = startAmount;
         this.currentAmount = currentAmount;
@@ -74,5 +73,6 @@ public class RevenueAccountView {
         this.currentAmount += amount;
         //transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
     }
+
 
 }

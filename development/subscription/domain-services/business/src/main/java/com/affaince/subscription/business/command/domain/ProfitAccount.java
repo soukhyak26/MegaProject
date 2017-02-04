@@ -1,6 +1,7 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.command.event.ProfitCreditedEvent;
+import com.affaince.subscription.date.SysDate;
 import org.apache.avro.generic.GenericData;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -32,8 +33,8 @@ public class ProfitAccount extends AbstractAnnotatedEntity {
         return (accumulatedProfitAmount - excessProfitToDebitAmount);
     }
 
-    public void addProfitToProfitAccount(Integer businessAccountId,double amountToBeCredited){
-        apply( new ProfitCreditedEvent(businessAccountId,amountToBeCredited));
+    public void addProfitToProfitAccount(Integer businessAccountId,String productId,double amountToBeCredited){
+        apply( new ProfitCreditedEvent(businessAccountId,productId,amountToBeCredited, SysDate.now()));
     }
 
     @EventSourcingHandler

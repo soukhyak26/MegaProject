@@ -5,15 +5,12 @@ import com.affaince.subscription.business.exception.ProvisionNotCreatedException
 import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
 import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
 import com.affaince.subscription.common.type.ExpenseType;
-import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.common.type.TimeBoundMoney;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 
 import java.util.Map;
 
@@ -128,22 +125,14 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.totalSubscriptionsRegistered = totalSubscriptionsRegistered;
     }
 
-    public void adjustPurchaseCost(double totalPurchaseCost) {
-        try {
-            this.provisionalPurchaseCostAccount.fireDebitedEvent(this.id, totalPurchaseCost);
-        } catch (NullPointerException npe) {
-            throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
-        }
-    }
-
     public void adjustOperatingExpenses(ExpenseType expenseType, double expenseAmount) {
         try {
             switch (expenseType) {
                 case COMMON_EXPENSE:
-                    this.provisionalCommonExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                    this.provisionalCommonExpensesAccount.debitFromCommonExpenses(this.id, expenseAmount);
                     break;
                 case SUBSCRIPTION_SPECIFIC_EXPENSE:
-                    this.provisionalSubscriptionSpecificExpensesAccount.fireDebitedEvent(this.id, expenseAmount);
+                    this.provisionalSubscriptionSpecificExpensesAccount.debitFromSubscriptionSpecificExpenses(this.id, expenseAmount);
                     break;
                 default:
                     //TODO : error handling
@@ -153,27 +142,27 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         }
     }
 
-    public void adjustBookingAmount(double bookingAmount) {
+    public void creditToBookingAmount(double bookingAmount) {
         try {
-            this.bookingAmountAccount.fireCreditedEvent(this.id, bookingAmount);
+            this.bookingAmountAccount.creditToBookingAmount(this.id, bookingAmount);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
 
-    public void adjustBasketAndDeliveryAmount(double basketAmount, double deliveryAmount) {
+    public void transferFromBookingAmountToRevenue(String contributorId,double basketAmount, double deliveryAmount) {
         try {
-            this.bookingAmountAccount.fireDebitedEvent(this.id, basketAmount);
-            this.revenueAccount.fireCreditedEvent(this.id, basketAmount);
+            this.bookingAmountAccount.debitFromBookingAmount(this.id, contributorId,basketAmount);
+            this.revenueAccount.creditToRevenue(this.id,contributorId, basketAmount);
             adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
 
-    public void adjustBenefits(double benefitAmount) {
+    public void adjustBenefits(String contributorId,double benefitAmount) {
         try {
-            this.provisionalBenefitsAccount.fireDebitedEvent(this.id, benefitAmount);
+            this.provisionalBenefitsAccount.issueBenefitsAmountToBeneficiary(this.id, contributorId,benefitAmount);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
@@ -251,22 +240,22 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     }
 
-    public void updatePurchaseCostRevenueAndProfit(double purchaseCostContribution, double revenueContribution, double profitContribution) {
+    public void updatePurchaseCostRevenueAndProfit(String productId,double purchaseCostContribution, double revenueContribution, double profitContribution) {
         //this.addToPurchaseCostAccount(purchaseCostContribution);
-        this.addToRevenueAccount(revenueContribution);
-        this.addToProfitAccount(profitContribution);
+        this.addToRevenueAccount(productId,revenueContribution);
+        this.addToProfitAccount(productId,profitContribution);
     }
 
-    private void addToProfitAccount(double profitContribution) {
-        this.profitAccount.addProfitToProfitAccount(this.id,profitContribution);
+    private void addToProfitAccount(String productId,double profitContribution) {
+        this.profitAccount.addProfitToProfitAccount(this.id,productId,profitContribution);
     }
 
-    private void addToRevenueAccount(double revenueContribution) {
-        this.revenueAccount.addRevenue(this.id, revenueContribution);
+    private void addToRevenueAccount(String productId,double revenueContribution) {
+        this.revenueAccount.addRevenue(this.id, productId,revenueContribution);
     }
 
-    public void addToNodalAccount(String productId, double excessProfit) {
-        apply(new ExcessProfitAddedToNodalAccountEvent(productId,excessProfit));
+    public void addToNodalAccount(String productId, double excessProfit,LocalDate transactionDate) {
+        apply(new ExcessProfitAddedToNodalAccountEvent(this.id,productId,excessProfit,transactionDate));
     }
 
     @EventSourcingHandler

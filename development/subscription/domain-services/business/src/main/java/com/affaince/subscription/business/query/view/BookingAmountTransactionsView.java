@@ -8,8 +8,13 @@ import org.joda.time.LocalDate;
  * Created by mandar on 22-01-2017.
  */
 public class BookingAmountTransactionsView extends AccountTransactionsView {
-    public BookingAmountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
+    private String contributorId;
+    public BookingAmountTransactionsView(String contributorId,LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
         super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
+        this.contributorId=contributorId;
     }
 
+    public String getContributorId() {
+        return contributorId;
+    }
 }

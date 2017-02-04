@@ -41,7 +41,7 @@ public class CommonExpensesAccount extends AbstractAnnotatedEntity {
     }
 
 
-    public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
+    public void debitFromCommonExpenses(Integer businessAccountId, double amountToDebit) {
         apply(new CommonExpenseDebitedEvent(businessAccountId, amountToDebit));
     }
 

@@ -178,9 +178,9 @@ public class BusinessDomainCommandsTest {
 
     @Test
     public void testDeliveryStatusAndDispatchDateUpdatedCommand() {
-        DeliveryStatusAndDispatchDateUpdatedCommand deliveryStatusAndDispatchDateUpdatedCommand = new DeliveryStatusAndDispatchDateUpdatedCommand(5.0, 1000.0);
+        AdjustBookingAmountAndRevenueCommand adjustBookingAmountAndRevenueCommand = new AdjustBookingAmountAndRevenueCommand(5.0, 1000.0);
         try {
-            commandGateway.sendAndWait(deliveryStatusAndDispatchDateUpdatedCommand);
+            commandGateway.sendAndWait(adjustBookingAmountAndRevenueCommand);
             Assert.assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
