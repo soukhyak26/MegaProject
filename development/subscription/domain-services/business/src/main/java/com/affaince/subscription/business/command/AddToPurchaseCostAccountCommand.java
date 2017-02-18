@@ -8,18 +8,30 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 public class AddToPurchaseCostAccountCommand {
     @TargetAggregateIdentifier
     private Integer Id;
-    private double amountTobeAdded;
+    private String productId;
+    private long getTotalProductSubscriptionCount;
+    private double currentProductPurchasePrice;
 
-    public AddToPurchaseCostAccountCommand(Integer id, double amountTobeAdded) {
+    public AddToPurchaseCostAccountCommand(Integer id, String productId, long getTotalProductSubscriptionCount, double currentProductPurchasePrice) {
         Id = id;
-        this.amountTobeAdded = amountTobeAdded;
+        this.productId = productId;
+        this.getTotalProductSubscriptionCount = getTotalProductSubscriptionCount;
+        this.currentProductPurchasePrice = currentProductPurchasePrice;
     }
 
     public Integer getId() {
         return Id;
     }
 
-    public double getAmountTobeAdded() {
-        return amountTobeAdded;
+    public String getProductId() {
+        return productId;
+    }
+
+    public long getGetTotalProductSubscriptionCount() {
+        return getTotalProductSubscriptionCount;
+    }
+
+    public double getCurrentProductPurchasePrice() {
+        return currentProductPurchasePrice;
     }
 }

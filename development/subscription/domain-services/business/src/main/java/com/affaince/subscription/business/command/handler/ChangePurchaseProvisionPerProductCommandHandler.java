@@ -22,6 +22,6 @@ public class ChangePurchaseProvisionPerProductCommandHandler {
         BusinessAccount businessAccount = repository.load(command.getId());
         //businessAccount.adjustPurchaseCost(command.getTotalPurchaseCost());
         //TODO: what to do??
-        businessAccount.addToPurchaseCostAccount(command.getProvisionAdjustment());
+        businessAccount.getProvisionalPurchaseCostAccount().addToPurchaseCostDueToPurchasePriceChange(command.getId(),command.getProductId(),command.getProvisionAdjustment());
     }
 }

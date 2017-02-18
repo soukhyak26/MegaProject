@@ -232,8 +232,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         apply(new ProvisionForNodalRegisteredEvent(id,startDate,endDate,provisionForNodal));
     }
 
-    public void addToPurchaseCostAccount(double amountTobeAdded) {
-        this.provisionalPurchaseCostAccount.addToPurchaseCost(this.getId(),amountTobeAdded);
+    public void addToPurchaseCostAccount(Integer businessAccountId,String productId,long totalSubscriptionsRegistered,double productPurchasePricePerUnit) {
+        this.provisionalPurchaseCostAccount.addToRecommendationForAdditionToPurchaseCost(businessAccountId,productId,totalSubscriptionsRegistered,productPurchasePricePerUnit);
     }
 
     public void reconcilePurchaseCostProvision(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits) {

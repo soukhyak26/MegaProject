@@ -71,11 +71,8 @@ public class ManualForecastAddedEventListener {
         //retrieve product view for this product and set its budgeted purchase cost
         ProductView productView =productViewRepository.findByProductId(event.getProductId());
         double productPurchasePrice = productView.getPurchasePrice();
-        double productPurchaseBudgetedAmount=totalSubscriptions*productPurchasePrice;
-        productView.setTotalAnticipatedSubscriptions(totalSubscriptions);
-        productView.setProductPurchaseBudgetedAmount(productPurchaseBudgetedAmount);
-        productViewRepository.save(productView);
-        AddToPurchaseCostAccountCommand command = new AddToPurchaseCostAccountCommand(SysDate.now().getYear(),productPurchaseBudgetedAmount);
+
+        AddToPurchaseCostAccountCommand command = new AddToPurchaseCostAccountCommand(SysDate.now().getYear(),event.getProductId(),totalSubscriptions, productPurchasePrice);
         commandGateway.executeAsync(command);
 
     }

@@ -34,7 +34,7 @@ public class ProductStatusReceivedEventListener {
         //Currently we are ignoring currentStockInUnits
         if(newPurchasePricePerUnit>registeredPurchasePricePerUnit) {
             double costAdjustment=(newPurchasePricePerUnit-registeredPurchasePricePerUnit)*productView.getTotalAnticipatedSubscriptions();
-            ChangePurchaseProvisionPerProductCommand command = new ChangePurchaseProvisionPerProductCommand(SysDate.now().getYear(),costAdjustment);
+            ChangePurchaseProvisionPerProductCommand command = new ChangePurchaseProvisionPerProductCommand(SysDate.now().getYear(),event.getProductId(),costAdjustment);
             commandGateway.executeAsync(command);
         }
         long totalAnticipatedSubscriptions=productView.getTotalAnticipatedSubscriptions();

@@ -1,18 +1,22 @@
 package com.affaince.subscription.business.command.event;
 
-public class PurchaseCostCreditedEvent {
+/**
+ * Created by mandar on 15-02-2017.
+ */
+public class PurchaseCostRecommendationCreditedEvent {
     private Integer id;
     private String productId;
     private long getTotalProductSubscriptionCount;
     private double currentProductPurchasePrice;
     private double additionalBudgetedAmount;
 
-    public PurchaseCostCreditedEvent(Integer id, String productId, long getTotalProductSubscriptionCount, double currentProductPurchasePrice, double additionalBudgetedAmount) {
+    public PurchaseCostRecommendationCreditedEvent(Integer id, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit, double additionalBudgetedAmount) {
         this.id = id;
         this.productId = productId;
         this.getTotalProductSubscriptionCount = getTotalProductSubscriptionCount;
         this.currentProductPurchasePrice = currentProductPurchasePrice;
         this.additionalBudgetedAmount = additionalBudgetedAmount;
+
     }
 
     public Integer getId() {
@@ -34,4 +38,5 @@ public class PurchaseCostCreditedEvent {
     public double getAdditionalBudgetedAmount() {
         return additionalBudgetedAmount;
     }
+
 }

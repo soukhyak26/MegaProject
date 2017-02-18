@@ -22,7 +22,7 @@ public class AddToPurchaseCostAccountCommandHandler {
     @CommandHandler
     public void handle(AddToPurchaseCostAccountCommand command) {
         BusinessAccount businessAccount= repository.load(command.getId());
-        businessAccount.addToPurchaseCostAccount(command.getAmountTobeAdded());
+        businessAccount.addToPurchaseCostAccount(command.getId(),command.getProductId(),command.getGetTotalProductSubscriptionCount(),command.getCurrentProductPurchasePrice());
     }
 
 }

@@ -7,10 +7,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
+import java.io.Serializable;
+
 /**
  * Created by mandark on 01-01-2016.
  */
-public class ProductForecastParameter {
+public class ProductForecastParameter implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate startDate;
