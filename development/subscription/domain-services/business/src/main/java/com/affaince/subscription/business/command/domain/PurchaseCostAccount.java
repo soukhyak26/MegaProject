@@ -1,25 +1,37 @@
 package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.command.event.*;
+import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
+import com.affaince.subscription.business.vo.AdditionalBudgetRecommendation;
+import com.affaince.subscription.business.vo.RecommendationReason;
+import com.affaince.subscription.business.vo.RecommendationReceiver;
+import com.affaince.subscription.business.vo.RecommenderType;
+import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anayonkar on 9/5/16.
  */
 public class PurchaseCostAccount extends AbstractAnnotatedEntity {
 
-    private double additionalRecommendedProvisionAmount;
+    //private double additionalRecommendedProvisionAmount;
+    List<AdditionalBudgetRecommendation> recommendations;
     private double provisionAmount;
     private LocalDate startDate;
     private LocalDate endDate;
 
 
-    public PurchaseCostAccount(LocalDate startDate,LocalDate endDate){
-        this.startDate=startDate;
-        this.endDate=endDate;
+    public PurchaseCostAccount(LocalDate startDate, LocalDate endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.recommendations = new ArrayList<>();
     }
+
     public void debit(double amount) {
         this.provisionAmount -= amount;
     }
@@ -38,24 +50,21 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         return endDate;
     }
 
-    public double getAdditionalRecommendedProvisionAmount() {
-        return additionalRecommendedProvisionAmount;
+    public void addToAdditionalProvisionRecommendation(String recommenderId, LocalDate recommendationDate, RecommenderType recommenderType, double recommendedAmount, RecommendationReason recommendationReason) {
+        recommendations.add(new AdditionalBudgetRecommendation(recommenderId, recommendationDate, recommenderType, recommendedAmount, recommendationReason));
     }
 
-    public void addToAdditionalProvisionRecommendation(double amount){
-        additionalRecommendedProvisionAmount +=amount;
-    }
     public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
         apply(new PurchaseCostDebitedEvent(businessAccountId, amountToDebit));
     }
 
 
     @EventSourcingHandler
-    public void on(ProvisionForPurchaseCostRegisteredEvent event){
-        this.startDate=event.getStartDate();
-        this.endDate=event.getEndDate();
+    public void on(ProvisionForPurchaseCostRegisteredEvent event) {
+        this.startDate = event.getStartDate();
+        this.endDate = event.getEndDate();
         //Manual provision should be directly registered in provisionAmount
-        this.provisionAmount=event.getProvisionForPurchaseOfGoods();
+        this.provisionAmount = event.getProvisionForPurchaseOfGoods();
     }
 
     @EventSourcingHandler
@@ -63,29 +72,70 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         debit(event.getAmountToDebit());
     }
 
-    public void addToPurchaseCostDueToSubscriptionCountChange(Integer id,String productId,long totalSubscriptionsRegistered,double productPurchasePricePerUnit) {
-        double additionalBudgetedAmount=totalSubscriptionsRegistered*productPurchasePricePerUnit;
-        apply(new PurchaseCostCreditedEvent(id,productId,totalSubscriptionsRegistered,productPurchasePricePerUnit,additionalBudgetedAmount));
+    public void addToPurchaseCostDueToSubscriptionCountChange(Integer id, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
+        double additionalBudgetedAmount = totalSubscriptionsRegistered * productPurchasePricePerUnit;
+        apply(new PurchaseCostCreditedEvent(id, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit, additionalBudgetedAmount));
     }
 
-    public void addToPurchaseCostDueToPurchasePriceChange(Integer id,String productId,double additionalBudgetProvision) {
-        apply(new PurchaseCostRevisedEvent(id,productId,additionalBudgetProvision));
+    public void addToPurchaseCostDueToPurchasePriceChange(Integer id, String productId, double additionalBudgetProvision) {
+        apply(new PurchaseCostRecommendationCreditedEvent(id, productId, SysDate.now(), additionalBudgetProvision, RecommenderType.PRODUCT, RecommendationReason.PURCHASE_PRICE_INCREASED));
     }
 
 
-
-    public void addToRecommendationForAdditionToPurchaseCost(Integer id,String productId,long totalSubscriptionsRegistered,double productPurchasePricePerUnit) {
-        double additionalBudgetedAmount=totalSubscriptionsRegistered*productPurchasePricePerUnit;
-        apply(new PurchaseCostRecommendationCreditedEvent(id,productId,totalSubscriptionsRegistered,productPurchasePricePerUnit,additionalBudgetedAmount));
-    }
-
-    @EventSourcingHandler
-    public void on(PurchaseCostRecommendationCreditedEvent event){
-        this.addToAdditionalProvisionRecommendation((event.getAdditionalBudgetedAmount()));
+    public void addToRecommendationForAdditionToPurchaseCost(Integer id, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
+        double additionalBudgetedAmount = totalSubscriptionsRegistered * productPurchasePricePerUnit;
+        apply(new PurchaseCostRecommendationCreditedEvent(id, productId, SysDate.now(), additionalBudgetedAmount, RecommenderType.PRODUCT, RecommendationReason.SUBSCRIPTION_COUNT_INCREASED));
     }
 
     @EventSourcingHandler
-    public void on(PurchaseCostCreditedEvent event){
-        this.provisionAmount +=event.getAdditionalBudgetedAmount();
+    public void on(PurchaseCostRecommendationCreditedEvent event) {
+        this.addToAdditionalProvisionRecommendation(event.getProductId(), event.getRecommendationDate(), event.getRecommenderType(), event.getAdditionalBudgetedAmount(), event.getRecommendationReason());
     }
+
+    @EventSourcingHandler
+    public void on(PurchaseCostCreditedEvent event) {
+        this.provisionAmount += event.getAdditionalBudgetedAmount();
+    }
+
+    public void acceptOrOverrideRecommendation(BudgetChangeRecommendationView acceptedRecommendation) {
+        if (acceptedRecommendation.getRecommendationReceiver() == RecommendationReceiver.PURCHASE_COST_ACCOUNT) {
+            double newPurchaseProvisionAmount=this.provisionAmount+acceptedRecommendation.getAdditionalBudgetedAmount();
+            apply(new AdditionalBudgetRecommendationConfirmedEvent(acceptedRecommendation.getBusinessAccountId(), acceptedRecommendation.getRecommenderId(), acceptedRecommendation.getRecommendationDate(), acceptedRecommendation.getAdditionalBudgetedAmount(), newPurchaseProvisionAmount,acceptedRecommendation.getRecommenderType(), acceptedRecommendation.getRecommendationReason()));
+        }
+    }
+
+    public void rejectRecommendation(BudgetChangeRecommendationView rejectedRecommendation) {
+        if (rejectedRecommendation.getRecommendationReceiver() == RecommendationReceiver.PURCHASE_COST_ACCOUNT) {
+            apply(new AdditionalBudgetRecommendationRejectedEvent(rejectedRecommendation.getBusinessAccountId(), rejectedRecommendation.getRecommenderId(), rejectedRecommendation.getRecommendationDate(), rejectedRecommendation.getAdditionalBudgetedAmount(), rejectedRecommendation.getRecommenderType(), rejectedRecommendation.getRecommendationReason()));
+        }
+    }
+
+    @EventSourcingHandler
+    public void on(AdditionalBudgetRecommendationConfirmedEvent event) {
+        for (AdditionalBudgetRecommendation recommendation : recommendations) {
+            if (event.getAdditionalBudgetedAmount() == recommendation.getRecommendationAmount()
+                    && event.getRecommendationDate() == recommendation.getRecommendationDate()
+                    && event.getRecommendationReason() == recommendation.getRecommendationReason()
+                    && event.getRecommenderId() == recommendation.getRecommenderId()) {
+                this.provisionAmount =event.getRevisedProvisionalAmount();
+                recommendations.remove(recommendation);
+                break;
+            }
+        }
+
+    }
+
+    @EventSourcingHandler
+    public void on(AdditionalBudgetRecommendationRejectedEvent event) {
+        for (AdditionalBudgetRecommendation recommendation : recommendations) {
+            if (event.getAdditionalBudgetedAmount() == recommendation.getRecommendationAmount()
+                    && event.getRecommendationDate() == recommendation.getRecommendationDate()
+                    && event.getRecommendationReason() == recommendation.getRecommendationReason()
+                    && event.getRecommenderId() == recommendation.getRecommenderId()) {
+                recommendations.remove(recommendation);
+                break;
+            }
+        }
+    }
+
 }

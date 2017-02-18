@@ -20,7 +20,7 @@ public abstract class AccountTransactionsView {
 
     public AccountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
         final LocalDateTime currentDateTime=dateOfTransaction.toLocalDateTime(LocalTime.now());
-        //TODO- NEED TO check if this si going to be duplicate
+        //TODO- NEED TO check if this is going to be duplicate
         this.transactionId = currentDateTime.toDateTime().getMillis();
         this.timeOfTransaction = currentDateTime;
         this.transactedAmount = transactedAmount;

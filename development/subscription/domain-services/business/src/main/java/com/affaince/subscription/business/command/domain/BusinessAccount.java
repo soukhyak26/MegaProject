@@ -4,6 +4,8 @@ import com.affaince.subscription.business.command.event.*;
 import com.affaince.subscription.business.exception.ProvisionNotCreatedException;
 import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
 import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
+import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
+import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -12,6 +14,7 @@ import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
+import java.util.List;
 import java.util.Map;
 
 public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
@@ -53,15 +56,15 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     private static final String INIT_ERROR_MESSAGE = "Please make sure that BusinessAccount aggregate is properly created via CreateProvisionEvent";
 
-    private double defaultPercentFixedExpensePerUnitPrice =1.0;
-    private double defaultPercentVariableExpensePerUnitPrice=1.0;
+    private double defaultPercentFixedExpensePerUnitPrice = 1.0;
+    private double defaultPercentVariableExpensePerUnitPrice = 1.0;
 
     public BusinessAccount() {
 
     }
 
-    public BusinessAccount(Integer id,LocalDate dateOfProvision){
-        apply(new BusinessAccountCreatedEvent(id,dateOfProvision));
+    public BusinessAccount(Integer id, LocalDate dateOfProvision) {
+        apply(new BusinessAccountCreatedEvent(id, dateOfProvision));
     }
 
     public Integer getId() {
@@ -150,19 +153,19 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         }
     }
 
-    public void transferFromBookingAmountToRevenue(String contributorId,double basketAmount, double deliveryAmount) {
+    public void transferFromBookingAmountToRevenue(String contributorId, double basketAmount, double deliveryAmount) {
         try {
-            this.bookingAmountAccount.debitFromBookingAmount(this.id, contributorId,basketAmount);
-            this.revenueAccount.creditToRevenue(this.id,contributorId, basketAmount);
+            this.bookingAmountAccount.debitFromBookingAmount(this.id, contributorId, basketAmount);
+            this.revenueAccount.creditToRevenue(this.id, contributorId, basketAmount);
             adjustOperatingExpenses(ExpenseType.SUBSCRIPTION_SPECIFIC_EXPENSE, deliveryAmount);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
 
-    public void adjustBenefits(String contributorId,double benefitAmount) {
+    public void adjustBenefits(String contributorId, double benefitAmount) {
         try {
-            this.provisionalBenefitsAccount.issueBenefitsAmountToBeneficiary(this.id, contributorId,benefitAmount);
+            this.provisionalBenefitsAccount.issueBenefitsAmountToBeneficiary(this.id, contributorId, benefitAmount);
         } catch (NullPointerException npe) {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
@@ -170,21 +173,21 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     @EventSourcingHandler
     public void on(BusinessAccountCreatedEvent event) {
-        this.id=event.getId();
-        this.dateForProvision=event.getDateOfProvision();
-        LocalDate endDate=dateForProvision.year().withMaximumValue();
+        this.id = event.getId();
+        this.dateForProvision = event.getDateOfProvision();
+        LocalDate endDate = dateForProvision.year().withMaximumValue();
 
-        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(dateForProvision,endDate);
-        this.provisionalLossesAccount = new LossesAccount(dateForProvision,endDate);
-        this.provisionalBenefitsAccount = new BenefitsAccount(dateForProvision,endDate);
-        this.provisionalTaxesAccount = new TaxesAccount(dateForProvision,endDate);
-        this.provisionalOthersAccount = new OthersAccount(dateForProvision,endDate);
-        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(dateForProvision,endDate);
-        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(dateForProvision,endDate);
+        this.provisionalPurchaseCostAccount = new PurchaseCostAccount(dateForProvision, endDate);
+        this.provisionalLossesAccount = new LossesAccount(dateForProvision, endDate);
+        this.provisionalBenefitsAccount = new BenefitsAccount(dateForProvision, endDate);
+        this.provisionalTaxesAccount = new TaxesAccount(dateForProvision, endDate);
+        this.provisionalOthersAccount = new OthersAccount(dateForProvision, endDate);
+        this.provisionalCommonExpensesAccount = new CommonExpensesAccount(dateForProvision, endDate);
+        this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(dateForProvision, endDate);
 
-        this.revenueAccount = new RevenueAccount(dateForProvision,endDate);
-        this.interestsGainAccount = new InterestsAccount(dateForProvision,endDate);
-        this.profitAccount= new ProfitAccount(dateForProvision,endDate);
+        this.revenueAccount = new RevenueAccount(dateForProvision, endDate);
+        this.interestsGainAccount = new InterestsAccount(dateForProvision, endDate);
+        this.profitAccount = new ProfitAccount(dateForProvision, endDate);
     }
 
 
@@ -193,28 +196,28 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         apply(new FixedExpenseUpdatedToProductEvent(productId, distributionDate, distributionAmountPerUnit));
     }
 
-    public void registerProvisionForPurchaseCost(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForPurchaseCostRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForPurchaseCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForPurchaseCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
     }
 
-    public void registerProvisionForLosses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForLossesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForLosses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForLossesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
     }
 
-    public void registerProvisionForBenefits(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForBenefitsRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForBenefits(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForBenefitsRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
     }
 
-    public void registerProvisionForTaxes(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForTaxesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForTaxes(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForTaxesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
     }
 
-    public void registerProvisionForOtherCost(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForOtherCostRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForOtherCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForOtherCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
     }
 
-    public void registerProvisionForCommonExpenses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForCommonExpensesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForCommonExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
 
         OperatingExpensesDeterminator operatingExpensesDeterminator =
                 new DefaultOperatingExpensesDeterminator();
@@ -224,43 +227,58 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         ));
     }
 
-    public void registerProvisionForSubscriptionSpecificExpenses(Integer id,LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(id,startDate,endDate,provisionForPurchaseOfGoods));
+    public void registerProvisionForSubscriptionSpecificExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
     }
 
     public void registerProvisionForNodal(Integer id, LocalDate startDate, LocalDate endDate, double provisionForNodal) {
-        apply(new ProvisionForNodalRegisteredEvent(id,startDate,endDate,provisionForNodal));
+        apply(new ProvisionForNodalRegisteredEvent(id, startDate, endDate, provisionForNodal));
     }
 
-    public void addToPurchaseCostAccount(Integer businessAccountId,String productId,long totalSubscriptionsRegistered,double productPurchasePricePerUnit) {
-        this.provisionalPurchaseCostAccount.addToRecommendationForAdditionToPurchaseCost(businessAccountId,productId,totalSubscriptionsRegistered,productPurchasePricePerUnit);
+    public void addToPurchaseCostAccount(Integer businessAccountId, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
+        this.provisionalPurchaseCostAccount.addToRecommendationForAdditionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
     }
 
     public void reconcilePurchaseCostProvision(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits) {
 
     }
 
-    public void updatePurchaseCostRevenueAndProfit(String productId,double purchaseCostContribution, double revenueContribution, double profitContribution) {
+    public void updatePurchaseCostRevenueAndProfit(String productId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
         //this.addToPurchaseCostAccount(purchaseCostContribution);
-        this.addToRevenueAccount(productId,revenueContribution);
-        this.addToProfitAccount(productId,profitContribution);
+        this.addToRevenueAccount(productId, revenueContribution);
+        this.addToProfitAccount(productId, profitContribution);
     }
 
-    private void addToProfitAccount(String productId,double profitContribution) {
-        this.profitAccount.addProfitToProfitAccount(this.id,productId,profitContribution);
+    private void addToProfitAccount(String productId, double profitContribution) {
+        this.profitAccount.addProfitToProfitAccount(this.id, productId, profitContribution);
     }
 
-    private void addToRevenueAccount(String productId,double revenueContribution) {
-        this.revenueAccount.addRevenue(this.id, productId,revenueContribution);
+    private void addToRevenueAccount(String productId, double revenueContribution) {
+        this.revenueAccount.addRevenue(this.id, productId, revenueContribution);
     }
 
-    public void addToNodalAccount(String productId, double excessProfit,LocalDate transactionDate) {
-        apply(new ExcessProfitAddedToNodalAccountEvent(this.id,productId,excessProfit,transactionDate));
+    public void addToNodalAccount(String productId, double excessProfit, LocalDate transactionDate) {
+        apply(new ExcessProfitAddedToNodalAccountEvent(this.id, productId, excessProfit, transactionDate));
     }
 
     @EventSourcingHandler
-    public void on(ExcessProfitAddedToNodalAccountEvent event){
+    public void on(ExcessProfitAddedToNodalAccountEvent event) {
         this.nodalAccount.credit(event.getExcessProfit());
-        this.profitAccount.addToExcessProfitToDebit(new ProfitDebitAccount(event.getProductId(),event.getExcessProfit(),SysDate.now()));
+        this.profitAccount.addToExcessProfitToDebit(new ProfitDebitAccount(event.getProductId(), event.getExcessProfit(), SysDate.now()));
+    }
+
+    public void acceptRecommendations(List<BudgetChangeRecommendationView> acceptedRecommendations, List<BudgetChangeRecommendationView> rejectedRecommendations) {
+        for (BudgetChangeRecommendationView acceptedRecommendation : acceptedRecommendations) {
+            RecommendationReceiver recommendationReceiver= acceptedRecommendation.getRecommendationReceiver();
+            if(recommendationReceiver == RecommendationReceiver.PURCHASE_COST_ACCOUNT){
+                this.provisionalPurchaseCostAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+            }
+        }
+        for(BudgetChangeRecommendationView rejectedRecommendation: rejectedRecommendations){
+            RecommendationReceiver recommendationReceiver= rejectedRecommendation.getRecommendationReceiver();
+            if(recommendationReceiver == RecommendationReceiver.PURCHASE_COST_ACCOUNT){
+                this.provisionalPurchaseCostAccount.rejectRecommendation(rejectedRecommendation);
+            }
+        }
     }
 }

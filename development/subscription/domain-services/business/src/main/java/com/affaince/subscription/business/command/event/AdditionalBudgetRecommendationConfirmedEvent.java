@@ -5,31 +5,32 @@ import com.affaince.subscription.business.vo.RecommenderType;
 import org.joda.time.LocalDate;
 
 /**
- * Created by mandar on 15-02-2017.
+ * Created by mandar on 18-02-2017.
  */
-public class PurchaseCostRecommendationCreditedEvent {
-    private Integer id;
-    private String productId;
+public class AdditionalBudgetRecommendationConfirmedEvent {
+    private int businessAccountId;
+    private String recommenderId;
     private LocalDate recommendationDate;
     private double additionalBudgetedAmount;
+    private double revisedProvisionalAmount;
     private RecommenderType recommenderType;
     private RecommendationReason recommendationReason;
-
-    public PurchaseCostRecommendationCreditedEvent(Integer id, String productId, LocalDate recommendationDate, double additionalBudgetedAmount,RecommenderType recommenderType,RecommendationReason recommendationReason) {
-        this.id = id;
-        this.productId = productId;
+    public AdditionalBudgetRecommendationConfirmedEvent(int businessAccountId, String recommenderId, LocalDate recommendationDate, double additionalBudgetedAmount, double revisedProvisionalAmount,RecommenderType recommenderType, RecommendationReason recommendationReason) {
+        this.businessAccountId=businessAccountId;
+        this.recommenderId=recommenderId;
         this.recommendationDate=recommendationDate;
-        this.additionalBudgetedAmount = additionalBudgetedAmount;
+        this.additionalBudgetedAmount=additionalBudgetedAmount;
+        this.revisedProvisionalAmount=revisedProvisionalAmount;
         this.recommenderType=recommenderType;
         this.recommendationReason=recommendationReason;
     }
 
-    public Integer getId() {
-        return id;
+    public int getBusinessAccountId() {
+        return businessAccountId;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getRecommenderId() {
+        return recommenderId;
     }
 
     public LocalDate getRecommendationDate() {
@@ -46,5 +47,9 @@ public class PurchaseCostRecommendationCreditedEvent {
 
     public RecommendationReason getRecommendationReason() {
         return recommendationReason;
+    }
+
+    public double getRevisedProvisionalAmount() {
+        return revisedProvisionalAmount;
     }
 }
