@@ -202,7 +202,8 @@ public class BusinessDomainCommandsTest {
 
     @Test
     public void testProductStatusReceivedCommand() {
-        ChangePurchaseProvisionPerProductCommand changePurchaseProvisionPerProductCommand = new ChangePurchaseProvisionPerProductCommand(SysDate.now().getYear(),1000.0);
+        ChangePurchaseProvisionPerProductCommand changePurchaseProvisionPerProductCommand = new ChangePurchaseProvisionPerProductCommand(
+                Integer.valueOf(SysDate.now().getYear()),"1",1000.0);
         try {
             commandGateway.sendAndWait(changePurchaseProvisionPerProductCommand);
             Assert.assertTrue(true);
