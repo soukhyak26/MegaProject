@@ -204,11 +204,12 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     }
 
     public void addDeliveredSubscriptionsAssociatedWithAPriceBucket(String productId,long subscriptionCount) {
-        long deliveredSubscriptionCount=this.getNumberOfDeliveredSubscriptions() + subscriptionCount;
-        if(deliveredSubscriptionCount==this.numberOfExistingSubscriptions){
+        long totalDeliveredSubscriptionCount=this.getNumberOfDeliveredSubscriptions() + subscriptionCount;
+        if(totalDeliveredSubscriptionCount==this.numberOfExistingSubscriptions){
             apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
         }
-        apply( new DeliveredSubscriptionCountAddedToPriceBucket(productId,this.priceBucketId,deliveredSubscriptionCount) );
+        apply( new DeliveredSubscriptionCountAddedToPriceBucket(productId,this.priceBucketId,this.getTaggedPriceVersion().getPurchasePricePerUnit(),this.getTaggedPriceVersion().getMRP(),this.getOfferedPriceOrPercentDiscountPerUnit(),this.getProductPricingCategory(),subscriptionCount, totalDeliveredSubscriptionCount) );
+
     }
 
     @EventSourcingHandler

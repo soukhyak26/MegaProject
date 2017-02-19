@@ -1,9 +1,9 @@
-package com.affaince.subscription.product.command.event;
+package com.affaince.subscription.business.command.event;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
- * Created by mandar on 31-12-2016.
+ * Created by mandar on 19-02-2017.
  */
 public class DeliveredSubscriptionCountAddedToPriceBucket {
     private final String productId;

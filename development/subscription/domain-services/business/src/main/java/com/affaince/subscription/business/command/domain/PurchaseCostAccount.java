@@ -6,10 +6,12 @@ import com.affaince.subscription.business.vo.AdditionalBudgetRecommendation;
 import com.affaince.subscription.business.vo.RecommendationReason;
 import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.business.vo.RecommenderType;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
     }
 
     public void debit(double amount) {
-        this.provisionAmount -= amount;
+        this.provisionAmount-=amount;
     }
 
 
@@ -119,6 +121,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
                     && event.getRecommendationReason() == recommendation.getRecommendationReason()
                     && event.getRecommenderId() == recommendation.getRecommenderId()) {
                 this.provisionAmount =event.getRevisedProvisionalAmount();
+
                 recommendations.remove(recommendation);
                 break;
             }
@@ -139,4 +142,13 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         }
     }
 
+    public void debitDeliveredItemsCostFromPurchaseAccount(Integer businessAccountId,String productId, String priceBucketId, double purchasePricePerUnit, double mrp, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount,long totalDeliveredSubscriptionCount) {
+        double revisedProvisionAmount = this.provisionAmount-(purchasePricePerUnit*deliveredSubscriptionCount);
+        apply(new CostOfDeliveredGoodsDebitedEvent(businessAccountId,productId,(purchasePricePerUnit*deliveredSubscriptionCount),revisedProvisionAmount,SysDate.now(),new LocalDate(YearMonth.now().getYear(),12,31)));
+    }
+
+    @EventSourcingHandler
+    public void on(CostOfDeliveredGoodsDebitedEvent event){
+        this.provisionAmount=event.getRevisedProvisionAmount();
+    }
 }

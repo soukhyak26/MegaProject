@@ -7,6 +7,7 @@ import com.affaince.subscription.business.process.operatingexpenses.OperatingExp
 import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
 import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.common.type.ExpenseType;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -170,7 +171,9 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
-
+    public void debitDeliveredItemsCostFromPurchaseAccount(String productId, String priceBucketId, double purchasePricePerUnit, double MRP, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount,long totalDeliveredSubscriptionCount){
+        this.getProvisionalPurchaseCostAccount().debitDeliveredItemsCostFromPurchaseAccount(this.id,productId, priceBucketId, purchasePricePerUnit, MRP, offerPriceOrPercent, productPricingCategory, deliveredSubscriptionCount,totalDeliveredSubscriptionCount);
+    }
     @EventSourcingHandler
     public void on(BusinessAccountCreatedEvent event) {
         this.id = event.getId();

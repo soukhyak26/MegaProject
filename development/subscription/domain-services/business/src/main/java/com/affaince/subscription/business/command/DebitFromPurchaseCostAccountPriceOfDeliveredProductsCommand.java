@@ -1,11 +1,12 @@
-package com.affaince.subscription.product.command.event;
+package com.affaince.subscription.business.command;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
- * Created by mandar on 31-12-2016.
+ * Created by mandar on 19-02-2017.
  */
-public class DeliveredSubscriptionCountAddedToPriceBucket {
+public class DebitFromPurchaseCostAccountPriceOfDeliveredProductsCommand {
+
     private final String productId;
     private final String priceBucketId;
     private final double purchasePricePerUnit;
@@ -14,8 +15,7 @@ public class DeliveredSubscriptionCountAddedToPriceBucket {
     private final ProductPricingCategory productPricingCategory;
     private final long deliveredSubscriptionCount;
     private final long totalDeliveredSubscriptionCount;
-
-    public DeliveredSubscriptionCountAddedToPriceBucket(String productId, String priceBucketId, double purchasePricePerUnit, double MRP, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount,long totalDeliveredSubscriptionCount) {
+    public DebitFromPurchaseCostAccountPriceOfDeliveredProductsCommand(String productId, String priceBucketId, double purchasePricePerUnit, double MRP, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount,long totalDeliveredSubscriptionCount) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.purchasePricePerUnit = purchasePricePerUnit;
@@ -54,7 +54,4 @@ public class DeliveredSubscriptionCountAddedToPriceBucket {
         return productPricingCategory;
     }
 
-    public long getTotalDeliveredSubscriptionCount() {
-        return totalDeliveredSubscriptionCount;
-    }
 }

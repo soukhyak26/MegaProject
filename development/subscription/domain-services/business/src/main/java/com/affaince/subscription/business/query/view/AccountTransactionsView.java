@@ -6,10 +6,12 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by mandar on 22-01-2017.
  */
+
 public abstract class AccountTransactionsView {
     @Id
     private final long transactionId;
