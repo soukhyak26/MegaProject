@@ -46,6 +46,10 @@ public class OthersAccount extends AbstractAnnotatedEntity {
         apply(new OthersAccountDebitedEvent(businessAccountId,amountToDebit));
     }
 
+    public void registerProvisionForOtherCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForOtherCost) {
+        apply(new ProvisionForOtherCostRegisteredEvent(id, startDate, endDate, provisionForOtherCost));
+    }
+
     @EventSourcingHandler
     public void on(ProvisionForOtherCostRegisteredEvent event){
         this.startDate=event.getStartDate();

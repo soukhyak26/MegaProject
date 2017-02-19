@@ -45,6 +45,10 @@ public class TaxesAccount extends AbstractAnnotatedEntity {
         recommendations.add(new AdditionalBudgetRecommendation(recommenderId, recommendationDate, recommenderType, recommendedAmount, recommendationReason));
     }
 
+    public void registerProvisionForTaxes(Integer id, LocalDate startDate, LocalDate endDate, double provisionForTaxes) {
+        apply(new ProvisionForTaxesRegisteredEvent(id, startDate, endDate, provisionForTaxes));
+    }
+
     @EventSourcingHandler
     private void on(TaxesDebitedEvent event) {
         debit(event.getAmountToDebit());

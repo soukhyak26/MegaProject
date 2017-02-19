@@ -52,6 +52,10 @@ public class SubscriptionSpecificExpensesAccount extends AbstractAnnotatedEntity
         debit(event.getAmountToDebit());
     }
 
+    public void registerProvisionForSubscriptionSpecificExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    }
+
     @EventSourcingHandler
     public  void on(ProvisionForSubscriptionSpecificExpensesRegisteredEvent event){
         this.startDate=event.getStartDate();

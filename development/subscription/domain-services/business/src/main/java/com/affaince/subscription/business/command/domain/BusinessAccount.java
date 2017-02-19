@@ -184,7 +184,6 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.provisionalOthersAccount = new OthersAccount(dateForProvision, endDate);
         this.provisionalCommonExpensesAccount = new CommonExpensesAccount(dateForProvision, endDate);
         this.provisionalSubscriptionSpecificExpensesAccount = new SubscriptionSpecificExpensesAccount(dateForProvision, endDate);
-
         this.revenueAccount = new RevenueAccount(dateForProvision, endDate);
         this.interestsGainAccount = new InterestsAccount(dateForProvision, endDate);
         this.profitAccount = new ProfitAccount(dateForProvision, endDate);
@@ -192,47 +191,41 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
 
     //Evnt listener for register/upgrade fixed expense shoould fire UpdateFixedExpenseTOProducCommand
+    //TODO:Currently unused
     public void updateFixedExpenseToProduct(String productId, double distributionAmountPerUnit, LocalDate distributionDate) {
         apply(new FixedExpenseUpdatedToProductEvent(productId, distributionDate, distributionAmountPerUnit));
     }
 
     public void registerProvisionForPurchaseCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForPurchaseCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+        this.getProvisionalPurchaseCostAccount().registerProvisionForPurchaseCost(id,startDate,endDate,provisionForPurchaseOfGoods);
     }
 
-    public void registerProvisionForLosses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForLossesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    public void registerProvisionForLosses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForLosses) {
+            this.getProvisionalLossesAccount().registerProvisionForLosses(id,startDate,endDate,provisionForLosses);
     }
 
-    public void registerProvisionForBenefits(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForBenefitsRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    public void registerProvisionForBenefits(Integer id, LocalDate startDate, LocalDate endDate, double provisionForBenefits) {
+        this.getProvisionalBenefitsAccount().registerProvisionForBenefits(id,startDate,endDate,provisionForBenefits);
     }
 
-    public void registerProvisionForTaxes(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForTaxesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    public void registerProvisionForTaxes(Integer id, LocalDate startDate, LocalDate endDate, double provisionForTaxes) {
+        this.getProvisionalTaxesAccount().registerProvisionForTaxes(id,startDate,endDate,provisionForTaxes);
     }
 
-    public void registerProvisionForOtherCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForOtherCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    public void registerProvisionForOtherCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForOtherCost) {
+        this.getProvisionalOthersAccount().registerProvisionForOtherCost(id,startDate,endDate,provisionForOtherCost);
     }
 
     public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForCommonExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
-
-        OperatingExpensesDeterminator operatingExpensesDeterminator =
-                new DefaultOperatingExpensesDeterminator();
-        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(provisionForPurchaseOfGoods);
-        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
-                new FixedExpenseUpdatedToProductEvent(productId, startDate, perUnitExpense)
-        ));
+        this.provisionalCommonExpensesAccount.registerProvisionForCommonExpenses(id,startDate,endDate,provisionForPurchaseOfGoods);
     }
 
     public void registerProvisionForSubscriptionSpecificExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForSubscriptionSpecificExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+        this.provisionalSubscriptionSpecificExpensesAccount.registerProvisionForSubscriptionSpecificExpenses(id,startDate,endDate,provisionForPurchaseOfGoods);
     }
 
     public void registerProvisionForNodal(Integer id, LocalDate startDate, LocalDate endDate, double provisionForNodal) {
-        apply(new ProvisionForNodalRegisteredEvent(id, startDate, endDate, provisionForNodal));
+        this.nodalAccount.registerProvisionForNodal(id,startDate,endDate,provisionForNodal);
     }
 
     public void addToPurchaseCostAccount(Integer businessAccountId, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {

@@ -46,6 +46,10 @@ public class LossesAccount extends AbstractAnnotatedEntity {
         apply(new LossesDebitedEvent(businessAccountId, amountToDebit));
     }
 
+    public void registerProvisionForLosses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForLosses) {
+        apply(new ProvisionForLossesRegisteredEvent(id, startDate, endDate, provisionForLosses));
+    }
+
     @EventSourcingHandler
     public void on(ProvisionForLossesRegisteredEvent event){
         this.startDate=event.getStartDate();

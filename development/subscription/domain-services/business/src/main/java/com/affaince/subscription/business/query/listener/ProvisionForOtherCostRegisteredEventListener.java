@@ -1,6 +1,5 @@
 package com.affaince.subscription.business.query.listener;
 
-import com.affaince.subscription.business.command.event.ProvisionForNodalRegisteredEvent;
 import com.affaince.subscription.business.command.event.ProvisionForOtherCostRegisteredEvent;
 import com.affaince.subscription.business.query.repository.OthersAccountTransactionsViewRepository;
 import com.affaince.subscription.business.query.repository.OthersAccountViewRepository;

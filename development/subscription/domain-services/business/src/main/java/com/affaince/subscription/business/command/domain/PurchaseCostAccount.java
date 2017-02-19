@@ -55,6 +55,10 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         apply(new PurchaseCostDebitedEvent(businessAccountId, amountToDebit));
     }
 
+    public void registerProvisionForPurchaseCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForPurchaseCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    }
+
 
     @EventSourcingHandler
     public void on(ProvisionForPurchaseCostRegisteredEvent event) {

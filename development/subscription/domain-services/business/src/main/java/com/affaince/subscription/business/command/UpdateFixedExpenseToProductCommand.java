@@ -1,6 +1,5 @@
 package com.affaince.subscription.business.command;
 
-import com.affaince.subscription.business.command.event.FixedExpenseUpdatedToProductEvent;
 import org.joda.time.LocalDate;
 
 /**

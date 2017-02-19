@@ -51,6 +51,10 @@ public class BenefitsAccount extends AbstractAnnotatedEntity {
         recommendations.add(new AdditionalBudgetRecommendation(recommenderId, recommendationDate, recommenderType, recommendedAmount, recommendationReason));
     }
 
+    public void registerProvisionForBenefits(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForBenefitsRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+    }
+
     @EventSourcingHandler
     public void on(BenefitDebitedEvent event) {
         debit(event.getAmountToDebit());

@@ -59,6 +59,17 @@ public class CommonExpensesAccount extends AbstractAnnotatedEntity {
         debit(event.getAmountToDebit());
     }
 
+    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
+        apply(new ProvisionForCommonExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+
+        OperatingExpensesDeterminator operatingExpensesDeterminator =
+                new DefaultOperatingExpensesDeterminator();
+        final Map<String, Double> perUnitOperatingExpenses = operatingExpensesDeterminator.calculateOperatingExpensesPerProduct(provisionForPurchaseOfGoods);
+        perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
+                new FixedExpenseUpdatedToProductEvent(productId, startDate, perUnitExpense)
+        ));
+    }
+
     @EventSourcingHandler
     public void on(ProvisionForCommonExpensesRegisteredEvent event){
         this.startDate=event.getStartDate();

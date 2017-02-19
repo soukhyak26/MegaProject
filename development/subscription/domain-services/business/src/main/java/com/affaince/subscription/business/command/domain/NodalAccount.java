@@ -1,16 +1,10 @@
 package com.affaince.subscription.business.command.domain;
 
-import com.affaince.subscription.business.command.event.CreditedEvent;
-import com.affaince.subscription.business.command.event.DebitedEvent;
-import com.affaince.subscription.business.command.event.NodalAccountCreditedEvent;
-import com.affaince.subscription.business.command.event.NodalAccountDebitedEvent;
+import com.affaince.subscription.business.command.event.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
-/**
- * Created by anayonkar on 9/5/16.
- */
 public class NodalAccount extends AbstractAnnotatedEntity {
     private double provisionAmount;
     private double currentAmount;
@@ -49,6 +43,17 @@ public class NodalAccount extends AbstractAnnotatedEntity {
         return endDate;
     }
 
+    public void registerProvisionForNodal(Integer id, LocalDate startDate, LocalDate endDate, double provisionForNodal) {
+        apply(new ProvisionForNodalRegisteredEvent(id, startDate, endDate, provisionForNodal));
+    }
+
+    @EventSourcingHandler
+    public void on(ProvisionForNodalRegisteredEvent event ){
+        this.startDate=event.getStartDate();
+        this.endDate=event.getEndDate();
+        this.provisionAmount=event.getProvisionForNodal();
+
+    }
     @EventSourcingHandler
     private void on(NodalAccountCreditedEvent event) {
         credit(event.getAmountToCredit());
