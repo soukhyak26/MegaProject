@@ -14,13 +14,10 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by anayonkar on 9/5/16.
- */
 public class PurchaseCostAccount extends AbstractAnnotatedEntity {
 
     //private double additionalRecommendedProvisionAmount;
-    List<AdditionalBudgetRecommendation> recommendations;
+    private List<AdditionalBudgetRecommendation> recommendations;
     private double provisionAmount;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -100,13 +97,13 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
     public void acceptOrOverrideRecommendation(BudgetChangeRecommendationView acceptedRecommendation) {
         if (acceptedRecommendation.getRecommendationReceiver() == RecommendationReceiver.PURCHASE_COST_ACCOUNT) {
             double newPurchaseProvisionAmount=this.provisionAmount+acceptedRecommendation.getAdditionalBudgetedAmount();
-            apply(new AdditionalBudgetRecommendationConfirmedEvent(acceptedRecommendation.getBusinessAccountId(), acceptedRecommendation.getRecommenderId(), acceptedRecommendation.getRecommendationDate(), acceptedRecommendation.getAdditionalBudgetedAmount(), newPurchaseProvisionAmount,acceptedRecommendation.getRecommenderType(), acceptedRecommendation.getRecommendationReason()));
+            apply(new AdditionalBudgetRecommendationConfirmedEvent(acceptedRecommendation.getBusinessAccountId(), acceptedRecommendation.getRecommenderId(), acceptedRecommendation.getRecommendationDate(), acceptedRecommendation.getAdditionalBudgetedAmount(), newPurchaseProvisionAmount,acceptedRecommendation.getRecommenderType(), acceptedRecommendation.getRecommendationReason(),acceptedRecommendation.getRecommendationReceiver()));
         }
     }
 
     public void rejectRecommendation(BudgetChangeRecommendationView rejectedRecommendation) {
         if (rejectedRecommendation.getRecommendationReceiver() == RecommendationReceiver.PURCHASE_COST_ACCOUNT) {
-            apply(new AdditionalBudgetRecommendationRejectedEvent(rejectedRecommendation.getBusinessAccountId(), rejectedRecommendation.getRecommenderId(), rejectedRecommendation.getRecommendationDate(), rejectedRecommendation.getAdditionalBudgetedAmount(), rejectedRecommendation.getRecommenderType(), rejectedRecommendation.getRecommendationReason()));
+            apply(new AdditionalBudgetRecommendationRejectedEvent(rejectedRecommendation.getBusinessAccountId(), rejectedRecommendation.getRecommenderId(), rejectedRecommendation.getRecommendationDate(), rejectedRecommendation.getAdditionalBudgetedAmount(), rejectedRecommendation.getRecommenderType(), rejectedRecommendation.getRecommendationReason(),rejectedRecommendation.getRecommendationReceiver()));
         }
     }
 

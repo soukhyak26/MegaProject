@@ -42,7 +42,7 @@ public class BudgetChangeRecommendationController {
         return budgetChangeRecommendationViewRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "acceptRecommendations")
+    @RequestMapping(method = RequestMethod.POST, value = "concludeRecommendations")
     @Consumes("application/json")
     public ResponseEntity<Object> acceptRecommendations(@RequestBody @Valid RecommendationsDecisionRequest request) throws Exception {
         Integer id = YearMonth.now().getYear();

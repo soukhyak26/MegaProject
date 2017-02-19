@@ -1,5 +1,6 @@
 package com.affaince.subscription.business.query.view;
 
+import org.apache.spark.sql.catalyst.expressions.In;
 import org.joda.time.YearMonth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,12 +11,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "SubscriptionSpecificOperatingExpenseView")
 public class SubscriptionSpecificOperatingExpenseView {
     @Id
-    private String id;
+    private Integer id;
     private String expenseHeader;
     private double monthlyExpenseAmount;
     private YearMonth monthOfYear;
 
-    public SubscriptionSpecificOperatingExpenseView(String id, String expenseHeader, double monthlyExpenseAmount, YearMonth monthOfYear) {
+    public SubscriptionSpecificOperatingExpenseView(Integer id, String expenseHeader, double monthlyExpenseAmount, YearMonth monthOfYear) {
         this.id = id;
         this.expenseHeader = expenseHeader;
         this.monthlyExpenseAmount = monthlyExpenseAmount;
@@ -25,11 +26,11 @@ public class SubscriptionSpecificOperatingExpenseView {
     public SubscriptionSpecificOperatingExpenseView() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

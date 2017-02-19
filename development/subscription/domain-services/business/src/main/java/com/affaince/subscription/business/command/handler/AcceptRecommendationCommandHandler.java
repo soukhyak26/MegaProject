@@ -19,6 +19,6 @@ public class AcceptRecommendationCommandHandler {
 
     public void handle(AcceptRecommendationCommand command){
         BusinessAccount businessAccount=repository.load(command.getBusinessAccountId());
-        businessAccount.acceptRecommendations(command.getAcceptedRecommendations(),command.getRejectedRecommendations());
+        businessAccount.concludeRecommendations(command.getAcceptedRecommendations(),command.getRejectedRecommendations());
     }
 }

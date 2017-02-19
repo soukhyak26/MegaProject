@@ -1,6 +1,7 @@
 package com.affaince.subscription.business.command.event;
 
 import com.affaince.subscription.business.vo.RecommendationReason;
+import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.business.vo.RecommenderType;
 import org.joda.time.LocalDate;
 
@@ -14,14 +15,16 @@ public class AdditionalBudgetRecommendationRejectedEvent {
     private double additionalBudgetedAmount;
     private RecommenderType recommenderType;
     private RecommendationReason recommendationReason;
+    private RecommendationReceiver recommendationReceiver;
 
-    public AdditionalBudgetRecommendationRejectedEvent(int businessAccountId, String recommenderId, LocalDate recommendationDate, double additionalBudgetedAmount, RecommenderType recommenderType, RecommendationReason recommendationReason) {
+    public AdditionalBudgetRecommendationRejectedEvent(int businessAccountId, String recommenderId, LocalDate recommendationDate, double additionalBudgetedAmount, RecommenderType recommenderType, RecommendationReason recommendationReason,RecommendationReceiver recommendationReceiver) {
         this.businessAccountId=businessAccountId;
         this.recommenderId=recommenderId;
         this.recommendationDate=recommendationDate;
         this.additionalBudgetedAmount=additionalBudgetedAmount;
         this.recommenderType=recommenderType;
         this.recommendationReason=recommendationReason;
+        this.recommendationReceiver=recommendationReceiver;
     }
 
     public int getBusinessAccountId() {
@@ -46,5 +49,9 @@ public class AdditionalBudgetRecommendationRejectedEvent {
 
     public RecommendationReason getRecommendationReason() {
         return recommendationReason;
+    }
+
+    public RecommendationReceiver getRecommendationReceiver() {
+        return recommendationReceiver;
     }
 }

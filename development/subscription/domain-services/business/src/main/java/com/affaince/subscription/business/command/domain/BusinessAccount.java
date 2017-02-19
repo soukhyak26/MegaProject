@@ -267,17 +267,45 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.profitAccount.addToExcessProfitToDebit(new ProfitDebitAccount(event.getProductId(), event.getExcessProfit(), SysDate.now()));
     }
 
-    public void acceptRecommendations(List<BudgetChangeRecommendationView> acceptedRecommendations, List<BudgetChangeRecommendationView> rejectedRecommendations) {
+    public void concludeRecommendations(List<BudgetChangeRecommendationView> acceptedRecommendations, List<BudgetChangeRecommendationView> rejectedRecommendations) {
         for (BudgetChangeRecommendationView acceptedRecommendation : acceptedRecommendations) {
-            RecommendationReceiver recommendationReceiver= acceptedRecommendation.getRecommendationReceiver();
-            if(recommendationReceiver == RecommendationReceiver.PURCHASE_COST_ACCOUNT){
-                this.provisionalPurchaseCostAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+            RecommendationReceiver recommendationReceiver = acceptedRecommendation.getRecommendationReceiver();
+            switch (recommendationReceiver) {
+                case PURCHASE_COST_ACCOUNT:
+                    this.provisionalPurchaseCostAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+                    break;
+                case BENEFITS_ACCOUNT:
+                    this.provisionalBenefitsAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+                    break;
+                case TAXES_ACCOUNT:
+                    this.provisionalTaxesAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+                    break;
+                case COMMON_EXPENSES_ACCOUNT:
+                    this.provisionalCommonExpensesAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+                    break;
+                case SUBSCRIPTION_SPICIFIC_EXPENSES_ACCOUNT:
+                    this.provisionalSubscriptionSpecificExpensesAccount.acceptOrOverrideRecommendation(acceptedRecommendation);
+                    break;
             }
         }
-        for(BudgetChangeRecommendationView rejectedRecommendation: rejectedRecommendations){
-            RecommendationReceiver recommendationReceiver= rejectedRecommendation.getRecommendationReceiver();
-            if(recommendationReceiver == RecommendationReceiver.PURCHASE_COST_ACCOUNT){
-                this.provisionalPurchaseCostAccount.rejectRecommendation(rejectedRecommendation);
+        for (BudgetChangeRecommendationView rejectedRecommendation : rejectedRecommendations) {
+            RecommendationReceiver recommendationReceiver = rejectedRecommendation.getRecommendationReceiver();
+            switch (recommendationReceiver) {
+                case PURCHASE_COST_ACCOUNT:
+                    this.provisionalPurchaseCostAccount.rejectRecommendation(rejectedRecommendation);
+                    break;
+                case BENEFITS_ACCOUNT:
+                    this.provisionalBenefitsAccount.rejectRecommendation(rejectedRecommendation);
+                case TAXES_ACCOUNT:
+                    this.provisionalTaxesAccount.rejectRecommendation(rejectedRecommendation);
+                    break;
+                case COMMON_EXPENSES_ACCOUNT:
+                    this.provisionalCommonExpensesAccount.rejectRecommendation(rejectedRecommendation);
+                    break;
+                case SUBSCRIPTION_SPICIFIC_EXPENSES_ACCOUNT:
+                    this.provisionalSubscriptionSpecificExpensesAccount.rejectRecommendation(rejectedRecommendation);
+                    break;
+
             }
         }
     }

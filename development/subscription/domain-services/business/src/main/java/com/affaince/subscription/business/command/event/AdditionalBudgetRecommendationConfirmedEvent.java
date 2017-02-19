@@ -1,6 +1,7 @@
 package com.affaince.subscription.business.command.event;
 
 import com.affaince.subscription.business.vo.RecommendationReason;
+import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.business.vo.RecommenderType;
 import org.joda.time.LocalDate;
 
@@ -15,7 +16,9 @@ public class AdditionalBudgetRecommendationConfirmedEvent {
     private double revisedProvisionalAmount;
     private RecommenderType recommenderType;
     private RecommendationReason recommendationReason;
-    public AdditionalBudgetRecommendationConfirmedEvent(int businessAccountId, String recommenderId, LocalDate recommendationDate, double additionalBudgetedAmount, double revisedProvisionalAmount,RecommenderType recommenderType, RecommendationReason recommendationReason) {
+    private RecommendationReceiver recommendationReceiver;
+
+    public AdditionalBudgetRecommendationConfirmedEvent(int businessAccountId, String recommenderId, LocalDate recommendationDate, double additionalBudgetedAmount, double revisedProvisionalAmount,RecommenderType recommenderType, RecommendationReason recommendationReason,RecommendationReceiver recommendationReceiver) {
         this.businessAccountId=businessAccountId;
         this.recommenderId=recommenderId;
         this.recommendationDate=recommendationDate;
@@ -23,6 +26,7 @@ public class AdditionalBudgetRecommendationConfirmedEvent {
         this.revisedProvisionalAmount=revisedProvisionalAmount;
         this.recommenderType=recommenderType;
         this.recommendationReason=recommendationReason;
+        this.recommendationReceiver=recommendationReceiver;
     }
 
     public int getBusinessAccountId() {
@@ -51,5 +55,9 @@ public class AdditionalBudgetRecommendationConfirmedEvent {
 
     public double getRevisedProvisionalAmount() {
         return revisedProvisionalAmount;
+    }
+
+    public RecommendationReceiver getRecommendationReceiver() {
+        return recommendationReceiver;
     }
 }
