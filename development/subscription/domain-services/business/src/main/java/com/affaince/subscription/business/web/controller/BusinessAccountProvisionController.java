@@ -3,6 +3,10 @@ package com.affaince.subscription.business.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.business.command.*;
 import com.affaince.subscription.business.query.repository.BusinessAccountViewRepository;
+import com.affaince.subscription.business.query.repository.CommonExpenseAccountViewRepository;
+import com.affaince.subscription.business.query.repository.CommonOperatingExpenseConfigViewRepository;
+import com.affaince.subscription.business.query.view.CommonOperatingExpenseConfigView;
+import com.affaince.subscription.business.vo.CommonOperatingExpenseHeader;
 import com.affaince.subscription.business.vo.OperatingExpenseVO;
 import com.affaince.subscription.business.web.request.*;
 import com.affaince.subscription.common.type.PeriodUnit;
@@ -20,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "businessacount")
@@ -27,12 +34,15 @@ public class BusinessAccountProvisionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessAccountProvisionController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final CommonOperatingExpenseConfigViewRepository commonOperatingExpenseConfigViewRepository;
 
     @Autowired
     public BusinessAccountProvisionController(SubscriptionCommandGateway commandGateway,
-                                              BusinessAccountViewRepository businessAccountViewRepository) {
+                                              BusinessAccountViewRepository businessAccountViewRepository,
+                                              CommonOperatingExpenseConfigViewRepository commonOperatingExpenseConfigViewRepository) {
         this.commandGateway = commandGateway;
         this.businessAccountViewRepository = businessAccountViewRepository;
+        this.commonOperatingExpenseConfigViewRepository=commonOperatingExpenseConfigViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "provisionForPurchase")
@@ -99,8 +109,13 @@ public class BusinessAccountProvisionController {
 
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "provisionForCommonExpenses")
+    @Consumes("application/json")
+    public List<CommonOperatingExpenseHeader> getCommonOperatingExpenseHeaders() throws Exception {
+        return new ArrayList<>(EnumSet.allOf(CommonOperatingExpenseHeader.class));
+    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "provisionForCommonExpenses")
+    @RequestMapping(method = RequestMethod.POST, value = "registercommonexpense")
     @Consumes("application/json")
     public ResponseEntity<Object> setProvisionForCommonOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
         double monthlyCommonExpenseAmount = 0;
@@ -109,6 +124,8 @@ public class BusinessAccountProvisionController {
         //need to verify accuracy of this number
         int remainingMonths = 12 - monthOfYear.getMonthOfYear() + 1;
         for (OperatingExpenseVO expense : request.getExpenses()) {
+            CommonOperatingExpenseConfigView commonOperatingExpenseConfigView= new CommonOperatingExpenseConfigView(expense.getExpenseHeader(),expense.getAmount(),expense.getPeriod(),expense.getSensitivityCharacteristic());
+            commonOperatingExpenseConfigViewRepository.save(commonOperatingExpenseConfigView);
             if (expense.getPeriod().getUnit() == PeriodUnit.WEEK) {
                 monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue()) * 4;
             } else if (expense.getPeriod().getUnit() == PeriodUnit.MONTH) {
@@ -127,6 +144,7 @@ public class BusinessAccountProvisionController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
 
     @RequestMapping(method = RequestMethod.POST, value = "provisionForTaxes")
     @Consumes("application/json")

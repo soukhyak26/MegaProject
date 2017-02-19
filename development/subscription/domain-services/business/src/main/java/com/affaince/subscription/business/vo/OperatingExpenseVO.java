@@ -8,18 +8,18 @@ import com.affaince.subscription.common.type.SensitivityCharacteristic;
  * Created by rbsavaliya on 15-01-2016.
  */
 public class OperatingExpenseVO {
-    private String expenseHeader;
+    private CommonOperatingExpenseHeader expenseHeader;
     private double amount;
     private Period period;
     private SensitivityCharacteristic sensitivityCharacteristic;
     private ExpenseType expenseType;
 
 
-    public String getExpenseHeader() {
+    public CommonOperatingExpenseHeader getExpenseHeader() {
         return expenseHeader;
     }
 
-    public void setExpenseHeader(String expenseHeader) {
+    public void setExpenseHeader(CommonOperatingExpenseHeader expenseHeader) {
         this.expenseHeader = expenseHeader;
     }
 

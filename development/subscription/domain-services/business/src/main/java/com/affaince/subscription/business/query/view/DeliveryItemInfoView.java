@@ -1,10 +1,12 @@
 package com.affaince.subscription.business.query.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by rsavaliya on 18/1/16.
  */
+@Document(collection = "DeliveryItemInfoView")
 public class DeliveryItemInfoView {
     private String deliveryItemId;
     private DeliveryStatus deliveryStatus;
