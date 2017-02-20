@@ -1,7 +1,10 @@
 package com.affaince.subscription.product.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 
 /**
  * Created by mandar on 27-05-2016.
@@ -11,7 +14,11 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
     private double purchasePricePerUnit;
     private double breakEvenPrice;
     private double MRP;
+    @JsonSerialize (using = LocalDateSerializer.class)
+    @JsonDeserialize (using = LocalDateDeserializer.class)
     private LocalDate taggedStartDate;
+    @JsonSerialize (using = LocalDateSerializer.class)
+    @JsonDeserialize (using = LocalDateDeserializer.class)
     private LocalDate taggedEndDate;
 
     public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate) {
