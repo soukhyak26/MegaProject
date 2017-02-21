@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.io.IOException;
 
@@ -15,15 +16,10 @@ import java.io.IOException;
 public class ProductPricingCategoryDeserializer extends JsonDeserializer<ProductPricingCategory> {
     @Override
     public ProductPricingCategory deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        JsonToken currentToken = jsonParser.getCurrentToken();
-        if (currentToken == JsonToken.VALUE_NUMBER_INT) {
-            int index = jsonParser.getIntValue();
-            for (ProductPricingCategory category : ProductPricingCategory.values()) {
-                if (category.getIndex() == index) {
-                    return category;
-                }
-            }
+        ProductPricingCategory productPricingCategory = ProductPricingCategory.valueOf(jsonParser.getIntValue());
+        if (productPricingCategory != null) {
+            return productPricingCategory;
         }
-        return null;
+        throw new JsonMappingException("invalid value for type, must be '0','1' or '2'");
     }
 }

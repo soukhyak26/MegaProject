@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.io.IOException;
 
@@ -15,15 +16,11 @@ import java.io.IOException;
 public class EntityStatusDeserializer extends JsonDeserializer<EntityStatus> {
     @Override
     public EntityStatus deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        JsonToken currentToken = jsonParser.getCurrentToken();
-        if (currentToken == JsonToken.VALUE_NUMBER_INT) {
-            int index = jsonParser.getIntValue();
-            for (EntityStatus entityStatus : EntityStatus.values()) {
-                if (entityStatus.getStatusCode() == index) {
-                    return entityStatus;
-                }
-            }
+        EntityStatus entityStatus = EntityStatus.valueOf(jsonParser.getIntValue());
+        if (entityStatus != null) {
+            return entityStatus;
         }
-        return null;
+        throw new JsonMappingException("invalid value for type, must be '0','1' or '2'");
+
     }
 }

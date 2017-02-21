@@ -2,6 +2,8 @@ package com.affaince.subscription.product.vo;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -28,7 +30,8 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         this.taggedStartDate = taggedStartDate;
     }
 
-    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
+    @JsonCreator
+    public PriceTaggedWithProduct(@JsonProperty("taggedPriceVersionId")String taggedPriceVersionId, @JsonProperty("purchasePricePerUnit")double purchasePricePerUnit, @JsonProperty("MRP")double MRP, @JsonProperty("taggedStartDate")LocalDate taggedStartDate, @JsonProperty("taggedEndDate")LocalDate taggedEndDate) {
         this.taggedPriceVersionId = taggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
@@ -36,8 +39,10 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         this.taggedEndDate = taggedEndDate;
     }
 
+/*
     public PriceTaggedWithProduct() {
     }
+*/
 
     public double getPurchasePricePerUnit() {
         return purchasePricePerUnit;
