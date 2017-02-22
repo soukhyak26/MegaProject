@@ -1,9 +1,9 @@
 package com.affaince.subscription.product.query.listener;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ProductActivateCommand;
 import com.affaince.subscription.product.command.event.OpeningPriceOrPercentRegisteredEvent;
 import com.affaince.subscription.product.query.exception.PriceInitializationNotAllowedException;
@@ -32,18 +32,21 @@ public class OpeningPriceOrPercentRegisteredEventListener {
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
     private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
+    private final SubscriptionCommandGateway subscriptionCommandGateway;
 
     @Autowired
     public OpeningPriceOrPercentRegisteredEventListener(ProductConfigurationViewRepository productConfigurationViewRepository,
                                                         PriceBucketViewRepository priceBucketViewRepository,
-                                                        ProductActivationStatusViewRepository productActivationStatusViewRepository) {
+                                                        ProductActivationStatusViewRepository productActivationStatusViewRepository,
+                                                        SubscriptionCommandGateway subscriptionCommandGateway) {
         this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.priceBucketViewRepository = priceBucketViewRepository;
         this.productActivationStatusViewRepository = productActivationStatusViewRepository;
+        this.subscriptionCommandGateway = subscriptionCommandGateway;
     }
 
     @EventHandler
-    public void on(OpeningPriceOrPercentRegisteredEvent event) throws PriceInitializationNotAllowedException, ProductReadinessException {
+    public void on(OpeningPriceOrPercentRegisteredEvent event) throws Exception {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<PriceBucketView> activePriceBuckets = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort);
         if (!activePriceBuckets.isEmpty()) {
@@ -76,6 +79,7 @@ public class OpeningPriceOrPercentRegisteredEventListener {
                 ProductReadinessStatus.ACTIVABLE
         )) {
             final ProductActivateCommand command = new ProductActivateCommand(event.getProductId());
+            subscriptionCommandGateway.executeAsync(command);
         }
     }
 }
