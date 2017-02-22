@@ -1,7 +1,7 @@
 package com.affaince.subscription.common.vo;
 
-import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -13,11 +13,11 @@ import java.io.Serializable;
  * Created by mandark on 01-01-2016.
  */
 public class ProductForecastParameter implements Serializable {
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private double purchasePricePerUnit;
     private double MRP;
