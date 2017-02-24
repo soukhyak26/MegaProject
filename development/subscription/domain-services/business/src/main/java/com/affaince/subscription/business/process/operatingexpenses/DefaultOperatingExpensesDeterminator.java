@@ -28,22 +28,13 @@ public class DefaultOperatingExpensesDeterminator implements OperatingExpensesDe
     public Map<String, Double> calculateOperatingExpensesPerProduct(double yearlyExpenseAmount) {
         Iterable<ProductView> allActiveProducts = productViewrepository.findByProductStatus(ProductStatus.PRODUCT_ACTIVATED);
         Map<String, Double> perUnitOperatingExpenses = new HashMap<>();
-       // Map<YearMonth, Double> rollingExpenseForecast = expense.getRollingExpenseForecast();
-       // double expenseAmountPerMonth=expense.getMonthlyExpenseAmount();
-        //double currentOperatingExpense = rollingExpenseForecast.get(YearMonth.now());
         double totalForecastedCommonOperatingExpense = 0;
-        YearMonth lastForecastedMonth = YearMonth.now();
-        //int numberOfMonthsMultiplier=12-lastForecastedMonth.getMonthOfYear();
         totalForecastedCommonOperatingExpense = yearlyExpenseAmount;
-        // double totalMonthlySaleAmount = 0;
         double totalAnnualForecastedRevenueForAllProducts = 0;
-        LocalDate date = new LocalDate(lastForecastedMonth.get(DateTimeFieldType.year()),lastForecastedMonth.get(DateTimeFieldType.monthOfYear()),1);
         for (ProductView tempProductView : allActiveProducts) {
-            //List<ProductForecastView> lastMonthProductForecast = productForecastViewRepository.findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(tempProductView.getProductId(), date.monthOfYear().withMinimumValue(), date.monthOfYear().withMaximumValue());
-            List<ProductForecastView> lastMonthOfYearProductForecast = productForecastViewRepository.findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(tempProductView.getProductId(), lastForecastedMonth.year().getYearMonth().toLocalDate(1),lastForecastedMonth.year().getYearMonth().toLocalDate(31));
-            totalAnnualForecastedRevenueForAllProducts += (lastMonthOfYearProductForecast.get(0).getTotalNumberOfExistingSubscriptions() * tempProductView.getMRP());
+            List<ProductForecastView> currentProductForcastView = productForecastViewRepository.findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(tempProductView.getProductId(), new LocalDate(LocalDate.now().getYear(),1,1),new LocalDate(LocalDate.now().getYear(),12,31));
+            totalAnnualForecastedRevenueForAllProducts += (currentProductForcastView.get(0).getTotalNumberOfExistingSubscriptions() * tempProductView.getMRP());
         }
-        //double contributorFactor = currentOperatingExpense / totalMonthlySaleAmount;
         double contributorFactor = totalForecastedCommonOperatingExpense / totalAnnualForecastedRevenueForAllProducts;
         for (ProductView productView : allActiveProducts) {
             perUnitOperatingExpenses.put(productView.getProductId(), productView.getSensitiveTo().entrySet().iterator().next().getValue() * contributorFactor * productView.getMRP());

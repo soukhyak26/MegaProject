@@ -1,19 +1,27 @@
-package com.affaince.subscription.product.vo;
-
+package com.affaince.subscription.product.services.serialize;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
+import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.command.domain.PriceBucketSample;
+import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
 
 /**
  * Created by rbsavaliya on 18-02-2017.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {Application.class})
 public class PriceTaggedWithProductSDTest {
 
-    public static void main(String[] args) throws IOException, IOException {
+    @Test
+    public  void testSerializationOfPRiceBucket() throws IOException {
         PriceTaggedWithProduct priceTaggedWithProduct = new PriceTaggedWithProduct(
                 "1", 20, 30, LocalDate.now(), LocalDate.now().plusDays(20)
         );

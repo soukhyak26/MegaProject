@@ -57,8 +57,8 @@ public class ManualForecastAddedEventListener {
         )) {
             ProductForecastParameter[] forecastParameters = event.getProductForecastParameters();
             LocalDate firstStartDate = null;
-            LocalDate lastEndDate = null;
-            Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
+            LocalDate lastEndDate = null;Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
+
             long totalSubscriptions = 0;
             for (ProductForecastParameter parameter : forecastParameters) {
                 List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(event.getProductId(), parameter.getStartDate(), parameter.getEndDate());

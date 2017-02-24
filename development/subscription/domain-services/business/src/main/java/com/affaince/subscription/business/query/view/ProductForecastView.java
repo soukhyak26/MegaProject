@@ -18,8 +18,6 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
     @Id
     private final ProductVersionId productVersionId;
     private LocalDate endDate;
-    private long newSubscriptions;
-    private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ProductForecastStatus productForecastStatus;
 
@@ -34,11 +32,9 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
     }
 */
 
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long totalNumberOfExistingSubscriptions) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
-        this.newSubscriptions = newSubscriptions;
-        this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
         this.productForecastStatus = ProductForecastStatus.ACTIVE;
     }
@@ -55,21 +51,6 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
         this.endDate = endDate;
     }
 
-    public long getNewSubscriptions() {
-        return newSubscriptions;
-    }
-
-    public void setNewSubscriptions(long newSubscriptions) {
-        this.newSubscriptions = newSubscriptions;
-    }
-
-    public long getChurnedSubscriptions() {
-        return churnedSubscriptions;
-    }
-
-    public void setChurnedSubscriptions(long churnedSubscriptions) {
-        this.churnedSubscriptions = churnedSubscriptions;
-    }
 
     public long getTotalNumberOfExistingSubscriptions() {
         return totalNumberOfExistingSubscriptions;

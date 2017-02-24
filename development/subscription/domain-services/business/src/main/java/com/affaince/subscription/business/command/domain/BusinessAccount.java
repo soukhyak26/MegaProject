@@ -219,8 +219,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.getProvisionalOthersAccount().registerProvisionForOtherCost(id,startDate,endDate,provisionForOtherCost);
     }
 
-    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        this.provisionalCommonExpensesAccount.registerProvisionForCommonExpenses(id,startDate,endDate,provisionForPurchaseOfGoods);
+    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods,DefaultOperatingExpensesDeterminator defaultOperatingExpensesDeterminator) {
+        this.provisionalCommonExpensesAccount.registerProvisionForCommonExpenses(id,startDate,endDate,provisionForPurchaseOfGoods,defaultOperatingExpensesDeterminator);
     }
 
     public void registerProvisionForSubscriptionSpecificExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {

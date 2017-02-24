@@ -9,6 +9,7 @@ import com.affaince.subscription.product.command.UpdateFixedExpenseToProductComm
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
 import com.affaince.subscription.product.query.view.ProductForecastView;
+import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
@@ -21,6 +22,7 @@ import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.YearMonth;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -323,9 +325,19 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public void registerManualForecast(ProductForecastParameter[] productForecastParameters) {
+    public void registerManualForecast(ProductForecastParameter[] productForecastParameters, ForecastFinderService forecastFinderService) {
         //for (ProductForecastParameter forecastParameter : productForecastParameters) {
         apply(new ManualForecastAddedEvent(productId, productForecastParameters));
+        LocalDate earmarkedAnnualEndDate = new LocalDate(YearMonth.now().getYear(), 12, 31);
+        for (ProductForecastParameter periodWiseForecast : productForecastParameters) {
+            if (periodWiseForecast.getEndDate().equals(earmarkedAnnualEndDate) ||
+                    (periodWiseForecast.getStartDate().isBefore(earmarkedAnnualEndDate) && periodWiseForecast.getEndDate().isAfter(earmarkedAnnualEndDate))) {
+                long earlierTotalSubscriptionCount = forecastFinderService.findForecastsEarlierThan(productId, periodWiseForecast.getEndDate()).get(0).getTotalNumberOfExistingSubscriptions();
+                long revisedTotalSubscriptionCount = earlierTotalSubscriptionCount + periodWiseForecast.getNumberOfNewSubscriptions() - periodWiseForecast.getNumberOfChurnedSubscriptions();
+                apply(new AnnualForecastCreatedEvent(productId, periodWiseForecast.getStartDate(), periodWiseForecast.getEndDate(), periodWiseForecast.getPurchasePricePerUnit(), periodWiseForecast.getMRP(), periodWiseForecast.getNumberOfNewSubscriptions(), periodWiseForecast.getNumberOfChurnedSubscriptions(), revisedTotalSubscriptionCount));
+            }
+        }
+
         //}
         /*if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
             for (ProductForecastParameter forecastParameter : productForecastParameters) {
