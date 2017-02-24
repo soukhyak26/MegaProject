@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -16,10 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateForecastFromActualsCommandHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterProductCommandHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateForecastFromActualsCommandHandler.class);
     private Repository<Product> repository;
     //private DemandForecasterChain demandForecasterChain;
-    private ProductDemandForecastBuilder builder;
+    private final ProductDemandForecastBuilder builder;
 
     @Autowired
     public UpdateForecastFromActualsCommandHandler(Repository<Product> repository, ProductDemandForecastBuilder builder) {

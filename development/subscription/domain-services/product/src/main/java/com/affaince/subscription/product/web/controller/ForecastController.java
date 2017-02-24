@@ -125,10 +125,6 @@ public class ForecastController {
             }
             lastEndDate = parameter.getEndDate();
         }
-/*
-        AddManualForecastCommand command = new AddManualForecastCommand(productId, firstStartDate, lastEndDate);
-        commandGateway.executeAsync(command);
-*/
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 

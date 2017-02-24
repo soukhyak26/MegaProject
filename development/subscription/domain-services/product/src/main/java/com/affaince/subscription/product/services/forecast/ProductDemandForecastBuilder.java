@@ -7,6 +7,7 @@ import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Created by mandar on 10-07-2016.
  */
+
 public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsView> {
 
     @Autowired
@@ -42,14 +44,28 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         List<Double> historicalTotalSubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getTotalNumberOfExistingSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
         List<LocalDate> historicalEndDates = productActualsViewList.stream().map(pamv -> pamv.getEndDate()).collect(Collectors.toCollection((ArrayList<LocalDate>::new)));
 
-
-        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, historicalSubscriptionChurnCountList.size() / 2);
-        List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, historicalTotalSubscriptionCountList.size() / 2);
+        //TODO: HERE we need to ensure that forecast shall be provided minimum until end of the current year in case actuals data is less to predict forecast
+        //TODO: typically we are having the rule of getting forecast values half of the actuals data size. Now we need to see that this half sized forecasts goes upto end of year
+        //TODO: else add some forecasted values in the actuals data set and recalculate forecast so that it reaches end of the year
+        // TODO: This will be required only until initial few months when actuals data is less.
+        final LocalDate lastActualsHistoricalRecordEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
+        final LocalDate dafaultLastForecastEndDate = lastActualsHistoricalRecordEndDate.plusDays(Math.abs(historicalTotalSubscriptionCountList.size() / 2));
+        int forecastSize = 0;
+        final LocalDate endOfYearDate = new LocalDate(dafaultLastForecastEndDate.getYear(), 12, 31);
+        if (lastActualsHistoricalRecordEndDate.getYear() == dafaultLastForecastEndDate.getYear() && dafaultLastForecastEndDate.isBefore(endOfYearDate)) {
+            int differenceBetweenLastForecastDateAndEndOfYear = Days.daysBetween(dafaultLastForecastEndDate, endOfYearDate).getDays();
+            forecastSize = historicalTotalSubscriptionCountList.size() / 2 + differenceBetweenLastForecastDateAndEndOfYear;
+        } else {
+            forecastSize = historicalTotalSubscriptionCountList.size() / 2;
+        }
+        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, forecastSize);
+        List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, forecastSize);
 
         List<ProductForecastView> forecasts = new ArrayList<>(forecastTotalSubscriptions.size());
         double previousTotalSubscriptionCount = 0;
-        LocalDate lastHistoricalEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
-        LocalDate newForecastStartDate = lastHistoricalEndDate.plusDays(1);
+
+        LocalDate newForecastStartDate = lastActualsHistoricalRecordEndDate.plusDays(1);
+
         //derive new subscription from current and previous total subscription counts
         for (int i = 0; i < forecastTotalSubscriptions.size(); i++) {
             //Please verify if this calculation is right without considering churns
@@ -70,6 +86,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         List<ProductForecastView> aggregatedActualsViewList = periodBasedAggregator.aggregate(forecasts, chunkAggregationPeriod);
         return aggregatedActualsViewList;
     }
+
 
     public LocalDate[] deriveStartAndEndDates(LocalDate startDate, int chunkAggregationPeriod) {
         if (chunkAggregationPeriod == 30) {

@@ -48,7 +48,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private ProductAccount productAccount;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
-    //private List<ProductStatus> productActivationStatusList;
     private boolean isProductActivated = false;
     private ProductDemandTrend productDemandTrend;
 
@@ -119,16 +118,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.getProductConfiguration().setNextForecastDate(event.getForecastEndDate().plusDays(1));
     }
 
-
-    /*@EventSourcingHandler
-    public void on(ManualForecastAddedEvent manualForecastAddedEvent) {
-        this.productActivationStatusList.add(ProductStatus.PRODUCT_FORECASTED);
-    }
-
-    @EventSourcingHandler
-    public void on(ManualStepForecastAddedEvent manualStepForecastAddedEvent) {
-        this.productActivationStatusList.add(ProductStatus.PRODUCT_STEPFORECAST_CREATED);
-    }*/
 
     @EventSourcingHandler
     public void on(CurrentPriceContinuedEvent event) {
@@ -210,14 +199,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     //for product administrator to configure product
     public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) throws InvalidProductStatusException, ProductDeactivatedException {
         apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod(), command.getTentativePercentageChangeInProductDemand()));
-        /*final ProductConfigurationValidator validator = new ProductConfigurationValidator();
-        try {
-            if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
-                apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
-            }
-        } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
-            LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
-        }*/
     }
 
 
@@ -269,7 +250,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
         List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
-
+        LocalDate earmarkedAnnualEndDate = new LocalDate(YearMonth.now().getYear(), 12, 31);
         for (int i = 0; i < forecasts.size(); i++) {
             //why same start/end dates to all events??
             apply(new SubscriptionForecastUpdatedEvent(productId,
@@ -278,9 +259,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                     forecasts.get(i).getNewSubscriptions(),
                     forecasts.get(i).getChurnedSubscriptions(),
                     forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
+            if (forecasts.get(i).getEndDate().equals(earmarkedAnnualEndDate) ||
+                    (forecasts.get(i).getProductVersionId().getFromDate().isBefore(earmarkedAnnualEndDate) && forecasts.get(i).getEndDate().isAfter(earmarkedAnnualEndDate))) {
+                apply(new AnnualForecastCreatedEvent(productId, forecasts.get(i).getProductVersionId().getFromDate(), forecasts.get(i).getEndDate(), this.getLatestTaggedPriceVersion().getPurchasePricePerUnit(), this.getLatestTaggedPriceVersion().getMRP(), forecasts.get(i).getNewSubscriptions(), forecasts.get(i).getChurnedSubscriptions(), forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
+            }
         }
-
-
     }
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
@@ -288,6 +271,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         if (this.getActivePriceBuckets().size() >= 1 && this.getLatestActivePriceBucket().getNumberOfExistingSubscriptions() >= 1) {
             //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
             List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
+
             //THIS LOOP SHOULD ITERATE SINGLE TIME
             for (int i = 0; i < forecasts.size(); i++) {
                 //why same start/end dates to all events??
@@ -298,6 +282,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                         forecasts.get(i).getChurnedSubscriptions(),
                         forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
             }
+
         }
     }
 
@@ -338,37 +323,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             }
         }
 
-        //}
-        /*if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_FORECASTED)) {
-            for (ProductForecastParameter forecastParameter : productForecastParameters) {
-                apply(new ManualForecastAddedEvent(productId, forecastParameter.getPurchasePricePerUnit(), forecastParameter.getMRP(), forecastParameter.getNumberOfNewSubscriptions(), forecastParameter.getNumberOfChurnedSubscriptions(), forecastParameter.getNumberOfTotalSubscriptions(), forecastParameter.getStartDate(), forecastParameter.getEndDate()));
-            }
-        }
-        final ProductConfigurationValidator validator = new ProductConfigurationValidator();
-        try {
-            if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
-                apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
-            }
-        } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
-            LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
-        }*/
-
     }
 
     //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
     public void registerManualStepForecast() {
         apply(new ManualStepForecastAddedEvent(productId));
-
-/*
-        final ProductConfigurationValidator validator = new ProductConfigurationValidator();
-        try {
-            if (validator.isProductReadyForActivation(this.productId, this.productActivationStatusList)) {
-                apply(new ProductActivatedEvent(this.productId, this.productName, this.categoryId, this.subCategoryId, this.substitutes, this.complements, this.sensitiveTo, this.netQuantity, quantityUnit));
-            }
-        } catch (InvalidProductStatusException | ProductDeactivatedException ex) {
-            LOGGER.error("Product Activation Status is Invalid or deactivated", ex);
-        }
-*/
     }
 
     public void acceptRecommendedPrice() {
