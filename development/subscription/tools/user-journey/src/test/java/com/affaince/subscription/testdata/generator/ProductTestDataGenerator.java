@@ -3,6 +3,8 @@ package com.affaince.subscription.testdata.generator;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -100,8 +102,8 @@ public class ProductTestDataGenerator {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
 
-                LocalDateTime startDate = LocalDateTime.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
-                LocalDateTime endDate = LocalDateTime.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
+                LocalDate startDate = LocalDate.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
+                LocalDate endDate = LocalDate.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
                 int newSubscription = 500;
                 int churnSubscription = 20;
                 int purchasePrice = new Random().nextInt(product.getMaxPrice()-product.getMinPrice()) +
