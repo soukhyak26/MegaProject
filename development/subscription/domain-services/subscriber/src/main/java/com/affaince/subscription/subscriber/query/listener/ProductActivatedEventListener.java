@@ -3,6 +3,7 @@ package com.affaince.subscription.subscriber.query.listener;
 import com.affaince.subscription.subscriber.command.event.ProductActivatedEvent;
 import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
 import com.affaince.subscription.subscriber.query.view.ProductView;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ public class ProductActivatedEventListener {
         this.productViewRepository = productViewRepository;
     }
 
+    @EventHandler
     public void on(ProductActivatedEvent event) {
         final ProductView productView = new ProductView(event.getProductId(),
                 event.getProductName(), event.getCategoryId(), event.getSubCategoryId(),
