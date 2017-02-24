@@ -23,7 +23,7 @@ class Product extends BaseSimulator {
   //var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
 
     Thread.sleep(1000)
-  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(30)).protocols(http))
   //, scn2.inject(atOnceUsers(1)).protocols(http))
 }
 
@@ -74,9 +74,9 @@ object AddProjectionParameter {
             """
               |{
               |    "productForecastParameters":[{"startDate":"${startDate}", "endDate":"${endDate}",
-              |    "purchasePricePerUnit":100,"MRP":150,
-              |    "numberOfNewSubscriptions":1000,
-              |    "numberOfChurnedSubscriptions":10,
+              |    "purchasePricePerUnit":${purchasePricePerUnit},"MRP":${mrp},
+              |    "numberOfNewSubscriptions":${numberOfNewSubscriptions},
+              |    "numberOfChurnedSubscriptions":${numberOfChurnedSubscriptions},
               |    "productForecastStatus":1}]
               |}
             """.

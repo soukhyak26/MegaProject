@@ -13,6 +13,7 @@ import org.joda.time.LocalDateTime;
  * Created by rbsavaliya on 30-12-2016.
  */
 public class Forecast {
+    private String productId;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
@@ -24,13 +25,18 @@ public class Forecast {
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
 
-    public Forecast(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions) {
+    public Forecast(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions) {
+        this.productId = productId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
+    }
+
+    public String getProductId() {
+        return productId;
     }
 
     public LocalDate getStartDate() {

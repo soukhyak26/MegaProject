@@ -2,6 +2,8 @@ package com.affaince.subscription.testdata.generator;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.repository.DefaultIdGenerator;
+import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -43,7 +45,7 @@ public class ProductTestDataGenerator {
     }
 
     private static void generateProductDetailsCsvFile() throws IOException {
-        File file = new File("d:/productdetails.json");
+        File file = new File("/home/rsavaliya/test/productdetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -68,7 +70,7 @@ public class ProductTestDataGenerator {
     }
 
     private static void generatePriceDetails () throws IOException {
-        File file = new File("d:/openingpricedetails.json");
+        File file = new File("/home/rsavaliya/test/openingpricedetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -95,13 +97,13 @@ public class ProductTestDataGenerator {
     }
 
     private static void generateStepForecast () throws IOException {
-        File file = new File("d:/stepforecast.json");
-        final DateTimeFormatter formatter =
-                DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss");
+        File file = new File("/home/rsavaliya/test/stepforecast.json");
+        IdGenerator idGenerator = new DefaultIdGenerator();
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
-
+                String IDString = product.getProductName() + "$" + product.getCategoryId() + "$" + product.getSubCategoryId() + "$" + product.getQuantity();
+                final String productId = idGenerator.generator(IDString);
                 LocalDate startDate = LocalDate.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
                 LocalDate endDate = LocalDate.now();//LocalDateTime.parse(LocalDateTime.now().toString("dd-MM-yyyy HH:mm:ss"), formatter);
                 int newSubscription = 500;
@@ -118,7 +120,7 @@ public class ProductTestDataGenerator {
                     endDate = startDate.plusDays(product.getActualsAggregationPeriodForTargetForecast());
                     newSubscription = newSubscription + (newSubscription*(new Random().nextInt(product.getMaxPercentageIncreaseInForecast()
                         - product.getMinPercentageIncreaseInForecast())+product.getMinPercentageIncreaseInForecast()))/newSubscription;
-                    Forecast forecast = new Forecast(startDate, endDate, purchasePrice, MRP, newSubscription, churnSubscription);
+                    Forecast forecast = new Forecast(productId, startDate, endDate, purchasePrice, MRP, newSubscription, churnSubscription);
                     forecasts.add(forecast);
                     ObjectMapper objectMapper = new ObjectMapper();
                     try {
@@ -154,7 +156,7 @@ public class ProductTestDataGenerator {
                         product.getForecasts().get(0).getMRP(),
                         noOfCycle
                 );
-                String fileName = "d:/abc/subscription"+i+".json";
+                String fileName = "/home/rsavaliya/test/abc/subscription"+i+".json";
                 if (lineNumberTracker.get(fileName)!= null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
                     i++;
@@ -184,6 +186,6 @@ public class ProductTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        ProductTestDataGenerator.generate(100);
+        ProductTestDataGenerator.generate(30);
     }
 }
