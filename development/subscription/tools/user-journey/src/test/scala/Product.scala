@@ -20,11 +20,12 @@ class Product extends BaseSimulator {
       RegisterOpeningPrice.registerPrice
     }
 
+  var benefitscn = scenario("Add Benefit equation").exec (BenefitEquation.createBenefitEquation)
+
   //var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
 
-    Thread.sleep(1000)
-  setUp(scn.inject(atOnceUsers(30)).protocols(http))
-  //, scn2.inject(atOnceUsers(1)).protocols(http))
+  Thread.sleep(1000)
+  setUp(scn.inject(atOnceUsers(30)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
@@ -34,6 +35,7 @@ object RegisterProduct {
   val createProjectionUrl = "http://localhost:8082/forecast"
   val registerOpeningPriceUrl = "http://localhost:8082/pricing/openprice"
   val businessProvisionUrl = "http://localhost:8085/businessacount/setProvision"
+  val benefitEquationUrl = "http://localhost:8084/benefits"
 
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json")
@@ -151,4 +153,22 @@ object BusinessProvision {
           )
         ).asJSON
     )
+}
+
+object BenefitEquation {
+  val createBenefitEquation = exec(
+    http("Create Benefit Equation")
+      .post((RegisterProduct.benefitEquationUrl).el[String])
+      .body(
+        StringBody(
+          """
+            |{
+              | "benefitEquation":"given 1000 currency and 2 month = 3 point configure as (totalSubscriptionAmount/subscriptionValue/subscriptionPeriod)*totalSubscriptionPeriod eligible when totalSubscriptionAmount = 1000 and (currentSubscriptionPeriod > 50 or totalLoyaltyPeriod > 36) apply as incremental;",
+              |	"activationStartTime":"2016-09-29",
+              |	"activationEndTime":"2020-12-30"
+            |}
+          """.stripMargin
+        )
+      ).asJSON
+  )
 }
