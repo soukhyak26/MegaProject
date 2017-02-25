@@ -50,11 +50,16 @@
         <dependency>
             <groupId>com.affaince</groupId>
             <artifactId>logback-commons</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.collections</groupId>
+                    <artifactId>google-collections</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.affaince</groupId>
             <artifactId>rules-compiler</artifactId>
-            <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
