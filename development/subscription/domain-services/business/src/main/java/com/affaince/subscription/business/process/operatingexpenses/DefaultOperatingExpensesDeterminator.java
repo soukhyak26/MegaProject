@@ -10,6 +10,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 /**
  * Created by mandark on 02-01-2016.
  */
+@Component
 public class DefaultOperatingExpensesDeterminator implements OperatingExpensesDeterminator {
     @Autowired
     ProductViewRepository productViewrepository;

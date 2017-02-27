@@ -239,7 +239,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     }
 
-    public void updatePurchaseCostRevenueAndProfit(String productId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
+    public void updateRevenueAndProfit(String productId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
         //this.addToPurchaseCostAccount(purchaseCostContribution);
         this.addToRevenueAccount(productId, revenueContribution);
         this.addToProfitAccount(productId, profitContribution);
@@ -250,7 +250,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     }
 
     private void addToRevenueAccount(String productId, double revenueContribution) {
-        this.revenueAccount.addRevenue(this.id, productId, revenueContribution);
+        this.revenueAccount.creditToRevenue(this.id, productId, revenueContribution);
     }
 
     public void addToNodalAccount(String productId, double excessProfit, LocalDate transactionDate) {

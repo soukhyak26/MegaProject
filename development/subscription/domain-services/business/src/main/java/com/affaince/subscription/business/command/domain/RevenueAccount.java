@@ -46,8 +46,4 @@ public class RevenueAccount extends AbstractAnnotatedEntity {
     public void on(RevenueCreditedEvent event) {
         credit(event.getAmountToCredit());
     }
-
-    public void addRevenue(Integer businessAccountId,String contributorId,double revenueContribution) {
-        apply(new RevenueCreditedEvent(businessAccountId, contributorId,revenueContribution));
-    }
 }
