@@ -164,7 +164,7 @@ public class ForecastController {
                                                    @PathVariable("productid") String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
-            throw ProductNotFoundException.build(productId);
+            throw ProductNotFoundException.client(productId);
         }
         ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
         LocalDateTime firstStartDate = null;
@@ -175,7 +175,7 @@ public class ForecastController {
             List<ProductPseudoActualsView> existingPseudoActualsViews = this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
             //forecast should not be newly added if it already exists in the view
             if (null != existingPseudoActualsViews && existingPseudoActualsViews.size() > 0) {
-                throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
+                throw ProductForecastAlreadyExistsException.client(productId, parameter.getStartDate(), parameter.getEndDate());
             }
             List<ProductPseudoActualsView> earlierPseudoActualsViews=this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId,parameter.getEndDate(),endDateSort);
             totalSubscriptions=earlierPseudoActualsViews.get(0).getTotalNumberOfExistingSubscriptions()+ parameter.getNumberOfNewSubscriptions()-parameter.getNumberOfChurnedSubscriptions();
@@ -205,7 +205,7 @@ public class ForecastController {
                                                       @PathVariable("productid") String productId) throws Exception {
         ProductView productView = this.productViewRepository.findOne(productId);
         if (productView == null) {
-            throw ProductNotFoundException.build(productId);
+            throw ProductNotFoundException.client(productId);
         }
         List<ProductPseudoActualsView> existingPseudoActualsViews = this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, request.getStartDate(), request.getEndDate());
         ProductPseudoActualsView modifiedView = null;
@@ -219,7 +219,7 @@ public class ForecastController {
                 modifiedView.setProductForecastStatus(ProductForecastStatus.ACTIVE);
             }
         } else {
-            throw ProductForecastModificationException.build(productId, request.getStartDate(), request.getEndDate());
+            throw ProductForecastModificationException.client(productId, request.getStartDate(), request.getEndDate());
         }
         //this has to change
         productPseudoActualsViewRepository.save(modifiedView);

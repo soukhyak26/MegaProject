@@ -465,15 +465,15 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void calculateRegisteredRevenueAndProfit(String productId) {
         Map<LocalDateTime,PriceBucket> datewiseActivePriceBucketsMap= this.getActivePriceBuckets();
         Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();
-        double registeredPurchaseCost=0;
-        double registeredRevenue=0;
-        double registeredProfit=0;
+        double revisedRegisteredPurchaseCost=0;
+        double revisedRegisteredRevenue=0;
+        double revisedRegisteredProfit=0;
         for(PriceBucket activePriceBucket: activePriceBuckets){
-            registeredPurchaseCost+= activePriceBucket.getRegisteredPurchaseCostOfDeliveredUnits();
-            registeredRevenue +=activePriceBucket.getRegisteredRevenue();
-            registeredProfit +=activePriceBucket.getRegisteredProfit();
+            revisedRegisteredPurchaseCost+= activePriceBucket.getRegisteredPurchaseCostOfDeliveredUnits();
+            revisedRegisteredRevenue +=activePriceBucket.getRegisteredRevenue();
+            revisedRegisteredProfit +=activePriceBucket.getRegisteredProfit();
         }
-        apply(new ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent(productId,(registeredPurchaseCost-this.registeredPurchaseCost),(registeredRevenue-this.registeredRevenue),(registeredProfit-this.registeredProfit)));
+        apply(new ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent(productId,(revisedRegisteredPurchaseCost-this.registeredPurchaseCost),(revisedRegisteredRevenue-this.registeredRevenue),(revisedRegisteredProfit-this.registeredProfit)));
     }
 
     @EventSourcingHandler

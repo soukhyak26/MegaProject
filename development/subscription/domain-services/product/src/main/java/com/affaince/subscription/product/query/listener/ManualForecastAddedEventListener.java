@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.common.service.interpolate.Interpolator;
+import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
+import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
@@ -36,16 +37,17 @@ public class ManualForecastAddedEventListener {
     private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
-    private final Interpolator interpolator;
+    //private final CubicSplineInterpolator interpolator;
+    private final InterpolatorChain interpolatorChain;
     private static final int INTERPOLATE_NEW_SUBSCRIPTIONS = 1;
     private static final int INTERPOLATE_TOTAL_SUBSCRIPTIONS = 2;
 
     @Autowired
-    public ManualForecastAddedEventListener(ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, Interpolator interpolator) {
+    public ManualForecastAddedEventListener(ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, InterpolatorChain interpolatorChain) {
         this.productActivationStatusViewRepository = productActivationStatusViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
-        this.interpolator = interpolator;
+        this.interpolatorChain = interpolatorChain;
     }
 
     @EventHandler
@@ -114,7 +116,7 @@ public class ManualForecastAddedEventListener {
             }
             count++;
         }
-        double[] interpolatedSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
+        double[] interpolatedSubscriptionsPerDay = interpolatorChain.interpolate(x, y);
         return interpolatedSubscriptionsPerDay;
     }
 

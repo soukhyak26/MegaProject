@@ -19,6 +19,7 @@ public final class ProductConfigurationValidator {
                 switch (productStatus) {
                     case SUBSCRIPTION_RULES_CONFIGURED:
                         productReadinessStatuses.add(ProductReadinessStatus.REGISTERABLE);
+                        break;
                     case PRODUCT_REGISTERED:
                         productReadinessStatuses.add(ProductReadinessStatus.CONFIGURABLE);
                         productReadinessStatuses.add(ProductReadinessStatus.SUBSCRIPTION_RULES_CONFIGURABLE);
@@ -42,6 +43,8 @@ public final class ProductConfigurationValidator {
                     case PRODUCT_PRICE_ASSIGNED:
                         productReadinessStatuses.add(ProductReadinessStatus.ACTIVABLE);
                         break;
+                    case PRODUCT_ACTIVATED:
+                        productReadinessStatuses.add(ProductReadinessStatus.COMPLETED);
                 }
             }
             return productReadinessStatuses;

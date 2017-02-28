@@ -52,7 +52,7 @@ public class ProductRegisteredEventListener {
             productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
             productActivationStatusViewRepository.save(productActivationStatusView);
     } /*else {
-            throw ProductReadinessException.build(event.getProductId(), ProductStatus.PRODUCT_REGISTERED);
+            throw ProductReadinessException.client(event.getProductId(), ProductStatus.PRODUCT_REGISTERED);
         }*/
     //}
 }

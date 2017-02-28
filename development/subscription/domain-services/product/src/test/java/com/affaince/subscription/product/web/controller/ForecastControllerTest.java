@@ -64,7 +64,7 @@ public class ForecastControllerTest {
     @Before
     public void setUp() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
         MockitoAnnotations.initMocks(this);
-        //this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        //this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).client();
         //chain = chain.buildForecasterChain(productForecastMetricsViewRepository,ProductActualsViewRepository);
         this.mockMvc=MockMvcBuilders.standaloneSetup(forecastController).build();
     }

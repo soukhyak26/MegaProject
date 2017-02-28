@@ -81,7 +81,7 @@ public class Axon extends Default {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
-                //job for calculating build  and pseudoActuals for eligible products.
+                //job for calculating client  and pseudoActuals for eligible products.
                 from("{{subscription.forecast.timer.expression}}")
                         .routeId("productsRetriever")
                         .to("bean:productsRetriever")
@@ -89,7 +89,7 @@ public class Axon extends Default {
                         .to("{{subscription.forecast.poston}}")
                         .multicast().to("direct:forecaster", "direct:stepForecaster");
 /*
-                from("{{subscription.build.poston}}")
+                from("{{subscription.client.poston}}")
                         .routeId("forecaster")
 */
                 from("direct:forecaster")
@@ -107,7 +107,7 @@ public class Axon extends Default {
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));
                 //job for calculating pseudoActuals for each product.
 
-                from("{{subscription.build.timer.expression}}")
+                from("{{subscription.client.timer.expression}}")
                         .routeId("PriceDeterminator")
                         .to("bean:forecastInterpolatedSubscriptionCountFinder")
                         .to("bean:productPricingTrigger")

@@ -1,6 +1,6 @@
 package com.affaince.subscription.pricing.build.interpolate;
 
-import com.affaince.subscription.common.service.interpolate.Interpolator;
+import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ForecastInterpolatedSubscriptionCountFinder {
 
     @Autowired
-    private Interpolator interpolator;
+    private CubicSplineInterpolator interpolator;
 
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
@@ -39,7 +39,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
             count++;
         }
-        double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
+        double[] interpolatedTotalSubscriptionsPerDay = interpolator.interpolate(x, y);
 /*
         LocalDate currentDate = LocalDate.now();
         int currentDay = Days.daysBetween(dateOfPlatformBeginning, currentDate).getDays();
@@ -64,7 +64,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
             x[count] = day;
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
         }
-        double[] interpolatedTotalSubscriptionsPerDay = interpolator.cubicSplineInterpolate(x, y);
+        double[] interpolatedTotalSubscriptionsPerDay = interpolator.interpolate(x, y);
         int expectedDay = Days.daysBetween(dateOfPlatformBeginning, date).getDays();
         return interpolatedTotalSubscriptionsPerDay[expectedDay];
     }

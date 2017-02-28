@@ -25,6 +25,7 @@
         <module>batch/ExpenseDistributionBatch</module>
         <module>batch/ForecastBatch</module>
         <module>batch/PrepareDeliveryForDispatchBatch</module>
+        <module>batch/ProductMetricsBatch</module>
     </modules>
     <dependencies>
 <!--

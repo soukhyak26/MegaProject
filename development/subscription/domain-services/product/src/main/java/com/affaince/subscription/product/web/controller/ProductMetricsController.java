@@ -3,6 +3,7 @@ package com.affaince.subscription.product.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.command.CalculateRevenueAndProfitCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
+import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsForOpExView;
 import com.affaince.subscription.product.query.view.ProductForecastMetricsView;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +33,24 @@ import java.util.List;
 public class ProductMetricsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final SubscriptionCommandGateway commandGateway;
+    private final ProductViewRepository productViewRepository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
 
     @Autowired
-    public ProductMetricsController(ProductForecastMetricsViewRepository productForecastMetricsViewRepository,SubscriptionCommandGateway commandGateway) {
+    public ProductMetricsController(ProductViewRepository productViewRepository,ProductForecastMetricsViewRepository productForecastMetricsViewRepository,SubscriptionCommandGateway commandGateway) {
+        this.productViewRepository=productViewRepository;
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
         this.commandGateway=commandGateway;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/findall")
+    @Produces("application/json")
+    public ResponseEntity<List<String>> findAllProducts() {
+        List<String> target = new ArrayList<>();
+        productViewRepository.findAll().forEach((item) -> {
+            target.add(item.getProductId());
+        });
+        return new ResponseEntity<List<String>>(target, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/pricebucket/all")

@@ -107,7 +107,7 @@ public class ProductPricingTrigger {
         System.arraycopy(totalSubscriptionsList, 0, newTotalsubscriptionList, 0, totalSubscriptionsList.length);
         newTotalsubscriptionList[newTotalsubscriptionList.length - 1] = latestProductPseudoActualsView.getTotalNumberOfExistingSubscriptions();
 
-        //Create similar array of interpolated total subscription count per day/half day from the weekly/monthly/quarterly build value
+        //Create similar array of interpolated total subscription count per day/half day from the weekly/monthly/quarterly client value
         double[] balancedInterpolatedForecastedTotalSubscriptionCount = new double[newTotalsubscriptionList.length];
         System.arraycopy(interpolatedForecastOnTotalSubscriptions, 0, balancedInterpolatedForecastedTotalSubscriptionCount, 0, newTotalsubscriptionList.length);
         double[][] observations = {balancedInterpolatedForecastedTotalSubscriptionCount, newTotalsubscriptionList};
@@ -128,7 +128,7 @@ public class ProductPricingTrigger {
         for (int i = 0; i < observations.length; i++) {
             classes.add(observations[i]);
         }
-        //Run one way Anova test to see the probability of actuals and interpolated build being overlapping(same)/non-overlapping(different)
+        //Run one way Anova test to see the probability of actuals and interpolated client being overlapping(same)/non-overlapping(different)
         OneWayAnova anova = new OneWayAnova();
         double fStatistic = anova.anovaFValue(classes); // F-value
         double pValue = anova.anovaPValue(classes);     // P-value
@@ -144,13 +144,13 @@ public class ProductPricingTrigger {
         final double changeThresholdForPriceChange =
                 productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
 
-        //If null hypothesis is rejected it means that target is different than actual.. so need to trigger build
+        //If null hypothesis is rejected it means that target is different than actual.. so need to trigger client
         if (rejectNullHypothesis) {
             double interpolatedForecastMean = findMean(interpolatedDailyDemand);
             double actualsMean = findMean(actualDailyDemand);
             double percentageMeanVariation = ((actualsMean - interpolatedForecastMean) / interpolatedForecastMean) * 100;
             //if difference is the mean values of actual subscription counts and interpolated+forecasted subscription counts is beyond the threshold value
-            // then the build should be triggered for the product.
+            // then the client should be triggered for the product.
             if (interpolatedForecastMean > actualsMean && Math.abs(percentageMeanVariation) > changeThresholdForPriceChange) {
                 return ProductDemandTrend.DOWNWARD;
             } else if (actualsMean > interpolatedForecastMean && Math.abs(percentageMeanVariation) > changeThresholdForPriceChange) {

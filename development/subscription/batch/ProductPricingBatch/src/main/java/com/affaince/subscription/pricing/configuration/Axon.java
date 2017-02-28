@@ -1,10 +1,9 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
-import com.affaince.subscription.common.service.interpolate.Interpolator;
+import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
 import com.affaince.subscription.pricing.determine.PricingClient;
 import com.affaince.subscription.pricing.determine.ProductPricingTrigger;
 import com.affaince.subscription.pricing.determine.ProductsRetriever;
@@ -100,8 +99,8 @@ public class Axon extends Default {
     }
 
     @Bean
-    public Interpolator interpolator() {
-        return new Interpolator();
+    public CubicSplineInterpolator interpolator() {
+        return new CubicSplineInterpolator();
     }
 
     @Bean
