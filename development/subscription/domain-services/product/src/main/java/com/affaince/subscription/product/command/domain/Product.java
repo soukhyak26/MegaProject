@@ -310,6 +310,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
+    public void registerSingularManualForecast(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+        apply(new ManualSingularForecastAddedEvent(productId,startDate, endDate, purchasePricePerUnit, mrp, numberOfNewSubscriptions, numberOfChurnedSubscriptions, productForecastStatus));
+    }
+
     public void registerManualForecast(ProductForecastParameter[] productForecastParameters, ForecastFinderService forecastFinderService) {
         //for (ProductForecastParameter forecastParameter : productForecastParameters) {
         apply(new ManualForecastAddedEvent(productId, productForecastParameters));

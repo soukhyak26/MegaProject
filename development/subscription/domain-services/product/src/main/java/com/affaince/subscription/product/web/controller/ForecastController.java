@@ -5,18 +5,16 @@ import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.AddManualForecastCommand;
+import com.affaince.subscription.product.command.AddSingularManualForecastCommand;
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
 import com.affaince.subscription.product.vo.ProductTargetParameters;
+import com.affaince.subscription.product.web.request.*;
 import com.affaince.subscription.query.exception.ProductForecastAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductForecastModificationException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
-import com.affaince.subscription.product.web.request.AddForecastParametersRequest;
-import com.affaince.subscription.product.web.request.NextCalendarRequest;
-import com.affaince.subscription.product.web.request.SetTargetParameterRequest;
-import com.affaince.subscription.product.web.request.UpdateForecastRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
@@ -83,6 +81,20 @@ public class ForecastController {
         UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
+    }
+
+    //API to add single/one-by-one forecast manually
+    @RequestMapping(method = RequestMethod.PUT, value = "addSingleforecast/{productid}")
+    @Consumes("application/json")
+    public ResponseEntity<Object> addSingleForecast(@RequestBody @Valid AddSingleForecastParametersRequest request,
+                                              @PathVariable("productid") String productId) throws Exception {
+        ProductView productView = this.productViewRepository.findOne(productId);
+        if (productView == null) {
+            throw ProductNotFoundException.build(productId);
+        }
+        AddSingularManualForecastCommand command = new AddSingularManualForecastCommand(productId, request.getStartDate(),request.getEndDate(),request.getPurchasePricePerUnit(),request.getMRP(),request.getNumberOfNewSubscriptions(),request.getNumberOfChurnedSubscriptions(),request.getProductForecastStatus());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
     //API to add forecast manually

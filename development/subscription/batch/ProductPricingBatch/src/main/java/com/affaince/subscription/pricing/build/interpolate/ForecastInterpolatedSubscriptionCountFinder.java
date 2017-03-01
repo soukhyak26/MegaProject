@@ -1,6 +1,6 @@
 package com.affaince.subscription.pricing.build.interpolate;
 
-import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
+import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ForecastInterpolatedSubscriptionCountFinder {
 
     @Autowired
-    private CubicSplineInterpolator interpolator;
+    private InterpolatorChain interpolator;
 
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
