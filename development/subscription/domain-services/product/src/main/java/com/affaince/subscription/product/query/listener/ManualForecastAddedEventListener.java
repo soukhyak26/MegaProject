@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
 import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.type.ProductReadinessStatus;
@@ -96,9 +95,8 @@ public class ManualForecastAddedEventListener {
     }
 
     private double[] interpolateStepForecastFromForecast(String productId, int whomToInterpolate) {
-        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
+                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateAsc
                         (productId, ProductForecastStatus.ACTIVE);
         ProductForecastView firstForecastView = registeredForecastValues.get(registeredForecastValues.size() - 1);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
