@@ -13,7 +13,7 @@ class Product extends BaseSimulator {
     .repeat(1) {
       AddConfigurationParameters.addConfigurationParameters
     }
-    .repeat(6) {
+    .repeat(1) {
       AddProjectionParameter.addProjectionParameter
     }
     .repeat(1) {
@@ -25,7 +25,7 @@ class Product extends BaseSimulator {
   //var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
 
   Thread.sleep(1000)
-  setUp(scn.inject(atOnceUsers(30)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(5)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
@@ -65,26 +65,13 @@ object RegisterProduct {
 }
 
 object AddProjectionParameter {
-  val stepforecastJsonFileFeeder = jsonFile("stepforecast.json");
+  //val stepforecastJsonFileFeeder = jsonFile("stepforecast.json");
   val addProjectionParameter =
-    feed(stepforecastJsonFileFeeder)
-      .exec(
+    //feed(stepforecastJsonFileFeeder)
+      exec(
       http("Add Projection Parameter to Product")
         .put((RegisterProduct.createProjectionUrl + "/addforecast/${productId}").el[String])
-        .body(
-          StringBody(
-            """
-              |{
-              |    "productForecastParameters":[{"startDate":"${startDate}", "endDate":"${endDate}",
-              |    "purchasePricePerUnit":${purchasePricePerUnit},"MRP":${mrp},
-              |    "numberOfNewSubscriptions":${numberOfNewSubscriptions},
-              |    "numberOfChurnedSubscriptions":${numberOfChurnedSubscriptions},
-              |    "productForecastStatus":1}]
-              |}
-            """.
-              stripMargin
-          )
-        ).asJSON
+        .body(ElFileBody("${productId}.json")).asJSON
     )
 }
 

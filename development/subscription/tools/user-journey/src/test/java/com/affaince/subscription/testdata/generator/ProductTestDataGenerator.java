@@ -5,11 +5,7 @@ import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,7 +41,7 @@ public class ProductTestDataGenerator {
     }
 
     private static void generateProductDetailsCsvFile() throws IOException {
-        File file = new File("/home/rsavaliya/test/productdetails.json");
+        File file = new File("D:/productdetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -70,7 +66,7 @@ public class ProductTestDataGenerator {
     }
 
     private static void generatePriceDetails () throws IOException {
-        File file = new File("/home/rsavaliya/test/openingpricedetails.json");
+        File file = new File("D:/openingpricedetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -97,10 +93,10 @@ public class ProductTestDataGenerator {
     }
 
     private static void generateStepForecast () throws IOException {
-        File file = new File("/home/rsavaliya/test/stepforecast.json");
+        //File file = new File("D:/stepforecast.json");
         IdGenerator idGenerator = new DefaultIdGenerator();
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            fileOutputStream.write(("[").getBytes());
+        //try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            //fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
                 String IDString = product.getProductName() + "$" + product.getCategoryId() + "$" + product.getSubCategoryId() + "$" + product.getQuantity();
                 final String productId = idGenerator.generator(IDString);
@@ -114,29 +110,35 @@ public class ProductTestDataGenerator {
                         product.getMinProfitMargin();
                 int MRP = purchasePrice + (purchasePrice*profitMargin)/100;
                 int openingPrice = new Random().nextInt(MRP - purchasePrice) + purchasePrice;
-                List <Forecast> forecasts = new ArrayList<>(6);
+                List <ProductForecastParameter> forecasts = new ArrayList<>(6);
+                ProductForecastParameter productForecastParameters [] = new ProductForecastParameter[6];
                 for (int i=1;i<=6;i++) {
                     startDate = endDate.plusDays(1);
                     endDate = startDate.plusDays(product.getActualsAggregationPeriodForTargetForecast());
                     newSubscription = newSubscription + (newSubscription*(new Random().nextInt(product.getMaxPercentageIncreaseInForecast()
                         - product.getMinPercentageIncreaseInForecast())+product.getMinPercentageIncreaseInForecast()))/newSubscription;
-                    Forecast forecast = new Forecast(productId, startDate, endDate, purchasePrice, MRP, newSubscription, churnSubscription);
+                    ProductForecastParameter forecast =
+                            new ProductForecastParameter(startDate, endDate, purchasePrice, MRP, newSubscription, churnSubscription,1);
+                    productForecastParameters[i-1] = forecast;
                     forecasts.add(forecast);
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    try {
-                        fileOutputStream.write(objectMapper.writeValueAsBytes(forecast));
-                        if (Integer.parseInt(product.getProductId())-1 != products.size()) {
-                                fileOutputStream.write((",").getBytes());
-                        }
-                        fileOutputStream.write(("\n").getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                }
+                Forecast forecast = new Forecast();
+                forecast.setProductForecastParameters(productForecastParameters);
+                ObjectMapper objectMapper = new ObjectMapper();
+                File file = new File("D:/test/" + productId +".json");
+                try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                    fileOutputStream.write(objectMapper.writeValueAsBytes(forecast));
+//                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
+//                        fileOutputStream.write((",").getBytes());
+//                    }
+                    //fileOutputStream.write(("\n").getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 product.setForecasts(forecasts);
             });
-            fileOutputStream.write(("]").getBytes());
-        }
+            //fileOutputStream.write(("]").getBytes());
+        //}
     }
 
     private static void generateSubscriptionData () {
@@ -156,7 +158,7 @@ public class ProductTestDataGenerator {
                         product.getForecasts().get(0).getMRP(),
                         noOfCycle
                 );
-                String fileName = "/home/rsavaliya/test/abc/subscription"+i+".json";
+                String fileName = "D:/abc/subscription"+i+".json";
                 if (lineNumberTracker.get(fileName)!= null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
                     i++;
@@ -186,6 +188,6 @@ public class ProductTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        ProductTestDataGenerator.generate(30);
+        ProductTestDataGenerator.generate(5);
     }
 }
