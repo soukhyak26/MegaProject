@@ -21,8 +21,9 @@ import java.util.*;
 public class ProductTestDataGenerator {
 
     private static List <Product> products;
+    ClassLoader classLoader = getClass ().getClassLoader();
 
-    public static void generate (int size) throws IOException {
+    public void generate (int size) throws IOException {
         products = ProductBuilder.buildProducts(size).quantity().
                 branded().
                 complements().
@@ -40,8 +41,8 @@ public class ProductTestDataGenerator {
         generateSubscriptionData();
     }
 
-    private static void generateProductDetailsCsvFile() throws IOException {
-        File file = new File("D:/productdetails.json");
+    private void generateProductDetailsCsvFile() throws IOException {
+        File file = new File(classLoader.getResource(".").getPath() + "\\productdetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -65,8 +66,8 @@ public class ProductTestDataGenerator {
         }
     }
 
-    private static void generatePriceDetails () throws IOException {
-        File file = new File("D:/openingpricedetails.json");
+    private void generatePriceDetails () throws IOException {
+        File file = new File(classLoader.getResource(".").getPath() + "\\openingpricedetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -92,7 +93,7 @@ public class ProductTestDataGenerator {
         }
     }
 
-    private static void generateStepForecast () throws IOException {
+    private void generateStepForecast () throws IOException {
         //File file = new File("D:/stepforecast.json");
         IdGenerator idGenerator = new DefaultIdGenerator();
         //try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
@@ -125,7 +126,7 @@ public class ProductTestDataGenerator {
                 Forecast forecast = new Forecast();
                 forecast.setProductForecastParameters(productForecastParameters);
                 ObjectMapper objectMapper = new ObjectMapper();
-                File file = new File("D:/test/" + productId +".json");
+                File file = new File(classLoader.getResource(".").getPath() + "\\" + productId +".json");
                 try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                     fileOutputStream.write(objectMapper.writeValueAsBytes(forecast));
 //                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
@@ -188,6 +189,6 @@ public class ProductTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        ProductTestDataGenerator.generate(5);
+        new ProductTestDataGenerator().generate(5);
     }
 }

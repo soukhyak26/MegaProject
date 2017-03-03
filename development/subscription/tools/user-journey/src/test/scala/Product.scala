@@ -1,3 +1,4 @@
+import com.affaince.subscription.testdata.generator.ProductTestDataGenerator
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
 import io.gatling.http.Predef._
@@ -8,6 +9,8 @@ import scala.util.Random
   * Created by rbsavaliya on 05-03-2016.
   */
 class Product extends BaseSimulator {
+
+  new ProductTestDataGenerator().generate(5);
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct)
     .repeat(1) {

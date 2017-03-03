@@ -1,6 +1,0 @@
-productId,productName,categoryID,subCategoryId,quantity,quantityUnit,substitutes,complements
-0,productName0,cat0,subcat0,2254,gram,[0],[0]
-1,productName1,cat1,subcat1,3537,gram,[1],[1]
-2,productName2,cat2,subcat2,317,gram,[2],[2]
-3,productName3,cat3,subcat0,4285,gram,[3],[3]
-4,productName4,cat4,subcat1,1500,gram,[4],[4]
