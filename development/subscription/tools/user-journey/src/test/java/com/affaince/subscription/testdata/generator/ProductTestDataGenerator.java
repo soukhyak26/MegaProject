@@ -42,7 +42,7 @@ public class ProductTestDataGenerator {
     }
 
     private void generateProductDetailsCsvFile() throws IOException {
-        File file = new File(classLoader.getResource(".").getPath() + "\\productdetails.json");
+        File file = new File(classLoader.getResource(".").getPath() + "/productdetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -54,7 +54,7 @@ public class ProductTestDataGenerator {
                     );
                     ObjectMapper objectMapper = new ObjectMapper();
                     fileOutputStream.write(objectMapper.writeValueAsBytes(productDetails));
-                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
+                    if (Integer.parseInt(product.getProductId())+1 != products.size()) {
                         fileOutputStream.write((",").getBytes());
                     }
                     fileOutputStream.write(("\n").getBytes());
@@ -67,7 +67,7 @@ public class ProductTestDataGenerator {
     }
 
     private void generatePriceDetails () throws IOException {
-        File file = new File(classLoader.getResource(".").getPath() + "\\openingpricedetails.json");
+        File file = new File(classLoader.getResource(".").getPath() + "/openingpricedetails.json");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
@@ -81,7 +81,7 @@ public class ProductTestDataGenerator {
                     PriceDetails priceDetails = new PriceDetails(openingPrice,purchasePrice,MRP);
                     ObjectMapper objectMapper = new ObjectMapper();
                     fileOutputStream.write(objectMapper.writeValueAsBytes(priceDetails));
-                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
+                    if (Integer.parseInt(product.getProductId())+1 != products.size()) {
                         fileOutputStream.write((",").getBytes());
                     }
                     fileOutputStream.write(("\n").getBytes());
@@ -126,7 +126,7 @@ public class ProductTestDataGenerator {
                 Forecast forecast = new Forecast();
                 forecast.setProductForecastParameters(productForecastParameters);
                 ObjectMapper objectMapper = new ObjectMapper();
-                File file = new File(classLoader.getResource(".").getPath() + "\\" + productId +".json");
+                File file = new File(classLoader.getResource(".").getPath() + "/" + productId +".json");
                 try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                     fileOutputStream.write(objectMapper.writeValueAsBytes(forecast));
 //                    if (Integer.parseInt(product.getProductId())-1 != products.size()) {
@@ -142,7 +142,7 @@ public class ProductTestDataGenerator {
         //}
     }
 
-    private static void generateSubscriptionData () {
+    private void generateSubscriptionData () {
         Map <String, Integer> lineNumberTracker = new HashMap<>();
         products.forEach(product -> {
             long totalBasketsToBeCreated = product.getForecasts().get(0).getNumberOfNewSubscriptions()
@@ -159,7 +159,7 @@ public class ProductTestDataGenerator {
                         product.getForecasts().get(0).getMRP(),
                         noOfCycle
                 );
-                String fileName = "D:/abc/subscription"+i+".json";
+                String fileName = classLoader.getResource(".").getPath() + "/subscription"+i+".json";
                 if (lineNumberTracker.get(fileName)!= null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
                     i++;
