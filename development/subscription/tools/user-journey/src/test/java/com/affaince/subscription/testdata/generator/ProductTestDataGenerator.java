@@ -144,6 +144,7 @@ public class ProductTestDataGenerator {
 
     private void generateSubscriptionData () {
         Map <String, Integer> lineNumberTracker = new HashMap<>();
+        Map <String, List<SubscriptionItem>> subscriptionItemMap = new HashMap<>();
         products.forEach(product -> {
             long totalBasketsToBeCreated = product.getForecasts().get(0).getNumberOfNewSubscriptions()
                     + (product.getForecasts().get(0).getNumberOfNewSubscriptions()*product.getPercentageChangeInTrend()/100);
@@ -166,25 +167,30 @@ public class ProductTestDataGenerator {
                     continue;
                 }
                 totalBasketsToBeCreated -= noOfCycle;
+                if (subscriptionItemMap.get(fileName) != null){
+                    subscriptionItemMap.get(fileName).add(subscriptionItem);
+                } else {
+                    List <SubscriptionItem> subscriptionItems = new ArrayList<>();
+                    subscriptionItems.add(subscriptionItem);
+                    subscriptionItemMap.put(fileName, subscriptionItems);
+                }
+                if (lineNumberTracker.containsKey(fileName)) {
+                    lineNumberTracker.put(fileName,
+                            lineNumberTracker.get(fileName).intValue()+1);
+                } else {
+                    lineNumberTracker.put(fileName, 1);
+                }
+                i++;
+            }
+            subscriptionItemMap.forEach((s, subscriptionItems) -> {
                 try {
-                    Files.write(Paths.get(fileName),
-                            objectMapper.writeValueAsBytes(subscriptionItem),
-                            StandardOpenOption.CREATE,StandardOpenOption.WRITE,StandardOpenOption.APPEND);
-                    Files.write(Paths.get(fileName),
-                            "\n".getBytes(),
-                            StandardOpenOption.APPEND);
-
-                    if (lineNumberTracker.containsKey(fileName)) {
-                        lineNumberTracker.put(fileName,
-                                lineNumberTracker.get(fileName).intValue()+1);
-                    } else {
-                        lineNumberTracker.put(fileName, 1);
-                    }
-                    i++;
+                    Files.write(Paths.get(s),
+                            objectMapper.writeValueAsBytes(subscriptionItems),
+                            StandardOpenOption.CREATE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            });
         });
     }
 
