@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.NetWorthSubscriberStatus;
 import com.affaince.subscription.common.type.PeriodUnit;
@@ -309,6 +310,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void setActiveSubscription(Subscription subscription) {
         this.subscription = subscription;
+        apply(new SubscriptionCreatedEvent(subscription.getSubscriptionId(), subscriberId, SysDate.now(), null, ConsumerBasketActivationStatus.CREATED));
     }
 
     public Subscription getSubscription() {

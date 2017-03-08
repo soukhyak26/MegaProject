@@ -40,8 +40,8 @@ public class Subscription extends AbstractAnnotatedEntity {
     private LocalDate subscriptionCreatedDate;
     private LocalDate subscriptionExpiredDate;
 
-    public Subscription(String subscriptionId, String subscriberId) {
-        apply(new SubscriptionCreatedEvent(subscriptionId, subscriberId, SysDate.now(), null, ConsumerBasketActivationStatus.CREATED));
+    public Subscription(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public Subscription() {

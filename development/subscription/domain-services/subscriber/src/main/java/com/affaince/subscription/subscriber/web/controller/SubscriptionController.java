@@ -42,7 +42,7 @@ public class SubscriptionController {
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscription(@RequestBody @Valid SubscriptionRequest request) throws Exception {
         final String subscriptionId = UUID.randomUUID().toString();
-        final CreateSubscriptionCommand command = new CreateSubscriptionCommand(subscriptionId, request.getSubscriberId());
+        final CreateSubscriptionCommand command = new CreateSubscriptionCommand(request.getSubscriberId(), subscriptionId);
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

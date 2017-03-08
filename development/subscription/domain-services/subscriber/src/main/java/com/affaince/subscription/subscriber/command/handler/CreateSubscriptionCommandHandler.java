@@ -24,7 +24,7 @@ public class CreateSubscriptionCommandHandler {
     @CommandHandler
     public void handle(CreateSubscriptionCommand command) {
         final Subscriber subscriber = repository.load(command.getSubscriberId());
-        final Subscription subscription = new Subscription(command.getSubscriptionId(), command.getSubscriberId());
+        final Subscription subscription = new Subscription(command.getSubscriptionId());
         subscriber.setActiveSubscription(subscription);
     }
 }
