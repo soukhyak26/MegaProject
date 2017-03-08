@@ -10,7 +10,8 @@ import scala.util.Random
   */
 class Subscriber extends BaseSimulator {
 
-  new ProductTestDataGenerator().generate(5);
+  val productTestDataGenerator = new ProductTestDataGenerator().generate(5);
+  productTestDataGenerator.getSubscriptionCount()
 
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
       .repeat(1) {
@@ -27,7 +28,7 @@ class Subscriber extends BaseSimulator {
 //    }
 
 
-  setUp(scn.inject(atOnceUsers(100)).protocols(http))
+  setUp(scn.inject(atOnceUsers(productTestDataGenerator.getSubscriptionCount())).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
@@ -94,7 +95,7 @@ object CreateSubscriber {
             """.stripMargin
           )
         ).asJSON
-        .check(jsonPath("$.id").saveAs("subscriberId"))
+        .check(jsonPath("$.id").saveAs("subscriptionId"))
     )
 
   val addItemToSubscription = //feed (feeder)
