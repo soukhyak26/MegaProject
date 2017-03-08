@@ -52,8 +52,7 @@ public class SubscriberController {
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscriber(@RequestBody @Valid CreateSubscriberRequest request) throws Exception {
         final String subscriberId =
-                idGenerator.generator(request.getContactDetails().getEmail() +
-                        request.getContactDetails().getMobileNumber());
+                idGenerator.generator(request.getContactDetails().getEmail());
         final CreateSubscriberCommand command = new CreateSubscriberCommand(subscriberId,
                 request.getSubscriberName(), request.getAddress(), request.getContactDetails()
         );
