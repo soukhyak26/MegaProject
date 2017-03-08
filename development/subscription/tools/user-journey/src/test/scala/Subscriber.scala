@@ -1,3 +1,4 @@
+import com.affaince.subscription.testdata.generator.ProductTestDataGenerator
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
 import io.gatling.http.Predef._
@@ -8,6 +9,9 @@ import scala.util.Random
   * Created by rbsavaliya on 04-03-2016.
   */
 class Subscriber extends BaseSimulator {
+
+  new ProductTestDataGenerator().generate(5);
+
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
       .repeat(1) {
         CreateSubscriber.setPassword
@@ -15,15 +19,15 @@ class Subscriber extends BaseSimulator {
     .repeat(1) {
         CreateSubscriber.createSubscription
     }
-    .repeat(5) {
-      CreateSubscriber.addItemToSubscription
-    }
-    .repeat(1) {
-      CreateSubscriber.confirmSubscription
-    }
+//    .repeat(5) {
+//      CreateSubscriber.addItemToSubscription
+//    }
+//    .repeat(1) {
+//      CreateSubscriber.confirmSubscription
+//    }
 
 
-  setUp(scn.inject(atOnceUsers(10)).protocols(http))
+  setUp(scn.inject(atOnceUsers(100)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
@@ -33,9 +37,9 @@ object CreateSubscriber {
 
   val createSubscriberUrl="http://localhost:8081/subscriber"
   val createSubscriptionUrl = "http://localhost:8081/subscription"
-  //val feeder = csv ("subscriber.csv").queue
+  val subscriberJsonFeeder = jsonFile ("Subscribers.json")
 
-  val createSubscriber = exec(session => session.set("randomeName", Random.nextInt(5)))
+  val createSubscriber = feed(subscriberJsonFeeder)
       .exec(
         http ("Create Subscriber")
           .post(createSubscriberUrl)
@@ -43,18 +47,18 @@ object CreateSubscriber {
             StringBody(
               """
                 |{
-                |   "subscriberName": {"title":"Mr.","firstName":"Rahul",
-                |    "middleName":"Babulal",
-                |    "lastName":"Savaliya"},
-                |    "address":{"addressLine1":"A1-504, Casa 7",
-                |    "addressLine2":"Dange Chowk",
-                |    "city":"Pune",
-                |    "state":"MH",
-                |    "country":"India",
-                |    "pinCode":"411033"},
-                |    "contactDetails":{"email":"rahulsavaliya@gmail.com",
-                |    "mobileNumber":"9011073762",
-                |    "alternativeNumber":"9028185884"}
+                |   "subscriberName": {"title":"${title}","firstName":"${firstName}",
+                |    "middleName":"${middleName}",
+                |    "lastName":"${lastName}"},
+                |    "address":{"addressLine1":"${addressLine1}",
+                |    "addressLine2":"${addressLine2}",
+                |    "city":"${city}",
+                |    "state":"${state}",
+                |    "country":"${country}",
+                |    "pinCode":"${pinCode}"},
+                |    "contactDetails":{"email":"${email}",
+                |    "mobileNumber":"${mobileNumber}",
+                |    "alternativeNumber":"$alternativeNumber{}"}
                 |}
               """.stripMargin
             )

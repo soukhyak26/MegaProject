@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriberViewRepository;
@@ -36,19 +37,23 @@ public class SubscriberController {
     private final SubscriberViewRepository subscriberViewRepository;
     private final SubscriptionTemplateViewRepository subscriptionTemplateViewRepository;
     private final DeliveryViewRepository deliveryViewRepository;
+    private final IdGenerator idGenerator;
 
     @Autowired
-    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository subscriberViewRepository, SubscriptionTemplateViewRepository subscriptionTemplateViewRepository, DeliveryViewRepository deliveryViewRepository) {
+    public SubscriberController(SubscriptionCommandGateway commandGateway, SubscriberViewRepository subscriberViewRepository, SubscriptionTemplateViewRepository subscriptionTemplateViewRepository, DeliveryViewRepository deliveryViewRepository, IdGenerator idGenerator) {
         this.commandGateway = commandGateway;
         this.subscriberViewRepository = subscriberViewRepository;
         this.subscriptionTemplateViewRepository = subscriptionTemplateViewRepository;
         this.deliveryViewRepository = deliveryViewRepository;
+        this.idGenerator = idGenerator;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> createSubscriber(@RequestBody @Valid CreateSubscriberRequest request) throws Exception {
-        final String subscriberId = UUID.randomUUID().toString();
+        final String subscriberId =
+                idGenerator.generator(request.getContactDetails().getEmail() +
+                        request.getContactDetails().getMobileNumber());
         final CreateSubscriberCommand command = new CreateSubscriberCommand(subscriberId,
                 request.getSubscriberName(), request.getAddress(), request.getContactDetails()
         );

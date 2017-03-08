@@ -9,10 +9,7 @@ import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRep
 import com.affaince.subscription.subscriber.query.view.ProductView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import com.affaince.subscription.subscriber.web.exception.ConsumerBasketNotFoundException;
-import com.affaince.subscription.subscriber.web.request.AddressRequest;
-import com.affaince.subscription.subscriber.web.request.BasketItemRequest;
-import com.affaince.subscription.subscriber.web.request.ContactDetailsRequest;
-import com.affaince.subscription.subscriber.web.request.SubscriptionRequest;
+import com.affaince.subscription.subscriber.web.request.*;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,6 +72,33 @@ public class SubscriptionController {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
             throw e;
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "addsubscription/{subscriberId}", method = RequestMethod.PUT)
+    @Consumes("application/json")
+    public ResponseEntity<Object> addSubscription(@PathVariable String subscriberId,
+                                                        @RequestBody @Valid AddSubscriptionRequest addSubscriptionRequest) throws Exception {
+        for (BasketItemRequest request: addSubscriptionRequest.getBasketItemRequests()) {
+            final ProductView productView = productViewRepository.findOne(request.getProductId());
+            final long productQuantity = productView.getNetQuantity();
+            final QuantityUnit productQuantityUnit = productView.getQuantityUnit();
+            double productQuantityInGrms = productQuantity;
+            if (productQuantityUnit == QuantityUnit.KG || productQuantityUnit == QuantityUnit.LT) {
+                productQuantityInGrms = productQuantity * 1000;
+            } else if (productQuantityUnit == QuantityUnit.ml) {
+                productQuantityInGrms = productQuantity;
+            }
+            final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriberId,
+                    request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
+                    request.getOfferedPriceWithBasketLevelDiscount(), request.getNoOfCycles(), productQuantityInGrms,
+                    productView.getProductPricingCategory());
+            try {
+                commandGateway.executeAsync(command);
+            } catch (Exception e) {
+                throw e;
+            }
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

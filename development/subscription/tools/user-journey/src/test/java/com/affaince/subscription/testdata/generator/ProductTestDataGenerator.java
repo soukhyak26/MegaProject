@@ -2,6 +2,9 @@ package com.affaince.subscription.testdata.generator;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.common.vo.Address;
+import com.affaince.subscription.common.vo.ContactDetails;
+import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,8 +40,9 @@ public class ProductTestDataGenerator {
                 actualsAggregationPeriodForTargetForecast().build();
         generateProductDetailsCsvFile ();
         generatePriceDetails();
-        generateStepForecast();
-        generateSubscriptionData();
+        //generateStepForecast();
+        //generateSubscriptionData();
+        generateSubscriberData();
     }
 
     private void generateProductDetailsCsvFile() throws IOException {
@@ -140,6 +144,25 @@ public class ProductTestDataGenerator {
             });
             //fileOutputStream.write(("]").getBytes());
         //}
+    }
+
+    private void generateSubscriberData () {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List <Subscriber> subscribers = new ArrayList<>();
+        for (int i=0;i<200;i++) {
+            Subscriber subscriber = new Subscriber("Mr","TestSubscriber"+i, "", "lastName" +i,
+                    "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
+                    "testemail" + i + "@affaince.com", new Random().nextLong()*100000000L +"", ""
+                    );
+            subscribers.add(subscriber);
+        }
+        try {
+            Files.write(Paths.get(classLoader.getResource(".").getPath() + "/Subscribers.json"),
+                    objectMapper.writeValueAsBytes(subscribers),
+                    StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void generateSubscriptionData () {
