@@ -10,8 +10,7 @@ import scala.util.Random
   */
 class Subscriber extends BaseSimulator {
 
-  val productTestDataGenerator = new ProductTestDataGenerator().generate(5);
-  productTestDataGenerator.getSubscriptionCount()
+  //val productTestDataGenerator = new ProductTestDataGenerator().generate(5);
 
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
       .repeat(1) {
@@ -20,15 +19,15 @@ class Subscriber extends BaseSimulator {
     .repeat(1) {
         CreateSubscriber.createSubscription
     }
-//    .repeat(5) {
-//      CreateSubscriber.addItemToSubscription
-//    }
+    .repeat(1) {
+      CreateSubscriber.addItemToSubscription
+    }
 //    .repeat(1) {
 //      CreateSubscriber.confirmSubscription
 //    }
 
 
-  setUp(scn.inject(atOnceUsers(productTestDataGenerator.getSubscriptionCount())).protocols(http))
+  setUp(scn.inject(atOnceUsers(86)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
@@ -82,7 +81,7 @@ object CreateSubscriber {
         ).asJSON
   )
 
-  val createSubscription = //feed (feeder)
+  val createSubscription =
     exec(
       http ("Create Subscription")
         .post(createSubscriptionUrl)
@@ -98,23 +97,12 @@ object CreateSubscriber {
         .check(jsonPath("$.id").saveAs("subscriptionId"))
     )
 
-  val addItemToSubscription = //feed (feeder)
+  val addItemToSubscription =
     exec(
       http("Add Item To Subscription")
-        .put((createSubscriptionUrl + "/additem/${subscriberId}").el[String])
+        .put((createSubscriptionUrl + "/addsubscription/${subscriberId}").el[String])
         .body(
-          StringBody (
-            """
-              |{
-              |    "productId":"product01",
-              |    "countPerPeriod":"2",
-              |    "period":{"value":"2","unit":"WEEK"},
-              |    "discountedOfferedPrice":"40",
-              |    "offeredPriceWithBasketLevelDiscount":"30",
-              |    "noOfCycles":"6"
-              |}
-            """.stripMargin
-          )
+          ElFileBody ("${subscriberId}.json")
         ).asJSON
     )
 

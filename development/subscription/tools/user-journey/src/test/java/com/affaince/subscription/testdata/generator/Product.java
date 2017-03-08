@@ -23,6 +23,7 @@ public class Product {
 	private int actualsAggregationPeriodForTargetForecast=30;
 	private int percentageChangeInTrend;
 	private List<ProductForecastParameter> forecasts;
+	private String generatedProductId;
 
 
 	public Product(String productId, String productName, String categoryId, String subCategoryId) {
@@ -215,5 +216,13 @@ public class Product {
 
 	public void setForecasts(List<ProductForecastParameter> forecasts) {
 		this.forecasts = forecasts;
+	}
+
+    public void setgeneratedProductId(String generatedProductId) {
+        this.generatedProductId = generatedProductId;
+    }
+
+	public String getGeneratedProductId() {
+		return generatedProductId;
 	}
 }

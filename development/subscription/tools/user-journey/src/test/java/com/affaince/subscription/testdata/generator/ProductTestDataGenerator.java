@@ -4,12 +4,11 @@ import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -21,10 +20,10 @@ import java.util.*;
 public class ProductTestDataGenerator {
 
     private static List<Product> products;
-    private int subscriptionCount;
+    private static int subscriptionCount;
     private ClassLoader classLoader = getClass().getClassLoader();
 
-    public int getSubscriptionCount() {
+    public static int getSubscriptionCount() {
         return subscriptionCount;
     }
 
@@ -109,6 +108,7 @@ public class ProductTestDataGenerator {
         products.forEach(product -> {
             String IDString = product.getProductName() + "$" + product.getCategoryId() + "$" + product.getSubCategoryId() + "$" + product.getQuantity();
             final String productId = idGenerator.generator(IDString);
+            product.setgeneratedProductId (productId);
             LocalDate startDate = LocalDate.now();
             LocalDate endDate = LocalDate.now();
             int newSubscription = 500;
@@ -163,9 +163,9 @@ public class ProductTestDataGenerator {
         }
     }
 
-    private void generateSubscriptionData() {
+    private void generateSubscriptionData() throws JsonProcessingException {
         Map<String, Integer> lineNumberTracker = new HashMap<>();
-        Map<String, List<SubscriptionItem>> subscriptionItemMap = new HashMap<>();
+        Map<String, SubscriptionItem> subscriptionItemMap = new HashMap<>();
         products.forEach(product -> {
             long totalBasketsToBeCreated = product.getForecasts().get(0).getNumberOfNewSubscriptions()
                     + (product.getForecasts().get(0).getNumberOfNewSubscriptions() * product.getPercentageChangeInTrend() / 100);
@@ -173,15 +173,16 @@ public class ProductTestDataGenerator {
             int i = 0;
             while (totalBasketsToBeCreated >= 0) {
                 int noOfCycle = new Random().nextInt(9) + 3;
-                SubscriptionItem subscriptionItem = new SubscriptionItem(
-                        product.getProductId(),
+                BasketItemRequest basketItemRequest = new BasketItemRequest(
+                        product.getGeneratedProductId(),
                         1,
                         new Period(1, PeriodUnit.MONTH),
                         product.getForecasts().get(0).getMRP(),
                         product.getForecasts().get(0).getMRP(),
                         noOfCycle
                 );
-                String fileName = classLoader.getResource(".").getPath() + "/subscription" + i + ".json";
+                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + "@affaince.com");
+                String fileName = classLoader.getResource(".").getPath() + "/" + subscriberId + ".json";
                 if (lineNumberTracker.get(fileName) != null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
                     i++;
@@ -189,11 +190,11 @@ public class ProductTestDataGenerator {
                 }
                 totalBasketsToBeCreated -= noOfCycle;
                 if (subscriptionItemMap.get(fileName) != null) {
-                    subscriptionItemMap.get(fileName).add(subscriptionItem);
+                    subscriptionItemMap.get(fileName).getBasketItemRequests().add(basketItemRequest);
                 } else {
-                    List<SubscriptionItem> subscriptionItems = new ArrayList<>();
-                    subscriptionItems.add(subscriptionItem);
-                    subscriptionItemMap.put(fileName, subscriptionItems);
+                    SubscriptionItem subscriptionItem = new SubscriptionItem();
+                    subscriptionItem.setBasketItemRequests(new ArrayList<>());
+                    subscriptionItemMap.put(fileName, subscriptionItem);
                 }
                 if (lineNumberTracker.containsKey(fileName)) {
                     lineNumberTracker.put(fileName,
@@ -204,15 +205,21 @@ public class ProductTestDataGenerator {
                 i++;
             }
             this.subscriptionCount = subscriptionItemMap.size();
-            subscriptionItemMap.forEach((s, subscriptionItems) -> {
-                try {
-                    Files.write(Paths.get(s),
-                            objectMapper.writeValueAsBytes(subscriptionItems),
-                            StandardOpenOption.CREATE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+
         });
+        ObjectMapper objectMapper = new ObjectMapper();
+        for (String fileName:
+             subscriptionItemMap.keySet()) {
+            File file = new File(fileName);
+            try {
+                OutputStream outputStream = new FileOutputStream(file);
+                String s = objectMapper.writeValueAsString(subscriptionItemMap.get(fileName));
+                outputStream.write(s.getBytes());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
