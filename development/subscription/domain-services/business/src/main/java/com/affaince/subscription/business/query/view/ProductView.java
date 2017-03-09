@@ -14,6 +14,9 @@ import java.util.Map;
 public class ProductView {
     @Id
     private String productId;
+    private String productName;
+    private String categoryId;
+    private String subCategoryId;
     private double purchasePrice;
     private double MRP;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
@@ -22,8 +25,11 @@ public class ProductView {
     private double currentOperatingExpensePerUnit;
     private double productPurchaseBudgetedAmount;
 
-    public ProductView(String productId, Map<SensitivityCharacteristic, Double> sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
+    public ProductView(String productId, String productName, String categoryId,String subCategoryId,Map<SensitivityCharacteristic, Double> sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
         this.productId = productId;
+        this.productName=productName;
+        this.categoryId=categoryId;
+        this.subCategoryId=subCategoryId;
         this.sensitiveTo = sensitiveTo;
         this.purchasePrice = purchasePrice;
         this.MRP = MRP;
@@ -95,5 +101,17 @@ public class ProductView {
 
     public void setTotalAnticipatedSubscriptions(long totalAnticipatedSubscriptions) {
         this.totalAnticipatedSubscriptions = totalAnticipatedSubscriptions;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public String getSubCategoryId() {
+        return subCategoryId;
     }
 }
