@@ -35,12 +35,12 @@ public class OfferedPriceRecommendedEventListener {
     public void on(OfferedPriceRecommendedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         RecommendedPriceBucketView latestPriceBucket = recommendedPriceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
-        RecommendedPriceBucketView newPriceBucket = new RecommendedPriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getNewPriceBucket().getPriceBucketId()));
-        newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getNewPriceBucket().getOfferedPriceOrPercentDiscountPerUnit());
-        newPriceBucket.setTaggedPriceVersion(event.getNewPriceBucket().getTaggedPriceVersion());
-        newPriceBucket.setEntityStatus(event.getNewPriceBucket().getEntityStatus());
+        RecommendedPriceBucketView newPriceBucket = new RecommendedPriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
+        newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
+        newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
+        newPriceBucket.setEntityStatus(event.getEntityStatus());
         newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
-        latestPriceBucket.setToDate(event.getNewPriceBucket().getToDate());
+        latestPriceBucket.setToDate(event.getToDate());
         recommendedPriceBucketViewRepository.save(latestPriceBucket);
         recommendedPriceBucketViewRepository.save(newPriceBucket);
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
