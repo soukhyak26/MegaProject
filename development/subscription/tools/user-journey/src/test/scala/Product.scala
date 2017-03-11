@@ -12,10 +12,7 @@ class Product extends BaseSimulator {
 
   new ProductTestDataGenerator().generate(5);
 
-  var scn = scenario("Create Product").exec(RegisterProduct.registerProduct)
-      .repeat(1) {
-        SleepForSomeTime.sleep
-      }
+  var scn = scenario("Create Product").exec(RegisterProduct.registerProduct).pause(10)
     .repeat(1) {
       AddConfigurationParameters.addConfigurationParameters
     }
@@ -32,10 +29,6 @@ class Product extends BaseSimulator {
 
   Thread.sleep(1000)
   setUp(scn.inject(atOnceUsers(5)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
-}
-
-object SleepForSomeTime {
-  val sleep = exec(http("dummy").get("http://www.google.com"));
 }
 
 object RegisterProduct {

@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit
+
 import com.affaince.subscription.testdata.generator.ProductTestDataGenerator
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
@@ -13,6 +15,7 @@ class Subscriber extends BaseSimulator {
   //val productTestDataGenerator = new ProductTestDataGenerator().generate(5);
 
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
+      .pause(10)
       .repeat(1) {
         CreateSubscriber.setPassword
       }
@@ -22,12 +25,12 @@ class Subscriber extends BaseSimulator {
     .repeat(1) {
       CreateSubscriber.addItemToSubscription
     }
-//    .repeat(1) {
-//      CreateSubscriber.confirmSubscription
-//    }
+    .repeat(1) {
+      CreateSubscriber.confirmSubscription
+    }
 
-
-  setUp(scn.inject(atOnceUsers(86)).protocols(http))
+  val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
+  setUp(scn.inject(atOnceUsers(70)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
