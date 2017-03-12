@@ -10,7 +10,7 @@ import com.affaince.subscription.product.services.pricing.calculator.AbstractPri
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.FunctionCoefficients;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;
 import com.affaince.subscription.product.services.pricing.exception.PricingEligibilityViolationException;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;

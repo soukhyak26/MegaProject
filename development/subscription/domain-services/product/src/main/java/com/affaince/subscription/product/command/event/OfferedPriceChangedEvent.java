@@ -3,8 +3,7 @@ package com.affaince.subscription.product.command.event;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
-import com.affaince.subscription.product.command.domain.PriceBucket;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
 
 /**

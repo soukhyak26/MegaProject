@@ -3,7 +3,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.command.domain.PriceBucketSample;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.junit.Test;

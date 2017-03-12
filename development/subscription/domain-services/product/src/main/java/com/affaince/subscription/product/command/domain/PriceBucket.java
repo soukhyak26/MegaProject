@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.*;
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDateTime;

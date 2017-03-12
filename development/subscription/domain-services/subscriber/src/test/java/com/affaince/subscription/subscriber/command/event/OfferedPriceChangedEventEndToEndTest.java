@@ -1,9 +1,13 @@
 package com.affaince.subscription.subscriber.command.event;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
+import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.subscriber.Application;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
 import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,8 +36,18 @@ public class OfferedPriceChangedEventEndToEndTest {
     @Test
     public void offeredPriceChangedEventEndToEndTest() throws InterruptedException {
         OfferedPriceChangedEvent offeredPriceChangedEvent = new OfferedPriceChangedEvent(
-                "1", "1", 100.0, LocalDateTime.now()
-        );
+                "1",
+                "1",
+                ProductPricingCategory.PRICE_COMMITMENT,
+                new PriceTaggedWithProduct("1",89,110, LocalDate.now(),new LocalDate(9999,12,31)),
+                20,
+                2,
+                400,
+                LocalDateTime.now(),
+                new LocalDateTime(9999,12,31,0,0,0),
+                EntityStatus.ACTIVE,
+                100.0,
+                LocalDateTime.now());
         genericEventPublisher.publish(offeredPriceChangedEvent);
         Thread.sleep(100);
         LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne("1");

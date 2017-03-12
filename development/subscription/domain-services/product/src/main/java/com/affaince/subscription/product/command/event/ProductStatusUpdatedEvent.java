@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
-import com.affaince.subscription.product.vo.PriceTaggedWithProduct;
-import org.joda.time.LocalDateTime;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 
 /**
  * Created by mandark on 27-12-2015.

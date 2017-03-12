@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.vo;
+package com.affaince.subscription.common.vo;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
