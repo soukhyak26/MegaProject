@@ -56,7 +56,6 @@ public class ActiveMQConfiguration {
     public ListenerContainerFactory listenerContainerFactory(
             @Value("${axon.eventBus.queueName}") String queueName,
             ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
-        System.out.println("@@Queue Name:" + queueName);
         ListenerContainerFactory containerFactory = new ListenerContainerFactory();
         containerFactory.setDestinationName(queueName);
         containerFactory.setConnectionFactory(connectionFactory);

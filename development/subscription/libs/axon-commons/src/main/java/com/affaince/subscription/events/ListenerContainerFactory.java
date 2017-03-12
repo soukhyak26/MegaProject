@@ -139,7 +139,6 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("@@@IN AfterProertiesSet");
         container = new DefaultMessageListenerContainer();
         container.setDestinationName(destinationName);
         container.setConnectionFactory(connectionFactory);
@@ -148,7 +147,6 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
         container.setIdleConsumerLimit(idleConsumerLimit);
         container.setSessionAcknowledgeMode(sessionAcknowledgeMode);
 
-        System.out.println("@@@selector output: " + selector());
         container.setMessageSelector(selector());
         System.out.println(selector());
     }
@@ -169,7 +167,6 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
 
     public Iterable<String> selectors() {
         final ClassPathScanningCandidateComponentProvider localTypeScanner = new ClassPathScanningCandidateComponentProvider(false, environment);
-        System.out.println("@@@Annotation@@@: " + annotation.getName());
         localTypeScanner.addIncludeFilter(new MethodAnnotationTypeFilter(annotation));
         final Multimap<String, String> reverseMap = invertMap(consumedEventTypes);
         //final Iterable<String> producedEventTypes = packagesToScan().stream().flatMap(h -> reverseMap.keySet().stream()).collect (Collectors.toSet());
@@ -186,7 +183,6 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
     }
 
     private Iterable<String> selectors(final String basePackage, ClassPathScanningCandidateComponentProvider localTypeScanner) {
-        System.out.println("@@@base package:" + basePackage);
         return from(localTypeScanner.findCandidateComponents(basePackage)).transform(beanDefinitionToClass).transformAndConcat(toEventTypes).transformAndConcat(toSubTypes(basePackage)).transform(beanDefinitionToClass).transform(toClassName).toSet();
     }
 
@@ -217,7 +213,6 @@ public class ListenerContainerFactory implements FactoryBean<DefaultMessageListe
 
     public void setAnnotation(Class<? extends Annotation> annotation) {
         this.annotation = annotation;
-        System.out.println("@@@Annotation@@@: " + annotation.getName());
     }
 
     public static class AnnotationMethodFilter implements ReflectionUtils.MethodFilter {
