@@ -58,10 +58,10 @@ public class OpeningPriceOrPercentRegisteredEventListener {
         if (ProductConfigurationValidator.getProductReadinessStatus(productActivationStatusView.getProductStatuses()).contains(
                 ProductReadinessStatus.PRICEASSIGNABLE
         )) {
-            PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucket().getPriceBucketId()));
-            newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getPriceBucket().getOfferedPriceOrPercentDiscountPerUnit());
-            newPriceBucket.setTaggedPriceVersion(event.getPriceBucket().getTaggedPriceVersion());
-            newPriceBucket.setEntityStatus(event.getPriceBucket().getEntityStatus());
+            PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
+            newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
+            newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
+            newPriceBucket.setEntityStatus(event.getEntityStatus());
             newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
 
             priceBucketViewRepository.save(newPriceBucket);

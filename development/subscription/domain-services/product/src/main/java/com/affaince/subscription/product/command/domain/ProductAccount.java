@@ -315,7 +315,20 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         final LocalDateTime currentDate = SysDateTime.now();
         PriceBucket newPriceBucket = createNewPriceBucket(productId, latestTaggedPriceVersion, openingPriceOrPercent, EntityStatus.CREATED, currentDate);
 
-        apply(new OpeningPriceOrPercentRegisteredEvent(productId, newPriceBucket));
+        //apply(new OpeningPriceOrPercentRegisteredEvent(productId, newPriceBucket));
+        apply(new OpeningPriceOrPercentRegisteredEvent(
+                newPriceBucket.getProductId(),
+                newPriceBucket.getPriceBucketId(),
+                newPriceBucket.getProductPricingCategory(),
+                newPriceBucket.getTaggedPriceVersion(),
+                newPriceBucket.getNumberOfNewSubscriptions(),
+                newPriceBucket.getNumberOfChurnedSubscriptions(),
+                newPriceBucket.getNumberOfExistingSubscriptions(),
+                newPriceBucket.getFromDate(),
+                newPriceBucket.getToDate(),
+                newPriceBucket.getEntityStatus(),
+                newPriceBucket.getOfferedPriceOrPercentDiscountPerUnit()
+                ));
     }
 
 //should fire productsubscription updated event OR shuld fire two events add/deduct
@@ -458,7 +471,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     @EventSourcingHandler
     public void on(OpeningPriceOrPercentRegisteredEvent event) {
-        PriceBucket newPriceBucket = event.getPriceBucket();
+        PriceBucket newPriceBucket = new PriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(),event.getTaggedPriceVersion(),event.getOfferedPriceOrPercentDiscountPerUnit(),event.getEntityStatus(),event.getFromDate());
         this.addNewPriceBucket(newPriceBucket.getFromDate(), newPriceBucket);
         //this.productActivationStatusList.add(ProductStatus.PRODUCT_PRICE_ASSIGNED);
     }
