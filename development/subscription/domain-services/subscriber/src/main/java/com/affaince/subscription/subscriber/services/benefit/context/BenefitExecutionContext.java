@@ -26,6 +26,7 @@ public class BenefitExecutionContext {
     private BenefitCalculationState benefitCalculationState;
 
     public BenefitResult calculateBenefit (BenefitCalculationRequest request) {
+        this.request = request;
         benefitCalculationState.calculate(this);
         return new BenefitResult(rewardPoints, benefitPayMethod, rewardPointsDistribution);
     }
