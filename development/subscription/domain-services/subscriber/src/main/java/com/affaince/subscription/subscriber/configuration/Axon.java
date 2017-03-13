@@ -4,6 +4,10 @@ import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.command.domain.SubscriptionRule;
 import com.affaince.subscription.subscriber.command.event.*;
+import com.affaince.subscription.subscriber.services.benefit.state.ApplicabilityState;
+import com.affaince.subscription.subscriber.services.benefit.state.BenefitCalculationState;
+import com.affaince.subscription.subscriber.services.benefit.state.EligibilityState;
+import com.affaince.subscription.subscriber.services.benefit.state.PointConversionState;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -39,6 +43,16 @@ public class Axon extends Default {
     @Bean
     public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
         return new SimpleMongoDbFactory(mongo, dbName);
+    }
+
+    @Bean
+    public BenefitCalculationState benefitCalculationState () {
+        BenefitCalculationState benefitCalculationState = new EligibilityState(
+                new PointConversionState(
+                        new ApplicabilityState(null)
+                )
+        );
+        return benefitCalculationState;
     }
 
     @Bean(name = "types")

@@ -164,12 +164,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void on(DeliveryDeletedEvent event) {
         Delivery tempDelivery = deliveries.get(event.getDeliveryId());
         deliveries.remove(event.getDeliveryId());
-
-        final BenefitResult benefitResult = calculateBenefits(tempDelivery.getTotalDeliveryPrice() * (-1));
-        for (String deliveryId : benefitResult.getRewardPointsDistribution().keySet()) {
-            Delivery delivery = deliveries.get(deliveryId);
-            delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryId));
-        }
         createSubscriptionSummaryEvent(tempDelivery,false);
     }
 
@@ -261,10 +255,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return deliveries;
     }
 
-    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService) {
+    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService,
+                                    BenefitExecutionContext benefitExecutionContext) {
         final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription, priceBucketService);
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
-        final BenefitResult benefitResult = calculateBenefits(0.0);
+        final BenefitResult benefitResult = calculateBenefits(0.0, benefitExecutionContext);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
@@ -277,19 +272,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    /*private BenefitResult calculateBenefits(Map<Integer, Delivery> deliveries) {
-        final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
-        benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount());
-        benefitCalculationRequest.setDeliveryAmounts(deliveries.values().stream().collect(Collectors.toMap(
-                Delivery::getDeliveryId, Delivery::getTotalDeliveryPrice
-        )));
-        benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
-        benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
-        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
-        return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
-    }*/
-
-    private BenefitResult calculateBenefits(double currentSubscriptionAmountDifference) {
+    private BenefitResult calculateBenefits(double currentSubscriptionAmountDifference,
+                                            BenefitExecutionContext benefitExecutionContext) {
         final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
         benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount()
                 + currentSubscriptionAmountDifference);
@@ -304,7 +288,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         );
         benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
-        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
         return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
     }
 
@@ -320,7 +303,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void addDelivery(String deliveryId, LocalDate deliveryDate,
                             List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
                             DeliveryChargesRule deliveryChargesRule,
-                            PriceBucketService priceBucketService) {
+                            PriceBucketService priceBucketService,
+                            BenefitExecutionContext benefitExecutionContext) {
         final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
                 deliveryDate, null, DeliveryStatus.CREATED);
         deliveryItems.forEach(deliveryItem -> {
@@ -338,7 +322,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         delivery.calculateTotalWeightInGrams();
         delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
-        final BenefitResult benefitResult = calculateBenefits(delivery.getTotalDeliveryPrice());
+        final BenefitResult benefitResult = calculateBenefits(delivery.getTotalDeliveryPrice(), benefitExecutionContext);
         delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(delivery.getDeliveryId()));
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
@@ -382,7 +366,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         });
     }
 
-    public void deleteDelivery(String deliveryId) {
+    public void deleteDelivery(String deliveryId, BenefitExecutionContext benefitExecutionContext) {
+        Delivery tempDelivery = deliveries.get(deliveryId);
+        final BenefitResult benefitResult =
+                calculateBenefits(tempDelivery.getTotalDeliveryPrice() * (-1), benefitExecutionContext);
+        for (String deliveryKey : benefitResult.getRewardPointsDistribution().keySet()) {
+            Delivery delivery = deliveries.get(deliveryKey);
+            delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryKey));
+        }
         apply(new DeliveryDeletedEvent(this.subscriberId, deliveryId));
     }
 
@@ -399,11 +390,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         );
     }
 
-    public void updateDelivery(String deliveryId, LocalDate deliveryDate, List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService) {
+    public void updateDelivery(String deliveryId, LocalDate deliveryDate,
+                               List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
+                               DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService,
+                               BenefitExecutionContext benefitExecutionContext) {
         Map <String, Map<String, Integer>> itemSubscribed = findDeferenceOfDeliveryItems(deliveryId, deliveryItems, priceBucketService);
-        deleteDelivery(deliveryId);
+        deleteDelivery(deliveryId, benefitExecutionContext);
         addDelivery(deliveryId, deliveryDate,
-                deliveryItems, deliveryChargesRule, priceBucketService);
+                deliveryItems, deliveryChargesRule, priceBucketService, benefitExecutionContext);
         itemSubscribed.keySet().forEach(productId -> {
             apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId)));
         });

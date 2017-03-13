@@ -13,6 +13,7 @@ import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
@@ -23,11 +24,14 @@ public class EligibilityState implements BenefitCalculationState {
 
     @Autowired
     private BenefitViewRepository benefitViewRepository;
-    private final BenefitCalculationState nextState;
+    private BenefitCalculationState nextState;
 
     private static Logger logger = LoggerFactory.getLogger(EligibilityState.class);
     public EligibilityState (BenefitCalculationState state) {
         this.nextState=state;
+    }
+
+    public EligibilityState() {
     }
 
     @Override

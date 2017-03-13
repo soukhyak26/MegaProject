@@ -5,12 +5,15 @@ import com.affaince.subscription.subscriber.services.benefit.state.Applicability
 import com.affaince.subscription.subscriber.services.benefit.state.BenefitCalculationState;
 import com.affaince.subscription.subscriber.services.benefit.state.EligibilityState;
 import com.affaince.subscription.subscriber.services.benefit.state.PointConversionState;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
  * Created by rbsavaliya on 29-05-2016.
  */
+@Component
 public class BenefitExecutionContext {
 
     private BenefitCalculationRequest request;
@@ -19,13 +22,10 @@ public class BenefitExecutionContext {
     private double rewardPoints;
     private String benefitPayMethod;
     private Map<String, Double> rewardPointsDistribution;
+    @Autowired
+    private BenefitCalculationState benefitCalculationState;
 
     public BenefitResult calculateBenefit (BenefitCalculationRequest request) {
-        BenefitCalculationState benefitCalculationState = new EligibilityState(
-                new PointConversionState(
-                        new ApplicabilityState(null)
-                )
-        );
         benefitCalculationState.calculate(this);
         return new BenefitResult(rewardPoints, benefitPayMethod, rewardPointsDistribution);
     }
