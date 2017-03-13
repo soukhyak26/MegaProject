@@ -28,7 +28,7 @@ public class ProductTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        new ProductTestDataGenerator().generate(5);
+        new ProductTestDataGenerator().generate(1);
     }
 
     public ProductTestDataGenerator generate(int size) throws IOException {
@@ -195,6 +195,7 @@ public class ProductTestDataGenerator {
                     SubscriptionItem subscriptionItem = new SubscriptionItem();
                     subscriptionItem.setBasketItemRequests(new ArrayList<>());
                     subscriptionItemMap.put(fileName, subscriptionItem);
+                    subscriptionItemMap.get(fileName).getBasketItemRequests().add(basketItemRequest);
                 }
                 if (lineNumberTracker.containsKey(fileName)) {
                     lineNumberTracker.put(fileName,
