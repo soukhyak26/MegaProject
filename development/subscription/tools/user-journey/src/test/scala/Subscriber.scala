@@ -30,7 +30,7 @@ class Subscriber extends BaseSimulator {
     }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
-  setUp(scn.inject(atOnceUsers(70)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(20)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)

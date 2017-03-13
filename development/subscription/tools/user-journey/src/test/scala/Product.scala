@@ -10,7 +10,7 @@ import scala.util.Random
   */
 class Product extends BaseSimulator {
 
-  new ProductTestDataGenerator().generate(5);
+  new ProductTestDataGenerator().generate(1);
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct).pause(10)
     .repeat(1) {
@@ -28,7 +28,7 @@ class Product extends BaseSimulator {
   //var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
 
   Thread.sleep(1000)
-  setUp(scn.inject(atOnceUsers(5)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(1)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
@@ -153,7 +153,7 @@ object BenefitEquation {
         StringBody(
           """
             |{
-              | "benefitEquation":"given 1000 currency and 2 month = 3 point configure as (totalSubscriptionAmount/subscriptionValue/subscriptionPeriod)*totalSubscriptionPeriod eligible when totalSubscriptionAmount = 1000 and (currentSubscriptionPeriod > 50 or totalLoyaltyPeriod > 36) apply as incremental;",
+              | "benefitEquation":"given 1000 currency and 2 month = 3 point configure as (totalSubscriptionAmount/subscriptionValue/subscriptionPeriod)*totalSubscriptionPeriod eligible when totalSubscriptionAmount >= 1000 and (currentSubscriptionPeriod > 50 or totalLoyaltyPeriod > 36) apply as incremental;",
               |	"activationStartTime":"2016-09-29",
               |	"activationEndTime":"2020-12-30"
             |}

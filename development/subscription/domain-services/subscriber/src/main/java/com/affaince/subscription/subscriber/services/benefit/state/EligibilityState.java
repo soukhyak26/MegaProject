@@ -59,7 +59,7 @@ public class EligibilityState implements BenefitCalculationState {
         ExpressionParser expressionParser = new SpelExpressionParser();
         Expression expression1 = expressionParser.parseExpression(condition);
         EvaluationContext context = new StandardEvaluationContext(benefitExecutionContext.getRequest());
-        boolean result = (boolean) expression1.getValue(context, Boolean.class);
+        boolean result = (boolean)expression1.getValue(context);
         return true;
     }
 }
