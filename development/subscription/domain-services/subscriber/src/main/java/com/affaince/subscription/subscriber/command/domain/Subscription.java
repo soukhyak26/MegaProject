@@ -104,11 +104,17 @@ public class Subscription extends AbstractAnnotatedEntity {
         if (subscriptionItems == null) {
             subscriptionItems = new ArrayList<>();
         }
+        totalSubscriptionAmount += subscriptionItem.getCountPerPeriod()*subscriptionItem.getNoOfCycles()*
+                subscriptionItem.getDiscountedOfferedPrice();
         subscriptionItems.add(subscriptionItem);
     }
 
     @EventSourcingHandler
     public void on(ItemRemovedFromSubscriptionEvent event) {
+        SubscriptionItem subscriptionItem = subscriptionItems.stream().
+                filter(item -> item.getProductId().equals(event.getItemId())).findAny().get();
+        totalSubscriptionAmount -= subscriptionItem.getCountPerPeriod()*subscriptionItem.getNoOfCycles()*
+                subscriptionItem.getDiscountedOfferedPrice();
         subscriptionItems.removeIf(item -> item.getProductId().equals(event.getItemId()));
     }
 
@@ -181,5 +187,17 @@ public class Subscription extends AbstractAnnotatedEntity {
 
     public List<SubscriptionItem> getSubscriptionItems() {
         return subscriptionItems;
+    }
+
+    public LocalDate getSubscriptionCreatedDate() {
+        return subscriptionCreatedDate;
+    }
+
+    public LocalDate getSubscriptionExpiredDate() {
+        return subscriptionExpiredDate;
+    }
+
+    public void setSubscriptionExpiredDate(LocalDate subscriptionExpiredDate) {
+        this.subscriptionExpiredDate = subscriptionExpiredDate;
     }
 }

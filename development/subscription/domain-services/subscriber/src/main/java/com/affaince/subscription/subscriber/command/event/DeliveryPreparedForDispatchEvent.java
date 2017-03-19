@@ -1,15 +1,17 @@
 package com.affaince.subscription.subscriber.command.event;
 
+import com.affaince.subscription.subscriber.command.domain.Delivery;
+
 /**
  * Created by rbsavaliya on 11-12-2016.
  */
 public class DeliveryPreparedForDispatchEvent {
     private String subscriberId;
-    private String deliveryId;
+    private Delivery delivery;
 
-    public DeliveryPreparedForDispatchEvent(String subscriberId, String deliveryId) {
+    public DeliveryPreparedForDispatchEvent(String subscriberId, Delivery delivery) {
         this.subscriberId = subscriberId;
-        this.deliveryId = deliveryId;
+        this.delivery = delivery;
     }
 
     public DeliveryPreparedForDispatchEvent() {
@@ -19,7 +21,7 @@ public class DeliveryPreparedForDispatchEvent {
         return subscriberId;
     }
 
-    public String getDeliveryId() {
-        return deliveryId;
+    public Delivery getDelivery() {
+        return delivery;
     }
 }

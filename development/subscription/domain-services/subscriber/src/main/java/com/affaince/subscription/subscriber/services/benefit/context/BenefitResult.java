@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.services.benefit.context;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,7 +10,7 @@ public class BenefitResult {
 
     private double rewardPoints;
     private String benefitPayMethod;
-    private Map<String, Double> rewardPointsDistribution;
+    private Map<String, Double> rewardPointsDistribution = new HashMap<>();
 
     public BenefitResult(double rewardPoints, String benefitPayMethod, Map<String, Double> rewardPointsDistribution) {
         this.rewardPoints = rewardPoints;

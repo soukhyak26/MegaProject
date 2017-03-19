@@ -23,12 +23,13 @@ public class Delivery {
     private double rewardPoints;
     private ReasonCode reasonCode;
 
-    public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status) {
+    public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double rewardPoints) {
         this.deliveryId = deliveryId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.dispatchDate = dispatchDate;
         this.status = status;
+        this.rewardPoints = rewardPoints;
     }
 
     public Delivery() {

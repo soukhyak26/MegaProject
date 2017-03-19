@@ -33,7 +33,7 @@ public class DeliveryCreatedEventListener {
                         deliveryItem.getProductPricingCategory())
         ));
         final DeliveryView deliveryView = new DeliveryView(event.getDeliveryId(), event.getSubscriberId(),
-                event.getSubscriptionId(),deliveryItems , event.getDeliveryDate(), event.getStatus());
+                event.getSubscriptionId(),deliveryItems , event.getDeliveryDate(), event.getStatus(), event.getRewardPoints());
         deliveryViewRepository.save(deliveryView);
     }
 }

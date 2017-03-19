@@ -30,14 +30,16 @@ public class DeliveryView {
     private LocalDate dispatchDate;
     private DeliveryStatus status;
     private ReasonCode reasonCode;
+    private double rewardPoints;
 
-    public DeliveryView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status) {
+    public DeliveryView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status, double rewardPoints) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.status = status;
+        this.rewardPoints = rewardPoints;
     }
 
     public String getDeliveryId() {
@@ -102,5 +104,13 @@ public class DeliveryView {
 
     public void setReasonCode(ReasonCode reasonCode) {
         this.reasonCode = reasonCode;
+    }
+
+    public double getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public void setRewardPoints(double rewardPoints) {
+        this.rewardPoints = rewardPoints;
     }
 }

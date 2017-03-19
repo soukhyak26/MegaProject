@@ -22,6 +22,7 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.slf4j.Logger;
@@ -156,8 +157,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on (DeliveryCreatedEvent event) {
+        if (this.subscription.getSubscriptionExpiredDate() == null ||
+                this.subscription.getSubscriptionExpiredDate().isBefore(event.getDeliveryDate())) {
+            this.subscription.setSubscriptionExpiredDate(event.getDeliveryDate());
+        }
         deliveries.put(event.getDeliveryId(), new Delivery(event.getDeliveryId(), event.getDeliveryItems(), event.getDeliveryDate(), event.getDispatchDate(),
-                event.getStatus()));
+                event.getStatus(), event.getRewardPoints()));
     }
 
     @EventSourcingHandler
@@ -170,6 +175,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(DeliveryPreparedForDispatchEvent event) {
         this.subscriberId = event.getSubscriberId();
+        deliveries.put(event.getDelivery().getDeliveryId(), event.getDelivery());
     }
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
@@ -237,6 +243,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                     weeklyDelivery = new Delivery();
                     weeklyDelivery.setDeliveryId(nextDeliveryWeek + SysDate.now().getYear() + "");
                     weeklyDelivery.setDeliveryDate(SysDate.now().plusWeeks(nextDeliveryWeek - weekOfYear));
+                    if (this.subscription.getSubscriptionExpiredDate() == null ||
+                            this.subscription.getSubscriptionExpiredDate().isBefore(weeklyDelivery.getDeliveryDate())) {
+                        this.subscription.setSubscriptionExpiredDate(weeklyDelivery.getDeliveryDate());
+                    }
                     weeklyDelivery.setStatus(DeliveryStatus.CREATED);
                     deliveries.put(nextDeliveryWeek, weeklyDelivery);
                 }
@@ -264,10 +274,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
-            delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
+            if (rewardsPointsDistribution.get(delivery.getDeliveryId()) != null) {
+                delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
+            }
             apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
-                    delivery.getTotalWeight()));
+                    delivery.getTotalWeight(), delivery.getRewardPoints()));
             createSubscriptionSummaryEvent(delivery, true);
         }
     }
@@ -288,6 +300,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         );
         benefitCalculationRequest.setTotalLoyaltyPeriod(totalLoyaltyPeriod);
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
+        benefitCalculationRequest.setCurrentSubscriptionPeriod(
+                Days.daysBetween(subscription.getSubscriptionCreatedDate().toDateTimeAtStartOfDay(),
+                        subscription.getSubscriptionExpiredDate().toDateTimeAtStartOfDay()).getDays());
         return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
     }
 
@@ -306,7 +321,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                             PriceBucketService priceBucketService,
                             BenefitExecutionContext benefitExecutionContext) {
         final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
-                deliveryDate, null, DeliveryStatus.CREATED);
+                deliveryDate, null, DeliveryStatus.CREATED, 0.0);
         deliveryItems.forEach(deliveryItem -> {
             for (int i = 0; i < deliveryItem.getQuantity(); i++) {
                 final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
@@ -326,7 +341,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(delivery.getDeliveryId()));
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
-                delivery.getTotalWeight()));
+                delivery.getTotalWeight(), delivery.getRewardPoints()));
 
         createSubscriptionSummaryEvent(delivery, true);
     }
@@ -386,7 +401,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
         });
         final DeliveryPreparedForDispatchEvent event = new DeliveryPreparedForDispatchEvent(
-                this.subscriberId, deliveryId
+                this.subscriberId, delivery
         );
     }
 

@@ -27,7 +27,7 @@ public class DeliveryPreparedForDispatchEventListener {
 
     @EventHandler
     public void on(DeliveryPreparedForDispatchEvent event) {
-        final DeliveryView deliveryView = deliveryViewRepository.findOne(event.getDeliveryId());
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(event.getDelivery().getDeliveryId());
         deliveryView.setStatus(DeliveryStatus.READYFORDELIVERY);
         deliveryView.getDeliveryItems().forEach(deliveryItem -> {
             LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository

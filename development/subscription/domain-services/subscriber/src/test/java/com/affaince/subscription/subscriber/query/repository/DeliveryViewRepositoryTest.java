@@ -43,7 +43,7 @@ public class DeliveryViewRepositoryTest {
             Random perDayDeliveryRandomObj = new Random ();
             int perDayDeliveryCount = perDayDeliveryRandomObj.ints(20,50).findFirst().getAsInt();
             for (int j=0; j<perDayDeliveryCount; j++) {
-                final DeliveryView deliveryView = new DeliveryView(deliveryId++ + "","1","1", null, deliveryDate, DeliveryStatus.CREATED);
+                final DeliveryView deliveryView = new DeliveryView(deliveryId++ + "","1","1", null, deliveryDate, DeliveryStatus.CREATED, 25);
                 Random perDeliveryItemCountRandomObj = new Random ();
                 int deliveryItemCount = perDeliveryItemCountRandomObj.ints(1, 10).findFirst().getAsInt();
                 List <DeliveryItem> deliveryItems = new ArrayList<>(10);
