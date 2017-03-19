@@ -14,6 +14,9 @@ public class SubscriptionActivitySummaryEvent {
         this.subscribedItems = subscribedItems;
     }
 
+    public SubscriptionActivitySummaryEvent() {
+    }
+
     public String getProductId() {
         return productId;
     }

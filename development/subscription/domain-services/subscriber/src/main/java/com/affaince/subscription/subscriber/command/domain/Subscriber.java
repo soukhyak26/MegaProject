@@ -226,9 +226,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    private Map<Integer, Delivery> makeDeliveriesReady(Subscription subscription, PriceBucketService priceBucketService) {
+    private Map<String, Delivery> makeDeliveriesReady(Subscription subscription, PriceBucketService priceBucketService) {
         final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
-        final Map<Integer, Delivery> deliveries = new HashMap<>();
+        final Map<String, Delivery> deliveries = new HashMap<>();
         int weekOfYear = SysDate.now().getWeekOfWeekyear();
         for (SubscriptionItem subscriptionItem : subscriptionItems) {
             int nextDeliveryWeek = weekOfYear;
@@ -248,7 +248,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                         this.subscription.setSubscriptionExpiredDate(weeklyDelivery.getDeliveryDate());
                     }
                     weeklyDelivery.setStatus(DeliveryStatus.CREATED);
-                    deliveries.put(nextDeliveryWeek, weeklyDelivery);
+                    deliveries.put(nextDeliveryWeek+"", weeklyDelivery);
                 }
                 for (int j = 0; j < subscriptionItem.getCountPerPeriod(); j++) {
                     final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
@@ -267,9 +267,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void confirmSubscription(DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService,
                                     BenefitExecutionContext benefitExecutionContext) {
-        final Map<Integer, Delivery> deliveries = makeDeliveriesReady(subscription, priceBucketService);
+        final Map<String, Delivery> deliveries = makeDeliveriesReady(subscription, priceBucketService);
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
-        final BenefitResult benefitResult = calculateBenefits(0.0, benefitExecutionContext);
+        final BenefitResult benefitResult =
+                calculateBenefits(deliveries, 0.0, benefitExecutionContext);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
@@ -284,7 +285,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    private BenefitResult calculateBenefits(double currentSubscriptionAmountDifference,
+    private BenefitResult calculateBenefits(Map<String, Delivery> deliveries,
+                                            double currentSubscriptionAmountDifference,
                                             BenefitExecutionContext benefitExecutionContext) {
         final BenefitCalculationRequest benefitCalculationRequest = new BenefitCalculationRequest();
         benefitCalculationRequest.setCurrentSubscriptionAmount(subscription.getTotalSubscriptionAmount()
@@ -302,7 +304,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         benefitCalculationRequest.setTotalSubscriptionAmount(totalSubscriptionAmount);
         benefitCalculationRequest.setCurrentSubscriptionPeriod(
                 Days.daysBetween(subscription.getSubscriptionCreatedDate().toDateTimeAtStartOfDay(),
-                        subscription.getSubscriptionExpiredDate().toDateTimeAtStartOfDay()).getDays());
+                        subscription.getSubscriptionExpiredDate().toDateTimeAtStartOfDay()).getDays()/30);
         return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
     }
 
@@ -337,7 +339,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         delivery.calculateTotalWeightInGrams();
         delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
-        final BenefitResult benefitResult = calculateBenefits(delivery.getTotalDeliveryPrice(), benefitExecutionContext);
+        final BenefitResult benefitResult = calculateBenefits(this.deliveries, delivery.getTotalDeliveryPrice(), benefitExecutionContext);
         delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(delivery.getDeliveryId()));
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
@@ -384,7 +386,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void deleteDelivery(String deliveryId, BenefitExecutionContext benefitExecutionContext) {
         Delivery tempDelivery = deliveries.get(deliveryId);
         final BenefitResult benefitResult =
-                calculateBenefits(tempDelivery.getTotalDeliveryPrice() * (-1), benefitExecutionContext);
+                calculateBenefits(this.deliveries, tempDelivery.getTotalDeliveryPrice() * (-1), benefitExecutionContext);
         for (String deliveryKey : benefitResult.getRewardPointsDistribution().keySet()) {
             Delivery delivery = deliveries.get(deliveryKey);
             delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryKey));

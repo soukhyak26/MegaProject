@@ -9,8 +9,7 @@ public class PointConversionParameters {
     private double subscriptionPeriod;
     private double pointValue;
     private double currentSubscriptionAmount;
-    private double totalSubscriptionAmount;
-    private int totalSubscriptionPeriod;
+    private double currentSubscriptionPeriod;
 
     public double getSubscriptionValue() {
         return subscriptionValue;
@@ -44,19 +43,11 @@ public class PointConversionParameters {
         return currentSubscriptionAmount;
     }
 
-    public double getTotalSubscriptionAmount() {
-        return totalSubscriptionAmount;
+    public double getCurrentSubscriptionPeriod() {
+        return currentSubscriptionPeriod;
     }
 
-    public void setTotalSubscriptionAmount(double totalSubscriptionAmount) {
-        this.totalSubscriptionAmount = totalSubscriptionAmount;
-    }
-
-    public int getTotalSubscriptionPeriod() {
-        return totalSubscriptionPeriod;
-    }
-
-    public void setTotalSubscriptionPeriod(int totalSubscriptionPeriod) {
-        this.totalSubscriptionPeriod = totalSubscriptionPeriod;
+    public void setCurrentSubscriptionPeriod(double currentSubscriptionPeriod) {
+        this.currentSubscriptionPeriod = currentSubscriptionPeriod;
     }
 }
