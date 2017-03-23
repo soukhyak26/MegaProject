@@ -45,6 +45,7 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
         //find today's productActualsView
 
         //ProductActualsView productActualsViewForToday = productActualsViewRepository.findOne(new ProductVersionId(event.getProductId(), SysDate.now()));
+        //very first record of ProductActualsView
         if (latestProductActualsView == null) {
             //ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), SysDate.now().minusDays(1))).get(0);
             //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
@@ -52,19 +53,42 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
             latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
             latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
         } else {
-            long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
-            //latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), SysDate.now()), new LocalDate(9999, 12, 31), 0, 0, latestSubscribedProductCount);
-            latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+            //latest record of ProductActualsView which is not of the same date when event was generated
+            if(latestProductActualsView.getProductVersionId().getFromDate().isEqual(event.getSubscriptionChangedDate())) {
+                //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+                latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                productActualsViewRepository.save(latestProductActualsView);
+                //Latest record is of the previous day of the event generated
+            }else if(latestProductActualsView.getProductVersionId().getFromDate().isBefore(event.getSubscriptionChangedDate())){
+
+                long latestTotalSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+                latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), new LocalDate(9999, 12, 31), 0, 0, 0);
+                latestProductActualsView.setNewSubscriptions(0);
+                latestProductActualsView.setTotalNumberOfExistingSubscriptions(latestTotalSubscriptionCount);
+                latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                productActualsViewRepository.save(latestProductActualsView);
+                //latest record is of the later date of the event generated.. probably because event has reached here too late.. should not happen
+            }else{
+                ProductActualsView eventDatedActualsView=productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(),event.getSubscriptionChangedDate())).get(0);
+                eventDatedActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                eventDatedActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                productActualsViewRepository.save(eventDatedActualsView);
+
+                latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                productActualsViewRepository.save(latestProductActualsView);
+            }
         }
 
         PriceBucketView priceBucketView = priceBucketViewRepository.findOne(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
         final long revisedNewSubscriptionCountOfPriceBucket = event.getNewSubscriptionCount();
         final long revisedTotalSubscriptionCountOfPriceBucket = event.getTotalSubscriptionCount();
-        final long addedSubscriptionCount= event.getAddedSubscriptionCount();
+        //final long addedSubscriptionCount= event.getAddedSubscriptionCount();
         priceBucketView.setNumberOfNewSubscriptionsAssociatedWithAPrice(revisedNewSubscriptionCountOfPriceBucket);
         priceBucketView.setNumberOfExistingSubscriptionsAssociatedWithAPrice(revisedTotalSubscriptionCountOfPriceBucket);
         priceBucketViewRepository.save(priceBucketView);
-        productActualsViewRepository.save(latestProductActualsView);
         try {
             CalculateExpectedProfitPerPriceBucketCommand command = new CalculateExpectedProfitPerPriceBucketCommand(event.getProductId(), event.getPriceBucketId());
             commandGateway.executeAsync(command);
