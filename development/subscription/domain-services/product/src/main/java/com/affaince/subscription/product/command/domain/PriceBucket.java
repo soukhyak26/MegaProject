@@ -7,6 +7,7 @@ import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -218,10 +219,11 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     }
 
 
-    public void addSubscriptionToPriceBucket(long subscriptionCount) {
+    public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount=this.getNumberOfNewSubscriptions()+subscriptionCount;
         long revisedTotalSubscriptionCount=this.getNumberOfExistingSubscriptions()+subscriptionCount;
-        apply(new NewSubscriptionAddedToPriceBucketEvent(productId,priceBucketId,subscriptionCount,revisedNewSubscriptionCount,revisedTotalSubscriptionCount));
+        apply(new NewSubscriptionAddedToPriceBucketEvent(productId,priceBucketId,subscriptionCount,
+                revisedNewSubscriptionCount,revisedTotalSubscriptionCount, subscriptionChangedDate));
     }
 
     @EventSourcingHandler

@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.command.event;
 
+import org.joda.time.LocalDate;
+
 import java.util.Map;
 
 /**
@@ -8,10 +10,12 @@ import java.util.Map;
 public class SubscriptionActivitySummaryEvent {
     private String productId;
     private Map<String, Integer> subscribedItems;
+    private LocalDate subscriptionChangedDate;
 
-    public SubscriptionActivitySummaryEvent(String productId, Map<String, Integer> subscribedItems) {
+    public SubscriptionActivitySummaryEvent(String productId, Map<String, Integer> subscribedItems, LocalDate subscriptionChangedDate) {
         this.productId = productId;
         this.subscribedItems = subscribedItems;
+        this.subscriptionChangedDate = subscriptionChangedDate;
     }
 
     public SubscriptionActivitySummaryEvent() {
@@ -23,5 +27,9 @@ public class SubscriptionActivitySummaryEvent {
 
     public Map<String, Integer> getSubscribedItems() {
         return subscribedItems;
+    }
+
+    public LocalDate getSubscriptionChangedDate() {
+        return subscriptionChangedDate;
     }
 }

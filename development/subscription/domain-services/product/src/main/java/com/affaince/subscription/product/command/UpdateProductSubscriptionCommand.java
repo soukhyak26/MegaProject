@@ -12,10 +12,12 @@ public class UpdateProductSubscriptionCommand {
     @TargetAggregateIdentifier
     private String productId;
     private Map<String,Integer> priceBucketWiseSubscriptionCount;
+    private LocalDate subscriptionChangedDate;
 
-    public UpdateProductSubscriptionCommand(String productId, Map<String,Integer> priceBucketWiseSubscriptionCount) {
+    public UpdateProductSubscriptionCommand(String productId, Map<String, Integer> priceBucketWiseSubscriptionCount, LocalDate subscriptionChangedDate) {
         this.productId = productId;
         this.priceBucketWiseSubscriptionCount = priceBucketWiseSubscriptionCount;
+        this.subscriptionChangedDate = subscriptionChangedDate;
     }
 
     public String getProductId() {
@@ -26,4 +28,7 @@ public class UpdateProductSubscriptionCommand {
         return priceBucketWiseSubscriptionCount;
     }
 
+    public LocalDate getSubscriptionChangedDate() {
+        return subscriptionChangedDate;
+    }
 }

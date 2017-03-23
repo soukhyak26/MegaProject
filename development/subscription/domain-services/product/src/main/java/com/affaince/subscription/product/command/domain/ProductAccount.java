@@ -11,6 +11,7 @@ import com.affaince.subscription.product.services.operatingexpense.OperatingExpe
 import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import com.affaince.subscription.product.vo.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -27,7 +28,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;// a version should go away when all pricebuckets associated with it are expired.??
     private SortedSet<FixedExpensePerProduct> fixedExpenseVersions;//should be reset annually. All but the latest one should vanish
     private SortedSet<VariableExpensePerProduct> variableExpenseVersions;//should be reset annually. All but the latest one should vanish
+    @EventSourcedMember
     private Map<LocalDateTime, PriceBucket> recommendedPriceBuckets;// taken care of creation and expiration automatically
+    @EventSourcedMember
     private Map<LocalDateTime, PriceBucket> activePriceBuckets;// taken care of creation and expiration automatically
     private long currentStockInUnits;// should be adjusted on each delivery made
     private ProductPricingCategory productPricingCategory;
@@ -338,7 +341,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             final PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(priceBucketId);
             final int subscriptionCount = priceBucketWiseSubscriptionCount.get(priceBucketId);
             if (subscriptionCount > 0) {
-                activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount);
+                activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount, command.getSubscriptionChangedDate());
             } else {
                 activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
             }

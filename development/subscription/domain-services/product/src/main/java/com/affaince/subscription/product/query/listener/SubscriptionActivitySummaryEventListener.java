@@ -21,7 +21,9 @@ public class SubscriptionActivitySummaryEventListener {
     @EventHandler
     public void on(SubscriptionActivitySummaryEvent event) throws Exception {
 
-        UpdateProductSubscriptionCommand command= new UpdateProductSubscriptionCommand(event.getProductId(),event.getSubscribedItems());
+        UpdateProductSubscriptionCommand command=
+                new UpdateProductSubscriptionCommand(event.getProductId(),
+                        event.getSubscribedItems(), event.getSubscriptionChangedDate());
         commandGateway.executeAsync(command);
     }
 }

@@ -14,10 +14,14 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created by mandar on 29-01-2017.
  */
+@Component
 public class NewSubscriptionAddedToPriceBucketEventListener {
     private final ProductActualsViewRepository productActualsViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
@@ -33,14 +37,24 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
 
     @EventHandler
     public void on(NewSubscriptionAddedToPriceBucketEvent event) throws Exception {
-        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-//        ProductActualsView productActualsView = productActualsViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
+
+        ProductActualsView latestProductActualsView =
+                productActualsViewRepository.findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc
+                        (event.getProductId());
+
         //find today's productActualsView
-        ProductActualsView productActualsViewForToday = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), SysDate.now())).get(0);
-        if (productActualsViewForToday == null) {
-            ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), SysDate.now().minusDays(1))).get(0);
+
+        //ProductActualsView productActualsViewForToday = productActualsViewRepository.findOne(new ProductVersionId(event.getProductId(), SysDate.now()));
+        if (latestProductActualsView == null) {
+            //ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), SysDate.now().minusDays(1))).get(0);
+            //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+            latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), SysDate.now()), new LocalDate(9999, 12, 31), 0, 0, 0);
+            latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+            latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+        } else {
             long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
-            productActualsViewForToday = new ProductActualsView(new ProductVersionId(event.getProductId(), SysDate.now()), new LocalDate(9999, 12, 31), 0, 0, latestSubscribedProductCount);
+            //latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), SysDate.now()), new LocalDate(9999, 12, 31), 0, 0, latestSubscribedProductCount);
+            latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
         }
 
         PriceBucketView priceBucketView = priceBucketViewRepository.findOne(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
@@ -50,8 +64,7 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
         priceBucketView.setNumberOfNewSubscriptionsAssociatedWithAPrice(revisedNewSubscriptionCountOfPriceBucket);
         priceBucketView.setNumberOfExistingSubscriptionsAssociatedWithAPrice(revisedTotalSubscriptionCountOfPriceBucket);
         priceBucketViewRepository.save(priceBucketView);
-        productActualsViewForToday.addToChurnedSubscriptionCount(addedSubscriptionCount);
-        productActualsViewRepository.save(productActualsViewForToday);
+        productActualsViewRepository.save(latestProductActualsView);
         try {
             CalculateExpectedProfitPerPriceBucketCommand command = new CalculateExpectedProfitPerPriceBucketCommand(event.getProductId(), event.getPriceBucketId());
             commandGateway.executeAsync(command);

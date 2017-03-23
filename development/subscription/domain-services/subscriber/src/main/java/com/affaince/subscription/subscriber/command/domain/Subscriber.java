@@ -379,7 +379,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             }
         });
         itemSubscribed.keySet().forEach(productId -> {
-            apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId)));
+            apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId), SysDate.now()));
         });
     }
 
@@ -416,7 +416,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         addDelivery(deliveryId, deliveryDate,
                 deliveryItems, deliveryChargesRule, priceBucketService, benefitExecutionContext);
         itemSubscribed.keySet().forEach(productId -> {
-            apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId)));
+            apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId), SysDate.now()));
         });
     }
 
