@@ -52,6 +52,7 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
             latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), SysDate.now()), new LocalDate(9999, 12, 31), 0, 0, 0);
             latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
             latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+            productActualsViewRepository.save(latestProductActualsView);
         } else {
             //latest record of ProductActualsView which is not of the same date when event was generated
             if(latestProductActualsView.getProductVersionId().getFromDate().isEqual(event.getSubscriptionChangedDate())) {
