@@ -316,7 +316,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void registerOpeningPrice(String productId, double openingPriceOrPercent) {
         PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
         final LocalDateTime currentDate = SysDateTime.now();
-        PriceBucket newPriceBucket = createNewPriceBucket(productId, latestTaggedPriceVersion, openingPriceOrPercent, EntityStatus.CREATED, currentDate);
+        PriceBucket newPriceBucket = createNewPriceBucket(productId, latestTaggedPriceVersion, openingPriceOrPercent, EntityStatus.ACTIVE, currentDate);
 
         //apply(new OpeningPriceOrPercentRegisteredEvent(productId, newPriceBucket));
         apply(new OpeningPriceOrPercentRegisteredEvent(

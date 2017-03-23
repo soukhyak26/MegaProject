@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.repository;
 
+import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
@@ -14,15 +15,21 @@ import java.util.List;
  */
 public interface PriceBucketViewRepository extends PagingAndSortingRepository<PriceBucketView, ProductwisePriceBucketId> {
 
-    @Query("{ entityStatus:'1' }")
+    @Query("{ entityStatus:'ACTIVE' }")
     PriceBucketView findOne(ProductwisePriceBucketId productwisePriceBucketId);
-    @Query("{ entityStatus:'1' }")
+
+    PriceBucketView findByProductwisePriceBucketIdAndEntityStatus (ProductwisePriceBucketId productwisePriceBucketId, EntityStatus entityStatus);
+    @Query("{ entityStatus:'ACTIVE' }")
     List<PriceBucketView> findAll(Sort sort);
-    @Query("{ entityStatus:'1' }")
+
+    List<PriceBucketView> findAllByProductwisePriceBucketIdAndEntityStatus (EntityStatus entityStatus);
+
+    @Query("{ entityStatus:'ACTIVE' }")
     List<PriceBucketView> findByProductwisePriceBucketId_ProductId(String productId);
 
-    @Query("{ entityStatus:'1' }")
+    @Query("{ entityStatus:'ACTIVE' }")
     List<PriceBucketView> findByProductwisePriceBucketId_ProductId(String productId, Sort sort);
+
     List<PriceBucketView> findByProductwisePriceBucketId_ProductIdAndTaggedPriceVersion_PurchasePricePerUnit(String productId, double purchasePricePerUnit);
     List<PriceBucketView> findByProductwisePriceBucketIdAndEntityStatus(ProductwisePriceBucketId productwisePriceBucketId, int entityStatus);
 

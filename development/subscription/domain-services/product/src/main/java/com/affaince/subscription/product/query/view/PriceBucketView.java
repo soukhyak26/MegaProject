@@ -13,7 +13,7 @@ import java.util.List;
  * Created by mandark on 28-01-2016.
  */
 
-@Document
+@Document (collection = "PriceBucketView")
 public class PriceBucketView  implements Comparable<PriceBucketView>{
     @Id
     private final ProductwisePriceBucketId productwisePriceBucketId;
@@ -172,5 +172,20 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     public void addToChurnedSubscriptions( int subscriptionCount){
         this.numberOfChurnedSubscriptionsAssociatedWithAPrice=this.numberOfChurnedSubscriptionsAssociatedWithAPrice + subscriptionCount;
         this.numberOfExistingSubscriptionsAssociatedWithAPrice -=subscriptionCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PriceBucketView)) return false;
+
+        PriceBucketView that = (PriceBucketView) o;
+
+        return getProductwisePriceBucketId() != null ? getProductwisePriceBucketId().equals(that.getProductwisePriceBucketId()) : that.getProductwisePriceBucketId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getProductwisePriceBucketId() != null ? getProductwisePriceBucketId().hashCode() : 0;
     }
 }

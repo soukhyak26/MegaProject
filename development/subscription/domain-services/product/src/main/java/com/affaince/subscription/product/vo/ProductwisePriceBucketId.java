@@ -21,4 +21,22 @@ public class ProductwisePriceBucketId implements Serializable{
     public String getPriceBucketId() {
         return priceBucketId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductwisePriceBucketId)) return false;
+
+        ProductwisePriceBucketId that = (ProductwisePriceBucketId) o;
+
+        if (!getProductId().equals(that.getProductId())) return false;
+        return getPriceBucketId().equals(that.getPriceBucketId());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getProductId().hashCode();
+        result = 31 * result + getPriceBucketId().hashCode();
+        return result;
+    }
 }
