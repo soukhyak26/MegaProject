@@ -122,6 +122,9 @@ public class Axon extends Default {
 
                 from("{{subscription.pricing.timer.expression}}")
                         .routeId("PriceDeterminator")
+                        .to("direct:productsRetriever");
+
+                from("direct:productsRetriever")
                         .to("bean:productsRetriever")
                         .split(body())
                         //.to("bean:forecastInterpolatedSubscriptionCountFinder") //interpolate monthly forecasted values to daily valules

@@ -84,6 +84,9 @@ public class Axon extends Default {
                 //job for calculating client  and pseudoActuals for eligible products.
                 from("{{subscription.forecast.timer.expression}}")
                         .routeId("productsRetriever")
+                        .to("direct: productRetriever");
+
+                from("direct: productRetriever")
                         .to("bean:productsRetriever")
                         .split(body())
                         .to("{{subscription.forecast.poston}}")

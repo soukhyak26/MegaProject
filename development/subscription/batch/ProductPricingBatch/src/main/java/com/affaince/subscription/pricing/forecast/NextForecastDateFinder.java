@@ -14,6 +14,7 @@ public class NextForecastDateFinder {
 
     public LocalDateTime findNextForecastDateForAProduct(String productId) {
         final int actualsAggregationPeriodForTargetForecast = productConfigurationViewRepository.findOne(productId).getActualsAggregationPeriodForTargetForecast();
-        return SysDateTime.now().plusDays(actualsAggregationPeriodForTargetForecast);
+        //return SysDateTime.now().plusDays(actualsAggregationPeriodForTargetForecast);
+        return SysDateTime.now().plusDays(1);
     }
 }
