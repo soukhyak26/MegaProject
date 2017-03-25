@@ -26,6 +26,10 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     private long numberOfChurnedSubscriptionsAssociatedWithAPrice;
     private long numberOfExistingSubscriptionsAssociatedWithAPrice;
     private EntityStatus entityStatus;
+    private double expectedPurchaseCost;
+    private double expectedRevenue;
+    private double expectedProfit;
+
     private double registeredPurchaseCost;
     private double registeredRevenue;
     private double registeredProfit;
@@ -133,6 +137,30 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
 
     public void setFromDate(LocalDateTime fromDate) {
         this.fromDate = fromDate;
+    }
+
+    public double getExpectedPurchaseCost() {
+        return expectedPurchaseCost;
+    }
+
+    public void setExpectedPurchaseCost(double expectedPurchaseCost) {
+        this.expectedPurchaseCost = expectedPurchaseCost;
+    }
+
+    public double getExpectedRevenue() {
+        return expectedRevenue;
+    }
+
+    public void setExpectedRevenue(double expectedRevenue) {
+        this.expectedRevenue = expectedRevenue;
+    }
+
+    public double getExpectedProfit() {
+        return expectedProfit;
+    }
+
+    public void setExpectedProfit(double expectedProfit) {
+        this.expectedProfit = expectedProfit;
     }
 
     public double getRegisteredPurchaseCost() {

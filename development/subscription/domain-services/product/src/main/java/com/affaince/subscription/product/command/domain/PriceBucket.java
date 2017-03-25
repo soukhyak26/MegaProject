@@ -22,6 +22,8 @@ public class PriceBucket extends AbstractAnnotatedEntity {
     private long numberOfChurnedSubscriptions;
     private long numberOfExistingSubscriptions;
     private long numberOfDeliveredSubscriptions;
+    private double expectedPurchaseCostOfDeliveredUnits;
+    private double expectedRevenue;
     private double expectedProfit;
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
@@ -249,6 +251,41 @@ public class PriceBucket extends AbstractAnnotatedEntity {
             this.numberOfExistingSubscriptions=event.getRevisedTotalSubscriptionCount();
     }
 
+    //Expected revenue/profit/cost at the time of each new/churned subscripton affiliated to this price bucket
+    public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, double fixedExpensePeUnit, double variableExpensePerUnit) {
+        LocalDateTime fromDate = this.getFromDate();
+        LocalDateTime toDate = this.getToDate();
+        double purchaseCost=0;
+        double revenue=0;
+        double totalFixedExpense=0;
+        double totalVariableExpense=0;
+        double profit=0;
+
+        if(this.productPricingCategory==ProductPricingCategory.PRICE_COMMITMENT) {
+            revenue=this.getNumberOfExistingSubscriptions() * this.getOfferedPriceOrPercentDiscountPerUnit();
+            purchaseCost=this.getNumberOfExistingSubscriptions() * (this.getTaggedPriceVersion().getPurchasePricePerUnit());
+            totalFixedExpense=this.getNumberOfExistingSubscriptions()*fixedExpensePeUnit;
+            totalVariableExpense=this.getNumberOfExistingSubscriptions()*variableExpensePerUnit;
+            profit =revenue -(purchaseCost + totalFixedExpense + totalVariableExpense);
+            apply(new PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
+        }else if(this.productPricingCategory==ProductPricingCategory.DISCOUNT_COMMITMENT){
+            double offeredPrice= (this.getTaggedPriceVersion().getMRP()-(this.getTaggedPriceVersion().getMRP()*this.getOfferedPriceOrPercentDiscountPerUnit())) ;
+            revenue= this.getNumberOfExistingSubscriptions()*offeredPrice;
+            purchaseCost=this.getNumberOfExistingSubscriptions() * this.getTaggedPriceVersion().getPurchasePricePerUnit();
+            totalFixedExpense=this.getNumberOfExistingSubscriptions()*fixedExpensePeUnit;
+            totalVariableExpense=this.getNumberOfExistingSubscriptions()*variableExpensePerUnit;
+            profit =revenue -(purchaseCost + totalFixedExpense + totalVariableExpense);
+            apply(new PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
+        }else{
+            revenue=this.getNumberOfExistingSubscriptions() * this.getOfferedPriceOrPercentDiscountPerUnit();
+            purchaseCost=this.getNumberOfExistingSubscriptions() * (this.getTaggedPriceVersion().getPurchasePricePerUnit());
+            totalFixedExpense=this.getNumberOfExistingSubscriptions()*fixedExpensePeUnit;
+            totalVariableExpense=this.getNumberOfExistingSubscriptions()*variableExpensePerUnit;
+            profit =revenue -(purchaseCost + totalFixedExpense + totalVariableExpense);
+            apply(new PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
+        }
+
+    }
     public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, double fixedExpensePeUnit, double variableExpensePerUnit) {
         LocalDateTime fromDate = this.getFromDate();
         LocalDateTime toDate = this.getToDate();
@@ -282,7 +319,13 @@ public class PriceBucket extends AbstractAnnotatedEntity {
             apply(new PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost,revenue,profit));
         }
     }
+    @EventSourcingHandler
+    public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event){
+      this.expectedPurchaseCostOfDeliveredUnits=event.getPurchaseCostOfDeliveredUnits();
+      this.expectedRevenue=event.getRevenue();
+      this.expectedProfit=event.getProfitAmountPerPriceBucket();
 
+    }
     @EventSourcingHandler
     public void on(PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent event){
         this.registeredPurchaseCostOfDeliveredUnits=event.getPurchaseCostOfDeliveredUnits();

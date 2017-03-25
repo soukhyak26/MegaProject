@@ -271,6 +271,14 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return bucketsWithSamePurchasePrice;
     }
 
+    public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId){
+        final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
+        LocalDateTime fromDate = priceBucket.getFromDate();
+        LocalDateTime toDate = priceBucket.getToDate();
+        double fixedExpensePerUnit = this.findLatestFixedExpensePerUnitInDateRange(fromDate, toDate);
+        double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
+        priceBucket.calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
+    }
     public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId) {
         final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
         LocalDateTime fromDate = priceBucket.getFromDate();
