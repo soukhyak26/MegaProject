@@ -1,9 +1,9 @@
-package com.affaince.subscription.product.command.event;
+package com.affaince.subscription.business.command.event;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
- * Created by mandar on 29-12-2016.
+ * Created by mandar on 3/25/2017.
  */
 public class PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent {
     private final String productId;
@@ -70,4 +70,5 @@ public class PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent {
     public double getProfitAmountPerPriceBucket() {
         return profitAmountPerPriceBucket;
     }
+
 }

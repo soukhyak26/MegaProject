@@ -271,6 +271,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         return bucketsWithSamePurchasePrice;
     }
 
+
     public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId){
         final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
         LocalDateTime fromDate = priceBucket.getFromDate();
@@ -279,13 +280,29 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
         priceBucket.calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
     }
-    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId) {
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId,long deliveredSubscriptionCount ) {
         final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
+
+        //this.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
+/*
+        if(totalDeliveredSubscriptionCount==priceBucket.getNumberOfExistingSubscriptions()){
+            apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
+        }
+*/
+       // apply( new DeliveredSubscriptionCountAddedToPriceBucket(productId,
+        //                                                        priceBucketId,
+        //                                                        priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(),
+        //                                                        priceBucket.getTaggedPriceVersion().getMRP(),
+        //                                                        priceBucket.getOfferedPriceOrPercentDiscountPerUnit(),
+        //                                                        this.getProductPricingCategory(),
+        //                                                        deliveredSubscriptionCount,
+        //                                                        totalDeliveredSubscriptionCount) );
+
         LocalDateTime fromDate = priceBucket.getFromDate();
         LocalDateTime toDate = priceBucket.getToDate();
         double fixedExpensePerUnit = this.findLatestFixedExpensePerUnitInDateRange(fromDate, toDate);
         double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
-        priceBucket.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
+        priceBucket.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,this.getProductPricingCategory(),fixedExpensePerUnit,variableExpensePerUnit,deliveredSubscriptionCount);
     }
 
     public double calculateBreakEvenPriceUponChangeOfPriceOrExpenses(OperatingExpenseService operatingExpenseService) {
