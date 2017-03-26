@@ -5,6 +5,7 @@ import com.affaince.subscription.expensedistribution.query.view.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -34,10 +35,11 @@ public class ExpenseDistributionClient {
 
     public List<DeliveryView> fetchAllDeliveries () throws IOException {
         final RestTemplate restTemplate = new RestTemplate();
-        String  result = restTemplate.getForObject(fetchDeliveriesUrl, String.class);
+        ResponseEntity <List<DeliveryView>>  result = restTemplate.getForObject(fetchDeliveriesUrl, ResponseEntity.class);
         final ObjectMapper objectMapper = new ObjectMapper();
-        final DeliveryView [] deliveryViews = objectMapper.readValue(result, DeliveryView[].class);
-        return Arrays.asList(deliveryViews);
+        /*final DeliveryView [] deliveryViews = objectMapper.readValue(result.getBody());
+        return Arrays.asList(deliveryViews);*/
+        return result.getBody();
     }
 
     public List <ProductView> fetchAllProducts () {

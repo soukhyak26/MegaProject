@@ -4,13 +4,19 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
-import com.affaince.subscription.expensedistribution.processor.CalculatePerUnitExpense;
-import com.affaince.subscription.expensedistribution.processor.DefaultOperatingExpenseDistributionDeterminator;
-import com.affaince.subscription.expensedistribution.processor.ExtraPolationBasedOperatingExpenseDistributionDeterminator;
-import com.affaince.subscription.expensedistribution.processor.ForecastBasedOperatingExpenseDistributionDeterminator;
+import com.affaince.subscription.expensedistribution.processor.*;
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.spring.boot.CamelContextConfiguration;
+import org.apache.camel.util.toolbox.AggregationStrategies;
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.apache.camel.language.simple.SimpleLanguage.simple;
 
 /**
  * Created by mandark on 19-07-2015.
@@ -48,23 +54,22 @@ public class Axon extends Default {
         return new ExpenseDistributionClient();
     }
 
+    @Bean
     public CalculatePerUnitExpense calculatePerUnitExpense () {
         return new CalculatePerUnitExpense();
     }
 
-    /*@Bean
+    public ProductWiseDeliveryStatsAggregation productWiseDeliveryStatsAggregation () {
+        return new ProductWiseDeliveryStatsAggregation();
+    }
+
+    @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() {
-                from("timer://foo?repeatCount=1").choice()
-                        .to("bean:operatingExpenseStrategyDeterminator?decideOperatingExpenseStrategy()")
-                        .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.DEFAULT_STRATEGY}"))
+                from("timer://foo?repeatCount=1")
                         .to("bean:defaultOperatingExpenseDistributionDeterminator")
-                        .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.EXTRAPOLATION_BASED_STRATEGY}"))
-                        .to("bean:extraPolationBasedOperatingExpenseDistributionDeterminator")
-                        .when(simple("${body.operatingExpenseDistributionStrategyType}==${type:com.affaince.subscription.expensedistribution.vo.OperatingExpenseDistributionStrategyType.FORECAST_BASED_STRATEGY}"))
-                        .to("bean:forecastBasedOperatingExpenseDistributionDeterminator")
-                        .multicast(AggregationStrategies.bean(ProductWiseDeliveryStatsAggregation.class))
+                        .to("bean:productWiseDeliveryStatsAggregation")
                         .to ("bean:calculatePerUnitExpense")
                         .to("bean:publisher");
             }
@@ -79,5 +84,11 @@ public class Axon extends Default {
                 System.out.println("@@@@@@@@@@@Hey Camel Started@@@@@@@@@@@");
             }
         };
-    }*/
+    }
+
+    @Override
+    @Bean(name = "types")
+    protected Map<String, String> types() {
+        return new HashMap<String, String>() {};
+    }
 }

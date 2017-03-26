@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * Created by NIKUNJ on 7/12/2015.
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @ComponentScan("com.affaince")
 @AnnotationDriven
+@PropertySource({"classpath:Application.properties","classpath:common.properties"})
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
