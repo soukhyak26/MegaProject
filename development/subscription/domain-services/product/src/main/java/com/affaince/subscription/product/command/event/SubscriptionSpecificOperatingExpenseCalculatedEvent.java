@@ -12,6 +12,9 @@ public class SubscriptionSpecificOperatingExpenseCalculatedEvent {
         this.operationExpense = operationExpense;
     }
 
+    public SubscriptionSpecificOperatingExpenseCalculatedEvent() {
+    }
+
     public String getProductId() {
         return productId;
     }

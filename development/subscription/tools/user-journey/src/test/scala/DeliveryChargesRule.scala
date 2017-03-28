@@ -24,23 +24,23 @@ object SetDeliveryChargesRules {
             |   "ruleMinimum":"0",
             |   "ruleMaximum":"1",
             |   "ruleUnit":"GM",
-            |   "applicableValue":""},{"ruleHeader":"2KG",
+            |   "applicableValue":10},{"ruleHeader":"2KG",
             |   "ruleMinimum":"1",
             |   "ruleMaximum":"2",
             |   "ruleUnit":"GM",
-            |   "applicableValue":""},{"ruleHeader":"3KG",
+            |   "applicableValue":20},{"ruleHeader":"3KG",
             |   "ruleMinimum":"2",
             |   "ruleMaximum":"3",
             |   "ruleUnit":"GM",
-            |   "applicableValue":""},{"ruleHeader":"4KG",
+            |   "applicableValue":30},{"ruleHeader":"4KG",
             |   "ruleMinimum":"3",
             |   "ruleMaximum":"4",
             |   "ruleUnit":"GM",
-            |   "applicableValue":""},{"ruleHeader":"5KG",
+            |   "applicableValue":40},{"ruleHeader":"5KG",
             |   "ruleMinimum":"4",
             |   "ruleMaximum":"5",
             |   "ruleUnit":"GM",
-            |   "applicableValue":""}]
+            |   "applicableValue":50}]
             |}
           """.stripMargin
         )

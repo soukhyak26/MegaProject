@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.UUID;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -26,14 +28,14 @@ public class PriceBucketViewRepositoryTest {
 
     @Test
     public void testAddPriceBucketView () {
+        String productId = UUID.randomUUID().toString();
+        String priceBucketId = UUID.randomUUID().toString();
         PriceBucketView priceBucketView = new PriceBucketView(
-                new ProductwisePriceBucketId("9e8b25bc-d74e-3838-b08f-df35d858c8f9","9e8b25bc-d74e-3838-b08f-df35d858c8f904022017")
-        );
+                new ProductwisePriceBucketId(productId,priceBucketId));
         priceBucketView.setEntityStatus(EntityStatus.ACTIVE);
         priceBucketViewRepository.save(priceBucketView);
 
-        assertThat (priceBucketViewRepository.findOne(new ProductwisePriceBucketId("9e8b25bc-d74e-3838-b08f-df35d858c8f9",
-                "9e8b25bc-d74e-3838-b08f-df35d858c8f904022017")), is (priceBucketView));
+        assertThat (priceBucketViewRepository.findOne(new ProductwisePriceBucketId(productId,priceBucketId)), is (priceBucketView));
     }
 
     @After

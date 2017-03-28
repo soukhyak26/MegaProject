@@ -21,6 +21,7 @@ public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(Application.class);
+        springApplication.setWebEnvironment(false);
         springApplication.run();
     }
 

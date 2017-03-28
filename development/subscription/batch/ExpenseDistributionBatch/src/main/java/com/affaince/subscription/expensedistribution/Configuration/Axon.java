@@ -4,6 +4,7 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
 import com.affaince.subscription.expensedistribution.determinator.OperatingExpenseStrategyDeterminator;
+import com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent;
 import com.affaince.subscription.expensedistribution.processor.*;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -70,8 +71,9 @@ public class Axon extends Default {
             public void configure() {
                 from("timer://foo?repeatCount=1")
                         .to("bean:defaultOperatingExpenseDistributionDeterminator")
-                        .to("bean:productWiseDeliveryStatsAggregation")
-                        .to ("bean:calculatePerUnitExpense")
+                        //.to("bean:productWiseDeliveryStatsAggregation")
+                        //.to ("bean:calculatePerUnitExpense")
+                        .split(body(SubscriptionSpecificOperatingExpenseCalculatedEvent.class))
                         .to("bean:publisher");
             }
         };

@@ -1,6 +1,7 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.expensedistribution.client.ExpenseDistributionClient;
+import com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryItem;
 import com.affaince.subscription.expensedistribution.query.view.DeliveryView;
 import com.affaince.subscription.expensedistribution.vo.ProductWiseDeliveryStats;
@@ -15,15 +16,15 @@ import java.util.Map;
 /**
  * Created by rsavaliya on 24/3/16.
  */
-public class DefaultOperatingExpenseDistributionDeterminator implements OperatingExpenseDistribution {
+public class DefaultOperatingExpenseDistributionDeterminator {
 
     @Autowired
     private ExpenseDistributionClient expenseDistributionClient;
 
-    public Map<String, Double> distributeDeliveryExpensesToProduct () throws IOException {
+    public List <SubscriptionSpecificOperatingExpenseCalculatedEvent> distributeDeliveryExpensesToProduct () throws IOException {
         final List<DeliveryView> deliveries = expenseDistributionClient.fetchAllDeliveries();
         final List<ProductWiseDeliveryStats> productWiseDeliveriesStats = new ArrayList<>();
-        final Map <String, Double> perUnitProductExpensesMap = new HashMap<>();
+        final List<SubscriptionSpecificOperatingExpenseCalculatedEvent> perUnitProductExpenses = new ArrayList<>();
 
         for (DeliveryView deliveryView : deliveries) {
             for (DeliveryItem deliveryItem: deliveryView.getDeliveryItems()) {
@@ -39,11 +40,10 @@ public class DefaultOperatingExpenseDistributionDeterminator implements Operatin
         }
 
         for (ProductWiseDeliveryStats productWiseDeliveryStats: productWiseDeliveriesStats) {
-            perUnitProductExpensesMap.put(
+            perUnitProductExpenses.add(new SubscriptionSpecificOperatingExpenseCalculatedEvent(
                     productWiseDeliveryStats.getProductId(),
-                    productWiseDeliveryStats.getTotalDeliveryExpense()/productWiseDeliveryStats.getTotalUnitsSold()
-            );
+                    productWiseDeliveryStats.getTotalDeliveryExpense()/productWiseDeliveryStats.getTotalUnitsSold()));
         }
-        return perUnitProductExpensesMap;
+        return perUnitProductExpenses;
     }
 }

@@ -1,6 +1,7 @@
 package com.affaince.subscription.expensedistribution.processor;
 
 import com.affaince.subscription.expensedistribution.Application;
+import com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +28,8 @@ public class DefaultOperatingExpenseDistributionDeterminatorTest {
 
     @Test
     public void testDistributeDeliveryExpensesToProductTest () throws IOException {
-        Map<String, Double> perUnitOperationExpense =
+        List<SubscriptionSpecificOperatingExpenseCalculatedEvent> perUnitOperationExpense =
                 defaultOperatingExpenseDistributionDeterminator.distributeDeliveryExpensesToProduct();
-        perUnitOperationExpense.forEach((productId, perUnitExpense) -> System.out.println(productId + " " + perUnitExpense));
+        perUnitOperationExpense.forEach(event -> System.out.println(event.getProductId() + " " + event.getOperationExpense()));
     }
 }
