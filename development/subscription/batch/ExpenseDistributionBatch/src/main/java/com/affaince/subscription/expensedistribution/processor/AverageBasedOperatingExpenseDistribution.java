@@ -31,7 +31,7 @@ public class AverageBasedOperatingExpenseDistribution {
         for (DeliveryView deliveryView : deliveries) {
             for (DeliveryItem deliveryItem: deliveryView.getDeliveryItems()) {
                 totalDeliveryExpense += deliveryItem.getDeliveryCharges();
-                totalOfferedPrice += deliveryItem.getOfferedPriceWithBasketLevelDiscount();
+                totalOfferedPrice += deliveryItem.getOfferedPricePerUnit();
             }
         }
         final Map<String, ProductWiseDeliveryStats> productWiseDeliveryStatsMap =

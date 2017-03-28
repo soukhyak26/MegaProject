@@ -1,6 +1,7 @@
 package com.affaince.subscription.expensedistribution.query.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 
 /**
  * Created by rbsavaliya on 02-10-2015.
@@ -11,20 +12,33 @@ public class DeliveryItem {
     private DeliveryStatus deliveryStatus;
     private double weightInGrms;
     private double deliveryCharges;
-    private double offeredPriceWithBasketLevelDiscount;
+    private String priceBucketId;
+    private double offeredPricePerUnit;
+    private ProductPricingCategory productPricingCategory;
 
-    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double offeredPriceWithBasketLevelDiscount) {
+    public DeliveryItem(String deliveryItemId) {
         this.deliveryItemId = deliveryItemId;
-        this.deliveryStatus = deliveryStatus;
-        this.weightInGrms = weightInGrms;
-        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
     }
 
     public DeliveryItem() {
     }
 
-    public DeliveryItem(String deliveryItemId) {
+    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit, ProductPricingCategory productPricingCategory) {
         this.deliveryItemId = deliveryItemId;
+        this.deliveryStatus = deliveryStatus;
+        this.weightInGrms = weightInGrms;
+        this.deliveryCharges = deliveryCharges;
+        this.priceBucketId = priceBucketId;
+        this.offeredPricePerUnit = offeredPricePerUnit;
+        this.productPricingCategory = productPricingCategory;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
     }
 
     public String getDeliveryItemId() {
@@ -59,12 +73,20 @@ public class DeliveryItem {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public double getOfferedPriceWithBasketLevelDiscount() {
-        return offeredPriceWithBasketLevelDiscount;
+    public String getPriceBucketId() {
+        return priceBucketId;
     }
 
-    public void setOfferedPriceWithBasketLevelDiscount(double offeredPriceWithBasketLevelDiscount) {
-        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+    public void setPriceBucketId(String priceBucketId) {
+        this.priceBucketId = priceBucketId;
+    }
+
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
+    }
+
+    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
+        this.offeredPricePerUnit = offeredPricePerUnit;
     }
 
     @Override
@@ -76,10 +98,5 @@ public class DeliveryItem {
 
         return deliveryItemId.equals(that.deliveryItemId);
 
-    }
-
-    @Override
-    public int hashCode() {
-        return deliveryItemId.hashCode();
     }
 }

@@ -35,11 +35,10 @@ public class ExpenseDistributionClient {
 
     public List<DeliveryView> fetchAllDeliveries () throws IOException {
         final RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity <List<DeliveryView>>  result = restTemplate.getForObject(fetchDeliveriesUrl, ResponseEntity.class);
+        String result = restTemplate.getForObject(fetchDeliveriesUrl, String.class);
         final ObjectMapper objectMapper = new ObjectMapper();
-        /*final DeliveryView [] deliveryViews = objectMapper.readValue(result.getBody());
-        return Arrays.asList(deliveryViews);*/
-        return result.getBody();
+        final DeliveryView [] deliveryViews = objectMapper.readValue(result, DeliveryView[].class);
+        return Arrays.asList(deliveryViews);
     }
 
     public List <ProductView> fetchAllProducts () {

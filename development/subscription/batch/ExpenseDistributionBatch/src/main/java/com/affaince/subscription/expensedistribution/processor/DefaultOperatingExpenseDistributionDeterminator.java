@@ -32,7 +32,7 @@ public class DefaultOperatingExpenseDistributionDeterminator implements Operatin
                     productWiseDeliveryStats = productWiseDeliveriesStats.get(productWiseDeliveriesStats.indexOf(productWiseDeliveryStats));
                 }
                 productWiseDeliveryStats.addDeliveryExpense(deliveryItem.getDeliveryCharges());
-                productWiseDeliveryStats.addMRP(deliveryItem.getOfferedPriceWithBasketLevelDiscount());
+                productWiseDeliveryStats.addMRP(deliveryItem.getOfferedPricePerUnit());
                 productWiseDeliveryStats.addUnitSold(1);
                 productWiseDeliveriesStats.add(productWiseDeliveryStats);
             }

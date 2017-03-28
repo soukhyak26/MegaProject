@@ -1,6 +1,8 @@
 package com.affaince.subscription.subscriber.query.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ReasonCode;
@@ -22,11 +24,11 @@ public class DeliveryView {
     private String subscriberId;
     private String subscriptionId;
     private List<DeliveryItem> deliveryItems;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate deliveryDate;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dispatchDate;
     private DeliveryStatus status;
     private ReasonCode reasonCode;
@@ -40,6 +42,9 @@ public class DeliveryView {
         this.deliveryDate = deliveryDate;
         this.status = status;
         this.rewardPoints = rewardPoints;
+    }
+
+    public DeliveryView() {
     }
 
     public String getDeliveryId() {

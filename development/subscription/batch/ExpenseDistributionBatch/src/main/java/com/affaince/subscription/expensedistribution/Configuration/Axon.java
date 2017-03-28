@@ -59,6 +59,7 @@ public class Axon extends Default {
         return new CalculatePerUnitExpense();
     }
 
+    @Bean
     public ProductWiseDeliveryStatsAggregation productWiseDeliveryStatsAggregation () {
         return new ProductWiseDeliveryStatsAggregation();
     }

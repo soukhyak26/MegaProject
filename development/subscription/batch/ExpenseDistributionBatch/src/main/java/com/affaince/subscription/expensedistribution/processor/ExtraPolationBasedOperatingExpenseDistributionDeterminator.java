@@ -83,7 +83,7 @@ public class ExtraPolationBasedOperatingExpenseDistributionDeterminator implemen
                 }
                 productWiseDeliveryStats.addDeliveryExpense(deliveryItem.getDeliveryCharges());
                 productWiseDeliveryStats.addUnitSold(1);
-                productWiseDeliveryStats.addMRP(deliveryItem.getOfferedPriceWithBasketLevelDiscount());
+                productWiseDeliveryStats.addMRP(deliveryItem.getOfferedPricePerUnit());
                 productWiseMonthlyDeliveriesMap.put(deliveryMonth, productWiseDeliveryStats);
                 productWiseDeliveryStatsMap.put(deliveryItem.getDeliveryItemId(), productWiseMonthlyDeliveriesMap);
             }
