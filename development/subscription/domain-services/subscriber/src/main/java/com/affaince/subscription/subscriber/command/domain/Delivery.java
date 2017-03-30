@@ -128,7 +128,7 @@ public class Delivery {
     public void calculateItemLevelDeliveryCharges(DeliveryChargesRule deliveryChargesRule) {
         List<RangeRule> rangeRules = deliveryChargesRule.getDeliveryChargesRules();
         for (RangeRule rangeRule:rangeRules) {
-            if (totalWeight > rangeRule.getRuleMinimum() && totalWeight < rangeRule.getRuleMaximum()) {
+            if (totalWeight/1000 > rangeRule.getRuleMinimum() && totalWeight/1000 < rangeRule.getRuleMaximum()) {
                 deliveryCharges = rangeRule.getApplicableValue();
                 break;
             }
