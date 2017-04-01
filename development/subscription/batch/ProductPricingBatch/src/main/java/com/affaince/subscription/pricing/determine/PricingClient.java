@@ -3,6 +3,7 @@ package com.affaince.subscription.pricing.determine;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.WeightedProductDemandTrend;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -12,8 +13,9 @@ import java.util.Map;
 /**
  * Created by mandar on 05-07-2016.
  */
+@Component
 public class PricingClient {
-    @Value("${subscription.forecast.findproducts.url}")
+    @Value("${subscription.pricing.findproducts.url}")
     private String findProductsUrl;
     @Value("${subscription.pricing.url}")
     private String pricingUrl;

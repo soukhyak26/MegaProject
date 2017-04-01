@@ -51,9 +51,9 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     public double getDailyInterpolatedTotalSubscriptionCountAsOnDate(String productId, LocalDate date) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
+                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateAsc
                         (productId, ProductForecastStatus.ACTIVE);
-        ProductForecastView firstForecastView = registeredForecastValues.get(registeredForecastValues.size() - 1);
+        ProductForecastView firstForecastView = registeredForecastValues.get(0);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
         double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
         double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
@@ -63,6 +63,7 @@ public class ForecastInterpolatedSubscriptionCountFinder {
             int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //TODO- should we add/subtract 1 in the value?
             x[count] = day;
             y[count] = previousView.getTotalNumberOfExistingSubscriptions();
+            count++;
         }
         double[] interpolatedTotalSubscriptionsPerDay = interpolator.interpolate(x, y);
         int expectedDay = Days.daysBetween(dateOfPlatformBeginning, date).getDays();

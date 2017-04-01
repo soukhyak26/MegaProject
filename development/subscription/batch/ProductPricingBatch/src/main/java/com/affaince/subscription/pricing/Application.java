@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 @EnableAspectJAutoProxy
 @ComponentScan("com.affaince")
 @AnnotationDriven
-@PropertySource({"classpath:Application.properties"})
+@PropertySource({"classpath:Application.properties","classpath:common.properties"})
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

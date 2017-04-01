@@ -1,6 +1,7 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
 import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
@@ -110,14 +111,14 @@ public class Axon extends Default {
 
     @Bean
     public ForecastDateSenderClient forecastDateSenderClient(){
-        return forecastDateSenderClient();
+        return new ForecastDateSenderClient();
     }
     @Bean
     public RouteBuilder routes() {
         return new RouteBuilder() {
             public void configure() throws Exception {
 
-                Predicate demandTrendChecker = or(simple("${body.productDemandTrend}==ProductDemandTrend.UPWARD"), simple("${body.productDemandTrend}==ProductDemandTrend.DOWNWARD"));
+                Predicate demandTrendChecker = or(simple("${body.productDemandTrend}== ProductDemandTrend.UPWARD"), simple("${body.productDemandTrend}== ProductDemandTrend.DOWNWARD"));
                 //job for calculating pseudoActuals for each product.
 
                 from("{{subscription.pricing.timer.expression}}")
@@ -128,7 +129,7 @@ public class Axon extends Default {
                         .to("bean:productsRetriever")
                         .split(body())
                         //.to("bean:forecastInterpolatedSubscriptionCountFinder") //interpolate monthly forecasted values to daily valules
-                        .to("bean:productPricingTrigger?method=triggerProductPricing2")       // compare interpolated daily forecast with daily actuals
+                        .to("bean:productPricingTrigger?method=triggerProductPricingNew")       // compare interpolated daily forecast with daily actuals
                         .choice()
                         .when(demandTrendChecker)
                         .multicast()
