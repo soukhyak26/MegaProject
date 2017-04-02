@@ -49,11 +49,11 @@ public class ProductPricingTrigger {
         final double changeThresholdForPriceChange =productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
 
         if(totalActualSubscriptionCount > totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
-            return new WeightedProductDemandTrend(ProductDemandTrend.UPWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate));
+            return new WeightedProductDemandTrend(ProductDemandTrend.UPWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate), productId);
         }else if(totalActualSubscriptionCount < totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
-            return new WeightedProductDemandTrend(ProductDemandTrend.DOWNWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate));
+            return new WeightedProductDemandTrend(ProductDemandTrend.DOWNWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate), productId);
         }else{
-            return new WeightedProductDemandTrend(ProductDemandTrend.NOCHANGE,0);
+            return new WeightedProductDemandTrend(ProductDemandTrend.NOCHANGE,0, productId);
         }
     }
 
