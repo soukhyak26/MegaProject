@@ -6,9 +6,11 @@ import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.FileBackedOutputStream;
 import org.joda.time.LocalDate;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -155,9 +157,12 @@ public class ProductTestDataGenerator {
             subscribers.add(subscriber);
         }
         try {
-            Files.write(Paths.get(classLoader.getResource(".").getPath() + "/Subscribers.json"),
+            File file = new File(classLoader.getResource(".").getPath() + "/Subscribers.json");
+            OutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(objectMapper.writeValueAsBytes(subscribers));
+            /*Files.write(Paths.get(classLoader.getResource(".").toURI().toString() + "/Subscribers.json"),
                     objectMapper.writeValueAsBytes(subscribers),
-                    StandardOpenOption.CREATE);
+                    StandardOpenOption.CREATE);*/
         } catch (IOException e) {
             e.printStackTrace();
         }

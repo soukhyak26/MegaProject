@@ -6,10 +6,12 @@ package com.affaince.subscription.common.type;
 public class WeightedProductDemandTrend {
     private final ProductDemandTrend productDemandTrend;
     private final double weight;
+    private final String productId;
 
-    public WeightedProductDemandTrend(ProductDemandTrend productDemandTrend, double weight) {
+    public WeightedProductDemandTrend(ProductDemandTrend productDemandTrend, double weight, String productId) {
         this.productDemandTrend = productDemandTrend;
         this.weight = weight;
+        this.productId = productId;
     }
 
     public ProductDemandTrend getProductDemandTrend() {
@@ -18,5 +20,9 @@ public class WeightedProductDemandTrend {
 
     public double getWeight() {
         return weight;
+    }
+
+    public String getProductId() {
+        return productId;
     }
 }
