@@ -30,6 +30,8 @@ public class PricingClient {
         //params.put("productdemandtrend", "" + trend.getProductDemandTrend());
         //params.put("weight", "" + trend.getWeight());
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(pricingUrl);
-        restTemplate.put(builder.buildAndExpand(params).toUri().toString(), params);
+        restTemplate.put(builder.buildAndExpand(params).toUri().toString(),
+                new CalculatePriceRequest(trend.getProductDemandTrend(), trend.getWeight()), params);
     }
 }
+
