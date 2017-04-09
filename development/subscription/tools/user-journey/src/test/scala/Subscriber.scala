@@ -24,7 +24,7 @@ class Subscriber extends BaseSimulator {
     }
     .repeat(1) {
       CreateSubscriber.addItemToSubscription
-    }
+    }.pause(5)
     .repeat(1) {
       CreateSubscriber.confirmSubscription
     }
