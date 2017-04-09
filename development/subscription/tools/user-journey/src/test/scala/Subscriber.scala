@@ -15,12 +15,12 @@ class Subscriber extends BaseSimulator {
   val productTestDataGenerator = new ProductTestDataGenerator().getSubscriptionCount();
 
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
-      .pause(10)
-      .repeat(1) {
-        CreateSubscriber.setPassword
-      }
+    .pause(10)
     .repeat(1) {
-        CreateSubscriber.createSubscription
+      CreateSubscriber.setPassword
+    }
+    .repeat(1) {
+      CreateSubscriber.createSubscription
     }
     .repeat(1) {
       CreateSubscriber.addItemToSubscription
@@ -43,35 +43,35 @@ object CreateSubscriber {
   val subscriberJsonFeeder = jsonFile ("Subscribers.json")
 
   val createSubscriber = feed(subscriberJsonFeeder)
-      .exec(
-        http ("Create Subscriber")
-          .post(createSubscriberUrl)
-          .body(
-            StringBody(
-              """
-                |{
-                |   "subscriberName": {"title":"${title}","firstName":"${firstName}",
-                |    "middleName":"${middleName}",
-                |    "lastName":"${lastName}"},
-                |    "address":{"addressLine1":"${addressLine1}",
-                |    "addressLine2":"${addressLine2}",
-                |    "city":"${city}",
-                |    "state":"${state}",
-                |    "country":"${country}",
-                |    "pinCode":"${pinCode}"},
-                |    "contactDetails":{"email":"${email}",
-                |    "mobileNumber":"${mobileNumber}",
-                |    "alternativeNumber":"$alternativeNumber{}"}
-                |}
-              """.stripMargin
-            )
-          ).asJSON
-          .check (jsonPath("$.id").saveAs("subscriberId"))
-      )
+    .exec(
+      http ("Create Subscriber")
+        .post(createSubscriberUrl)
+        .body(
+          StringBody(
+            """
+              |{
+              |   "subscriberName": {"title":"${title}","firstName":"${firstName}",
+              |    "middleName":"${middleName}",
+              |    "lastName":"${lastName}"},
+              |    "address":{"addressLine1":"${addressLine1}",
+              |    "addressLine2":"${addressLine2}",
+              |    "city":"${city}",
+              |    "state":"${state}",
+              |    "country":"${country}",
+              |    "pinCode":"${pinCode}"},
+              |    "contactDetails":{"email":"${email}",
+              |    "mobileNumber":"${mobileNumber}",
+              |    "alternativeNumber":"$alternativeNumber{}"}
+              |}
+            """.stripMargin
+          )
+        ).asJSON
+        .check (jsonPath("$.id").saveAs("subscriberId"))
+    )
 
   val setPassword = //exec(session => session.set("randomeName", Random.nextInt(5)))
-      exec (
-          http ("Set Subscriber Password")
+    exec (
+      http ("Set Subscriber Password")
         .put((createSubscriberUrl + "/password/${subscriberId}").el[String])
         .body(
           StringBody(
@@ -82,7 +82,7 @@ object CreateSubscriber {
             """.stripMargin
           )
         ).asJSON
-  )
+    )
 
   val createSubscription =
     exec(
