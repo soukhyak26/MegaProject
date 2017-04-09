@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.command;
 
+import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.web.request.DeliveryItem;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.joda.time.LocalDate;
@@ -15,12 +16,14 @@ public class UpdateDeliveryCommand {
     private String deliveryId;
     private LocalDate deliveryDate;
     private List<DeliveryItem> deliveryItems;
+    private DeliveryChargesRule deliveryChargesRule;
 
-    public UpdateDeliveryCommand(String subscriberId, String deliveryId, LocalDate deliveryDate, List<DeliveryItem> deliveryItems) {
+    public UpdateDeliveryCommand(String subscriberId, String deliveryId, LocalDate deliveryDate, List<DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule) {
         this.subscriberId = subscriberId;
         this.deliveryId = deliveryId;
         this.deliveryDate = deliveryDate;
         this.deliveryItems = deliveryItems;
+        this.deliveryChargesRule = deliveryChargesRule;
     }
 
     public UpdateDeliveryCommand() {
@@ -40,5 +43,9 @@ public class UpdateDeliveryCommand {
 
     public List<DeliveryItem> getDeliveryItems() {
         return deliveryItems;
+    }
+
+    public DeliveryChargesRule getDeliveryChargesRule() {
+        return deliveryChargesRule;
     }
 }

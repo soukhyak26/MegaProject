@@ -2,12 +2,16 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
+import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
+import com.affaince.subscription.subscriber.query.repository.DeliveryChargesRuleViewRepository;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
 import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
+import com.affaince.subscription.subscriber.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
 import com.affaince.subscription.subscriber.query.view.ProductView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
@@ -36,13 +40,15 @@ public class SubscriptionController {
     private final SubscriptionViewRepository subscriptionViewRepository;
     private final ProductViewRepository productViewRepository;
     private final LatestPriceBucketViewRepository latestPriceBucketViewRepository;
+    private final DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository;
 
     @Autowired
-    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository subscriptionViewRepository, ProductViewRepository productViewRepository, LatestPriceBucketViewRepository latestPriceBucketViewRepository) {
+    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository subscriptionViewRepository, ProductViewRepository productViewRepository, LatestPriceBucketViewRepository latestPriceBucketViewRepository, DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository) {
         this.commandGateway = commandGateway;
         this.subscriptionViewRepository = subscriptionViewRepository;
         this.productViewRepository = productViewRepository;
         this.latestPriceBucketViewRepository = latestPriceBucketViewRepository;
+        this.deliveryChargesRuleViewRepository = deliveryChargesRuleViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -203,12 +209,20 @@ public class SubscriptionController {
                     latestPriceBucketView.getCurrentPriceDate()));
         });
         try {
-            final ConfirmSubscriptionCommand confirmSubscriptionCommand = new ConfirmSubscriptionCommand(subscriberId, latestPriceBucketMap);
+            final ConfirmSubscriptionCommand confirmSubscriptionCommand =
+                    new ConfirmSubscriptionCommand(subscriberId, latestPriceBucketMap, fetchDeliveryChargesRules());
             commandGateway.executeAsync(confirmSubscriptionCommand);
         } catch (Exception e) {
             throw e;
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
+    }
 
+    private DeliveryChargesRule fetchDeliveryChargesRules() {
+        DeliveryChargesRuleView deliveryChargesRuleView = deliveryChargesRuleViewRepository.
+                findFirstByRuleIdOrderByEffectiveDateDesc(DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT);
+        DeliveryChargesRule deliveryChargesRule = new DeliveryChargesRule(DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT,
+                deliveryChargesRuleView.getRangeRules(), deliveryChargesRuleView.getEffectiveDate());
+        return deliveryChargesRule;
     }
 }

@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.command;
 
+import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
@@ -11,11 +12,13 @@ import java.util.Map;
 public class ConfirmSubscriptionCommand {
     @TargetAggregateIdentifier
     private final String subscriberId;
-    Map<String, LatestPriceBucket> latestPriceBucketMap;
+    private Map<String, LatestPriceBucket> latestPriceBucketMap;
+    private DeliveryChargesRule deliveryChargesRule;
 
-    public ConfirmSubscriptionCommand(String subscriberId, Map<String, LatestPriceBucket> latestPriceBucketMap) {
+    public ConfirmSubscriptionCommand(String subscriberId, Map<String, LatestPriceBucket> latestPriceBucketMap, DeliveryChargesRule deliveryChargesRule) {
         this.subscriberId = subscriberId;
         this.latestPriceBucketMap = latestPriceBucketMap;
+        this.deliveryChargesRule = deliveryChargesRule;
     }
 
     public String getSubscriberId() {
@@ -24,5 +27,9 @@ public class ConfirmSubscriptionCommand {
 
     public Map<String, LatestPriceBucket> getLatestPriceBucketMap() {
         return latestPriceBucketMap;
+    }
+
+    public DeliveryChargesRule getDeliveryChargesRule() {
+        return deliveryChargesRule;
     }
 }

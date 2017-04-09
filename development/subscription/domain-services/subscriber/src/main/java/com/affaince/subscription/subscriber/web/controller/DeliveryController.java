@@ -2,14 +2,18 @@ package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.ReasonCode;
 import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
+import com.affaince.subscription.subscriber.query.repository.DeliveryChargesRuleViewRepository;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
 import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
+import com.affaince.subscription.subscriber.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
 import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
 import com.affaince.subscription.subscriber.query.view.ProductView;
@@ -41,17 +45,20 @@ public class DeliveryController {
     private final ProductViewRepository productViewRepository;
     private final LatestPriceBucketViewRepository latestPriceBucketViewRepository;
     private final DeliveryViewRepository deliveryViewRepository;
+    private final DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository;
 
 
     @Autowired
     public DeliveryController(SubscriptionCommandGateway commandGateway,
                               ProductViewRepository productViewRepository,
                               LatestPriceBucketViewRepository latestPriceBucketViewRepository,
-                              DeliveryViewRepository deliveryViewRepository) {
+                              DeliveryViewRepository deliveryViewRepository,
+                              DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository) {
         this.commandGateway = commandGateway;
         this.productViewRepository = productViewRepository;
         this.latestPriceBucketViewRepository = latestPriceBucketViewRepository;
         this.deliveryViewRepository = deliveryViewRepository;
+        this.deliveryChargesRuleViewRepository = deliveryChargesRuleViewRepository;
     }
 
     @RequestMapping(value = "add/{subscriberId}", method = RequestMethod.POST)
@@ -74,22 +81,32 @@ public class DeliveryController {
                     .getOfferedPricePerUnit());
             deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
-        setLaestPriceParameterToDeliveryItem(request.getDeliveryItems());
+        setLatestPriceParameterToDeliveryItem(request.getDeliveryItems());
+        fetchDeliveryChargesRules();
+
         final AddDeliveryToSubscriptionCommand command = new AddDeliveryToSubscriptionCommand(
-                subscriberId, deliveryId, request.getDeliveryDate(), Arrays.asList(request.getDeliveryItems())
+                subscriberId, deliveryId, request.getDeliveryDate(), Arrays.asList(request.getDeliveryItems()),
+                fetchDeliveryChargesRules()
         );
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.CREATED);
     }
 
-    private void setLaestPriceParameterToDeliveryItem(DeliveryItem[] deliveryItems) {
+    private DeliveryChargesRule fetchDeliveryChargesRules() {
+        DeliveryChargesRuleView deliveryChargesRuleView = deliveryChargesRuleViewRepository.
+                findFirstByRuleIdOrderByEffectiveDateDesc(DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT);
+        DeliveryChargesRule deliveryChargesRule = new DeliveryChargesRule(DeliveryChargesRuleType.CHARGES_ON_DELIVERY_WEIGHT,
+                deliveryChargesRuleView.getRangeRules(), deliveryChargesRuleView.getEffectiveDate());
+        return deliveryChargesRule;
+    }
+
+    private void setLatestPriceParameterToDeliveryItem(DeliveryItem[] deliveryItems) {
         for (DeliveryItem deliveryItem: deliveryItems) {
             LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId());
             deliveryItem.setPriceBucketId(latestPriceBucketView.getPriceBucketId());
             deliveryItem.setOfferedPricePerUnit(latestPriceBucketView.getOfferedPricePerUnit());
         }
     }
-
 
     @RequestMapping(value = "delete/{subscriberId}/{deliveryId}", method = RequestMethod.DELETE)
     @Consumes("application/json")
@@ -126,9 +143,9 @@ public class DeliveryController {
                     .getOfferedPricePerUnit());
             deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
-        setLaestPriceParameterToDeliveryItem(request.getDeliveryItems());
+        setLatestPriceParameterToDeliveryItem(request.getDeliveryItems());
         final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, deliveryId, request.getDeliveryDate(),
-                Arrays.asList(request.getDeliveryItems()));
+                Arrays.asList(request.getDeliveryItems()), fetchDeliveryChargesRules());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
     }
