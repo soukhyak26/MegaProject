@@ -12,7 +12,7 @@ import scala.util.Random
   */
 class Subscriber extends BaseSimulator {
 
-  //val productTestDataGenerator = new ProductTestDataGenerator().generate(5);
+  val productTestDataGenerator = new ProductTestDataGenerator().getSubscriptionCount();
 
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
       .pause(10)
@@ -30,7 +30,7 @@ class Subscriber extends BaseSimulator {
     }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
-  setUp(scn.inject(atOnceUsers(20)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)

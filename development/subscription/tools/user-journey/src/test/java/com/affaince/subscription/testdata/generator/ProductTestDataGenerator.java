@@ -25,12 +25,19 @@ public class ProductTestDataGenerator {
     private static int subscriptionCount;
     private ClassLoader classLoader = getClass().getClassLoader();
 
-    public static int getSubscriptionCount() {
+    public int getSubscriptionCount() {
+        File file = new File(classLoader.getResource(".").getPath() + "/subscriptioncount");
+        try (InputStream fileInputStream = new FileInputStream(file)) {
+            subscriptionCount =  fileInputStream.read();
+            System.out.println(subscriptionCount);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return subscriptionCount;
     }
 
     public static void main(String[] args) throws IOException {
-        new ProductTestDataGenerator().generate(1);
+        new ProductTestDataGenerator().generate(1).getSubscriptionCount();
     }
 
     public ProductTestDataGenerator generate(int size) throws IOException {
@@ -50,7 +57,17 @@ public class ProductTestDataGenerator {
         generateStepForecast();
         generateSubscriptionData();
         generateSubscriberData();
+        writeSubscriptionCountToFile ();
         return this;
+    }
+
+    private void writeSubscriptionCountToFile() {
+        File file = new File(classLoader.getResource(".").getPath() + "/subscriptioncount");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            fileOutputStream.write(subscriptionCount);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void generateProductDetailsCsvFile() throws IOException {
