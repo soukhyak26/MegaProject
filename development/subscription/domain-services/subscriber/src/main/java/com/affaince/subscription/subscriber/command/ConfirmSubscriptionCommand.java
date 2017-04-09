@@ -1,6 +1,9 @@
 package com.affaince.subscription.subscriber.command;
 
+import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+
+import java.util.Map;
 
 /**
  * Created by rsavaliya on 17/1/16.
@@ -8,12 +11,18 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 public class ConfirmSubscriptionCommand {
     @TargetAggregateIdentifier
     private final String subscriberId;
+    Map<String, LatestPriceBucket> latestPriceBucketMap;
 
-    public ConfirmSubscriptionCommand(String subscriberId) {
+    public ConfirmSubscriptionCommand(String subscriberId, Map<String, LatestPriceBucket> latestPriceBucketMap) {
         this.subscriberId = subscriberId;
+        this.latestPriceBucketMap = latestPriceBucketMap;
     }
 
     public String getSubscriberId() {
         return subscriberId;
+    }
+
+    public Map<String, LatestPriceBucket> getLatestPriceBucketMap() {
+        return latestPriceBucketMap;
     }
 }

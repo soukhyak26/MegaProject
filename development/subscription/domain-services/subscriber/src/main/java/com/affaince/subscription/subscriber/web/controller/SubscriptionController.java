@@ -4,8 +4,11 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
+import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
 import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
+import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
 import com.affaince.subscription.subscriber.query.view.ProductView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionView;
 import com.affaince.subscription.subscriber.web.exception.ConsumerBasketNotFoundException;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,12 +35,14 @@ public class SubscriptionController {
     private final SubscriptionCommandGateway commandGateway;
     private final SubscriptionViewRepository subscriptionViewRepository;
     private final ProductViewRepository productViewRepository;
+    private final LatestPriceBucketViewRepository latestPriceBucketViewRepository;
 
     @Autowired
-    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository subscriptionViewRepository, ProductViewRepository productViewRepository) {
+    public SubscriptionController(SubscriptionCommandGateway commandGateway, SubscriptionViewRepository subscriptionViewRepository, ProductViewRepository productViewRepository, LatestPriceBucketViewRepository latestPriceBucketViewRepository) {
         this.commandGateway = commandGateway;
         this.subscriptionViewRepository = subscriptionViewRepository;
         this.productViewRepository = productViewRepository;
+        this.latestPriceBucketViewRepository = latestPriceBucketViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -188,8 +195,15 @@ public class SubscriptionController {
         if (subscriptionView == null) {
             throw ConsumerBasketNotFoundException.build(subscriberId);
         }
-        final ConfirmSubscriptionCommand confirmSubscriptionCommand = new ConfirmSubscriptionCommand(subscriberId);
+        final Map<String, LatestPriceBucket> latestPriceBucketMap = new HashMap<>(subscriptionView.getSubscriptionItems().size());
+        subscriptionView.getSubscriptionItems().forEach(subscriptionItem -> {
+            LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(subscriptionItem.getProductId());
+            latestPriceBucketMap.put(latestPriceBucketView.getProductId(), new LatestPriceBucket(latestPriceBucketView.getProductId(),
+                    latestPriceBucketView.getPriceBucketId(), latestPriceBucketView.getOfferedPricePerUnit(),
+                    latestPriceBucketView.getCurrentPriceDate()));
+        });
         try {
+            final ConfirmSubscriptionCommand confirmSubscriptionCommand = new ConfirmSubscriptionCommand(subscriberId, latestPriceBucketMap);
             commandGateway.executeAsync(confirmSubscriptionCommand);
         } catch (Exception e) {
             throw e;

@@ -6,10 +6,12 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.ReasonCode;
 import com.affaince.subscription.subscriber.command.*;
+import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
 import com.affaince.subscription.subscriber.query.repository.ProductViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryView;
+import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
 import com.affaince.subscription.subscriber.query.view.ProductView;
 import com.affaince.subscription.subscriber.web.exception.DeliveryNotFoundException;
 import com.affaince.subscription.subscriber.web.request.AddDeliveryRequest;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -70,11 +74,20 @@ public class DeliveryController {
                     .getOfferedPricePerUnit());
             deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
+        setLaestPriceParameterToDeliveryItem(request.getDeliveryItems());
         final AddDeliveryToSubscriptionCommand command = new AddDeliveryToSubscriptionCommand(
                 subscriberId, deliveryId, request.getDeliveryDate(), Arrays.asList(request.getDeliveryItems())
         );
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.CREATED);
+    }
+
+    private void setLaestPriceParameterToDeliveryItem(DeliveryItem[] deliveryItems) {
+        for (DeliveryItem deliveryItem: deliveryItems) {
+            LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId());
+            deliveryItem.setPriceBucketId(latestPriceBucketView.getPriceBucketId());
+            deliveryItem.setOfferedPricePerUnit(latestPriceBucketView.getOfferedPricePerUnit());
+        }
     }
 
 
@@ -113,6 +126,7 @@ public class DeliveryController {
                     .getOfferedPricePerUnit());
             deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
+        setLaestPriceParameterToDeliveryItem(request.getDeliveryItems());
         final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, deliveryId, request.getDeliveryDate(),
                 Arrays.asList(request.getDeliveryItems()));
         commandGateway.executeAsync(command);
@@ -145,7 +159,16 @@ public class DeliveryController {
     public ResponseEntity<Object> prepareDeliveryForDispatch(@PathVariable String subscriberId,
                                                              @PathVariable String deliveryId) throws Exception {
 
-        final PrepareDeliveryForDispatchCommand command = new PrepareDeliveryForDispatchCommand(subscriberId, deliveryId);
+        DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
+        final Map<String, LatestPriceBucket> latestPriceBucketMap = new HashMap<>(deliveryView.getDeliveryItems().size());
+        deliveryView.getDeliveryItems().forEach(deliveryItem -> {
+            LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId());
+            latestPriceBucketMap.put(deliveryItem.getDeliveryItemId(),
+                    new LatestPriceBucket(latestPriceBucketView.getProductId(), latestPriceBucketView.getPriceBucketId(),
+                            latestPriceBucketView.getOfferedPricePerUnit(), latestPriceBucketView.getCurrentPriceDate()));
+        });
+        final PrepareDeliveryForDispatchCommand command = new PrepareDeliveryForDispatchCommand(subscriberId, deliveryId,
+                latestPriceBucketMap);
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

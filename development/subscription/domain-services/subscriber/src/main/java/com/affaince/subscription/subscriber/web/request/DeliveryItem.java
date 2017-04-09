@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.web.request;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
+import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 
 /**
  * Created by rbsavaliya on 23-10-2016.
@@ -11,6 +12,8 @@ public class DeliveryItem {
     private long quantityInGrms;
     private double deliveryItemOfferedPrice;
     private ProductPricingCategory productPricingCategory;
+    private String priceBucketId;
+    private double offeredPricePerUnit;
 
     public String getDeliveryItemId() {
         return deliveryItemId;
@@ -50,5 +53,21 @@ public class DeliveryItem {
 
     public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
         this.productPricingCategory = productPricingCategory;
+    }
+
+    public String getPriceBucketId() {
+        return priceBucketId;
+    }
+
+    public void setPriceBucketId(String priceBucketId) {
+        this.priceBucketId = priceBucketId;
+    }
+
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
+    }
+
+    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
+        this.offeredPricePerUnit = offeredPricePerUnit;
     }
 }

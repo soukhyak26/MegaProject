@@ -17,7 +17,6 @@ import com.affaince.subscription.subscriber.services.benefit.context.BenefitCalc
 import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import com.affaince.subscription.subscriber.services.benefit.context.BenefitResult;
 import com.affaince.subscription.subscriber.services.encoder.Base64Encoder;
-import com.affaince.subscription.subscriber.services.pricebucket.PriceBucketService;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
@@ -226,7 +225,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    private Map<String, Delivery> makeDeliveriesReady(Subscription subscription, PriceBucketService priceBucketService) {
+    private Map<String, Delivery> makeDeliveriesReady(Subscription subscription, Map<String, LatestPriceBucket> latestPriceBucketMap) {
         final List<SubscriptionItem> subscriptionItems = subscription.getSubscriptionItems();
         final Map<String, Delivery> deliveries = new HashMap<>();
         int weekOfYear = SysDate.now().getWeekOfWeekyear();
@@ -251,7 +250,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                     deliveries.put(nextDeliveryWeek+"", weeklyDelivery);
                 }
                 for (int j = 0; j < subscriptionItem.getCountPerPeriod(); j++) {
-                    final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
+                    final LatestPriceBucket latestPriceBucket = latestPriceBucketMap.get(
                             subscriptionItem.getProductId()
                     );
                     final DeliveryItem deliveryItem = new DeliveryItem(subscriptionItem.getProductId(),
@@ -265,9 +264,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return deliveries;
     }
 
-    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService,
+    public void confirmSubscription(DeliveryChargesRule deliveryChargesRule, Map<String, LatestPriceBucket> latestPriceBucketMap,
                                     BenefitExecutionContext benefitExecutionContext) {
-        final Map<String, Delivery> deliveries = makeDeliveriesReady(subscription, priceBucketService);
+        final Map<String, Delivery> deliveries = makeDeliveriesReady(subscription, latestPriceBucketMap);
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
         final BenefitResult benefitResult =
                 calculateBenefits(deliveries, 0.0, benefitExecutionContext);
@@ -320,19 +319,15 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void addDelivery(String deliveryId, LocalDate deliveryDate,
                             List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
                             DeliveryChargesRule deliveryChargesRule,
-                            PriceBucketService priceBucketService,
                             BenefitExecutionContext benefitExecutionContext) {
         final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
                 deliveryDate, null, DeliveryStatus.CREATED, 0.0);
         deliveryItems.forEach(deliveryItem -> {
             for (int i = 0; i < deliveryItem.getQuantity(); i++) {
-                final LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(
-                        deliveryItem.getDeliveryItemId()
-                );
                 delivery.getDeliveryItems().add(new DeliveryItem(deliveryItem.getDeliveryItemId(),
                         DeliveryStatus.CREATED, deliveryItem.getQuantityInGrms(), 0.0,
-                        latestPriceBucket.getPriceBucketId(),
-                        latestPriceBucket.getOfferedPricePerUnit(),
+                        deliveryItem.getPriceBucketId(),
+                        deliveryItem.getOfferedPricePerUnit(),
                         deliveryItem.getProductPricingCategory()));
             }
         });
@@ -394,11 +389,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         apply(new DeliveryDeletedEvent(this.subscriberId, deliveryId));
     }
 
-    public void prepareDeliveryForDispatch(String deliveryId, PriceBucketService priceBucketService) {
+    public void prepareDeliveryForDispatch(String deliveryId, Map<String, LatestPriceBucket> latestPriceBucketMap) {
         final Delivery delivery = deliveries.get(deliveryId);
         delivery.setStatus(DeliveryStatus.READYFORDELIVERY);
         delivery.getDeliveryItems().forEach(deliveryItem -> {
-            LatestPriceBucket latestPriceBucket = priceBucketService.fetchLatestPriceBucket(deliveryItem.getDeliveryItemId());
+            LatestPriceBucket latestPriceBucket = latestPriceBucketMap.get(deliveryItem.getDeliveryItemId());
             deliveryItem.setPriceBucketId(latestPriceBucket.getPriceBucketId());
             deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
         });
@@ -409,20 +404,19 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateDelivery(String deliveryId, LocalDate deliveryDate,
                                List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
-                               DeliveryChargesRule deliveryChargesRule, PriceBucketService priceBucketService,
+                               DeliveryChargesRule deliveryChargesRule,
                                BenefitExecutionContext benefitExecutionContext) {
-        Map <String, Map<String, Integer>> itemSubscribed = findDeferenceOfDeliveryItems(deliveryId, deliveryItems, priceBucketService);
+        Map <String, Map<String, Integer>> itemSubscribed = findDeferenceOfDeliveryItems(deliveryId, deliveryItems);
         deleteDelivery(deliveryId, benefitExecutionContext);
         addDelivery(deliveryId, deliveryDate,
-                deliveryItems, deliveryChargesRule, priceBucketService, benefitExecutionContext);
+                deliveryItems, deliveryChargesRule, benefitExecutionContext);
         itemSubscribed.keySet().forEach(productId -> {
             apply(new SubscriptionActivitySummaryEvent(productId, itemSubscribed.get(productId), SysDate.now()));
         });
     }
 
     private Map <String, Map<String, Integer>> findDeferenceOfDeliveryItems(String deliveryId,
-                                              List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
-                                              PriceBucketService priceBucketService) {
+                                              List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems) {
         Delivery delivery = deliveries.get(deliveryId);
         Map <String, Map<String, Integer>> itemSubscribed = new HashMap<>();
         delivery.getDeliveryItems().forEach(deliveryItem -> {
@@ -442,17 +436,16 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         });
 
         deliveryItems.forEach(deliveryItem -> {
+            final String priceBucketId = deliveryItem.getPriceBucketId();
             if (itemSubscribed.containsKey(deliveryItem.getDeliveryItemId())) {
                 Map <String,Integer> priceBucketMap = itemSubscribed.get(deliveryItem.getDeliveryItemId());
-                String priceBucketId = priceBucketService.fetchLatestPriceBucket(deliveryItem.getDeliveryItemId()).getPriceBucketId();
-                if (priceBucketMap.containsKey(priceBucketId)) {
+                if (priceBucketMap.containsKey(deliveryItem.getPriceBucketId())) {
                     priceBucketMap.put(priceBucketId, priceBucketMap.get(priceBucketId).intValue() + deliveryItem.getQuantity());
                 } else {
                     priceBucketMap.put(priceBucketId, deliveryItem.getQuantity());
                 }
             } else {
                 Map <String,Integer> priceBucketMap = new HashMap<>();
-                String priceBucketId = priceBucketService.fetchLatestPriceBucket(deliveryItem.getDeliveryItemId()).getPriceBucketId();
                 priceBucketMap.put(priceBucketId, deliveryItem.getQuantity());
                 itemSubscribed.put(deliveryItem.getDeliveryItemId(),priceBucketMap);
             }
