@@ -52,7 +52,7 @@ public class ProductStatusUpdatedEventListener {
         PriceTaggedWithProduct newTaggedPriceVersion = event.getNewTaggedPrice();
         if (latestTaggedPriceVersionsViews.isEmpty() ||
                 (latestTaggedPriceVersionsViews.get(0).getPurchasePricePerUnit() != newTaggedPriceVersion.getPurchasePricePerUnit())) {
-            DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+            //DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(), newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
             taggedPriceVersionsViewRepository.save(newTaggedPrice);
             RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(),newTaggedPriceVersion.getTaggedStartDate().toDateTimeAtCurrentTime().toLocalDateTime(),newTaggedPriceVersion.getTaggedEndDate().toDateTimeAtCurrentTime().toLocalDateTime());

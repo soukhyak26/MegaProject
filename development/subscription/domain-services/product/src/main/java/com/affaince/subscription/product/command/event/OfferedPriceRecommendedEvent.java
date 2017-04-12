@@ -8,7 +8,7 @@ import org.joda.time.LocalDateTime;
 
 public class OfferedPriceRecommendedEvent {
     private String productId;
-    //private PriceBucket newPriceBucket;
+    //private ValueCommittedPriceBucket newPriceBucket;
     private String priceBucketId;
     private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
@@ -25,7 +25,7 @@ public class OfferedPriceRecommendedEvent {
     }
 
 /*
-    public OfferedPriceRecommendedEvent(String productId, PriceBucket priceBucket,ProductDemandTrend productDemandTrend) {
+    public OfferedPriceRecommendedEvent(String productId, ValueCommittedPriceBucket priceBucket,ProductDemandTrend productDemandTrend) {
         this.productId = productId;
         this.newPriceBucket = priceBucket;
         this.productDemandTrend=productDemandTrend;
@@ -96,7 +96,7 @@ public class OfferedPriceRecommendedEvent {
         return productDemandTrend;
     }
 
-   /* public PriceBucket getNewPriceBucket() {
+   /* public ValueCommittedPriceBucket getNewPriceBucket() {
         return newPriceBucket;
     }*/
 

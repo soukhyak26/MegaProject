@@ -33,6 +33,7 @@ public class ProductwisePriceBucketId implements Serializable{
         return getPriceBucketId().equals(that.getPriceBucketId());
     }
 
+
     @Override
     public int hashCode() {
         int result = getProductId().hashCode();

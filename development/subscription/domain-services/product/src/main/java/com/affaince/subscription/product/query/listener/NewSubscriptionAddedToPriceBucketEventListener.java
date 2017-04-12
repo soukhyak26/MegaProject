@@ -4,7 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.CalculateExpectedProfitPerPriceBucketCommand;
-import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPriceBucketEvent;
+import com.affaince.subscription.product.command.event.NewSubscriptionAddedToValueCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
@@ -13,10 +13,7 @@ import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by mandar on 29-01-2017.
@@ -36,7 +33,7 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
 
 
     @EventHandler
-    public void on(NewSubscriptionAddedToPriceBucketEvent event) throws Exception {
+    public void on(NewSubscriptionAddedToValueCommittedPriceBucketEvent event) throws Exception {
 
         ProductActualsView latestProductActualsView =
                 productActualsViewRepository.findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc

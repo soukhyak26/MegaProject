@@ -1,10 +1,8 @@
 package com.affaince.subscription.product.command.event;
 
 import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.command.domain.PriceBucket;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -13,7 +11,7 @@ import org.joda.time.LocalDateTime;
 public class OpeningPriceOrPercentRegisteredEvent {
 
     private String productId;
-    //private PriceBucket newPriceBucket;
+    //private ValueCommittedPriceBucket newPriceBucket;
     private String priceBucketId;
     private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;

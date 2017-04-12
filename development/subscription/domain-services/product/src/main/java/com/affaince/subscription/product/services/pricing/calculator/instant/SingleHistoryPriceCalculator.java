@@ -33,8 +33,8 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
         }
         if (null != minusOnePriceBucket && null == minusTwoPriceBucket && latestPriceBucket.getEntityStatus() == EntityStatus.ACTIVE) {
 
-            double y2 = minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit();
-            double y1 = latestPriceBucket.getTaggedPriceVersion().getMRP(); //mark  price
+            double y2 = minusOnePriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
+            double y1 = latestPriceBucket.getLatestTaggedPriceVersion().getMRP(); //mark  price
             double x2 = latestPriceBucket.getNumberOfNewSubscriptions();
             double x1 = 0;//mark quantity
             double slope = calculateSlopeOfDemandCurve(x2, x1, y2, y1);
@@ -59,7 +59,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
 */
             LocalDateTime currentDate = SysDateTime.now();
-            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterOpeningPriceCommandHandler {
     private final Repository<Product> repository;
-
     @Autowired
     public RegisterOpeningPriceCommandHandler(Repository<Product> repository) {
         this.repository = repository;
@@ -22,6 +21,6 @@ public class RegisterOpeningPriceCommandHandler {
     @CommandHandler
     public void handle(RegisterOpeningPriceCommand command) {
         Product product = repository.load(command.getProductId());
-        product.registerOpeningPrice(command.getOpeningPrice());
+        product.getProductAccount().registerOpeningPrice(command.getProductId(),command.getOpeningPrice(),command.getFromDate());
     }
 }

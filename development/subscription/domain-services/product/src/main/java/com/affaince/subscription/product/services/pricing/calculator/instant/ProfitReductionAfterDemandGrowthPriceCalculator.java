@@ -55,7 +55,7 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
 */
             LocalDateTime currentDate = SysDateTime.now();
-            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 
@@ -69,7 +69,7 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
         double weightedProduct = 0.0;
         double quantitySum = 0.0;
         for (PriceBucket tempInput : activePriceBuckets) {
-            weightedProduct += tempInput.getOfferedPriceOrPercentDiscountPerUnit() * tempInput.getNumberOfExistingSubscriptions();
+            weightedProduct += tempInput.getFixedOfferedPriceOrPercentDiscountPerUnit() * tempInput.getNumberOfExistingSubscriptions();
             quantitySum += tempInput.getNumberOfExistingSubscriptions();
         }
         return weightedProduct / quantitySum;

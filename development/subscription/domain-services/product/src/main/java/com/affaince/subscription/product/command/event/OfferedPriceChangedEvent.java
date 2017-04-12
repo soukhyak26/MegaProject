@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.vo.PricingOptions;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -11,7 +12,7 @@ import org.joda.time.LocalDateTime;
  */
 public class OfferedPriceChangedEvent {
     private String productId;
-    //private PriceBucket newPriceBucket;
+    //private ValueCommittedPriceBucket newPriceBucket;
     private String priceBucketId;
     private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
@@ -23,18 +24,19 @@ public class OfferedPriceChangedEvent {
     private EntityStatus entityStatus;
     private double offeredPriceOrPercentDiscountPerUnit;
     private ProductDemandTrend productDemandTrend;
+    private PricingOptions pricingOptions;
 
     public OfferedPriceChangedEvent() {
     }
 /*
-    public OfferedPriceChangedEvent(String productId, PriceBucket newPriceBucket,ProductDemandTrend productDemandTrend) {
+    public OfferedPriceChangedEvent(String productId, ValueCommittedPriceBucket newPriceBucket,ProductDemandTrend productDemandTrend) {
         this.productId = productId;
         this.newPriceBucket = newPriceBucket;
         this.productDemandTrend=productDemandTrend;
     }
 */
 
-    public OfferedPriceChangedEvent(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfExistingSubscriptions, LocalDateTime fromDate, LocalDateTime toDate, EntityStatus entityStatus, double offeredPriceOrPercentDiscountPerUnit, ProductDemandTrend productDemandTrend) {
+    public OfferedPriceChangedEvent(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfExistingSubscriptions, LocalDateTime fromDate, LocalDateTime toDate, EntityStatus entityStatus, double offeredPriceOrPercentDiscountPerUnit, ProductDemandTrend productDemandTrend,PricingOptions pricingOptions) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.productPricingCategory = productPricingCategory;
@@ -47,6 +49,7 @@ public class OfferedPriceChangedEvent {
         this.entityStatus = entityStatus;
         this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
         this.productDemandTrend = productDemandTrend;
+        this.pricingOptions=pricingOptions;
     }
 
     public String getProductId() {
@@ -54,7 +57,7 @@ public class OfferedPriceChangedEvent {
     }
 
 /*
-    public PriceBucket getNewPriceBucket() {
+    public ValueCommittedPriceBucket getNewPriceBucket() {
         return newPriceBucket;
     }
 */
@@ -101,5 +104,9 @@ public class OfferedPriceChangedEvent {
 
     public ProductDemandTrend getProductDemandTrend() {
         return productDemandTrend;
+    }
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
     }
 }

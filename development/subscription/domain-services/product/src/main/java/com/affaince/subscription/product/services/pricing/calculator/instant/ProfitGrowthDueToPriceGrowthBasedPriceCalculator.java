@@ -33,12 +33,12 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
                 minusOnePriceBucket.getRegisteredProfit() > minusTwoPriceBucket.getRegisteredProfit() &&
-                minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit() > minusTwoPriceBucket.getOfferedPriceOrPercentDiscountPerUnit() &&
+                minusOnePriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() > minusTwoPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() &&
                 ((minusOnePriceBucket.getNumberOfExistingSubscriptions() < minusTwoPriceBucket.getNumberOfExistingSubscriptions()) ||
                 (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions()))
                 ) {
-            double y2 = minusOnePriceBucket.getOfferedPriceOrPercentDiscountPerUnit();
-            double y1 = latestPriceBucket.getTaggedPriceVersion().getMRP();//markPrice.getOfferedPrice();
+            double y2 = minusOnePriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
+            double y1 = latestPriceBucket.getLatestTaggedPriceVersion().getMRP();//markPrice.getOfferedPrice();
             double x2 = minusOnePriceBucket.getNumberOfNewSubscriptions();
             double x1 = 0;//markPrice.getQuantity();
             double expectedDemand = 0;
@@ -63,7 +63,7 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
         */
             LocalDateTime currentDate = SysDateTime.now();
-            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
         } else {

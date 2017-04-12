@@ -4,7 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.CalculateExpectedProfitPerPriceBucketCommand;
-import com.affaince.subscription.product.command.event.SubscriptionDeductedFromPriceBucketEvent;
+import com.affaince.subscription.product.command.event.SubscriptionDeductedFromValueCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
@@ -14,8 +14,6 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-
-import java.util.Iterator;
 
 /**
  * Created by mandar on 29-01-2017.
@@ -35,7 +33,7 @@ public class SubscriptionDeductedFromPriceBucketEventListener {
 
 
     @EventHandler
-    public void on(SubscriptionDeductedFromPriceBucketEvent event) throws Exception {
+    public void on(SubscriptionDeductedFromValueCommittedPriceBucketEvent event) throws Exception {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
 //        ProductActualsView productActualsView = productActualsViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
         //find today's productActualsView

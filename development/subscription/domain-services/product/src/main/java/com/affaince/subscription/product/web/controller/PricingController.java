@@ -2,6 +2,8 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.RecommendedPriceBucketViewRepository;
@@ -46,7 +48,7 @@ public class PricingController {
     @RequestMapping(method = RequestMethod.PUT, value = "/openprice/{productid}")
     @Consumes("application/json")
     public ResponseEntity<String> registerOpeningPrice(@PathVariable("productid") String productId, @RequestBody RegisterOpeningPriceRequest request) throws Exception {
-        RegisterOpeningPriceCommand command = new RegisterOpeningPriceCommand(productId, request.getOpeningPrice());
+        RegisterOpeningPriceCommand command = new RegisterOpeningPriceCommand(productId, request.getOpeningPrice(), SysDateTime.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.RecalculateOfferPriceCommand;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
@@ -24,6 +25,6 @@ public class RecalculateOfferPriceCommandHandler {
     @CommandHandler
     public void handle(RecalculateOfferPriceCommand command){
         Product product= repository.load(command.getProductId());
-        product.calculatePrice(defaultPriceDeterminator,product.getProductDemandTrend());
+        product.calculatePrice(command.getProductId(),SysDateTime.now(),defaultPriceDeterminator,product.getProductConfiguration().getPricingOptions(),product.getProductDemandTrend());
     }
 }

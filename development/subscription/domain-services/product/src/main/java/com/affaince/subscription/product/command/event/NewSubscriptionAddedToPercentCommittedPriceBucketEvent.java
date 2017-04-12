@@ -3,9 +3,9 @@ package com.affaince.subscription.product.command.event;
 import org.joda.time.LocalDate;
 
 /**
- * Created by mandar on 31-12-2016.
+ * Created by mandar on 4/10/2017.
  */
-public class NewSubscriptionAddedToPriceBucketEvent {
+public class NewSubscriptionAddedToPercentCommittedPriceBucketEvent {
     private String productId;
     private String priceBucketId;
     private long addedSubscriptionCount;
@@ -13,7 +13,7 @@ public class NewSubscriptionAddedToPriceBucketEvent {
     private long totalSubscriptionCount;
     private LocalDate subscriptionChangedDate;
 
-    public NewSubscriptionAddedToPriceBucketEvent(String productId, String priceBucketId, long addedSubscriptionCount, long newSubscriptionCount, long totalSubscriptionCount, LocalDate subscriptionChangedDate) {
+    public NewSubscriptionAddedToPercentCommittedPriceBucketEvent(String productId, String priceBucketId, long addedSubscriptionCount, long newSubscriptionCount, long totalSubscriptionCount, LocalDate subscriptionChangedDate) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.addedSubscriptionCount = addedSubscriptionCount;
@@ -22,7 +22,7 @@ public class NewSubscriptionAddedToPriceBucketEvent {
         this.subscriptionChangedDate = subscriptionChangedDate;
     }
 
-    public NewSubscriptionAddedToPriceBucketEvent() {
+    public NewSubscriptionAddedToPercentCommittedPriceBucketEvent() {
     }
 
     public String getProductId() {
@@ -48,4 +48,5 @@ public class NewSubscriptionAddedToPriceBucketEvent {
     public LocalDate getSubscriptionChangedDate() {
         return subscriptionChangedDate;
     }
+
 }
