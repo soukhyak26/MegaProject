@@ -6,6 +6,7 @@ import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ReasonCode;
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -20,9 +21,7 @@ import java.util.List;
 @Document(collection = "DeliveryView")
 public class DeliveryView {
     @Id
-    private String deliveryId;
-    private String subscriberId;
-    private String subscriptionId;
+    private DeliveryId deliveryId;
     private List<DeliveryItem> deliveryItems;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -34,10 +33,8 @@ public class DeliveryView {
     private ReasonCode reasonCode;
     private double rewardPoints;
 
-    public DeliveryView(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status, double rewardPoints) {
+    public DeliveryView(DeliveryId deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus status, double rewardPoints) {
         this.deliveryId = deliveryId;
-        this.subscriberId = subscriberId;
-        this.subscriptionId = subscriptionId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.status = status;
@@ -47,28 +44,12 @@ public class DeliveryView {
     public DeliveryView() {
     }
 
-    public String getDeliveryId() {
+    public DeliveryId getDeliveryId() {
         return deliveryId;
     }
 
-    public void setDeliveryId(String deliveryId) {
+    public void setDeliveryId(DeliveryId deliveryId) {
         this.deliveryId = deliveryId;
-    }
-
-    public String getSubscriberId() {
-        return subscriberId;
-    }
-
-    public void setSubscriberId(String subscriberId) {
-        this.subscriberId = subscriberId;
-    }
-
-    public String getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
     }
 
     public List<DeliveryItem> getDeliveryItems() {

@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryItem;
@@ -25,7 +26,8 @@ public class DeliveryStatusAndDispatchDateUpdatedEventListener {
 
     @EventHandler
     public void on(DeliveryStatusAndDispatchDateUpdatedEvent event) {
-        DeliveryView deliveryView = deliveryViewRepository.findOne(event.getDeliveryId());
+        final DeliveryId deliveryId = new DeliveryId(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId());
+        DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {
             DeliveryItem deliveryItem = new DeliveryItem(itemDispatchStatus.getItemId());
             deliveryItem = deliveryView.getDeliveryItems().get(deliveryView.getDeliveryItems().indexOf(deliveryItem));

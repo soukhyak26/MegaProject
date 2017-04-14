@@ -26,6 +26,6 @@ public class DeleteDeliveryCommandHandler {
     @CommandHandler
     public void handle(DeleteDeliveryCommand command) {
         final Subscriber subscriber = repository.load(command.getSubscriberId());
-        subscriber.deleteDelivery(command.getDeliveryId(), benefitExecutionContext);
+        subscriber.deleteDelivery(command.getDeliveryId(), command.getSubscriberId(), benefitExecutionContext);
     }
 }

@@ -3,6 +3,7 @@ package com.affaince.subscription.delivery.query.view;
 import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -15,9 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "DeliveryView")
 public class DeliveryView {
     @Id
-    private String deliveryId;
-    private String subscriberId;
-    private String subscriptionId;
+    private DeliveryId deliveryId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate deliveryDate;
@@ -26,28 +25,12 @@ public class DeliveryView {
     public DeliveryView() {
     }
 
-    public String getDeliveryId() {
+    public DeliveryId getDeliveryId() {
         return deliveryId;
     }
 
-    public void setDeliveryId(String deliveryId) {
+    public void setDeliveryId(DeliveryId deliveryId) {
         this.deliveryId = deliveryId;
-    }
-
-    public String getSubscriberId() {
-        return subscriberId;
-    }
-
-    public void setSubscriberId(String subscriberId) {
-        this.subscriberId = subscriberId;
-    }
-
-    public String getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
     }
 
     public LocalDate getDeliveryDate() {

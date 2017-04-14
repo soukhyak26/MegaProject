@@ -13,13 +13,15 @@ import java.util.List;
 public class UpdateDeliveryCommand {
     @TargetAggregateIdentifier
     private String subscriberId;
+    private String subscriptionId;
     private String deliveryId;
     private LocalDate deliveryDate;
     private List<DeliveryItem> deliveryItems;
     private DeliveryChargesRule deliveryChargesRule;
 
-    public UpdateDeliveryCommand(String subscriberId, String deliveryId, LocalDate deliveryDate, List<DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule) {
+    public UpdateDeliveryCommand(String subscriberId, String subscriptionId, String deliveryId, LocalDate deliveryDate, List<DeliveryItem> deliveryItems, DeliveryChargesRule deliveryChargesRule) {
         this.subscriberId = subscriberId;
+        this.subscriptionId = subscriptionId;
         this.deliveryId = deliveryId;
         this.deliveryDate = deliveryDate;
         this.deliveryItems = deliveryItems;
@@ -31,6 +33,10 @@ public class UpdateDeliveryCommand {
 
     public String getSubscriberId() {
         return subscriberId;
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 
     public String getDeliveryId() {

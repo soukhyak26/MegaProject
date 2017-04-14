@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.subscriber.command.event.DeliveryPreparedForDispatchEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
@@ -27,7 +28,8 @@ public class DeliveryPreparedForDispatchEventListener {
 
     @EventHandler
     public void on(DeliveryPreparedForDispatchEvent event) {
-        final DeliveryView deliveryView = deliveryViewRepository.findOne(event.getDelivery().getDeliveryId());
+        final DeliveryId deliveryId = new DeliveryId(event.getDelivery().getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId());
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
         deliveryView.setStatus(DeliveryStatus.READYFORDELIVERY);
         deliveryView.getDeliveryItems().forEach(deliveryItem -> {
             LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository

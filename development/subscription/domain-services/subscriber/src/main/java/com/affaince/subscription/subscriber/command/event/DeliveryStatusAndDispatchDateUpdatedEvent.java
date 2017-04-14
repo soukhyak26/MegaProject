@@ -10,6 +10,7 @@ import java.util.List;
  * Created by rbsavaliya on 10-10-2015.
  */
 public class DeliveryStatusAndDispatchDateUpdatedEvent {
+    private String subscriberId;
     private String subscriptionId;
     private String deliveryId;
     private DeliveryStatus deliveryStatus;
@@ -19,7 +20,8 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private double totalDeliveryPrice;
     private ReasonCode reasonCode;
 
-    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String deliveryId, DeliveryStatus deliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice, ReasonCode reasonCode) {
+    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriberId, String subscriptionId, String deliveryId, DeliveryStatus deliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice, ReasonCode reasonCode) {
+        this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
         this.deliveryId = deliveryId;
         this.deliveryStatus = deliveryStatus;
@@ -63,5 +65,9 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
 
     public ReasonCode getReasonCode() {
         return reasonCode;
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
     }
 }

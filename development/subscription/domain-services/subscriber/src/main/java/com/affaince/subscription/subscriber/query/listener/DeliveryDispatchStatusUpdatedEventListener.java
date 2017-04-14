@@ -23,7 +23,7 @@ public class DeliveryDispatchStatusUpdatedEventListener {
     @EventHandler
     public void on(DeliveryDispatchStatusUpdatedEvent event) {
         final UpdateDeliveryStatusAndDispatchDateCommand command = new UpdateDeliveryStatusAndDispatchDateCommand(
-                event.getSubscriptionId(), event.getSubscriberId(), event.getBasketDeliveryStatus(), event.getDispatchDate(),
+                event.getSubscriberId(), event.getSubscriptionId(), event.getDeliveryId(),event.getBasketDeliveryStatus(), event.getDispatchDate(),
                 event.getItemDispatchStatuses(), event.getReasonCode());
         commandGateway.send(command);
     }

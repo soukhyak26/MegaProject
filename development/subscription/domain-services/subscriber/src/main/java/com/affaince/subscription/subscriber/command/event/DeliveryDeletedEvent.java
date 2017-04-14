@@ -5,10 +5,12 @@ package com.affaince.subscription.subscriber.command.event;
  */
 public class DeliveryDeletedEvent {
     private String subscriberId;
+    private String subscriptionId;
     private String deliveryId;
 
-    public DeliveryDeletedEvent(String subscriberId, String deliveryId) {
+    public DeliveryDeletedEvent(String subscriberId, String subscriptionId, String deliveryId) {
         this.subscriberId = subscriberId;
+        this.subscriptionId = subscriptionId;
         this.deliveryId = deliveryId;
     }
 
@@ -18,5 +20,9 @@ public class DeliveryDeletedEvent {
 
     public String getDeliveryId() {
         return deliveryId;
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 }

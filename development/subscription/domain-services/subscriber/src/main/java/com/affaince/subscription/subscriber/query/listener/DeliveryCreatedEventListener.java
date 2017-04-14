@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.listener;
 
 import com.affaince.subscription.common.type.ReasonCode;
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryItem;
@@ -33,8 +34,8 @@ public class DeliveryCreatedEventListener {
                         deliveryItem.getPriceBucketId(), deliveryItem.getOfferedPricePerUnit(),
                         deliveryItem.getProductPricingCategory())
         ));
-        final DeliveryView deliveryView = new DeliveryView(event.getDeliveryId(), event.getSubscriberId(),
-                event.getSubscriptionId(),deliveryItems , event.getDeliveryDate(), event.getStatus(), event.getRewardPoints());
+        final DeliveryId deliveryId = new DeliveryId(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId());
+        final DeliveryView deliveryView = new DeliveryView(deliveryId,deliveryItems , event.getDeliveryDate(), event.getStatus(), event.getRewardPoints());
         deliveryViewRepository.save(deliveryView);
     }
 }

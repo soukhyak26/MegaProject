@@ -23,6 +23,6 @@ public class PrepareDeliveryForDispatchCommandHandler {
     @CommandHandler
     public void handle(PrepareDeliveryForDispatchCommand command) {
         final Subscriber subscriber = repository.load(command.getSubscriberId());
-        subscriber.prepareDeliveryForDispatch(command.getDeliveryId(), command.getLatestPriceBucketMap());
+        subscriber.prepareDeliveryForDispatch(command.getSubscriptionId(), command.getDeliveryId(), command.getLatestPriceBucketMap());
     }
 }

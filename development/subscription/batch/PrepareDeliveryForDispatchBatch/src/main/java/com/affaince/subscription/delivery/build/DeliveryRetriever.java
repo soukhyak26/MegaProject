@@ -29,8 +29,7 @@ public class DeliveryRetriever {
                 )
         );
         deliveryViews.forEach(deliveryView -> deliveryClient.prepareDeliveryForDispatch(
-                deliveryView.getSubscriberId()
-                , deliveryView.getDeliveryId()
+                deliveryView.getDeliveryId()
         ));
     }
 }

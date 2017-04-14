@@ -7,10 +7,12 @@ import com.affaince.subscription.subscriber.command.domain.Delivery;
  */
 public class DeliveryPreparedForDispatchEvent {
     private String subscriberId;
+    private String subscriptionId;
     private Delivery delivery;
 
-    public DeliveryPreparedForDispatchEvent(String subscriberId, Delivery delivery) {
+    public DeliveryPreparedForDispatchEvent(String subscriberId, String subscriptionId, Delivery delivery) {
         this.subscriberId = subscriberId;
+        this.subscriptionId = subscriptionId;
         this.delivery = delivery;
     }
 
@@ -23,5 +25,9 @@ public class DeliveryPreparedForDispatchEvent {
 
     public Delivery getDelivery() {
         return delivery;
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 }

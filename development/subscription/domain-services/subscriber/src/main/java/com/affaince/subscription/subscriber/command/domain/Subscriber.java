@@ -198,7 +198,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 delivery.getDeliveryItems().get(delivery.getDeliveryItems().indexOf(
         new DeliveryItem(itemDispatchStatus.getItemId()))).getPriceBucketId()
         ));
-        apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getDeliveryId(),
+        apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getSubscriptionId(), command.getDeliveryId(),
                 command.getDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses(), delivery.getDeliveryCharges(),
                 delivery.getTotalDeliveryPrice(), command.getReasonCode()));
@@ -366,7 +366,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         });
     }
 
-    public void deleteDelivery(String deliveryId, BenefitExecutionContext benefitExecutionContext) {
+    public void deleteDelivery(String deliveryId, String subscriptionId, BenefitExecutionContext benefitExecutionContext) {
         Delivery tempDelivery = deliveries.get(deliveryId);
         final BenefitResult benefitResult =
                 calculateBenefits(this.deliveries, tempDelivery.getTotalDeliveryPrice() * (-1), benefitExecutionContext);
@@ -374,10 +374,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             Delivery delivery = deliveries.get(deliveryKey);
             delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryKey));
         }
-        apply(new DeliveryDeletedEvent(this.subscriberId, deliveryId));
+        apply(new DeliveryDeletedEvent(this.subscriberId, subscriptionId, deliveryId));
     }
 
-    public void prepareDeliveryForDispatch(String deliveryId, Map<String, LatestPriceBucket> latestPriceBucketMap) {
+    public void prepareDeliveryForDispatch(String subscriptionId, String deliveryId, Map<String, LatestPriceBucket> latestPriceBucketMap) {
         final Delivery delivery = deliveries.get(deliveryId);
         delivery.setStatus(DeliveryStatus.READYFORDELIVERY);
         delivery.getDeliveryItems().forEach(deliveryItem -> {
@@ -386,7 +386,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
         });
         final DeliveryPreparedForDispatchEvent event = new DeliveryPreparedForDispatchEvent(
-                this.subscriberId, delivery
+                this.subscriberId, subscriptionId, delivery
         );
     }
 
@@ -395,7 +395,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                                DeliveryChargesRule deliveryChargesRule,
                                BenefitExecutionContext benefitExecutionContext) {
         Map <String, Map<String, Integer>> itemSubscribed = findDeferenceOfDeliveryItems(deliveryId, deliveryItems);
-        deleteDelivery(deliveryId, benefitExecutionContext);
         addDelivery(deliveryId, deliveryDate,
                 deliveryItems, deliveryChargesRule, benefitExecutionContext);
         itemSubscribed.keySet().forEach(productId -> {

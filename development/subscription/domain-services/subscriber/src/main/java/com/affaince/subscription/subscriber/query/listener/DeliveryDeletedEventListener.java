@@ -1,5 +1,6 @@
 package com.affaince.subscription.subscriber.query.listener;
 
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.subscriber.command.event.DeliveryDeletedEvent;
 import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -21,6 +22,7 @@ public class DeliveryDeletedEventListener {
 
     @EventHandler
     public void on(DeliveryDeletedEvent event) {
-        deliveryViewRepository.delete(event.getDeliveryId());
+        final DeliveryId deliveryId = new DeliveryId(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId());
+        deliveryViewRepository.delete(deliveryId);
     }
 }

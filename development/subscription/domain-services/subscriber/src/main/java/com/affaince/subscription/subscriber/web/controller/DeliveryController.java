@@ -6,6 +6,7 @@ import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.ReasonCode;
+import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
@@ -101,30 +102,33 @@ public class DeliveryController {
     }
 
     private void setLatestPriceParameterToDeliveryItem(DeliveryItem[] deliveryItems) {
-        for (DeliveryItem deliveryItem: deliveryItems) {
+        for (DeliveryItem deliveryItem : deliveryItems) {
             LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId());
             deliveryItem.setPriceBucketId(latestPriceBucketView.getPriceBucketId());
             deliveryItem.setOfferedPricePerUnit(latestPriceBucketView.getOfferedPricePerUnit());
         }
     }
 
-    @RequestMapping(value = "delete/{subscriberId}/{deliveryId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "delete/{subscriberId}/{subscriptionId}/{deliveryId}", method = RequestMethod.DELETE)
     @Consumes("application/json")
-    public ResponseEntity<Object> deleteDelivery(@PathVariable String subscriberId, @PathVariable String deliveryId) throws Exception {
-        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
+    public ResponseEntity<Object> deleteDelivery(@PathVariable String subscriberId, @PathVariable String subscriptionId,
+                                                 @PathVariable String deliveryId) throws Exception {
+        final DeliveryId deliveryIdKey = new DeliveryId(deliveryId, subscriberId, subscriptionId);
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryIdKey);
         if (deliveryView == null) {
             throw DeliveryNotFoundException.build(deliveryId);
         }
-        final DeleteDeliveryCommand command = new DeleteDeliveryCommand(subscriberId, deliveryId);
+        final DeleteDeliveryCommand command = new DeleteDeliveryCommand(subscriberId, subscriberId, deliveryId);
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "update/{subscriberId}/{deliveryId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "update/{subscriberId}/{subscriptionId}/{deliveryId}", method = RequestMethod.PUT)
     @Consumes("application/json")
-    public ResponseEntity<Object> updateDelivery(@PathVariable String subscriberId, @PathVariable String deliveryId,
-                                                 UpdateDeliveryRequest request) throws Exception {
-        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
+    public ResponseEntity<Object> updateDelivery(@PathVariable String subscriberId, @PathVariable String subscriptionId,
+                                                 @PathVariable String deliveryId,UpdateDeliveryRequest request) throws Exception {
+        final DeliveryId deliveryIdKey = new DeliveryId(deliveryId, subscriberId, subscriptionId);
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryIdKey);
         if (deliveryView == null) {
             throw DeliveryNotFoundException.build(deliveryId);
         }
@@ -144,7 +148,7 @@ public class DeliveryController {
             deliveryItem.setProductPricingCategory(productView.getProductPricingCategory());
         }
         setLatestPriceParameterToDeliveryItem(request.getDeliveryItems());
-        final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, deliveryId, request.getDeliveryDate(),
+        final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, subscriberId, deliveryId, request.getDeliveryDate(),
                 Arrays.asList(request.getDeliveryItems()), fetchDeliveryChargesRules());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
@@ -155,12 +159,13 @@ public class DeliveryController {
                                                               @PathVariable String subscriberId,
                                                               @PathVariable String subscriptionId,
                                                               @PathVariable String deliveryId) throws Exception {
-        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
+        final DeliveryId deliveryIdKey = new DeliveryId(deliveryId, subscriberId, subscriptionId);
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryIdKey);
         if (deliveryView == null) {
             throw DeliveryNotFoundException.build(deliveryId);
         }
         final UpdateDeliveryStatusAndDispatchDateCommand command = new UpdateDeliveryStatusAndDispatchDateCommand(
-                subscriberId, subscriberId, DeliveryStatus.valueOf(request.getBasketDeliveryStatus()), request.getDispatchDate(),
+                subscriberId, subscriberId, deliveryId, DeliveryStatus.valueOf(request.getBasketDeliveryStatus()), request.getDispatchDate(),
                 Arrays.stream(request.getItemStatusRequest()).map(itemStatusRequest -> new ItemDispatchStatus(
                         itemStatusRequest.getItemId(), itemStatusRequest.getItemDeliveryStatus()
                 )).collect(Collectors.toList()), ReasonCode.valueOf(request.getReasonCode()));
@@ -172,11 +177,13 @@ public class DeliveryController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "prepare/{subscriberId}/{deliveryId}")
+    @RequestMapping(value = "prepare/{subscriberId}/{subscriptionId}/{deliveryId}")
     public ResponseEntity<Object> prepareDeliveryForDispatch(@PathVariable String subscriberId,
+                                                             @PathVariable String subscriptionId,
                                                              @PathVariable String deliveryId) throws Exception {
 
-        DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryId);
+        final DeliveryId deliveryIdKey = new DeliveryId(deliveryId, subscriberId, subscriptionId);
+        final DeliveryView deliveryView = deliveryViewRepository.findOne(deliveryIdKey);
         final Map<String, LatestPriceBucket> latestPriceBucketMap = new HashMap<>(deliveryView.getDeliveryItems().size());
         deliveryView.getDeliveryItems().forEach(deliveryItem -> {
             LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(deliveryItem.getDeliveryItemId());
@@ -184,7 +191,7 @@ public class DeliveryController {
                     new LatestPriceBucket(latestPriceBucketView.getProductId(), latestPriceBucketView.getPriceBucketId(),
                             latestPriceBucketView.getOfferedPricePerUnit(), latestPriceBucketView.getCurrentPriceDate()));
         });
-        final PrepareDeliveryForDispatchCommand command = new PrepareDeliveryForDispatchCommand(subscriberId, deliveryId,
+        final PrepareDeliveryForDispatchCommand command = new PrepareDeliveryForDispatchCommand(subscriberId, subscriptionId, deliveryId,
                 latestPriceBucketMap);
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
