@@ -9,7 +9,6 @@ import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.subscriber.command.DeleteBasketCommand;
 import com.affaince.subscription.subscriber.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.subscriber.command.UpdateSubscriberAddressCommand;
 import com.affaince.subscription.subscriber.command.event.*;
@@ -142,13 +141,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     @EventSourcingHandler
-    public void on(BasketDeletedEvent event) {
-        this.subscriberId = event.getSubscriptionId();
-        Delivery delivery = this.deliveries.get(event.getBasketId());
-        delivery.setStatus(DeliveryStatus.DELETED);
-    }
-
-    @EventSourcingHandler
     public void on(SubscriberPasswordSetEvent event) {
         this.subscriberId = event.getSubscriberId();
         this.password = event.getPassword();
@@ -210,10 +202,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 command.getDeliveryStatus(), command.getDispatchDate(),
                 command.getItemDispatchStatuses(), delivery.getDeliveryCharges(),
                 delivery.getTotalDeliveryPrice(), command.getReasonCode()));
-    }
-
-    public void deleteBasket(DeleteBasketCommand command) {
-        apply(new BasketDeletedEvent(this.subscriberId, command.getBasketId(), DeliveryStatus.DELETED));
     }
 
     public void setPassword(String password) throws NoSuchAlgorithmException {
