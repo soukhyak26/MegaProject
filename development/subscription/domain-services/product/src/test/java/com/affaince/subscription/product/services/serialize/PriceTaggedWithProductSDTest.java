@@ -23,9 +23,9 @@ public class PriceTaggedWithProductSDTest {
     @Test
     public  void testSerializationOfPRiceBucket() throws IOException {
         PriceTaggedWithProduct priceTaggedWithProduct = new PriceTaggedWithProduct(
-                "1", 20, 30, LocalDate.now(), LocalDate.now().plusDays(20)
+                "1", 20, 30, LocalDate.now()
         );
-
+        priceTaggedWithProduct.setTaggedEndDate(LocalDate.now().plusDays(20));
         ObjectMapper objectMapper = new ObjectMapper();
 
         String a = objectMapper.writeValueAsString(priceTaggedWithProduct);

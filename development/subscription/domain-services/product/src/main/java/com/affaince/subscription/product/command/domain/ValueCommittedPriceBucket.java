@@ -21,14 +21,24 @@ public class ValueCommittedPriceBucket extends PriceBucket {
     public ValueCommittedPriceBucket() {
     }
 
-
+    //Since this constructor is already being invoked through an event sourcing handler,it need not emit any event of its own
     public ValueCommittedPriceBucket(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercentDiscountPerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
-        apply(new ValueCommittedPriceBucketCreatedEvent(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercentDiscountPerUnit, entityStatus, fromDate));
+        //apply(new ValueCommittedPriceBucketCreatedEvent(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercentDiscountPerUnit, entityStatus, fromDate));
+        this.productId = productId;
+        this.priceBucketId = priceBucketId;
+        this.productPricingCategory = productPricingCategory;
+        this.taggedPriceVersion = taggedPriceVersion;
+        this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
+        this.entityStatus = entityStatus;
+        this.fromDate = fromDate;
+
     }
 
     public PriceTaggedWithProduct getLatestTaggedPriceVersion(){
         return this.taggedPriceVersion;
     }
+
+    //This may not be needed.
     @EventSourcingHandler
     public void on(ValueCommittedPriceBucketCreatedEvent event) {
         this.productId = event.getProductId();

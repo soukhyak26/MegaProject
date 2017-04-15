@@ -30,10 +30,11 @@ public class SubscriptionForecastUpdatedEventListener {
         final ProductForecastView latestProductForecastView
                 = productForecastViewRepository.findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc(event.getProductId());
         final ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
-        productConfigurationView.setNextForecastDate(event.getForecastEndDate().plusDays(1));
+        //productConfigurationView.setNextForecastDate(event.getForecastEndDate().plusDays(1));
         //expire latest Forecast
+        //TODO: This condition is wrong
         if (event.getForecastStartDate().isBefore(latestProductForecastView.getEndDate())) {
-            latestProductForecastView.setEndDate(event.getForecastStartDate().minusDays(1));
+           // latestProductForecastView.setEndDate(event.getForecastStartDate().minusDays(1));
             latestProductForecastView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
             productForecastViewRepository.save(latestProductForecastView);
         }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Created by mandar on 26-06-2016.
  */
-
+//This class is responsible for calculating the breakeven price of a product per unit given differnt cost headers which contribute to the BE price.
 public class BreakEvenPriceCalculator {
     @Autowired
     public BreakEvenPriceCalculator() {

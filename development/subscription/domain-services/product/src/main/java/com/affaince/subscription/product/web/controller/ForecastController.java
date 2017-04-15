@@ -83,6 +83,7 @@ public class ForecastController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
+/*
     //API to add single/one-by-one forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "addSingleforecast/{productid}")
     @Consumes("application/json")
@@ -96,6 +97,7 @@ public class ForecastController {
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+*/
 
     //API to add forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")

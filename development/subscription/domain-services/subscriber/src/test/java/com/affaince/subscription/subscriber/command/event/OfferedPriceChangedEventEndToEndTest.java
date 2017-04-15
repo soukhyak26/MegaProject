@@ -39,7 +39,7 @@ public class OfferedPriceChangedEventEndToEndTest {
                 "1",
                 "1",
                 ProductPricingCategory.PRICE_COMMITMENT,
-                new PriceTaggedWithProduct("1",89,110, LocalDate.now(),new LocalDate(9999,12,31)),
+                new PriceTaggedWithProduct("1",89,110, LocalDate.now()),
                 20,
                 2,
                 400,

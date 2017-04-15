@@ -85,22 +85,12 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     //Event for setting product configuration
-    /*@EventSourcingHandler
-    public void on(ProductPricingConfigurationSetEvent event) {
-        if (!this.productActivationStatusList.contains(ProductStatus.PRODUCT_CONFIGURED)) {
-            this.productConfiguration = new ProductConfiguration(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getDemandCurvePeriod(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingOptions(), event.getPricingStrategyType());
-            this.productActivationStatusList.add(ProductStatus.PRODUCT_CONFIGURED);
-        }
-
-    }*/
-
-
-    //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler
     @EventSourcingHandler
-    public void on(SubscriptionForecastUpdatedEvent event) {
-        this.productId = event.getProductId();
-        this.getProductConfiguration().setNextForecastDate(event.getForecastEndDate().plusDays(1));
+    public void on(ProductPricingConfigurationSetEvent event) {
+            this.productConfiguration = new ProductConfiguration(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getDemandCurvePeriod(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingOptions(), event.getPricingStrategyType(),event.getTentativePercentageChangeInProductDemand());
     }
+
+
 
 
     @EventSourcingHandler
@@ -253,10 +243,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
             List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
 
-            //THIS LOOP SHOULD ITERATE SINGLE TIME
             for (int i = 0; i < forecasts.size(); i++) {
                 //why same start/end dates to all events??
-                apply(new SubscriptionForecastUpdatedEvent(productId,
+                apply(new SubscriptionPseudoActualsUpdatedEvent(productId,
                         forecasts.get(i).getProductVersionId().getFromDate(),
                         forecasts.get(i).getEndDate(),
                         forecasts.get(i).getNewSubscriptions(),
@@ -273,9 +262,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
 
 
+/*
     public void registerSingularManualForecast(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
         apply(new ManualSingularForecastAddedEvent(productId, startDate, endDate, purchasePricePerUnit, mrp, numberOfNewSubscriptions, numberOfChurnedSubscriptions, productForecastStatus));
     }
+*/
 
     public void registerManualForecast(ProductForecastParameter[] productForecastParameters, ForecastFinderService forecastFinderService) {
         //for (ProductForecastParameter forecastParameter : productForecastParameters) {

@@ -2,9 +2,11 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.product.command.event.SubscriptionForecastUpdatedEvent;
 import com.affaince.subscription.product.vo.PricingOptions;
 import com.affaince.subscription.product.vo.PricingStrategyType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
@@ -24,6 +26,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private double tentativePercentageChangeInProductDemand;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
 
+    //This constructor need/should not publish event as it is being invoked from event sourcing handler of already published event(ProductPricingConfigurationSetEvent)
     public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
@@ -158,4 +161,12 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
             return -1;
         }
     }
+
+    //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler
+    @EventSourcingHandler
+    public void on(SubscriptionForecastUpdatedEvent event) {
+        this.productId = event.getProductId();
+        this.setNextForecastDate(event.getForecastEndDate().plusDays(1));
+    }
+
 }

@@ -18,11 +18,20 @@ public class NoneCommittedPriceBucket extends PriceBucket {
     private long numberOfChurnedSubscriptions;
     protected PriceTaggedWithProduct taggedPriceVersion;
 
-    //Only to be used for product with none commitment
+    //Since this constructor is already being invoked through an event sourcing handler,it need not emit any event of its own
     public NoneCommittedPriceBucket(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercentDiscountPerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
-        apply(new NoneCommittedPriceBucketCreatedEvent(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercentDiscountPerUnit, entityStatus, fromDate));
+        //apply(new NoneCommittedPriceBucketCreatedEvent(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercentDiscountPerUnit, entityStatus, fromDate));
+        this.productId = productId;
+        this.priceBucketId = priceBucketId;
+        this.productPricingCategory = productPricingCategory;
+        this.taggedPriceVersion = taggedPriceVersion;
+        this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
+        this.entityStatus = entityStatus;
+        this.fromDate = fromDate;
+
     }
 
+    //This may not be needed
     @EventSourcingHandler
     public void on(NoneCommittedPriceBucketCreatedEvent event) {
         this.productId = event.getProductId();

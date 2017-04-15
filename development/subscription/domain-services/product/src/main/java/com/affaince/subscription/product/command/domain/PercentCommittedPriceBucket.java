@@ -27,10 +27,20 @@ public class PercentCommittedPriceBucket extends PriceBucket {
     private long numberOfChurnedSubscriptions;
     private PriceTaggedWithProduct taggedPriceVersion;
 
+    //Since this constructor is already being invoked through an event sourcing handler,it need not emit any event of its own
     public PercentCommittedPriceBucket(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercentDiscountPerUnit, EntityStatus entityStatus, LocalDateTime fromDate) {
-        apply(new PercentCommittedPriceBucketCreatedEvent(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercentDiscountPerUnit, entityStatus, fromDate));
+        //apply(new PercentCommittedPriceBucketCreatedEvent(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercentDiscountPerUnit, entityStatus, fromDate));
+        this.productId = productId;
+        this.priceBucketId = priceBucketId;
+        this.productPricingCategory = productPricingCategory;
+        this.taggedPriceVersion = taggedPriceVersion;
+        this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
+        this.entityStatus = entityStatus;
+        this.fromDate = fromDate;
+
     }
 
+    //This may not be needed
     @EventSourcingHandler
     public void on(PercentCommittedPriceBucketCreatedEvent event){
         this.productId = event.getProductId();

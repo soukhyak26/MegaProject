@@ -23,13 +23,16 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
     @JsonDeserialize (using = LocalDateDeserializer.class)
     private LocalDate taggedEndDate;
 
-    public PriceTaggedWithProduct(String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate) {
+    @JsonCreator
+    public PriceTaggedWithProduct(@JsonProperty("taggedPriceVersionId")String taggedPriceVersionId,@JsonProperty("purchasePricePerUnit") double purchasePricePerUnit, @JsonProperty("MRP")double MRP, @JsonProperty("taggedStartDate")LocalDate taggedStartDate) {
         this.taggedPriceVersionId = taggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;
+        this.taggedEndDate= new LocalDate(9999,12,31);
     }
 
+/*
     @JsonCreator
     public PriceTaggedWithProduct(@JsonProperty("taggedPriceVersionId")String taggedPriceVersionId, @JsonProperty("purchasePricePerUnit")double purchasePricePerUnit, @JsonProperty("MRP")double MRP, @JsonProperty("taggedStartDate")LocalDate taggedStartDate, @JsonProperty("taggedEndDate")LocalDate taggedEndDate) {
         this.taggedPriceVersionId = taggedPriceVersionId;
@@ -38,6 +41,7 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
         this.taggedStartDate = taggedStartDate;
         this.taggedEndDate = taggedEndDate;
     }
+*/
 
     public PriceTaggedWithProduct() {
     }
@@ -88,6 +92,33 @@ public class PriceTaggedWithProduct  implements Comparable<PriceTaggedWithProduc
 
     public void setBreakEvenPrice(double breakEvenPrice) {
         this.breakEvenPrice = breakEvenPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PriceTaggedWithProduct that = (PriceTaggedWithProduct) o;
+
+        if (Double.compare(that.purchasePricePerUnit, purchasePricePerUnit) != 0) return false;
+        if (Double.compare(that.MRP, MRP) != 0) return false;
+        if (!taggedStartDate.equals(that.taggedStartDate)) return false;
+        return taggedEndDate.equals(that.taggedEndDate);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(purchasePricePerUnit);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(MRP);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + taggedStartDate.hashCode();
+        result = 31 * result + taggedEndDate.hashCode();
+        return result;
     }
 
     @Override
