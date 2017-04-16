@@ -61,6 +61,9 @@ public class NoneCommittedPriceBucket extends PriceBucket {
         //assumed that this collection is sorted in descending order of start date of tagged price version;
         return this.taggedPriceVersion;
     }
+    public double getCategoryIndependentOfferedPricePerUnit(){
+        return this.offeredPriceOrPercentDiscountPerUnit;
+    }
 
     public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;

@@ -98,6 +98,7 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public double getFixedOfferedPriceOrPercentDiscountPerUnit() {
         return offeredPriceOrPercentDiscountPerUnit;
     }
+    public abstract double getCategoryIndependentOfferedPricePerUnit();
     public long getNumberOfExistingSubscriptions() {
         return numberOfExistingSubscriptions;
     }
@@ -121,7 +122,7 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         if (slope != 0) {
             return (getLatestTaggedPriceVersion().getMRP() + slope * getNumberOfNewSubscriptions());
         } else {
-            return getFixedOfferedPriceOrPercentDiscountPerUnit();
+            return getCategoryIndependentOfferedPricePerUnit();
         }
     }
 

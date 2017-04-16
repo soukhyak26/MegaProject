@@ -59,6 +59,9 @@ public class ValueCommittedPriceBucket extends PriceBucket {
         return numberOfChurnedSubscriptions;
     }
 
+    public double getCategoryIndependentOfferedPricePerUnit(){
+        return this.offeredPriceOrPercentDiscountPerUnit;
+    }
 
     public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;

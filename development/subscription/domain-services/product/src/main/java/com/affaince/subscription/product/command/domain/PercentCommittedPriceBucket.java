@@ -74,6 +74,10 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         return taggedPriceVersion;
     }
 
+    public double getCategoryIndependentOfferedPricePerUnit(){
+        return this.getLatestTaggedPriceVersion().getMRP() *(1 - this.offeredPriceOrPercentDiscountPerUnit);
+    }
+
     //confusing in case of percent discount commitment???
     public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
         long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions + subscriptionCount;
