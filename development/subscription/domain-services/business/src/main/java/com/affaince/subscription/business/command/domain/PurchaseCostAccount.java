@@ -23,6 +23,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
     private double provisionAmount;
     private LocalDate startDate;
     private LocalDate endDate;
+    private long remainingProductCount;
 
 
     public PurchaseCostAccount(LocalDate startDate, LocalDate endDate) {
@@ -47,6 +48,18 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+
+    public void addToRemainingProductCount(long registeredProductCount){
+        remainingProductCount +=registeredProductCount;
+    }
+    public List<AdditionalBudgetRecommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    public long getRemainingProductCount() {
+        return remainingProductCount;
     }
 
     public void addToAdditionalProvisionRecommendation(String recommenderId, LocalDate recommendationDate, RecommenderType recommenderType, double recommendedAmount, RecommendationReason recommendationReason) {

@@ -1,5 +1,9 @@
 package com.affaince.subscription.business.command.event;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
 /**
@@ -7,7 +11,11 @@ import org.joda.time.LocalDate;
  */
 public class AnnualForecastCreatedEvent {
     String productId;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     LocalDate startDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     LocalDate endDate;
     double purchasePricePerUnit;
     double mrp;

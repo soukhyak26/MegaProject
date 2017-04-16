@@ -25,6 +25,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     @EventSourcedMember
     private ProfitAccount profitAccount;
     private long totalSubscriptionsRegistered;
+    private long registeredProductCount;
 
     @EventSourcedMember
     private NodalAccount nodalAccount;
@@ -304,5 +305,15 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
             }
         }
+    }
+
+    public void addRegisteredProductCount(long registeredProductCount) {
+        apply ( new RegisteredProductCountAddedToBusinessAccountEvent(this.id,registeredProductCount ));
+    }
+
+    @EventSourcingHandler
+    public void on(RegisteredProductCountAddedToBusinessAccountEvent event){
+        this.registeredProductCount +=event.getRegisteredProductCount();
+        this.getProvisionalPurchaseCostAccount().addToRemainingProductCount(event.getRegisteredProductCount());
     }
 }

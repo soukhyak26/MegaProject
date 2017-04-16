@@ -39,9 +39,11 @@ public class AnnualForecastCreatedEventListener {
 
     @EventHandler
     public void on(AnnualForecastCreatedEvent event) throws Exception {
+/*
         LocalDate firstStartDate = null;
         LocalDate lastEndDate = null;
         Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
+*/
         List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(event.getProductId(), event.getStartDate(), event.getEndDate());
         //forecast should not be newly added if it already exists in the view
         if (null != existingForecastViews && !existingForecastViews.isEmpty()) {
@@ -57,9 +59,11 @@ public class AnnualForecastCreatedEventListener {
         }
 
         //retrieve product view for this product and set its budgeted purchase cost
+/*
         ProductView productView = productViewRepository.findByProductId(event.getProductId());
         double productPurchasePrice = productView.getPurchasePrice();
-        AddToPurchaseCostAccountCommand command = new AddToPurchaseCostAccountCommand(SysDate.now().getYear(), event.getProductId(), event.getRevisedTotalSubscriptionCount(), productPurchasePrice);
+*/
+        AddToPurchaseCostAccountCommand command = new AddToPurchaseCostAccountCommand(SysDate.now().getYear(), event.getProductId(), event.getRevisedTotalSubscriptionCount(), event.getPurchasePricePerUnit());
         commandGateway.executeAsync(command);
     }
 
