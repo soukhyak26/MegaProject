@@ -124,7 +124,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public void addNewPriceBucket(LocalDateTime date, PriceBucket priceBucket) {
         PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
-        closePriceBucketForSubscription(latestPriceBucket, date.minusMillis(1));
+        if (latestPriceBucket != null) {
+            closePriceBucketForSubscription(latestPriceBucket, date.minusMillis(1));
+        }
         activePriceBuckets.put(date, priceBucket);
     }
 
@@ -134,6 +136,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public PriceBucket getLatestActivePriceBucket() {
         Set<LocalDateTime> timeBasedKeys = activePriceBuckets.keySet();
+        if (timeBasedKeys.size() <=0 ) {
+            return null;
+        }
         LocalDateTime max = timeBasedKeys.iterator().next();
         for (LocalDateTime time : timeBasedKeys) {
             if (time.compareTo(max) > 0) {
