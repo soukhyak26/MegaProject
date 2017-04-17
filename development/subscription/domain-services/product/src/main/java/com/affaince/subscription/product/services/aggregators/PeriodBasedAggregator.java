@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by mandar on 23-07-2016.
  */
-public class PeriodBasedAggregator<T extends ProductSubscriptionMetricsView> {
+public class PeriodBasedAggregator<T extends ProductSubscriptionMetricsView> implements MetricsAggregator<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodBasedAggregator.class);
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
