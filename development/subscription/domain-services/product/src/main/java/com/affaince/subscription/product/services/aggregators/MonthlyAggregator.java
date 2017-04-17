@@ -46,17 +46,21 @@ public class MonthlyAggregator<T extends ProductSubscriptionMetricsView> impleme
                 } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException ex) {
                     LOGGER.error("Cannot construct object of generic type using reflection: " + ex.getMessage());
                 }
-                startDate = singleRecord.getProductVersionId().getFromDate();
-                endDate = singleRecord.getEndDate();
-                monthwiseAggregateView.getProductVersionId().setFromDate(startDate);
-                monthwiseAggregateView.setEndDate(endDate);
-                monthwiseAggregateView.setNewSubscriptions(monthwiseAggregateView.getNewSubscriptions() + singleRecord.getNewSubscriptions());
-                monthwiseAggregateView.setChurnedSubscriptions(monthwiseAggregateView.getChurnedSubscriptions() + singleRecord.getChurnedSubscriptions());
-                monthwiseAggregateView.setTotalNumberOfExistingSubscriptions(singleRecord.getTotalNumberOfExistingSubscriptions());
             }
+            startDate = singleRecord.getProductVersionId().getFromDate();
+            endDate = singleRecord.getEndDate();
+            monthwiseAggregateView.getProductVersionId().setFromDate(startDate);
+            monthwiseAggregateView.setEndDate(endDate);
+            monthwiseAggregateView.setNewSubscriptions(monthwiseAggregateView.getNewSubscriptions() + singleRecord.getNewSubscriptions());
+            monthwiseAggregateView.setChurnedSubscriptions(monthwiseAggregateView.getChurnedSubscriptions() + singleRecord.getChurnedSubscriptions());
+            monthwiseAggregateView.setTotalNumberOfExistingSubscriptions(singleRecord.getTotalNumberOfExistingSubscriptions());
             monthwiseAggregatesMap.put(key,monthwiseAggregateView);
         }
         return new ArrayList(monthwiseAggregatesMap.values());
     }
 
+    public static void main(String[] args) {
+        LocalDate localDate = LocalDate.now();
+
+    }
 }
