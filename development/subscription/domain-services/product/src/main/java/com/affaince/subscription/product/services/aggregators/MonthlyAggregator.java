@@ -58,9 +58,4 @@ public class MonthlyAggregator<T extends ProductSubscriptionMetricsView> impleme
         }
         return new ArrayList(monthwiseAggregatesMap.values());
     }
-
-    public static void main(String[] args) {
-        LocalDate localDate = LocalDate.now();
-
-    }
 }
