@@ -3,6 +3,7 @@ package com.affaince.subscription.business.command.handler;
 import com.affaince.subscription.business.command.AddToPurchaseCostAccountCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import org.axonframework.commandhandling.annotation.CommandHandler;
+import org.axonframework.repository.AggregateNotFoundException;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,12 @@ public class AddToPurchaseCostAccountCommandHandler {
 
     @CommandHandler
     public void handle(AddToPurchaseCostAccountCommand command) {
-        BusinessAccount businessAccount= repository.load(command.getId());
+        BusinessAccount businessAccount=null;
+        try {
+            businessAccount = repository.load(command.getId());
+        }catch(AggregateNotFoundException ex){
+            businessAccount=new BusinessAccount(command.getId(),command.getProvisionsDate());
+        }
         businessAccount.addToPurchaseCostAccount(command.getId(),command.getProductId(),command.getGetTotalProductSubscriptionCount(),command.getCurrentProductPurchasePrice());
     }
 

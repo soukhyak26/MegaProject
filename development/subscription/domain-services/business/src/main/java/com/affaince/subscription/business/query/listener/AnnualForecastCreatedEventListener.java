@@ -63,7 +63,7 @@ public class AnnualForecastCreatedEventListener {
         ProductView productView = productViewRepository.findByProductId(event.getProductId());
         double productPurchasePrice = productView.getPurchasePrice();
 */
-        AddToPurchaseCostAccountCommand command = new AddToPurchaseCostAccountCommand(SysDate.now().getYear(), event.getProductId(), event.getRevisedTotalSubscriptionCount(), event.getPurchasePricePerUnit());
+        AddToPurchaseCostAccountCommand command = new AddToPurchaseCostAccountCommand(SysDate.now().getYear(), event.getProductId(), event.getRevisedTotalSubscriptionCount(), event.getPurchasePricePerUnit(),SysDate.now());
         commandGateway.executeAsync(command);
     }
 
