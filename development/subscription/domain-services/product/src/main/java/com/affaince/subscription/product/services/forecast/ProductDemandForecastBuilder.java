@@ -2,10 +2,12 @@ package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.product.factory.AggregatorFactory;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
+import com.affaince.subscription.product.services.aggregators.MetricsAggregator;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -22,8 +24,8 @@ import java.util.stream.Collectors;
 
 public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsView> {
 
-    @Autowired
-    PeriodBasedAggregator periodBasedAggregator;
+
+    private AggregatorFactory<ProductForecastView> aggregatorFactory;
     @Autowired
     private DemandForecasterChain demandForecasterChain;
     @Autowired
@@ -83,7 +85,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
             previousTotalSubscriptionCount = forecastTotalSubscriptions.get(i);
             newForecastStartDate = newForecastEndDate.plusDays(1);
         }
-        List<ProductForecastView> aggregatedActualsViewList = periodBasedAggregator.aggregate(forecasts, chunkAggregationPeriod);
+        List<ProductForecastView> aggregatedActualsViewList = new AggregatorFactory(ProductForecastView.class).getAggregator(chunkAggregationPeriod).aggregate(forecasts, chunkAggregationPeriod);
         return aggregatedActualsViewList;
     }
 

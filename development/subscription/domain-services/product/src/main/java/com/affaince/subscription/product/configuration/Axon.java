@@ -10,6 +10,7 @@ import com.affaince.subscription.product.converters.ProductwisePriceBucketIdRead
 import com.affaince.subscription.product.converters.ProductwisePricebucketIdWriterConverter;
 import com.affaince.subscription.product.converters.ProductwiseTaggedPriceVersionIdReaderConverter;
 import com.affaince.subscription.product.converters.ProductwiseTaggedPriceVersionIdWriterConverter;
+import com.affaince.subscription.product.factory.AggregatorFactory;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
@@ -184,4 +185,5 @@ public class Axon extends Default {
     PeriodBasedAggregator periodBasedAggregator() {
         return new PeriodBasedAggregator();
     }
+
 }

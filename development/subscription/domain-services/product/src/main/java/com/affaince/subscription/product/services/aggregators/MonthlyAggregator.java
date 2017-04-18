@@ -6,6 +6,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -15,6 +16,15 @@ import java.util.*;
  */
 public class MonthlyAggregator<T extends ProductSubscriptionMetricsView> implements MetricsAggregator<T>{
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodBasedAggregator.class);
+    private Class<T> typeClass;
+
+    public MonthlyAggregator(Class<T> typeClass){
+        this.typeClass=typeClass;
+    }
+
+    public Class<T> getTypeClass() {
+        return typeClass;
+    }
 
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
     public List<T> aggregate(List<T> historicalData, int period) {
@@ -38,13 +48,12 @@ public class MonthlyAggregator<T extends ProductSubscriptionMetricsView> impleme
                 monthwiseAggregateView = monthwiseAggregatesMap.get(key);
             } else {
                 try {
-                    monthwiseAggregateView = (T) this.getClass()
-                            .getTypeParameters()[0]
-                            .getClass()
-                            .getDeclaredConstructor(ProductVersionId.class, LocalDateTime.class, Long.class, Long.class, Long.class)
-                            .newInstance(singleRecord.getProductVersionId(), singleRecord.getEndDate(), 0, 0, 0);
+                    monthwiseAggregateView = (T)this.getTypeClass()
+                            .getDeclaredConstructor(ProductVersionId.class, LocalDate.class, Long.TYPE, Long.TYPE, Long.TYPE).
+                            newInstance(singleRecord.getProductVersionId(), singleRecord.getEndDate(), 0, 0, 0);
                 } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException ex) {
                     LOGGER.error("Cannot construct object of generic type using reflection: " + ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
             startDate = singleRecord.getProductVersionId().getFromDate();

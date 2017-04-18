@@ -6,6 +6,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,8 +17,17 @@ import java.util.TreeMap;
 /**
  * Created by mandar on 4/17/2017.
  */
-public class WeeklyAggregator<T extends ProductSubscriptionMetricsView> implements MetricsAggregator<T>{
+public class WeeklyAggregator<T extends ProductSubscriptionMetricsView> implements MetricsAggregator<T> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodBasedAggregator.class);
+    private Class<T> typeClass;
+
+    public WeeklyAggregator(Class<T> typeClass) {
+        this.typeClass = typeClass;
+    }
+
+    public Class<T> getTypeClass() {
+        return typeClass;
+    }
 
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
     public List<T> aggregate(List<T> historicalData, int period) {
@@ -42,11 +52,9 @@ public class WeeklyAggregator<T extends ProductSubscriptionMetricsView> implemen
                 weekwiseAggregateView = weekwiseAggregatesMap.get(key);
             } else {
                 try {
-                    weekwiseAggregateView = (T) this.getClass()
-                            .getTypeParameters()[0]
-                            .getClass()
-                            .getDeclaredConstructor(ProductVersionId.class, LocalDateTime.class, Long.class, Long.class, Long.class)
-                            .newInstance(singleRecord.getProductVersionId(), singleRecord.getEndDate(), 0, 0, 0);
+                    weekwiseAggregateView = (T) this.getTypeClass()
+                            .getDeclaredConstructor(ProductVersionId.class, LocalDate.class, Long.TYPE, Long.TYPE, Long.TYPE).
+                                    newInstance(singleRecord.getProductVersionId(), singleRecord.getEndDate(), 0, 0, 0);
                 } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException ex) {
                     LOGGER.error("Cannot construct object of generic type using reflection: " + ex.getMessage());
                 }
@@ -58,7 +66,7 @@ public class WeeklyAggregator<T extends ProductSubscriptionMetricsView> implemen
             weekwiseAggregateView.setNewSubscriptions(weekwiseAggregateView.getNewSubscriptions() + singleRecord.getNewSubscriptions());
             weekwiseAggregateView.setChurnedSubscriptions(weekwiseAggregateView.getChurnedSubscriptions() + singleRecord.getChurnedSubscriptions());
             weekwiseAggregateView.setTotalNumberOfExistingSubscriptions(singleRecord.getTotalNumberOfExistingSubscriptions());
-            weekwiseAggregatesMap.put(key,weekwiseAggregateView);
+            weekwiseAggregatesMap.put(key, weekwiseAggregateView);
         }
         return new ArrayList(weekwiseAggregatesMap.values());
     }

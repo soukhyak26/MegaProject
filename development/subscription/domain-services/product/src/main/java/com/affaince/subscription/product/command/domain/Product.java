@@ -279,7 +279,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             if (periodWiseForecast.getEndDate().equals(earmarkedAnnualEndDate) ||
                     (periodWiseForecast.getStartDate().isBefore(earmarkedAnnualEndDate) && periodWiseForecast.getEndDate().isAfter(earmarkedAnnualEndDate))) {
                //obtain total subscription count in the forecast earlier than this forecast
-                long earlierTotalSubscriptionCount = forecastFinderService.findForecastsEarlierThan(productId, periodWiseForecast.getEndDate()).get(0).getTotalNumberOfExistingSubscriptions();
+                List<ProductForecastView> earlierForecasts=forecastFinderService.findForecastsEarlierThan(productId, periodWiseForecast.getEndDate());
+                long earlierTotalSubscriptionCount=0;
+                if(null != earlierForecasts && earlierForecasts.size()>0) {
+                    earlierTotalSubscriptionCount = earlierForecasts.get(0).getTotalNumberOfExistingSubscriptions();
+                }
                 //Add current new subscriptions and deduct churned subscription in the current forecast from earlier total forecast so as to obtain last period forecast.
                 long revisedTotalSubscriptionCount = earlierTotalSubscriptionCount + periodWiseForecast.getNumberOfNewSubscriptions() - periodWiseForecast.getNumberOfChurnedSubscriptions();
                 //Send a single AnnualForecast event for the last month/period of a finanical year as the same should be consumed by business account for finding prchase provision

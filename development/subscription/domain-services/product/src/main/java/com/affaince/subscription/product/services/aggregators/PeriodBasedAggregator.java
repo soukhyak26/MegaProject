@@ -35,7 +35,7 @@ public class PeriodBasedAggregator<T extends ProductSubscriptionMetricsView> imp
                 T aggregatedView = (T) this.getClass()
                         .getTypeParameters()[0]
                         .getClass()
-                        .getDeclaredConstructor(ProductVersionId.class, LocalDateTime.class, Long.class, Long.class, Long.class)
+                        .getDeclaredConstructor(ProductVersionId.class, LocalDate.class, Long.class, Long.class, Long.class)
                         .newInstance(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0);
                 //inner for-aggregating the chunks into single number
                 for (int index = period * (periodIndex - 1); index < period * periodIndex; index++) {
