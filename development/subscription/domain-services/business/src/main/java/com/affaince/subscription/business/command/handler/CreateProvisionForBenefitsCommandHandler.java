@@ -4,6 +4,7 @@ import com.affaince.subscription.business.command.CreateProvisionForBenefitsComm
 import com.affaince.subscription.business.command.CreateProvisionForPurchaseCostCommand;
 import com.affaince.subscription.business.command.domain.BusinessAccount;
 import org.axonframework.commandhandling.annotation.CommandHandler;
+import org.axonframework.repository.AggregateNotFoundException;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,13 @@ public class CreateProvisionForBenefitsCommandHandler {
     @CommandHandler
     public void handle(CreateProvisionForBenefitsCommand command) {
         Integer id= command.getStartDate().getYear();
-        BusinessAccount businessAccount= repository.load(id);
-        if(null== businessAccount) {
+        BusinessAccount businessAccount;
+        try {
+            businessAccount = repository.load(id);
+        } catch (AggregateNotFoundException e) {
             businessAccount = new BusinessAccount(id,command.getStartDate());
             repository.add(businessAccount);
         }
         businessAccount.registerProvisionForBenefits(command.getId(),command.getStartDate(),command.getEndDate(),command.getProvisionForBenefits());
     }
-
 }
