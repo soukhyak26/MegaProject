@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by rbsavaliya on 10-01-2016.
  */
+//This seems to be an event coming from Subscriber when a new subscription is activated subject to payment
 public class ProductSubscriptionActivatedEvent {
      private final String productId;
      private final int subscriptionCount;

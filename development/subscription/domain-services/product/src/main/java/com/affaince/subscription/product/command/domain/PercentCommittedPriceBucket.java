@@ -144,4 +144,22 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         }
     }
 
+    @EventSourcingHandler
+    public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event) {
+        this.expectedPurchaseCostOfDeliveredUnits = event.getPurchaseCostOfDeliveredUnits();
+        this.expectedRevenue = event.getRevenue();
+        this.expectedProfit = event.getProfitAmountPerPriceBucket();
+
+    }
+
+    @EventSourcingHandler
+    public void on(PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent event) {
+        DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionAgainstTaggedPrice = getLatestDeliveredSubscriptionsAgainstTaggedPriceVersion();
+        latestDeliveredSubscriptionAgainstTaggedPrice.addToDeliveredSubscriptions(event.getDeliveredSubscriptionCount());
+        //this.numberOfDeliveredSubscriptions = event.getTotalDeliveredSubscriptionCount();
+        this.registeredPurchaseCostOfDeliveredUnits = event.getPurchaseCostOfDeliveredUnits();
+        this.registeredRevenue = event.getRevenue();
+        this.registeredProfit = event.getProfitAmountPerPriceBucket();
+    }
+
 }

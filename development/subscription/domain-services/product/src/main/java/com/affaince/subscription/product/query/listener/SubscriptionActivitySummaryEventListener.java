@@ -2,13 +2,13 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.command.UpdateProductSubscriptionCommand;
-import com.affaince.subscription.product.command.event.ProductSubscriptionActivatedEvent;
 import com.affaince.subscription.product.command.event.SubscriptionActivitySummaryEvent;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+//This seems to be an event coming from Subscriber when an existing subscription is changed by the subscriber
 public class SubscriptionActivitySummaryEventListener {
 
     SubscriptionCommandGateway commandGateway;

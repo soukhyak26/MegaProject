@@ -104,15 +104,18 @@ public class Axon extends Default {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.product.command.event.*", "");
             //put("com.affaince.subscription.integration.command.event.shoppingitemreceipt.ProductRegisteredEvent", ProductRegisteredEvent.class.getName());
+            //evene to be recieved from main application regarding current tagged price and stock
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
+            //??
             put("com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent", ProductForecastReceivedEvent.class.getName());
-            put("com.affaince.subscription.subscriber.command.event.ProductSubscriptionActivatedEvent", ProductSubscriptionActivatedEvent.class.getName());
+            //when a new subscription is added or an existing subscription is changed by subscriber then below event carry the changes from subscriber domain to product domain
+            put("com.affaince.subscription.subscriber.command.event.SubscriptionActivitySummaryEvent", SubscriptionActivitySummaryEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
             put("com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent", SubscriptionSpecificOperatingExpenseCalculatedEvent.class.getName());
             put("com.affaince.subscription.expensedistribution.event.FixedExpenseUpdatedToProductEvent", FixedExpenseUpdatedToProductEvent.class.getName());
             put("com.affaince.subscription.business.command.event.ProvisionCreatedEvent", ProvisionCreatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.SubscriptionRuleAddedEvent", SubscriptionRuleAddedEvent.class.getName());
-            put("com.affaince.subscription.subscriber.command.event.SubscriptionActivitySummaryEvent", SubscriptionActivitySummaryEvent.class.getName());
+
             put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
         }};
     }

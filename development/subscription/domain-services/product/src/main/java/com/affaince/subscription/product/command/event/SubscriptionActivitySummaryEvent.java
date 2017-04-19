@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Created by mandar on 29-12-2016.
  */
+//This seems to be an event coming from Subscriber when an existing subscription is changed by the subscriber
 public class SubscriptionActivitySummaryEvent {
     private String productId;
     private Map<String, Integer> subscribedItems;

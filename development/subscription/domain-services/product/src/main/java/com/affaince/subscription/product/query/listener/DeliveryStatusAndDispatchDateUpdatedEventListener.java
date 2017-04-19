@@ -29,7 +29,7 @@ public class DeliveryStatusAndDispatchDateUpdatedEventListener {
         event.getItemDispatchStatuses().stream().filter(itemDispatchStatus -> !itemDispatchStatus
                 .getItemDeliveryStatus().equals(DeliveryStatus.DELIVERED)).forEach(itemDispatchStatus -> {
                     UpdateDeliveryCountPerPriceBucketCommand command = new UpdateDeliveryCountPerPriceBucketCommand(
-                            itemDispatchStatus.getPriceBucketId(),
+                            itemDispatchStatus.getItemId(),
                             itemDispatchStatus.getPriceBucketId()
                     );
                     try {

@@ -88,6 +88,7 @@ public class ValueCommittedPriceBucket extends PriceBucket {
         apply(new SubscriptionDeductedFromValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount));
     }
 
+    @EventSourcingHandler
     public void on(SubscriptionDeductedFromValueCommittedPriceBucketEvent event) {
         this.numberOfChurnedSubscriptions = event.getRevisedChurnedSubscriptionCount();
         this.numberOfExistingSubscriptions = event.getRevisedTotalSubscriptionCount();
