@@ -1,10 +1,7 @@
 package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
-import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
-import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.common.type.NetWorthSubscriberStatus;
-import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.affaince.subscription.common.vo.SubscriberName;
@@ -380,7 +377,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
     public void prepareDeliveryForDispatch(String subscriptionId, String deliveryId, Map<String, LatestPriceBucket> latestPriceBucketMap) {
         final Delivery delivery = deliveries.get(deliveryId);
         delivery.setStatus(DeliveryStatus.READYFORDELIVERY);
-        delivery.getDeliveryItems().forEach(deliveryItem -> {
+        delivery.getDeliveryItems().stream().filter(deliveryItem -> deliveryItem.getProductPricingCategory().equals(
+                ProductPricingCategory.NO_COMMITMENT
+        )).forEach(deliveryItem -> {
             LatestPriceBucket latestPriceBucket = latestPriceBucketMap.get(deliveryItem.getDeliveryItemId());
             deliveryItem.setPriceBucketId(latestPriceBucket.getPriceBucketId());
             deliveryItem.setOfferedPricePerUnit(latestPriceBucket.getOfferedPricePerUnit());
