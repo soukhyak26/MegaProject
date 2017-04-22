@@ -228,7 +228,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 Delivery weeklyDelivery = deliveries.get(nextDeliveryWeek);
                 if (weeklyDelivery == null) {
                     weeklyDelivery = new Delivery();
-                    weeklyDelivery.setDeliveryId(nextDeliveryWeek + SysDate.now().getYear() + "");
+                    weeklyDelivery.setDeliveryId(SysDate.now().plusWeeks(nextDeliveryWeek - weekOfYear) + "");
                     weeklyDelivery.setDeliveryDate(SysDate.now().plusWeeks(nextDeliveryWeek - weekOfYear));
                     if (this.subscription.getSubscriptionExpiredDate() == null ||
                             this.subscription.getSubscriptionExpiredDate().isBefore(weeklyDelivery.getDeliveryDate())) {

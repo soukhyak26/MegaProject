@@ -79,7 +79,7 @@ class Subscriber1 {
                 Delivery weeklyDelivery = deliveries.get(nextDeliveryWeek);
                 if (weeklyDelivery == null) {
                     weeklyDelivery = new Delivery();
-                    weeklyDelivery.setDeliveryId(nextDeliveryWeek + SysDate.now().getYear() + "");
+                    weeklyDelivery.setDeliveryId(SysDate.now().plusWeeks(nextDeliveryWeek - weekOfYear) + "");
                     weeklyDelivery.setDeliveryDate(SysDate.now().plusWeeks(nextDeliveryWeek - weekOfYear));
                     weeklyDelivery.setStatus(DeliveryStatus.CREATED);
                     deliveries.put(nextDeliveryWeek, weeklyDelivery);
