@@ -195,8 +195,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 delivery.getDeliveryItems().get(delivery.getDeliveryItems().indexOf(
         new DeliveryItem(itemDispatchStatus.getItemId()))).getPriceBucketId()
         ));
+        final Map <String, String> itemPriceBucketMapping = delivery.getDeliveryItems().stream()
+                .filter(deliveryItem -> deliveryItem.getDeliveryStatus().equals(DeliveryStatus.DELIVERED))
+                .collect(Collectors.toMap(deliveryItem -> deliveryItem.getDeliveryItemId(), deliveryItem -> deliveryItem.getPriceBucketId()));
         apply(new DeliveryStatusAndDispatchDateUpdatedEvent(this.subscriberId, command.getSubscriptionId(), command.getDeliveryId(),
-                command.getDeliveryStatus(), command.getDispatchDate(),
+                command.getDeliveryStatus(), command.getDispatchDate(), itemPriceBucketMapping,
                 command.getItemDispatchStatuses(), delivery.getDeliveryCharges(),
                 delivery.getTotalDeliveryPrice(), command.getReasonCode()));
     }

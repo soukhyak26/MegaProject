@@ -5,6 +5,7 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ReasonCode;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rbsavaliya on 10-10-2015.
@@ -15,17 +16,19 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private String deliveryId;
     private DeliveryStatus deliveryStatus;
     private String dispatchDate;
+    private Map<String, String> itemPriceBucketMapping;
     private List<ItemDispatchStatus> itemDispatchStatuses;
     private double deliveryCharges;
     private double totalDeliveryPrice;
     private ReasonCode reasonCode;
 
-    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriberId, String subscriptionId, String deliveryId, DeliveryStatus deliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice, ReasonCode reasonCode) {
+    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriberId, String subscriptionId, String deliveryId, DeliveryStatus deliveryStatus, String dispatchDate, Map<String, String> itemPriceBucketMapping, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice, ReasonCode reasonCode) {
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
         this.deliveryId = deliveryId;
         this.deliveryStatus = deliveryStatus;
         this.dispatchDate = dispatchDate;
+        this.itemPriceBucketMapping = itemPriceBucketMapping;
         this.itemDispatchStatuses = itemDispatchStatuses;
         this.deliveryCharges = deliveryCharges;
         this.totalDeliveryPrice = totalDeliveryPrice;
@@ -53,6 +56,10 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
 
     public List<ItemDispatchStatus> getItemDispatchStatuses() {
         return itemDispatchStatuses;
+    }
+
+    public Map<String, String> getItemPriceBucketMapping() {
+        return itemPriceBucketMapping;
     }
 
     public double getDeliveryCharges() {
