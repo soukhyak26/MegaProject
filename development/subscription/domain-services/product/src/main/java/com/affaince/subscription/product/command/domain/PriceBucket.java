@@ -4,19 +4,16 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucket;
+import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucketEvent;
 import com.affaince.subscription.product.command.event.PriceBucketExpiredEvent;
 import com.affaince.subscription.product.services.Comparator.DeliveredSusbcriptionsAgainstTaggedPriceComparator;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
-import com.affaince.subscription.product.vo.SubscriptionsAgainstTaggedPrice;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by mandar on 4/5/2017.
@@ -32,9 +29,9 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     protected long numberOfExistingSubscriptions;
     protected double offeredPriceOrPercentDiscountPerUnit;
     protected Set<DeliveredSubscriptionsAgainstTaggedPrice> deliveredSubscriptionsAgainstTaggedPrices;
-    protected double registeredProfit;
-    protected double registeredPurchaseCostOfDeliveredUnits;
-    protected double registeredRevenue;
+    protected Map<LocalDate,Double> registeredProfit;
+    protected Map<LocalDate,Double> registeredPurchaseCostOfDeliveredUnits;
+    protected Map<LocalDate,Double> registeredRevenue;
     protected double slope;
 
     protected double expectedPurchaseCostOfDeliveredUnits;
@@ -102,16 +99,43 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public long getNumberOfExistingSubscriptions() {
         return numberOfExistingSubscriptions;
     }
-    public double getRegisteredProfit() {
-        return registeredProfit;
+
+    public double getRegisteredRevenueForADate(LocalDate date){
+        return registeredRevenue.get(date);
     }
-    public double getRegisteredPurchaseCostOfDeliveredUnits() {
-        return registeredPurchaseCostOfDeliveredUnits;
-    }
-    public double getRegisteredRevenue() {
-        return registeredRevenue;
+    public double getTotalRegisteredRevenue(){
+        double totalRegisteredRevenue=0;
+        Iterator<Double> registeredRevenueIterator= registeredRevenue.values().iterator();
+        while (registeredRevenueIterator.hasNext()){
+            totalRegisteredRevenue +=registeredRevenueIterator.next();
+        }
+        return totalRegisteredRevenue;
     }
 
+    public double getRegisteredProfitForADate(LocalDate date){
+        return registeredProfit.get(date);
+    }
+    public double getTotalRegisteredProfit(){
+        double totalRegisteredProfit=0;
+        Iterator<Double> registeredProfitIterator= registeredProfit.values().iterator();
+        while (registeredProfitIterator.hasNext()){
+            totalRegisteredProfit +=registeredProfitIterator.next();
+        }
+        return totalRegisteredProfit;
+    }
+
+
+    public double getRegisteredPurchaseCostForADate(LocalDate date){
+        return registeredPurchaseCostOfDeliveredUnits.get(date);
+    }
+    public double getTotalRegisteredPurchaseCost(){
+        double totalRegisteredPurchaseCost=0;
+        Iterator<Double> registeredPurchaseCostOfDeliveredUnitsIterator= registeredPurchaseCostOfDeliveredUnits.values().iterator();
+        while (registeredPurchaseCostOfDeliveredUnitsIterator.hasNext()){
+            totalRegisteredPurchaseCost +=registeredPurchaseCostOfDeliveredUnitsIterator.next();
+        }
+        return totalRegisteredPurchaseCost;
+    }
 
     public DeliveredSubscriptionsAgainstTaggedPrice getLatestDeliveredSubscriptionsAgainstTaggedPriceVersion(){
         //Assumption is, this set is sorted in descending order of start date of tagged price version
@@ -127,7 +151,7 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     }
 
     //local method for updating state - used from withing event sourcing handler
-    public void addToDeliveredSubscriptions(long deliveredSubscriptionCount){
+    private void addToDeliveredSubscriptions(long deliveredSubscriptionCount){
         if(null != deliveredSubscriptionsAgainstTaggedPrices){
             deliveredSubscriptionsAgainstTaggedPrices= new TreeSet<>(new DeliveredSusbcriptionsAgainstTaggedPriceComparator());
         }
@@ -146,18 +170,18 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public void addDeliveredSubscriptionsAssociatedWithAPriceBucket(String productId,long deliveredSubscriptionCount ){
         long totalDeliveredSubscriptionCount=this.getTotalDeliveredSubscriptions() + deliveredSubscriptionCount;
         //this.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
+        DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionsAgainstTaggedPrice= deliveredSubscriptionsAgainstTaggedPrices.iterator().next();
+        apply( new DeliveredSubscriptionCountAddedToPriceBucketEvent(productId,this.priceBucketId,latestDeliveredSubscriptionsAgainstTaggedPrice,this.getFixedOfferedPriceOrPercentDiscountPerUnit(),this.getProductPricingCategory(),deliveredSubscriptionCount, totalDeliveredSubscriptionCount) );
         if(totalDeliveredSubscriptionCount==this.numberOfExistingSubscriptions){
             apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
         }
-        DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionsAgainstTaggedPrice= deliveredSubscriptionsAgainstTaggedPrices.iterator().next();
-        apply( new DeliveredSubscriptionCountAddedToPriceBucket(productId,this.priceBucketId,latestDeliveredSubscriptionsAgainstTaggedPrice,this.getFixedOfferedPriceOrPercentDiscountPerUnit(),this.getProductPricingCategory(),deliveredSubscriptionCount, totalDeliveredSubscriptionCount) );
     }
 
     public void expirePriceBucket() {
         this.setEntityStatus(EntityStatus.EXPIRED);
     }
     @EventSourcingHandler
-    public void on(DeliveredSubscriptionCountAddedToPriceBucket event){
+    public void on(DeliveredSubscriptionCountAddedToPriceBucketEvent event){
         this.addToDeliveredSubscriptions(event.getDeliveredSubscriptionCount());
     }
 
@@ -169,5 +193,5 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public abstract void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate);
     public abstract void deductSubscriptionFromPriceBucket(int subscriptionCount);
     public abstract void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, double fixedExpensePeUnit, double variableExpensePerUnit);
-    public abstract void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount);
+    public abstract void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount,LocalDate dispatchDate);
 }

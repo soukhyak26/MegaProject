@@ -2,12 +2,16 @@ package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by mandark on 28-01-2016.
@@ -30,9 +34,10 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     private double expectedRevenue;
     private double expectedProfit;
 
-    private double registeredPurchaseCost;
-    private double registeredRevenue;
-    private double registeredProfit;
+    protected Set<DeliveredSubscriptionsAgainstTaggedPrice> deliveredSubscriptionsAgainstTaggedPrices;
+    protected Map<LocalDate,Double> registeredProfit;
+    protected Map<LocalDate,Double> registeredPurchaseCostOfDeliveredUnits;
+    protected Map<LocalDate,Double> registeredRevenue;
 
     private double slope;
 
@@ -119,13 +124,6 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.taggedPriceVersion = taggedPriceVersion;
     }
 
-    public double getRegisteredProfit() {
-        return registeredProfit;
-    }
-
-    public void setRegisteredProfit(double registeredProfit) {
-        this.registeredProfit = registeredProfit;
-    }
 
     public double getSlope() {
         return slope;
@@ -163,22 +161,6 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.expectedProfit = expectedProfit;
     }
 
-    public double getRegisteredPurchaseCost() {
-        return registeredPurchaseCost;
-    }
-
-    public void setRegisteredPurchaseCost(double registeredPurchaseCost) {
-        this.registeredPurchaseCost = registeredPurchaseCost;
-    }
-
-    public double getRegisteredRevenue() {
-        return registeredRevenue;
-    }
-
-    public void setRegisteredRevenue(double registeredRevenue) {
-        this.registeredRevenue = registeredRevenue;
-    }
-
     @Override
     public int compareTo(PriceBucketView o) {
         return this.getFromDate().compareTo(o.getFromDate());
@@ -202,6 +184,34 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.numberOfExistingSubscriptionsAssociatedWithAPrice -=subscriptionCount;
     }
 
+    public Set<DeliveredSubscriptionsAgainstTaggedPrice> getDeliveredSubscriptionsAgainstTaggedPrices() {
+        return deliveredSubscriptionsAgainstTaggedPrices;
+    }
+
+    public void addToDeliveredSubscriptionsAgainstTaggedPrices(DeliveredSubscriptionsAgainstTaggedPrice deliveredSubscriptionsAgainstTaggedPrice){
+        this.deliveredSubscriptionsAgainstTaggedPrices.add(deliveredSubscriptionsAgainstTaggedPrice);
+    }
+
+    public Map<LocalDate, Double> getRegisteredProfit() {
+        return registeredProfit;
+    }
+    public void addToRegisteredProfit(LocalDate profitDate,double profitAmount ){
+        registeredProfit.put(profitDate,profitAmount);
+    }
+    public Map<LocalDate, Double> getRegisteredPurchaseCostOfDeliveredUnits() {
+        return registeredPurchaseCostOfDeliveredUnits;
+    }
+
+    public void addToRegisteredPurchaseCostOfDeliveredUnits(LocalDate deliveryDate,double purchaseCost){
+        registeredPurchaseCostOfDeliveredUnits.put(deliveryDate,purchaseCost);
+    }
+    public Map<LocalDate, Double> getRegisteredRevenue() {
+        return registeredRevenue;
+    }
+
+    public void addToRegisteredRevenue(LocalDate deliveryDate, double revenue){
+        this.registeredRevenue.put(deliveryDate,revenue);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

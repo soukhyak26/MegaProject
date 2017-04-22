@@ -6,7 +6,7 @@ import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedP
 /**
  * Created by mandar on 31-12-2016.
  */
-public class DeliveredSubscriptionCountAddedToPriceBucket {
+public class DeliveredSubscriptionCountAddedToPriceBucketEvent {
     private final String productId;
     private final String priceBucketId;
     private final DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionsAgainstTaggedPrice;
@@ -15,7 +15,7 @@ public class DeliveredSubscriptionCountAddedToPriceBucket {
     private final long deliveredSubscriptionCount;
     private final long totalDeliveredSubscriptionCount;
 
-    public DeliveredSubscriptionCountAddedToPriceBucket(String productId, String priceBucketId, DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionsAgainstTaggedPrice, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount, long totalDeliveredSubscriptionCount) {
+    public DeliveredSubscriptionCountAddedToPriceBucketEvent(String productId, String priceBucketId, DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionsAgainstTaggedPrice, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount, long totalDeliveredSubscriptionCount) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.latestDeliveredSubscriptionsAgainstTaggedPrice = latestDeliveredSubscriptionsAgainstTaggedPrice;

@@ -32,7 +32,7 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
         }
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
-                minusOnePriceBucket.getRegisteredProfit() > minusTwoPriceBucket.getRegisteredProfit() &&
+                minusOnePriceBucket.getTotalRegisteredProfit() > minusTwoPriceBucket.getTotalRegisteredProfit() &&
                 minusOnePriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() > minusTwoPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() &&
                 ((minusOnePriceBucket.getNumberOfExistingSubscriptions() < minusTwoPriceBucket.getNumberOfExistingSubscriptions()) ||
                 (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions()))

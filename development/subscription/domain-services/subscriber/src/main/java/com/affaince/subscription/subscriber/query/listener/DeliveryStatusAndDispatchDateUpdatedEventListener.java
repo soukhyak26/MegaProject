@@ -33,7 +33,7 @@ public class DeliveryStatusAndDispatchDateUpdatedEventListener {
             deliveryItem = deliveryView.getDeliveryItems().get(deliveryView.getDeliveryItems().indexOf(deliveryItem));
             deliveryItem.setDeliveryStatus(itemDispatchStatus.getItemDeliveryStatus());
         }
-        deliveryView.setDispatchDate(new LocalDate(event.getDispatchDate()));
+        deliveryView.setDispatchDate(event.getDispatchDate());
         deliveryView.setStatus(event.getDeliveryStatus());
         deliveryView.setReasonCode(event.getReasonCode());
         deliveryViewRepository.save(deliveryView);

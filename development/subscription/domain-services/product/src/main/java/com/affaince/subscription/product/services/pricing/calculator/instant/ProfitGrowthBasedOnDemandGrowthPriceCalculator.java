@@ -33,7 +33,7 @@ public class ProfitGrowthBasedOnDemandGrowthPriceCalculator extends AbstractPric
         }
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
-                minusOnePriceBucket.getRegisteredProfit() > minusTwoPriceBucket.getRegisteredProfit() &&
+                minusOnePriceBucket.getTotalRegisteredProfit() > minusTwoPriceBucket.getTotalRegisteredProfit() &&
                 minusOnePriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() < minusTwoPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() &&
                 (minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions())) {
             double y2 = minusOnePriceBucket.recalculateOfferedPriceBasedOnActualDemand();

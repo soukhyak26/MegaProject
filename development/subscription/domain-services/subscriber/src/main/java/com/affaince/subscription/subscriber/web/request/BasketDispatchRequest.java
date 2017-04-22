@@ -1,5 +1,7 @@
 package com.affaince.subscription.subscriber.web.request;
 
+import org.joda.time.LocalDate;
+
 /**
  * Created by rbsavaliya on 04-10-2015.
  */
@@ -7,7 +9,7 @@ public class BasketDispatchRequest {
 
     private int basketDeliveryStatus;
     private ItemStatusRequest[] itemStatusRequest;
-    private String dispatchDate;
+    private LocalDate dispatchDate;
     private String reasonCode;
 
     public int getBasketDeliveryStatus() {
@@ -26,11 +28,11 @@ public class BasketDispatchRequest {
         this.itemStatusRequest = itemStatusRequest;
     }
 
-    public String getDispatchDate() {
+    public LocalDate getDispatchDate() {
         return dispatchDate;
     }
 
-    public void setDispatchDate(String dispatchDate) {
+    public void setDispatchDate(LocalDate dispatchDate) {
         this.dispatchDate = dispatchDate;
     }
 

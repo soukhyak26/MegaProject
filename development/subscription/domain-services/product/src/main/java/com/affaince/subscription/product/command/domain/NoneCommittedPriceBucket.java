@@ -5,15 +5,19 @@ import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.*;
+import com.affaince.subscription.product.command.exception.PriceBucketLifecycleMismatchException;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by mandar on 4/5/2017.
  */
 public class NoneCommittedPriceBucket extends PriceBucket {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NoneCommittedPriceBucket.class);
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     protected PriceTaggedWithProduct taggedPriceVersion;
@@ -101,7 +105,8 @@ public class NoneCommittedPriceBucket extends PriceBucket {
 
     }
 
-    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount) {
+/*
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount,LocalDate dispatchDate) {
         LocalDateTime fromDate = this.getFromDate();
         LocalDateTime toDate = this.getToDate();
         double purchaseCost = 0;
@@ -128,6 +133,28 @@ public class NoneCommittedPriceBucket extends PriceBucket {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
     }
+*/
+
+    //registered profit and revenue should be calculated on each delivery confirmation OR by a batch job
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePerUnit, double variableExpensePerUnit, long deliveredSubscriptionCount,LocalDate dispatchDate){
+        double purchaseCostOfDeliveredSubscriptions=0;
+        //first calculate revenue, profit and purchase cost of delivered subscription in a day
+        double revenueOfDeliveredSubscriptions= deliveredSubscriptionCount*this.getFixedOfferedPriceOrPercentDiscountPerUnit();
+        try {
+            if ((dispatchDate.isEqual(this.getTaggedPriceVersion().getTaggedStartDate()) || dispatchDate.isAfter(this.getTaggedPriceVersion().getTaggedStartDate())) && ( dispatchDate.isBefore(this.getTaggedPriceVersion().getTaggedEndDate())|| dispatchDate.isEqual(this.getTaggedPriceVersion().getTaggedEndDate()))) {
+                purchaseCostOfDeliveredSubscriptions = deliveredSubscriptionCount * this.getTaggedPriceVersion().getPurchasePricePerUnit();
+            } else {
+                throw PriceBucketLifecycleMismatchException.build(productId, priceBucketId, dispatchDate);
+            }
+        }catch(PriceBucketLifecycleMismatchException ex){
+            LOGGER.error(ex.getMessage());
+        }
+        double fixedExpensesOfDeliveredSubscriptions=deliveredSubscriptionCount*fixedExpensePerUnit;
+        double variableExpensesOfDeliveredSubscriptions=deliveredSubscriptionCount*variableExpensePerUnit;
+        double profitOfDeliveredSubscriptions=revenueOfDeliveredSubscriptions -( purchaseCostOfDeliveredSubscriptions + fixedExpensesOfDeliveredSubscriptions + variableExpensesOfDeliveredSubscriptions);
+        apply(new PurchaseCostRevenueAndProfitOfDeliveredSubscriptionsCalculatedEvent(productId, priceBucketId, productPricingCategory, fixedExpensePerUnit, variableExpensePerUnit, deliveredSubscriptionCount,purchaseCostOfDeliveredSubscriptions,revenueOfDeliveredSubscriptions,profitOfDeliveredSubscriptions,dispatchDate));
+
+    }
 
     @EventSourcingHandler
     public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event) {
@@ -138,6 +165,31 @@ public class NoneCommittedPriceBucket extends PriceBucket {
     }
 
     @EventSourcingHandler
+    public void on(PurchaseCostRevenueAndProfitOfDeliveredSubscriptionsCalculatedEvent event){
+        Double registeredPurchaseCostForADate= this.registeredPurchaseCostOfDeliveredUnits.get(event.getDispatchDate());
+        if(null== registeredPurchaseCostForADate || registeredPurchaseCostForADate==0.0){
+            this.registeredPurchaseCostOfDeliveredUnits.put(event.getDispatchDate(),event.getPurchaseCostOfDeliveredSubscriptions());
+        }else{
+            this.registeredPurchaseCostOfDeliveredUnits.put(event.getDispatchDate(),registeredPurchaseCostForADate + event.getPurchaseCostOfDeliveredSubscriptions());
+        }
+
+        Double revenueForADate= this.getRegisteredRevenueForADate(event.getDispatchDate());
+        if( null== revenueForADate || revenueForADate==0.0){
+            this.registeredRevenue.put(event.getDispatchDate(),event.getRevenueOfDeliveredSubscriptions());
+        }else{
+            this.registeredRevenue.put(event.getDispatchDate(),revenueForADate + event.getRevenueOfDeliveredSubscriptions());
+        }
+
+        Double profitForADate=this.getRegisteredProfitForADate(event.getDispatchDate());
+        if( null == profitForADate || profitForADate==0.0){
+            this.registeredProfit.put(event.getDispatchDate(),event.getProfitOfDeliveredSubscriptions());
+        }else{
+            this.registeredProfit.put(event.getDispatchDate(),profitForADate + event.getProfitOfDeliveredSubscriptions());
+        }
+    }
+
+/*
+    @EventSourcingHandler
     public void on(PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent event) {
         DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionAgainstTaggedPrice = getLatestDeliveredSubscriptionsAgainstTaggedPriceVersion();
         latestDeliveredSubscriptionAgainstTaggedPrice.addToDeliveredSubscriptions(event.getDeliveredSubscriptionCount());
@@ -146,5 +198,6 @@ public class NoneCommittedPriceBucket extends PriceBucket {
         this.registeredRevenue = event.getRevenue();
         this.registeredProfit = event.getProfitAmountPerPriceBucket();
     }
+*/
 
 }

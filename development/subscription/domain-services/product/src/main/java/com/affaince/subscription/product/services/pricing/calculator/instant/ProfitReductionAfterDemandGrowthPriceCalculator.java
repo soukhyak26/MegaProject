@@ -34,7 +34,7 @@ public class ProfitReductionAfterDemandGrowthPriceCalculator extends AbstractPri
         }
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
-                minusOnePriceBucket.getRegisteredProfit() < minusTwoPriceBucket.getRegisteredProfit() &&
+                minusOnePriceBucket.getTotalRegisteredProfit() < minusTwoPriceBucket.getTotalRegisteredProfit() &&
                 minusOnePriceBucket.getNumberOfExistingSubscriptions() > minusTwoPriceBucket.getNumberOfExistingSubscriptions()) {
             double slope = minusOnePriceBucket.getSlope() - (minusOnePriceBucket.getSlope() * calculateWeightedAverage(product.getActivePriceBuckets().values()) / 100);
             double intercept = latestTaggedPriceVersion.getMRP();

@@ -115,7 +115,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         this.subscriberId = event.getSubscriptionId();
 
         Delivery delivery = this.deliveries.get(event.getDeliveryId());
-        delivery.setDispatchDate(new LocalDate(event.getDispatchDate()));
+        delivery.setDispatchDate(event.getDispatchDate());
         delivery.setStatus(event.getDeliveryStatus());
         List<DeliveryItem> deliveryItems = delivery.getDeliveryItems();
         for (ItemDispatchStatus itemDispatchStatus : event.getItemDispatchStatuses()) {

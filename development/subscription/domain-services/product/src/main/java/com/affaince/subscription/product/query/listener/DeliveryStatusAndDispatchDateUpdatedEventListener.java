@@ -30,7 +30,7 @@ public class DeliveryStatusAndDispatchDateUpdatedEventListener {
                 .getItemDeliveryStatus().equals(DeliveryStatus.DELIVERED)).forEach(itemDispatchStatus -> {
                     UpdateDeliveryCountPerPriceBucketCommand command = new UpdateDeliveryCountPerPriceBucketCommand(
                             itemDispatchStatus.getItemId(),
-                            itemDispatchStatus.getPriceBucketId()
+                            itemDispatchStatus.getPriceBucketId(),event.getDispatchDate()
                     );
                     try {
                         subscriptionCommandGateway.executeAsync(command);

@@ -165,7 +165,7 @@ public class DeliveryController {
             throw DeliveryNotFoundException.build(deliveryId);
         }
         final UpdateDeliveryStatusAndDispatchDateCommand command = new UpdateDeliveryStatusAndDispatchDateCommand(
-                subscriberId, subscriberId, deliveryId, DeliveryStatus.valueOf(request.getBasketDeliveryStatus()), request.getDispatchDate(),
+                subscriberId, subscriptionId, deliveryId, DeliveryStatus.valueOf(request.getBasketDeliveryStatus()), request.getDispatchDate(),
                 Arrays.stream(request.getItemStatusRequest()).map(itemStatusRequest -> new ItemDispatchStatus(
                         itemStatusRequest.getItemId(), itemStatusRequest.getItemDeliveryStatus()
                 )).collect(Collectors.toList()), ReasonCode.valueOf(request.getReasonCode()));

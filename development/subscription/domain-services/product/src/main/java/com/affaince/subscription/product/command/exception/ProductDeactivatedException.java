@@ -6,7 +6,7 @@ import com.affaince.subscription.common.type.ProductStatus;
  * Created by mandar on 16-10-2016.
  */
 public class ProductDeactivatedException extends Exception {
-    private static final String message = "For product %s,current sttus is %s, ";
+    private static final String message = "For product %s,current status is %s, ";
 
     public ProductDeactivatedException(String message) {
         super(message);

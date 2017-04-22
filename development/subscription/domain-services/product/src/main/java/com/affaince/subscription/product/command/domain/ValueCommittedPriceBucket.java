@@ -5,15 +5,19 @@ import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.product.command.exception.PriceBucketLifecycleMismatchException;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by mandark on 28-11-2015.
  */
 public class ValueCommittedPriceBucket extends PriceBucket {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValueCommittedPriceBucket.class);
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     protected PriceTaggedWithProduct taggedPriceVersion;
@@ -113,33 +117,69 @@ public class ValueCommittedPriceBucket extends PriceBucket {
     }
 
     //registered profit and revenue should be calculated on each delivery confirmation OR by a batch job
-    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount) {
-        double purchaseCost = 0;
-        double revenue = 0;
-        double totalFixedExpense = 0;
-        double totalVariableExpense = 0;
-        double profit = 0;
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePerUnit, double variableExpensePerUnit, long deliveredSubscriptionCount,LocalDate dispatchDate){
+        double purchaseCostOfDeliveredSubscriptions=0;
+        //first calculate revenue, profit and purchase cost of delivered subscription in a day
+        double revenueOfDeliveredSubscriptions= deliveredSubscriptionCount*this.getFixedOfferedPriceOrPercentDiscountPerUnit();
+        try {
+            if ((dispatchDate.isEqual(this.getTaggedPriceVersion().getTaggedStartDate()) || dispatchDate.isAfter(this.getTaggedPriceVersion().getTaggedStartDate())) && ( dispatchDate.isBefore(this.getTaggedPriceVersion().getTaggedEndDate())|| dispatchDate.isEqual(this.getTaggedPriceVersion().getTaggedEndDate()))) {
+                purchaseCostOfDeliveredSubscriptions = deliveredSubscriptionCount * this.getTaggedPriceVersion().getPurchasePricePerUnit();
+            } else {
+                throw PriceBucketLifecycleMismatchException.build(productId, priceBucketId, dispatchDate);
+            }
+        }catch(PriceBucketLifecycleMismatchException ex){
+            LOGGER.error(ex.getMessage());
+        }
+        double fixedExpensesOfDeliveredSubscriptions=deliveredSubscriptionCount*fixedExpensePerUnit;
+        double variableExpensesOfDeliveredSubscriptions=deliveredSubscriptionCount*variableExpensePerUnit;
+        double profitOfDeliveredSubscriptions=revenueOfDeliveredSubscriptions -( purchaseCostOfDeliveredSubscriptions + fixedExpensesOfDeliveredSubscriptions + variableExpensesOfDeliveredSubscriptions);
+        apply(new PurchaseCostRevenueAndProfitOfDeliveredSubscriptionsCalculatedEvent(productId, priceBucketId, productPricingCategory, fixedExpensePerUnit, variableExpensePerUnit, deliveredSubscriptionCount,purchaseCostOfDeliveredSubscriptions,revenueOfDeliveredSubscriptions,profitOfDeliveredSubscriptions,dispatchDate));
+/*
         long totalDeliveredSubscriptions = this.getTotalDeliveredSubscriptions() + deliveredSubscriptionCount;
-        revenue = totalDeliveredSubscriptions * this.getFixedOfferedPriceOrPercentDiscountPerUnit();
+        totalRevenue = totalDeliveredSubscriptions * this.getFixedOfferedPriceOrPercentDiscountPerUnit();
         //need to change the following as total delivered subscriptions may be associated with different tagged price versions in different types of price buckets
         //purchaseCost = totalDeliveredSubscriptions * (this.getTaggedPriceVersion().getPurchasePricePerUnit());
         for(DeliveredSubscriptionsAgainstTaggedPrice deliveredSubscriptionsAgainstTaggedPrice: deliveredSubscriptionsAgainstTaggedPrices){
-            purchaseCost += deliveredSubscriptionsAgainstTaggedPrice.getNumberOfDeliveredSubscriptions() * deliveredSubscriptionsAgainstTaggedPrice.getTaggedPriceVersion().getPurchasePricePerUnit();
+            totalPurchaseCost += deliveredSubscriptionsAgainstTaggedPrice.getNumberOfDeliveredSubscriptions() * deliveredSubscriptionsAgainstTaggedPrice.getTaggedPriceVersion().getPurchasePricePerUnit();
         }
         //now add the purchase cost of latest delivered subscriptions as the same has not yet been added against respective latest tagged price version.
-        purchaseCost += deliveredSubscriptionCount * getLatestDeliveredSubscriptionsAgainstTaggedPriceVersion().getTaggedPriceVersion().getPurchasePricePerUnit();
-        totalFixedExpense = totalDeliveredSubscriptions * fixedExpensePeUnit;
+        totalPurchaseCost += deliveredSubscriptionCount * getLatestDeliveredSubscriptionsAgainstTaggedPriceVersion().getTaggedPriceVersion().getPurchasePricePerUnit();
+        totalFixedExpense = totalDeliveredSubscriptions * fixedExpensePerUnit;
         totalVariableExpense = totalDeliveredSubscriptions * variableExpensePerUnit;
-        profit = revenue - (purchaseCost + totalFixedExpense + totalVariableExpense);
-        apply(new PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, productPricingCategory, fixedExpensePeUnit, variableExpensePerUnit, deliveredSubscriptionCount, totalDeliveredSubscriptions, purchaseCost, revenue, profit));
+        totalProfit = totalRevenue - (totalPurchaseCost + totalFixedExpense + totalVariableExpense);
+        apply(new PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, productPricingCategory, fixedExpensePerUnit, variableExpensePerUnit, deliveredSubscriptionCount, totalDeliveredSubscriptions, totalPurchaseCost, totalRevenue, totalProfit));
         if (totalDeliveredSubscriptions == this.numberOfExistingSubscriptions) {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
+*/
     }
     private PriceTaggedWithProduct getTaggedPriceVersion(){
         return this.taggedPriceVersion;
     }
 
+    @EventSourcingHandler
+    public void on(PurchaseCostRevenueAndProfitOfDeliveredSubscriptionsCalculatedEvent event){
+        Double registeredPurchaseCostForADate= this.registeredPurchaseCostOfDeliveredUnits.get(event.getDispatchDate());
+        if(null== registeredPurchaseCostForADate || registeredPurchaseCostForADate==0.0){
+            this.registeredPurchaseCostOfDeliveredUnits.put(event.getDispatchDate(),event.getPurchaseCostOfDeliveredSubscriptions());
+        }else{
+            this.registeredPurchaseCostOfDeliveredUnits.put(event.getDispatchDate(),registeredPurchaseCostForADate + event.getPurchaseCostOfDeliveredSubscriptions());
+        }
+
+        Double revenueForADate= this.getRegisteredRevenueForADate(event.getDispatchDate());
+        if( null== revenueForADate || revenueForADate==0.0){
+            this.registeredRevenue.put(event.getDispatchDate(),event.getRevenueOfDeliveredSubscriptions());
+        }else{
+            this.registeredRevenue.put(event.getDispatchDate(),revenueForADate + event.getRevenueOfDeliveredSubscriptions());
+        }
+
+        Double profitForADate=this.getRegisteredProfitForADate(event.getDispatchDate());
+        if( null == profitForADate || profitForADate==0.0){
+            this.registeredProfit.put(event.getDispatchDate(),event.getProfitOfDeliveredSubscriptions());
+        }else{
+            this.registeredProfit.put(event.getDispatchDate(),profitForADate + event.getProfitOfDeliveredSubscriptions());
+        }
+    }
     @EventSourcingHandler
     public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event) {
         this.expectedPurchaseCostOfDeliveredUnits = event.getPurchaseCostOfDeliveredUnits();
@@ -148,6 +188,7 @@ public class ValueCommittedPriceBucket extends PriceBucket {
 
     }
 
+/*
     @EventSourcingHandler
     public void on(PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent event) {
         DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionAgainstTaggedPrice = getLatestDeliveredSubscriptionsAgainstTaggedPriceVersion();
@@ -157,4 +198,5 @@ public class ValueCommittedPriceBucket extends PriceBucket {
         this.registeredRevenue = event.getRevenue();
         this.registeredProfit = event.getProfitAmountPerPriceBucket();
     }
+*/
 }

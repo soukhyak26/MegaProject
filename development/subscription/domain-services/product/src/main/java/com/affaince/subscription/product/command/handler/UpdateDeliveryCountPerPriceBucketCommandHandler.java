@@ -23,6 +23,7 @@ public class UpdateDeliveryCountPerPriceBucketCommandHandler {
     @CommandHandler
     public void handle (UpdateDeliveryCountPerPriceBucketCommand command) {
         final Product product = productRepository.load(command.getProductId());
-        product.getProductAccount().calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(command.getProductId(),command.getPriceBucketId(),1);
+        product.getProductAccount().addDeliveredSubscriptionCountToRespectivePriceBucket(command.getProductId(),command.getPriceBucketId(),command.getDispatchDate());
+        product.getProductAccount().calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(command.getProductId(),command.getPriceBucketId(),1,command.getDispatchDate());
     }
 }

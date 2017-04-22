@@ -4,6 +4,7 @@ import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ReasonCode;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -16,14 +17,14 @@ public class UpdateDeliveryStatusAndDispatchDateCommand {
     private String subscriptionId;
     private String deliveryId;
     private DeliveryStatus deliveryStatus;
-    private String dispatchDate;
+    private LocalDate dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
     private ReasonCode reasonCode;
 
     public UpdateDeliveryStatusAndDispatchDateCommand() {
     }
 
-    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriberId, String subscriptionId, String deliveryId, DeliveryStatus deliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, ReasonCode reasonCode) {
+    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriberId, String subscriptionId, String deliveryId, DeliveryStatus deliveryStatus, LocalDate dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, ReasonCode reasonCode) {
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
         this.deliveryId = deliveryId;
@@ -45,7 +46,7 @@ public class UpdateDeliveryStatusAndDispatchDateCommand {
         return deliveryStatus;
     }
 
-    public String getDispatchDate() {
+    public LocalDate getDispatchDate() {
         return dispatchDate;
     }
 
