@@ -24,6 +24,9 @@ public class PurchaseCostRecommendationCreditedEvent {
         this.recommendationReason=recommendationReason;
     }
 
+    public PurchaseCostRecommendationCreditedEvent() {
+    }
+
     public Integer getId() {
         return id;
     }
