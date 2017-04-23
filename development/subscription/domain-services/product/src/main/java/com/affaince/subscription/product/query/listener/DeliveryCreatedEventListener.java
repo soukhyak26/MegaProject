@@ -19,7 +19,7 @@ public class DeliveryCreatedEventListener {
         this.subscriptionInfoViewRepository = subscriptionInfoViewRepository;
     }
 
-    @EventHandler
+    //@EventHandler
     public void on(DeliveryCreatedEvent event) {
         final SubscriptionInfoView subscriptionInfoView = new SubscriptionInfoView(event.getDeliveryId(),
                 event.getSubscriberId(), event.getSubscriptionId(), event.getDeliveryItems(), event.getDeliveryDate(),

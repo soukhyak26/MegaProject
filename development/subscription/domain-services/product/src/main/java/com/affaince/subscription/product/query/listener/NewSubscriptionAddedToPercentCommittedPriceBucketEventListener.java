@@ -14,10 +14,12 @@ import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 4/23/2017.
  */
+@Component
 public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
     private final ProductActualsViewRepository productActualsViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
