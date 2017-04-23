@@ -9,16 +9,22 @@ public class CalculatePriceRequest {
     private ProductDemandTrend productDemandTrend;
     private double weight;
 
-    public CalculatePriceRequest(ProductDemandTrend productDemandTrend, double weight) {
-        this.productDemandTrend = productDemandTrend;
-        this.weight = weight;
+    public CalculatePriceRequest() {
     }
 
     public ProductDemandTrend getProductDemandTrend() {
         return productDemandTrend;
     }
 
+    public void setProductDemandTrend(ProductDemandTrend productDemandTrend) {
+        this.productDemandTrend = productDemandTrend;
+    }
+
     public double getWeight() {
         return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 }

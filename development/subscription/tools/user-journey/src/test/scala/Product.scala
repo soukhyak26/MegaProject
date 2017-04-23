@@ -19,6 +19,7 @@ class Product extends BaseSimulator {
     .repeat(1) {
       AddProjectionParameter.addProjectionParameter
     }
+    .pause (20)
     .repeat(1) {
       RegisterOpeningPrice.registerPrice
     }

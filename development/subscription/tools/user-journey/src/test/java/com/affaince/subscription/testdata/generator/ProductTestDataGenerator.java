@@ -139,8 +139,8 @@ public class ProductTestDataGenerator {
             int MRP = purchasePrice + (purchasePrice * profitMargin) / 100;
             int openingPrice = new Random().nextInt(MRP - purchasePrice) + purchasePrice;
             List<ProductForecastParameter> forecasts = new ArrayList<>(6);
-            ProductForecastParameter productForecastParameters[] = new ProductForecastParameter[6];
-            for (int i = 1; i <= 6; i++) {
+            ProductForecastParameter productForecastParameters[] = new ProductForecastParameter[12];
+            for (int i = 1; i <= 12; i++) {
                 startDate = endDate.plusDays(1);
                 endDate = startDate.plusDays(product.getActualsAggregationPeriodForTargetForecast());
                 newSubscription = newSubscription + (newSubscription * (new Random().nextInt(product.getMaxPercentageIncreaseInForecast()

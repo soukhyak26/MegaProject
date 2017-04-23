@@ -13,4 +13,12 @@ class CalculatePriceRequest {
         this.productDemandTrend = productDemandTrend;
         this.weight = weight;
     }
+
+    public ProductDemandTrend getProductDemandTrend() {
+        return productDemandTrend;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
 }
