@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 public class OpeningPriceCalculator extends AbstractPriceCalculator {
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         //if price is entered by merchant but there is no subscription yet as the product is not active yet...
-        if (product.getActivePriceBuckets().size() == 1 && product.getActivePriceBuckets().get(0).getNumberOfExistingSubscriptions() == 0 && product.getActivePriceBuckets().get(0).getEntityStatus() == EntityStatus.CREATED) {
+        if (product.getActivePriceBuckets().size() == 1 && product.getActivePriceBuckets().values().iterator().next().getNumberOfExistingSubscriptions() == 0
+                && product.getActivePriceBuckets().values().iterator().next().getEntityStatus() == EntityStatus.CREATED) {
             PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
             latestPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
             return latestPriceBucket;
