@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.CalculateExpectedProfitPerPriceBucketCommand;
+import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPercentCommittedPriceBucketEvent;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToValueCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
@@ -13,19 +14,17 @@ import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
- * Created by mandar on 29-01-2017.
+ * Created by mandar on 4/23/2017.
  */
-@Component
-public class NewSubscriptionAddedToPriceBucketEventListener {
+public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
     private final ProductActualsViewRepository productActualsViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public NewSubscriptionAddedToPriceBucketEventListener(ProductActualsViewRepository productActualsViewRepository, PriceBucketViewRepository priceBucketViewRepository, SubscriptionCommandGateway commandGateway) {
+    public NewSubscriptionAddedToPercentCommittedPriceBucketEventListener(ProductActualsViewRepository productActualsViewRepository, PriceBucketViewRepository priceBucketViewRepository, SubscriptionCommandGateway commandGateway) {
         this.productActualsViewRepository = productActualsViewRepository;
         this.priceBucketViewRepository = priceBucketViewRepository;
         this.commandGateway = commandGateway;
@@ -33,7 +32,7 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
 
 
     @EventHandler
-    public void on(NewSubscriptionAddedToValueCommittedPriceBucketEvent event) throws Exception {
+    public void on(NewSubscriptionAddedToPercentCommittedPriceBucketEvent event) throws Exception {
 
         ProductActualsView latestProductActualsView =
                 productActualsViewRepository.findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc
@@ -94,6 +93,7 @@ public class NewSubscriptionAddedToPriceBucketEventListener {
             ex.printStackTrace();
         }
     }
+
 
 
 }
