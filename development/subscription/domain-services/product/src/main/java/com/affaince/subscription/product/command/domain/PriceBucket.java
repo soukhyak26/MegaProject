@@ -76,6 +76,34 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         return slope;
     }
 
+    public double getOfferedPriceOrPercentDiscountPerUnit() {
+        return offeredPriceOrPercentDiscountPerUnit;
+    }
+
+    public Set<DeliveredSubscriptionsAgainstTaggedPrice> getDeliveredSubscriptionsAgainstTaggedPrices() {
+        return deliveredSubscriptionsAgainstTaggedPrices;
+    }
+
+    public Map<LocalDate, Double> getRegisteredProfit() {
+        return registeredProfit;
+    }
+
+    public Map<LocalDate, Double> getRegisteredPurchaseCostOfDeliveredUnits() {
+        return registeredPurchaseCostOfDeliveredUnits;
+    }
+
+    public Map<LocalDate, Double> getRegisteredRevenue() {
+        return registeredRevenue;
+    }
+
+    public double getExpectedPurchaseCostOfDeliveredUnits() {
+        return expectedPurchaseCostOfDeliveredUnits;
+    }
+
+    public double getExpectedRevenue() {
+        return expectedRevenue;
+    }
+
     public void setEntityStatus(EntityStatus entityStatus) {
         this.entityStatus = entityStatus;
     }

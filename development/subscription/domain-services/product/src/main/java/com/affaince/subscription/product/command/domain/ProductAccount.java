@@ -36,6 +36,10 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     private ProductPricingCategory productPricingCategory;
     private double creditPoints;
     private double variableExpenseSlope;
+    private double expectedPurchaseCost;
+    private double expectedRevenue;
+    private double expectedProfit;
+
     private double registeredPurchaseCost; //should be reset annually=pc of remaining stock + new purchase cost
     private double registeredRevenue;// should be reset annually =0;
     private double registeredProfit; // should be reset annually =0;
@@ -559,6 +563,26 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
 
+    public void calculateExpectedRevenueAndProfit(String productId) {
+        Map<LocalDateTime, PriceBucket> datewiseActivePriceBucketsMap = this.getActivePriceBuckets();
+        Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();
+        double revisedExpectedPurchaseCost = 0;
+        double revisedExpectedRevenue = 0;
+        double revisedExpectedProfit = 0;
+        for (PriceBucket activePriceBucket : activePriceBuckets) {
+            revisedExpectedPurchaseCost += activePriceBucket.getExpectedPurchaseCostOfDeliveredUnits();
+            revisedExpectedRevenue += activePriceBucket.getExpectedRevenue();
+            revisedExpectedProfit += activePriceBucket.getExpectedProfit();
+        }
+        apply(new ExpectedProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent(productId, (revisedExpectedPurchaseCost - this.expectedPurchaseCost), (revisedExpectedRevenue - this.expectedRevenue), (revisedExpectedProfit - this.expectedProfit)));
+    }
+
+    @EventSourcingHandler
+    public void on(ExpectedProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent event ){
+        this.expectedPurchaseCost +=event.getPurchaseCostContribution();
+        this.expectedRevenue +=event.getRevenueContribution();
+        this.expectedProfit +=event.getProfitContribution();
+    }
     public void calculateRegisteredRevenueAndProfit(String productId) {
         Map<LocalDateTime, PriceBucket> datewiseActivePriceBucketsMap = this.getActivePriceBuckets();
         Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();

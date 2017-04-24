@@ -44,6 +44,7 @@ public class Axon extends Default {
             put("com.affaince.subscription.product.command.event.ProductRegisteredEvent", ProductRegisteredEvent.class.getName());
             put("com.affaince.subscription.product.command.event.AnnualForecastCreatedEvent", AnnualForecastCreatedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ProductActivatedEvent", ProductActivatedEvent.class.getName());
+            put("com.affaince.subscription.product.command.event.ExpectedProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent", ExpectedProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent", ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ExcessProfitDonatedToNodalAccountEvent", ExcessProfitDonatedToNodalAccountEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
