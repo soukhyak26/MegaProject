@@ -4,7 +4,6 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToNoneCommittedPriceBucketEvent;
-import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPercentCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;

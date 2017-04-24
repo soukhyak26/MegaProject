@@ -77,6 +77,11 @@ public class NoneCommittedPriceBucket extends PriceBucket {
                 revisedNewSubscriptionCount, revisedTotalSubscriptionCount, subscriptionChangedDate));
     }
 
+    @EventSourcingHandler
+    public void on (NewSubscriptionAddedToNoneCommittedPriceBucketEvent event){
+        this.numberOfNewSubscriptions=event.getNewSubscriptionCount();
+        this.numberOfExistingSubscriptions= event.getTotalSubscriptionCount();
+    }
     public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
         long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions + subscriptionCount;
         long revisedTotalSubscriptionCount = this.numberOfExistingSubscriptions - subscriptionCount;
@@ -87,6 +92,11 @@ public class NoneCommittedPriceBucket extends PriceBucket {
         apply(new SubscriptionDeductedFromNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount));
     }
 
+    public void on(SubscriptionDeductedFromNoneCommittedPriceBucketEvent event ){
+        this.numberOfChurnedSubscriptions= event.getRevisedChurnedSubscriptionCount();
+        this.numberOfExistingSubscriptions=event.getRevisedTotalSubscriptionCount();
+
+    }
     //Expected revenue/profit/cost at the time of each new/churned subscription affiliated to this price bucket
     public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, int changedSubscriptionCount,double fixedExpensePeUnit, double variableExpensePerUnit) {
         final double revenue = Math.abs(changedSubscriptionCount) * this.getFixedOfferedPriceOrPercentDiscountPerUnit();

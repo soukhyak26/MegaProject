@@ -91,14 +91,25 @@ public class PercentCommittedPriceBucket extends PriceBucket {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount));
+        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount));
     }
 
+    @EventSourcingHandler
+    public void on(SubscriptionDeductedFromPercentCommittedPriceBucketEvent event ){
+        this.numberOfChurnedSubscriptions= event.getRevisedChurnedSubscriptionCount();
+        this.numberOfExistingSubscriptions=event.getRevisedTotalSubscriptionCount();
+    }
     public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;
         long revisedTotalSubscriptionCount = this.getNumberOfExistingSubscriptions() + subscriptionCount;
         apply(new NewSubscriptionAddedToPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount,
                 revisedNewSubscriptionCount, revisedTotalSubscriptionCount, subscriptionChangedDate));
+    }
+
+    @EventSourcingHandler
+    public void on(NewSubscriptionAddedToPercentCommittedPriceBucketEvent event){
+        this.numberOfNewSubscriptions=event.getNewSubscriptionCount();
+        this.numberOfExistingSubscriptions= event.getTotalSubscriptionCount();
     }
 
     //Expected revenue/profit/cost at the time of each new/churned subscription affiliated to this price bucket

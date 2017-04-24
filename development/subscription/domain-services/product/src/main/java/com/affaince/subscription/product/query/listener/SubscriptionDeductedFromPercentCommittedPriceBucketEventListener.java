@@ -3,6 +3,7 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.product.command.event.SubscriptionDeductedFromPercentCommittedPriceBucketEvent;
 import com.affaince.subscription.product.command.event.SubscriptionDeductedFromValueCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
@@ -17,14 +18,14 @@ import org.springframework.data.domain.Sort;
 /**
  * Created by mandar on 29-01-2017.
  */
-public class SubscriptionDeductedFromPriceBucketEventListener {
+public class SubscriptionDeductedFromPercentCommittedPriceBucketEventListener {
 
     private final ProductActualsViewRepository productActualsViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public SubscriptionDeductedFromPriceBucketEventListener(ProductActualsViewRepository productActualsViewRepository, PriceBucketViewRepository priceBucketViewRepository, SubscriptionCommandGateway commandGateway) {
+    public SubscriptionDeductedFromPercentCommittedPriceBucketEventListener(ProductActualsViewRepository productActualsViewRepository, PriceBucketViewRepository priceBucketViewRepository, SubscriptionCommandGateway commandGateway) {
         this.productActualsViewRepository = productActualsViewRepository;
         this.priceBucketViewRepository = priceBucketViewRepository;
         this.commandGateway = commandGateway;
@@ -32,7 +33,7 @@ public class SubscriptionDeductedFromPriceBucketEventListener {
 
 
     @EventHandler
-    public void on(SubscriptionDeductedFromValueCommittedPriceBucketEvent event) throws Exception {
+    public void on(SubscriptionDeductedFromPercentCommittedPriceBucketEvent event) throws Exception {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
 //        ProductActualsView productActualsView = productActualsViewRepository.findByProductVersionId_ProductId(event.getProductId(), sort).get(0);
         //find today's productActualsView
