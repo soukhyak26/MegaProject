@@ -23,5 +23,6 @@ public class UpdateProductSubscriptionCommandHandler {
     public void on(UpdateProductSubscriptionCommand command){
         final Product product = repository.load(command.getProductId());
         product.getProductAccount().updateProductSubscription(command);
+        product.getProductAccount().calculateExpectedPurchaseExpenseRevenueAndProfitOnSubscriptionUpdate(command.getProductId(),command.getPriceBucketWiseSubscriptionCount(),command.getSubscriptionChangedDate());
     }
 }

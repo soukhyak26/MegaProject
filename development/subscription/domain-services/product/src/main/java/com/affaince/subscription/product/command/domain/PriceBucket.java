@@ -192,6 +192,6 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public abstract long getNumberOfChurnedSubscriptions();
     public abstract void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate);
     public abstract void deductSubscriptionFromPriceBucket(int subscriptionCount);
-    public abstract void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, double fixedExpensePeUnit, double variableExpensePerUnit);
+    public abstract void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId,int changedSubscriptionCount, double fixedExpensePeUnit, double variableExpensePerUnit);
     public abstract void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount,LocalDate dispatchDate);
 }

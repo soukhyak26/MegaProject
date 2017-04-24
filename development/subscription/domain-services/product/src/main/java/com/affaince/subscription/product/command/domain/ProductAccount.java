@@ -104,9 +104,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
         if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
             //assumption is that for non commitment a single price bucket will exist in map.
-            if(null != this.activePriceBuckets && this.activePriceBuckets.size()>0) {
+            if (null != this.activePriceBuckets && this.activePriceBuckets.size() > 0) {
                 return this.activePriceBuckets.entrySet().iterator().next().getValue();
-            }else{
+            } else {
                 return PriceBucketFactory.createPriceBucket(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             }
         } else {
@@ -136,7 +136,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     public PriceBucket getLatestActivePriceBucket() {
         Set<LocalDateTime> timeBasedKeys = activePriceBuckets.keySet();
-        if (timeBasedKeys.size() <=0 ) {
+        if (timeBasedKeys.size() <= 0) {
             return null;
         }
         LocalDateTime max = timeBasedKeys.iterator().next();
@@ -158,10 +158,12 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
         return recommendedPriceBuckets.get(max);
     }
+
     // This method is called from event sourcing handlers of ProductRegisteredEvent and ProductStatusUpdatedEvent
     public void addNewTaggedPriceVersion(PriceTaggedWithProduct newTaggedPrice) {
         this.taggedPriceVersions.add(newTaggedPrice);
     }
+
     //TODO: An event from BusinessAccount should give per product fixed expense and the same should get added to product account
     public void addNewFixedExpense(FixedExpensePerProduct newFixedExpense) {
         this.fixedExpenseVersions.add(newFixedExpense);
@@ -209,7 +211,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command, OperatingExpenseService operatingExpenseService) {
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
         if (null == latestVariableExpense || (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != command.getOperationExpense())) {
-            final LocalDate startDate=SysDate.now();
+            final LocalDate startDate = SysDate.now();
             VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(command.getOperationExpense(), startDate);
             Set<PriceTaggedWithProduct> taggedPriceVersions = updateBreakEvenPriceUponChangeOfPriceOrExpenses(operatingExpenseService);
             apply(new VariableExpenseChangedEvent(command.getProductId(), startDate, newVariableExpenseVersion, taggedPriceVersions));
@@ -280,16 +282,28 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
 
-    public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId){
-        final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
-        LocalDateTime fromDate = priceBucket.getFromDate();
-        LocalDateTime toDate = priceBucket.getToDate();
-        double fixedExpensePerUnit = this.findLatestFixedExpensePerUnitInDateRange(fromDate, toDate);
-        double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
-        priceBucket.calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
+    /*
+        public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId){
+            final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
+            LocalDateTime fromDate = priceBucket.getFromDate();
+            LocalDateTime toDate = priceBucket.getToDate();
+            double fixedExpensePerUnit = this.findLatestFixedExpensePerUnitInDateRange(fromDate, toDate);
+            double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
+            priceBucket.calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
+        }
+    */
+    public void calculateExpectedPurchaseExpenseRevenueAndProfitOnSubscriptionUpdate(String productId, Map<String, Integer> priceBucketWiseSubscriptionCount, LocalDate subscriptionChangeDate) {
+        priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId -> {
+            final PriceBucket activePriceBucket = this.findActivePriceBucketByPriceBucketId(priceBucketId);
+            final int subscriptionCount = priceBucketWiseSubscriptionCount.get(priceBucketId);
+            double fixedExpensePerUnit = this.getLatestFixedExpenseVersion().getFixedOperatingExpPerUnit();
+            double variableExpensePerUnit = this.getLatestVariableExpenseVersion().getVariableOperatingExpPerUnit();
+            activePriceBucket.calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(productId, subscriptionCount, fixedExpensePerUnit, variableExpensePerUnit);
+        });
     }
-    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId,long deliveredSubscriptionCount,LocalDate dispatchDate) {
-        final PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
+
+    public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, String priceBucketId, long deliveredSubscriptionCount, LocalDate dispatchDate) {
+        final PriceBucket priceBucket = this.findActivePriceBucketByPriceBucketId(priceBucketId);
 
         //this.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,fixedExpensePerUnit,variableExpensePerUnit);
 /*
@@ -297,7 +311,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             apply(new PriceBucketExpiredEvent(productId,priceBucketId, SysDateTime.now()));
         }
 */
-       // apply( new DeliveredSubscriptionCountAddedToPriceBucketEvent(productId,
+        // apply( new DeliveredSubscriptionCountAddedToPriceBucketEvent(productId,
         //                                                        priceBucketId,
         //                                                        priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(),
         //                                                        priceBucket.getTaggedPriceVersion().getMRP(),
@@ -310,15 +324,15 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         LocalDateTime toDate = priceBucket.getToDate();
         double fixedExpensePerUnit = this.findLatestFixedExpensePerUnitInDateRange(fromDate, toDate);
         double variableExpensePerUnit = this.findLatestVariableExpensePerUnitInDateRange(fromDate, toDate);
-        priceBucket.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId,this.getProductPricingCategory(),fixedExpensePerUnit,variableExpensePerUnit,deliveredSubscriptionCount,dispatchDate);
+        priceBucket.calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(productId, this.getProductPricingCategory(), fixedExpensePerUnit, variableExpensePerUnit, deliveredSubscriptionCount, dispatchDate);
     }
 
     public Set<PriceTaggedWithProduct> updateBreakEvenPriceUponChangeOfPriceOrExpenses(OperatingExpenseService operatingExpenseService) {
         List<CostHeader> costHeaders = new ArrayList<>(3);
         //PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
         // we will need to calculate revised breakeven price for active tagged price versions as differnt tagged price versions are embedded in different price buckets
-        Set<PriceTaggedWithProduct> taggedPriceVersions=this.getTaggedPriceVersions();
-        for( PriceTaggedWithProduct taggedPriceVersion: taggedPriceVersions) {
+        Set<PriceTaggedWithProduct> taggedPriceVersions = this.getTaggedPriceVersions();
+        for (PriceTaggedWithProduct taggedPriceVersion : taggedPriceVersions) {
             CostHeader purchasePriceHeader = new CostHeader(CostHeaderType.PURCHASE_PRICE_PER_UNIT, "purchase price per unit", taggedPriceVersion.getPurchasePricePerUnit(), CostHeaderApplicability.ABSOLUTE);
             costHeaders.add(purchasePriceHeader);
 
@@ -344,14 +358,14 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             costHeaders.add(variableExpenseHeader);
 
             BreakEvenPriceCalculator breakEvenPriceCalculator = new BreakEvenPriceCalculator();
-            final double breakEvenPriceForATaggedPriceVersion= breakEvenPriceCalculator.calculateBreakEvenPrice(costHeaders);
+            final double breakEvenPriceForATaggedPriceVersion = breakEvenPriceCalculator.calculateBreakEvenPrice(costHeaders);
             taggedPriceVersion.setBreakEvenPrice(breakEvenPriceForATaggedPriceVersion);
             //latestTaggedPriceVersion.setBreakEvenPrice(breakEvenrPrice);
         }
         return taggedPriceVersions;
     }
 
-    public void registerOpeningPrice(String productId, double openingPriceOrPercent,LocalDateTime fromDate) {
+    public void registerOpeningPrice(String productId, double openingPriceOrPercent, LocalDateTime fromDate) {
         PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
         String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
@@ -368,13 +382,13 @@ public class ProductAccount extends AbstractAnnotatedEntity {
                 0L,
                 0L,
                 fromDate,
-                new LocalDateTime(9999,12,31,0,0,0),
+                new LocalDateTime(9999, 12, 31, 0, 0, 0),
                 EntityStatus.ACTIVE,
                 openingPriceOrPercent
-                ));
+        ));
     }
 
-//should fire productsubscription updated event OR shuld fire two events add/deduct
+    //should fire productsubscription updated event OR shuld fire two events add/deduct
     public void updateProductSubscription(UpdateProductSubscriptionCommand command) {
         final Map<String, Integer> priceBucketWiseSubscriptionCount = command.getPriceBucketWiseSubscriptionCount();
         priceBucketWiseSubscriptionCount.keySet().stream().forEach(priceBucketId -> {
@@ -475,13 +489,13 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
         latestTaggedPriceVersion.setBreakEvenPrice(event.getRevisedBreakEvenPrice());
 */
-        Set<PriceTaggedWithProduct> taggedPriceVersionsWithRevisedBEPrice= event.getUpdatedTaggedPriceVersions();
-        for( PriceTaggedWithProduct taggedPriceVersionWithRevisedBEPrice: taggedPriceVersionsWithRevisedBEPrice){
-                if(taggedPriceVersions.contains(taggedPriceVersionWithRevisedBEPrice)){
-                    PriceTaggedWithProduct matchedTaggedPriceVersion =taggedPriceVersions.stream().filter(taggedPriceVersionWithRevisedBEPrice :: equals).findAny().get();
-                    matchedTaggedPriceVersion.setBreakEvenPrice(taggedPriceVersionWithRevisedBEPrice.getBreakEvenPrice());
-                }
-                //Need to update delivered subscriptions against tagged prices too
+        Set<PriceTaggedWithProduct> taggedPriceVersionsWithRevisedBEPrice = event.getUpdatedTaggedPriceVersions();
+        for (PriceTaggedWithProduct taggedPriceVersionWithRevisedBEPrice : taggedPriceVersionsWithRevisedBEPrice) {
+            if (taggedPriceVersions.contains(taggedPriceVersionWithRevisedBEPrice)) {
+                PriceTaggedWithProduct matchedTaggedPriceVersion = taggedPriceVersions.stream().filter(taggedPriceVersionWithRevisedBEPrice::equals).findAny().get();
+                matchedTaggedPriceVersion.setBreakEvenPrice(taggedPriceVersionWithRevisedBEPrice.getBreakEvenPrice());
+            }
+            //Need to update delivered subscriptions against tagged prices too
         }
     }
 
@@ -495,10 +509,10 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         latestTaggedPriceVersion.setBreakEvenPrice(event.   getRevisedBreakEvenPrice());
 */
 
-        Set<PriceTaggedWithProduct> taggedPriceVersionsWithRevisedBEPrice= event.getUpdatedTaggedPriceVersions();
-        for( PriceTaggedWithProduct taggedPriceVersionWithRevisedBEPrice: taggedPriceVersionsWithRevisedBEPrice){
-            if(taggedPriceVersions.contains(taggedPriceVersionWithRevisedBEPrice)){
-                PriceTaggedWithProduct matchedTaggedPriceVersion =taggedPriceVersions.stream().filter(taggedPriceVersionWithRevisedBEPrice :: equals).findAny().get();
+        Set<PriceTaggedWithProduct> taggedPriceVersionsWithRevisedBEPrice = event.getUpdatedTaggedPriceVersions();
+        for (PriceTaggedWithProduct taggedPriceVersionWithRevisedBEPrice : taggedPriceVersionsWithRevisedBEPrice) {
+            if (taggedPriceVersions.contains(taggedPriceVersionWithRevisedBEPrice)) {
+                PriceTaggedWithProduct matchedTaggedPriceVersion = taggedPriceVersions.stream().filter(taggedPriceVersionWithRevisedBEPrice::equals).findAny().get();
                 matchedTaggedPriceVersion.setBreakEvenPrice(taggedPriceVersionWithRevisedBEPrice.getBreakEvenPrice());
             }
             //Need to update delivered subscriptions against tagged prices too
@@ -539,40 +553,39 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     @EventSourcingHandler
     public void on(OpeningPriceOrPercentRegisteredEvent event) {
         //PriceBucket newPriceBucket = new PriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(),event.getTaggedPriceVersion(),event.getOfferedPriceOrPercentDiscountPerUnit(),event.getEntityStatus(),event.getFromDate());
-        PriceBucket newPriceBucket = PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(),event.getTaggedPriceVersion(),event.getOfferedPriceOrPercentDiscountPerUnit(),event.getEntityStatus(),event.getFromDate());
+        PriceBucket newPriceBucket = PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(), event.getTaggedPriceVersion(), event.getOfferedPriceOrPercentDiscountPerUnit(), event.getEntityStatus(), event.getFromDate());
         this.addNewPriceBucket(newPriceBucket.getFromDate(), newPriceBucket);
         //this.productActivationStatusList.add(ProductStatus.PRODUCT_PRICE_ASSIGNED);
     }
 
 
-
     public void calculateRegisteredRevenueAndProfit(String productId) {
-        Map<LocalDateTime,PriceBucket> datewiseActivePriceBucketsMap= this.getActivePriceBuckets();
+        Map<LocalDateTime, PriceBucket> datewiseActivePriceBucketsMap = this.getActivePriceBuckets();
         Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();
-        double revisedRegisteredPurchaseCost=0;
-        double revisedRegisteredRevenue=0;
-        double revisedRegisteredProfit=0;
-        for(PriceBucket activePriceBucket: activePriceBuckets){
-            revisedRegisteredPurchaseCost+=activePriceBucket.getTotalRegisteredPurchaseCost();
-            revisedRegisteredRevenue +=activePriceBucket.getTotalRegisteredRevenue();
-            revisedRegisteredProfit +=activePriceBucket.getTotalRegisteredProfit();
+        double revisedRegisteredPurchaseCost = 0;
+        double revisedRegisteredRevenue = 0;
+        double revisedRegisteredProfit = 0;
+        for (PriceBucket activePriceBucket : activePriceBuckets) {
+            revisedRegisteredPurchaseCost += activePriceBucket.getTotalRegisteredPurchaseCost();
+            revisedRegisteredRevenue += activePriceBucket.getTotalRegisteredRevenue();
+            revisedRegisteredProfit += activePriceBucket.getTotalRegisteredProfit();
         }
-        apply(new ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent(productId,(revisedRegisteredPurchaseCost-this.registeredPurchaseCost),(revisedRegisteredRevenue-this.registeredRevenue),(revisedRegisteredProfit-this.registeredProfit)));
+        apply(new ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent(productId, (revisedRegisteredPurchaseCost - this.registeredPurchaseCost), (revisedRegisteredRevenue - this.registeredRevenue), (revisedRegisteredProfit - this.registeredProfit)));
     }
 
     @EventSourcingHandler
-    public void on(ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent event){
+    public void on(ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent event) {
 
-        this.registeredPurchaseCost+=event.getPurchaseCostContribution();
-        this.registeredRevenue +=event.getRevenueContribution();
-        this.registeredProfit+=event.getProfitContribution();
+        this.registeredPurchaseCost += event.getPurchaseCostContribution();
+        this.registeredRevenue += event.getRevenueContribution();
+        this.registeredProfit += event.getProfitContribution();
     }
 
     //When the new actual offer price is recommended
     //Expire current price bucket and register a new price bucket
     @EventSourcingHandler
     public void on(OfferedPriceChangedEvent event) {
-        PriceBucket newPriceBucket= PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(),event.getTaggedPriceVersion(),event.getOfferedPriceOrPercentDiscountPerUnit(),event.getEntityStatus(),event.getFromDate());
+        PriceBucket newPriceBucket = PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(), event.getTaggedPriceVersion(), event.getOfferedPriceOrPercentDiscountPerUnit(), event.getEntityStatus(), event.getFromDate());
         this.addNewPriceBucket(event.getFromDate(), newPriceBucket);
         if (event.getPricingOptions() != PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
             this.removeRecommendedPriceBucket(newPriceBucket);
@@ -583,40 +596,40 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     @EventSourcingHandler
     public void on(OfferedPriceRecommendedEvent event) {
         //this.productDemandTrend = event.getProductDemandTrend();
-        PriceBucket newPriceBucket= PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(),event.getTaggedPriceVersion(),event.getOfferedPriceOrPercentDiscountPerUnit(),event.getEntityStatus(),event.getFromDate());
+        PriceBucket newPriceBucket = PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(), event.getTaggedPriceVersion(), event.getOfferedPriceOrPercentDiscountPerUnit(), event.getEntityStatus(), event.getFromDate());
         this.addNewPriceRecommendation(event.getFromDate(), newPriceBucket);
     }
 
-    public void calculateTotalActiveSubscriptions(){
-        Map<LocalDateTime,PriceBucket> datewiseActivePriceBucketsMap= this.getActivePriceBuckets();
+    public void calculateTotalActiveSubscriptions() {
+        Map<LocalDateTime, PriceBucket> datewiseActivePriceBucketsMap = this.getActivePriceBuckets();
         Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();
-        long activeSubscriptions=0;
-        for(PriceBucket activePriceBucket: activePriceBuckets) {
-            activeSubscriptions +=activePriceBucket.getNumberOfExistingSubscriptions();
+        long activeSubscriptions = 0;
+        for (PriceBucket activePriceBucket : activePriceBuckets) {
+            activeSubscriptions += activePriceBucket.getNumberOfExistingSubscriptions();
         }
     }
 
 
-    public void calculateTotalDeliveredSubscriptions(){
-        Map<LocalDateTime,PriceBucket> datewiseActivePriceBucketsMap= this.getActivePriceBuckets();
+    public void calculateTotalDeliveredSubscriptions() {
+        Map<LocalDateTime, PriceBucket> datewiseActivePriceBucketsMap = this.getActivePriceBuckets();
         Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();
-        long deliveredSubscriptions=0;
-        for(PriceBucket activePriceBucket: activePriceBuckets) {
-            deliveredSubscriptions +=activePriceBucket.getTotalDeliveredSubscriptions();
+        long deliveredSubscriptions = 0;
+        for (PriceBucket activePriceBucket : activePriceBuckets) {
+            deliveredSubscriptions += activePriceBucket.getTotalDeliveredSubscriptions();
         }
     }
 
-    public void calculateTotalChurnedSubscriptions(){
-        Map<LocalDateTime,PriceBucket> datewiseActivePriceBucketsMap= this.getActivePriceBuckets();
+    public void calculateTotalChurnedSubscriptions() {
+        Map<LocalDateTime, PriceBucket> datewiseActivePriceBucketsMap = this.getActivePriceBuckets();
         Collection<PriceBucket> activePriceBuckets = datewiseActivePriceBucketsMap.values();
-        long churnedSubscriptions=0;
-        for(PriceBucket activePriceBucket: activePriceBuckets) {
-            churnedSubscriptions +=activePriceBucket.getNumberOfChurnedSubscriptions();
+        long churnedSubscriptions = 0;
+        for (PriceBucket activePriceBucket : activePriceBuckets) {
+            churnedSubscriptions += activePriceBucket.getNumberOfChurnedSubscriptions();
         }
     }
 
     public void addDeliveredSubscriptionCountToRespectivePriceBucket(String productId, String priceBucketId, LocalDate dispatchDate) {
-        PriceBucket priceBucket=this.findActivePriceBucketByPriceBucketId(priceBucketId);
-        priceBucket.addDeliveredSubscriptionsAssociatedWithAPriceBucket(productId,1);
+        PriceBucket priceBucket = this.findActivePriceBucketByPriceBucketId(priceBucketId);
+        priceBucket.addDeliveredSubscriptionsAssociatedWithAPriceBucket(productId, 1);
     }
 }

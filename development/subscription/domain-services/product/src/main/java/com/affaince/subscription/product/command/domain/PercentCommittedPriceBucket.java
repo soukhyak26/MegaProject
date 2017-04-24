@@ -8,6 +8,7 @@ import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.PriceBucketLifecycleMismatchException;
 import com.affaince.subscription.product.services.Comparator.SubscriptionsAgainstTaggedPriceDescComparator;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
+import com.affaince.subscription.product.vo.SubscriptionChangeType;
 import com.affaince.subscription.product.vo.SubscriptionsAgainstTaggedPrice;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
@@ -100,6 +101,36 @@ public class PercentCommittedPriceBucket extends PriceBucket {
                 revisedNewSubscriptionCount, revisedTotalSubscriptionCount, subscriptionChangedDate));
     }
 
+    //Expected revenue/profit/cost at the time of each new/churned subscription affiliated to this price bucket
+    public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, int changedSubscriptionCount,double fixedExpensePeUnit, double variableExpensePerUnit) {
+        final double offeredPrice = (this.getLatestTaggedPriceVersion().getMRP() - (this.getLatestTaggedPriceVersion().getMRP() * this.getFixedOfferedPriceOrPercentDiscountPerUnit()));
+        final double revenue = Math.abs(changedSubscriptionCount) * offeredPrice;
+        final double purchaseCost = Math.abs(changedSubscriptionCount) * (this.getTaggedPriceVersion().getPurchasePricePerUnit());
+        final double totalFixedExpense = Math.abs(changedSubscriptionCount) * fixedExpensePeUnit;
+        final double totalVariableExpense = Math.abs(changedSubscriptionCount) * variableExpensePerUnit;
+        final double profit = revenue - (purchaseCost + totalFixedExpense + totalVariableExpense);
+        SubscriptionChangeType changeType=SubscriptionChangeType.GAIN;
+        if(changedSubscriptionCount<0){
+            changeType=SubscriptionChangeType.CHURN;
+        }
+        apply(new PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost, revenue, profit,changeType));
+    }
+
+
+    @EventSourcingHandler
+    public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event) {
+        if (event.getSubscriptionChangeType() == SubscriptionChangeType.GAIN){
+            this.expectedPurchaseCostOfDeliveredUnits += event.getPurchaseCostOfDeliveredUnits();
+            this.expectedRevenue += event.getRevenue();
+            this.expectedProfit += event.getProfitAmountPerPriceBucket();
+        }else{
+            this.expectedPurchaseCostOfDeliveredUnits -= event.getPurchaseCostOfDeliveredUnits();
+            this.expectedRevenue -= event.getRevenue();
+            this.expectedProfit -= event.getProfitAmountPerPriceBucket();
+        }
+    }
+
+/*
     //Expected revenue/profit/cost at the time of each new/churned subscripton affiliated to this price bucket
     public void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, double fixedExpensePeUnit, double variableExpensePerUnit) {
         LocalDateTime fromDate = this.getFromDate();
@@ -118,6 +149,7 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         profit = revenue - (purchaseCost + totalFixedExpense + totalVariableExpense);
         apply(new PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent(productId, priceBucketId, purchaseCost, revenue, profit));
     }
+*/
 
 /*
     public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(String productId, ProductPricingCategory productPricingCategory, double fixedExpensePeUnit, double variableExpensePerUnit, long deliveredSubscriptionCount,LocalDate dispatchDate) {
@@ -171,6 +203,7 @@ public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(Str
 
 }
 
+/*
     @EventSourcingHandler
     public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event) {
         this.expectedPurchaseCostOfDeliveredUnits = event.getPurchaseCostOfDeliveredUnits();
@@ -178,6 +211,7 @@ public void calculateRegisteredPurchaseExpenseRevenueAndProfitForPriceBucket(Str
         this.expectedProfit = event.getProfitAmountPerPriceBucket();
 
     }
+*/
 
     @EventSourcingHandler
     public void on(PurchaseCostRevenueAndProfitOfDeliveredSubscriptionsCalculatedEvent event){

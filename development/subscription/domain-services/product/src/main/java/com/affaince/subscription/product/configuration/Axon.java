@@ -110,7 +110,7 @@ public class Axon extends Default {
             put("com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent", ProductForecastReceivedEvent.class.getName());
             //when a new subscription is added or an existing subscription is changed by subscriber then below event carry the changes from subscriber domain to product domain
             put("com.affaince.subscription.subscriber.command.event.SubscriptionActivitySummaryEvent", SubscriptionActivitySummaryEvent.class.getName());
-            put("com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
+            //put("com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
             put("com.affaince.subscription.expensedistribution.event.SubscriptionSpecificOperatingExpenseCalculatedEvent", SubscriptionSpecificOperatingExpenseCalculatedEvent.class.getName());
             put("com.affaince.subscription.expensedistribution.event.FixedExpenseUpdatedToProductEvent", FixedExpenseUpdatedToProductEvent.class.getName());
             put("com.affaince.subscription.business.command.event.ProvisionCreatedEvent", ProvisionCreatedEvent.class.getName());

@@ -145,6 +145,12 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.expectedPurchaseCost = expectedPurchaseCost;
     }
 
+    public void addToExpectedPurchaseCost(double incrementalPurchaseCost){
+        this.expectedPurchaseCost += incrementalPurchaseCost;
+    }
+    public void deductFromExpectedPurchaseCost(double deductiblePurchaseCost){
+        this.expectedPurchaseCost -= deductiblePurchaseCost;
+    }
     public double getExpectedRevenue() {
         return expectedRevenue;
     }
@@ -153,6 +159,12 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.expectedRevenue = expectedRevenue;
     }
 
+    public void addToExpectedRevenue(double incrementalRevenue){
+        this.expectedRevenue +=incrementalRevenue;
+    }
+    public void deductFromExpectedRevenue(double deductibleRevenue){
+        this.expectedRevenue -= deductibleRevenue;
+    }
     public double getExpectedProfit() {
         return expectedProfit;
     }
@@ -161,6 +173,12 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         this.expectedProfit = expectedProfit;
     }
 
+    public void addToExpectedProfit(double incrementalProfit){
+        this.expectedProfit +=incrementalProfit;
+    }
+    public void deductFromExpectedProfit(double deductibleProfit){
+        this.expectedProfit -= deductibleProfit;
+    }
     @Override
     public int compareTo(PriceBucketView o) {
         return this.getFromDate().compareTo(o.getFromDate());

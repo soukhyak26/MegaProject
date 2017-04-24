@@ -3,7 +3,6 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.product.command.CalculateExpectedProfitPerPriceBucketCommand;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToNoneCommittedPriceBucketEvent;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPercentCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
@@ -88,12 +87,15 @@ public class NewSubscriptionAddedToNoneCommittedPriceBucketEventListener {
         priceBucketView.setNumberOfNewSubscriptionsAssociatedWithAPrice(revisedNewSubscriptionCountOfPriceBucket);
         priceBucketView.setNumberOfExistingSubscriptionsAssociatedWithAPrice(revisedTotalSubscriptionCountOfPriceBucket);
         priceBucketViewRepository.save(priceBucketView);
+
+/*
         try {
             CalculateExpectedProfitPerPriceBucketCommand command = new CalculateExpectedProfitPerPriceBucketCommand(event.getProductId(), event.getPriceBucketId());
             commandGateway.executeAsync(command);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+*/
     }
 
 
