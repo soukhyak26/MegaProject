@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
@@ -33,7 +34,7 @@ public class PriceBucketViewRepositoryTest {
         String productId = UUID.randomUUID().toString();
         String priceBucketId = UUID.randomUUID().toString();
         PriceBucketView priceBucketView = new PriceBucketView(
-                new ProductwisePriceBucketId(productId,priceBucketId));
+                new ProductwisePriceBucketId(productId,priceBucketId), ProductPricingCategory.PRICE_COMMITMENT);
         priceBucketView.setEntityStatus(EntityStatus.ACTIVE);
         priceBucketViewRepository.save(priceBucketView);
 

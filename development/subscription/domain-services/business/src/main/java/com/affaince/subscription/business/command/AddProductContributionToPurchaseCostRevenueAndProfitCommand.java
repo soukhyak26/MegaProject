@@ -3,14 +3,14 @@ package com.affaince.subscription.business.command;
 /**
  * Created by mandar on 29-01-2017.
  */
-public class AddProductContributionToRevenueAndProfitCommand {
+public class AddProductContributionToPurchaseCostRevenueAndProfitCommand {
     private final String productId;
     private Integer businessAccountId;
     private final double purchaseCostContribution;
     private final double revenueContribution;
     private final double profitContribution;
 
-    public AddProductContributionToRevenueAndProfitCommand(String productId, Integer businessAccountId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
+    public AddProductContributionToPurchaseCostRevenueAndProfitCommand(String productId, Integer businessAccountId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
         this.productId = productId;
         this.businessAccountId=businessAccountId;
         this.purchaseCostContribution = purchaseCostContribution;

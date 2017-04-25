@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
@@ -21,6 +22,7 @@ import java.util.Set;
 public class PriceBucketView  implements Comparable<PriceBucketView>{
     @Id
     private final ProductwisePriceBucketId productwisePriceBucketId;
+    private final ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
@@ -41,8 +43,9 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
 
     private double slope;
 
-    public PriceBucketView(ProductwisePriceBucketId productwisePriceBucketId) {
+    public PriceBucketView(ProductwisePriceBucketId productwisePriceBucketId,ProductPricingCategory productPricingCategory) {
         this.productwisePriceBucketId = productwisePriceBucketId;
+        this.productPricingCategory=productPricingCategory;
     }
 
     public static PriceBucketView getLatestPriceBucket(List<PriceBucketView> activePriceBuckets) {
@@ -230,6 +233,11 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     public void addToRegisteredRevenue(LocalDate deliveryDate, double revenue){
         this.registeredRevenue.put(deliveryDate,revenue);
     }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

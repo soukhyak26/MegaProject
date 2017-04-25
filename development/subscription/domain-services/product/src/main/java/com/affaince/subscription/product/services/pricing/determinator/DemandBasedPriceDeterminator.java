@@ -53,7 +53,7 @@ public class DemandBasedPriceDeterminator {// implements PriceDeterminator {
         List<Double> forecastedDemands = extrapolateDemand(totalQuantitySubscribedWithSamePurchasePrice, 12);
         double offeredPrice= determinePriceBasedOnCurrentAndForecastedDemand(demandFunctionCoeffiecients, costFunctionCoefficients, latestPriceBucket.getNumberOfExistingSubscriptionsAssociatedWithAPrice(), forecastedDemands);
         LocalDate currentDate = SysDate.now();
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(latestPriceBucket.getProductwisePriceBucketId().getProductId(), ""+latestPriceBucket.getProductwisePriceBucketId().getProductId()+"_"+ currentDate));
+        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(latestPriceBucket.getProductwisePriceBucketId().getProductId(), ""+latestPriceBucket.getProductwisePriceBucketId().getProductId()+"_"+ currentDate),latestPriceBucket.getProductPricingCategory());
         DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
 
         final String taggedPriceVersionId = productId + currentDate.toString(format);

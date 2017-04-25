@@ -240,7 +240,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     }
 
-    public void updateRevenueAndProfit(String productId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
+    public void updatePurchaseCostRevenueAndProfit(String productId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
         //this.addToPurchaseCostAccount(purchaseCostContribution);
         this.debitDeliveredItemsCostFromPurchaseAccount(productId,purchaseCostContribution);
         this.addToRevenueAccount(productId, revenueContribution);

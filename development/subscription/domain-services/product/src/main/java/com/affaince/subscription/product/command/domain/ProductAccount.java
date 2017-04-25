@@ -547,7 +547,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     //when the purchase price is changed --it should create new price bucket,by stalling all existing price buckets
     @EventSourcingHandler
     public void on(ProductStatusUpdatedEvent event) {
-        String productId = event.getProductId();
         PriceTaggedWithProduct latestTaggedPriceVersion = this.getLatestTaggedPriceVersion();
         latestTaggedPriceVersion.setTaggedEndDate(SysDate.now());
         this.addNewTaggedPriceVersion(event.getNewTaggedPrice());

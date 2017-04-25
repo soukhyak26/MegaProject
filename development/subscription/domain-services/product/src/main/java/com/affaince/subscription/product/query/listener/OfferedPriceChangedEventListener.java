@@ -34,7 +34,7 @@ public class OfferedPriceChangedEventListener {
     public void on(OfferedPriceChangedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
+        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()),event.getProductPricingCategory());
         newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
         newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
         newPriceBucket.setEntityStatus(event.getEntityStatus());

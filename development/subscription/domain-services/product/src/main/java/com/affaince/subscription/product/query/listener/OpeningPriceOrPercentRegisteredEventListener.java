@@ -58,7 +58,7 @@ public class OpeningPriceOrPercentRegisteredEventListener {
         if (ProductConfigurationValidator.getProductReadinessStatus(productActivationStatusView.getProductStatuses()).contains(
                 ProductReadinessStatus.PRICEASSIGNABLE
         )) {
-            PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
+            PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()),event.getProductPricingCategory());
             newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
             newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
             newPriceBucket.setEntityStatus(event.getEntityStatus());
@@ -66,7 +66,7 @@ public class OpeningPriceOrPercentRegisteredEventListener {
 
             priceBucketViewRepository.save(newPriceBucket);
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
-            //set next forecast date as current date + configured duration for repeating forecast
+            //set next forecast date as current date + configured duration for repeating forecast. SHOULD IT BE THAT LONG???
             productConfigurationView.setNextForecastDate(SysDate.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));
             productConfigurationViewRepository.save(productConfigurationView);
             productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_PRICE_ASSIGNED);

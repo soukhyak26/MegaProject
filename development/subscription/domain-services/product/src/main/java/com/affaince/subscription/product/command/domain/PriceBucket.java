@@ -25,6 +25,8 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     protected LocalDateTime fromDate;
     protected LocalDateTime toDate;
     protected EntityStatus entityStatus;
+    protected long numberOfNewSubscriptions;
+    protected long numberOfChurnedSubscriptions;
 
     protected long numberOfExistingSubscriptions;
     protected double offeredPriceOrPercentDiscountPerUnit;

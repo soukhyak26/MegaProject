@@ -19,8 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NoneCommittedPriceBucket extends PriceBucket {
     private static final Logger LOGGER = LoggerFactory.getLogger(NoneCommittedPriceBucket.class);
-    private long numberOfNewSubscriptions;
-    private long numberOfChurnedSubscriptions;
     protected PriceTaggedWithProduct taggedPriceVersion;
 
     //Since this constructor is already being invoked through an event sourcing handler,it need not emit any event of its own
