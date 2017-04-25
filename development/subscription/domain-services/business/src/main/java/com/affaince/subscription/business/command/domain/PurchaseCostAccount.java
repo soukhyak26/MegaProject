@@ -155,9 +155,9 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         }
     }
 
-    public void debitDeliveredItemsCostFromPurchaseAccount(Integer businessAccountId,String productId, String priceBucketId, double purchasePricePerUnit, double mrp, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount,long totalDeliveredSubscriptionCount) {
-        double revisedProvisionAmount = this.provisionAmount-(purchasePricePerUnit*deliveredSubscriptionCount);
-        apply(new CostOfDeliveredGoodsDebitedEvent(businessAccountId,productId,(purchasePricePerUnit*deliveredSubscriptionCount),revisedProvisionAmount,SysDate.now(),new LocalDate(YearMonth.now().getYear(),12,31)));
+    public void debitDeliveredItemsCostFromPurchaseAccount(Integer businessAccountId,String productId, double purchasePriceContribution) {
+        double revisedProvisionAmount = this.provisionAmount-purchasePriceContribution;
+        apply(new CostOfDeliveredGoodsDebitedEvent(businessAccountId,productId,purchasePriceContribution,revisedProvisionAmount,SysDate.now(),new LocalDate(YearMonth.now().getYear(),12,31)));
     }
 
     @EventSourcingHandler

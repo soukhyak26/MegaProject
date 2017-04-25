@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
  * Created by mandar on 29-01-2017.
  */
 @Component
-public class ProductContributionToRevenueAndProfitAddedEventListener {
+public class ProductContributionToPurchaseExpenseRevenueAndProfitAddedEventListener {
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public ProductContributionToRevenueAndProfitAddedEventListener(SubscriptionCommandGateway commandGateway) {
+    public ProductContributionToPurchaseExpenseRevenueAndProfitAddedEventListener(SubscriptionCommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }
 

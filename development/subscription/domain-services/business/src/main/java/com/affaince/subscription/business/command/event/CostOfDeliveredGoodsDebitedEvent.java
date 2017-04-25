@@ -14,7 +14,7 @@ public class CostOfDeliveredGoodsDebitedEvent {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public CostOfDeliveredGoodsDebitedEvent(Integer businessAccountId,String productId, double amountToBeDebited, double revisedProvisionAmount,LocalDate startDate,LocalDate endDate) {
+    public CostOfDeliveredGoodsDebitedEvent(Integer businessAccountId,String productId, double amountToBeDebited,double revisedProvisionAmount,LocalDate startDate,LocalDate endDate) {
         this.businessAccountId=businessAccountId;
         this.productId=productId;
         this.amountToBeDebited=amountToBeDebited;
@@ -31,12 +31,12 @@ public class CostOfDeliveredGoodsDebitedEvent {
         return productId;
     }
 
-    public double getAmountToBeDebited() {
-        return amountToBeDebited;
-    }
-
     public double getRevisedProvisionAmount() {
         return revisedProvisionAmount;
+    }
+
+    public double getAmountToBeDebited() {
+        return amountToBeDebited;
     }
 
     public LocalDate getStartDate() {

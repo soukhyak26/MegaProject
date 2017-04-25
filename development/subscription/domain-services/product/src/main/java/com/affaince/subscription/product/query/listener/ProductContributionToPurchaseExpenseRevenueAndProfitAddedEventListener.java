@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
  * Created by mandar on 29-01-2017.
  */
 @Component
-public class ProductContributionToPurchaseExpenseRevenueAndProfitAddedEventEventListener {
+public class ProductContributionToPurchaseExpenseRevenueAndProfitAddedEventListener {
     private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
 
     @Autowired
-    public ProductContributionToPurchaseExpenseRevenueAndProfitAddedEventEventListener(ProductActualMetricsViewRepository productActualMetricsViewRepository) {
+    public ProductContributionToPurchaseExpenseRevenueAndProfitAddedEventListener(ProductActualMetricsViewRepository productActualMetricsViewRepository) {
         this.productActualMetricsViewRepository = productActualMetricsViewRepository;
     }
 

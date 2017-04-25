@@ -172,8 +172,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
-    public void debitDeliveredItemsCostFromPurchaseAccount(String productId, String priceBucketId, double purchasePricePerUnit, double MRP, double offerPriceOrPercent, ProductPricingCategory productPricingCategory, long deliveredSubscriptionCount,long totalDeliveredSubscriptionCount){
-        this.getProvisionalPurchaseCostAccount().debitDeliveredItemsCostFromPurchaseAccount(this.id,productId, priceBucketId, purchasePricePerUnit, MRP, offerPriceOrPercent, productPricingCategory, deliveredSubscriptionCount,totalDeliveredSubscriptionCount);
+    public void debitDeliveredItemsCostFromPurchaseAccount(String productId, double purchaseCostContribution){
+        this.getProvisionalPurchaseCostAccount().debitDeliveredItemsCostFromPurchaseAccount(this.id,productId,purchaseCostContribution );
     }
     @EventSourcingHandler
     public void on(BusinessAccountCreatedEvent event) {
@@ -242,6 +242,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
 
     public void updateRevenueAndProfit(String productId, double purchaseCostContribution, double revenueContribution, double profitContribution) {
         //this.addToPurchaseCostAccount(purchaseCostContribution);
+        this.debitDeliveredItemsCostFromPurchaseAccount(productId,purchaseCostContribution);
         this.addToRevenueAccount(productId, revenueContribution);
         this.addToProfitAccount(productId, profitContribution);
     }
