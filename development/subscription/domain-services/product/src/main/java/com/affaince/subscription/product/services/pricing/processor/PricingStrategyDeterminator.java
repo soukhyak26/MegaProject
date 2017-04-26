@@ -3,7 +3,7 @@ package com.affaince.subscription.product.services.pricing.processor;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductView;
-import com.affaince.subscription.product.vo.PricingStrategyType;
+import com.affaince.subscription.common.type.PricingStrategyType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

@@ -49,7 +49,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         activePriceBuckets = new TreeMap<>();
         taggedPriceVersions = new TreeSet<>();
         fixedExpenseVersions = new TreeSet<>();
+        fixedExpenseVersions.add(new FixedExpensePerProduct(3.0, SysDate.now()));
         variableExpenseVersions = new TreeSet<>();
+        variableExpenseVersions.add(new VariableExpensePerProduct(3.0, SysDate.now()));
         this.productPricingCategory = productPricingCategory;
     }
 

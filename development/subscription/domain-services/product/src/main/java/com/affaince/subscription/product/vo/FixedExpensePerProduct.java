@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 public class FixedExpensePerProduct implements Comparable<FixedExpensePerProduct>{
     private double fixedOperatingExpPerUnit;
     private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate endDate = new LocalDate(9999, 12, 31);
 
     public FixedExpensePerProduct(double fixedOperatingExpPerUnit, LocalDate startDate) {
         this.fixedOperatingExpPerUnit = fixedOperatingExpPerUnit;

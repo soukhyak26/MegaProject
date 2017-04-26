@@ -53,8 +53,14 @@ public class Axon extends Default {
             public void configure() throws Exception {
                 from("{{subscription.metrics.timer.expression}}")
                         .routeId("MetricsCalculator")
+                        .to("direct: productRetriever");
+
+                from("direct: productRetriever")
                         .to("bean:productsRetriever")
                         .split(body())
+                        .to("{{subscription.product.metrics.poston}}")
+                        .to("direct:productConsumer");
+                from("direct:productConsumer")
                         .to("bean:productMetricsCalculator");
             }
         };

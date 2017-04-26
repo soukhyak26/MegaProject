@@ -12,6 +12,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Created by mandark on 28-01-2016.
  */
+/*
+@JsonSerialize(using= EntityStatusSerializer.class)
+@JsonDeserialize(using= EntityStatusDeserializer.class)
+*/
 public enum EntityStatus {
     CREATED(0),ACTIVE(1),EXPIRED(2), ;
     private final int statusCode;

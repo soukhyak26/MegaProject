@@ -7,7 +7,7 @@ import com.affaince.subscription.product.services.pricing.processor.function.Reg
 import com.affaince.subscription.product.vo.CoefficientsType;
 import com.affaince.subscription.product.vo.FunctionCoefficients;
 import com.affaince.subscription.product.vo.PriceDeterminationCriteria;
-import com.affaince.subscription.product.vo.PricingStrategyType;
+import com.affaince.subscription.common.type.PricingStrategyType;
 
 import java.util.ArrayList;
 import java.util.List;

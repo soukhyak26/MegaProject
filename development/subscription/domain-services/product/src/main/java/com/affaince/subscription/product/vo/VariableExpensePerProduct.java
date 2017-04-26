@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 public class VariableExpensePerProduct implements Comparable<VariableExpensePerProduct> {
     private double variableOperatingExpPerUnit;
     private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate endDate = new LocalDate(9999, 12, 31);
 
     public VariableExpensePerProduct(double variableOperatingExpPerUnit, LocalDate startDate) {
         this.variableOperatingExpPerUnit = variableOperatingExpPerUnit;

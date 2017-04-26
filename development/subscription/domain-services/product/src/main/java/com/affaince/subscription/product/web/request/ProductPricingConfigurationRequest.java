@@ -2,7 +2,7 @@ package com.affaince.subscription.product.web.request;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.product.vo.PricingOptions;
-import com.affaince.subscription.product.vo.PricingStrategyType;
+import com.affaince.subscription.common.type.PricingStrategyType;
 
 /**
  * Created by rbsavaliya on 15-01-2016.

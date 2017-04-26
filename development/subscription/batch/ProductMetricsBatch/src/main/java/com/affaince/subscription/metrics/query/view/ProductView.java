@@ -1,9 +1,9 @@
 package com.affaince.subscription.metrics.query.view;
 
+import com.affaince.subscription.common.type.PricingStrategyType;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.affaince.subscription.metrics.vo.PricingStrategyType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
