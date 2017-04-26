@@ -1,26 +1,30 @@
 package com.affaince.subscription.product.query.performance;
 
 import com.affaince.subscription.product.command.domain.PriceBucket;
-import com.affaince.subscription.product.query.exception.OutOfMonthAggregationException;
-import org.joda.time.LocalDateTime;
-import org.joda.time.YearMonth;
+import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
+import com.affaince.subscription.product.query.view.ProductActualsView;
+import org.joda.time.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by mandark on 02-01-2016.
  */
 public class AggregationPerformanceTracker {
-    private YearMonth monthOfYear;
+    private String productId;
+    private LocalDate executionDate;
+    private YearMonth earlierMonthOfYear;
     private double expectedMerchantProfitPercentage;
     private double grossMargin;
     private double percentageGrossMargin;
     private double totalOperationalExpenses;
     private double operatingProfit;
     private double percentageOperatingProfit;
-    private long netNewCustomers;
-    private long totalNumberOfChurnedCustomers;
-    private long totalNumberOfExistingCustomers;
+    private long netNewSusbcriptions;
+    private long totalNumberOfChurnedSubscriptions;
+    private long totalNumberOfExistingSubscriptions;
     private double percentageCustomerChurn;
     private double startingMRR;
     private Map<PriceBucket, Double> newMRRPerPriceBucket;
@@ -38,38 +42,63 @@ public class AggregationPerformanceTracker {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
+    @Autowired
+    ProductActualsViewRepository productActualsViewRepository;
 
-    public AggregationPerformanceTracker calculateMetrics(String productId, LocalDateTime aggregationStartDate, LocalDateTime aggrgationEndDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions) throws OutOfMonthAggregationException {
-        if (aggregationStartDate.monthOfYear() != aggrgationEndDate.monthOfYear()) {
-            throw OutOfMonthAggregationException.build(productId, aggregationStartDate, aggrgationEndDate);
-        }
-        this.monthOfYear = new YearMonth(aggregationStartDate);
-        //TODO:how to obtain latest breakeven price?
-        return null;
-
-    }
-    public long getNetNewCustomers() {
-        return netNewCustomers;
+    public AggregationPerformanceTracker(String productId,LocalDate executionDate){
+        this.executionDate=executionDate;
+        this.earlierMonthOfYear=new YearMonth(executionDate.getYear(),executionDate.getMonthOfYear()).minusMonths(1);
+        this.productId=productId;
     }
 
-    public void setNetNewCustomers(long netNewCustomers) {
-        this.netNewCustomers = netNewCustomers;
+    public void calculateMonthlyMetrics(){
+        LocalDate datetEarlierMonth = new LocalDate(earlierMonthOfYear.get(DateTimeFieldType.year()), earlierMonthOfYear.get(DateTimeFieldType.monthOfYear()),1);
+        LocalDate lastDayOfEarlierMonth=datetEarlierMonth.dayOfMonth().withMaximumValue();
+
+        List<ProductActualsView> monthlyRangeOfActualViews= productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(this.productId,lastDayOfEarlierMonth,this.executionDate);
+        //List<ProductActualsView> currentActualsViews= productActualsViewRepository.findByProductVersionId_ProductIdAndEndDate(this.productId,this.executionDate);
+        long lastMonthNewSubscriptions=0;
+        long lastMonthChurnedSubscriptions=0;
+        long lastMonthTotalSubscriptions=0;
+        long totalMonthlySubscriptions=0;
+        long totalNewSubscriptions=0;
+        long totalChurnedSubscriptions=0;
+            for(ProductActualsView dailyActualsView:monthlyRangeOfActualViews ){
+                    if(dailyActualsView.getEndDate().equals(lastDayOfEarlierMonth)){
+                        lastMonthTotalSubscriptions=dailyActualsView.getTotalNumberOfExistingSubscriptions();
+                    }else {
+                        if (dailyActualsView.getEndDate().equals(executionDate)) {
+                            long currentTotalSubscriptions = dailyActualsView.getTotalNumberOfExistingSubscriptions();
+                            totalMonthlySubscriptions = currentTotalSubscriptions - lastMonthTotalSubscriptions;
+                        }
+                        totalNewSubscriptions+=dailyActualsView.getNewSubscriptions();
+                        totalChurnedSubscriptions +=dailyActualsView.getChurnedSubscriptions();
+                    }
+
+            }
+    }
+    public long getNetNewSusbcriptions() {
+        return netNewSusbcriptions;
     }
 
-    public long getTotalNumberOfChurnedCustomers() {
-        return totalNumberOfChurnedCustomers;
+    public void setNetNewSusbcriptions(long netNewSusbcriptions) {
+        this.netNewSusbcriptions = netNewSusbcriptions;
     }
 
-    public void setTotalNumberOfChurnedCustomers(long totalNumberOfChurnedCustomers) {
-        this.totalNumberOfChurnedCustomers = totalNumberOfChurnedCustomers;
+    public long getTotalNumberOfChurnedSubscriptions() {
+        return totalNumberOfChurnedSubscriptions;
     }
 
-    public long getTotalNumberOfExistingCustomers() {
-        return totalNumberOfExistingCustomers;
+    public void setTotalNumberOfChurnedSubscriptions(long totalNumberOfChurnedSubscriptions) {
+        this.totalNumberOfChurnedSubscriptions = totalNumberOfChurnedSubscriptions;
     }
 
-    public void setTotalNumberOfExistingCustomers(long totalNumberOfExistingCustomers) {
-        this.totalNumberOfExistingCustomers = totalNumberOfExistingCustomers;
+    public long getTotalNumberOfExistingSubscriptions() {
+        return totalNumberOfExistingSubscriptions;
+    }
+
+    public void setTotalNumberOfExistingSubscriptions(long totalNumberOfExistingSubscriptions) {
+        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
     public double getPercentageCustomerChurn() {

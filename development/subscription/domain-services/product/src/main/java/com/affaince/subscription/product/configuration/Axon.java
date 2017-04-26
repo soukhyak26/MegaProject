@@ -6,10 +6,7 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
-import com.affaince.subscription.product.converters.ProductwisePriceBucketIdReaderConverter;
-import com.affaince.subscription.product.converters.ProductwisePricebucketIdWriterConverter;
-import com.affaince.subscription.product.converters.ProductwiseTaggedPriceVersionIdReaderConverter;
-import com.affaince.subscription.product.converters.ProductwiseTaggedPriceVersionIdWriterConverter;
+import com.affaince.subscription.product.converters.*;
 import com.affaince.subscription.product.factory.AggregatorFactory;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.services.forecast.*;
@@ -85,6 +82,11 @@ public class Axon extends Default {
         converters.add(new ProductwisePricebucketIdWriterConverter());
         converters.add(new ProductwiseTaggedPriceVersionIdReaderConverter());
         converters.add(new ProductwiseTaggedPriceVersionIdWriterConverter());
+        converters.add(new ProductwiseFixedExpenseIdReaderConverter());
+        converters.add(new ProductwiseFixedExpenseIdWriterConverter());
+        converters.add(new ProductwiseVariableExpenseIdReaderConverter());
+        converters.add(new ProductwiseVariableExpenseIdWriterConverter());
+
         return new CustomConversions(converters);
     }
     @Bean
