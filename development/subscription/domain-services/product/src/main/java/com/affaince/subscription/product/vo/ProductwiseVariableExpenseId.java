@@ -2,10 +2,12 @@ package com.affaince.subscription.product.vo;
 
 import org.joda.time.LocalDate;
 
+import java.io.Serializable;
+
 /**
  * Created by mandar on 4/26/2017.
  */
-public class ProductwiseVariableExpenseId {
+public class ProductwiseVariableExpenseId implements Serializable {
     private final String productId;
     private final LocalDate fromDate;
 
