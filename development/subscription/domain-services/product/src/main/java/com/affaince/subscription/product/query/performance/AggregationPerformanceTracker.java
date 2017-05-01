@@ -10,7 +10,6 @@ import com.affaince.subscription.product.query.view.FixedExpensePerProductView;
 import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.VariableExpensePerProductView;
-import org.apache.tomcat.jni.Local;
 import org.joda.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -71,6 +70,7 @@ public class AggregationPerformanceTracker {
         LocalDate lastDayOfEarlierMonth=datetEarlierMonth.dayOfMonth().withMaximumValue();
         LocalDate firstDayOfCurrentMonth=lastDayOfEarlierMonth.plusDays(1);
         List<ProductActualsView> monthlyRangeOfActualViews= productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(this.productId,lastDayOfEarlierMonth,this.executionDate);
+
         long lastMonthTotalSubscriptions=0;
         long totalMonthlySubscriptions=0;
 
@@ -99,6 +99,8 @@ public class AggregationPerformanceTracker {
             double totalMonthlyVariableExpense=calculateMonthlyVariableExpenses(productId,firstDayOfCurrentMonth,executionDate,monthlyRangeOfActualViews);
             productActualMetricsView.setFixedOperatingExpense(totalMonthlyFixedExpense);
             productActualMetricsView.setVariableOperatingExpense(totalMonthlyVariableExpense);
+            double percentageSubscriptionsChurn=calculatePercentageSubscriptionsChurn(productId,lastDayOfEarlierMonth,totalChurnedSubscriptionsInAMonth);
+            productActualMetricsView.setPercentageSubscriptionChurn(percentageSubscriptionsChurn);
 
     }
 
@@ -149,6 +151,18 @@ public class AggregationPerformanceTracker {
             }
         }
         return latestActualsView;
+    }
+
+    private double calculatePercentageSubscriptionsChurn(String productId,LocalDate lastDayOfEarlierMonth,long churnedSubscriptionsOfCurrentMonth){
+        LocalDate firstDayOfEarlierMonth=lastDayOfEarlierMonth.monthOfYear().withMinimumValue();
+        List<ProductActualMetricsView> earlierMonthActualMetrics=productActualMetricsViewRepository.findByProductVersionId(new ProductVersionId(productId,firstDayOfEarlierMonth));
+        double percentageSubscriptionsChurn=0;
+        if(null!= earlierMonthActualMetrics && earlierMonthActualMetrics.size()>0){
+            long totalSubscriptionsFromLastMonth=earlierMonthActualMetrics.get(0).getTotalNumberOfExistingSubscriptions();
+            percentageSubscriptionsChurn=-(churnedSubscriptionsOfCurrentMonth/totalSubscriptionsFromLastMonth);
+
+        }
+        return percentageSubscriptionsChurn;
     }
     public long getNetNewSusbcriptions() {
         return netNewSusbcriptions;

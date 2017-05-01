@@ -16,6 +16,6 @@ public interface ProductActualMetricsViewRepository extends CrudRepository<Produ
 
     List<ProductActualMetricsView> findByProductVersionId_ProductId(String productId, Sort sort);
 
-    List<ProductActualMetricsView> findByProductVersionId(ProductVersionId productVersionId, Sort sort);
+    List<ProductActualMetricsView> findByProductVersionId(ProductVersionId productVersionId);
 
 }

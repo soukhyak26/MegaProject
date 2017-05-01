@@ -28,7 +28,7 @@ public class ProductActualMetricsView {
     private long churnedSubscriptions;
     private long netNewSubscriptions;
     private long totalNumberOfExistingSubscriptions;
-    private double percentageCustomerChurn;
+    private double percentageSubscriptionChurn;
     private double startingMRR;
     private Map<PriceBucket, Double> newMRRPerPriceBucket;
     private Map<PriceBucket, Double> churnedMRRPerPriceBucket;
@@ -109,12 +109,12 @@ public class ProductActualMetricsView {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
-    public double getPercentageCustomerChurn() {
-        return percentageCustomerChurn;
+    public double getPercentageSubscriptionChurn() {
+        return percentageSubscriptionChurn;
     }
 
-    public void setPercentageCustomerChurn(double percentageCustomerChurn) {
-        this.percentageCustomerChurn = percentageCustomerChurn;
+    public void setPercentageSubscriptionChurn(double percentageSubscriptionChurn) {
+        this.percentageSubscriptionChurn = percentageSubscriptionChurn;
     }
 
     public double getStartingMRR() {
