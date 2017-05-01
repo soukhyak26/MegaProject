@@ -1,11 +1,20 @@
 package com.affaince.subscription.product.query.performance;
 
+import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.domain.PriceBucket;
+import com.affaince.subscription.product.query.repository.FixedExpensePerProductViewRepository;
+import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
+import com.affaince.subscription.product.query.repository.VariableExpensePerProductViewRepository;
+import com.affaince.subscription.product.query.view.FixedExpensePerProductView;
+import com.affaince.subscription.product.query.view.ProductActualMetricsView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.query.view.VariableExpensePerProductView;
+import org.apache.tomcat.jni.Local;
 import org.joda.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +52,13 @@ public class AggregationPerformanceTracker {
     private double salesAndMarketingExpenses;
 
     @Autowired
-    ProductActualsViewRepository productActualsViewRepository;
+    private ProductActualsViewRepository productActualsViewRepository;
+    @Autowired
+    private FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository;
+    @Autowired
+    private VariableExpensePerProductViewRepository variableExpensePerProductViewRepository;
+    @Autowired
+    private ProductActualMetricsViewRepository productActualMetricsViewRepository;
 
     public AggregationPerformanceTracker(String productId,LocalDate executionDate){
         this.executionDate=executionDate;
@@ -54,15 +69,13 @@ public class AggregationPerformanceTracker {
     public void calculateMonthlyMetrics(){
         LocalDate datetEarlierMonth = new LocalDate(earlierMonthOfYear.get(DateTimeFieldType.year()), earlierMonthOfYear.get(DateTimeFieldType.monthOfYear()),1);
         LocalDate lastDayOfEarlierMonth=datetEarlierMonth.dayOfMonth().withMaximumValue();
-
+        LocalDate firstDayOfCurrentMonth=lastDayOfEarlierMonth.plusDays(1);
         List<ProductActualsView> monthlyRangeOfActualViews= productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(this.productId,lastDayOfEarlierMonth,this.executionDate);
-        //List<ProductActualsView> currentActualsViews= productActualsViewRepository.findByProductVersionId_ProductIdAndEndDate(this.productId,this.executionDate);
-        long lastMonthNewSubscriptions=0;
-        long lastMonthChurnedSubscriptions=0;
         long lastMonthTotalSubscriptions=0;
         long totalMonthlySubscriptions=0;
-        long totalNewSubscriptions=0;
-        long totalChurnedSubscriptions=0;
+
+        long totalNewSubscriptionsInAMonth=0;
+        long totalChurnedSubscriptionsInAMonth=0;
             for(ProductActualsView dailyActualsView:monthlyRangeOfActualViews ){
                     if(dailyActualsView.getEndDate().equals(lastDayOfEarlierMonth)){
                         lastMonthTotalSubscriptions=dailyActualsView.getTotalNumberOfExistingSubscriptions();
@@ -71,11 +84,71 @@ public class AggregationPerformanceTracker {
                             long currentTotalSubscriptions = dailyActualsView.getTotalNumberOfExistingSubscriptions();
                             totalMonthlySubscriptions = currentTotalSubscriptions - lastMonthTotalSubscriptions;
                         }
-                        totalNewSubscriptions+=dailyActualsView.getNewSubscriptions();
-                        totalChurnedSubscriptions +=dailyActualsView.getChurnedSubscriptions();
+                        totalNewSubscriptionsInAMonth+=dailyActualsView.getNewSubscriptions();
+                        totalChurnedSubscriptionsInAMonth +=dailyActualsView.getChurnedSubscriptions();
                     }
-
             }
+
+            long netNewSubscriptions=totalNewSubscriptionsInAMonth - totalChurnedSubscriptionsInAMonth;
+            ProductActualMetricsView productActualMetricsView = new ProductActualMetricsView(new ProductVersionId(productId,firstDayOfCurrentMonth),executionDate);
+            productActualMetricsView.setNewSubscriptions(totalNewSubscriptionsInAMonth);
+            productActualMetricsView.setChurnedSubscriptions(totalChurnedSubscriptionsInAMonth);
+            productActualMetricsView.setTotalNumberOfExistingSubscriptions(totalMonthlySubscriptions);
+            productActualMetricsView.setNetNewSubscriptions(netNewSubscriptions);
+            double totalMonthlyFixedExpense=calculateTotalMonthlyFixedExpenses(productId,firstDayOfCurrentMonth,executionDate,monthlyRangeOfActualViews);
+            double totalMonthlyVariableExpense=calculateMonthlyVariableExpenses(productId,firstDayOfCurrentMonth,executionDate,monthlyRangeOfActualViews);
+            productActualMetricsView.setFixedOperatingExpense(totalMonthlyFixedExpense);
+            productActualMetricsView.setVariableOperatingExpense(totalMonthlyVariableExpense);
+
+    }
+
+    private double calculateTotalMonthlyFixedExpenses(String productId,LocalDate firstDayOfMonth,LocalDate executionDate,List<ProductActualsView> monthlyRangeOfActualViews){
+        //total fixed expenses
+        List<FixedExpensePerProductView> fixedExpensePerProductVersions= fixedExpensePerProductViewRepository.findByProductwiseFixedExpenseId_ProductIdAndProductwiseFixedExpenseId_FromDateBetween(productId,firstDayOfMonth,executionDate);
+        double totalMonthlyFixedExpenses=0;
+        for(FixedExpensePerProductView fixedExpenseVersion:fixedExpensePerProductVersions ){
+            LocalDate endDateOffixedExpense=fixedExpenseVersion.getEndDate();
+            List<ProductActualsView> productActualsViewSubset=findMonthlyActualsViewsInDatesBetween(monthlyRangeOfActualViews,firstDayOfMonth,endDateOffixedExpense);
+            ProductActualsView latestActualsView=findLatestProductActualsView(productActualsViewSubset);
+            totalMonthlyFixedExpenses +=latestActualsView.getTotalNumberOfExistingSubscriptions()*fixedExpenseVersion.getFixedExpensePerProductPerUnit();
+        }
+        return totalMonthlyFixedExpenses;
+    }
+
+    private double calculateMonthlyVariableExpenses(String productId,LocalDate firstDayOfMonth,LocalDate executionDate,List<ProductActualsView> monthlyRangeOfActualViews){
+        //total variable expense
+        List<VariableExpensePerProductView> variableExpensePerProductVersions = variableExpensePerProductViewRepository.findByProductwiseVariableExpenseId_ProductIdAndProductwiseVariableExpenseId_FromDateBetween(productId,firstDayOfMonth,executionDate);
+        double totalMonthlyVariableExpenses=0;
+        for(VariableExpensePerProductView variableExpenseVersion :variableExpensePerProductVersions ){
+            LocalDate endDateOfVariableExpense=variableExpenseVersion.getEndDate();
+            List<ProductActualsView> productActualsViewSubset=findMonthlyActualsViewsInDatesBetween(monthlyRangeOfActualViews,firstDayOfMonth,endDateOfVariableExpense);
+            ProductActualsView latestActualsView=findLatestProductActualsView(productActualsViewSubset);
+            totalMonthlyVariableExpenses +=latestActualsView.getTotalNumberOfExistingSubscriptions()*variableExpenseVersion.getVariableExpensePerProductPerUnit();
+        }
+        return totalMonthlyVariableExpenses;
+
+    }
+
+    private List<ProductActualsView> findMonthlyActualsViewsInDatesBetween(List<ProductActualsView> monthlyActualsViews, LocalDate startDate, LocalDate endDate ){
+            List<ProductActualsView> monthlyActualsViewInDateRange = new ArrayList<>(30);
+            for(ProductActualsView productActualsView:monthlyActualsViews){
+                LocalDate fromDate= productActualsView.getProductVersionId().getFromDate();
+                LocalDate toDate= productActualsView.getEndDate();
+                if((fromDate.isEqual(startDate)||fromDate.isAfter(startDate)) &&(toDate.isBefore(endDate)|| toDate.isEqual(endDate)) ){
+                    monthlyActualsViewInDateRange.add(productActualsView);
+                }
+            }
+            return monthlyActualsViewInDateRange;
+    }
+
+    private ProductActualsView findLatestProductActualsView(List<ProductActualsView> productActualsViews){
+        ProductActualsView latestActualsView=productActualsViews.get(0);
+        for(ProductActualsView actualsView:productActualsViews){
+            if(actualsView.getEndDate().isAfter(latestActualsView.getEndDate())){
+                latestActualsView=actualsView;
+            }
+        }
+        return latestActualsView;
     }
     public long getNetNewSusbcriptions() {
         return netNewSusbcriptions;

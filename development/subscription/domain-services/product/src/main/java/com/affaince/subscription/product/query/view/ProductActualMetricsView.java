@@ -3,7 +3,7 @@ package com.affaince.subscription.product.query.view;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,12 +20,13 @@ import java.util.TreeSet;
 public class ProductActualMetricsView {
     @Id
     private final ProductVersionId productVersionId;
-    private LocalDateTime endDate;
+    private LocalDate endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private double fixedOperatingExpense;
     private double variableOperatingExpense;
     private long newSubscriptions;
     private long churnedSubscriptions;
+    private long netNewSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private double percentageCustomerChurn;
     private double startingMRR;
@@ -51,7 +52,7 @@ public class ProductActualMetricsView {
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
 
-    public ProductActualMetricsView(ProductVersionId productVersionId, LocalDateTime endDate) {
+    public ProductActualMetricsView(ProductVersionId productVersionId, LocalDate endDate) {
         this.productVersionId= productVersionId;
         this.endDate=endDate;
         taggedPriceVersions= new TreeSet<>();
@@ -288,11 +289,11 @@ public class ProductActualMetricsView {
         return productVersionId;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -302,6 +303,14 @@ public class ProductActualMetricsView {
 
     public void setPurchaseCost(double purchaseCost) {
         this.purchaseCost = purchaseCost;
+    }
+
+    public long getNetNewSubscriptions() {
+        return netNewSubscriptions;
+    }
+
+    public void setNetNewSubscriptions(long netNewSubscriptions) {
+        this.netNewSubscriptions = netNewSubscriptions;
     }
 
     public PriceTaggedWithProduct getLatestTaggedPriceVersion(){
