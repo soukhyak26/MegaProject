@@ -86,6 +86,8 @@ public class Axon extends Default {
         converters.add(new ProductwiseFixedExpenseIdWriterConverter());
         converters.add(new ProductwiseVariableExpenseIdReaderConverter());
         converters.add(new ProductwiseVariableExpenseIdWriterConverter());
+        converters.add(new PriceBucketTransactionIdReaderConverter());
+        converters.add(new PriceBucketTransactionIdWriterConverter());
 
         return new CustomConversions(converters);
     }
