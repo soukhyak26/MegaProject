@@ -80,14 +80,14 @@ public class NoneCommittedPriceBucket extends PriceBucket {
         this.numberOfNewSubscriptions=event.getNewSubscriptionCount();
         this.numberOfExistingSubscriptions= event.getTotalSubscriptionCount();
     }
-    public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
+    public void deductSubscriptionFromPriceBucket(int subscriptionCount,LocalDate subscriptionChangeDate) {
         long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions + subscriptionCount;
         long revisedTotalSubscriptionCount = this.numberOfExistingSubscriptions - subscriptionCount;
         if (revisedTotalSubscriptionCount == 0) {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount));
+        apply(new SubscriptionDeductedFromNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,subscriptionChangeDate));
     }
 
     public void on(SubscriptionDeductedFromNoneCommittedPriceBucketEvent event ){

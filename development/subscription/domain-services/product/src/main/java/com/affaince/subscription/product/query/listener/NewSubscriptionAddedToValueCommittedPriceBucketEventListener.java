@@ -4,10 +4,13 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToValueCommittedPriceBucketEvent;
+import com.affaince.subscription.product.query.repository.PriceBucketTransactionViewRepository;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
+import com.affaince.subscription.product.query.view.PriceBucketTransactionView;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
+import com.affaince.subscription.product.vo.PriceBucketTransactionId;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
@@ -23,12 +26,14 @@ import java.util.List;
 public class NewSubscriptionAddedToValueCommittedPriceBucketEventListener {
     private final ProductActualsViewRepository productActualsViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
+    private final PriceBucketTransactionViewRepository priceBucketTransactionViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public NewSubscriptionAddedToValueCommittedPriceBucketEventListener(ProductActualsViewRepository productActualsViewRepository, PriceBucketViewRepository priceBucketViewRepository, SubscriptionCommandGateway commandGateway) {
+    public NewSubscriptionAddedToValueCommittedPriceBucketEventListener(ProductActualsViewRepository productActualsViewRepository, PriceBucketViewRepository priceBucketViewRepository,PriceBucketTransactionViewRepository priceBucketTransactionViewRepository,SubscriptionCommandGateway commandGateway) {
         this.productActualsViewRepository = productActualsViewRepository;
         this.priceBucketViewRepository = priceBucketViewRepository;
+        this.priceBucketTransactionViewRepository=priceBucketTransactionViewRepository;
         this.commandGateway = commandGateway;
     }
 
@@ -68,6 +73,14 @@ public class NewSubscriptionAddedToValueCommittedPriceBucketEventListener {
         priceBucketView.setNumberOfNewSubscriptionsAssociatedWithAPrice(revisedNewSubscriptionCountOfPriceBucket);
         priceBucketView.setNumberOfExistingSubscriptionsAssociatedWithAPrice(revisedTotalSubscriptionCountOfPriceBucket);
         priceBucketViewRepository.save(priceBucketView);
+
+        PriceBucketTransactionView priceBucketTransactionView = priceBucketTransactionViewRepository.findOne(new PriceBucketTransactionId(event.getProductId(),event.getPriceBucketId(),event.getSubscriptionChangedDate()));
+        if(null == priceBucketTransactionView){
+            priceBucketTransactionView = new PriceBucketTransactionView(new PriceBucketTransactionId(event.getProductId(),event.getPriceBucketId(),event.getSubscriptionChangedDate()));
+        }
+        priceBucketTransactionView.addToNewSubscriptions(event.getAddedSubscriptionCount());
+        priceBucketTransactionViewRepository.save(priceBucketTransactionView);
+
 /*
         try {
             CalculateExpectedProfitPerPriceBucketCommand command = new CalculateExpectedProfitPerPriceBucketCommand(event.getProductId(), event.getPriceBucketId());

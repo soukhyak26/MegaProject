@@ -403,7 +403,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             if (subscriptionCount > 0) {
                 activePriceBucket.addSubscriptionToPriceBucket(subscriptionCount, command.getSubscriptionChangedDate());
             } else {
-                activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount));
+                activePriceBucket.deductSubscriptionFromPriceBucket(Math.abs(subscriptionCount),command.getSubscriptionChangedDate());
             }
         });
     }

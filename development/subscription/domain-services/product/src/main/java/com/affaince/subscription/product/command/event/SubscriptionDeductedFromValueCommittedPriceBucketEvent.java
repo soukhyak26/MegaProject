@@ -1,5 +1,7 @@
 package com.affaince.subscription.product.command.event;
 
+import org.joda.time.LocalDate;
+
 /**
  * Created by mandar on 31-12-2016.
  */
@@ -9,13 +11,15 @@ public class SubscriptionDeductedFromValueCommittedPriceBucketEvent {
     private final long deductedSubscriptionCount;
     private final long revisedChurnedSubscriptionCount;
     private final long revisedTotalSubscriptionCount;
+    private final LocalDate subscriptionChangedDate;
 
-    public SubscriptionDeductedFromValueCommittedPriceBucketEvent(String productId, String priceBucketId, long deductedSubscriptionCount, long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount) {
+    public SubscriptionDeductedFromValueCommittedPriceBucketEvent(String productId, String priceBucketId, long deductedSubscriptionCount, long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount,LocalDate subscriptionChangedDate) {
         this.productId=productId;
         this.priceBucketId=priceBucketId;
         this.deductedSubscriptionCount=deductedSubscriptionCount;
         this.revisedChurnedSubscriptionCount=revisedChurnedSubscriptionCount;
         this.revisedTotalSubscriptionCount=revisedTotalSubscriptionCount;
+        this.subscriptionChangedDate=subscriptionChangedDate;
     }
 
     public String getProductId() {
@@ -36,5 +40,9 @@ public class SubscriptionDeductedFromValueCommittedPriceBucketEvent {
 
     public long getDeductedSubscriptionCount() {
         return deductedSubscriptionCount;
+    }
+
+    public LocalDate getSubscriptionChangedDate() {
+        return subscriptionChangedDate;
     }
 }

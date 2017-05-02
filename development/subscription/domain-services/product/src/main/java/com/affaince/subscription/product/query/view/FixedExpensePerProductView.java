@@ -2,10 +2,12 @@ package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.product.vo.ProductwiseFixedExpenseId;
 import org.joda.time.LocalDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by mandar on 4/26/2017.
  */
+@Document(collection = "FixedExpensePerProductView")
 public class FixedExpensePerProductView {
     private final ProductwiseFixedExpenseId productwiseFixedExpenseId;
     private final double fixedExpensePerProductPerUnit;

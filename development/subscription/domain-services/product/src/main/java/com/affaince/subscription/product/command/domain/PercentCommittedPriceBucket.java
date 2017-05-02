@@ -84,14 +84,14 @@ public class PercentCommittedPriceBucket extends PriceBucket {
     }
 
     //confusing in case of percent discount commitment???
-    public void deductSubscriptionFromPriceBucket(int subscriptionCount) {
+    public void deductSubscriptionFromPriceBucket(int subscriptionCount,LocalDate subscriptionChangeDate) {
         long revisedChurnedSubscriptionCount = this.numberOfChurnedSubscriptions + subscriptionCount;
         long revisedTotalSubscriptionCount = this.numberOfExistingSubscriptions - subscriptionCount;
         if (revisedTotalSubscriptionCount == 0) {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount));
+        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,subscriptionChangeDate));
     }
 
     @EventSourcingHandler
