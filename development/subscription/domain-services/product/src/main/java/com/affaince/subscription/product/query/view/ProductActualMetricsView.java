@@ -30,13 +30,12 @@ public class ProductActualMetricsView {
     private long totalNumberOfExistingSubscriptions;
     private double percentageSubscriptionChurn;
     private double startingMRR;
-    private Map<PriceBucket, Double> newMRRPerPriceBucket;
-    private Map<PriceBucket, Double> churnedMRRPerPriceBucket;
     private double grossMargin;
     private double percentageGrossMargin;
     private double totalOperationalExpenses;
     private double operatingProfit;
     private double percentageOperatingProfit;
+    private double totalNewMRR;
     private double totalChurnedMRR;
     private double percentageMRRChurn;
     private double endingMRR;
@@ -56,8 +55,6 @@ public class ProductActualMetricsView {
         this.productVersionId= productVersionId;
         this.endDate=endDate;
         taggedPriceVersions= new TreeSet<>();
-        newMRRPerPriceBucket= new TreeMap<>();
-        churnedMRRPerPriceBucket= new TreeMap<>();
     }
 
 
@@ -125,20 +122,12 @@ public class ProductActualMetricsView {
         this.startingMRR = startingMRR;
     }
 
-    public Map<PriceBucket, Double> getNewMRRPerPriceBucket() {
-        return newMRRPerPriceBucket;
+    public double getTotalNewMRR() {
+        return totalNewMRR;
     }
 
-    public void setNewMRRPerPriceBucket(Map<PriceBucket, Double> newMRRPerPriceBucket) {
-        this.newMRRPerPriceBucket = newMRRPerPriceBucket;
-    }
-
-    public Map<PriceBucket, Double> getChurnedMRRPerPriceBucket() {
-        return churnedMRRPerPriceBucket;
-    }
-
-    public void setChurnedMRRPerPriceBucket(Map<PriceBucket, Double> churnedMRRPerPriceBucket) {
-        this.churnedMRRPerPriceBucket = churnedMRRPerPriceBucket;
+    public void setTotalNewMRR(double totalNewMRR) {
+        this.totalNewMRR = totalNewMRR;
     }
 
     public double getGrossMargin() {

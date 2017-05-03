@@ -4,6 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import org.joda.time.LocalDate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -29,6 +30,7 @@ public interface PriceBucketViewRepository extends PagingAndSortingRepository<Pr
 
     List<PriceBucketView> findByProductwisePriceBucketId_ProductIdAndEntityStatus(String productId,EntityStatus entityStatus);
 
+    List<PriceBucketView> findByProductwisePriceBucketId_ProductIdAndToDateGreaterThan(String productId,LocalDate firstDayOfMonth);
     @Query("{ entityStatus:'ACTIVE' }")
     List<PriceBucketView> findByProductwisePriceBucketId_ProductId(String productId, Sort sort);
 
