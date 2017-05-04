@@ -62,6 +62,8 @@ public class SubscriptionDeductedFromValueCommittedPriceBucketEventListener {
         }
         priceBucketTransactionView.addToChurnedSubscriptions(event.getDeductedSubscriptionCount());
         priceBucketTransactionView.setOfferedPrice(event.getOfferedPrice());
+        priceBucketTransactionView.setPurchasePrice(event.getPurchasePrice());
+        priceBucketTransactionView.setMRP(event.getMRP());
         priceBucketTransactionViewRepository.save(priceBucketTransactionView);
 
         productActualsViewForToday.addToChurnedSubscriptionCount(Math.abs(deductedSubscriptionCount));

@@ -72,8 +72,12 @@ public class ValueCommittedPriceBucket extends PriceBucket {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;
         long revisedTotalSubscriptionCount = this.getNumberOfExistingSubscriptions() + subscriptionCount;
         double offeredPrice=this.getOfferedPriceOrPercentDiscountPerUnit();
+        PriceTaggedWithProduct latestTaggedPriceVersion=this.getLatestTaggedPriceVersion();
+        double purchasePrice=latestTaggedPriceVersion.getPurchasePricePerUnit();
+        double MRP=latestTaggedPriceVersion.getMRP();
+
         apply(new NewSubscriptionAddedToValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount,
-                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,subscriptionChangedDate));
+                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,purchasePrice,MRP,subscriptionChangedDate));
     }
 
     @EventSourcingHandler
@@ -91,8 +95,12 @@ public class ValueCommittedPriceBucket extends PriceBucket {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
         double offeredPrice=this.getOfferedPriceOrPercentDiscountPerUnit();
+        PriceTaggedWithProduct latestTaggedPriceVersion=this.getLatestTaggedPriceVersion();
+        double purchasePrice=latestTaggedPriceVersion.getPurchasePricePerUnit();
+        double MRP=latestTaggedPriceVersion.getMRP();
+
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,subscriptionChangeDate));
+        apply(new SubscriptionDeductedFromValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,purchasePrice,MRP,subscriptionChangeDate));
     }
 
     @EventSourcingHandler

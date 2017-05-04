@@ -99,6 +99,9 @@ public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
         }
         priceBucketTransactionView.addToNewSubscriptions(event.getAddedSubscriptionCount());
         priceBucketTransactionView.setOfferedPrice(event.getOfferedPrice());
+        priceBucketTransactionView.setPurchasePrice(event.getPurchasePrice());
+        priceBucketTransactionView.setMRP(event.getMRP());
+
         priceBucketTransactionViewRepository.save(priceBucketTransactionView);
 
 /*

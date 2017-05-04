@@ -13,6 +13,8 @@ public class PriceBucketTransactionView {
     private long numberOfChurnedSubscriptions;
     private long numberOfExistingSubscriptions;
     private double offeredPrice;
+    private double purchasePrice;
+    private double MRP;
 
     public PriceBucketTransactionView(PriceBucketTransactionId priceBucketTransactionId) {
         this.priceBucketTransactionId = priceBucketTransactionId;
@@ -50,5 +52,21 @@ public class PriceBucketTransactionView {
 
     public void setOfferedPrice(double offeredPrice) {
         this.offeredPrice = offeredPrice;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getMRP() {
+        return MRP;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
     }
 }

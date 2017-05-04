@@ -93,8 +93,12 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         double percentDiscount=this.getOfferedPriceOrPercentDiscountPerUnit();
         double latestMRP=this.getLatestTaggedPriceVersion().getMRP();
         double offeredPrice= latestMRP*(1-percentDiscount);
+        PriceTaggedWithProduct latestTaggedPriceVersion=this.getLatestTaggedPriceVersion();
+        double purchasePrice=latestTaggedPriceVersion.getPurchasePricePerUnit();
+        double MRP=latestTaggedPriceVersion.getMRP();
+
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,subscriptionChangeDate));
+        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,purchasePrice,MRP,subscriptionChangeDate));
     }
 
     @EventSourcingHandler
@@ -108,9 +112,12 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         double percentDiscount=this.getOfferedPriceOrPercentDiscountPerUnit();
         double latestMRP=this.getLatestTaggedPriceVersion().getMRP();
         double offeredPrice= latestMRP*(1-percentDiscount);
+        PriceTaggedWithProduct latestTaggedPriceVersion=this.getLatestTaggedPriceVersion();
+        double purchasePrice=latestTaggedPriceVersion.getPurchasePricePerUnit();
+        double MRP=latestTaggedPriceVersion.getMRP();
 
         apply(new NewSubscriptionAddedToPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount,
-                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,subscriptionChangedDate));
+                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,purchasePrice,MRP,subscriptionChangedDate));
     }
 
     @EventSourcingHandler
