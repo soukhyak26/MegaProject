@@ -12,6 +12,7 @@ public class PriceBucketTransactionView {
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     private long numberOfExistingSubscriptions;
+    private double offeredPrice;
 
     public PriceBucketTransactionView(PriceBucketTransactionId priceBucketTransactionId) {
         this.priceBucketTransactionId = priceBucketTransactionId;
@@ -41,5 +42,13 @@ public class PriceBucketTransactionView {
     public void addToChurnedSubscriptions(long subscriptionCount){
         this.numberOfChurnedSubscriptions += subscriptionCount;
         this.numberOfExistingSubscriptions -=subscriptionCount;
+    }
+
+    public double getOfferedPrice() {
+        return offeredPrice;
+    }
+
+    public void setOfferedPrice(double offeredPrice) {
+        this.offeredPrice = offeredPrice;
     }
 }

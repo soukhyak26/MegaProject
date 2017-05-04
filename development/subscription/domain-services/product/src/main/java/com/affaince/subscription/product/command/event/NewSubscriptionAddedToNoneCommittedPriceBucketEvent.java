@@ -11,14 +11,16 @@ public class NewSubscriptionAddedToNoneCommittedPriceBucketEvent {
     private long addedSubscriptionCount;
     private long newSubscriptionCount;
     private long totalSubscriptionCount;
+    private double offeredPrice;
     private LocalDate subscriptionChangedDate;
 
-    public NewSubscriptionAddedToNoneCommittedPriceBucketEvent(String productId, String priceBucketId, long addedSubscriptionCount, long newSubscriptionCount, long totalSubscriptionCount, LocalDate subscriptionChangedDate) {
+    public NewSubscriptionAddedToNoneCommittedPriceBucketEvent(String productId, String priceBucketId, long addedSubscriptionCount, long newSubscriptionCount, long totalSubscriptionCount, double offeredPrice,LocalDate subscriptionChangedDate) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.addedSubscriptionCount = addedSubscriptionCount;
         this.newSubscriptionCount = newSubscriptionCount;
         this.totalSubscriptionCount = totalSubscriptionCount;
+        this.offeredPrice=offeredPrice;
         this.subscriptionChangedDate = subscriptionChangedDate;
     }
 
@@ -47,5 +49,9 @@ public class NewSubscriptionAddedToNoneCommittedPriceBucketEvent {
 
     public LocalDate getSubscriptionChangedDate() {
         return subscriptionChangedDate;
+    }
+
+    public double getOfferedPrice() {
+        return offeredPrice;
     }
 }

@@ -11,14 +11,16 @@ public class SubscriptionDeductedFromPercentCommittedPriceBucketEvent {
     private final long deductedSubscriptionCount;
     private final long revisedChurnedSubscriptionCount;
     private final long revisedTotalSubscriptionCount;
+    private final double offeredPrice;
     private final LocalDate subscriptionChangeDate;
 
-    public SubscriptionDeductedFromPercentCommittedPriceBucketEvent(String productId, String priceBucketId, long deductedSubscriptionCount, long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount,LocalDate subscriptionChangeDate) {
+    public SubscriptionDeductedFromPercentCommittedPriceBucketEvent(String productId, String priceBucketId, long deductedSubscriptionCount, long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount,double offeredPrice,LocalDate subscriptionChangeDate) {
         this.productId=productId;
         this.priceBucketId=priceBucketId;
         this.deductedSubscriptionCount=deductedSubscriptionCount;
         this.revisedChurnedSubscriptionCount=revisedChurnedSubscriptionCount;
         this.revisedTotalSubscriptionCount=revisedTotalSubscriptionCount;
+        this.offeredPrice=offeredPrice;
         this.subscriptionChangeDate=subscriptionChangeDate;
     }
 
@@ -44,5 +46,9 @@ public class SubscriptionDeductedFromPercentCommittedPriceBucketEvent {
 
     public LocalDate getSubscriptionChangeDate() {
         return subscriptionChangeDate;
+    }
+
+    public double getOfferedPrice() {
+        return offeredPrice;
     }
 }

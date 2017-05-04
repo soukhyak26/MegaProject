@@ -79,6 +79,7 @@ public class NewSubscriptionAddedToValueCommittedPriceBucketEventListener {
             priceBucketTransactionView = new PriceBucketTransactionView(new PriceBucketTransactionId(event.getProductId(),event.getPriceBucketId(),event.getSubscriptionChangedDate()));
         }
         priceBucketTransactionView.addToNewSubscriptions(event.getAddedSubscriptionCount());
+        priceBucketTransactionView.setOfferedPrice(event.getOfferedPrice());
         priceBucketTransactionViewRepository.save(priceBucketTransactionView);
 
 /*

@@ -90,8 +90,11 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         if (revisedTotalSubscriptionCount == 0) {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
+        double percentDiscount=this.getOfferedPriceOrPercentDiscountPerUnit();
+        double latestMRP=this.getLatestTaggedPriceVersion().getMRP();
+        double offeredPrice= latestMRP*(1-percentDiscount);
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,subscriptionChangeDate));
+        apply(new SubscriptionDeductedFromPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,subscriptionChangeDate));
     }
 
     @EventSourcingHandler
@@ -102,8 +105,12 @@ public class PercentCommittedPriceBucket extends PriceBucket {
     public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;
         long revisedTotalSubscriptionCount = this.getNumberOfExistingSubscriptions() + subscriptionCount;
+        double percentDiscount=this.getOfferedPriceOrPercentDiscountPerUnit();
+        double latestMRP=this.getLatestTaggedPriceVersion().getMRP();
+        double offeredPrice= latestMRP*(1-percentDiscount);
+
         apply(new NewSubscriptionAddedToPercentCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount,
-                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, subscriptionChangedDate));
+                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,subscriptionChangedDate));
     }
 
     @EventSourcingHandler

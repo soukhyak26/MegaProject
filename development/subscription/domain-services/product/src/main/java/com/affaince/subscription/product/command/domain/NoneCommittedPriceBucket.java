@@ -71,8 +71,9 @@ public class NoneCommittedPriceBucket extends PriceBucket {
     public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;
         long revisedTotalSubscriptionCount = this.getNumberOfExistingSubscriptions() + subscriptionCount;
+        double offeredPrice= this.getOfferedPriceOrPercentDiscountPerUnit();
         apply(new NewSubscriptionAddedToNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount,
-                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, subscriptionChangedDate));
+                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,subscriptionChangedDate));
     }
 
     @EventSourcingHandler
@@ -86,8 +87,9 @@ public class NoneCommittedPriceBucket extends PriceBucket {
         if (revisedTotalSubscriptionCount == 0) {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
+        double offeredPrice= this.getOfferedPriceOrPercentDiscountPerUnit();
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,subscriptionChangeDate));
+        apply(new SubscriptionDeductedFromNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,subscriptionChangeDate));
     }
 
     public void on(SubscriptionDeductedFromNoneCommittedPriceBucketEvent event ){

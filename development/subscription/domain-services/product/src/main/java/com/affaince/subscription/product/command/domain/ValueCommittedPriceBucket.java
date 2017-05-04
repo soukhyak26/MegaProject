@@ -71,8 +71,9 @@ public class ValueCommittedPriceBucket extends PriceBucket {
     public void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate) {
         long revisedNewSubscriptionCount = this.getNumberOfNewSubscriptions() + subscriptionCount;
         long revisedTotalSubscriptionCount = this.getNumberOfExistingSubscriptions() + subscriptionCount;
+        double offeredPrice=this.getOfferedPriceOrPercentDiscountPerUnit();
         apply(new NewSubscriptionAddedToValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount,
-                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, subscriptionChangedDate));
+                revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,subscriptionChangedDate));
     }
 
     @EventSourcingHandler
@@ -89,8 +90,9 @@ public class ValueCommittedPriceBucket extends PriceBucket {
         if (revisedTotalSubscriptionCount == 0) {
             apply(new PriceBucketExpiredEvent(productId, priceBucketId, SysDateTime.now()));
         }
+        double offeredPrice=this.getOfferedPriceOrPercentDiscountPerUnit();
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
-        apply(new SubscriptionDeductedFromValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,subscriptionChangeDate));
+        apply(new SubscriptionDeductedFromValueCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,subscriptionChangeDate));
     }
 
     @EventSourcingHandler
