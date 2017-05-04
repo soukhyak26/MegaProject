@@ -1,15 +1,12 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Map;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -40,11 +37,12 @@ public class ProductActualMetricsView {
     private double percentageMRRChurn;
     private double endingMRR;
     private double netNewMRR;
+    private double arr;
     private double purchaseCost;
     private double revenue;
     private double averageRevenuePerNewSubscriber;
     private double averageRevenuePerSubscriber;
-    private double subscriberLIfetimeValue;
+    private double subscriberLifetimeValue;
     private double subscriberLifetimePeriod;
     private double costOfAcquiringASubscriber;
     private double SLVToCASRatio;
@@ -218,12 +216,12 @@ public class ProductActualMetricsView {
         this.averageRevenuePerSubscriber = averageRevenuePerSubscriber;
     }
 
-    public double getSubscriberLIfetimeValue() {
-        return subscriberLIfetimeValue;
+    public double getSubscriberLifetimeValue() {
+        return subscriberLifetimeValue;
     }
 
-    public void setSubscriberLIfetimeValue(double subscriberLIfetimeValue) {
-        this.subscriberLIfetimeValue = subscriberLIfetimeValue;
+    public void setSubscriberLifetimeValue(double subscriberLifetimeValue) {
+        this.subscriberLifetimeValue = subscriberLifetimeValue;
     }
 
     public double getSubscriberLifetimePeriod() {
@@ -300,6 +298,15 @@ public class ProductActualMetricsView {
 
     public void setNetNewSubscriptions(long netNewSubscriptions) {
         this.netNewSubscriptions = netNewSubscriptions;
+    }
+
+
+    public double getArr() {
+        return arr;
+    }
+
+    public void setArr(double arr) {
+        this.arr = arr;
     }
 
     public PriceTaggedWithProduct getLatestTaggedPriceVersion(){

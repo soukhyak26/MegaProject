@@ -32,20 +32,18 @@ public class AggregationPerformanceTracker {
     @Autowired
     PriceBucketTransactionViewRepository priceBucketTransactionViewRepository;
 
-    public AggregationPerformanceTracker() {
-    }
-
     public void calculateMonthlyMetrics(String productId, LocalDate executionDate) {
         YearMonth earlierMonthOfYear = new YearMonth(executionDate.getYear(), executionDate.getMonthOfYear()).minusMonths(1);
         LocalDate datetEarlierMonth = new LocalDate(earlierMonthOfYear.get(DateTimeFieldType.year()), earlierMonthOfYear.get(DateTimeFieldType.monthOfYear()), 1);
+        LocalDate firstDayOfEarlierMonth = datetEarlierMonth.dayOfMonth().withMinimumValue();
         LocalDate lastDayOfEarlierMonth = datetEarlierMonth.dayOfMonth().withMaximumValue();
         LocalDate firstDayOfCurrentMonth = lastDayOfEarlierMonth.plusDays(1);
         List<ProductActualsView> monthlyRangeOfActualViews = productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, lastDayOfEarlierMonth, executionDate);
 
-        long[] subscriptionCounts=calculateMonthlySubscriptionCounts(monthlyRangeOfActualViews,lastDayOfEarlierMonth,executionDate);
-        long totalNewSubscriptionsInAMonth =subscriptionCounts[0];
-        long totalChurnedSubscriptionsInAMonth=subscriptionCounts[1];
-        long totalMonthlySubscriptions=subscriptionCounts[2];
+        long[] subscriptionCounts = calculateMonthlySubscriptionCounts(monthlyRangeOfActualViews, lastDayOfEarlierMonth, executionDate);
+        long totalNewSubscriptionsInAMonth = subscriptionCounts[0];
+        long totalChurnedSubscriptionsInAMonth = subscriptionCounts[1];
+        long totalMonthlySubscriptions = subscriptionCounts[2];
         long netNewSubscriptions = totalNewSubscriptionsInAMonth - totalChurnedSubscriptionsInAMonth;
         ProductActualMetricsView productActualMetricsView = new ProductActualMetricsView(new ProductVersionId(productId, firstDayOfCurrentMonth), executionDate);
         productActualMetricsView.setNewSubscriptions(totalNewSubscriptionsInAMonth);
@@ -62,6 +60,33 @@ public class AggregationPerformanceTracker {
         double[] newAndChunredMRR = calculateNewAndChunredMRR(productId, firstDayOfCurrentMonth, executionDate);
         productActualMetricsView.setTotalNewMRR(newAndChunredMRR[0]);
         productActualMetricsView.setTotalChurnedMRR(newAndChunredMRR[1]);
+        double netNewMRR = newAndChunredMRR[0] - newAndChunredMRR[1];
+        productActualMetricsView.setNetNewMRR(netNewMRR);
+
+        List<ProductActualMetricsView> earlierMonthProductActualMtericsViews = productActualMetricsViewRepository.findByProductVersionId(new ProductVersionId(productId, firstDayOfEarlierMonth));
+        ProductActualMetricsView earlierMonthProductActualMetricsView = null;
+        double lastMonthEndingMRR = 0;
+        if (null != earlierMonthProductActualMtericsViews && earlierMonthProductActualMtericsViews.size() > 0) {
+            earlierMonthProductActualMetricsView = earlierMonthProductActualMtericsViews.get(0);
+            lastMonthEndingMRR = earlierMonthProductActualMetricsView.getEndingMRR();
+        }
+        productActualMetricsView.setStartingMRR(lastMonthEndingMRR);
+        double currentMonthEndingMRR = earlierMonthProductActualMetricsView.getEndingMRR() + netNewMRR;
+        productActualMetricsView.setEndingMRR(currentMonthEndingMRR);
+        productActualMetricsView.setArr(currentMonthEndingMRR * 12);
+        if (lastMonthEndingMRR != 0) {
+            productActualMetricsView.setPercentageMRRChurn(newAndChunredMRR[1] / lastMonthEndingMRR);
+        } else {
+            productActualMetricsView.setPercentageMRRChurn(0);
+        }
+        double arpsNew = (newAndChunredMRR[0] / totalNewSubscriptionsInAMonth) * 1000;
+        double arps = (currentMonthEndingMRR / totalMonthlySubscriptions) * 1000;
+        productActualMetricsView.setAverageRevenuePerNewSubscriber(arpsNew);
+        productActualMetricsView.setAverageRevenuePerSubscriber(arps);
+        productActualMetricsView.setRevenue(currentMonthEndingMRR);
+
+
+        productActualMetricsViewRepository.save(productActualMetricsView);
 
     }
 
@@ -83,7 +108,7 @@ public class AggregationPerformanceTracker {
                 totalChurnedSubscriptionsInAMonth += dailyActualsView.getChurnedSubscriptions();
             }
         }
-        return new long[]{totalNewSubscriptionsInAMonth,totalChurnedSubscriptionsInAMonth,totalMonthlySubscriptions};
+        return new long[]{totalNewSubscriptionsInAMonth, totalChurnedSubscriptionsInAMonth, totalMonthlySubscriptions};
     }
 
     private double calculateTotalMonthlyFixedExpenses(String productId, LocalDate firstDayOfMonth, LocalDate executionDate, List<ProductActualsView> monthlyRangeOfActualViews) {
@@ -155,25 +180,15 @@ public class AggregationPerformanceTracker {
         for (PriceBucketView activePriceBucket : priceBucketsActiveInCurrentMonth) {
             String priceBucketId = activePriceBucket.getProductwisePriceBucketId().getPriceBucketId();
             ProductPricingCategory productPricingCategory = activePriceBucket.getProductPricingCategory();
-            double offeredPriceOrPercentDiscount = activePriceBucket.getOfferedPriceOrPercentDiscountPerUnit();
             List<PriceBucketTransactionView> priceBucketTransactionViews = priceBucketTransactionViewRepository.findByPriceBucketTransactionId_ProductIdAndPriceBucketTransactionId_PriceBucketIdAndPriceBucketTransactionId_TransactionDateBetween(productId, priceBucketId, firstDayOfCurrentMonth, executionDate);
-            long newSubscriptionsPerPriceBucket = 0;
-            long churnedSubscriptionsPerPriceBucket = 0;
             for (PriceBucketTransactionView singleTransactionView : priceBucketTransactionViews) {
-                newSubscriptionsPerPriceBucket += singleTransactionView.getNumberOfNewSubscriptions();
-                churnedSubscriptionsPerPriceBucket += singleTransactionView.getNumberOfChurnedSubscriptions();
+                newMRR += singleTransactionView.getOfferedPrice() * singleTransactionView.getNumberOfNewSubscriptions();
+                churnedMRR += singleTransactionView.getOfferedPrice() * singleTransactionView.getNumberOfChurnedSubscriptions();
             }
-            double offeredPrice = 0;
-            if (productPricingCategory == ProductPricingCategory.DISCOUNT_COMMITMENT) {
-                offeredPrice = activePriceBucket.getTaggedPriceVersion().getMRP() * (1 - offeredPriceOrPercentDiscount);
-            } else {
-                offeredPrice = offeredPriceOrPercentDiscount;
-            }
-            newMRR += offeredPrice * newSubscriptionsPerPriceBucket;
-            churnedMRR += offeredPrice * churnedSubscriptionsPerPriceBucket;
         }
         return new double[]{newMRR, churnedMRR};
     }
+
 
 
 }
