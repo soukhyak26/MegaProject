@@ -99,7 +99,7 @@ public class NewSubscriptionAddedToNoneCommittedPriceBucketEventListener {
         priceBucketTransactionView.addToNewSubscriptions(event.getAddedSubscriptionCount());
         priceBucketTransactionView.setOfferedPrice(event.getOfferedPrice());
         priceBucketTransactionView.setPurchasePrice(event.getPurchasePrice());
-        priceBucketTransactionView.setMRP(event.getMRP());
+        priceBucketTransactionView.setMRP(event.getMrp());
         priceBucketTransactionViewRepository.save(priceBucketTransactionView);
 
 /*

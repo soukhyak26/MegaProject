@@ -166,7 +166,7 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         double totalVariableExpense = 0;
         double profit = 0;
 
-        double offeredPrice = (this.getLatestTaggedPriceVersion().getMRP() - (this.getLatestTaggedPriceVersion().getMRP() * this.getFixedOfferedPriceOrPercentDiscountPerUnit()));
+        double offeredPrice = (this.getLatestTaggedPriceVersion().getMrp() - (this.getLatestTaggedPriceVersion().getMrp() * this.getFixedOfferedPriceOrPercentDiscountPerUnit()));
         revenue = this.getNumberOfExistingSubscriptions() * offeredPrice;
         purchaseCost = this.getNumberOfExistingSubscriptions() * this.getLatestTaggedPriceVersion().getPurchasePricePerUnit();
         totalFixedExpense = this.getNumberOfExistingSubscriptions() * fixedExpensePeUnit;
@@ -186,7 +186,7 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         double totalVariableExpense = 0;
         double profit = 0;
         long totalDeliveredSubscriptions = this.getTotalDeliveredSubscriptions() + deliveredSubscriptionCount;
-        double offeredPrice = (this.getLatestTaggedPriceVersion().getMRP() - (this.getLatestTaggedPriceVersion().getMRP() * this.getFixedOfferedPriceOrPercentDiscountPerUnit()));
+        double offeredPrice = (this.getLatestTaggedPriceVersion().getMrp() - (this.getLatestTaggedPriceVersion().getMrp() * this.getFixedOfferedPriceOrPercentDiscountPerUnit()));
         revenue = totalDeliveredSubscriptions * offeredPrice;
         //need to change the following as total delivered subscriptions may be associated with different tagged price versions in different types of price buckets
         //purchaseCost = totalDeliveredSubscriptions * (this.getTaggedPriceVersion().getPurchasePricePerUnit());

@@ -93,7 +93,7 @@ public class ForecastController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        AddSingularManualForecastCommand command = new AddSingularManualForecastCommand(productId, request.getFromDate(),request.getEndDate(),request.getPurchasePricePerUnit(),request.getMRP(),request.getNumberOfNewSubscriptions(),request.getNumberOfChurnedSubscriptions(),request.getProductForecastStatus());
+        AddSingularManualForecastCommand command = new AddSingularManualForecastCommand(productId, request.getFromDate(),request.getEndDate(),request.getPurchasePricePerUnit(),request.getMrp(),request.getNumberOfNewSubscriptions(),request.getNumberOfChurnedSubscriptions(),request.getProductForecastStatus());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }

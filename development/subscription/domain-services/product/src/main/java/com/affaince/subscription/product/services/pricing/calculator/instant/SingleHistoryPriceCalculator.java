@@ -56,7 +56,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toString(format);
 
-            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMRP(), currentDate);
+            PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMrp(), currentDate);
 */
             LocalDateTime currentDate = SysDateTime.now();
             PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);

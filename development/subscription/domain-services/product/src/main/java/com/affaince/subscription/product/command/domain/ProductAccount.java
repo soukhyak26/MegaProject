@@ -320,7 +320,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         // apply( new DeliveredSubscriptionCountAddedToPriceBucketEvent(productId,
         //                                                        priceBucketId,
         //                                                        priceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(),
-        //                                                        priceBucket.getTaggedPriceVersion().getMRP(),
+        //                                                        priceBucket.getTaggedPriceVersion().getMrp(),
         //                                                        priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(),
         //                                                        this.getProductPricingCategory(),
         //                                                        deliveredSubscriptionCount,

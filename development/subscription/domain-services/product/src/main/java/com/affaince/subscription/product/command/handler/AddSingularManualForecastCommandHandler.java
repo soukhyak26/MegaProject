@@ -24,6 +24,6 @@ public class AddSingularManualForecastCommandHandler {
     @CommandHandler
     public void handle(AddSingularManualForecastCommand command){
         Product product = repository.load(command.getProductId());
-       // product.registerSingularManualForecast(command.getFromDate(),command.getEndDate(),command.getPurchasePricePerUnit(),command.getMRP(),command.getNumberOfNewSubscriptions(),command.getNumberOfChurnedSubscriptions(),command.getProductForecastStatus());
+       // product.registerSingularManualForecast(command.getFromDate(),command.getEndDate(),command.getPurchasePricePerUnit(),command.getMrp(),command.getNumberOfNewSubscriptions(),command.getNumberOfChurnedSubscriptions(),command.getProductForecastStatus());
     }
 }

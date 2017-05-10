@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.product.vo.PriceBucketTransactionId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection="PriceBucketTransactionView")
 public class PriceBucketTransactionView {
+    @Id
     private final PriceBucketTransactionId priceBucketTransactionId;
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
