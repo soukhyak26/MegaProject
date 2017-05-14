@@ -6,11 +6,14 @@ import com.affaince.subscription.product.query.repository.PriceBucketViewReposit
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import com.affaince.subscription.product.vo.SubscriptionChangeType;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 3/25/2017.
  */
+@Component
 public class PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEventListener {
     private final PriceBucketViewRepository priceBucketViewRepository;
 
@@ -19,6 +22,7 @@ public class PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEventL
         this.priceBucketViewRepository = priceBucketViewRepository;
     }
 
+    @EventHandler
     public void on(PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent event){
         PriceBucketView priceBucketView=priceBucketViewRepository.findOne(new ProductwisePriceBucketId(event.getProductId(),event.getPriceBucketId()));
         if( event.getSubscriptionChangeType()== SubscriptionChangeType.GAIN) {
