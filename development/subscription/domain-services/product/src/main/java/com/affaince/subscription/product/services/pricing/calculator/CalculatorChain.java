@@ -1,8 +1,10 @@
 package com.affaince.subscription.product.services.pricing.calculator;
 
+import com.affaince.subscription.common.type.PricingStrategyType;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.configuration.CalculatorConfiguration;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
 import com.affaince.subscription.product.services.pricing.calculator.instant.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +12,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mandark on 27-03-2016.
  */
 @Component
 public class CalculatorChain {
+
     @Autowired
-    private RegressionBasedPriceCalculator regressionBasedPriceCalculator;
-    private AbstractPriceCalculator initialCalculator;
-    @Value("${pricing.calculator.chain.list}")
-    private String pricingCalculatorChainElements;
+    private CalculatorConfiguration calculatorConfiguration;
+    private List<AbstractPriceCalculator> initialCalculatorsForDifferentStrategies;
+/*
     @Autowired
     private OpeningPriceCalculator openingPriceCalculator;
     @Autowired
@@ -36,37 +37,65 @@ public class CalculatorChain {
     @Autowired
     private ProfitReductionDueToDemandPriceCalculator profitReductionDueToDemandPriceCalculator;
 
-    @PostConstruct
-    public void init() {
-        List<String> calculatorPrefixes = Arrays.asList(pricingCalculatorChainElements.split(","));
-        for (String prefix : calculatorPrefixes) {
-            if (prefix.equals("Opening")) {
-                this.addCalculator(openingPriceCalculator);
-            } else if (prefix.equals("SingleHistory")) {
-                this.addCalculator(singleHistoryPriceCalculator);
-            } else if (prefix.equals("ProfitGrowthBasedOnDemandGrowth")) {
-                this.addCalculator(profitGrowthBasedOnDemandGrowthPriceCalculator);
-            } else if (prefix.equals("ProfitGrowthDueToPriceGrowth")) {
-                this.addCalculator(profitGrowthDueToPriceGrowthBasedPriceCalculator);
-            } else if (prefix.equals("ProfitReductionAfterDemandGrowth")) {
-                this.addCalculator(profitReductionAfterDemandGrowthPriceCalculator);
-            } else if (prefix.equals("ProfitReductionDueToDemand")) {
-                this.addCalculator(profitReductionDueToDemandPriceCalculator);
-            } else if (prefix.equals("RegressionBased")) {
-                this.addCalculator(regressionBasedPriceCalculator);
+    @Autowired
+    private RegressionBasedPriceCalculator regressionBasedPriceCalculator;
+*/
+
+    //@PostConstruct
+    public void CalculatorChain() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+        List<CalculatorConfiguration.CalculatorChainConfig> calculatorChainConfigs = calculatorConfiguration.getCalculatorchain();
+        Map<String, AbstractPriceCalculator> calculatorsMapAgainstNextCalculatorName = new HashMap<>();
+        Map<String, AbstractPriceCalculator> initialCalculatorsMap = new HashMap<>();
+        for (int i = 0; i < calculatorChainConfigs.size(); i++) {
+            CalculatorConfiguration.CalculatorChainConfig config = calculatorChainConfigs.get(i);
+            String name = config.getName();
+            AbstractPriceCalculator calculator = (AbstractPriceCalculator) Class.forName(config.getCls()).newInstance();
+            String next = config.getNext();
+            calculatorsMapAgainstNextCalculatorName.put(next, calculator);
+            if (next.equals("NULL")) {
+                calculator.setNextCalculator(null);
+            } else {
+                AbstractPriceCalculator earlierCalculator = calculatorsMapAgainstNextCalculatorName.get(name);
+                if (null != earlierCalculator) {
+                    earlierCalculator.setNextCalculator(calculator);
+                    calculatorsMapAgainstNextCalculatorName.remove(name);
+                    initialCalculatorsMap.remove(name);
+                } else {
+                    initialCalculatorsMap.put(name, calculator);
+                }
             }
         }
+        this.initialCalculatorsForDifferentStrategies=new ArrayList<>();
+        this.initialCalculatorsForDifferentStrategies.addAll(initialCalculatorsMap.values());
     }
 
+/*
     public void addCalculator(AbstractPriceCalculator calculator) {
-        if (initialCalculator != null) {
-            initialCalculator.setNextCalculator(calculator);
-        }else {
+        if (initialCalculator == null) {
             initialCalculator = calculator;
+        }else {
+            initialCalculator.setNextCalculator(calculator);
+
         }
     }
+*/
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
-        return initialCalculator.calculatePrice(product, productDemandTrend);
+        PriceBucket priceBucket=null;
+        for (AbstractPriceCalculator calculator : this.initialCalculatorsForDifferentStrategies) {
+            if (product.getProductConfiguration().getPricingStrategyType() == PricingStrategyType.DEFAULT_PRICING_STRATEGY) {
+                if (calculator instanceof OpeningPriceCalculator) {
+                    priceBucket= calculator.calculatePrice(product, productDemandTrend);
+                    break;
+                }
+            } else if (product.getProductConfiguration().getPricingStrategyType() == PricingStrategyType.DEMAND_BASED_PRICING_STRATEGY) {
+                if (calculator instanceof RegressionBasedPriceCalculator) {
+                    priceBucket= calculator.calculatePrice(product, productDemandTrend);
+                    break;
+                }
+            }
+        }
+        return priceBucket;
     }
 }

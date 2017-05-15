@@ -26,14 +26,17 @@ public abstract class AbstractPriceCalculator {
     }
 
     public void setNextCalculator(AbstractPriceCalculator nextCalculator) {
-        this.nextCalculator = nextCalculator;
+        if (null == this.nextCalculator) {
+            this.nextCalculator = nextCalculator;
+        } else {
+            this.nextCalculator.setNextCalculator(nextCalculator);
+        }
     }
 
 
     protected double calculateSlopeOfDemandCurve(double latestDemand, double demandAssociatedWithEarlierPrice, double latestPrice, double earlierPrice) {
         return ((latestPrice - earlierPrice) / (latestDemand - demandAssociatedWithEarlierPrice));
     }
-
 
 
     protected List<Double> extrapolateDemand(List<Double> totalQuantitySubscribedWithSamePurchasePrice, int periodPerYear) {

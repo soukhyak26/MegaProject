@@ -6,7 +6,7 @@ import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.CalculatorChain;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Component;
 
 public class DefaultPriceDeterminator implements PriceDeterminator {
     @Autowired

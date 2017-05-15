@@ -53,8 +53,14 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
             newPriceBucket.setSlope(functionCoefficients.getSlope());
             return newPriceBucket;
+        }else{
+            if(null != getNextCalculator()) {
+                return getNextCalculator().calculatePrice(product, productDemandTrend);
+            }else{
+                throw new PricingEligibilityViolationException();
+            }
         }
-        throw new PricingEligibilityViolationException();
+
 
     }
 }
