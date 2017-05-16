@@ -11,10 +11,12 @@ import com.affaince.subscription.business.vo.TransactionReasonCode;
 import com.affaince.subscription.business.vo.TransactionType;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 03-02-2017.
  */
+@Component
 public class ExcessProfitAddedToNodalAccountEventListener {
     private NodalAccountViewRepository nodalAccountViewRepository;
     private NodalAccountTransactionsViewRepository nodalAccountTransactionsViewRepository;

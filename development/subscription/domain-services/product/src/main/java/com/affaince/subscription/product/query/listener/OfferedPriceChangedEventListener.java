@@ -38,6 +38,7 @@ public class OfferedPriceChangedEventListener {
         newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
         newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
         newPriceBucket.setEntityStatus(event.getEntityStatus());
+        newPriceBucket.setFromDate(event.getFromDate());
         newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
         latestPriceBucket.setToDate(event.getToDate().minusMillis(1));
         priceBucketViewRepository.save(latestPriceBucket);
