@@ -51,6 +51,7 @@ public class ProductTestDataGenerator {
                 maxProfit().
                 minPercentageIncreaseInForecast().
                 maxPercentageIncreaseInForecast().
+
                 actualsAggregationPeriodForTargetForecast().build();
         generateProductDetailsCsvFile();
         generatePriceDetails();
@@ -76,11 +77,14 @@ public class ProductTestDataGenerator {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
                 try {
+                    double purchasePrice = new Random().doubles(product.getMinPrice(), product.getMaxPrice()).findAny().getAsDouble();
+                    double mrp = purchasePrice*(1+product.getMaxProfitMargin()/100);
                     ProductDetails productDetails = new ProductDetails(
                             product.getProductId(), product.getProductName(), product.getCategoryId(),
                             product.getSubCategoryId(), product.getQuantity(), product.getQuantityUnit(),
-                            product.getSubstitute(), product.getComplements()
+                            product.getSubstitute(), product.getComplements(), purchasePrice, mrp
                     );
+                    product.setProductDetails (productDetails);
                     ObjectMapper objectMapper = new ObjectMapper();
                     fileOutputStream.write(objectMapper.writeValueAsBytes(productDetails));
                     if (Integer.parseInt(product.getProductId()) + 1 != products.size()) {
@@ -100,14 +104,11 @@ public class ProductTestDataGenerator {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
-                int purchasePrice = new Random().nextInt(product.getMaxPrice() - product.getMinPrice()) +
-                        product.getMinPrice();
-                int profitMargin = new Random().nextInt(product.getMaxProfitMargin() - product.getMinProfitMargin()) +
-                        product.getMinProfitMargin();
-                int MRP = purchasePrice + (purchasePrice * profitMargin) / 100;
-                int openingPrice = new Random().nextInt(MRP - purchasePrice) + purchasePrice;
+                double openingPrice = new Random().doubles(product.getProductDetails().getPurchasePrice(), product.getProductDetails().getMRP())
+                        .findAny().getAsDouble();
+
                 try {
-                    PriceDetails priceDetails = new PriceDetails(openingPrice, purchasePrice, MRP);
+                    PriceDetails priceDetails = new PriceDetails(openingPrice);
                     ObjectMapper objectMapper = new ObjectMapper();
                     fileOutputStream.write(objectMapper.writeValueAsBytes(priceDetails));
                     if (Integer.parseInt(product.getProductId()) + 1 != products.size()) {

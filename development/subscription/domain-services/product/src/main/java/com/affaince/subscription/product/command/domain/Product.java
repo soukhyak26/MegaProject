@@ -297,10 +297,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void calculatePrice(String productId,LocalDateTime fromDate,DefaultPriceDeterminator defaultPriceDeterminator, PricingOptions pricingOptions,ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
-        PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
+        //PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
         double newOfferedPriceOrPercent = priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
         //Change price ONLY if difference between latest price and new price is more than 0.5 money
-        if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - newOfferedPriceOrPercent) > 0.5) {
+       // if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - newOfferedPriceOrPercent) > 0.5) {
 
             //PriceBucket newPriceBucket = createNewPriceBucket(productId, priceBucket.getLatestTaggedPriceVersion(), newOfferedPriceOrPercent, priceBucket.getEntityStatus(), priceBucket.getFromDate(),priceBucketFactory);
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
@@ -315,7 +315,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 //this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
                 apply(new OfferedPriceRecommendedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(), priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(), priceBucket.getEntityStatus(), priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), productDemandTrend));
             }
-        }
+        //}
     }
     public void acceptRecommendedPrice() {
         PriceBucket newPriceBucket=this.getLatestRecommendedPriceBucket();

@@ -122,6 +122,10 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         this.expectedProfit = expectedProfit;
     }
 
+    public void setOfferedPriceOrPercentDiscountPerUnit(double offeredPriceOrPercentDiscountPerUnit) {
+        this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
+    }
+
     public double getFixedOfferedPriceOrPercentDiscountPerUnit() {
         return offeredPriceOrPercentDiscountPerUnit;
     }

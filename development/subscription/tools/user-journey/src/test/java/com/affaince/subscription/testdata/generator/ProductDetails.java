@@ -15,8 +15,10 @@ public class ProductDetails {
     private String quantityUnit;
     private List<String> substitute = new ArrayList<>();
     private List<String> complements =  new ArrayList<>();
+    private double purchasePrice;
+    private double MRP;
 
-    public ProductDetails(String productId, String productName, String categoryId, String subCategoryId, int quantity, String quantityUnit, List<String> substitute, List<String> complements) {
+    public ProductDetails(String productId, String productName, String categoryId, String subCategoryId, int quantity, String quantityUnit, List<String> substitute, List<String> complements, double purchasePrice, double MRP) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -25,6 +27,8 @@ public class ProductDetails {
         this.quantityUnit = quantityUnit;
         this.substitute = substitute;
         this.complements = complements;
+        this.purchasePrice = purchasePrice;
+        this.MRP = MRP;
     }
 
     public String getProductId() {
@@ -89,5 +93,21 @@ public class ProductDetails {
 
     public void setComplements(List<String> complements) {
         this.complements = complements;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getMRP() {
+        return MRP;
+    }
+
+    public void setMRP(double MRP) {
+        this.MRP = MRP;
     }
 }

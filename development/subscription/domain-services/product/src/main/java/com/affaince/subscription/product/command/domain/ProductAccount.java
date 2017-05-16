@@ -111,7 +111,9 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && findLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
             //assumption is that for non commitment a single price bucket will exist in map.
             if (null != this.activePriceBuckets && this.activePriceBuckets.size() > 0) {
-                return this.activePriceBuckets.entrySet().iterator().next().getValue();
+                PriceBucket onlyPriceBucket= this.activePriceBuckets.entrySet().iterator().next().getValue();
+                onlyPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(offeredPriceOrPercent);
+                return onlyPriceBucket;
             } else {
                 return PriceBucketFactory.createPriceBucket(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
             }

@@ -59,7 +59,9 @@ object RegisterProduct {
               |    "quantityUnit":"${quantityUnit}",
               |    "substitutes":${substitute},
               |    "complements":${complements},
-              |    "productPricingCategory":0
+              |    "productPricingCategory":0,
+              |    "purchasePrice":"${purchasePrice}",
+              |    "MRP":"${mrp}"
               |}
             """.stripMargin
           )
@@ -94,7 +96,7 @@ object AddConfigurationParameters {
             |    "isAdvertisingExpensesConsidered":"false",
             |    "actualsAggregationPeriodForTargetForecast":30,
             |    "pricingOptions":1,
-            |    "pricingStrategyType":1
+            |    "pricingStrategyType":0
             |}
           """.stripMargin
         )
@@ -113,9 +115,7 @@ object RegisterOpeningPrice {
         StringBody(
           """
             |{
-            |    "openingPrice":${openingPrice},
-            |    "purchasePrice":${purchasePrice},
-            |    "MRP":${mrp}
+            |    "openingPrice":${openingPrice}
             |}
           """.stripMargin
         )
