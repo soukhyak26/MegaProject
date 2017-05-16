@@ -16,7 +16,7 @@ public class OpeningPriceCalculator extends AbstractPriceCalculator {
         //if price is entered by merchant but there is no subscription yet as the product is not active yet...
         if (product.getActivePriceBuckets().size() == 1 && product.getActivePriceBuckets().values().iterator().next().getNumberOfExistingSubscriptions() == 0
                 && product.getActivePriceBuckets().values().iterator().next().getEntityStatus() == EntityStatus.CREATED) {
-            PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
+            PriceBucket latestPriceBucket = product.findLatestActivePriceBucket();
             latestPriceBucket.setEntityStatus(EntityStatus.ACTIVE);
             return latestPriceBucket;
         } else {

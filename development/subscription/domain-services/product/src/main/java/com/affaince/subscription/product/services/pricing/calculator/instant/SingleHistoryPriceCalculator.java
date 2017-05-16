@@ -20,13 +20,13 @@ import java.util.List;
 public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
-        final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
+        final PriceBucket latestPriceBucket = product.findLatestActivePriceBucket();
         final PriceTaggedWithProduct latestTaggedPriceVersion= product.getLatestTaggedPriceVersion();
         final String productId = product.getProductId();
         final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
 
-        final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
+        final PriceBucket minusOnePriceBucket = product.findLatestActivePriceBucket();
         final PriceBucket minusTwoPriceBucket = product.findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
         if (pricingStrategyType != PricingStrategyType.DEFAULT_PRICING_STRATEGY && bucketsWithSamePurchasePrice.size() > maxHistoryCountforDefaultPricing) {
             return getNextCalculator().calculatePrice(product, productDemandTrend);

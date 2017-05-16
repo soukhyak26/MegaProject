@@ -6,12 +6,12 @@ import com.affaince.subscription.product.vo.SubscriptionChangeType;
  * Created by mandar on 3/25/2017.
  */
 public class PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent {
-    private final String productId;
-    private final String priceBucketId;
-    private final double purchaseCostOfDeliveredUnits;
-    private final double revenue;
-    private final double profitAmountPerPriceBucket;
-    private final SubscriptionChangeType subscriptionChangeType;
+    private String productId;
+    private String priceBucketId;
+    private double purchaseCostOfDeliveredUnits;
+    private double revenue;
+    private double profitAmountPerPriceBucket;
+    private SubscriptionChangeType subscriptionChangeType;
 
     public PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent(String productId, String priceBucketId, double purchaseCostOfDeliveredUnits, double revenue, double profitAmountPerPriceBucket,SubscriptionChangeType subscriptionChangeType) {
         this.productId = productId;
@@ -20,6 +20,9 @@ public class PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent 
         this.revenue=revenue;
         this.profitAmountPerPriceBucket = profitAmountPerPriceBucket;
         this.subscriptionChangeType = subscriptionChangeType;
+    }
+
+    public PriceBucketWiseExpectedPurchaseCostRevenueAndProfitCalculatedEvent() {
     }
 
     public String getProductId() {

@@ -20,7 +20,7 @@ import java.util.List;
 public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
-        final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
+        final PriceBucket latestPriceBucket = product.findLatestActivePriceBucket();
         final String productId = product.getProductId();
         final PriceTaggedWithProduct latestTaggedPriceVersion= product.getLatestTaggedPriceVersion();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);

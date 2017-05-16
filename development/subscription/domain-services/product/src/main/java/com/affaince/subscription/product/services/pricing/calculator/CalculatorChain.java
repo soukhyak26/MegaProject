@@ -41,8 +41,8 @@ public class CalculatorChain {
     private RegressionBasedPriceCalculator regressionBasedPriceCalculator;
 */
 
-    //@PostConstruct
-    public void CalculatorChain() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    @PostConstruct
+    public void init() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         List<CalculatorConfiguration.CalculatorChainConfig> calculatorChainConfigs = calculatorConfiguration.getCalculatorchain();
         Map<String, AbstractPriceCalculator> calculatorsMapAgainstNextCalculatorName = new HashMap<>();

@@ -108,7 +108,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
         String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
-        if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && getLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
+        if (this.getProductPricingCategory() == ProductPricingCategory.NO_COMMITMENT && findLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent) {
             //assumption is that for non commitment a single price bucket will exist in map.
             if (null != this.activePriceBuckets && this.activePriceBuckets.size() > 0) {
                 return this.activePriceBuckets.entrySet().iterator().next().getValue();
@@ -129,7 +129,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void addNewPriceBucket(LocalDateTime date, PriceBucket priceBucket) {
-        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
         if (latestPriceBucket != null) {
             closePriceBucketForSubscription(latestPriceBucket, date.minusMillis(1));
         }
@@ -140,7 +140,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         recommendedPriceBuckets.put(date, forecastedPriceBucket);
     }
 
-    public PriceBucket getLatestActivePriceBucket() {
+    public PriceBucket findLatestActivePriceBucket() {
         Set<LocalDateTime> timeBasedKeys = activePriceBuckets.keySet();
         if (timeBasedKeys.size() <= 0) {
             return null;
@@ -275,7 +275,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public List<PriceBucket> findBucketsWithSamePurchasePrice(PriceBucket priceBucket) {
-        //final PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        //final PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
         List<PriceBucket> bucketsWithSamePurchasePrice = new ArrayList<PriceBucket>();
         Iterator<Map.Entry<LocalDateTime, PriceBucket>> priceBucketIterator = activePriceBuckets.entrySet().iterator();
         while (priceBucketIterator.hasNext()) {
@@ -412,7 +412,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     //for receipt from main application thru integration
     public void receiveProductStatus(ReceiveProductStatusCommand command, OperatingExpenseService operatingExpenseService) {
         String productId = command.getProductId();
-        //PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        //PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
         PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
         if (latestTaggedPriceVersion.getPurchasePricePerUnit() != command.getCurrentPurchasePrice()) {
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");

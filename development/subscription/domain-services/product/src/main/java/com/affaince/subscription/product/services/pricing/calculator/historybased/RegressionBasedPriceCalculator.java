@@ -33,7 +33,7 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         String productId = product.getProductId();
-        final PriceBucket latestPriceBucket = product.getLatestActivePriceBucket();
+        final PriceBucket latestPriceBucket = product.findLatestActivePriceBucket();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
         final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
 

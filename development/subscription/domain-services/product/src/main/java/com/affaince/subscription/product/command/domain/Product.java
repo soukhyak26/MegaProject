@@ -3,13 +3,11 @@ package com.affaince.subscription.product.command.domain;
 import com.affaince.subscription.common.type.*;
 import com.affaince.subscription.common.vo.ProductForecastParameter;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.command.UpdateFixedExpenseToProductCommand;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
-import com.affaince.subscription.product.factory.PriceBucketFactory;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
@@ -129,8 +127,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         return this.productAccount;
     }
 
-    public PriceBucket getLatestActivePriceBucket() {
-        return getProductAccount().getLatestActivePriceBucket();
+    public PriceBucket findLatestActivePriceBucket() {
+        return getProductAccount().findLatestActivePriceBucket();
     }
 
     public PriceBucket getLatestRecommendedPriceBucket() {
@@ -239,7 +237,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
 
-        if (this.getActivePriceBuckets().size() >= 1 && this.getLatestActivePriceBucket().getNumberOfExistingSubscriptions() >= 1) {
+        if (this.getActivePriceBuckets().size() >= 1 && this.findLatestActivePriceBucket().getNumberOfExistingSubscriptions() >= 1) {
             //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
             List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
 
@@ -299,7 +297,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void calculatePrice(String productId,LocalDateTime fromDate,DefaultPriceDeterminator defaultPriceDeterminator, PricingOptions pricingOptions,ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
-        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
         double newOfferedPriceOrPercent = priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
         //Change price ONLY if difference between latest price and new price is more than 0.5 money
         if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - newOfferedPriceOrPercent) > 0.5) {
@@ -325,7 +323,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void overrideRecommendedPrice(double overriddenPriceOrPercent) {
-        PriceBucket latestPriceBucket = this.getLatestActivePriceBucket();
+        PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
         PriceBucket latestRecommendedPriceBucket = this.getLatestRecommendedPriceBucket();
 
         //Change price ONLY if difference between latest price and new price is more than 0.5 money? BUT WHAT ABOUT PERCENT DICOUNT.. NEEDS CORRECTION
@@ -352,8 +350,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void donateToNodalAccount(double weight) {
         if (weight > 0) {
-            final double offeredPriceOrPercent = getLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit();
-            final double MRP = getLatestActivePriceBucket().getLatestTaggedPriceVersion().getMRP();
+            final double offeredPriceOrPercent = findLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit();
+            final double MRP = findLatestActivePriceBucket().getLatestTaggedPriceVersion().getMRP();
             final double latestPurchasePrice = getLatestPurchasePrice();
             final double fixedExpensePerUnit = this.getProductAccount().getLatestFixedExpenseVersion().getFixedOperatingExpPerUnit();
             final double variableExpensePerUnit = this.getProductAccount().getLatestVariableExpenseVersion().getVariableOperatingExpPerUnit();

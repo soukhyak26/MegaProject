@@ -16,6 +16,6 @@ public class SysDateTest {
         SysDate.setCurrentDate(LocalDate.now().plusDays(10));
         assertThat(SysDate.now(), is(LocalDate.now().plusDays(10)));
         //resetting to current date
-        SysDate.setCurrentDate(LocalDate.now().plusDays(10));
+        SysDate.setCurrentDate(LocalDate.now().plusDays(30));
     }
 }

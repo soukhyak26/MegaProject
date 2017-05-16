@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.listener;
 
+import com.affaince.subscription.common.type.PricingStrategyType;
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.product.command.event.ProductPricingConfigurationSetEvent;
@@ -40,7 +41,7 @@ public class ProductPricingConfigurationSetEventListener {
         )) {
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
             if (null == productConfigurationView) {
-                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType(), event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand());
+                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), PricingStrategyType.DEFAULT_PRICING_STRATEGY, event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand());
             } else {
                 productConfigurationView.setProductId(event.getProductId());
                 productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
@@ -49,7 +50,7 @@ public class ProductPricingConfigurationSetEventListener {
                 productConfigurationView.setActualsAggregationPeriodForTargetForecast(event.getActualsAggregationPeriodForTargetForecast());
                 productConfigurationView.setPricingOptions(event.getPricingOptions());
                 productConfigurationView.setDemandCurvePeriod(event.getDemandCurvePeriod());
-                productConfigurationView.setPricingStrategyType(event.getPricingStrategyType());
+                productConfigurationView.setPricingStrategyType(PricingStrategyType.DEFAULT_PRICING_STRATEGY);
                 productConfigurationView.setTentativePercentageChangeInProductDemand(event.getTentativePercentageChangeInProductDemand());
             }
             productConfigurationViewRepository.save(productConfigurationView);
