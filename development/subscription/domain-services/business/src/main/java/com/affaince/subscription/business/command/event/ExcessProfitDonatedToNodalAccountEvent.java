@@ -6,6 +6,7 @@ package com.affaince.subscription.business.command.event;
 public class ExcessProfitDonatedToNodalAccountEvent {
     private String productId;
     private double excessProfit;
+    public ExcessProfitDonatedToNodalAccountEvent(){}
     public ExcessProfitDonatedToNodalAccountEvent(String productId, double excessProfit) {
         this.productId=productId;
         this.excessProfit=excessProfit;
