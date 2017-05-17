@@ -298,7 +298,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     public void calculatePrice(String productId,LocalDateTime fromDate,DefaultPriceDeterminator defaultPriceDeterminator, PricingOptions pricingOptions,ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
         //PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
-        double newOfferedPriceOrPercent = priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
+        //double newOfferedPriceOrPercent = priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
         //Change price ONLY if difference between latest price and new price is more than 0.5 money
        // if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - newOfferedPriceOrPercent) > 0.5) {
 

@@ -36,6 +36,7 @@ public class ValueCommittedPriceBucket extends PriceBucket {
         this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
         this.entityStatus = entityStatus;
         this.fromDate = fromDate;
+        this.toDate= new LocalDateTime(9999,12,31,0,0,0);
 
     }
 
