@@ -253,7 +253,7 @@ public class ForecastController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "setnextforecastdate/{productid}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/setnextforecastdate/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable("productid") String productId) {
         ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);

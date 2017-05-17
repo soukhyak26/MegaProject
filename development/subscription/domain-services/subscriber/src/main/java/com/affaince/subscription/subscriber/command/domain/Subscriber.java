@@ -270,9 +270,10 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                     delivery.getTotalWeight(), delivery.getRewardPoints());
             TotalSubscriptionDeliveries.add(event);
-            //apply(event);
+            apply(event);
             createSubscriptionSummaryEvent(delivery, true);
         }
+        apply( new SubscriptionSpecificDeliveriesCreatedAggregateEvent(this.subscriberId, subscription.getSubscriptionId(),TotalSubscriptionDeliveries));
     }
 
     private BenefitResult calculateBenefits(Map<String, Delivery> deliveries,
