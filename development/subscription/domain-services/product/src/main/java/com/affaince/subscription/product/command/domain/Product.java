@@ -14,7 +14,7 @@ import com.affaince.subscription.product.services.forecast.ProductDemandForecast
 import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;

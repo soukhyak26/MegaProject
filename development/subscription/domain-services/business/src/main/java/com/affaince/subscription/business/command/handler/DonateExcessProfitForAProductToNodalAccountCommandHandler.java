@@ -5,10 +5,12 @@ import com.affaince.subscription.business.command.domain.BusinessAccount;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 30-01-2017.
  */
+@Component
 public class DonateExcessProfitForAProductToNodalAccountCommandHandler {
     private Repository<BusinessAccount> repository;
 

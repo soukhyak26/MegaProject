@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;

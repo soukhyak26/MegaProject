@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.command;
 
 import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 

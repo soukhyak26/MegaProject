@@ -259,15 +259,18 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         final BenefitResult benefitResult =
                 calculateBenefits(deliveries, 0.0, benefitExecutionContext);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
+        List<DeliveryCreatedEvent> TotalSubscriptionDeliveries=new ArrayList<>();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
             if (rewardsPointsDistribution.get(delivery.getDeliveryId()) != null) {
                 delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
             }
-            apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
+            DeliveryCreatedEvent event=new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
                     delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
-                    delivery.getTotalWeight(), delivery.getRewardPoints()));
+                    delivery.getTotalWeight(), delivery.getRewardPoints());
+            TotalSubscriptionDeliveries.add(event);
+            //apply(event);
             createSubscriptionSummaryEvent(delivery, true);
         }
     }

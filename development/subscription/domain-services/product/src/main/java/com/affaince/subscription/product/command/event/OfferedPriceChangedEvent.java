@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.common.type.PricingOptions;
 import org.joda.time.LocalDateTime;
 
 /**

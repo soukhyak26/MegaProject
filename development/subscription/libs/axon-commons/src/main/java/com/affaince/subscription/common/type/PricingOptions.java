@@ -1,7 +1,7 @@
-package com.affaince.subscription.product.vo;
+package com.affaince.subscription.common.type;
 
-import com.affaince.subscription.product.converters.PricingOptionsDeserializer;
-import com.affaince.subscription.product.converters.PricingOptionsSerializer;
+import com.affaince.subscription.common.deserializer.PricingOptionsDeserializer;
+import com.affaince.subscription.common.serializer.PricingOptionsSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

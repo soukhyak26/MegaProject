@@ -24,7 +24,7 @@ public class OfferedPriceChangedEventListener {
     public void on(OfferedPriceChangedEvent event) {
         final LatestPriceBucketView latestPriceBucketView = new LatestPriceBucketView(
                 event.getProductId(), event.getPriceBucketId(),
-                event.getOfferedPriceOrPercentDiscountPerUnit(), event.getCurrentPriceDate()
+                event.getOfferedPriceOrPercentDiscountPerUnit(), event.getFromDate()
         );
         latestPriceBucketViewRepository.save(latestPriceBucketView);
     }

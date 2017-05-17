@@ -1,6 +1,6 @@
-package com.affaince.subscription.product.converters;
+package com.affaince.subscription.common.deserializer;
 
-import com.affaince.subscription.product.vo.PricingOptions;
+import com.affaince.subscription.common.type.PricingOptions;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;

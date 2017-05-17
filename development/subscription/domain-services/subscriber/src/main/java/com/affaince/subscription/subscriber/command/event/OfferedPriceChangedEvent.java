@@ -1,6 +1,8 @@
 package com.affaince.subscription.subscriber.command.event;
 
 import com.affaince.subscription.common.type.EntityStatus;
+import com.affaince.subscription.common.type.PricingOptions;
+import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
@@ -10,6 +12,7 @@ import org.joda.time.LocalDateTime;
  */
 public class OfferedPriceChangedEvent {
     private String productId;
+    //private ValueCommittedPriceBucket newPriceBucket;
     private String priceBucketId;
     private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
@@ -20,21 +23,20 @@ public class OfferedPriceChangedEvent {
     private LocalDateTime toDate;
     private EntityStatus entityStatus;
     private double offeredPriceOrPercentDiscountPerUnit;
-    private LocalDateTime currentPriceDate;
+    private ProductDemandTrend productDemandTrend;
+    private PricingOptions pricingOptions;
 
     public OfferedPriceChangedEvent() {
     }
-
 /*
-    public OfferedPriceChangedEvent(String productId, String priceBucketId, double offeredPricePerUnit, LocalDateTime currentPriceDate) {
+    public OfferedPriceChangedEvent(String productId, ValueCommittedPriceBucket newPriceBucket,ProductDemandTrend productDemandTrend) {
         this.productId = productId;
-        this.priceBucketId = priceBucketId;
-        this.offeredPricePerUnit = offeredPricePerUnit;
-        this.currentPriceDate = currentPriceDate;
+        this.newPriceBucket = newPriceBucket;
+        this.productDemandTrend=productDemandTrend;
     }
 */
 
-    public OfferedPriceChangedEvent(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfExistingSubscriptions, LocalDateTime fromDate, LocalDateTime toDate, EntityStatus entityStatus, double offeredPriceOrPercentDiscountPerUnit, LocalDateTime currentPriceDate) {
+    public OfferedPriceChangedEvent(String productId, String priceBucketId, ProductPricingCategory productPricingCategory, PriceTaggedWithProduct taggedPriceVersion, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long numberOfExistingSubscriptions, LocalDateTime fromDate, LocalDateTime toDate, EntityStatus entityStatus, double offeredPriceOrPercentDiscountPerUnit, ProductDemandTrend productDemandTrend,PricingOptions pricingOptions) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;
         this.productPricingCategory = productPricingCategory;
@@ -46,41 +48,22 @@ public class OfferedPriceChangedEvent {
         this.toDate = toDate;
         this.entityStatus = entityStatus;
         this.offeredPriceOrPercentDiscountPerUnit = offeredPriceOrPercentDiscountPerUnit;
-        this.currentPriceDate = currentPriceDate;
+        this.productDemandTrend = productDemandTrend;
+        this.pricingOptions=pricingOptions;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getPriceBucketId() {
-        return priceBucketId;
-    }
-
-    public void setPriceBucketId(String priceBucketId) {
-        this.priceBucketId = priceBucketId;
-    }
-
 /*
-    public double getOfferedPricePerUnit() {
-        return offeredPricePerUnit;
-    }
-
-    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
-        this.offeredPricePerUnit = offeredPricePerUnit;
+    public ValueCommittedPriceBucket getNewPriceBucket() {
+        return newPriceBucket;
     }
 */
 
-    public LocalDateTime getCurrentPriceDate() {
-        return currentPriceDate;
-    }
-
-    public void setCurrentPriceDate(LocalDateTime currentPriceDate) {
-        this.currentPriceDate = currentPriceDate;
+    public String getPriceBucketId() {
+        return priceBucketId;
     }
 
     public ProductPricingCategory getProductPricingCategory() {
@@ -117,5 +100,13 @@ public class OfferedPriceChangedEvent {
 
     public double getOfferedPriceOrPercentDiscountPerUnit() {
         return offeredPriceOrPercentDiscountPerUnit;
+    }
+
+    public ProductDemandTrend getProductDemandTrend() {
+        return productDemandTrend;
+    }
+
+    public PricingOptions getPricingOptions() {
+        return pricingOptions;
     }
 }
