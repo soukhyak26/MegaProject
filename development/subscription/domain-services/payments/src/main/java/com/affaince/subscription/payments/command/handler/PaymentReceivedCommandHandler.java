@@ -33,7 +33,6 @@ public class PaymentReceivedCommandHandler {
         PaymentAccount paymentAccount;
         try {
             paymentAccount = repository.load(command.getSubscriptionId());
-            paymentAccount.handlePartialPayment(command.getPaidAmount());
         } catch (AggregateNotFoundException anfe) {
             paymentAccount = new PaymentAccount(command.getSubscriptionId(), command.getPaidAmount());
             repository.add(paymentAccount);

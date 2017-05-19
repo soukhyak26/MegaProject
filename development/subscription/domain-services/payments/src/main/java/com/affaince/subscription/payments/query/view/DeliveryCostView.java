@@ -1,44 +1,53 @@
 package com.affaince.subscription.payments.query.view;
 
-import com.affaince.subscription.payments.command.accounting.DeliveryCostAccount;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by anayonkar on 21/8/16.
+ * Created by mandar on 5/18/2017.
  */
-@Document(collection = "DeliveryCostView")
+@Document(collection="DeliveryCostView")
 public class DeliveryCostView {
     @Id
     private String deliveryId;
     private String subscriptionId;
-    private double deliveryCost;
-    private DeliveryCostAccount deliveryCostAccount;
+    private int deliverySequence;
+    private double deliveryAmount;
+    private LocalDate deliveryDate;
 
-    public DeliveryCostView() {
-        this.deliveryCostAccount = new DeliveryCostAccount(0);
-    }
-
-    public DeliveryCostView(String deliveryId, String subscriptionId, double deliveryCost) {
-        this();
+    public DeliveryCostView(String deliveryId, String subscriptionId, int deliverySequence, double deliveryAmount,LocalDate deliveryDate) {
         this.deliveryId = deliveryId;
         this.subscriptionId = subscriptionId;
-        this.deliveryCost = deliveryCost;
+        this.deliverySequence = deliverySequence;
+        this.deliveryAmount = deliveryAmount;
+        this.deliveryDate=deliveryDate;
     }
 
+    public void credit(double amount) {
+        this.deliveryAmount += amount;
+    }
+
+    public void debit(double amount) {
+        this.deliveryAmount  -= amount;
+    }
     public String getDeliveryId() {
         return deliveryId;
-    }
-
-    public double getDeliveryCost() {
-        return deliveryCost;
     }
 
     public String getSubscriptionId() {
         return subscriptionId;
     }
 
-    public DeliveryCostAccount getDeliveryCostAccount() {
-        return deliveryCostAccount;
+    public int getDeliverySequence() {
+        return deliverySequence;
+    }
+
+    public double getDeliveryAmount() {
+        return deliveryAmount;
+    }
+
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 }
