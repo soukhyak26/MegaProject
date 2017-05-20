@@ -2,7 +2,8 @@ package com.affaince.subscription.payments.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.payments.command.CreatePaymentSchemeCommand;
-import com.affaince.subscription.payments.web.request.PaymentSchemeRequest;
+import com.affaince.subscription.payments.web.request.CreatePaymentSchemeRequest;
+import com.affaince.subscription.payments.web.request.ModifyPaymentSchemeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-@RestController(value = "paymentscheme")
+@RestController(value = "/paymentscheme")
 public class PaymentSchemeController {
 
     private final SubscriptionCommandGateway commandGateway;
@@ -23,11 +24,23 @@ public class PaymentSchemeController {
         this.commandGateway = commandGateway;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> createPaymentScheme(@RequestBody PaymentSchemeRequest request) throws Exception {
+    @RequestMapping(value= "/create",  method = RequestMethod.POST)
+    public ResponseEntity<Object> createPaymentScheme(@RequestBody CreatePaymentSchemeRequest request) throws Exception {
         final CreatePaymentSchemeCommand command = new CreatePaymentSchemeCommand(UUID.randomUUID().toString(),
                 request.getPaymentSchemeName(), request.getPaymentSchemeDescription(), request.getPaymentSchemeRule(), request.getStartDate(), request.getEndDate());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
+    @RequestMapping(value= "/modify/{schemeId}", method = RequestMethod.POST)
+    public ResponseEntity<Object> modifyPaymentScheme(String schemeId,@RequestBody ModifyPaymentSchemeRequest request) throws Exception {
+/*
+        final ModifyPaymentSchemeCommand PaymentSchemeCommand = new ModifyPaymentSchemeCommand(schemeId),
+                request.getPaymentSchemeName(), request.getPaymentSchemeDescription(), request.getPaymentSchemeRule(), request.getStartDate(), request.getEndDate());
+        commandGateway.executeAsync(command);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+*/
+        return null;
+    }
+
 }

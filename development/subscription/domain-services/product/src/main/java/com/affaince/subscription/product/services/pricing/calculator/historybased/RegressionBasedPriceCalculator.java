@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.pricing.calculator.historybas
 import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
@@ -50,7 +51,17 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
             LocalDateTime currentDate = SysDateTime.now();
             final String taggedPriceVersionId = productId + currentDate.toLocalDate().toString(format);
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, product.getLatestTaggedPriceVersion().getPurchasePricePerUnit(), product.getLatestTaggedPriceVersion().getMRP(), currentDate.toLocalDate());
-            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+            //PriceBucket newPriceBucket = product.createNewPriceBucket(productId, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, currentDate);
+            PriceBucket newPriceBucket=null;
+            if (product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT){
+                newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
+            }else if(product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT){
+                double percentDiscount= (product.getLatestTaggedPriceVersion().getMRP()-offeredPrice)/product.getLatestTaggedPriceVersion().getMRP();
+                newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), percentDiscount, EntityStatus.CREATED, currentDate);
+            }else{
+                newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
+            }
+
             newPriceBucket.setSlope(functionCoefficients.getSlope());
             return newPriceBucket;
         }else{

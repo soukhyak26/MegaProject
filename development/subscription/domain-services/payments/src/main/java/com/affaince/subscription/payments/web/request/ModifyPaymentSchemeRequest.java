@@ -2,8 +2,7 @@ package com.affaince.subscription.payments.web.request;
 
 import org.joda.time.LocalDate;
 
-public class PaymentSchemeRequest {
-
+public class ModifyPaymentSchemeRequest {
     private String paymentSchemeName;
     private String paymentSchemeDescription;
     private String paymentSchemeRule;

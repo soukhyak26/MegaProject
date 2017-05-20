@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.listener;
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
@@ -33,16 +34,25 @@ public class OfferedPriceChangedEventListener {
     @EventHandler
     public void on(OfferedPriceChangedEvent event) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
-        PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()),event.getProductPricingCategory());
-        newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
-        newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
-        newPriceBucket.setEntityStatus(event.getEntityStatus());
-        newPriceBucket.setFromDate(event.getFromDate());
-        newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
-        latestPriceBucket.setToDate(event.getToDate().minusMillis(1));
-        priceBucketViewRepository.save(latestPriceBucket);
-        priceBucketViewRepository.save(newPriceBucket);
+        ProductPricingCategory productPricingStrategy=event.getProductPricingCategory();
+        if(productPricingStrategy == ProductPricingCategory.PRICE_COMMITMENT || productPricingStrategy == ProductPricingCategory.DISCOUNT_COMMITMENT) {
+            PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
+            PriceBucketView newPriceBucket = new PriceBucketView(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()), event.getProductPricingCategory());
+            newPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
+            newPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
+            newPriceBucket.setEntityStatus(event.getEntityStatus());
+            newPriceBucket.setFromDate(event.getFromDate());
+            newPriceBucket.setToDate(new LocalDateTime(9999, 12, 31, 23, 59));
+            latestPriceBucket.setToDate(event.getToDate().minusMillis(1));
+            priceBucketViewRepository.save(latestPriceBucket);
+            priceBucketViewRepository.save(newPriceBucket);
+        }else{
+            PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
+            latestPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
+            latestPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
+            latestPriceBucket.setEntityStatus(event.getEntityStatus());
+            priceBucketViewRepository.save(latestPriceBucket);
+        }
         ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
         //set next forecast date as current date + configured duration for repeating forecast
         productConfigurationView.setNextForecastDate(SysDate.now().plusDays(productConfigurationView.getActualsAggregationPeriodForTargetForecast()));
