@@ -2,6 +2,7 @@ package com.affaince.subscription.payments.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.payments.command.domain.PaymentAccount;
+import com.affaince.subscription.payments.command.domain.PaymentScheme;
 import com.affaince.subscription.payments.command.event.*;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -28,6 +29,12 @@ public class Axon extends Default {
     @Bean
     public Repository<PaymentAccount> createPaymentRepository(DisruptorCommandBus commandBus) {
         Repository<PaymentAccount> repository = commandBus.createRepository(new GenericAggregateFactory<>(PaymentAccount.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<PaymentScheme> createPaymentSchemeRepository(DisruptorCommandBus commandBus) {
+        Repository<PaymentScheme> repository = commandBus.createRepository(new GenericAggregateFactory<>(PaymentScheme.class));
         return repository;
     }
 

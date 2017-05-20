@@ -50,6 +50,10 @@
             <artifactId>log4j-over-slf4j</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>rules-compiler</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
