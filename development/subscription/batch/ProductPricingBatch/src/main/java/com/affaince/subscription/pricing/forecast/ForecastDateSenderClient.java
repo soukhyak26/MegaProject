@@ -2,6 +2,7 @@ package com.affaince.subscription.pricing.forecast;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import org.apache.http.impl.client.HttpClients;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -20,18 +21,18 @@ public class ForecastDateSenderClient {
     @Value("${subscription.pricing.setnextforecastdate.url}")
     private String setNextForecastDateUrl;
 
-    public void calculatePrice(String productId, LocalDateTime nextForecastDate) {
+    public void calculatePrice(Map <String, LocalDate> productIdToNextForecastDateMap) {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
         RestTemplate restTemplate = new RestTemplate(requestFactory);
       //  ArrayList<String> result = restTemplate.getForObject(setNextForecastDateUrl, ArrayList.class);
         Map<String, Object> uriParams = new HashMap<>();
-        uriParams.put("productid", productId);
+        uriParams.put("productid", productIdToNextForecastDateMap.keySet().iterator().next());
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(setNextForecastDateUrl);
 
         Map<String,Object> requestParams= new HashMap<>();
-        requestParams.put("nextForecastDate",nextForecastDate);
+        requestParams.put("nextForecastDate",productIdToNextForecastDateMap.values().iterator().next());
 
         System.out.println("$$$$$$$$$$$$$$setNextForecastDateUrl: " + setNextForecastDateUrl);
         //restTemplate.put(builder.buildAndExpand(uriParams).toUri().toString(), null, productAttributesMap);

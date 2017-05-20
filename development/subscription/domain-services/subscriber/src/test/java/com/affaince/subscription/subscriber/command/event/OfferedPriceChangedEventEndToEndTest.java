@@ -33,6 +33,7 @@ public class OfferedPriceChangedEventEndToEndTest {
     @Autowired
     private LatestPriceBucketViewRepository latestPriceBucketViewRepository;
 
+/*
     @Test
     public void offeredPriceChangedEventEndToEndTest() throws InterruptedException {
         OfferedPriceChangedEvent offeredPriceChangedEvent = new OfferedPriceChangedEvent(
@@ -53,4 +54,5 @@ public class OfferedPriceChangedEventEndToEndTest {
         LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne("1");
         assertThat(latestPriceBucketView.getOfferedPricePerUnit(), is(100.0));
     }
+*/
 }
