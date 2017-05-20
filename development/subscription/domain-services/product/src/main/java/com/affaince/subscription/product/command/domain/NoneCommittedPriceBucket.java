@@ -79,6 +79,11 @@ public class NoneCommittedPriceBucket extends PriceBucket {
                 revisedNewSubscriptionCount, revisedTotalSubscriptionCount, offeredPrice,purchasePrice,MRP,subscriptionChangedDate));
     }
 
+    public void updateTaggedPriceVersion(PriceTaggedWithProduct taggedPriceVersion){
+        if(this.getLatestTaggedPriceVersion().getPurchasePricePerUnit()!= taggedPriceVersion.getPurchasePricePerUnit() || this.getLatestTaggedPriceVersion().getMRP() != taggedPriceVersion.getMRP()){
+            this.taggedPriceVersion=taggedPriceVersion;
+        }
+    }
     @EventSourcingHandler
     public void on (NewSubscriptionAddedToNoneCommittedPriceBucketEvent event){
         this.numberOfNewSubscriptions=event.getNewSubscriptionCount();
@@ -98,7 +103,7 @@ public class NoneCommittedPriceBucket extends PriceBucket {
         //SHALL WE UPDATE TOTAL SUBSCRIPTION COUNT HERE ALSO?
         apply(new SubscriptionDeductedFromNoneCommittedPriceBucketEvent(productId, priceBucketId, subscriptionCount, revisedChurnedSubscriptionCount, revisedTotalSubscriptionCount,offeredPrice,purchasePrice,MRP,subscriptionChangeDate));
     }
-
+    @EventSourcingHandler
     public void on(SubscriptionDeductedFromNoneCommittedPriceBucketEvent event ){
         this.numberOfChurnedSubscriptions= event.getRevisedChurnedSubscriptionCount();
         this.numberOfExistingSubscriptions=event.getRevisedTotalSubscriptionCount();

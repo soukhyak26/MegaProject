@@ -50,6 +50,7 @@ public class OfferedPriceChangedEventListener {
             PriceBucketView latestPriceBucket = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(event.getProductId(), sort).get(0);
             latestPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
             latestPriceBucket.setTaggedPriceVersion(event.getTaggedPriceVersion());
+            latestPriceBucket.setFromDate(event.getFromDate());
             latestPriceBucket.setEntityStatus(event.getEntityStatus());
             priceBucketViewRepository.save(latestPriceBucket);
         }

@@ -64,6 +64,11 @@ public class PercentCommittedPriceBucket extends PriceBucket {
         return this.taggedPriceVersion;
     }
 
+    public void updateTaggedPriceVersion(PriceTaggedWithProduct taggedPriceVersion){
+        if(this.getLatestTaggedPriceVersion().getPurchasePricePerUnit()!= taggedPriceVersion.getPurchasePricePerUnit() || this.getLatestTaggedPriceVersion().getMRP() != taggedPriceVersion.getMRP()){
+            this.taggedPriceVersion=taggedPriceVersion;
+        }
+    }
 
     @Override
     public long getNumberOfNewSubscriptions() {

@@ -614,7 +614,14 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     @EventSourcingHandler
     public void on(OfferedPriceChangedEvent event) {
         PriceBucket newPriceBucket = PriceBucketFactory.createPriceBucket(event.getProductId(), event.getPriceBucketId(), event.getProductPricingCategory(), event.getTaggedPriceVersion(), event.getOfferedPriceOrPercentDiscountPerUnit(), event.getEntityStatus(), event.getFromDate());
-        this.addNewPriceBucket(event.getFromDate(), newPriceBucket);
+        if(this.getProductPricingCategory()==ProductPricingCategory.PRICE_COMMITMENT || this.getProductPricingCategory()== ProductPricingCategory.DISCOUNT_COMMITMENT) {
+            this.addNewPriceBucket(event.getFromDate(), newPriceBucket);
+        }else{
+            PriceBucket onlyPriceBucket=this.findLatestActivePriceBucket();
+            onlyPriceBucket.updateTaggedPriceVersion(event.getTaggedPriceVersion());
+            onlyPriceBucket.setOfferedPriceOrPercentDiscountPerUnit(event.getOfferedPriceOrPercentDiscountPerUnit());
+            onlyPriceBucket.setFromDate(event.getFromDate());
+        }
         if (event.getPricingOptions() != PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
             this.removeRecommendedPriceBucket(newPriceBucket);
         }

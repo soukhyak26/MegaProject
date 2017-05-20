@@ -137,6 +137,9 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public double getRegisteredRevenueForADate(LocalDate date){
         return registeredRevenue.get(date);
     }
+
+
+
     public double getTotalRegisteredRevenue(){
         double totalRegisteredRevenue=0;
         Iterator<Double> registeredRevenueIterator= registeredRevenue.values().iterator();
@@ -224,6 +227,7 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     public abstract PriceTaggedWithProduct getLatestTaggedPriceVersion();
     public abstract long getNumberOfNewSubscriptions();
     public abstract long getNumberOfChurnedSubscriptions();
+    public abstract void updateTaggedPriceVersion(PriceTaggedWithProduct taggedPriceVersion);
     public abstract void addSubscriptionToPriceBucket(long subscriptionCount, LocalDate subscriptionChangedDate);
     public abstract void deductSubscriptionFromPriceBucket(int subscriptionCount,LocalDate subscriptionChangeDate);
     public abstract void calculateExpectedPurchaseExpenseRevenueAndProfitForPriceBucket(String productId,int changedSubscriptionCount, double fixedExpensePeUnit, double variableExpensePerUnit);
