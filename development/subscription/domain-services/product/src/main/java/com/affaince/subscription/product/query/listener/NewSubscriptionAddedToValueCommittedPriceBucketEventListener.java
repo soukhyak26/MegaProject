@@ -2,7 +2,6 @@ package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToValueCommittedPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketTransactionViewRepository;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
@@ -13,7 +12,6 @@ import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.vo.PriceBucketTransactionId;
 import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -81,7 +79,7 @@ public class NewSubscriptionAddedToValueCommittedPriceBucketEventListener {
         priceBucketTransactionView.addToNewSubscriptions(event.getAddedSubscriptionCount());
         priceBucketTransactionView.setOfferedPrice(event.getOfferedPrice());
         priceBucketTransactionView.setPurchasePrice(event.getPurchasePrice());
-        priceBucketTransactionView.setMRP(event.getMRP());
+        priceBucketTransactionView.setMRP(event.getMrp());
 
         priceBucketTransactionViewRepository.save(priceBucketTransactionView);
 

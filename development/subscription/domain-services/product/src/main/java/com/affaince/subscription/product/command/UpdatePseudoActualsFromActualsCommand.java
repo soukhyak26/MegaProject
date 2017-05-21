@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 /**
  * Created by mandar on 14-08-2016.
  */
-public class UpdatePseudoActualsFromActualsCommand {
+public class    UpdatePseudoActualsFromActualsCommand {
     @TargetAggregateIdentifier
     private final String productId;
     private final LocalDate forecastDate;

@@ -82,7 +82,7 @@ public class Axon extends Default {
             public void configure() throws Exception {
 
                 //job for calculating client  and pseudoActuals for eligible products.
-                from("{{subscription.forecast.timer.expression}}")
+                from("timer://foo?repeatCount=1")
                         .routeId("productsRetriever")
                         .to("direct: productRetriever");
 

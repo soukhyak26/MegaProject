@@ -1,23 +1,13 @@
 package com.affaince.subscription.subscriber.command.event;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.common.type.ProductPricingCategory;
-import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.subscriber.Application;
 import com.affaince.subscription.subscriber.query.repository.LatestPriceBucketViewRepository;
-import com.affaince.subscription.subscriber.query.view.LatestPriceBucketView;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by rbsavaliya on 04-09-2016.
@@ -34,7 +24,7 @@ public class OfferedPriceChangedEventEndToEndTest {
     private LatestPriceBucketViewRepository latestPriceBucketViewRepository;
 
 /*
-    @Test
+    @Tests
     public void offeredPriceChangedEventEndToEndTest() throws InterruptedException {
         OfferedPriceChangedEvent offeredPriceChangedEvent = new OfferedPriceChangedEvent(
                 "1",
