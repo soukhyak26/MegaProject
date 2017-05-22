@@ -4,15 +4,17 @@ package com.affaince.subscription.product.vo;
  * Created by mandar on 08-10-2016.
  */
 public class CostHeader {
-    final CostHeaderType costHeaderType;
-    final String description;
-    final double value;
-    final CostHeaderApplicability costHeaderApplicability;
+    private CostHeaderType costHeaderType;
+    private String description;
+    private double oldValue;
+    private double newValue;
+    private CostHeaderApplicability costHeaderApplicability;
 
-    public CostHeader(CostHeaderType costHeaderType, String description, double value, CostHeaderApplicability costHeaderApplicability) {
+    public CostHeader(CostHeaderType costHeaderType, String description, double oldValue,double newValue, CostHeaderApplicability costHeaderApplicability) {
         this.costHeaderType = costHeaderType;
         this.description = description;
-        this.value = value;
+        this.oldValue=oldValue;
+        this.newValue = newValue;
         this.costHeaderApplicability = costHeaderApplicability;
     }
 
@@ -24,11 +26,27 @@ public class CostHeader {
         return description;
     }
 
-    public double getValue() {
-        return value;
+    public double getNewValue() {
+        return newValue;
+    }
+
+    public double getOldValue() {
+        return oldValue;
     }
 
     public CostHeaderApplicability getCostHeaderApplicability() {
         return costHeaderApplicability;
+    }
+
+    public void setOldValue(double oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public void setNewValue(double newValue) {
+        this.newValue = newValue;
+    }
+
+    public void setCostHeaderApplicability(CostHeaderApplicability costHeaderApplicability) {
+        this.costHeaderApplicability = costHeaderApplicability;
     }
 }

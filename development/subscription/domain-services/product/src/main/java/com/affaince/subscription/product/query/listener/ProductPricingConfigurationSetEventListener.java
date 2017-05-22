@@ -41,7 +41,7 @@ public class ProductPricingConfigurationSetEventListener {
         )) {
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
             if (null == productConfigurationView) {
-                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), PricingStrategyType.DEFAULT_PRICING_STRATEGY, event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand());
+                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), PricingStrategyType.DEFAULT_PRICING_STRATEGY, event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand(),event.getCostHeaderTypes());
             } else {
                 productConfigurationView.setProductId(event.getProductId());
                 productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
@@ -52,6 +52,7 @@ public class ProductPricingConfigurationSetEventListener {
                 productConfigurationView.setDemandCurvePeriod(event.getDemandCurvePeriod());
                 productConfigurationView.setPricingStrategyType(PricingStrategyType.DEFAULT_PRICING_STRATEGY);
                 productConfigurationView.setTentativePercentageChangeInProductDemand(event.getTentativePercentageChangeInProductDemand());
+                productConfigurationView.setCostHeaderTypes(event.getCostHeaderTypes());
             }
             productConfigurationViewRepository.save(productConfigurationView);
             final ProductActivationStatusView productActivationStatusView = productActivationStatusViewRepository.findByProductId(event.getProductId());

@@ -3,6 +3,9 @@ package com.affaince.subscription.product.command.event;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
+import com.affaince.subscription.product.vo.CostHeaderType;
+
+import java.util.EnumSet;
 
 
 public class ProductPricingConfigurationSetEvent {
@@ -18,8 +21,9 @@ public class ProductPricingConfigurationSetEvent {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
+    private EnumSet<CostHeaderType> costHeaderTypes;
 
-    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand) {
+    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -29,6 +33,7 @@ public class ProductPricingConfigurationSetEvent {
         this.pricingStrategyType = pricingStrategyType;
         this.demandCurvePeriod = demandCurvePeriod;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
+        this.costHeaderTypes=costHeaderTypes;
     }
 
     public ProductPricingConfigurationSetEvent() {
@@ -100,5 +105,9 @@ public class ProductPricingConfigurationSetEvent {
 
     public double getTentativePercentageChangeInProductDemand() {
         return tentativePercentageChangeInProductDemand;
+    }
+
+    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+        return costHeaderTypes;
     }
 }

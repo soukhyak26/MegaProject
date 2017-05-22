@@ -3,6 +3,9 @@ package com.affaince.subscription.product.web.request;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
+import com.affaince.subscription.product.vo.CostHeaderType;
+
+import java.util.EnumSet;
 
 /**
  * Created by rbsavaliya on 15-01-2016.
@@ -19,7 +22,7 @@ public class ProductPricingConfigurationRequest {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
-
+    private EnumSet<CostHeaderType> costHeaderTypes;
 
     public double getTargetChangeThresholdForPriceChange() {
         return targetChangeThresholdForPriceChange;
@@ -83,5 +86,9 @@ public class ProductPricingConfigurationRequest {
 
     public void setTentativePercentageChangeInProductDemand(double tentativePercentageChangeInProductDemand) {
         this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
+    }
+
+    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+        return costHeaderTypes;
     }
 }

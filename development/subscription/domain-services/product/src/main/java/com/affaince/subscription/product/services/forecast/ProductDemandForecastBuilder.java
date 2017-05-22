@@ -51,11 +51,11 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         //TODO: else add some forecasted values in the actuals data set and recalculate forecast so that it reaches end of the year
         // TODO: This will be required only until initial few months when actuals data is less.
         final LocalDate lastActualsHistoricalRecordEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
-        final LocalDate dafaultLastForecastEndDate = lastActualsHistoricalRecordEndDate.plusDays(Math.abs(historicalTotalSubscriptionCountList.size() / 2));
+        final LocalDate defaultLastForecastEndDate = lastActualsHistoricalRecordEndDate.plusDays(Math.abs(historicalTotalSubscriptionCountList.size() / 2));
         int forecastSize = 0;
-        final LocalDate endOfYearDate = new LocalDate(dafaultLastForecastEndDate.getYear(), 12, 31);
-        if (lastActualsHistoricalRecordEndDate.getYear() == dafaultLastForecastEndDate.getYear() && dafaultLastForecastEndDate.isBefore(endOfYearDate)) {
-            int differenceBetweenLastForecastDateAndEndOfYear = Days.daysBetween(dafaultLastForecastEndDate, endOfYearDate).getDays();
+        final LocalDate endOfYearDate = new LocalDate(defaultLastForecastEndDate.getYear(), 12, 31);
+        if (lastActualsHistoricalRecordEndDate.getYear() == defaultLastForecastEndDate.getYear() && defaultLastForecastEndDate.isBefore(endOfYearDate)) {
+            int differenceBetweenLastForecastDateAndEndOfYear = Days.daysBetween(defaultLastForecastEndDate, endOfYearDate).getDays();
             forecastSize = historicalTotalSubscriptionCountList.size() / 2 + differenceBetweenLastForecastDateAndEndOfYear;
         } else {
             forecastSize = historicalTotalSubscriptionCountList.size() / 2;

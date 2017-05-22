@@ -1,12 +1,19 @@
 package com.affaince.subscription.product.services.pricing.calculator;
 
 import com.affaince.subscription.common.service.MathsProcessingService;
+import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
+import com.affaince.subscription.common.type.ProductPricingCategory;
+import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.factory.PriceBucketFactory;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.apache.commons.lang3.ArrayUtils;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
@@ -53,6 +60,14 @@ public abstract class AbstractPriceCalculator {
 
     protected double calculateExpectedDemand(ProductForecastView productForecastView, ProductActualsView productActualsView) {
         return productForecastView.getTotalNumberOfExistingSubscriptions() - productActualsView.getTotalNumberOfExistingSubscriptions();
+    }
+
+    //This is just a utility method being used by Price Calculators for creating a price bucket.. Hence it should not emit events.
+    public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, ProductPricingCategory productPricingCategory,LocalDateTime fromDate) {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
+        String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
+         //&& findLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent
+        return PriceBucketFactory.createPriceBucket(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
     }
 
     public abstract PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend);

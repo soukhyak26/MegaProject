@@ -1,6 +1,7 @@
 package com.affaince.subscription.payments.command.domain;
 
 import com.affaince.subscription.payments.command.event.PaymentSchemeCreatedEvent;
+import com.affaince.subscription.payments.command.event.PaymentSchemeExpiredEvent;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -33,4 +34,14 @@ public class PaymentScheme extends AbstractAnnotatedAggregateRoot<String>{
         this.schemeStartDate = schemeStartDate;
         this.schemeEndDate = schemeEndDate;
     }
+
+    public void expireScheme(LocalDate expiryDate) {
+        apply(new PaymentSchemeExpiredEvent(this.schemeId,expiryDate));
+    }
+
+    @EventSourcingHandler
+    public  void on(PaymentSchemeExpiredEvent event){
+        this.schemeEndDate=event.getExpiryDate();
+    }
+
 }

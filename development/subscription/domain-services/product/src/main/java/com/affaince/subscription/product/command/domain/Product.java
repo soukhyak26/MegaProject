@@ -12,9 +12,11 @@ import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
+import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.common.type.PricingOptions;
+import com.affaince.subscription.product.vo.CostHeaderType;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
@@ -28,6 +30,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -85,7 +88,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     //Event for setting product configuration
     @EventSourcingHandler
     public void on(ProductPricingConfigurationSetEvent event) {
-            this.productConfiguration = new ProductConfiguration(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getDemandCurvePeriod(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingOptions(), event.getPricingStrategyType(),event.getTentativePercentageChangeInProductDemand());
+            this.productConfiguration = new ProductConfiguration(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getDemandCurvePeriod(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingOptions(), event.getPricingStrategyType(),event.getTentativePercentageChangeInProductDemand(),event.getCostHeaderTypes());
     }
 
 
@@ -170,7 +173,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     //for product administrator to configure product
     public void setProductPricingConfiguration(SetProductPricingConfigurationCommand command) throws InvalidProductStatusException, ProductDeactivatedException {
-        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod(), command.getTentativePercentageChangeInProductDemand()));
+        apply(new ProductPricingConfigurationSetEvent(command.getProductId(), command.getActualsAggregationPeriodForTargetForecast(), command.getTargetChangeThresholdForPriceChange(), command.isCrossPriceElasticityConsidered(), command.isAdvertisingExpensesConsidered(), command.getPricingOptions(), command.getPricingStrategyType(), command.getDemandCurvePeriod(), command.getTentativePercentageChangeInProductDemand(),command.getCostHeaderTypes()));
     }
 
 
@@ -179,8 +182,8 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.getProductAccount().receiveProductStatus(command, operatingExpenseService);
     }
 
-    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, OperatingExpenseService operatingExpenseService) {
-        getProductAccount().updateFixedExpenses(command, operatingExpenseService);
+    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, EnumSet<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
+        getProductAccount().updateFixedExpenses(command,costHeaderTypes, breakEvenPriceCalculator);
     }
 
 
@@ -207,9 +210,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
 
+/*
     public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, LocalDateTime fromDate) {
         return getProductAccount().createNewPriceBucket(productId, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
     }
+*/
 
 
     //business logic to create forecast for a product and store it on read side.
@@ -303,8 +308,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
        // if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - newOfferedPriceOrPercent) > 0.5) {
 
             //PriceBucket newPriceBucket = createNewPriceBucket(productId, priceBucket.getLatestTaggedPriceVersion(), newOfferedPriceOrPercent, priceBucket.getEntityStatus(), priceBucket.getFromDate(),priceBucketFactory);
-            DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
-            String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
 
             //cannot do expiration of latest pricebucket as this is just a recommended price bucket.
             //latestPriceBucket.setToDate(event.getCurrentPriceDate());

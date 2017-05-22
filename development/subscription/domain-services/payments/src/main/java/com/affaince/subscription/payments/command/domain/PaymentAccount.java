@@ -135,4 +135,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalReceivedCostAccount= new TotalReceivedCostAccount(event.getSubscriptionId(),0,event.getRegistrationDate());
         this.totalSubscriptionCostAccount= new TotalSubscriptionCostAccount(event.getSubscriptionId(),event.getTotalTentativeSubscriptionAmount(),event.getRegistrationDate());
     }
+
+    public void correctDues(DeliveryStatusAndDispatchDateUpdatedCommand command) {
+    }
 }

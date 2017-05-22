@@ -52,18 +52,6 @@ public class Axon extends Default {
             //to be removed
             put("com.affaince.subscription.product.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.SubscriptionSpecificDeliveriesCreatedAggregateEvent", SubscriptionSpecificDeliveriesCreatedAggregateEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.DeliveryCostAccountCreditedEvent", DeliveryCostAccountCreditedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.DeliveryCostAccountDebitedEvent", DeliveryCostAccountDebitedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.DeliveryInitiatedEvent", DeliveryInitiatedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.PaymentInitiatedEvent", PaymentInitiatedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalBalanceAccountCreditedEvent", TotalBalanceAccountCreditedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalBalanceAccountDebitedEvent", TotalBalanceAccountDebitedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalReceivableCostAccountCreditedEvent", TotalReceivableCostAccountCreditedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalReceivableCostAccountDebitedEvent", TotalReceivableCostAccountDebitedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalReceivedCostAccountCreditedEvent", TotalReceivedCostAccountCreditedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalReceivedCostAccountDebitedEvent", TotalReceivedCostAccountDebitedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalSubscriptionCostAccountCreditedEvent", TotalSubscriptionCostAccountCreditedEvent.class.getName());
-            put("com.affaince.subscription.payments.command.event.TotalSubscriptionCostAccountDebitedEvent", TotalSubscriptionCostAccountDebitedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.DeliveryDeletedEvent", DeliveryDeletedEvent.class.getName());
         }};
     }

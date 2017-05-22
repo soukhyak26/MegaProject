@@ -5,9 +5,12 @@ import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.product.command.event.SubscriptionForecastUpdatedEvent;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
+import com.affaince.subscription.product.vo.CostHeaderType;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+
+import java.util.EnumSet;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
     private String productId;
@@ -25,9 +28,9 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     //while doing linear forecasting we need how much percent product demand will change( increase or decrease)
     private double tentativePercentageChangeInProductDemand;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
-
+    private EnumSet<CostHeaderType> costHeaderTypes;
     //This constructor need/should not publish event as it is being invoked from event sourcing handler of already published event(ProductPricingConfigurationSetEvent)
-    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand) {
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.demandCurvePeriod = demandCurvePeriod;
@@ -37,6 +40,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         this.pricingOptions = pricingOptions;
         this.pricingStrategyType = pricingStrategyType;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
+        this.costHeaderTypes=costHeaderTypes;
     }
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -118,6 +122,14 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
 
     public void setTentativePercentageChangeInProductDemand(double tentativePercentageChangeInProductDemand) {
         this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
+    }
+
+    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+        return costHeaderTypes;
+    }
+
+    public void setCostHeaderTypes(EnumSet<CostHeaderType> costHeaderTypes) {
+        this.costHeaderTypes = costHeaderTypes;
     }
 
     public double getDemandCurvePeriodInDays() {

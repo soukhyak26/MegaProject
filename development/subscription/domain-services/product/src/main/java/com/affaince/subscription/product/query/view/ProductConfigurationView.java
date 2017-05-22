@@ -3,9 +3,12 @@ package com.affaince.subscription.product.query.view;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
+import com.affaince.subscription.product.vo.CostHeaderType;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.EnumSet;
 
 /**
  * Created by mandar on 14-08-2016.
@@ -24,8 +27,8 @@ public class ProductConfigurationView {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
-
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand) {
+    private EnumSet<CostHeaderType> costHeaderTypes;
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -35,6 +38,7 @@ public class ProductConfigurationView {
         this.pricingOptions = pricingOptions;
         this.demandCurvePeriod=demandCurvePeriod;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
+        this.costHeaderTypes=costHeaderTypes;
     }
 
     public String getProductId() {
@@ -115,5 +119,13 @@ public class ProductConfigurationView {
 
     public void setTentativePercentageChangeInProductDemand(double tentativePercentageChangeInProductDemand) {
         this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
+    }
+
+    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+        return costHeaderTypes;
+    }
+
+    public void setCostHeaderTypes(EnumSet<CostHeaderType> costHeaderTypes) {
+        this.costHeaderTypes = costHeaderTypes;
     }
 }

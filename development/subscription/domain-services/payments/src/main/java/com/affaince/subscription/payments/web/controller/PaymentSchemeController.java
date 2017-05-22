@@ -1,7 +1,10 @@
 package com.affaince.subscription.payments.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.CreatePaymentSchemeCommand;
+import com.affaince.subscription.payments.command.ExpirePaymentSchemeCommand;
+import com.affaince.subscription.payments.command.ModifyPaymentSchemeCommand;
 import com.affaince.subscription.payments.web.request.CreatePaymentSchemeRequest;
 import com.affaince.subscription.payments.web.request.ModifyPaymentSchemeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +34,10 @@ public class PaymentSchemeController {
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
-
-    @RequestMapping(value= "/modify/{schemeId}", method = RequestMethod.POST)
-    public ResponseEntity<Object> modifyPaymentScheme(String schemeId,@RequestBody ModifyPaymentSchemeRequest request) throws Exception {
-/*
-        final ModifyPaymentSchemeCommand PaymentSchemeCommand = new ModifyPaymentSchemeCommand(schemeId),
-                request.getPaymentSchemeName(), request.getPaymentSchemeDescription(), request.getPaymentSchemeRule(), request.getStartDate(), request.getEndDate());
+    @RequestMapping(value= "/expire/{schemeId}",  method = RequestMethod.POST)
+    public ResponseEntity<Object> expirePaymentScheme(String schemeId) throws Exception {
+        final ExpirePaymentSchemeCommand command= new ExpirePaymentSchemeCommand(schemeId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
-*/
-        return null;
     }
-
 }
