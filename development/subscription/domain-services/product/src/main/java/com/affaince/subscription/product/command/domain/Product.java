@@ -377,6 +377,4 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             //do nothing
         }
     }
-
-
 }

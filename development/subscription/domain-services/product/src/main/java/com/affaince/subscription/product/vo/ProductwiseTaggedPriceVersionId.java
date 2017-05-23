@@ -21,4 +21,23 @@ public class ProductwiseTaggedPriceVersionId  implements Serializable{
     public String getTaggedPriceVersionId() {
         return taggedPriceVersionId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductwiseTaggedPriceVersionId that = (ProductwiseTaggedPriceVersionId) o;
+
+        if (!productId.equals(that.productId)) return false;
+        return taggedPriceVersionId.equals(that.taggedPriceVersionId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = productId.hashCode();
+        result = 31 * result + taggedPriceVersionId.hashCode();
+        return result;
+    }
 }

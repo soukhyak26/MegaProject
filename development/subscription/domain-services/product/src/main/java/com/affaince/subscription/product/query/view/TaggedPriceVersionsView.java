@@ -14,6 +14,7 @@ public class TaggedPriceVersionsView {
     private ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId ;
     private double purchasePricePerUnit;
     private double MRP;
+    private double breakEvenPrice;
     private LocalDate taggedStartDate;
     private LocalDate taggedEndDate;
 
@@ -63,5 +64,13 @@ public class TaggedPriceVersionsView {
 
     public void setTaggedEndDate(LocalDate taggedEndDate) {
         this.taggedEndDate = taggedEndDate;
+    }
+
+    public double getBreakEvenPrice() {
+        return breakEvenPrice;
+    }
+
+    public void setBreakEvenPrice(double breakEvenPrice) {
+        this.breakEvenPrice = breakEvenPrice;
     }
 }
