@@ -51,7 +51,7 @@ public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
         if (latestProductActualsView == null) {
             //ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), SysDate.now().minusDays(1))).get(0);
             //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
-            latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), SysDate.now()), new LocalDate(9999, 12, 31), 0, 0, 0);
+            latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
             latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
             latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
             productActualsViewRepository.save(latestProductActualsView);
@@ -66,7 +66,7 @@ public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
             }else if(latestProductActualsView.getProductVersionId().getFromDate().isBefore(event.getSubscriptionChangedDate())){
 
                 long latestTotalSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
-                latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), new LocalDate(9999, 12, 31), 0, 0, 0);
+                latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
                 latestProductActualsView.setNewSubscriptions(0);
                 latestProductActualsView.setTotalNumberOfExistingSubscriptions(latestTotalSubscriptionCount);
                 latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
