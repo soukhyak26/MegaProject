@@ -18,6 +18,7 @@ public interface ProductActualsViewRepository extends CrudRepository<ProductActu
     List<ProductActualsView> findByProductVersionId(ProductVersionId productVersionId);
     //@Query("{productVersionId.productId:?0,productVersionId.startDate:{$gte:?1},endDate:{$lte:?2}}")
     List<ProductActualsView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDate startDate, LocalDate endDate);
+    List<ProductActualsView> findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(String productId, LocalDate startDate, LocalDate endDate);
     List<ProductActualsView> findByProductVersionId_ProductIdAndEndDate(String productId,LocalDate endDate);
     ProductActualsView findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc (String productId);
 }

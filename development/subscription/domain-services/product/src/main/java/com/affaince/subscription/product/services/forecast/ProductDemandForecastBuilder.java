@@ -33,7 +33,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
 
     public List<ProductForecastView> buildForecast(String productId, LocalDate currentDate, int chunkAggregationPeriod, double demandCurvePeriod) {
         LocalDate startDate = currentDate.minusDays(Double.valueOf(demandCurvePeriod).intValue());
-        List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, startDate, currentDate);
+        List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(productId, startDate, currentDate);
 /*
         List<ProductActualsView> aggregatedActualsViewList = periodBasedAggregator.aggregate(productActualsViewList, chunkAggregationPeriod);
 
