@@ -241,9 +241,17 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
-
-        if (this.getActivePriceBuckets().size() >= 1 && this.findLatestActivePriceBucket().getNumberOfExistingSubscriptions() >= 1) {
-            //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
+        int numberOfActivePriceBuckets=this.getActivePriceBuckets().size();
+        PriceBucket earlierPriceBucket=null;
+        if(numberOfActivePriceBuckets>1 ) {
+            earlierPriceBucket = this.findEarlierPriceBucketInActivePriceBuckets(this.findLatestActivePriceBucket());
+        }else if(numberOfActivePriceBuckets==1 ){
+            earlierPriceBucket=this.findLatestActivePriceBucket();
+        }else{
+            return;
+        }
+        boolean actualSubscriptionsPresent=earlierPriceBucket.getNumberOfExistingSubscriptions()>0?true:false;
+        if (actualSubscriptionsPresent) {
             List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, 1, getProductConfiguration().getDemandCurvePeriodInDays());
 
             for (int i = 0; i < forecasts.size(); i++) {
@@ -255,7 +263,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                         forecasts.get(i).getChurnedSubscriptions(),
                         forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
             }
-
         }
     }
 
