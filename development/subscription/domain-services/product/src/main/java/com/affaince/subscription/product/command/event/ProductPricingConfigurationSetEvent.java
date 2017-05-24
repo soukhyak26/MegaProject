@@ -6,6 +6,7 @@ import com.affaince.subscription.common.type.PricingStrategyType;
 import com.affaince.subscription.product.vo.CostHeaderType;
 
 import java.util.EnumSet;
+import java.util.List;
 
 
 public class ProductPricingConfigurationSetEvent {
@@ -21,9 +22,9 @@ public class ProductPricingConfigurationSetEvent {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
-    private EnumSet<CostHeaderType> costHeaderTypes;
+    private List<CostHeaderType> costHeaderTypes;
 
-    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
+    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -107,7 +108,7 @@ public class ProductPricingConfigurationSetEvent {
         return tentativePercentageChangeInProductDemand;
     }
 
-    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+    public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
     }
 }

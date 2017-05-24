@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by mandar on 14-08-2016.
@@ -27,8 +28,8 @@ public class ProductConfigurationView {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
-    private EnumSet<CostHeaderType> costHeaderTypes;
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
+    private List<CostHeaderType> costHeaderTypes;
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -121,11 +122,11 @@ public class ProductConfigurationView {
         this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
     }
 
-    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+    public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
     }
 
-    public void setCostHeaderTypes(EnumSet<CostHeaderType> costHeaderTypes) {
+    public void setCostHeaderTypes(List<CostHeaderType> costHeaderTypes) {
         this.costHeaderTypes = costHeaderTypes;
     }
 }

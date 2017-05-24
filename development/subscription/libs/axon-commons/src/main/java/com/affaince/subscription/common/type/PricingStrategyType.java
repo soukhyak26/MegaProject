@@ -13,7 +13,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonDeserialize(using = PricingStrategyTypeDeserializer.class)
 */
 public enum PricingStrategyType {
-    DEFAULT_PRICING_STRATEGY(0), DEMAND_BASED_PRICING_STRATEGY(1), DEMAND_AND_COST_BASED_PRICING_STRATEGY(2);
+
+    DEFAULT_PRICING_STRATEGY(0),
+    DEMAND_BASED_PRICING_STRATEGY(1),
+    DEMAND_AND_COST_BASED_PRICING_STRATEGY(2);
+
     private int strategyType;
 
     PricingStrategyType(int strategyType) {

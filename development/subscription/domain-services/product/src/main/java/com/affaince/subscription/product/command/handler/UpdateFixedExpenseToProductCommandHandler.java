@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by mandar on 16-10-2016.
@@ -29,7 +30,7 @@ public class UpdateFixedExpenseToProductCommandHandler {
     @CommandHandler
     public void on(UpdateFixedExpenseToProductCommand command) {
         final Product product = repository.load(command.getProductId());
-        EnumSet<CostHeaderType> costHeaderTypes=product.getProductConfiguration().getCostHeaderTypes();
+        List<CostHeaderType> costHeaderTypes=product.getProductConfiguration().getCostHeaderTypes();
         product.updateFixedExpenses(command,costHeaderTypes,breakEvenPriceCalculator);
     }
 }

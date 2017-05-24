@@ -11,6 +11,7 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
     private String productId;
@@ -28,9 +29,9 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     //while doing linear forecasting we need how much percent product demand will change( increase or decrease)
     private double tentativePercentageChangeInProductDemand;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
-    private EnumSet<CostHeaderType> costHeaderTypes;
+    private List<CostHeaderType> costHeaderTypes;
     //This constructor need/should not publish event as it is being invoked from event sourcing handler of already published event(ProductPricingConfigurationSetEvent)
-    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.demandCurvePeriod = demandCurvePeriod;
@@ -124,11 +125,11 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
     }
 
-    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+    public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
     }
 
-    public void setCostHeaderTypes(EnumSet<CostHeaderType> costHeaderTypes) {
+    public void setCostHeaderTypes(List<CostHeaderType> costHeaderTypes) {
         this.costHeaderTypes = costHeaderTypes;
     }
 

@@ -22,7 +22,7 @@ public class ProductPricingConfigurationRequest {
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
-    private EnumSet<CostHeaderType> costHeaderTypes;
+    private CostHeaderType [] costHeaderTypes;
 
     public double getTargetChangeThresholdForPriceChange() {
         return targetChangeThresholdForPriceChange;
@@ -88,7 +88,11 @@ public class ProductPricingConfigurationRequest {
         this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
     }
 
-    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+    public CostHeaderType[] getCostHeaderTypes() {
         return costHeaderTypes;
+    }
+
+    public void setCostHeaderTypes(CostHeaderType[] costHeaderTypes) {
+        this.costHeaderTypes = costHeaderTypes;
     }
 }

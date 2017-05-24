@@ -7,6 +7,7 @@ import com.affaince.subscription.product.vo.CostHeaderType;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.EnumSet;
+import java.util.List;
 
 
 public class SetProductPricingConfigurationCommand {
@@ -24,11 +25,11 @@ public class SetProductPricingConfigurationCommand {
     private Period demandCurvePeriod;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
     private double tentativePercentageChangeInProductDemand;
-    private EnumSet<CostHeaderType> costHeaderTypes;
+    private List<CostHeaderType> costHeaderTypes;
 
 
 
-    public SetProductPricingConfigurationCommand(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,EnumSet<CostHeaderType> costHeaderTypes) {
+    public SetProductPricingConfigurationCommand(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -79,7 +80,7 @@ public class SetProductPricingConfigurationCommand {
         return tentativePercentageChangeInProductDemand;
     }
 
-    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+    public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
     }
 }

@@ -33,7 +33,7 @@ public class BreakEvenPriceCalculator {
     }
 */
 
-    public PriceTaggedWithProduct calculateBreakEvenPrice(EnumSet<CostHeaderType> applicableCostHeaderTypes, List<CostHeader> changedCostHeaders, PriceTaggedWithProduct activeTaggedPriceVersion) {
+    public PriceTaggedWithProduct calculateBreakEvenPrice(List<CostHeaderType> applicableCostHeaderTypes, List<CostHeader> changedCostHeaders, PriceTaggedWithProduct activeTaggedPriceVersion) {
         List<CostHeader> costHeaders = createCostHeaders(applicableCostHeaderTypes, changedCostHeaders, activeTaggedPriceVersion);
         double breakEvenPrice = 0.0;
         for (CostHeader costHeader : costHeaders) {
@@ -48,7 +48,7 @@ public class BreakEvenPriceCalculator {
         return activeTaggedPriceVersion;
     }
 
-    private List<CostHeader> createCostHeaders(EnumSet<CostHeaderType> applicableCostHeaderTypes, List<CostHeader> changedCostHeaders, PriceTaggedWithProduct activeTaggedPriceVersion) {
+    private List<CostHeader> createCostHeaders(List<CostHeaderType> applicableCostHeaderTypes, List<CostHeader> changedCostHeaders, PriceTaggedWithProduct activeTaggedPriceVersion) {
         Map<PriceTaggedWithProduct, List<CostHeader>> costHeadersAssociatedWithTaggedPrice = new HashMap<>();
         //PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
         // we will need to calculate revised break-even price for active tagged price versions as differnt tagged price versions are embedded in different price buckets

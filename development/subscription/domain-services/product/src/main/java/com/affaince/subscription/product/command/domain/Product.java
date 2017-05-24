@@ -182,7 +182,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.getProductAccount().receiveProductStatus(command, operatingExpenseService);
     }
 
-    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, EnumSet<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
+    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, List<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
         getProductAccount().updateFixedExpenses(command,costHeaderTypes, breakEvenPriceCalculator);
     }
 

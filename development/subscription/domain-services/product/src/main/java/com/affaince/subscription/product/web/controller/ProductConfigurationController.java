@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
+import com.affaince.subscription.product.vo.CostHeaderType;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.ProductPricingConfigurationRequest;
 import org.slf4j.Logger;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by mandar on 12-09-2016.
@@ -41,9 +45,9 @@ public class ProductConfigurationController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-
+        List<CostHeaderType> costHeaderTypes = Arrays.asList(request.getCostHeaderTypes());
         SetProductPricingConfigurationCommand command = new SetProductPricingConfigurationCommand(
-                productId, request.getActualsAggregationPeriodForTargetForecast(), request.getTargetChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(), request.getPricingOptions(), request.getPricingStrategyType(), request.getDemandCurvePeriod(),request.getTentativePercentageChangeInProductDemand(),request.getCostHeaderTypes());
+                productId, request.getActualsAggregationPeriodForTargetForecast(), request.getTargetChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(), request.getPricingOptions(), request.getPricingStrategyType(), request.getDemandCurvePeriod(),request.getTentativePercentageChangeInProductDemand(), costHeaderTypes);
         try {
             this.commandGateway.executeAsync(command);
         } catch (Exception e) {

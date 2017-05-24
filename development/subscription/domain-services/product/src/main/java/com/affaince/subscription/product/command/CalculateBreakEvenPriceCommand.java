@@ -4,15 +4,16 @@ import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.CostHeaderType;
 
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by mandar on 5/22/2017.
  */
 public class CalculateBreakEvenPriceCommand {
     private String productId;
-    private EnumSet<CostHeaderType> costHeaderTypes;
+    private List<CostHeaderType> costHeaderTypes;
 
-    public CalculateBreakEvenPriceCommand(String productId,EnumSet<CostHeaderType> costHeaderTypes) {
+    public CalculateBreakEvenPriceCommand(String productId,List<CostHeaderType> costHeaderTypes) {
         this.productId = productId;
         this.costHeaderTypes=costHeaderTypes;
     }
@@ -22,7 +23,7 @@ public class CalculateBreakEvenPriceCommand {
     }
 
 
-    public EnumSet<CostHeaderType> getCostHeaderTypes() {
+    public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
     }
 }

@@ -200,7 +200,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         this.variableExpenseSlope = variableExpenseSlope;
     }
 
-    public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command, EnumSet<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
+    public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command, List<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
         if (null == latestVariableExpense || (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != command.getOperationExpense())) {
             final LocalDate startDate = SysDate.now();
@@ -212,7 +212,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
         }
     }
 
-    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, EnumSet<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
+    public void updateFixedExpenses(UpdateFixedExpenseToProductCommand command, List<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
         //get latest fixed Expense
         FixedExpensePerProduct latestFixedExpense = fixedExpenseVersions.first();
         if (latestFixedExpense.getFixedOperatingExpPerUnit() != command.getOperationExpense()) {
@@ -621,7 +621,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
 
-    public void calculateBreakEvenPrice(String productId,EnumSet<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator, OperatingExpenseService operatingExpenseService) {
+    public void calculateBreakEvenPrice(String productId,List<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator, OperatingExpenseService operatingExpenseService) {
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
         CostHeader variableExpenseHeader = null;
         if (null == latestVariableExpense) {
