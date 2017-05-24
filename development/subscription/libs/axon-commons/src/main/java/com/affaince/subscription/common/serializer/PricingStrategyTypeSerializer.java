@@ -14,7 +14,7 @@ public class PricingStrategyTypeSerializer extends JsonSerializer<PricingStrateg
     @Override
     public void serialize(PricingStrategyType pricingStrategyType, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException {
         generator.writeStartObject();
-        generator.writeFieldName("pricingStrategyType");
+        generator.writeFieldName("strategyType");
         generator.writeNumber(pricingStrategyType.getStrategyType());
         generator.writeEndObject();
     }

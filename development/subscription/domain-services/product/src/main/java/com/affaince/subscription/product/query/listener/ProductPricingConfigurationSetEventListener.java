@@ -11,6 +11,7 @@ import com.affaince.subscription.product.query.repository.ProductConfigurationVi
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
+import com.affaince.subscription.product.vo.CostHeaderType;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
@@ -18,6 +19,7 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,12 +43,16 @@ public class ProductPricingConfigurationSetEventListener {
     public void on(ProductPricingConfigurationSetEvent event) throws InvalidProductStatusException, ProductNotFoundException,Exception {
         final List<ProductStatus> productStatuses = productActivationStatusViewRepository.
                 findByProductId(event.getProductId()).getProductStatuses();
+        List <CostHeaderType> costHeaderTypes = new ArrayList<>(3);
+        costHeaderTypes.add(CostHeaderType.FIXED_EXPENSE_PER_UNIT);
+        costHeaderTypes.add(CostHeaderType.PURCHASE_PRICE_PER_UNIT);
+        costHeaderTypes.add(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT);
         if (ProductConfigurationValidator.getProductReadinessStatus(productStatuses).contains(
                 ProductReadinessStatus.CONFIGURABLE
         )) {
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
             if (null == productConfigurationView) {
-                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), PricingStrategyType.DEFAULT_PRICING_STRATEGY, event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand(),event.getCostHeaderTypes());
+                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), PricingStrategyType.DEFAULT_PRICING_STRATEGY, event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand(),costHeaderTypes);
             } else {
                 productConfigurationView.setProductId(event.getProductId());
                 productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
@@ -57,7 +63,7 @@ public class ProductPricingConfigurationSetEventListener {
                 productConfigurationView.setDemandCurvePeriod(event.getDemandCurvePeriod());
                 productConfigurationView.setPricingStrategyType(PricingStrategyType.DEFAULT_PRICING_STRATEGY);
                 productConfigurationView.setTentativePercentageChangeInProductDemand(event.getTentativePercentageChangeInProductDemand());
-                productConfigurationView.setCostHeaderTypes(event.getCostHeaderTypes());
+                productConfigurationView.setCostHeaderTypes(costHeaderTypes);
             }
             productConfigurationViewRepository.save(productConfigurationView);
             final ProductActivationStatusView productActivationStatusView = productActivationStatusViewRepository.findByProductId(event.getProductId());
@@ -67,7 +73,7 @@ public class ProductPricingConfigurationSetEventListener {
             productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_CONFIGURED);
             productActivationStatusViewRepository.save(productActivationStatusView);
 
-            CalculateBreakEvenPriceCommand command= new CalculateBreakEvenPriceCommand(event.getProductId(),event.getCostHeaderTypes());
+            CalculateBreakEvenPriceCommand command= new CalculateBreakEvenPriceCommand(event.getProductId(),costHeaderTypes);
             subscriptionCommandGateway.executeAsync(command);
 
         } else {

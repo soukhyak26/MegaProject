@@ -320,10 +320,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
             //latestPriceBucket.setToDate(event.getCurrentPriceDate());
             if (pricingOptions == PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
                 //shall we keep the same date as mentioned in recommended bucket?? for now....yes
-                apply(new OfferedPriceChangedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(),priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(),priceBucket.getEntityStatus(), priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(),productDemandTrend,pricingOptions));
+                apply(new OfferedPriceChangedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(),priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(),EntityStatus.ACTIVE, priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(),productDemandTrend,pricingOptions));
             } else {
                 //this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
-                apply(new OfferedPriceRecommendedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(), priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(), priceBucket.getEntityStatus(), priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), productDemandTrend));
+                apply(new OfferedPriceRecommendedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(), priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(), EntityStatus.CREATED, priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), productDemandTrend));
             }
         //}
     }

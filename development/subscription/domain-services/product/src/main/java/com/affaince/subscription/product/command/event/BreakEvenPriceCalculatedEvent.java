@@ -16,6 +16,9 @@ public class BreakEvenPriceCalculatedEvent {
         this.taggedPriceVersions=taggedPriceVersions;
     }
 
+    public BreakEvenPriceCalculatedEvent() {
+    }
+
     public String getProductId() {
         return productId;
     }

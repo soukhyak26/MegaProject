@@ -2,12 +2,16 @@ package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
+import com.affaince.subscription.common.deserializer.PricingStrategyTypeDeserializer;
 import com.affaince.subscription.common.deserializer.QuantityUnitDeserializer;
 import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
+import com.affaince.subscription.common.serializer.PricingOptionsSerializer;
+import com.affaince.subscription.common.serializer.PricingStrategyTypeSerializer;
 import com.affaince.subscription.common.serializer.QuantityUnitSerializer;
 import com.affaince.subscription.common.service.forecast.config.Forecast;
+import com.affaince.subscription.common.type.PricingStrategyType;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
@@ -168,6 +172,8 @@ public class Default {
         simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
         simpleModule.addSerializer(QuantityUnit.class, new QuantityUnitSerializer());
         simpleModule.addDeserializer(QuantityUnit.class, new QuantityUnitDeserializer());
+        simpleModule.addSerializer(PricingStrategyType.class, new PricingStrategyTypeSerializer());
+        simpleModule.addDeserializer(PricingStrategyType.class, new PricingStrategyTypeDeserializer());
         serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
 

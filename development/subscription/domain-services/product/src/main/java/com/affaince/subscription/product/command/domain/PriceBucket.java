@@ -222,7 +222,24 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         this.addToDeliveredSubscriptions(event.getDeliveredSubscriptionCount());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        PriceBucket that = (PriceBucket) o;
+
+        if (!productId.equals(that.productId)) return false;
+        return priceBucketId.equals(that.priceBucketId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = productId.hashCode();
+        result = 31 * result + priceBucketId.hashCode();
+        return result;
+    }
 
     public abstract PriceTaggedWithProduct getLatestTaggedPriceVersion();
     public abstract long getNumberOfNewSubscriptions();
