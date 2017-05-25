@@ -34,8 +34,10 @@ public class PaymentReceivedCommandHandler {
         try {
             paymentAccount = repository.load(command.getSubscriptionId());
         } catch (AggregateNotFoundException anfe) {
-            paymentAccount = new PaymentAccount(command.getSubscriptionId(), command.getPaidAmount());
+            paymentAccount = new PaymentAccount(command.getSusbcriberId(),command.getSubscriptionId());
             repository.add(paymentAccount);
+
         }
+        paymentAccount.addPayment(command.getSubscriptionId(),command.getPaidAmount(),command.getPaymentDate());
     }
 }

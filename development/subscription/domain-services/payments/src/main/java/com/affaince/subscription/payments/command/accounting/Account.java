@@ -15,14 +15,14 @@ public abstract class Account extends AbstractAnnotatedEntity {
         this.transactionDate = transactionDate;
     }
 
-    public void credit(double amount) {
+    public void credit(double amount,LocalDate transactionDate) {
         this.amount += amount;
-        transactionDate = SysDate.now();
+        this.transactionDate =transactionDate ;
     }
 
-    public void debit(double amount) {
+    public void debit(double amount,LocalDate transactionDate) {
         this.amount -= amount;
-        transactionDate = SysDate.now();
+        this.transactionDate = transactionDate;
     }
 
     public double getAmount() {

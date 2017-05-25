@@ -14,6 +14,7 @@ public class DeliveryCostView {
     private String subscriptionId;
     private int deliverySequence;
     private double deliveryAmount;
+    private double paymentReceived;
     private LocalDate deliveryDate;
 
     public DeliveryCostView(String deliveryId, String subscriptionId, int deliverySequence, double deliveryAmount,LocalDate deliveryDate) {
@@ -27,7 +28,9 @@ public class DeliveryCostView {
     public void credit(double amount) {
         this.deliveryAmount += amount;
     }
-
+    public void creditToPaymentReceived( double payment){
+        paymentReceived += payment;
+    }
     public void debit(double amount) {
         this.deliveryAmount  -= amount;
     }

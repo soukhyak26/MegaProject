@@ -10,10 +10,10 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.joda.time.LocalDate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
@@ -46,12 +46,55 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new PaymentAccountCreatedEvent(subscriberId,subscriptionId));
     }
 
-    public PaymentAccount(String subscriptionId, Double totalBalance) {
-        apply(new PaymentInitiatedEvent(subscriptionId, totalBalance));
+    public void addPayment(String subscriptionId, double paidAmount, LocalDate paymentDate) {
+        List<DeliveryCostAccount> deliveryCostAccounts= this.deliveryCostAccountMap.values().stream().collect(Collectors.toList());
+
+        Collections.sort(deliveryCostAccounts,new Comparator<DeliveryCostAccount>(){
+            @Override
+            public int compare(DeliveryCostAccount account1, DeliveryCostAccount account2) {
+                return account1.getTransactionDate().compareTo(account2.getTransactionDate());
+            }
+        });
+        Map<String,Double> paymentToBeAdjustedAgainstDeliveries= new HashMap<>();
+
+        //this is total payment received
+        double paymentReceived=paidAmount;
+        for(DeliveryCostAccount deliveryCostAccount: deliveryCostAccounts){
+            //get total delivery amount
+            double deliveryAmount=deliveryCostAccount.getAmount();
+            //get payment made so far for this delivery
+            double paymentReceivedForDelivery=deliveryCostAccount.getPaymentReceived();
+            //find payment to be made from the incoming payment to the current delivery
+            double paymentMadeForDelivery=0;
+            //if delivery cost is more than total payment received for this delivery so far
+            //Then try to finish remaining payment to this delivery by making ALL/maximum payment to it.
+            if(deliveryAmount > paymentReceivedForDelivery){
+                double residualAmountForDelivery=deliveryAmount-paymentReceivedForDelivery;
+                if(paymentReceived > residualAmountForDelivery){
+                    paymentMadeForDelivery=residualAmountForDelivery;
+                }else if(paymentReceived <= residualAmountForDelivery){
+                    paymentMadeForDelivery=paymentReceived;
+                }
+                paymentReceived -=paymentReceivedForDelivery;
+                //deliveryCostAccount.creditToPaymentReceived(paymentMadeForDelivery);
+                paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(),paymentMadeForDelivery);
+            }
+        }
+
+        apply(new PaymentInitiatedEvent(subscriptionId,paidAmount,paymentToBeAdjustedAgainstDeliveries,paymentDate));
     }
 
     @EventSourcingHandler
     public void on(PaymentInitiatedEvent event) {
+        this.totalReceivedCostAccount.credit(event.getPaidAmount(),event.getPaymentDate());
+        this.totalReceivableCostAccount.debit(event.getPaidAmount(),event.getPaymentDate());
+        Map<String,Double> paymentToBeAdjustedAgainstDeliveries= event.getPaymentToBeAdjustedAgainstDeliveries();
+        java.util.Iterator<String> deliveryCostAccountKeysIterator= deliveryCostAccountMap.keySet().iterator();
+        while(deliveryCostAccountKeysIterator.hasNext()){
+            String deliveryId=deliveryCostAccountKeysIterator.next();
+            DeliveryCostAccount deliveryCostAccount=deliveryCostAccountMap.get(deliveryId);
+            deliveryCostAccount.creditToPaymentReceived(paymentToBeAdjustedAgainstDeliveries.get(deliveryId));
+        }
     }
 
 
@@ -137,5 +180,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void correctDues(DeliveryStatusAndDispatchDateUpdatedCommand command) {
+    }
+
+    private class Iterator<T> {
     }
 }
