@@ -3,6 +3,7 @@ package com.affaince.subscription.business.command.event;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,14 @@ public class ProductRegisteredEvent {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
-    private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    private Map<SensitivityCharacteristic,Double> sensitiveTo;
     private ProductPricingCategory productPricingCategory;
+    private String taggedPriceVersionId;
     private double purchasePrice;
     private double MRP;
+    private LocalDate registrationDate;
 
-    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, double purchasePrice, double MRP) {
+    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, String taggedPriceVersionId,double purchasePrice, double MRP,LocalDate registrationDate) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -33,10 +36,12 @@ public class ProductRegisteredEvent {
         this.quantityUnit = quantityUnit;
         this.substitutes = substitutes;
         this.complements = complements;
-        this.sensitiveTo = sensitiveTo;
+        this.sensitiveTo=sensitiveTo;
         this.productPricingCategory = productPricingCategory;
+        this.taggedPriceVersionId=taggedPriceVersionId;
         this.purchasePrice = purchasePrice;
         this.MRP = MRP;
+        this.registrationDate=registrationDate;
     }
 
     public ProductRegisteredEvent() {
@@ -82,11 +87,19 @@ public class ProductRegisteredEvent {
         return productPricingCategory;
     }
 
+    public String getTaggedPriceVersionId() {
+        return taggedPriceVersionId;
+    }
+
     public double getPurchasePrice() {
         return purchasePrice;
     }
 
     public double getMRP() {
         return MRP;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
     }
 }

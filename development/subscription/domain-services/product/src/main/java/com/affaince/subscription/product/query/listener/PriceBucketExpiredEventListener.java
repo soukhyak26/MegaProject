@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.product.command.event.PriceBucketExpiredEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

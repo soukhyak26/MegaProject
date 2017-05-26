@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;

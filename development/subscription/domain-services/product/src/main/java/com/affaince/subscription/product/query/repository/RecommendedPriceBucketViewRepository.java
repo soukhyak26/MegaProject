@@ -1,9 +1,7 @@
 package com.affaince.subscription.product.query.repository;
 
-import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.RecommendedPriceBucketView;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

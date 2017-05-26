@@ -18,9 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Created by rbsavaliya on 25-07-2015.
- */
+
 @Component
 public class ProductStatusUpdatedEventListener {
 

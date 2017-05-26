@@ -11,7 +11,7 @@ import com.affaince.subscription.product.query.view.PriceBucketTransactionView;
 import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.vo.PriceBucketTransactionId;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;

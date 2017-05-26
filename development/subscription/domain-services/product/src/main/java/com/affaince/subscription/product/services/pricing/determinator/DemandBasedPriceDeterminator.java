@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.pricing.determinator;
 import com.affaince.subscription.common.service.MathsProcessingService;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualMetricsViewRepository;

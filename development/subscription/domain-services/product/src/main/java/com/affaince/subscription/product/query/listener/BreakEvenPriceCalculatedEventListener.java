@@ -4,10 +4,9 @@ import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.product.command.event.BreakEvenPriceCalculatedEvent;
 import com.affaince.subscription.product.query.repository.TaggedPriceVersionsViewRepository;
 import com.affaince.subscription.product.query.view.TaggedPriceVersionsView;
-import com.affaince.subscription.product.vo.ProductwiseTaggedPriceVersionId;
+import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

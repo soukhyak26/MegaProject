@@ -1,8 +1,7 @@
 package com.affaince.subscription.product.query.repository;
 
-import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.TaggedPriceVersionsView;
-import com.affaince.subscription.product.vo.ProductwiseTaggedPriceVersionId;
+import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 

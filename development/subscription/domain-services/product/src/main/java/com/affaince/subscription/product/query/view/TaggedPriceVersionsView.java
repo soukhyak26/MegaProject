@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
-import com.affaince.subscription.product.vo.ProductwiseTaggedPriceVersionId;
+import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

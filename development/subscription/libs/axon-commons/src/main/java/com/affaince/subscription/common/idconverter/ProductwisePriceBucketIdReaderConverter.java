@@ -1,8 +1,7 @@
-package com.affaince.subscription.product.converters;
+package com.affaince.subscription.common.idconverter;
 
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import com.mongodb.DBObject;
-import org.joda.time.LocalDateTime;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 

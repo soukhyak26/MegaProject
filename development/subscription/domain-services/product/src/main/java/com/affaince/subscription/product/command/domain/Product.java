@@ -58,7 +58,11 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, double purchasePrice, double MRP) {
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory, purchasePrice, MRP));
+        DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
+        final LocalDate currentDate = SysDate.now();
+        final String taggedPriceVersionId = productId + currentDate.toString(format);
+
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory, taggedPriceVersionId,purchasePrice, MRP,currentDate));
     }
 
 
@@ -78,10 +82,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productActivationStatusList.add(ProductStatus.PRODUCT_REGISTERED);
         */
         this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
-        DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-        final LocalDate currentDate = SysDate.now();
-        final String taggedPriceVersionId = productId + currentDate.toString(format);
-        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, event.getPurchasePrice(), event.getMRP(), currentDate);
+        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(event.getTaggedPriceVersionId(), event.getPurchasePrice(), event.getMRP(), event.getRegistrationDate());
         this.productAccount.addNewTaggedPriceVersion(taggedPriceVersion);
     }
 

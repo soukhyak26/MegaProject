@@ -1,15 +1,12 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.OfferedPriceRecommendedEvent;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.product.query.repository.RecommendedPriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.RecommendedPriceBucketView;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;

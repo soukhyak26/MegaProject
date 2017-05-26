@@ -1,13 +1,11 @@
 package com.affaince.subscription.product.configuration;
 
-import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
-import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
+import com.affaince.subscription.common.idconverter.*;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.converters.*;
-import com.affaince.subscription.product.factory.AggregatorFactory;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
 import com.affaince.subscription.product.services.forecast.*;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.RegressionBasedPriceCalculator;
@@ -21,12 +19,9 @@ import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventhandling.EventTemplate;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

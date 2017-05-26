@@ -1,10 +1,9 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.product.command.event.PriceBucketWisePurchaseCostRevenueAndProfitCalculatedEvent;
 import com.affaince.subscription.product.command.event.PurchaseCostRevenueAndProfitOfDeliveredSubscriptionsCalculatedEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

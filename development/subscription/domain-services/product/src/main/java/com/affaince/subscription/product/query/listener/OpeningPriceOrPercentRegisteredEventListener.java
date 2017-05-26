@@ -14,7 +14,7 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDateTime;

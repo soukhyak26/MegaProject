@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.converters;
 
 import com.affaince.subscription.product.vo.PriceBucketTransactionId;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.springframework.core.convert.converter.Converter;

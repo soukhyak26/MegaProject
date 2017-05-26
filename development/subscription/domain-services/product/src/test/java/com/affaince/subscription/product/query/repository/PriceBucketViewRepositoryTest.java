@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -3,7 +3,7 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucketEvent;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.view.PriceBucketView;
-import com.affaince.subscription.product.vo.ProductwisePriceBucketId;
+import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

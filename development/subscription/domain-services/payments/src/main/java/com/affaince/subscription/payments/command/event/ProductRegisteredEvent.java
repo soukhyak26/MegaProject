@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.command.event;
+package com.affaince.subscription.payments.command.event;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
@@ -8,6 +8,9 @@ import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Created by mandar on 5/26/2017.
+ */
 public class ProductRegisteredEvent {
     private String productId;
     private String productName;
