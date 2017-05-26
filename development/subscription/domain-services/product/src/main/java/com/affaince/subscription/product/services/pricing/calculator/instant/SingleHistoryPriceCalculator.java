@@ -10,6 +10,8 @@ import com.affaince.subscription.product.services.pricing.calculator.AbstractPri
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.common.type.PricingStrategyType;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -59,16 +61,19 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
 
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMrp(), currentDate);
 */
+/*
             LocalDateTime currentDate = SysDateTime.now();
             PriceBucket newPriceBucket=null;
             if (product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT){
-                newPriceBucket =createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, ProductPricingCategory.PRICE_COMMITMENT,currentDate);
+                newPriceBucket =createNewPriceBucket(productId, minusOnePriceBucket.getPriceBucketId(),latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, ProductPricingCategory.PRICE_COMMITMENT,currentDate);
             }else if(product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT){
                 double percentDiscount= (product.getLatestTaggedPriceVersion().getMRP()-offeredPrice)/product.getLatestTaggedPriceVersion().getMRP();
-                newPriceBucket = createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), percentDiscount, EntityStatus.CREATED,ProductPricingCategory.DISCOUNT_COMMITMENT, currentDate);
+                newPriceBucket = createNewPriceBucket(productId, minusOnePriceBucket.getPriceBucketId(),latestPriceBucket.getLatestTaggedPriceVersion(), percentDiscount, EntityStatus.CREATED,ProductPricingCategory.DISCOUNT_COMMITMENT, currentDate);
             }else{
-                newPriceBucket = createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED,ProductPricingCategory.NO_COMMITMENT, currentDate);
+                newPriceBucket = createNewPriceBucket(productId, minusOnePriceBucket.getPriceBucketId(),latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED,ProductPricingCategory.NO_COMMITMENT, currentDate);
             }
+*/
+            PriceBucket newPriceBucket=createNewPriceBucket(productId,minusOnePriceBucket.getPriceBucketId(), product.getLatestTaggedPriceVersion(), offeredPrice,product.getProductAccount().getProductPricingCategory());
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
 

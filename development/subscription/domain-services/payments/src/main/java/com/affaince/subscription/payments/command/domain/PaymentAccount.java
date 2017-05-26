@@ -6,6 +6,9 @@ import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
 import com.affaince.subscription.payments.command.DeliveryStatusAndDispatchDateUpdatedCommand;
 import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.*;
+import com.affaince.subscription.payments.vo.DeliveredProductDetail;
+import com.affaince.subscription.payments.vo.DeliveryDetails;
+import com.affaince.subscription.payments.vo.DeliveryItem;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
@@ -22,6 +25,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     private String subscriptionId;
 
     private String subscriberId;
+    private List<DeliveryDetails> deliveryDetails;
+
     @EventSourcedMember
     private Map<String, DeliveryCostAccount> deliveryCostAccountMap;
     @EventSourcedMember
@@ -43,56 +48,56 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public PaymentAccount(String subscriberId, String subscriptionId) {
-        apply(new PaymentAccountCreatedEvent(subscriberId,subscriptionId));
+        apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId));
     }
 
     public void addPayment(String subscriptionId, double paidAmount, LocalDate paymentDate) {
-        List<DeliveryCostAccount> deliveryCostAccounts= this.deliveryCostAccountMap.values().stream().collect(Collectors.toList());
+        List<DeliveryCostAccount> deliveryCostAccounts = this.deliveryCostAccountMap.values().stream().collect(Collectors.toList());
 
-        Collections.sort(deliveryCostAccounts,new Comparator<DeliveryCostAccount>(){
+        Collections.sort(deliveryCostAccounts, new Comparator<DeliveryCostAccount>() {
             @Override
             public int compare(DeliveryCostAccount account1, DeliveryCostAccount account2) {
                 return account1.getTransactionDate().compareTo(account2.getTransactionDate());
             }
         });
-        Map<String,Double> paymentToBeAdjustedAgainstDeliveries= new HashMap<>();
+        Map<String, Double> paymentToBeAdjustedAgainstDeliveries = new HashMap<>();
 
         //this is total payment received
-        double paymentReceived=paidAmount;
-        for(DeliveryCostAccount deliveryCostAccount: deliveryCostAccounts){
+        double paymentReceived = paidAmount;
+        for (DeliveryCostAccount deliveryCostAccount : deliveryCostAccounts) {
             //get total delivery amount
-            double deliveryAmount=deliveryCostAccount.getAmount();
+            double deliveryAmount = deliveryCostAccount.getAmount();
             //get payment made so far for this delivery
-            double paymentReceivedForDelivery=deliveryCostAccount.getPaymentReceived();
+            double paymentReceivedForDelivery = deliveryCostAccount.getPaymentReceived();
             //find payment to be made from the incoming payment to the current delivery
-            double paymentMadeForDelivery=0;
+            double paymentMadeForDelivery = 0;
             //if delivery cost is more than total payment received for this delivery so far
             //Then try to finish remaining payment to this delivery by making ALL/maximum payment to it.
-            if(deliveryAmount > paymentReceivedForDelivery){
-                double residualAmountForDelivery=deliveryAmount-paymentReceivedForDelivery;
-                if(paymentReceived > residualAmountForDelivery){
-                    paymentMadeForDelivery=residualAmountForDelivery;
-                }else if(paymentReceived <= residualAmountForDelivery){
-                    paymentMadeForDelivery=paymentReceived;
+            if (deliveryAmount > paymentReceivedForDelivery) {
+                double residualAmountForDelivery = deliveryAmount - paymentReceivedForDelivery;
+                if (paymentReceived > residualAmountForDelivery) {
+                    paymentMadeForDelivery = residualAmountForDelivery;
+                } else if (paymentReceived <= residualAmountForDelivery) {
+                    paymentMadeForDelivery = paymentReceived;
                 }
-                paymentReceived -=paymentReceivedForDelivery;
+                paymentReceived -= paymentReceivedForDelivery;
                 //deliveryCostAccount.creditToPaymentReceived(paymentMadeForDelivery);
-                paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(),paymentMadeForDelivery);
+                paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(), paymentMadeForDelivery);
             }
         }
 
-        apply(new PaymentInitiatedEvent(subscriptionId,paidAmount,paymentToBeAdjustedAgainstDeliveries,paymentDate));
+        apply(new PaymentInitiatedEvent(subscriptionId, paidAmount, paymentToBeAdjustedAgainstDeliveries, paymentDate));
     }
 
     @EventSourcingHandler
     public void on(PaymentInitiatedEvent event) {
-        this.totalReceivedCostAccount.credit(event.getPaidAmount(),event.getPaymentDate());
-        this.totalReceivableCostAccount.debit(event.getPaidAmount(),event.getPaymentDate());
-        Map<String,Double> paymentToBeAdjustedAgainstDeliveries= event.getPaymentToBeAdjustedAgainstDeliveries();
-        java.util.Iterator<String> deliveryCostAccountKeysIterator= deliveryCostAccountMap.keySet().iterator();
-        while(deliveryCostAccountKeysIterator.hasNext()){
-            String deliveryId=deliveryCostAccountKeysIterator.next();
-            DeliveryCostAccount deliveryCostAccount=deliveryCostAccountMap.get(deliveryId);
+        this.totalReceivedCostAccount.credit(event.getPaidAmount(), event.getPaymentDate());
+        this.totalReceivableCostAccount.debit(event.getPaidAmount(), event.getPaymentDate());
+        Map<String, Double> paymentToBeAdjustedAgainstDeliveries = event.getPaymentToBeAdjustedAgainstDeliveries();
+        java.util.Iterator<String> deliveryCostAccountKeysIterator = deliveryCostAccountMap.keySet().iterator();
+        while (deliveryCostAccountKeysIterator.hasNext()) {
+            String deliveryId = deliveryCostAccountKeysIterator.next();
+            DeliveryCostAccount deliveryCostAccount = deliveryCostAccountMap.get(deliveryId);
             deliveryCostAccount.creditToPaymentReceived(paymentToBeAdjustedAgainstDeliveries.get(deliveryId));
         }
     }
@@ -144,39 +149,54 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void registerSubscriptionDetails(List<DeliveryCreatedEvent> totalSubscriptionDeliveries) {
-        double totalTentativeSubscriptionAmount=0;
-        double totalRewardPoints=0;
-        for(DeliveryCreatedEvent delivery: totalSubscriptionDeliveries){
-            List<DeliveryItem> itemsInADelivery= delivery.getDeliveryItems();
-            totalRewardPoints +=delivery.getRewardPoints();
-            double totalDeliveryCost=0;
-            for(DeliveryItem item:itemsInADelivery){
-                totalTentativeSubscriptionAmount+=item.getOfferedPriceWithBasketLevelDiscount();
-                totalDeliveryCost +=item.getOfferedPriceWithBasketLevelDiscount();
+        double totalTentativeSubscriptionAmount = 0;
+        double totalRewardPoints = 0;
+        List<DeliveryDetails> deliveries = new ArrayList<>();
+        for (DeliveryCreatedEvent delivery : totalSubscriptionDeliveries) {
+            DeliveryDetails deliveryDetails = createDeliveryDetails(delivery);
+            List<DeliveryItem> itemsInADelivery = delivery.getDeliveryItems();
+            totalRewardPoints += delivery.getRewardPoints();
+            double totalDeliveryCost = 0;
+            for (DeliveryItem item : itemsInADelivery) {
+                totalTentativeSubscriptionAmount += item.getOfferedPriceWithBasketLevelDiscount();
+                totalDeliveryCost += item.getOfferedPriceWithBasketLevelDiscount();
             }
-            apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(),delivery.getDeliveryId(),delivery.getDeliveryDate(),totalDeliveryCost));
+            apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(), delivery.getDeliveryId(), delivery.getDeliveryDate(), totalDeliveryCost));
         }
 
-        apply(new SubscriptionDetailsRegisteredEvent(this.getSubscriptionId(),totalTentativeSubscriptionAmount,totalRewardPoints, SysDate.now()));
+        apply(new SubscriptionDetailsRegisteredEvent(this.getSubscriptionId(), totalTentativeSubscriptionAmount, totalRewardPoints, deliveries, SysDate.now()));
+    }
+
+    private DeliveryDetails createDeliveryDetails(DeliveryCreatedEvent delivery) {
+        DeliveryDetails deliveryDetail= new DeliveryDetails(delivery.getDeliveryId(),delivery.getSubscriptionId());
+        deliveryDetail.setDeliveryDate(delivery.getDeliveryDate());
+        List<DeliveryItem> deliveryItems= delivery.getDeliveryItems();
+        for(DeliveryItem deliveryItem: deliveryItems){
+            DeliveredProductDetail deliveredProduct= new DeliveredProductDetail(deliveryItem.getDeliveryItemId());
+
+        }
+        return deliveryDetail;
     }
 
     @EventSourcingHandler
-    public void on (PaymentAccountCreatedEvent event){
+    public void on(PaymentAccountCreatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();
-        this.subscriberId=event.getSubscriberId();
+        this.subscriberId = event.getSubscriberId();
         this.deliveryCostAccountMap = new HashMap<>();
     }
+
     @EventSourcingHandler
-    public void on(CostCalculatedForRegisteredDeliveryEvent event){
-        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(),event.getSubscriptionId(),event.getDeliveryDate(),event.getTotalDeliveryCost());
-        this.deliveryCostAccountMap.put(event.getDeliveryId(),deliveryCostAccount);
+    public void on(CostCalculatedForRegisteredDeliveryEvent event) {
+        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getDeliveryDate(), event.getTotalDeliveryCost());
+        this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
     }
 
     @EventSourcingHandler
-    public void on(SubscriptionDetailsRegisteredEvent event){
-        this.totalReceivableCostAccount=new TotalReceivableCostAccount(event.getSubscriptionId(),event.getTotalTentativeSubscriptionAmount(),event.getRegistrationDate());
-        this.totalReceivedCostAccount= new TotalReceivedCostAccount(event.getSubscriptionId(),0,event.getRegistrationDate());
-        this.totalSubscriptionCostAccount= new TotalSubscriptionCostAccount(event.getSubscriptionId(),event.getTotalTentativeSubscriptionAmount(),event.getRegistrationDate());
+    public void on(SubscriptionDetailsRegisteredEvent event) {
+        this.totalReceivableCostAccount = new TotalReceivableCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
+        this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getSubscriptionId(), 0, event.getRegistrationDate());
+        this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
+        this.deliveryDetails = event.getDeliveries();
     }
 
     public void correctDues(DeliveryStatusAndDispatchDateUpdatedCommand command) {

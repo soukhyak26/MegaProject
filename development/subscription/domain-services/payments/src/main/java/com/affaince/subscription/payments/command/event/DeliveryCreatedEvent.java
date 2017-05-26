@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.command.event;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.payments.command.domain.DeliveryItem;
+import com.affaince.subscription.payments.vo.DeliveryItem;
 import org.joda.time.LocalDate;
 
 import java.util.List;

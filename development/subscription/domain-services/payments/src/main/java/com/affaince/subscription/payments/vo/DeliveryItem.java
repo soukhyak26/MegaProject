@@ -1,10 +1,7 @@
-package com.affaince.subscription.payments.command.domain;
+package com.affaince.subscription.payments.vo;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 
-/**
- * Created by anayonkar on 21/8/16.
- */
 public class DeliveryItem {
     private String deliveryItemId;
     private DeliveryStatus deliveryStatus;

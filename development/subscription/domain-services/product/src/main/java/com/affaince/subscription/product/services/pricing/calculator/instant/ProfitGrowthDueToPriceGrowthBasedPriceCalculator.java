@@ -63,18 +63,7 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
             //Tagged price version should not be created new but to be obtained from Product aggregate.THE BELOW IS WRONG
             PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(taggedPriceVersionId, latestPriceBucket.getTaggedPriceVersion().getPurchasePricePerUnit(), latestPriceBucket.getTaggedPriceVersion().getMrp(), currentDate);
         */
-            LocalDateTime currentDate = SysDateTime.now();
-//            PriceBucket newPriceBucket = product.createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, currentDate);
-            PriceBucket newPriceBucket=null;
-            if (product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT){
-                newPriceBucket =createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, ProductPricingCategory.PRICE_COMMITMENT,currentDate);
-            }else if(product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT){
-                double percentDiscount= (y1-offeredPrice)/y1;
-                newPriceBucket = createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), percentDiscount, EntityStatus.CREATED,ProductPricingCategory.DISCOUNT_COMMITMENT, currentDate);
-            }else{
-                newPriceBucket = createNewPriceBucket(productId, latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED,ProductPricingCategory.NO_COMMITMENT, currentDate);
-            }
-
+            PriceBucket newPriceBucket=createNewPriceBucket(productId,minusOnePriceBucket.getPriceBucketId(), product.getLatestTaggedPriceVersion(), offeredPrice,product.getProductAccount().getProductPricingCategory());
             newPriceBucket.setSlope(slope);
             return newPriceBucket;
         } else {

@@ -5,6 +5,7 @@ import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
 import com.affaince.subscription.product.factory.PriceBucketFactory;
@@ -63,11 +64,16 @@ public abstract class AbstractPriceCalculator {
     }
 
     //This is just a utility method being used by Price Calculators for creating a price bucket.. Hence it should not emit events.
-    public PriceBucket createNewPriceBucket(String productId, PriceTaggedWithProduct taggedPriceVersion, double offeredPriceOrPercent, EntityStatus entityStatus, ProductPricingCategory productPricingCategory,LocalDateTime fromDate) {
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyyHHmmsss");
-        String priceBucketId = "" + productId + "_" + fromDate.toString(fmt);
+    public PriceBucket createNewPriceBucket(String productId,String latestPriceBucketId, PriceTaggedWithProduct taggedPriceVersion, double offeredPrice, ProductPricingCategory productPricingCategory) {
          //&& findLatestActivePriceBucket().getFixedOfferedPriceOrPercentDiscountPerUnit() != offeredPriceOrPercent
-        return PriceBucketFactory.createPriceBucket(productId, priceBucketId, productPricingCategory, taggedPriceVersion, offeredPriceOrPercent, entityStatus, fromDate);
+        LocalDateTime fromDate = SysDateTime.now();
+        if (productPricingCategory == ProductPricingCategory.PRICE_COMMITMENT || productPricingCategory == ProductPricingCategory.NO_COMMITMENT){
+            return PriceBucketFactory.createPriceBucket(productId, latestPriceBucketId, productPricingCategory, taggedPriceVersion, offeredPrice, EntityStatus.CREATED, fromDate);
+        }else if(productPricingCategory == ProductPricingCategory.DISCOUNT_COMMITMENT){
+            double percentDiscount= (taggedPriceVersion.getMRP()-offeredPrice)/taggedPriceVersion.getMRP();
+            return PriceBucketFactory.createPriceBucket(productId, latestPriceBucketId, productPricingCategory, taggedPriceVersion, percentDiscount, EntityStatus.CREATED, fromDate);
+        }
+        return null;
     }
 
     public abstract PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend);
