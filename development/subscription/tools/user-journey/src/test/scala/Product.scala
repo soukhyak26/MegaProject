@@ -96,7 +96,8 @@ object AddConfigurationParameters {
             |    "isAdvertisingExpensesConsidered":"false",
             |    "actualsAggregationPeriodForTargetForecast":30,
             |    "pricingOptions":1,
-            |    "pricingStrategyType":0
+            |    "pricingStrategyType":0,
+            |    "costHeaderTypes":["PURCHASE_PRICE_PER_UNIT", "FIXED_EXPENSE_PER_UNIT", "VARIABLE_EXPENSE_PER_UNIT"]
             |}
           """.stripMargin
         )

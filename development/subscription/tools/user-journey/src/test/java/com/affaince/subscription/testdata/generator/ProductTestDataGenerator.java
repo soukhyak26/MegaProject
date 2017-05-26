@@ -2,12 +2,17 @@ package com.affaince.subscription.testdata.generator;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.FileBackedOutputStream;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -59,7 +64,28 @@ public class ProductTestDataGenerator {
         generateSubscriptionData();
         generateSubscriberData();
         writeSubscriptionCountToFile ();
+        createSysDateAndTime ();
         return this;
+    }
+
+    private void createSysDateAndTime() {
+        File file = new File (classLoader.getResource(".").getPath() + "/sysdate.csv");
+        DateTimeFormatter formatter =
+                DateTimeFormat.forPattern("dd-MM-yyyy");
+        DateTimeFormatter dateTimeFormatter =
+                DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            fileOutputStream.write("sysDate,sysDateTime".getBytes());
+            fileOutputStream.write("\n".getBytes());
+            for (int i=0; i<subscriptionCount; i++) {
+                 fileOutputStream.write(formatter.print(LocalDate.now().plusDays(i%15)).getBytes());
+                 fileOutputStream.write(",".getBytes());
+                 fileOutputStream.write(dateTimeFormatter.print(LocalDateTime.now().plusDays(i%15)).getBytes());
+                 fileOutputStream.write("\n".getBytes());
+            }
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeSubscriptionCountToFile() {

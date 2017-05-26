@@ -1,9 +1,12 @@
 import java.util.concurrent.TimeUnit
 
+import com.affaince.subscription.date.SysDate
 import com.affaince.subscription.testdata.generator.ProductTestDataGenerator
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
+import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
+import org.joda.time.LocalDate
 
 import scala.util.Random
 
@@ -27,7 +30,9 @@ class Subscriber extends BaseSimulator {
     }.pause(5)
     .repeat(1) {
       CreateSubscriber.confirmSubscription
-    }
+    } .repeat(1) {
+    CreateSubscriber.sysDateChange
+  }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
   setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
@@ -40,7 +45,9 @@ object CreateSubscriber {
 
   val createSubscriberUrl="http://localhost:8081/subscriber"
   val createSubscriptionUrl = "http://localhost:8081/subscription"
+  val sysDateChangeUrl= "http://localhost:8086/sysdate"
   val subscriberJsonFeeder = jsonFile ("Subscribers.json")
+  val sysdateFeeder = csv("sysdate.csv").queue;
 
   val createSubscriber = feed(subscriberJsonFeeder)
     .exec(
@@ -114,4 +121,19 @@ object CreateSubscriber {
       http("Confirm Subscription")
         .put((createSubscriptionUrl + "/confirmsubscription/${subscriberId}").el[String])
     )
+
+  val sysDateChange = feed(sysdateFeeder).exec(
+    http ("Change SysDate Time")
+      .put(sysDateChangeUrl)
+      .body(
+        StringBody(
+          """
+            |{
+            | "sysDate":"${sysDate}",
+            | "sysDateTime":"${sysDateTime}"
+            |}
+          """.stripMargin
+        )
+      ).asJSON
+  )
 }
