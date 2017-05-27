@@ -21,7 +21,7 @@ public class ProductRegisteredEventListener {
 
     @EventHandler
     public void on (ProductRegisteredEvent event){
-        ProductTaggedPricesView productTaggedPricesView=new ProductTaggedPricesView(new ProductwiseTaggedPriceVersionId(event.getProductId(),event.getTaggedPriceVersionId()),event.getPurchasePrice(),event.getMRP());
+        ProductTaggedPricesView productTaggedPricesView=new ProductTaggedPricesView(new ProductwiseTaggedPriceVersionId(event.getProductId(),event.getTaggedPriceVersionId()),event.getPurchasePrice(),event.getMRP(),event.getRegistrationDate());
         productTaggedPricesViewRepository.save(productTaggedPricesView);
     }
 }
