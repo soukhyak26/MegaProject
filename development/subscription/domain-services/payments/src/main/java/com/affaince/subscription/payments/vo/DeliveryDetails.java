@@ -18,6 +18,14 @@ public class DeliveryDetails {
         this.subscriptionId = subscriptionId;
     }
 
+    public String getDeliveryId() {
+        return deliveryId;
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
     public List<DeliveredProductDetail> getDeliveredProductDetails() {
         return deliveredProductDetails;
     }
