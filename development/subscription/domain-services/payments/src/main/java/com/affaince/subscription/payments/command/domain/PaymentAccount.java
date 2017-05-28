@@ -1,11 +1,14 @@
 package com.affaince.subscription.payments.command.domain;
 
+import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
 import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
 import com.affaince.subscription.payments.command.DeliveryStatusAndDispatchDateUpdatedCommand;
 import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.*;
+import com.affaince.subscription.payments.service.ProductDetailsService;
+import com.affaince.subscription.payments.service.TaggedPricingService;
 import com.affaince.subscription.payments.vo.DeliveredProductDetail;
 import com.affaince.subscription.payments.vo.DeliveryDetails;
 import com.affaince.subscription.payments.vo.DeliveryItem;
@@ -148,18 +151,25 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         return totalReceivedCostAccount;
     }
 
-    public void registerSubscriptionDetails(List<DeliveryCreatedEvent> totalSubscriptionDeliveries) {
+    public void registerSubscriptionDetails(List<DeliveryCreatedEvent> totalSubscriptionDeliveries, TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
         double totalTentativeSubscriptionAmount = 0;
         double totalRewardPoints = 0;
         List<DeliveryDetails> deliveries = new ArrayList<>();
         for (DeliveryCreatedEvent delivery : totalSubscriptionDeliveries) {
-            DeliveryDetails deliveryDetails = createDeliveryDetails(delivery);
+            DeliveryDetails deliveryDetails = createDeliveryDetails(delivery,taggedPricingService,productDetailsService);
             List<DeliveryItem> itemsInADelivery = delivery.getDeliveryItems();
             totalRewardPoints += delivery.getRewardPoints();
             double totalDeliveryCost = 0;
             for (DeliveryItem item : itemsInADelivery) {
-                totalTentativeSubscriptionAmount += item.getOfferedPriceWithBasketLevelDiscount();
-                totalDeliveryCost += item.getOfferedPriceWithBasketLevelDiscount();
+                ProductPricingCategory pricingCategory=productDetailsService.findProductByProductId(item.getDeliveryItemId()).getProductPricingCategory();
+                if(pricingCategory== ProductPricingCategory.DISCOUNT_COMMITMENT){
+                    double latestMRP= taggedPricingService.findLatestTaggedPriceForAProduct(item.getDeliveryItemId());
+                    totalTentativeSubscriptionAmount += latestMRP*(1-item.getOfferedPriceWithBasketLevelDiscount());
+                    totalDeliveryCost += latestMRP*(1-item.getOfferedPriceWithBasketLevelDiscount());
+                }else {
+                    totalTentativeSubscriptionAmount += item.getOfferedPriceWithBasketLevelDiscount();
+                    totalDeliveryCost += item.getOfferedPriceWithBasketLevelDiscount();
+                }
             }
             apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(), delivery.getDeliveryId(), delivery.getDeliveryDate(), totalDeliveryCost));
         }
@@ -167,14 +177,20 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new SubscriptionDetailsRegisteredEvent(this.getSubscriptionId(), totalTentativeSubscriptionAmount, totalRewardPoints, deliveries, SysDate.now()));
     }
 
-    private DeliveryDetails createDeliveryDetails(DeliveryCreatedEvent delivery) {
+    private DeliveryDetails createDeliveryDetails(DeliveryCreatedEvent delivery, TaggedPricingService taggedPricingService, ProductDetailsService productDetailsService) {
         DeliveryDetails deliveryDetail= new DeliveryDetails(delivery.getDeliveryId(),delivery.getSubscriptionId());
         deliveryDetail.setDeliveryDate(delivery.getDeliveryDate());
         List<DeliveryItem> deliveryItems= delivery.getDeliveryItems();
+        List<DeliveredProductDetail> deliveredProducts=new ArrayList<>();
         for(DeliveryItem deliveryItem: deliveryItems){
             DeliveredProductDetail deliveredProduct= new DeliveredProductDetail(deliveryItem.getDeliveryItemId());
-
+            deliveredProduct.setDeliveryCharges(deliveryItem.getDeliveryCharges());
+            deliveredProduct.setMRPAtSubscription(taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId()));
+            deliveredProduct.setOfferedPricePerUnitAtSubscription(deliveryItem.getOfferedPriceWithBasketLevelDiscount());
+            deliveredProduct.setProductPricingCategory(productDetailsService.findProductByProductId(deliveryItem.getDeliveryItemId()).getProductPricingCategory());
+            deliveredProducts.add(deliveredProduct);
         }
+        deliveryDetail.setDeliveredProductDetails(deliveredProducts);
         return deliveryDetail;
     }
 
