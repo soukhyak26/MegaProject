@@ -14,6 +14,9 @@ import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 /**
  * Created by mandar on 4/23/2017.
@@ -54,13 +57,13 @@ public class NewSubscriptionAddedToNoneCommittedPriceBucketEventListener {
             productActualsViewRepository.save(latestProductActualsView);
         } else {
             //latest record of ProductActualsView which is not of the same date when event was generated
-            if(latestProductActualsView.getProductVersionId().getFromDate().isEqual(event.getSubscriptionChangedDate())) {
+            //if(latestProductActualsView.getProductVersionId().getFromDate().isEqual(event.getSubscriptionChangedDate())) {
                 //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
                 latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
                 latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
                 productActualsViewRepository.save(latestProductActualsView);
                 //Latest record is of the previous day of the event generated
-            }else if(latestProductActualsView.getProductVersionId().getFromDate().isBefore(event.getSubscriptionChangedDate())){
+            /*}else if(latestProductActualsView.getProductVersionId().getFromDate().isBefore(event.getSubscriptionChangedDate())){
 
                 long latestTotalSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
                 latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
@@ -71,15 +74,26 @@ public class NewSubscriptionAddedToNoneCommittedPriceBucketEventListener {
                 productActualsViewRepository.save(latestProductActualsView);
                 //latest record is of the later date of the event generated.. probably because event has reached here too late.. should not happen
             }else{
-                ProductActualsView eventDatedActualsView=productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(),event.getSubscriptionChangedDate())).get(0);
-                eventDatedActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
-                eventDatedActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
-                productActualsViewRepository.save(eventDatedActualsView);
+                List<ProductActualsView> eventDatedActualsViews=productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(),event.getSubscriptionChangedDate()));
+                ProductActualsView eventDatedActualsView = null;
+                if (eventDatedActualsViews.size() > 0) {
+                    eventDatedActualsView = eventDatedActualsViews.get(0);
+                    eventDatedActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                    eventDatedActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                    productActualsViewRepository.save(eventDatedActualsView);
+
+                } else {
+                    eventDatedActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
+                    eventDatedActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                    eventDatedActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                    productActualsViewRepository.save(eventDatedActualsView);
+                }
 
                 latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
                 latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
                 productActualsViewRepository.save(latestProductActualsView);
-            }
+
+            }*/
         }
 
         PriceBucketView priceBucketView = priceBucketViewRepository.findOne(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
