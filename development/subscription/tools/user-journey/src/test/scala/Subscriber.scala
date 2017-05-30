@@ -27,12 +27,13 @@ class Subscriber extends BaseSimulator {
     }
     .repeat(1) {
       CreateSubscriber.addItemToSubscription
-    }.pause(5)
+    }.pause(1)
+    .repeat(1) {
+      CreateSubscriber.sysDateChange
+    }.pause(1)
     .repeat(1) {
       CreateSubscriber.confirmSubscription
-    } .repeat(1) {
-    CreateSubscriber.sysDateChange
-  }
+    }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
   setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))

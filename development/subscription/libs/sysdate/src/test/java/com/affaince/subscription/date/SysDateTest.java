@@ -16,20 +16,20 @@ public class SysDateTest {
 
     @Test
     public void testSetCurrentDate() {
-        SysDate.setCurrentDate(LocalDate.now().plusDays(10));
-        assertThat(SysDate.now(), is(LocalDate.now().plusDays(10)));
+        SysDate.setCurrentDate(LocalDate.now().plusDays(1));
+        assertThat(SysDate.now(), is(LocalDate.now().plusDays(1)));
         //resetting to current date
-        SysDate.setCurrentDate(LocalDate.now().plusDays(plusDays()));
+        //SysDate.setCurrentDate(LocalDate.now().plusDays(plusDays()));
     }
 
     @Test
     public void testSetCurrentDateTime() {
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("dd-MM-yyyy-hh:mm:ss");
-        LocalDateTime currentDate = LocalDateTime.now().plusDays(10).plusHours(4);
+        LocalDateTime currentDate = LocalDateTime.now().plusDays(1).plusHours(4);
         SysDateTime.setCurrentDateTime(currentDate);
         assertThat(SysDateTime.now(), is(LocalDateTime.parse(formatter.print(currentDate), formatter)));
-        SysDateTime.setCurrentDateTime(LocalDateTime.now().plusDays(plusDays()));
+        //SysDateTime.setCurrentDateTime(LocalDateTime.now().plusDays(plusDays()));
     }
 
     private int plusDays () {
