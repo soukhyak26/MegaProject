@@ -1,6 +1,7 @@
 package com.affaince.subscription.payments.query.repository;
 
 import com.affaince.subscription.payments.query.view.DeliveryDetailsView;
+import com.affaince.subscription.payments.vo.DeliveredProductDetail;
 import com.affaince.subscription.payments.vo.SubscriptionwiseDeliveryId;
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface DeliveryDetailsViewRepository extends CrudRepository<DeliveryDetailsView,SubscriptionwiseDeliveryId> {
     public List<DeliveryDetailsView> findBySubscriptionwiseDeliveryId_SubscriptionId(String subscriptionId);
+    public List<DeliveryDetailsView> findByDeliveredProductDetailsIn(List<DeliveredProductDetail> products);
 }

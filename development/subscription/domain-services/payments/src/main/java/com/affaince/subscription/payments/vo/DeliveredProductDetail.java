@@ -3,12 +3,9 @@ package com.affaince.subscription.payments.vo;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 
 
-/**
- * Created by rbsavaliya on 02-10-2015.
- */
 public class DeliveredProductDetail {
-
     private String deliveryItemId;
+    private String priceBucketId;
     private double deliveryCharges;
     private double offeredPricePerUnitAtSubscription;
     private double offeredPricePerUnitAtDispatch;
@@ -19,11 +16,12 @@ public class DeliveredProductDetail {
     private ProductPricingCategory productPricingCategory;
 
 
-    public DeliveredProductDetail(String deliveryItemId) {
+    public DeliveredProductDetail(String deliveryItemId){
         this.deliveryItemId = deliveryItemId;
     }
-
-    public DeliveredProductDetail() {
+    public DeliveredProductDetail(String deliveryItemId, String priceBucketId) {
+        this.deliveryItemId = deliveryItemId;
+        this.priceBucketId = priceBucketId;
     }
 
     public String getDeliveryItemId() {

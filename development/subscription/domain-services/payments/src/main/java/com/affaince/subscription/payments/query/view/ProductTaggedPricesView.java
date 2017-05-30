@@ -2,6 +2,7 @@ package com.affaince.subscription.payments.query.view;
 
 import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import org.joda.time.LocalDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection="ProductTaggedPricesView")
 public class ProductTaggedPricesView {
+    @Id
     private ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId;
     private double purchasePricePerUnit;
     private double MRP;

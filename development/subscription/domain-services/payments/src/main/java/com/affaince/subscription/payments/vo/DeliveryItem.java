@@ -1,26 +1,32 @@
 package com.affaince.subscription.payments.vo;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.type.ProductPricingCategory;
 
 public class DeliveryItem {
     private String deliveryItemId;
     private DeliveryStatus deliveryStatus;
     private double weightInGrms;
     private double deliveryCharges;
-    private double offeredPriceWithBasketLevelDiscount;
+    private String priceBucketId;
+    private double offeredPricePerUnit;
+    private ProductPricingCategory productPricingCategory;
 
-    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double offeredPriceWithBasketLevelDiscount) {
+    public DeliveryItem(String deliveryItemId, DeliveryStatus deliveryStatus, double weightInGrms, double deliveryCharges, String priceBucketId, double offeredPricePerUnit, ProductPricingCategory productPricingCategory) {
         this.deliveryItemId = deliveryItemId;
         this.deliveryStatus = deliveryStatus;
         this.weightInGrms = weightInGrms;
-        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
-    }
-
-    public DeliveryItem() {
+        this.deliveryCharges = deliveryCharges;
+        this.priceBucketId = priceBucketId;
+        this.offeredPricePerUnit = offeredPricePerUnit;
+        this.productPricingCategory = productPricingCategory;
     }
 
     public DeliveryItem(String deliveryItemId) {
         this.deliveryItemId = deliveryItemId;
+    }
+
+    public DeliveryItem() {
     }
 
     public String getDeliveryItemId() {
@@ -55,27 +61,47 @@ public class DeliveryItem {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public double getOfferedPriceWithBasketLevelDiscount() {
-        return offeredPriceWithBasketLevelDiscount;
+    public String getPriceBucketId() {
+        return priceBucketId;
     }
 
-    public void setOfferedPriceWithBasketLevelDiscount(double offeredPriceWithBasketLevelDiscount) {
-        this.offeredPriceWithBasketLevelDiscount = offeredPriceWithBasketLevelDiscount;
+    public void setPriceBucketId(String priceBucketId) {
+        this.priceBucketId = priceBucketId;
     }
+
+    public double getOfferedPricePerUnit() {
+        return offeredPricePerUnit;
+    }
+
+    public void setOfferedPricePerUnit(double offeredPricePerUnit) {
+        this.offeredPricePerUnit = offeredPricePerUnit;
+    }
+
+    public ProductPricingCategory getProductPricingCategory() {
+        return productPricingCategory;
+    }
+
+    public void setProductPricingCategory(ProductPricingCategory productPricingCategory) {
+        this.productPricingCategory = productPricingCategory;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DeliveryItem)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         DeliveryItem that = (DeliveryItem) o;
 
-        return deliveryItemId.equals(that.deliveryItemId);
+        if (!deliveryItemId.equals(that.deliveryItemId)) return false;
+        return priceBucketId.equals(that.priceBucketId);
 
     }
 
     @Override
     public int hashCode() {
-        return deliveryItemId.hashCode();
+        int result = deliveryItemId.hashCode();
+        result = 31 * result + priceBucketId.hashCode();
+        return result;
     }
 }

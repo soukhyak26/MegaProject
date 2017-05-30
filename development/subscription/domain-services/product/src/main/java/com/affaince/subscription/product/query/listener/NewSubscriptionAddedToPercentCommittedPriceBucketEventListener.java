@@ -3,6 +3,8 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.event.NewSubscriptionAddedToPercentCommittedPriceBucketEvent;
+import com.affaince.subscription.product.query.exception.MultipleActualViewsOnSingleDateException;
+import com.affaince.subscription.product.query.exception.StaleNewSubscriptionsEventException;
 import com.affaince.subscription.product.query.repository.PriceBucketTransactionViewRepository;
 import com.affaince.subscription.product.query.repository.PriceBucketViewRepository;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
@@ -11,8 +13,11 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.vo.PriceBucketTransactionId;
 import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
+import org.apache.avro.Schema;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,24 +48,53 @@ public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
                 productActualsViewRepository.findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc
                         (event.getProductId());
 
-        //find today's productActualsView
-
-        //ProductActualsView productActualsViewForToday = productActualsViewRepository.findOne(new ProductVersionId(event.getProductId(), SysDate.now()));
-        //very first record of ProductActualsView
         if (latestProductActualsView == null) {
-            //ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), SysDate.now().minusDays(1))).get(0);
-            //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
             latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
             latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
             latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
             productActualsViewRepository.save(latestProductActualsView);
         } else {
-            //latest record of ProductActualsView which is not of the same date when event was generated
-            //if(latestProductActualsView.getProductVersionId().getFromDate().isEqual(event.getSubscriptionChangedDate())) {
-                //long latestSubscribedProductCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+            if (latestProductActualsView.getProductVersionId().getFromDate().isEqual(event.getSubscriptionChangedDate())) {
                 latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
                 latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
                 productActualsViewRepository.save(latestProductActualsView);
+            } else if (latestProductActualsView.getProductVersionId().getFromDate().isBefore(event.getSubscriptionChangedDate())) {
+                long latestTotalSubscriptionCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+                latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
+                latestProductActualsView.setTotalNumberOfExistingSubscriptions(latestTotalSubscriptionCount);
+                latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                productActualsViewRepository.save(latestProductActualsView);
+            } else {//latest view is after event date
+                List<ProductActualsView> actualsViewsOnEventDate = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()));
+                if (actualsViewsOnEventDate.size() == 0) {
+                    //    long latestTotalSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+                    final Sort sort = new Sort(Sort.Direction.DESC, "endDate");
+                    long latestTotalSubscriptionCountBeforeEvent = productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(event.getProductId(), event.getSubscriptionChangedDate().minusDays(10), event.getSubscriptionChangedDate(), sort).get(0).getTotalNumberOfExistingSubscriptions();
+                    latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
+                    latestProductActualsView.setTotalNumberOfExistingSubscriptions(latestTotalSubscriptionCountBeforeEvent);
+                    latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                    latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                    productActualsViewRepository.save(latestProductActualsView);
+
+                } else if (actualsViewsOnEventDate.size() > 1) {
+                    throw MultipleActualViewsOnSingleDateException.build(event.getProductId(), event.getSubscriptionChangedDate());
+                } else {
+                    ProductActualsView eventDatedActualsView = actualsViewsOnEventDate.get(0);
+                    eventDatedActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
+                    eventDatedActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                    productActualsViewRepository.save(eventDatedActualsView);
+                }
+                int daysDifference = Days.daysBetween(event.getSubscriptionChangedDate(), latestProductActualsView.getProductVersionId().getFromDate()).getDays();
+                if (daysDifference == 1) {
+                    latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
+                    productActualsViewRepository.save(latestProductActualsView);
+                } else {
+                    throw StaleNewSubscriptionsEventException.build(event.getProductId());
+                }
+
+            }
+        }
                 //Latest record is of the previous day of the event generated
             /*}else if(latestProductActualsView.getProductVersionId().getFromDate().isBefore(event.getSubscriptionChangedDate())){
 
@@ -92,7 +126,6 @@ public class NewSubscriptionAddedToPercentCommittedPriceBucketEventListener {
                 latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
                 productActualsViewRepository.save(latestProductActualsView);
             }*/
-        }
 
         PriceBucketView priceBucketView = priceBucketViewRepository.findOne(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
         final long revisedNewSubscriptionCountOfPriceBucket = event.getNewSubscriptionCount();

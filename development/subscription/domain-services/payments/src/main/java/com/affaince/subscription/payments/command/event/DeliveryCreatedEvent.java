@@ -6,9 +6,6 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-/**
- * Created by anayonkar on 21/8/16.
- */
 public class DeliveryCreatedEvent {
     public String deliveryId;
     private String subscriberId;

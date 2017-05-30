@@ -157,6 +157,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         List<DeliveryDetails> deliveries = new ArrayList<>();
         for (DeliveryCreatedEvent delivery : totalSubscriptionDeliveries) {
             DeliveryDetails deliveryDetails = createDeliveryDetails(delivery,taggedPricingService,productDetailsService);
+            deliveries.add(deliveryDetails);
+
             List<DeliveryItem> itemsInADelivery = delivery.getDeliveryItems();
             totalRewardPoints += delivery.getRewardPoints();
             double totalDeliveryCost = 0;
@@ -164,11 +166,11 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
                 ProductPricingCategory pricingCategory=productDetailsService.findProductByProductId(item.getDeliveryItemId()).getProductPricingCategory();
                 if(pricingCategory== ProductPricingCategory.DISCOUNT_COMMITMENT){
                     double latestMRP= taggedPricingService.findLatestTaggedPriceForAProduct(item.getDeliveryItemId());
-                    totalTentativeSubscriptionAmount += latestMRP*(1-item.getOfferedPriceWithBasketLevelDiscount());
-                    totalDeliveryCost += latestMRP*(1-item.getOfferedPriceWithBasketLevelDiscount());
+                    totalTentativeSubscriptionAmount += latestMRP*(1-item.getOfferedPricePerUnit());
+                    totalDeliveryCost += latestMRP*(1-item.getOfferedPricePerUnit());
                 }else {
-                    totalTentativeSubscriptionAmount += item.getOfferedPriceWithBasketLevelDiscount();
-                    totalDeliveryCost += item.getOfferedPriceWithBasketLevelDiscount();
+                    totalTentativeSubscriptionAmount += item.getOfferedPricePerUnit();
+                    totalDeliveryCost += item.getOfferedPricePerUnit();
                 }
             }
             apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(), delivery.getDeliveryId(), delivery.getDeliveryDate(), totalDeliveryCost));
@@ -183,10 +185,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         List<DeliveryItem> deliveryItems= delivery.getDeliveryItems();
         List<DeliveredProductDetail> deliveredProducts=new ArrayList<>();
         for(DeliveryItem deliveryItem: deliveryItems){
-            DeliveredProductDetail deliveredProduct= new DeliveredProductDetail(deliveryItem.getDeliveryItemId());
+            DeliveredProductDetail deliveredProduct= new DeliveredProductDetail(deliveryItem.getDeliveryItemId(),deliveryItem.getPriceBucketId());
             deliveredProduct.setDeliveryCharges(deliveryItem.getDeliveryCharges());
             deliveredProduct.setMRPAtSubscription(taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId()));
-            deliveredProduct.setOfferedPricePerUnitAtSubscription(deliveryItem.getOfferedPriceWithBasketLevelDiscount());
+            deliveredProduct.setOfferedPricePerUnitAtSubscription(deliveryItem.getOfferedPricePerUnit());
             deliveredProduct.setProductPricingCategory(productDetailsService.findProductByProductId(deliveryItem.getDeliveryItemId()).getProductPricingCategory());
             deliveredProducts.add(deliveredProduct);
         }

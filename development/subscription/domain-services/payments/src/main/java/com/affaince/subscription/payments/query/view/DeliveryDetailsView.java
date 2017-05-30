@@ -39,4 +39,5 @@ public class DeliveryDetailsView {
     public void setDeliveredProductDetails(List<DeliveredProductDetail> deliveredProductDetails) {
         this.deliveredProductDetails = deliveredProductDetails;
     }
+
 }
