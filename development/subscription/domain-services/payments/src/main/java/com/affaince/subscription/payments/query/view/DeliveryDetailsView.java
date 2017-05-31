@@ -1,5 +1,6 @@
 package com.affaince.subscription.payments.query.view;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.payments.vo.DeliveredProductDetail;
 import com.affaince.subscription.payments.vo.SubscriptionwiseDeliveryId;
 import org.joda.time.LocalDate;
@@ -17,11 +18,13 @@ public class DeliveryDetailsView {
     private SubscriptionwiseDeliveryId subscriptionwiseDeliveryId;
     private List<DeliveredProductDetail> deliveredProductDetails;
     private LocalDate deliveryDate;
+    private DeliveryStatus deliveryStatus;
 
     public DeliveryDetailsView(SubscriptionwiseDeliveryId subscriptionwiseDeliveryId, List<DeliveredProductDetail> deliveredProductDetails, LocalDate deliveryDate) {
         this.subscriptionwiseDeliveryId = subscriptionwiseDeliveryId;
         this.deliveredProductDetails = deliveredProductDetails;
         this.deliveryDate = deliveryDate;
+        deliveryStatus=DeliveryStatus.CREATED;
     }
 
     public SubscriptionwiseDeliveryId getSubscriptionwiseDeliveryId() {
@@ -40,4 +43,11 @@ public class DeliveryDetailsView {
         this.deliveredProductDetails = deliveredProductDetails;
     }
 
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
 }

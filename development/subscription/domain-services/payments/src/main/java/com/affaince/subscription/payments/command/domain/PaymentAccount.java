@@ -187,8 +187,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         for(DeliveryItem deliveryItem: deliveryItems){
             DeliveredProductDetail deliveredProduct= new DeliveredProductDetail(deliveryItem.getDeliveryItemId(),deliveryItem.getPriceBucketId());
             deliveredProduct.setDeliveryCharges(deliveryItem.getDeliveryCharges());
-            deliveredProduct.setMRPAtSubscription(taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId()));
-            deliveredProduct.setOfferedPricePerUnitAtSubscription(deliveryItem.getOfferedPricePerUnit());
+            deliveredProduct.setMRPOld(taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId()));
+            deliveredProduct.setOfferedPricePerUnitOld(deliveryItem.getOfferedPricePerUnit());
+            //seperate field for percent in case of percent discount committed product. For other price bucket categories the value in this field will be junk.
+            deliveredProduct.setOfferedPriceOrPercent(deliveryItem.getOfferedPricePerUnit());
             deliveredProduct.setProductPricingCategory(productDetailsService.findProductByProductId(deliveryItem.getDeliveryItemId()).getProductPricingCategory());
             deliveredProducts.add(deliveredProduct);
         }

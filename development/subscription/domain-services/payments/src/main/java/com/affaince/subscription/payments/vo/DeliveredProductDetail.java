@@ -7,12 +7,13 @@ public class DeliveredProductDetail {
     private String deliveryItemId;
     private String priceBucketId;
     private double deliveryCharges;
-    private double offeredPricePerUnitAtSubscription;
-    private double offeredPricePerUnitAtDispatch;
-    private double purchasePriceAtSubscription;
-    private double purchasePriceAtDispatch;
-    private double MRPAtSubscription;
-    private double MRPAtDispatch;
+    private double offeredPriceOrPercent;
+    private double offeredPricePerUnitOld;
+    private double offeredPricePerUnitNew;
+    private double purchasePriceOld;
+    private double purchasePriceNew;
+    private double MRPOld;
+    private double MRPNew;
     private ProductPricingCategory productPricingCategory;
 
 
@@ -49,52 +50,64 @@ public class DeliveredProductDetail {
         this.productPricingCategory = productPricingCategory;
     }
 
-    public double getOfferedPricePerUnitAtSubscription() {
-        return offeredPricePerUnitAtSubscription;
+    public double getOfferedPricePerUnitOld() {
+        return offeredPricePerUnitOld;
     }
 
-    public void setOfferedPricePerUnitAtSubscription(double offeredPricePerUnitAtSubscription) {
-        this.offeredPricePerUnitAtSubscription = offeredPricePerUnitAtSubscription;
+    public void setOfferedPricePerUnitOld(double offeredPricePerUnitOld) {
+        this.offeredPricePerUnitOld = offeredPricePerUnitOld;
     }
 
-    public double getOfferedPricePerUnitAtDispatch() {
-        return offeredPricePerUnitAtDispatch;
+    public double getOfferedPricePerUnitNew() {
+        return offeredPricePerUnitNew;
     }
 
-    public void setOfferedPricePerUnitAtDispatch(double offeredPricePerUnitAtDispatch) {
-        this.offeredPricePerUnitAtDispatch = offeredPricePerUnitAtDispatch;
+    public void setOfferedPricePerUnitNew(double offeredPricePerUnitNew) {
+        this.offeredPricePerUnitNew = offeredPricePerUnitNew;
     }
 
-    public double getPurchasePriceAtSubscription() {
-        return purchasePriceAtSubscription;
+    public double getPurchasePriceOld() {
+        return purchasePriceOld;
     }
 
-    public void setPurchasePriceAtSubscription(double purchasePriceAtSubscription) {
-        this.purchasePriceAtSubscription = purchasePriceAtSubscription;
+    public void setPurchasePriceOld(double purchasePriceOld) {
+        this.purchasePriceOld = purchasePriceOld;
     }
 
-    public double getPurchasePriceAtDispatch() {
-        return purchasePriceAtDispatch;
+    public double getPurchasePriceNew() {
+        return purchasePriceNew;
     }
 
-    public void setPurchasePriceAtDispatch(double purchasePriceAtDispatch) {
-        this.purchasePriceAtDispatch = purchasePriceAtDispatch;
+    public void setPurchasePriceNew(double purchasePriceNew) {
+        this.purchasePriceNew = purchasePriceNew;
     }
 
-    public double getMRPAtSubscription() {
-        return MRPAtSubscription;
+    public double getMRPOld() {
+        return MRPOld;
     }
 
-    public void setMRPAtSubscription(double MRPAtSubscription) {
-        this.MRPAtSubscription = MRPAtSubscription;
+    public void setMRPOld(double MRPOld) {
+        this.MRPOld = MRPOld;
     }
 
-    public double getMRPAtDispatch() {
-        return MRPAtDispatch;
+    public double getMRPNew() {
+        return MRPNew;
     }
 
-    public void setMRPAtDispatch(double MRPAtDispatch) {
-        this.MRPAtDispatch = MRPAtDispatch;
+    public void setMRPNew(double MRPNew) {
+        this.MRPNew = MRPNew;
+    }
+
+    public String getPriceBucketId() {
+        return priceBucketId;
+    }
+
+    public double getOfferedPriceOrPercent() {
+        return offeredPriceOrPercent;
+    }
+
+    public void setOfferedPriceOrPercent(double offeredPriceOrPercent) {
+        this.offeredPriceOrPercent = offeredPriceOrPercent;
     }
 
     @Override

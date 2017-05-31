@@ -171,10 +171,10 @@ public class Default {
         };
         SimpleModule simpleModule = new SimpleModule("Axon");
         simpleModule.addDeserializer(MetaData.class, new MetadataDeserializer());
-        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+        /*simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
         simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer());
-        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());
+        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());*/
         simpleModule.addSerializer(QuantityUnit.class, new QuantityUnitSerializer());
         simpleModule.addDeserializer(QuantityUnit.class, new QuantityUnitDeserializer());
         simpleModule.addSerializer(PricingStrategyType.class, new PricingStrategyTypeSerializer());
