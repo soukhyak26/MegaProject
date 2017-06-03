@@ -6,7 +6,7 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import java.util.List;
 
 
-public class DeliveryStatusAndDispatchDateUpdatedCommand {
+public class UpdateDeliveryStatusAndDispatchDateCommand {
     private String subscriptionId;
     private String basketId;
     private DeliveryStatus basketDeliveryStatus;
@@ -15,7 +15,7 @@ public class DeliveryStatusAndDispatchDateUpdatedCommand {
     private double deliveryCharges;
     private double totalDeliveryPrice;
 
-    public DeliveryStatusAndDispatchDateUpdatedCommand(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
+    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
@@ -25,7 +25,7 @@ public class DeliveryStatusAndDispatchDateUpdatedCommand {
         this.totalDeliveryPrice = totalDeliveryPrice;
     }
 
-    public DeliveryStatusAndDispatchDateUpdatedCommand() {
+    public UpdateDeliveryStatusAndDispatchDateCommand() {
     }
 
     public String getSubscriptionId() {

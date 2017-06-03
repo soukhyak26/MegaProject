@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
 import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
-import com.affaince.subscription.payments.command.DeliveryStatusAndDispatchDateUpdatedCommand;
+import com.affaince.subscription.payments.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.*;
 import com.affaince.subscription.payments.service.ProductDetailsService;
@@ -28,7 +28,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     private String subscriptionId;
 
     private String subscriberId;
-    private List<DeliveryDetails> deliveryDetails;
 
     @EventSourcedMember
     private Map<String, DeliveryCostAccount> deliveryCostAccountMap;
@@ -173,7 +172,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
                     totalDeliveryCost += item.getOfferedPricePerUnit();
                 }
             }
-            apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(), delivery.getDeliveryId(), delivery.getDeliveryDate(), totalDeliveryCost));
+            apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(), delivery.getDeliveryId(),delivery.getDeliveryDate(),deliveryDetails, totalDeliveryCost));
         }
 
         apply(new SubscriptionDetailsRegisteredEvent(this.getSubscriptionId(), totalTentativeSubscriptionAmount, totalRewardPoints, deliveries, SysDate.now()));
@@ -207,7 +206,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(CostCalculatedForRegisteredDeliveryEvent event) {
-        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getDeliveryDate(), event.getTotalDeliveryCost());
+        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getDeliveryDate(), event.getDeliveryDetails(),event.getTotalDeliveryCost());
         this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
     }
 
@@ -216,10 +215,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalReceivableCostAccount = new TotalReceivableCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
         this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getSubscriptionId(), 0, event.getRegistrationDate());
         this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
-        this.deliveryDetails = event.getDeliveries();
     }
 
-    public void correctDues(DeliveryStatusAndDispatchDateUpdatedCommand command) {
+    public void correctDues(UpdateDeliveryStatusAndDispatchDateCommand command) {
+
     }
 
 

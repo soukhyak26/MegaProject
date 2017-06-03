@@ -1,5 +1,6 @@
 package com.affaince.subscription.payments.vo;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class DeliveryDetails {
     private String subscriptionId;
     private List<DeliveredProductDetail> deliveredProductDetails;
     private LocalDate deliveryDate;
+    private DeliveryStatus deliveryStatus;
 
     public DeliveryDetails(String deliveryId, String subscriptionId) {
         this.deliveryId = deliveryId;
@@ -40,5 +42,13 @@ public class DeliveryDetails {
 
     public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
+    }
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 }
