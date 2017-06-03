@@ -1,6 +1,8 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
+import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
+import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;
@@ -27,6 +29,11 @@ import java.util.stream.Stream;
 public class ARIMABasedDemandForecasterTest {
     @Autowired
     ARIMABasedDemandForecaster forecaster;
+    @Autowired
+    private HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    private HistoryMaxSizeConstraints historyMaxSizeConstraints;
+
     private List<ProductActualsView> ProductActualsViewList;
 
     @Before
@@ -51,7 +58,8 @@ public class ARIMABasedDemandForecasterTest {
             ProductActualsViewList.add(actualsView);
         }
         List<Double> historicalDailySubscriptionCountList = ProductActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
-
+        forecaster.setHistoryMinSizeConstraints(this.historyMinSizeConstraints);
+        forecaster.setHistoryMaxSizeConstraints(this.historyMaxSizeConstraints);
         List<Double> result = forecaster.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
         System.out.println("ARIMA Precise prediction: " + (result == null ? "null" : result.get(0)));
     }

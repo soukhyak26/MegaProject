@@ -46,10 +46,10 @@ public class PaymentInitiatedEventListener {
         PaymentTransactionView paymentTransactionView = new PaymentTransactionView(event.getPaymentDate(),event.getSubscriptionId(),event.getPaidAmount(), PaymentTransactionType.PAYMENT_BY_MONEY);
         paymentTransactionViewRepository.save(paymentTransactionView);
 
-        List<DeliveryCostView> deliveriesForASubscription=deliveryCostViewRepository.findBySubscriptionId(event.getSubscriptionId());
+        List<DeliveryCostView> deliveriesForASubscription=deliveryCostViewRepository.findBySubscriptionwiseDeliveryId_SubscriptionId(event.getSubscriptionId());
         Map<String,Double> paymentToBeAdjustedAgainstDeliveries= event.getPaymentToBeAdjustedAgainstDeliveries();
         for(DeliveryCostView deliveryCostView: deliveriesForASubscription){
-            Double paymentToBeAdjustedAgainstDelivery=paymentToBeAdjustedAgainstDeliveries.get(deliveryCostView.getDeliveryId());
+            Double paymentToBeAdjustedAgainstDelivery=paymentToBeAdjustedAgainstDeliveries.get(deliveryCostView.getSubscriptionwiseDeliveryId().getDeliveryId());
             if(null != paymentToBeAdjustedAgainstDelivery && paymentToBeAdjustedAgainstDelivery.doubleValue()>0) {
                 deliveryCostView.creditToPaymentReceived(paymentToBeAdjustedAgainstDelivery);
                 deliveryCostViewRepository.save(deliveryCostView);

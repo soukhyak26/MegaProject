@@ -7,9 +7,8 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by anayonkar on 20/11/16.
- */
+import java.util.List;
+//TODO: NOT Authentic implementaiton.. needs to be corrected
 @Component
 public class DeliveryDestroyedEventListener {
     private final DeliveryCostViewRepository deliveryCostViewRepository;
@@ -21,7 +20,7 @@ public class DeliveryDestroyedEventListener {
 
     @EventHandler
     public void on(DeliveryDestroyedEvent event) {
-        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findByDeliveryId(event.getDeliveryId());
+        List<DeliveryCostView> deliveryCostView = deliveryCostViewRepository.findBySubscriptionwiseDeliveryId_DeliveryId(event.getDeliveryId());
         /*if(deliveryCostView == null) {
             deliveryCostView = new DeliveryCostView(event.getDeliveryId(), event.getSubscriptionId(), 0);
         }*/

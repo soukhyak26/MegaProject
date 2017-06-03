@@ -52,18 +52,19 @@ public class CalculatorChain {
             String name = config.getName();
             AbstractPriceCalculator calculator = (AbstractPriceCalculator) Class.forName(config.getCls()).newInstance();
             String next = config.getNext();
-            calculatorsMapAgainstNextCalculatorName.put(next, calculator);
+
             if (next.equals("NULL")) {
                 calculator.setNextCalculator(null);
             } else {
-                AbstractPriceCalculator earlierCalculator = calculatorsMapAgainstNextCalculatorName.get(name);
-                if (null != earlierCalculator) {
-                    earlierCalculator.setNextCalculator(calculator);
-                    calculatorsMapAgainstNextCalculatorName.remove(name);
-                    initialCalculatorsMap.remove(name);
-                } else {
-                    initialCalculatorsMap.put(name, calculator);
-                }
+                calculatorsMapAgainstNextCalculatorName.put(next, calculator);
+            }
+            AbstractPriceCalculator earlierCalculator = calculatorsMapAgainstNextCalculatorName.get(name);
+            if (null != earlierCalculator) {
+                earlierCalculator.setNextCalculator(calculator);
+                calculatorsMapAgainstNextCalculatorName.remove(name);
+                initialCalculatorsMap.remove(name);
+            } else {
+                initialCalculatorsMap.put(name, calculator);
             }
         }
         this.initialCalculatorsForDifferentStrategies=new ArrayList<>();

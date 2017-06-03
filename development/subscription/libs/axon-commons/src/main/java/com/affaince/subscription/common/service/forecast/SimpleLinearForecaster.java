@@ -60,4 +60,16 @@ public class SimpleLinearForecaster implements TimeSeriesBasedForecaster{
 
         }
     }
+
+    @Override
+    public void setHistoryMinSizeConstraints(HistoryMinSizeConstraints historyMinSizeConstraints) {
+     this.historyMinSizeConstraints=historyMinSizeConstraints;
+    }
+
+    @Override
+    public void setHistoryMaxSizeConstraints(HistoryMaxSizeConstraints historyMaxSizeConstraints) {
+        this.historyMaxSizeConstraints=historyMaxSizeConstraints;
+    }
+
+
 }

@@ -222,6 +222,5 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void correctDues(DeliveryStatusAndDispatchDateUpdatedCommand command) {
     }
 
-    private class Iterator<T> {
-    }
+
 }

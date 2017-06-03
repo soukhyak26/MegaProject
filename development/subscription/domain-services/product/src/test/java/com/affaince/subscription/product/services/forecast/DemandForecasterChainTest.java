@@ -41,7 +41,7 @@ public class DemandForecasterChainTest {
     private ProductActualsViewRepository productActualsViewRepository;
     @Mock
     private ProductForecastViewRepository productForecastViewRepository;
-    @InjectMocks
+    //@InjectMocks
     @Autowired
     private DemandForecasterChain chain;
 

@@ -77,4 +77,14 @@ public class SimpleMovingAverageDemandForecaster implements TimeSeriesBasedForec
         return null;
 
     }
+
+    @Override
+    public void setHistoryMinSizeConstraints(HistoryMinSizeConstraints historyMinSizeConstraints) {
+        this.historyMinSizeConstraints=historyMinSizeConstraints;
+    }
+
+    @Override
+    public void setHistoryMaxSizeConstraints(HistoryMaxSizeConstraints historyMaxSizeConstraints) {
+        this.historyMaxSizeConstraints=historyMaxSizeConstraints;
+    }
 }

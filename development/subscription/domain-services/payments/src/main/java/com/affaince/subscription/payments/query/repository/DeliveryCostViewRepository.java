@@ -1,15 +1,13 @@
 package com.affaince.subscription.payments.query.repository;
 
 import com.affaince.subscription.payments.query.view.DeliveryCostView;
+import com.affaince.subscription.payments.vo.SubscriptionwiseDeliveryId;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-/**
- * Created by anayonkar on 21/8/16.
- */
-public interface DeliveryCostViewRepository extends CrudRepository<DeliveryCostView, String> {
-    DeliveryCostView findByDeliveryId(String deliveryId);
-    List<DeliveryCostView> findBySubscriptionId(String subscriptionId);
+public interface DeliveryCostViewRepository extends CrudRepository<DeliveryCostView, SubscriptionwiseDeliveryId> {
+    List<DeliveryCostView> findBySubscriptionwiseDeliveryId_SubscriptionId(String subscriptionId);
+    List<DeliveryCostView> findBySubscriptionwiseDeliveryId_DeliveryId(String deliveryId);
     //TODO: introduce method to look for DeliveryCostView by subscription id AND delivery id
 }

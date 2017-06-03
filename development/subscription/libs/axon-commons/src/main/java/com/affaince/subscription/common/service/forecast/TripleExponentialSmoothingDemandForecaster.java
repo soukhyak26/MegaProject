@@ -94,5 +94,13 @@ public class TripleExponentialSmoothingDemandForecaster implements TimeSeriesBas
                     : nextForecaster.forecast(dataIdentifier, historicalDataList);
         }
     }
+    @Override
+    public void setHistoryMinSizeConstraints(HistoryMinSizeConstraints historyMinSizeConstraints) {
+        this.historyMinSizeConstraints=historyMinSizeConstraints;
+    }
 
+    @Override
+    public void setHistoryMaxSizeConstraints(HistoryMaxSizeConstraints historyMaxSizeConstraints) {
+        this.historyMaxSizeConstraints=historyMaxSizeConstraints;
+    }
 }

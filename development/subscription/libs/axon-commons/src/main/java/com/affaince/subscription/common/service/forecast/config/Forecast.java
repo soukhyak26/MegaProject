@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by mandar on 10-01-2017.
  */
 @Configuration
-@EnableConfigurationProperties({HistoryMinSizeConstraints.class, HistoryMaxSizeConstraints.class})
+@EnableConfigurationProperties({HistoryMinSizeConstraints.class, HistoryMaxSizeConstraints.class,ForecasterConfiguration.class})
 public class Forecast {
     @Bean
     public DemandForecasterChain demandForecasterChain() {

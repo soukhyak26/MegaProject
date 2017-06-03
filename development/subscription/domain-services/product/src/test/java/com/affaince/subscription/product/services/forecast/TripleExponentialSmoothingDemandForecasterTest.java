@@ -1,6 +1,8 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.TripleExponentialSmoothingDemandForecaster;
+import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
+import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;
@@ -25,6 +27,11 @@ import java.util.stream.Collectors;
 public class TripleExponentialSmoothingDemandForecasterTest {
     @Autowired
     TripleExponentialSmoothingDemandForecaster forecaster;
+    @Autowired
+    private HistoryMinSizeConstraints historyMinSizeConstraints;
+    @Autowired
+    private HistoryMaxSizeConstraints historyMaxSizeConstraints;
+
     private List<ProductActualsView> ProductActualsViewList;
 
     @Before
@@ -96,6 +103,8 @@ public class TripleExponentialSmoothingDemandForecasterTest {
         // TimeSeriesBasedForecaster forecaster= new TripleExponentialSmoothingDemandForecaster();
         List<Double> historicalDailySubscriptionCountList = ProductActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
+        forecaster.setHistoryMinSizeConstraints(this.historyMinSizeConstraints);
+        forecaster.setHistoryMaxSizeConstraints(this.historyMaxSizeConstraints);
 
         List<Double> result = forecaster.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
         System.out.println("Triple exponential Precise prediction: "+ (result == null ? "null" : result.get(0)));
