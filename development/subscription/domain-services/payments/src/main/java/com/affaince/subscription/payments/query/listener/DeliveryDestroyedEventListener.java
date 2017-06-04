@@ -20,7 +20,7 @@ public class DeliveryDestroyedEventListener {
 
     @EventHandler
     public void on(DeliveryDestroyedEvent event) {
-        List<DeliveryCostView> deliveryCostView = deliveryCostViewRepository.findBySubscriptionwiseDeliveryId_DeliveryId(event.getDeliveryId());
+        List<DeliveryCostView> deliveryCostView = deliveryCostViewRepository.findByDeliveryId_DeliveryId(event.getDeliveryId());
         /*if(deliveryCostView == null) {
             deliveryCostView = new DeliveryCostView(event.getDeliveryId(), event.getSubscriptionId(), 0);
         }*/

@@ -7,12 +7,14 @@ import org.joda.time.LocalDate;
  * Created by mandar on 5/17/2017.
  */
 public class CostCalculatedForRegisteredDeliveryEvent {
+    private String subscriberId;
     private String subscriptionId;
     private String deliveryId;
     private LocalDate deliveryDate;
     private DeliveryDetails deliveryDetails;
     private double totalDeliveryCost;
-    public CostCalculatedForRegisteredDeliveryEvent(String subscriptionId, String deliveryId, LocalDate deliveryDate, DeliveryDetails deliveyDetails, double totalDeliveryCost) {
+    public CostCalculatedForRegisteredDeliveryEvent(String subscriberId,String subscriptionId, String deliveryId, LocalDate deliveryDate, DeliveryDetails deliveyDetails, double totalDeliveryCost) {
+        this.subscriberId=subscriberId;
         this.deliveryId=deliveryId;
         this.subscriptionId=subscriptionId;
         this.deliveryDate=deliveryDate;
@@ -38,5 +40,9 @@ public class CostCalculatedForRegisteredDeliveryEvent {
 
     public DeliveryDetails getDeliveryDetails() {
         return deliveryDetails;
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
     }
 }

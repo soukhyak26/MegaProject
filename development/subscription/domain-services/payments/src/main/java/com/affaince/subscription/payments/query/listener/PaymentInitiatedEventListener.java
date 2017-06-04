@@ -1,6 +1,5 @@
 package com.affaince.subscription.payments.query.listener;
 
-import com.affaince.subscription.payments.command.accounting.TotalReceivableCostAccount;
 import com.affaince.subscription.payments.command.event.PaymentInitiatedEvent;
 import com.affaince.subscription.payments.query.repository.DeliveryCostViewRepository;
 import com.affaince.subscription.payments.query.repository.PaymentTransactionViewRepository;
@@ -46,10 +45,10 @@ public class PaymentInitiatedEventListener {
         PaymentTransactionView paymentTransactionView = new PaymentTransactionView(event.getPaymentDate(),event.getSubscriptionId(),event.getPaidAmount(), PaymentTransactionType.PAYMENT_BY_MONEY);
         paymentTransactionViewRepository.save(paymentTransactionView);
 
-        List<DeliveryCostView> deliveriesForASubscription=deliveryCostViewRepository.findBySubscriptionwiseDeliveryId_SubscriptionId(event.getSubscriptionId());
+        List<DeliveryCostView> deliveriesForASubscription=deliveryCostViewRepository.findByDeliveryId_SubscriptionId(event.getSubscriptionId());
         Map<String,Double> paymentToBeAdjustedAgainstDeliveries= event.getPaymentToBeAdjustedAgainstDeliveries();
         for(DeliveryCostView deliveryCostView: deliveriesForASubscription){
-            Double paymentToBeAdjustedAgainstDelivery=paymentToBeAdjustedAgainstDeliveries.get(deliveryCostView.getSubscriptionwiseDeliveryId().getDeliveryId());
+            Double paymentToBeAdjustedAgainstDelivery=paymentToBeAdjustedAgainstDeliveries.get(deliveryCostView.getDeliveryId().getDeliveryId());
             if(null != paymentToBeAdjustedAgainstDelivery && paymentToBeAdjustedAgainstDelivery.doubleValue()>0) {
                 deliveryCostView.creditToPaymentReceived(paymentToBeAdjustedAgainstDelivery);
                 deliveryCostViewRepository.save(deliveryCostView);

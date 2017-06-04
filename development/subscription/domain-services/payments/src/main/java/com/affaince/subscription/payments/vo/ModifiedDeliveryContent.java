@@ -10,17 +10,23 @@ import java.util.Map;
  */
 public class ModifiedDeliveryContent {
     private String subscriptionId;
+    private String deliveryId;
     private List<DeliveredProductDetail> items;
     private double correctedTotalPayment;
     private double correctedRemainingDuePayment;
 
-    public ModifiedDeliveryContent(String subscriptionId) {
+    public ModifiedDeliveryContent(String subscriptionId,String deliveryId) {
         this.subscriptionId = subscriptionId;
+        this.deliveryId=deliveryId;
         this.items=new ArrayList<>();
     }
 
     public String getSubscriptionId() {
         return subscriptionId;
+    }
+
+    public String getDeliveryId() {
+        return deliveryId;
     }
 
     public List<DeliveredProductDetail> getItems() {

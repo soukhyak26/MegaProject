@@ -46,5 +46,7 @@ public class DeliveryCostAccount extends Account {
     public void setDeliveryDetail(DeliveryDetails deliveryDetail) {
         this.deliveryDetail = deliveryDetail;
     }
-
+    public boolean isProductInDelivery(String productId){
+        return this.deliveryDetail.isProductInDelivery(productId);
+    }
 }

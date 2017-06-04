@@ -23,6 +23,6 @@ public class UpdateDeliveryStatusAndDispatchDateCommandHandler {
     @CommandHandler
     public void handle(UpdateDeliveryStatusAndDispatchDateCommand command){
         PaymentAccount paymentAccount=paymentAccounts.load(command.getSubscriptionId());
-        paymentAccount.correctDues(command);
+        paymentAccount.correctDues(command,duePaymentCorrectionEngine);
     }
 }

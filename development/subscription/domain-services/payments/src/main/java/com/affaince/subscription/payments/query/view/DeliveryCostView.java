@@ -1,6 +1,6 @@
 package com.affaince.subscription.payments.query.view;
 
-import com.affaince.subscription.payments.vo.SubscriptionwiseDeliveryId;
+import com.affaince.subscription.common.vo.DeliveryId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,15 +11,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="DeliveryCostView")
 public class DeliveryCostView {
     @Id
-    private SubscriptionwiseDeliveryId subscriptionwiseDeliveryId;
+    private DeliveryId deliveryId;
     private String subscriptionId;
     private int deliverySequence;
     private double deliveryAmount;
     private double paymentReceived;
     private LocalDate deliveryDate;
 
-    public DeliveryCostView(String deliveryId, String subscriptionId, int deliverySequence, double deliveryAmount,LocalDate deliveryDate) {
-        this.subscriptionwiseDeliveryId = new SubscriptionwiseDeliveryId(subscriptionId,deliveryId);
+    public DeliveryCostView(String deliveryId, String subscriberId,String subscriptionId, int deliverySequence, double deliveryAmount,LocalDate deliveryDate) {
+        this.deliveryId = new DeliveryId(deliveryId,subscriberId,subscriptionId);
         this.subscriptionId = subscriptionId;
         this.deliverySequence = deliverySequence;
         this.deliveryAmount = deliveryAmount;
@@ -36,8 +36,8 @@ public class DeliveryCostView {
         this.deliveryAmount  -= amount;
     }
 
-    public SubscriptionwiseDeliveryId getSubscriptionwiseDeliveryId() {
-        return subscriptionwiseDeliveryId;
+    public DeliveryId getDeliveryId() {
+        return deliveryId;
     }
 
     public double getPaymentReceived() {

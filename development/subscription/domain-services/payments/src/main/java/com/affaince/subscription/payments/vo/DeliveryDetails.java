@@ -51,4 +51,8 @@ public class DeliveryDetails {
     public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
         this.deliveryStatus = deliveryStatus;
     }
+
+    public boolean isProductInDelivery(String productId){
+        return deliveredProductDetails.stream().anyMatch(delivery->delivery.getDeliveryItemId().equals(productId));
+    }
 }

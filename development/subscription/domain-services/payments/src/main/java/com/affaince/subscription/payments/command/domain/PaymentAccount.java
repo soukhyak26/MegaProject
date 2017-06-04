@@ -7,11 +7,10 @@ import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
 import com.affaince.subscription.payments.command.UpdateDeliveryStatusAndDispatchDateCommand;
 import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.*;
+import com.affaince.subscription.payments.service.DuePaymentCorrectionEngine;
 import com.affaince.subscription.payments.service.ProductDetailsService;
 import com.affaince.subscription.payments.service.TaggedPricingService;
-import com.affaince.subscription.payments.vo.DeliveredProductDetail;
-import com.affaince.subscription.payments.vo.DeliveryDetails;
-import com.affaince.subscription.payments.vo.DeliveryItem;
+import com.affaince.subscription.payments.vo.*;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
@@ -67,7 +66,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         //this is total payment received
         double paymentReceived = paidAmount;
         for (DeliveryCostAccount deliveryCostAccount : deliveryCostAccounts) {
-            //get total delivery amount
+            //get total delivery amount.. it has to be latest???
             double deliveryAmount = deliveryCostAccount.getAmount();
             //get payment made so far for this delivery
             double paymentReceivedForDelivery = deliveryCostAccount.getPaymentReceived();
@@ -172,10 +171,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
                     totalDeliveryCost += item.getOfferedPricePerUnit();
                 }
             }
-            apply(new CostCalculatedForRegisteredDeliveryEvent(this.getSubscriptionId(), delivery.getDeliveryId(),delivery.getDeliveryDate(),deliveryDetails, totalDeliveryCost));
+            apply(new CostCalculatedForRegisteredDeliveryEvent(this.subscriberId,this.getSubscriptionId(), delivery.getDeliveryId(),delivery.getDeliveryDate(),deliveryDetails, totalDeliveryCost));
         }
 
-        apply(new SubscriptionDetailsRegisteredEvent(this.getSubscriptionId(), totalTentativeSubscriptionAmount, totalRewardPoints, deliveries, SysDate.now()));
+        apply(new SubscriptionDetailsRegisteredEvent(this.subscriberId,this.getSubscriptionId(), totalTentativeSubscriptionAmount, totalRewardPoints, deliveries, SysDate.now()));
     }
 
     private DeliveryDetails createDeliveryDetails(DeliveryCreatedEvent delivery, TaggedPricingService taggedPricingService, ProductDetailsService productDetailsService) {
@@ -217,9 +216,33 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
     }
 
-    public void correctDues(UpdateDeliveryStatusAndDispatchDateCommand command) {
-
+    public void correctDues(UpdateDeliveryStatusAndDispatchDateCommand command, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
+        String subscriptionId= command.getSubscriptionId();
+        String deliveryId=command.getBasketId();
+        ModifiedSubscriptionContent modifiedSubscriptionContent=duePaymentCorrectionEngine.correctTotalDues(subscriptionId,this.deliveryCostAccountMap.values().stream().collect(Collectors.toList()));
+        apply(new DeliveriesUpdatdWithCorrectedPaymentEvent(this.subscriberId,modifiedSubscriptionContent,new LocalDate(command.getDispatchDate())));
     }
 
+    @EventSourcingHandler
+    public void on(DeliveriesUpdatdWithCorrectedPaymentEvent event){
+        ModifiedSubscriptionContent modifiedSubscriptionContent=event.getModifiedSubscriptionContent();
+        this.totalReceivableCostAccount.setAmount(modifiedSubscriptionContent.getModifiedTotalSubscriptionPayment());
+        this.totalReceivableCostAccount.setTransactionDate(event.getChangeDate());
+
+        List<ModifiedDeliveryContent> modifiedDeliveries=modifiedSubscriptionContent.getModifiedDeliveries();
+        List<DeliveryCostAccount> deliveryCostAccounts=this.deliveryCostAccountMap.values().stream().collect(Collectors.toList());
+        for(ModifiedDeliveryContent modifiedDeliveryContent: modifiedDeliveries){
+            DeliveryCostAccount deliveryCostAccount=deliveryCostAccounts.stream().filter(dca->(dca.getDeliveryDetail().getDeliveryId().equals(modifiedDeliveryContent.getDeliveryId()))).collect(Collectors.toList()).get(0);
+            deliveryCostAccount.setAmount(modifiedDeliveryContent.getCorrectedTotalPayment());
+            List<DeliveredProductDetail> deliverableItems=modifiedDeliveryContent.getItems();
+            for(DeliveredProductDetail deliverableItem: deliverableItems){
+                List<DeliveredProductDetail> deliverableItemsWithSamePriceBucket=deliveryCostAccount.getDeliveryDetail().getDeliveredProductDetails().stream().filter(dpd->(dpd.getDeliveryItemId().equals(deliverableItem.getDeliveryItemId()))&&(dpd.getPriceBucketId().equals(deliverableItem.getPriceBucketId()))).collect(Collectors.toList());
+                deliverableItemsWithSamePriceBucket.stream().forEach(diwspb-> {
+                    diwspb.setOfferedPricePerUnitNew(deliverableItem.getOfferedPricePerUnitNew());
+                    diwspb.setOfferedPricePerUnitOld(deliverableItem.getOfferedPricePerUnitOld());
+                });
+            }
+        }
+    }
 
 }

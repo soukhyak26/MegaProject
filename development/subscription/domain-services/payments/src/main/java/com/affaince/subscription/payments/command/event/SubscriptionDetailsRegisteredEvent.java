@@ -9,17 +9,23 @@ import java.util.List;
  * Created by mandar on 5/17/2017.
  */
 public class SubscriptionDetailsRegisteredEvent {
+    private String subscriberId;
     private String subscriptionId;
     private double totalTentativeSubscriptionAmount;
     private double totalRewardPoints;
     private List<DeliveryDetails> deliveries;
     private LocalDate registrationDate;
-    public SubscriptionDetailsRegisteredEvent(String subscriptionId, double totalTentativeSubscriptionAmount, double totalRewardPoints,List<DeliveryDetails> deliveries,LocalDate registrationDate) {
+    public SubscriptionDetailsRegisteredEvent(String subscriberId,String subscriptionId, double totalTentativeSubscriptionAmount, double totalRewardPoints,List<DeliveryDetails> deliveries,LocalDate registrationDate) {
+        this.subscriberId=subscriberId;
         this.subscriptionId=subscriptionId;
         this.totalTentativeSubscriptionAmount=totalTentativeSubscriptionAmount;
         this.totalRewardPoints=totalRewardPoints;
         this.deliveries=deliveries;
         this.registrationDate=registrationDate;
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getSubscriptionId() {

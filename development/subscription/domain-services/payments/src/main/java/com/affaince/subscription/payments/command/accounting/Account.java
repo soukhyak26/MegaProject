@@ -29,6 +29,14 @@ public abstract class Account extends AbstractAnnotatedEntity {
         return amount;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setTransactionDate(LocalDate transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
     public LocalDate getTransactionDate() {
         return transactionDate;
     }
