@@ -1,31 +1,27 @@
 package com.affaince.subscription.payments.command;
 
-import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
+import org.joda.time.LocalDate;
 
-import java.util.List;
 
-
-public class UpdateDeliveryStatusAndDispatchDateCommand {
+public class CorrectDuePaymentCommand {
     private String subscriptionId;
     private String basketId;
     private DeliveryStatus basketDeliveryStatus;
-    private String dispatchDate;
-    private List<ItemDispatchStatus> itemDispatchStatuses;
+    private LocalDate dispatchDate;
     private double deliveryCharges;
     private double totalDeliveryPrice;
 
-    public UpdateDeliveryStatusAndDispatchDateCommand(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
+    public CorrectDuePaymentCommand(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, LocalDate dispatchDate, double deliveryCharges, double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
         this.dispatchDate = dispatchDate;
-        this.itemDispatchStatuses = itemDispatchStatuses;
         this.deliveryCharges = deliveryCharges;
         this.totalDeliveryPrice = totalDeliveryPrice;
     }
 
-    public UpdateDeliveryStatusAndDispatchDateCommand() {
+    public CorrectDuePaymentCommand() {
     }
 
     public String getSubscriptionId() {
@@ -40,12 +36,8 @@ public class UpdateDeliveryStatusAndDispatchDateCommand {
         return basketDeliveryStatus;
     }
 
-    public String getDispatchDate() {
+    public LocalDate getDispatchDate() {
         return dispatchDate;
-    }
-
-    public List<ItemDispatchStatus> getItemDispatchStatuses() {
-        return itemDispatchStatuses;
     }
 
     public double getDeliveryCharges() {

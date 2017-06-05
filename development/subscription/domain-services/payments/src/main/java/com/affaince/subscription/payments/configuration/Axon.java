@@ -47,15 +47,14 @@ public class Axon extends Default {
     @Bean(name = "types")
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
+            put("com.affaince.subscription.subscriber.command.event.DeliveryPreparedForDispatchEvent",DeliveryPreparedForDispatchEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ProductRegisteredEvent",ProductRegisteredEvent.class.getName());
             put("com.affaince.subscription.product.command.event.SubscriptionSpecificDeliveriesCreatedAggregateEvent", SubscriptionSpecificDeliveriesCreatedAggregateEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ProductStatusUpdatedEvent",ProductStatusUpdatedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.OfferedPriceChangedEvent",OfferedPriceChangedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.DeliveryStatusAndDispatchDateUpdatedEvent", DeliveryStatusAndDispatchDateUpdatedEvent.class.getName());
             put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedEvent.class.getName());
-            //to be removed
             put("com.affaince.subscription.product.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
-
             put("com.affaince.subscription.subscriber.command.event.DeliveryDeletedEvent", DeliveryDeletedEvent.class.getName());
         }};
     }

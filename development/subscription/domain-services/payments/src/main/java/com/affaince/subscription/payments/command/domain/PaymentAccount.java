@@ -4,7 +4,7 @@ import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
 import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
-import com.affaince.subscription.payments.command.UpdateDeliveryStatusAndDispatchDateCommand;
+import com.affaince.subscription.payments.command.CorrectDuePaymentCommand;
 import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.*;
 import com.affaince.subscription.payments.service.DuePaymentCorrectionEngine;
@@ -216,11 +216,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
     }
 
-    public void correctDues(UpdateDeliveryStatusAndDispatchDateCommand command, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
+    public void correctDues(CorrectDuePaymentCommand command, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
         String subscriptionId= command.getSubscriptionId();
-        String deliveryId=command.getBasketId();
         ModifiedSubscriptionContent modifiedSubscriptionContent=duePaymentCorrectionEngine.correctTotalDues(subscriptionId,this.deliveryCostAccountMap.values().stream().collect(Collectors.toList()));
-        apply(new DeliveriesUpdatdWithCorrectedPaymentEvent(this.subscriberId,modifiedSubscriptionContent,new LocalDate(command.getDispatchDate())));
+        apply(new DeliveriesUpdatdWithCorrectedPaymentEvent(this.subscriberId,modifiedSubscriptionContent,command.getDispatchDate()));
     }
 
     @EventSourcingHandler

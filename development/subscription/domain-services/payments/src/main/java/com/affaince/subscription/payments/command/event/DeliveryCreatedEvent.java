@@ -17,6 +17,7 @@ public class DeliveryCreatedEvent {
     private double deliveryWeightInGrms;
     private double rewardPoints;
 
+
     public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms,double rewardPoints) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
