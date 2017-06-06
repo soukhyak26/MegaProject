@@ -8,8 +8,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Created by mandark on 02-01-2016.
  */
+/*
 @JsonSerialize(using = QuantityUnitSerializer.class)
 @JsonDeserialize(using = QuantityUnitDeserializer.class)
+*/
 public enum QuantityUnit {
     GM("gram"), KG("kilogram"), LT("Litre"), ml("millilitre");
 

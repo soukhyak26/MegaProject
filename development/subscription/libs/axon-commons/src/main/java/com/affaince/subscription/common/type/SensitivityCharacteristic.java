@@ -8,8 +8,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Created by mandark on 26-01-2016.
  */
+/*
 @JsonSerialize(using = SensitivityCharacteristicSerializer.class)
 @JsonDeserialize(using = SensitivityCharacteristicDeserializer.class)
+*/
 public enum SensitivityCharacteristic {
     NONE(0),
     ELECTRICITY_CONSUMPTION(1),

@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Created by mandar on 09-10-2016.
  */
-@JsonSerialize(using = PricingOptionsSerializer.class)
-@JsonDeserialize(using = PricingOptionsDeserializer.class)
 public enum PricingOptions {
     ACCEPT_AUTOMATED_PRICE_GENERATION(1), MANUAL_PRICE_INPUT(2), PROMPT_PRICE_RECOMMENDATION(3);
     private int pricingOptionValue;

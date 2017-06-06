@@ -49,4 +49,23 @@ public class DeliveryCostAccount extends Account {
     public boolean isProductInDelivery(String productId){
         return this.deliveryDetail.isProductInDelivery(productId);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DeliveryCostAccount that = (DeliveryCostAccount) o;
+
+        if (!deliveryId.equals(that.deliveryId)) return false;
+        return subscriptionId.equals(that.subscriptionId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = deliveryId.hashCode();
+        result = 31 * result + subscriptionId.hashCode();
+        return result;
+    }
 }

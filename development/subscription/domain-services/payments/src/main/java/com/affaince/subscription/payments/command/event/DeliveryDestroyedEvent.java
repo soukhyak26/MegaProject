@@ -1,33 +1,37 @@
 package com.affaince.subscription.payments.command.event;
 
-/**
- * Created by anayonkar on 20/11/16.
- */
+import com.affaince.subscription.payments.vo.ModifiedSubscriptionContent;
+import org.joda.time.LocalDate;
+
 public class DeliveryDestroyedEvent {
+    private String subscriberId;
     private String deliveryId;
     private String subscriptionId;
-
+    private LocalDate deletionDate;
     public DeliveryDestroyedEvent() {
     }
 
-    public DeliveryDestroyedEvent(String deliveryId, String subscriptionId) {
+    public DeliveryDestroyedEvent(String subscriberId,String subscriptionId,String deliveryId,LocalDate deletionDate) {
+        this.subscriberId=subscriberId;
         this.deliveryId = deliveryId;
         this.subscriptionId = subscriptionId;
+        this.deletionDate=deletionDate;
+
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
     }
 
     public String getDeliveryId() {
         return deliveryId;
     }
 
-    public void setDeliveryId(String deliveryId) {
-        this.deliveryId = deliveryId;
-    }
-
     public String getSubscriptionId() {
         return subscriptionId;
     }
 
-    public void setSubscriptionId(String subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public LocalDate getDeletionDate() {
+        return deletionDate;
     }
 }

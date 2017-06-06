@@ -5,8 +5,10 @@ import com.affaince.subscription.common.serializer.ProductForecastStatusSerializ
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+/*
 @JsonSerialize(using = ProductForecastStatusSerializer.class)
 @JsonDeserialize(using = ProductForecastStatusDeserializer.class)
+*/
 public enum ProductForecastStatus {
     ACTIVE(1), EXPIRED(2);
 

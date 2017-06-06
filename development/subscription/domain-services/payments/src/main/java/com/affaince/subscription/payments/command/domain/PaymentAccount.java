@@ -2,8 +2,7 @@ package com.affaince.subscription.payments.command.domain;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.payments.command.DeliveryCreatedCommand;
-import com.affaince.subscription.payments.command.DeliveryDeletedCommand;
+import com.affaince.subscription.payments.command.CreateDeliveryCommand;
 import com.affaince.subscription.payments.command.CorrectDuePaymentCommand;
 import com.affaince.subscription.payments.command.accounting.*;
 import com.affaince.subscription.payments.command.event.*;
@@ -86,7 +85,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
                 paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(), paymentMadeForDelivery);
             }
         }
-
         apply(new PaymentInitiatedEvent(subscriptionId, paidAmount, paymentToBeAdjustedAgainstDeliveries, paymentDate));
     }
 
@@ -104,20 +102,64 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
 
-    public void handleDeliveryCreatedCommand(DeliveryCreatedCommand command) {
-        apply(new DeliveryInitiatedEvent(command.getDeliveryId(), command.getSubscriptionId()));
+    public void createdNewDelivery(CreateDeliveryCommand command,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService,DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
+        List<DeliveryCostAccount> deliveries=deliveryCostAccountMap.values().stream().collect(Collectors.toList());
+        DeliveryDetails newDeliveryDetails=new DeliveryDetails(command.getDeliveryId(),command.getSubscriptionId());
+        newDeliveryDetails.setDeliveryDate(command.getDeliveryDate());
+        List<DeliveryItem> deliveryItems= command.getDeliveryItems();
+        List<DeliveredProductDetail> deliveredProducts=new ArrayList<>();
+        double totalDeliveryCost = 0;
+
+        for(DeliveryItem deliveryItem: deliveryItems){
+            ProductPricingCategory pricingCategory=productDetailsService.findProductByProductId(deliveryItem.getDeliveryItemId()).getProductPricingCategory();
+            if(pricingCategory== ProductPricingCategory.DISCOUNT_COMMITMENT){
+                double latestMRP= taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId());
+                totalDeliveryCost += latestMRP*(1-deliveryItem.getOfferedPricePerUnit());
+            }else {
+                totalDeliveryCost += deliveryItem.getOfferedPricePerUnit();
+            }
+
+            DeliveredProductDetail deliveredProduct= new DeliveredProductDetail(deliveryItem.getDeliveryItemId(),deliveryItem.getPriceBucketId());
+            deliveredProduct.setDeliveryCharges(deliveryItem.getDeliveryCharges());
+            deliveredProduct.setMRPOld(taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId()));
+            deliveredProduct.setOfferedPricePerUnitOld(deliveryItem.getOfferedPricePerUnit());
+            //seperate field for percent in case of percent discount committed product. For other price bucket categories the value in this field will be junk.
+            deliveredProduct.setOfferedPriceOrPercent(deliveryItem.getOfferedPricePerUnit());
+            deliveredProduct.setProductPricingCategory(productDetailsService.findProductByProductId(deliveryItem.getDeliveryItemId()).getProductPricingCategory());
+            deliveredProducts.add(deliveredProduct);
+        }
+        newDeliveryDetails.setDeliveredProductDetails(deliveredProducts);
+
+        DeliveryCostAccount newDeliveryCostAccount= new DeliveryCostAccount(command.getDeliveryId(), command.getSubscriptionId(), command.getDeliveryDate(),newDeliveryDetails,totalDeliveryCost);
+        deliveries.add(newDeliveryCostAccount);
+        ModifiedSubscriptionContent modifiedSubscriptionContent=duePaymentCorrectionEngine.correctTotalDues(command.getSubscriptionId(),deliveries);
+        apply(new DeliveryInitiatedEvent(command.getSubscriberId(),command.getSubscriptionId(),command.getDeliveryId(),newDeliveryCostAccount));
+        apply(new DeliveriesUpdatdWithCorrectedPaymentEvent(subscriberId,modifiedSubscriptionContent,command.getDeliveryDate()));
     }
 
-    public void handleDeliveryDeletedCommand(DeliveryDeletedCommand command) {
-        apply(new DeliveryDestroyedEvent(command.getDeliveryId(), command.getSubscriberId()));
+    public void deleteDelivery(String subscriberId,String subscriptionId,String deliveryId,LocalDate deletionDate,DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
+        if(this.deliveryCostAccountMap.containsKey(deliveryId)){
+            List<DeliveryCostAccount> deliveries=deliveryCostAccountMap.values().stream().collect(Collectors.toList());
+            List<DeliveryCostAccount> deliveriesToBeRemoved=deliveryCostAccountMap.values().stream().filter(dca->dca.getDeliveryId().equals(deliveryId) && dca.getSubscriptionId().equals(subscriptionId)).collect(Collectors.toList());
+            deliveries.removeAll(deliveriesToBeRemoved);
+            ModifiedSubscriptionContent modifiedSubscriptionContent=duePaymentCorrectionEngine.correctTotalDues(subscriptionId,deliveries);
+            apply(new DeliveryDestroyedEvent(subscriberId,subscriptionId,deliveryId,deletionDate));
+            apply(new DeliveriesUpdatdWithCorrectedPaymentEvent(subscriberId,modifiedSubscriptionContent,deletionDate));
+        }
+
     }
 
     @EventSourcingHandler
     public void on(DeliveryInitiatedEvent event) {
+        DeliveryCostAccount newDeliveryCostAccount= event.getNewDeliveryCostAccount();
+        this.deliveryCostAccountMap.put(newDeliveryCostAccount.getDeliveryId(),newDeliveryCostAccount);
     }
 
     @EventSourcingHandler
     public void on(DeliveryDestroyedEvent event) {
+        if(this.deliveryCostAccountMap.containsKey(event.getDeliveryId())){
+            this.deliveryCostAccountMap.remove(event.getDeliveryId());
+        }
     }
 
     public String getSubscriptionId() {
@@ -187,7 +229,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             deliveredProduct.setDeliveryCharges(deliveryItem.getDeliveryCharges());
             deliveredProduct.setMRPOld(taggedPricingService.findLatestTaggedPriceForAProduct(deliveryItem.getDeliveryItemId()));
             deliveredProduct.setOfferedPricePerUnitOld(deliveryItem.getOfferedPricePerUnit());
-            //seperate field for percent in case of percent discount committed product. For other price bucket categories the value in this field will be junk.
+            //separate field for percent in case of percent discount committed product. For other price bucket categories the value in this field will be junk.
             deliveredProduct.setOfferedPriceOrPercent(deliveryItem.getOfferedPricePerUnit());
             deliveredProduct.setProductPricingCategory(productDetailsService.findProductByProductId(deliveryItem.getDeliveryItemId()).getProductPricingCategory());
             deliveredProducts.add(deliveredProduct);

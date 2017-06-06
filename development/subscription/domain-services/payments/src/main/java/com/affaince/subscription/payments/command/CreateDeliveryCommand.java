@@ -6,10 +6,7 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-/**
- * Created by anayonkar on 21/8/16.
- */
-public class DeliveryCreatedCommand {
+public class CreateDeliveryCommand {
     private String deliveryId;
     private String subscriberId;
     private String subscriptionId;
@@ -19,7 +16,7 @@ public class DeliveryCreatedCommand {
     private DeliveryStatus status;
     private double deliveryWeightInGrms;
 
-    public DeliveryCreatedCommand(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms) {
+    public CreateDeliveryCommand(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
@@ -30,7 +27,7 @@ public class DeliveryCreatedCommand {
         this.deliveryWeightInGrms = deliveryWeightInGrms;
     }
 
-    public DeliveryCreatedCommand() {
+    public CreateDeliveryCommand() {
     }
 
     public String getDeliveryId() {
