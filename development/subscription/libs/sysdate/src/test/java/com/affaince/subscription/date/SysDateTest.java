@@ -33,6 +33,6 @@ public class SysDateTest {
     }
 
     private int plusDays () {
-        return 30;
+        return 60;
     }
 }

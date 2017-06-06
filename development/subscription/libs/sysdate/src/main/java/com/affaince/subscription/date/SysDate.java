@@ -37,7 +37,7 @@ public final class SysDate {
 
     }
 
-    public static void setCurrentDate(LocalDate currentDate) {
+    public synchronized static void setCurrentDate(LocalDate currentDate) {
         dbCollection.drop();
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("dd-MM-yyyy");

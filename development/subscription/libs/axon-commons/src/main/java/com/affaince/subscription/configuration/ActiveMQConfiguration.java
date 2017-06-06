@@ -6,7 +6,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.axonframework.eventhandling.Cluster;
 import org.axonframework.eventhandling.EventBusTerminal;
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.axonframework.serializer.Serializer;
+import org.axonframework.serializer.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -46,6 +46,8 @@ import org.axonframework.eventstore.mongo.MongoEventStore;
 import org.axonframework.eventstore.mongo.MongoTemplate;
 import org.axonframework.saga.ResourceInjector;
 import org.axonframework.saga.spring.SpringResourceInjector;
+import org.axonframework.serializer.AnnotationRevisionResolver;
+import org.axonframework.serializer.RevisionResolver;
 import org.axonframework.serializer.SerializedType;
 import org.axonframework.serializer.Serializer;
 import org.axonframework.serializer.json.JacksonSerializer;
@@ -151,36 +153,12 @@ public class Default {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enableDefaultTyping();
-        objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-        return objectMapper;
-    }
-
-    @Bean
     public Serializer serializer(ObjectMapper objectMapper) {
-        final JacksonSerializer serializer = new JacksonSerializer(objectMapper) {
-            private Map<String, String> types = types();
-
-            public String resolveClassName(SerializedType serializedType) {
-                String name = serializedType.getName();
-                String result = types.get(name);
-                return result == null ? name : result;
-            }
-        };
+        JacksonSerializer serializer = new AxonJacksonSerializer(
+                objectMapper, new AnnotationRevisionResolver(), types()
+        );
         SimpleModule simpleModule = new SimpleModule("Axon");
         simpleModule.addDeserializer(MetaData.class, new MetadataDeserializer());
-        /*simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
-        simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
-        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer());
-        simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());*/
-/*
-        simpleModule.addSerializer(QuantityUnit.class, new QuantityUnitSerializer());
-        simpleModule.addDeserializer(QuantityUnit.class, new QuantityUnitDeserializer());
-        simpleModule.addSerializer(PricingStrategyType.class, new PricingStrategyTypeSerializer());
-        simpleModule.addDeserializer(PricingStrategyType.class, new PricingStrategyTypeDeserializer());
-*/
         serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
 
