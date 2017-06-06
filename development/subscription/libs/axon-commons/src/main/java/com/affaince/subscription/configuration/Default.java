@@ -175,10 +175,12 @@ public class Default {
         simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
         simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer());
         simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());*/
+/*
         simpleModule.addSerializer(QuantityUnit.class, new QuantityUnitSerializer());
         simpleModule.addDeserializer(QuantityUnit.class, new QuantityUnitDeserializer());
         simpleModule.addSerializer(PricingStrategyType.class, new PricingStrategyTypeSerializer());
         simpleModule.addDeserializer(PricingStrategyType.class, new PricingStrategyTypeDeserializer());
+*/
         serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
 

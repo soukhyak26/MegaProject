@@ -25,7 +25,7 @@ public class PrceTest {
     public static void calculatePriceSet1(){
         PriceInput markPrice= new PriceInput(30.0,54.0,5.55,2.0,54,0,0);
 
-        PriceInput pi2= new PriceInput(30.0,54.0,5.55,2.0,36,540,avg(540));
+        PriceInput pi2= new PriceInput(30.0,54.0,5.55,2.0,45,540,avg(540));
         PriceInput pi3= new PriceInput(30.0,54.0,2.54,2.0,-1.0,640,avg(640));
         PriceInput pi4= new PriceInput(30.0,54.0,1.60,2.0,-1.0,690,avg(690));
         PriceInput pi5= new PriceInput(30.0,54.0,1.23,2.0,-1.0,790,avg(790));

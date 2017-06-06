@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/batch/ExpenseDistributionBatch/ExpenseDistributionBatch.iml" filepath="$PROJECT_DIR$/batch/ExpenseDistributionBatch/ExpenseDistributionBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/batch/ForecastBatch/ForecastBatch.iml" filepath="$PROJECT_DIR$/batch/ForecastBatch/ForecastBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/batch/PrepareDeliveryForDispatchBatch/PrepareDeliveryForDispatchBatch.iml" filepath="$PROJECT_DIR$/batch/PrepareDeliveryForDispatchBatch/PrepareDeliveryForDispatchBatch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/batch/ProductMetricsBatch/ProductMetricsBatch.iml" filepath="$PROJECT_DIR$/batch/ProductMetricsBatch/ProductMetricsBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/batch/ProductPricingBatch/ProductPricingBatch.iml" filepath="$PROJECT_DIR$/batch/ProductPricingBatch/ProductPricingBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/application-simulator/application-simulator.iml" filepath="$PROJECT_DIR$/tools/application-simulator/application-simulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/axon-commons/axon-commons.iml" filepath="$PROJECT_DIR$/libs/axon-commons/axon-commons.iml" />
@@ -19,6 +20,7 @@
       <module fileurl="file://$PROJECT_DIR$/domain-services/subscriber/subscriber.iml" filepath="$PROJECT_DIR$/domain-services/subscriber/subscriber.iml" />
       <module fileurl="file://$PROJECT_DIR$/subscription.iml" filepath="$PROJECT_DIR$/subscription.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/sysdate/sysdate.iml" filepath="$PROJECT_DIR$/libs/sysdate/sysdate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/user-journey/user-journey.iml" filepath="$PROJECT_DIR$/tools/user-journey/user-journey.iml" />
     </modules>
   </component>
 </project>

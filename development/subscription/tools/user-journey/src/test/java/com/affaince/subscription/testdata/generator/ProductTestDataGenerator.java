@@ -77,8 +77,8 @@ public class ProductTestDataGenerator {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write("sysDate,sysDateTime".getBytes());
             fileOutputStream.write("\n".getBytes());
-            for (int i=0; i<subscriptionCount/12; i++) {
-                for (int j=0;j<16;j++) {
+            for (int i=0; i<subscriptionCount/3; i++) {
+                for (int j=0;j<5;j++) {
                     fileOutputStream.write(formatter.print(LocalDate.now().plusDays(i)).getBytes());
                     fileOutputStream.write(",".getBytes());
                     fileOutputStream.write(dateTimeFormatter.print(LocalDateTime.now().plusDays(i)).getBytes());

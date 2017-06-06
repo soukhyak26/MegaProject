@@ -1,0 +1,8 @@
+@startuml
+(*) --> "register product request"
+
+--> "Create Product and set attributes"
+--> "ProductRegisteredEvent"
+--> "Create ProductView on read side"
+-->(*)
+@enduml

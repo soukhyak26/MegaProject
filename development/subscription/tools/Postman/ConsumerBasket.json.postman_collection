@@ -77,7 +77,7 @@
 			"description": "",
 			"collectionId": "ffb87056-0f4e-066c-4e9e-fda803d0c929",
 			"responses": [],
-			"rawModeData": "{\n    \"deliveryItems\":[\"item01\", \"item02\"],\n    \"deliveryDate\":\"2015-10-03\"\n}"
+			"rawModeData": "{\n    \"deliveredProductDetails\":[\"item01\", \"item02\"],\n    \"deliveryDate\":\"2015-10-03\"\n}"
 		},
 		{
 			"id": "76b9ac78-0c39-05f1-76eb-5c9c93bfcf8c",

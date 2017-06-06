@@ -35,10 +35,12 @@
         <module name="payments" />
         <module name="PrepareDeliveryForDispatchBatch" />
         <module name="product" />
+        <module name="ProductMetricsBatch" />
         <module name="ProductPricingBatch" />
         <module name="rules-compiler" />
         <module name="subscriber" />
         <module name="sysdate" />
+        <module name="user-journey" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
@@ -54,11 +56,13 @@
       <module name="payments" target="1.8" />
       <module name="PrepareDeliveryForDispatchBatch" target="1.8" />
       <module name="product" target="1.8" />
+      <module name="ProductMetricsBatch" target="1.8" />
       <module name="ProductPricingBatch" target="1.8" />
       <module name="rules-compiler" target="1.8" />
       <module name="subscriber" target="1.8" />
       <module name="subscription" target="1.8" />
       <module name="sysdate" target="1.8" />
+      <module name="user-journey" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
