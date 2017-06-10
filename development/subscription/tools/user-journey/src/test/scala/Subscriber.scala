@@ -1,5 +1,6 @@
 import java.util.concurrent.TimeUnit
 
+import com.affaince.subscription.date
 import com.affaince.subscription.date.SysDate
 import com.affaince.subscription.testdata.generator.ProductTestDataGenerator
 import io.gatling.core.Predef._
@@ -27,10 +28,10 @@ class Subscriber extends BaseSimulator {
     }
     .repeat(1) {
       CreateSubscriber.addItemToSubscription
-    }.pause(1)
-    .repeat(1) {
-      CreateSubscriber.sysDateChange
-    }.pause(1)
+   // }.pause(1)
+    //.repeat(1) {
+     // CreateSubscriber.sysDateChange
+    }.pause(5)
     .repeat(1) {
       CreateSubscriber.confirmSubscription
     }

@@ -32,7 +32,7 @@ public class ProductBuilder {
     public ProductBuilder quantity() {
         products.forEach(product -> {
             product.setQuantity(new Random().nextInt(5000) + 50);
-            product.setQuantityUnit("gram");
+            product.setQuantityUnit("GM");
         });
         return this;
     }
