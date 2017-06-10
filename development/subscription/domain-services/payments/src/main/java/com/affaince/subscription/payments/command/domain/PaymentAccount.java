@@ -37,6 +37,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcedMember
     private TotalReceivedCostAccount totalReceivedCostAccount;
 
+    private RefundAccount refundAccount;
+    private PaymentAccountStatus paymentAccountStatus;
+
     /**
      * When subscription cost increases, receivable increases
      * When balance increases, recievable decreases

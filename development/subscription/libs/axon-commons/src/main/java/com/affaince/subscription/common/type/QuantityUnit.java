@@ -17,7 +17,7 @@ public enum QuantityUnit {
 
     private String unitName;
 
-    private QuantityUnit(String name) {
+    QuantityUnit(String name) {
         this.unitName = name;
     }
 
