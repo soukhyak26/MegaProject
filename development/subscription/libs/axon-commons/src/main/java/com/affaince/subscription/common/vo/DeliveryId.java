@@ -17,6 +17,9 @@ public class DeliveryId implements Serializable {
         this.subscriptionId = subscriptionId;
     }
 
+    public DeliveryId() {
+    }
+
     public String getDeliveryId() {
         return deliveryId;
     }
