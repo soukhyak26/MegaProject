@@ -44,7 +44,8 @@ public class ProductDemandForecastBuilderTest {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/actualViewSim.csv"))))) {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
-            for (List<String> value : values) {
+            for (int i=0;i< 90;i++) {
+                List<String> value=values.get(i);
                 ProductVersionId productVersionId = new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter));
                 LocalDate endDate = LocalDate.parse(value.get(2), formatter);
                 long newSubscriptionCount = Long.parseLong(value.get(3));
@@ -65,9 +66,9 @@ public class ProductDemandForecastBuilderTest {
 
     @Test
     public void testForeast() {
-        List<ProductForecastView> forecasts = builder.buildForecast("1", SysDate.now(), 30, 730);
+        List<ProductForecastView> forecasts = builder.buildForecast("1", SysDate.now(), 1, 730);
         for (ProductForecastView forecast : forecasts) {
-            System.out.println("New subscriptions: " + forecast.getNewSubscriptions());
+            System.out.println("****New subscriptions: " + forecast.getNewSubscriptions());
             System.out.println("churned subscriptions: " + forecast.getChurnedSubscriptions());
             System.out.println("total subscriptions: " + forecast.getTotalNumberOfExistingSubscriptions());
             System.out.println("start date: " + forecast.getProductVersionId().getFromDate());

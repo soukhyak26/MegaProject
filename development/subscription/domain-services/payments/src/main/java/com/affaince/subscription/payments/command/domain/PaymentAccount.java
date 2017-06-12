@@ -27,6 +27,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     private String subscriberId;
 
+    private String schemeId;
+
     @EventSourcedMember
     private Map<String, DeliveryCostAccount> deliveryCostAccountMap;
     @EventSourcedMember
