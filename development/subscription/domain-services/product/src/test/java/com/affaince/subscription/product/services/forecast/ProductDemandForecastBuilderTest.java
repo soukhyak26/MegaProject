@@ -6,6 +6,7 @@ import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
+import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -66,13 +67,14 @@ public class ProductDemandForecastBuilderTest {
 
     @Test
     public void testForeast() {
-        List<ProductForecastView> forecasts = builder.buildForecast("1", SysDate.now(), 1, 730);
-        for (ProductForecastView forecast : forecasts) {
-            System.out.println("****New subscriptions: " + forecast.getNewSubscriptions());
-            System.out.println("churned subscriptions: " + forecast.getChurnedSubscriptions());
-            System.out.println("total subscriptions: " + forecast.getTotalNumberOfExistingSubscriptions());
-            System.out.println("start date: " + forecast.getProductVersionId().getFromDate());
-            System.out.println("end date: " + forecast.getEndDate());
+        List<List<? extends ProductSubscriptionMetricsView>> listOfPseudoActualsAndForecasts = builder.buildForecast("1", SysDate.now(), 1, 730);
+        List<? extends ProductSubscriptionMetricsView> forecasts=listOfPseudoActualsAndForecasts.get(1);
+        for (int i=0;i<forecasts.size();i++) {
+            System.out.println("****New subscriptions: " + forecasts.get(i).getNewSubscriptions());
+            System.out.println("churned subscriptions: " + forecasts.get(i).getChurnedSubscriptions());
+            System.out.println("total subscriptions: " + forecasts.get(i).getTotalNumberOfExistingSubscriptions());
+            System.out.println("start date: " + forecasts.get(i).getProductVersionId().getFromDate());
+            System.out.println("end date: " + forecasts.get(i).getEndDate());
             System.out.println("___________________________________________________________________");
         }
     }

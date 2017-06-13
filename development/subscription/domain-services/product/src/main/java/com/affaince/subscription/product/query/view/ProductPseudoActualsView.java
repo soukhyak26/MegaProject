@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document(collection = "ProductPseudoActualsView")
-public class ProductPseudoActualsView {
+public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
     @Id
     private final ProductVersionId productVersionId;
     private LocalDate endDate;

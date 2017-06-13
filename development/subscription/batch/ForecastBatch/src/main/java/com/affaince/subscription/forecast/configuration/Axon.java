@@ -90,7 +90,7 @@ public class Axon extends Default {
                         .to("bean:productsRetriever")
                         .split(body())
                         .to("{{subscription.forecast.poston}}")
-                        .multicast().to("direct:forecaster", "direct:stepForecaster");
+                        .to("direct:forecaster");
 /*
                 from("{{subscription.client.poston}}")
                         .routeId("forecaster")
@@ -101,10 +101,6 @@ public class Axon extends Default {
                         .simple("${body} != null")
                         .to("bean:forecastingClient?method=initiateForecast")
                         .endChoice();
-
-                from("direct:stepForecaster")
-                        .to("bean:forecastingClient?method=initiatePseudoActual");
-
 
 /*
                 Predicate demandTrendChecker = or(body().isEqualTo(ProductDemandTrend.UPWARD), body().isEqualTo(ProductDemandTrend.DOWNWARD));

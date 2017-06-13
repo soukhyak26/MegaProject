@@ -9,6 +9,7 @@ import com.affaince.subscription.product.command.UpdateFixedExpenseToProductComm
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
 import com.affaince.subscription.product.query.view.ProductForecastView;
+import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
 import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
@@ -224,8 +225,20 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateForecastFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
         //Whole bunch of logic to add forecast in Product aggregate - NOT NEEDED AS WE ARE NOT KEEPING FORECASTS IN AGGREGATE
-        List<ProductForecastView> forecasts = builder.buildForecast(productId, forecastDate, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
+        List<List<? extends ProductSubscriptionMetricsView>> pseudoActualsAndForecasts = builder.buildForecast(productId, forecastDate, getProductConfiguration().getActualsAggregationPeriodForTargetForecast(), getProductConfiguration().getDemandCurvePeriodInDays());
+        List<? extends ProductSubscriptionMetricsView> pseuoActualsViewList=pseudoActualsAndForecasts.get(0);
+        List<? extends ProductSubscriptionMetricsView> forecasts=pseudoActualsAndForecasts.get(1);
         LocalDate earmarkedAnnualEndDate = new LocalDate(YearMonth.now().getYear(), 12, 31);
+        for (int i = 0; i < pseuoActualsViewList.size(); i++) {
+            //why same start/end dates to all events??
+            apply(new SubscriptionPseudoActualsUpdatedEvent(productId,
+                    pseuoActualsViewList.get(i).getProductVersionId().getFromDate(),
+                    pseuoActualsViewList.get(i).getEndDate(),
+                    pseuoActualsViewList.get(i).getNewSubscriptions(),
+                    pseuoActualsViewList.get(i).getChurnedSubscriptions(),
+                    pseuoActualsViewList.get(i).getTotalNumberOfExistingSubscriptions()));
+        }
+
         for (int i = 0; i < forecasts.size(); i++) {
             //why same start/end dates to all events??
             apply(new SubscriptionForecastUpdatedEvent(productId,
@@ -242,6 +255,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void updatePseudoActualsFromActuals(LocalDate forecastDate, ProductDemandForecastBuilder builder) {
+/*
         int numberOfActivePriceBuckets=this.getActivePriceBuckets().size();
         PriceBucket earlierPriceBucket=null;
         if(numberOfActivePriceBuckets>1 ) {
@@ -265,6 +279,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                         forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
             }
         }
+*/
     }
 
     public Map<LocalDateTime, PriceBucket> getActivePriceBuckets() {
