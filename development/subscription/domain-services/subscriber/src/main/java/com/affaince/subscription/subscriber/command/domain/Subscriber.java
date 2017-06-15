@@ -57,7 +57,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public Subscriber(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails) {
         apply(new SubscriberCreatedEvent(subscriberId, subscriberName, address, contactDetails, NetWorthSubscriberStatus.NORMAL.getSubscriberStatusCode()));
-        deliveries = new HashMap<>();
     }
 
     public Subscriber() {
@@ -70,6 +69,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         this.address = event.getAddress();
         this.contactDetails = event.getContactDetails();
         this.status = NetWorthSubscriberStatus.valueOf(event.getSubscriberStatusCode());
+        deliveries = new HashMap<>();
     }
 
     @EventSourcingHandler
@@ -168,6 +168,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void updateContactDetails(String email, String mobileNumber, String alternativeNumber) {
         apply(new SubscriberContactDetailsUpdatedEvent(this.subscriberId, email, mobileNumber, alternativeNumber));
+    }
+
+    @EventSourcingHandler
+    public void on(SubscriptionCreatedEvent event) {
+        this.subscription = new Subscription(event.getSubscriptionId(),
+                event.getBasketCreatedDate(),
+                event.getBasketExpiredDate(),
+                event.getConsumerBasketStatus());
     }
 
     public void updateAddress(UpdateSubscriberAddressCommand command) {
@@ -299,9 +307,8 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         return benefitExecutionContext.calculateBenefit(benefitCalculationRequest);
     }
 
-    public void setActiveSubscription(Subscription subscription) {
-        this.subscription = subscription;
-        apply(new SubscriptionCreatedEvent(subscription.getSubscriptionId(), subscriberId, SysDate.now(), null, ConsumerBasketActivationStatus.CREATED));
+    public void setActiveSubscription(String subscriberId, String subscriptionId) {
+        apply(new SubscriptionCreatedEvent(subscriptionId, subscriberId, SysDate.now(), null, ConsumerBasketActivationStatus.CREATED));
     }
 
     public Subscription getSubscription() {

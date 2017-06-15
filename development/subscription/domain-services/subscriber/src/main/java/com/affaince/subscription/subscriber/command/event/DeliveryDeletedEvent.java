@@ -14,6 +14,9 @@ public class DeliveryDeletedEvent {
         this.deliveryId = deliveryId;
     }
 
+    public DeliveryDeletedEvent() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }

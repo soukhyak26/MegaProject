@@ -48,16 +48,15 @@ public class Subscription extends AbstractAnnotatedEntity {
 
     }
 
-    public double getTotalSubscriptionAmount() {
-        return totalSubscriptionAmount;
+    public Subscription(String subscriptionId, LocalDate basketCreatedDate, LocalDate basketExpiredDate, ConsumerBasketActivationStatus consumerBasketStatus) {
+        this.subscriptionId = subscriptionId;
+        this.subscriptionCreatedDate = basketCreatedDate;
+        this.subscriptionExpiredDate = basketExpiredDate;
+        this.consumerBasketStatus = consumerBasketStatus;
     }
 
-    @EventSourcingHandler
-    public void on(SubscriptionCreatedEvent event) {
-        this.subscriptionId = event.getSubscriptionId();
-        this.subscriptionCreatedDate = event.getBasketCreatedDate();
-        this.subscriptionExpiredDate = event.getBasketExpiredDate();
-        this.consumerBasketStatus = event.getConsumerBasketStatus();
+    public double getTotalSubscriptionAmount() {
+        return totalSubscriptionAmount;
     }
 
     @EventSourcingHandler

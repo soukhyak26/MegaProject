@@ -6,16 +6,15 @@ import org.joda.time.LocalDate;
  * Created by mandar on 4/10/2017.
  */
 public class SubscriptionDeductedFromNoneCommittedPriceBucketEvent {
-    private final String productId;
-    private final String priceBucketId;
-    private final long deductedSubscriptionCount;
-    private final long revisedChurnedSubscriptionCount;
-    private final long revisedTotalSubscriptionCount;
-    private final double offeredPrice;
-    private final double purchasePrice;
-    private final double MRP;
-
-    private final LocalDate subscriptionChangedDate;
+    private String productId;
+    private String priceBucketId;
+    private long deductedSubscriptionCount;
+    private long revisedChurnedSubscriptionCount;
+    private long revisedTotalSubscriptionCount;
+    private double offeredPrice;
+    private double purchasePrice;
+    private double MRP;
+    private LocalDate subscriptionChangedDate;
 
 
     public SubscriptionDeductedFromNoneCommittedPriceBucketEvent(String productId, String priceBucketId, long deductedSubscriptionCount, long revisedChurnedSubscriptionCount, long revisedTotalSubscriptionCount,double offeredPrice,double purchasePrice,double MRP,LocalDate subscriptionChangedDate) {
@@ -28,6 +27,9 @@ public class SubscriptionDeductedFromNoneCommittedPriceBucketEvent {
         this.purchasePrice=purchasePrice;
         this.MRP=MRP;
         this.subscriptionChangedDate=subscriptionChangedDate;
+    }
+
+    public SubscriptionDeductedFromNoneCommittedPriceBucketEvent() {
     }
 
     public String getProductId() {

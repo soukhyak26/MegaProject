@@ -16,10 +16,12 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 29-01-2017.
  */
+@Component
 public class SubscriptionDeductedFromNoneCommittedPriceBucketEventListener {
 
     private final ProductActualsViewRepository productActualsViewRepository;
