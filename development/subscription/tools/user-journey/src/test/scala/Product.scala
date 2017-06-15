@@ -95,7 +95,7 @@ object AddConfigurationParameters {
             |    "isCrossPriceElasticityConsidered":"false",
             |    "isAdvertisingExpensesConsidered":"false",
             |    "actualsAggregationPeriodForTargetForecast":30,
-            |    "pricingOptions":1,
+            |    "pricingOptions":0,
             |    "pricingStrategyType":0,
             |    "costHeaderTypes":["PURCHASE_PRICE_PER_UNIT", "FIXED_EXPENSE_PER_UNIT", "VARIABLE_EXPENSE_PER_UNIT"]
             |}

@@ -47,7 +47,7 @@ public final class SysDate {
         dbCollection.insert(basicDBObject);
     }
 
-    public static LocalDate now() {
+    public synchronized static LocalDate now() {
         if (productionMode) {
             return LocalDate.now();
         }

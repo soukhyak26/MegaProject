@@ -4,6 +4,7 @@ import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -44,7 +45,7 @@ public class Axon extends Default {
                         split(body())
                         .to("bean:publisher");
 
-                JacksonDataFormat df = new JacksonDataFormat(objectMapper(), BasketDispatchedStatusEvent.class);
+                JacksonDataFormat df = new JacksonDataFormat(new ObjectMapper(), BasketDispatchedStatusEvent.class);
 
                /* //INT_05: update status of targetted dispatches every day
                 from("${basket.dispatch.status.source}").

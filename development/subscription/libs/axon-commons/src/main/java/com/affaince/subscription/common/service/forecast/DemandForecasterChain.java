@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.*;
 
-/**
+/**A
  * Created by mandark on 01-05-2016.
  */
 @Component
@@ -43,4 +43,5 @@ public class DemandForecasterChain {
         }
         return forecast;
     }
+
 }

@@ -6,12 +6,12 @@ import org.joda.time.LocalDate;
  * Created by mandar on 14-08-2016.
  */
 public class SubscriptionPseudoActualsUpdatedEvent {
-    private final String productId;
-    private final LocalDate forecastStartDate;
-    private final LocalDate forecastEndDate;
-    private final long newSubscriptionForecast;
-    private final long churnedSubscriptionForecast;
-    private final long forecastedTotalSubscriptionCount;
+    private String productId;
+    private LocalDate forecastStartDate;
+    private LocalDate forecastEndDate;
+    private long newSubscriptionForecast;
+    private long churnedSubscriptionForecast;
+    private long forecastedTotalSubscriptionCount;
 
     public SubscriptionPseudoActualsUpdatedEvent(String productId, LocalDate forecastStartDate, LocalDate forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
         this.productId = productId;
@@ -20,6 +20,9 @@ public class SubscriptionPseudoActualsUpdatedEvent {
         this.newSubscriptionForecast = newSubscriptionForecast;
         this.churnedSubscriptionForecast = churnedSubscriptionForecast;
         this.forecastedTotalSubscriptionCount = forecastedTotalSubscriptionCount;
+    }
+
+    public SubscriptionPseudoActualsUpdatedEvent() {
     }
 
     public String getProductId() {

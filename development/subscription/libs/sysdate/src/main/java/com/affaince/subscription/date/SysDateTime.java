@@ -38,7 +38,7 @@ public final class SysDateTime {
 
     }
 
-    public static void setCurrentDateTime(LocalDateTime currentDateTime) {
+    public synchronized static void setCurrentDateTime(LocalDateTime currentDateTime) {
         dbCollection.drop();
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("dd-MM-yyyy-hh:mm:ss");
@@ -48,7 +48,7 @@ public final class SysDateTime {
         dbCollection.insert(basicDBObject);
     }
 
-    public static LocalDateTime now() {
+    public synchronized static LocalDateTime now() {
         if (productionMode) {
             return LocalDateTime.now();
         }
