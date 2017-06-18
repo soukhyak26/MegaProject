@@ -31,37 +31,38 @@ public class ForecasterCreatorFactory {
         for (int i = 0; i < ForecasterChainConfigs.size(); i++) {
             ForecasterConfiguration.ForecasterChainConfig config = ForecasterChainConfigs.get(i);
             String name = config.getName();
-            TimeSeriesBasedForecaster forecaster=null;
-            //TimeSeriesBasedForecaster forecaster = (TimeSeriesBasedForecaster) Class.forName(config.getCls()).newInstance();
-            if(name.equalsIgnoreCase("SimpleLinearForecaster")){
-                forecaster=simpleLinearForecaster;
-            }else if (name.equalsIgnoreCase("SimpleMovingAverageDemandForecaster")){
-                forecaster=simpleMovingAverageDemandForecaster;
-            }else if(name.equalsIgnoreCase("SimpleExponentialSmoothingDemandForecaster")){
-                forecaster=simpleExponentialSmoothingDemandForecaster;
-            }else if(name.equalsIgnoreCase("TripleExponentialSmoothingDemandForecaster")){
-                forecaster=tripleExponentialSmoothingDemandForecaster;
-            }else if(name.equalsIgnoreCase("ARIMABasedDemandForecaster")){
-                forecaster=arimaBasedDemandForecaster;
-            }else{
-                forecaster=arimaBasedDemandForecaster;
-            }
+            if(null != name) {
+                TimeSeriesBasedForecaster forecaster = null;
+                //TimeSeriesBasedForecaster forecaster = (TimeSeriesBasedForecaster) Class.forName(config.getCls()).newInstance();
+                if (name.equalsIgnoreCase("SimpleLinearForecaster")) {
+                    forecaster = simpleLinearForecaster;
+                } else if (name.equalsIgnoreCase("SimpleMovingAverageDemandForecaster")) {
+                    forecaster = simpleMovingAverageDemandForecaster;
+                } else if (name.equalsIgnoreCase("SimpleExponentialSmoothingDemandForecaster")) {
+                    forecaster = simpleExponentialSmoothingDemandForecaster;
+                } else if (name.equalsIgnoreCase("TripleExponentialSmoothingDemandForecaster")) {
+                    forecaster = tripleExponentialSmoothingDemandForecaster;
+                } else if (name.equalsIgnoreCase("ARIMABasedDemandForecaster")) {
+                    forecaster = arimaBasedDemandForecaster;
+                } else {
+                    forecaster = arimaBasedDemandForecaster;
+                }
 
-            String next = config.getNext();
-            if (next.equals("NULL")) {
-                forecaster.addNextForecaster(null);
-            } else {
-                forecastersMapAgainstNextForecasterName.put(next, forecaster);
+                String next = config.getNext();
+                if (next.equals("NULL")) {
+                    forecaster.addNextForecaster(null);
+                } else {
+                    forecastersMapAgainstNextForecasterName.put(next, forecaster);
+                }
+                TimeSeriesBasedForecaster earlierForecaster = forecastersMapAgainstNextForecasterName.get(name);
+                if (null != earlierForecaster) {
+                    earlierForecaster.addNextForecaster(forecaster);
+                    forecastersMapAgainstNextForecasterName.remove(name);
+                    initialForecastersMap.remove(name);
+                } else {
+                    initialForecastersMap.put(name, forecaster);
+                }
             }
-            TimeSeriesBasedForecaster earlierForecaster = forecastersMapAgainstNextForecasterName.get(name);
-            if (null != earlierForecaster) {
-                earlierForecaster.addNextForecaster(forecaster);
-                forecastersMapAgainstNextForecasterName.remove(name);
-                initialForecastersMap.remove(name);
-            } else {
-                initialForecastersMap.put(name, forecaster);
-            }
-
         }
         return initialForecastersMap;
     }

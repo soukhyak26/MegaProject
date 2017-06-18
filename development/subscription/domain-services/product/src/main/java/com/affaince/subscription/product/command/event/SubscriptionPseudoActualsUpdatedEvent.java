@@ -12,14 +12,16 @@ public class SubscriptionPseudoActualsUpdatedEvent {
     private long newSubscriptionForecast;
     private long churnedSubscriptionForecast;
     private long forecastedTotalSubscriptionCount;
+    private LocalDate forecastDate;
 
-    public SubscriptionPseudoActualsUpdatedEvent(String productId, LocalDate forecastStartDate, LocalDate forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount) {
+    public SubscriptionPseudoActualsUpdatedEvent(String productId, LocalDate forecastStartDate, LocalDate forecastEndDate, long newSubscriptionForecast, long churnedSubscriptionForecast, long forecastedTotalSubscriptionCount,LocalDate forecastDate) {
         this.productId = productId;
         this.forecastStartDate = forecastStartDate;
         this.forecastEndDate = forecastEndDate;
         this.newSubscriptionForecast = newSubscriptionForecast;
         this.churnedSubscriptionForecast = churnedSubscriptionForecast;
         this.forecastedTotalSubscriptionCount = forecastedTotalSubscriptionCount;
+        this.forecastDate=forecastDate;
     }
 
     public SubscriptionPseudoActualsUpdatedEvent() {
@@ -47,5 +49,9 @@ public class SubscriptionPseudoActualsUpdatedEvent {
 
     public long getForecastedTotalSubscriptionCount() {
         return forecastedTotalSubscriptionCount;
+    }
+
+    public LocalDate getForecastDate() {
+        return forecastDate;
     }
 }

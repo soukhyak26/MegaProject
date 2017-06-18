@@ -4,6 +4,7 @@ import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecas
 import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
 import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
@@ -47,7 +48,7 @@ public class ARIMABasedDemandForecasterTest {
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250, SysDate.now());
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
         long totalSusbcriptions=1250;

@@ -22,7 +22,7 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ProductForecastStatus productForecastStatus;
-
+    private LocalDate forecastDate;
 /*
     public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
         this.productVersionId = productVersionId;
@@ -44,13 +44,14 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
         this.productForecastStatus = ProductForecastStatus.ACTIVE;
     }
 */
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions,LocalDate forecastDate) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
         this.productForecastStatus = ProductForecastStatus.ACTIVE;
+        this.forecastDate=forecastDate;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -95,6 +96,10 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
 
     public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
         this.productForecastStatus = productForecastStatus;
+    }
+
+    public LocalDate getForecastDate() {
+        return forecastDate;
     }
 
     public int compareTo(ProductForecastView o) {

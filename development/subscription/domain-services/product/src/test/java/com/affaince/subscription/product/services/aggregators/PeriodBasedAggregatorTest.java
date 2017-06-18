@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.services.aggregators;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
@@ -41,7 +42,7 @@ public class PeriodBasedAggregatorTest {
                         LocalDate.parse(value.get(2), formatter),
                         Long.parseLong(value.get(3)),
                         Long.parseLong(value.get(4)),
-                        Long.parseLong(value.get(5)));
+                        Long.parseLong(value.get(5)), SysDate.now());
                 productForecastViews.add(productForecastView);
 
                 ProductActualsView productActualsView = new ProductActualsView(
@@ -59,7 +60,7 @@ public class PeriodBasedAggregatorTest {
         int period = 30;
         for (int periodIndex = 1; periodIndex <= 12; periodIndex++) {
             ProductForecastView firstView = productForecastViews.get(0);
-            ProductForecastView aggregateView = new ProductForecastView(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0);
+            ProductForecastView aggregateView = new ProductForecastView(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0,SysDate.now());
             String productId = null;
             LocalDate startDate = null;
             LocalDate endDate = null;

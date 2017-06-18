@@ -10,20 +10,21 @@ import org.joda.time.LocalDate;
  * Created by mandar on 2/23/2017.
  */
 public class AnnualForecastCreatedEvent {
-    String productId;
+    private String productId;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    LocalDate startDate;
+    private LocalDate startDate;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    LocalDate endDate;
-    double purchasePricePerUnit;
-    double mrp;
-    long numberOfNewSubscriptions;
-    long numberOfChurnedSubscriptions;
-    long revisedTotalSubscriptionCount;
+    private LocalDate endDate;
+    private double purchasePricePerUnit;
+    private double mrp;
+    private long numberOfNewSubscriptions;
+    private long numberOfChurnedSubscriptions;
+    private long revisedTotalSubscriptionCount;
+    private LocalDate forecastDate;
 
-    public AnnualForecastCreatedEvent(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long revisedTotalSubscriptionCount) {
+    public AnnualForecastCreatedEvent(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, long revisedTotalSubscriptionCount,LocalDate forecastDate) {
         this.productId = productId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -32,6 +33,7 @@ public class AnnualForecastCreatedEvent {
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
         this.revisedTotalSubscriptionCount = revisedTotalSubscriptionCount;
+        this.forecastDate=forecastDate;
     }
     public AnnualForecastCreatedEvent(){};
     public String getProductId() {
@@ -64,5 +66,9 @@ public class AnnualForecastCreatedEvent {
 
     public long getRevisedTotalSubscriptionCount() {
         return revisedTotalSubscriptionCount;
+    }
+
+    public LocalDate getForecastDate() {
+        return forecastDate;
     }
 }

@@ -236,7 +236,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                     pseuoActualsViewList.get(i).getEndDate(),
                     pseuoActualsViewList.get(i).getNewSubscriptions(),
                     pseuoActualsViewList.get(i).getChurnedSubscriptions(),
-                    pseuoActualsViewList.get(i).getTotalNumberOfExistingSubscriptions()));
+                    pseuoActualsViewList.get(i).getTotalNumberOfExistingSubscriptions(),forecastDate));
         }
 
         for (int i = 0; i < forecasts.size(); i++) {
@@ -246,10 +246,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                     forecasts.get(i).getEndDate(),
                     forecasts.get(i).getNewSubscriptions(),
                     forecasts.get(i).getChurnedSubscriptions(),
-                    forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
+                    forecasts.get(i).getTotalNumberOfExistingSubscriptions(),forecastDate));
             if (forecasts.get(i).getEndDate().equals(earmarkedAnnualEndDate) ||
                     (forecasts.get(i).getProductVersionId().getFromDate().isBefore(earmarkedAnnualEndDate) && forecasts.get(i).getEndDate().isAfter(earmarkedAnnualEndDate))) {
-                apply(new AnnualForecastCreatedEvent(productId, forecasts.get(i).getProductVersionId().getFromDate(), forecasts.get(i).getEndDate(), this.getLatestTaggedPriceVersion().getPurchasePricePerUnit(), this.getLatestTaggedPriceVersion().getMRP(), forecasts.get(i).getNewSubscriptions(), forecasts.get(i).getChurnedSubscriptions(), forecasts.get(i).getTotalNumberOfExistingSubscriptions()));
+                apply(new AnnualForecastCreatedEvent(productId, forecasts.get(i).getProductVersionId().getFromDate(), forecasts.get(i).getEndDate(), this.getLatestTaggedPriceVersion().getPurchasePricePerUnit(), this.getLatestTaggedPriceVersion().getMRP(), forecasts.get(i).getNewSubscriptions(), forecasts.get(i).getChurnedSubscriptions(), forecasts.get(i).getTotalNumberOfExistingSubscriptions(),forecastDate));
             }
         }
     }
@@ -294,9 +294,9 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
     }
 */
 
-    public void registerManualForecast(ProductForecastParameter[] productForecastParameters, ForecastFinderService forecastFinderService) {
+    public void registerManualForecast(ProductForecastParameter[] productForecastParameters, ForecastFinderService forecastFinderService,LocalDate forecastDate) {
         //for (ProductForecastParameter forecastParameter : productForecastParameters) {
-        apply(new ManualForecastAddedEvent(productId, productForecastParameters));
+        apply(new ManualForecastAddedEvent(productId, productForecastParameters,forecastDate));
         //Annual forecast has to be captured for financial year. So lets have earmerked date for end of current financial year.
         LocalDate earmarkedAnnualEndDate = new LocalDate(YearMonth.now().getYear(), 12, 31);
         // Forecast can be fed starting from mid month of an year or from January . The same  needs to be checked
@@ -313,7 +313,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 //Add current new subscriptions and deduct churned subscription in the current forecast from earlier total forecast so as to obtain last period forecast.
                 long revisedTotalSubscriptionCount = earlierTotalSubscriptionCount + periodWiseForecast.getNumberOfNewSubscriptions() - periodWiseForecast.getNumberOfChurnedSubscriptions();
                 //Send a single AnnualForecast event for the last month/period of a finanical year as the same should be consumed by business account for finding prchase provision
-                apply(new AnnualForecastCreatedEvent(productId, periodWiseForecast.getStartDate(), periodWiseForecast.getEndDate(), periodWiseForecast.getPurchasePricePerUnit(), periodWiseForecast.getMRP(), periodWiseForecast.getNumberOfNewSubscriptions(), periodWiseForecast.getNumberOfChurnedSubscriptions(), revisedTotalSubscriptionCount));
+                apply(new AnnualForecastCreatedEvent(productId, periodWiseForecast.getStartDate(), periodWiseForecast.getEndDate(), periodWiseForecast.getPurchasePricePerUnit(), periodWiseForecast.getMRP(), periodWiseForecast.getNumberOfNewSubscriptions(), periodWiseForecast.getNumberOfChurnedSubscriptions(), revisedTotalSubscriptionCount,forecastDate));
             }
         }
     }

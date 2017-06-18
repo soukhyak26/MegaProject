@@ -19,14 +19,15 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ProductForecastStatus productForecastStatus;
+    private LocalDate forecastDate;
 
-
-    public ProductPseudoActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+    public ProductPseudoActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions,LocalDate forecastDate) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
+        this.forecastDate=forecastDate;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -71,5 +72,9 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
 
     public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
         this.productForecastStatus = productForecastStatus;
+    }
+
+    public LocalDate getForecastDate() {
+        return forecastDate;
     }
 }

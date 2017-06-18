@@ -25,6 +25,6 @@ public class AddManualForecastCommandHandler {
     @CommandHandler
     public void handle(AddManualForecastCommand command) {
         Product product = repository.load(command.getProductId());
-        product.registerManualForecast(command.getProductForecastParameters(),forecastFinderService);
+        product.registerManualForecast(command.getProductForecastParameters(),forecastFinderService,command.getForecastDate());
     }
 }

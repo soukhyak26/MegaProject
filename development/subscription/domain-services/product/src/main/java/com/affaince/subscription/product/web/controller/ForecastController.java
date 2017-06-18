@@ -108,7 +108,7 @@ public class ForecastController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        AddManualForecastCommand command = new AddManualForecastCommand(productId, request.getProductForecastParameters());
+        AddManualForecastCommand command = new AddManualForecastCommand(productId, request.getProductForecastParameters(),SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
@@ -159,7 +159,7 @@ public class ForecastController {
                 //this.productForecastViewRepository.delete(eachView);
                 eachView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
                 this.productForecastViewRepository.save(eachView);
-                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions());
+                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions(),SysDate.now());
             }
         } else {
             throw ProductForecastModificationException.build(productId, request.getStartDate(), request.getEndDate());

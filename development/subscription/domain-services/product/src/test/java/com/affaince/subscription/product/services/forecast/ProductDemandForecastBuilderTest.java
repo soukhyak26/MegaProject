@@ -45,7 +45,7 @@ public class ProductDemandForecastBuilderTest {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/actualViewSim.csv"))))) {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
-            for (int i=0;i< 90;i++) {
+            for (int i=0;i< 10;i++) {
                 List<String> value=values.get(i);
                 ProductVersionId productVersionId = new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter));
                 LocalDate endDate = LocalDate.parse(value.get(2), formatter);

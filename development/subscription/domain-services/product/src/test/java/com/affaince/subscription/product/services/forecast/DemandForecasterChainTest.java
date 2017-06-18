@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.forecast;
 import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
@@ -57,7 +58,7 @@ public class DemandForecasterChainTest {
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250, SysDate.now());
         //forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
@@ -103,7 +104,7 @@ public class DemandForecasterChainTest {
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
+        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250,SysDate.now());
         //forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);

@@ -74,7 +74,7 @@ public class ManualForecastAddedEventListener {
                 } else {
                     totalSubscriptions = earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions() + parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
                 }
-                ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(event.getProductId(), parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions);
+                ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(event.getProductId(), parameter.getStartDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions, event.getForecastDate());
                 productForecastViewRepository.save(productForecastView);
                 if (null == firstStartDate) {
                     firstStartDate = parameter.getStartDate();
@@ -87,7 +87,7 @@ public class ManualForecastAddedEventListener {
                 productActivationStatusViewRepository.save(view);
             }
 
-            derivePseudoActualsFromForecast(event.getProductId(),firstStartDate);
+            derivePseudoActualsFromForecast(event.getProductId(),firstStartDate,event.getForecastDate());
         } else {
             ProductReadinessException.build(event.getProductId(), ProductStatus.PRODUCT_FORECASTED);
         }
@@ -118,7 +118,7 @@ public class ManualForecastAddedEventListener {
         return interpolatedSubscriptionsPerDay;
     }
 
-    private void derivePseudoActualsFromForecast(String productId,LocalDate firstStartDate){
+    private void derivePseudoActualsFromForecast(String productId,LocalDate firstStartDate,LocalDate forecastDate){
         //Now add PseudoActuals by interpolating manual forecastAdded
         double[] interpolatedPseudoActualsTotalSubscriptions = interpolateStepForecastFromForecast(productId, INTERPOLATE_TOTAL_SUBSCRIPTIONS);
         double[] interpolatedPseudoActualsNewSubscriptions = interpolateStepForecastFromForecast(productId, INTERPOLATE_NEW_SUBSCRIPTIONS);
@@ -133,7 +133,7 @@ public class ManualForecastAddedEventListener {
                 dailychurnedSubscriptionCount = previousDayTotalSubcriptionCount + interpolatedNewSubscriptionCount - interpolatedTotalSubscriptionCount;
             }
             previousDayTotalSubcriptionCount=interpolatedTotalSubscriptionCount;
-            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, firstStartDate.plusDays(i)), firstStartDate.plusDays(i), Double.valueOf(interpolatedNewSubscriptionCount).longValue(), Double.valueOf(dailychurnedSubscriptionCount).longValue(), Double.valueOf(interpolatedTotalSubscriptionCount).longValue());
+            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, firstStartDate.plusDays(i)), firstStartDate.plusDays(i), Double.valueOf(interpolatedNewSubscriptionCount).longValue(), Double.valueOf(dailychurnedSubscriptionCount).longValue(), Double.valueOf(interpolatedTotalSubscriptionCount).longValue(),forecastDate);
             productPseudoActualsViewRepository.save(productPseudoActualsView);
         }
     }

@@ -2,6 +2,7 @@ package com.affaince.subscription.product.query.repository;
 
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
@@ -39,14 +40,14 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
-                100, 20, 110
+                100, 20, 110, SysDate.now()
         );
         productForecastViewRepository.save(productForecastView1);
 
         ProductForecastView productForecastView2 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(31)),
                 localDate.plusDays(51),
-                100, 20, 110
+                100, 20, 110, SysDate.now()
         );
 
         productForecastViewRepository.save(productForecastView2);
@@ -54,7 +55,7 @@ public class ProductForecastViewRepositoryTest {
         ProductForecastView productForecastView3 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(52)),
                 localDate.plusDays(74),
-                100, 20, 110
+                100, 20, 110, SysDate.now()
         );
 
         productForecastViewRepository.save(productForecastView3);
@@ -73,7 +74,7 @@ public class ProductForecastViewRepositoryTest {
             for (int i = 0; i < readings.length; i++) {
                 LocalDate newDate = localDate.plusDays(i + 1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000);
+                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000,SysDate.now());
                 productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }
