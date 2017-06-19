@@ -97,4 +97,8 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
         return this.getProductVersionId().compareTo(o.getProductVersionId());
     }
 
+    @Override
+    public LocalDate getForecastDate() {
+        return null;
+    }
 }
