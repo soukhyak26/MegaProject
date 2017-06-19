@@ -49,7 +49,7 @@ public class MonthlyAggregator<T extends ProductSubscriptionMetricsView> impleme
             } else {
                 try {
                     monthwiseAggregateView = (T)this.getTypeClass()
-                            .getDeclaredConstructor(ProductVersionId.class, LocalDate.class, Long.TYPE, Long.TYPE, Long.TYPE).
+                            .getDeclaredConstructor(ProductVersionId.class, LocalDate.class, Long.TYPE, Long.TYPE, Long.TYPE,LocalDate.class).
                             newInstance(singleRecord.getProductVersionId(), singleRecord.getEndDate(), 0, 0, 0);
                 } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException ex) {
                     LOGGER.error("Cannot construct object of generic type using reflection: " + ex.getMessage());
