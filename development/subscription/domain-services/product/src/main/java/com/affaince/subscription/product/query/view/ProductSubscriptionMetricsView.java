@@ -25,4 +25,5 @@ public interface ProductSubscriptionMetricsView {
     long getTotalNumberOfExistingSubscriptions();
 
     void setTotalNumberOfExistingSubscriptions(long totalNumberOfExistingSubscriptions);
+    public LocalDate getForecastDate();
 }
