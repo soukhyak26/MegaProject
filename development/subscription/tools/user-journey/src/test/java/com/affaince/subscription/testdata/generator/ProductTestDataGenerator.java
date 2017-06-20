@@ -209,9 +209,9 @@ public class ProductTestDataGenerator {
         Map<String, Integer> lineNumberTracker = new HashMap<>();
         Map<String, SubscriptionItem> subscriptionItemMap = new HashMap<>();
         products.forEach(product -> {
-            //long totalForecastCounts = product.getForecasts().
-            long totalBasketsToBeCreated = product.getForecasts().get(0).getNumberOfNewSubscriptions()
-                    + (product.getForecasts().get(0).getNumberOfNewSubscriptions() * product.getPercentageChangeInTrend() / 100);
+            long totalForecastCounts = product.getForecasts().stream().mapToLong(ProductForecastParameter::getNumberOfNewSubscriptions).sum();
+            long totalBasketsToBeCreated = totalForecastCounts
+                    + (totalForecastCounts * product.getPercentageChangeInTrend() / 100);
             ObjectMapper objectMapper = new ObjectMapper();
             int i = 0;
             while (totalBasketsToBeCreated >= 0) {
