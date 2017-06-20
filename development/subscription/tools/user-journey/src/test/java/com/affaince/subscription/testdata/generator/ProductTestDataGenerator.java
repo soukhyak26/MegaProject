@@ -2,23 +2,13 @@ package com.affaince.subscription.testdata.generator;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
-import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.FileBackedOutputStream;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 /**
@@ -33,7 +23,9 @@ public class ProductTestDataGenerator {
     public int getSubscriptionCount() {
         File file = new File(classLoader.getResource(".").getPath() + "/subscriptioncount");
         try (InputStream fileInputStream = new FileInputStream(file)) {
-            subscriptionCount =  fileInputStream.read();
+            byte [] values = new byte[fileInputStream.available()];
+            fileInputStream.read(values);
+            subscriptionCount = new Integer(new String(values));
             System.out.println(subscriptionCount);
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,19 +48,18 @@ public class ProductTestDataGenerator {
                 maxProfit().
                 minPercentageIncreaseInForecast().
                 maxPercentageIncreaseInForecast().
-
-                actualsAggregationPeriodForTargetForecast().build();
+        actualsAggregationPeriodForTargetForecast().build();
         generateProductDetailsCsvFile();
         generatePriceDetails();
         generateStepForecast();
         generateSubscriptionData();
         generateSubscriberData();
         writeSubscriptionCountToFile ();
-        createSysDateAndTime ();
+        //createSysDateAndTime ();
         return this;
     }
 
-    private void createSysDateAndTime() {
+    /*private void createSysDateAndTime() {
         File file = new File (classLoader.getResource(".").getPath() + "/sysdate.csv");
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("dd-MM-yyyy");
@@ -88,12 +79,12 @@ public class ProductTestDataGenerator {
         }  catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void writeSubscriptionCountToFile() {
         File file = new File(classLoader.getResource(".").getPath() + "/subscriptioncount");
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            fileOutputStream.write(subscriptionCount);
+            fileOutputStream.write((subscriptionCount+"").getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -218,6 +209,7 @@ public class ProductTestDataGenerator {
         Map<String, Integer> lineNumberTracker = new HashMap<>();
         Map<String, SubscriptionItem> subscriptionItemMap = new HashMap<>();
         products.forEach(product -> {
+            //long totalForecastCounts = product.getForecasts().
             long totalBasketsToBeCreated = product.getForecasts().get(0).getNumberOfNewSubscriptions()
                     + (product.getForecasts().get(0).getNumberOfNewSubscriptions() * product.getPercentageChangeInTrend() / 100);
             ObjectMapper objectMapper = new ObjectMapper();
