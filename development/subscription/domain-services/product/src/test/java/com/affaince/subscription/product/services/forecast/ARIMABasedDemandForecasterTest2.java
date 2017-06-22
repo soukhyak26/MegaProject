@@ -1,8 +1,10 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
+import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster2;
 import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
 import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
+import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
@@ -10,7 +12,6 @@ import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,52 +21,54 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * Created by mandar on 19-06-2016.
  */
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={Application.class})
-public class ARIMABasedDemandForecasterTest {
+@ContextConfiguration(classes = {Application.class})
+public class ARIMABasedDemandForecasterTest2 {
     @Autowired
-    ARIMABasedDemandForecaster forecaster;
+    ARIMABasedDemandForecaster2 forecaster;
     @Autowired
     private HistoryMinSizeConstraints historyMinSizeConstraints;
     @Autowired
     private HistoryMaxSizeConstraints historyMaxSizeConstraints;
 
-    private List<ProductActualsView> ProductActualsViewList;
+    private List<ProductActualsView> productActualsViewList;
 
     @Before
-    public void setUp(){
+    public void setUp() {
 
     }
+
     @Test
     public void testPrecisePrediction() throws IOException {
-        ProductActualsViewList= new ArrayList<>();
+        productActualsViewList = new ArrayList<>();
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250, SysDate.now());
-        List<ProductForecastView> forecasts = new ArrayList<>();
-        forecasts.add(forecastView);
-        long totalSusbcriptions=1250;
-        for (int i = 0; i < 30 /*readings.length*/; i++) {
-            totalSusbcriptions=totalSusbcriptions+readings[i][0]-readings[i][1];
-            ProductActualsView actualsView = new ProductActualsView(productVersionId, new LocalDate(9999, 12, 31),readings[i][0],readings[i][1],totalSusbcriptions);
+        long totalSubscriptions = 0;
+        for (int i = 0; i < readings.length; i++) {
+            totalSubscriptions = readings[i][0];
+            ProductActualsView actualsView = new ProductActualsView(productVersionId, productVersionId.getFromDate(), readings[i][0], readings[i][1], totalSubscriptions);
+            productVersionId.setFromDate(productVersionId.getFromDate().plusDays(1));
             //actualsView.setTotalNumberOfExistingSubscriptions(readings[i][0]);
             System.out.println("total subscription:" + readings[i][0]);
-            System.out.println("churned subscription:"+readings[i][1] );
-            ProductActualsViewList.add(actualsView);
+            System.out.println("churned subscription:" + readings[i][1]);
+            productActualsViewList.add(actualsView);
         }
-        List<Double> historicalDailySubscriptionCountList = ProductActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+        // List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
+        List<DataFrameVO> dataFrames = new ArrayList<>();
+        for (ProductActualsView view : productActualsViewList) {
+            DataFrameVO vo = new DataFrameVO(view.getEndDate(), "totalsubscriptioncount", view.getTotalNumberOfExistingSubscriptions());
+            dataFrames.add(vo);
+        }
         forecaster.setHistoryMinSizeConstraints(this.historyMinSizeConstraints);
         forecaster.setHistoryMaxSizeConstraints(this.historyMaxSizeConstraints);
-        List<Double> result = forecaster.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList);
+        List<Double> result = forecaster.forecast(productVersionId.getProductId(), dataFrames);
         System.out.println("ARIMA Precise prediction: " + (result == null ? "null" : result.get(0)));
     }
 

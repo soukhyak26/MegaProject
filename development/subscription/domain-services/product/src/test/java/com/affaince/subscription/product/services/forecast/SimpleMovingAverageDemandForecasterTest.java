@@ -9,6 +9,7 @@ import com.affaince.subscription.product.query.view.ProductActualsView;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Created by mandar on 29-05-2016.
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={Application.class})
 public class SimpleMovingAverageDemandForecasterTest {

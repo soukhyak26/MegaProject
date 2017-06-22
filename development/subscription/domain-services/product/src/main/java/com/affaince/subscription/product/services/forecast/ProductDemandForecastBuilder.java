@@ -65,7 +65,8 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         } else {
             forecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
         }
-        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, forecastSize);
+        forecastSize = 90;
+        //List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, forecastSize);
         List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, forecastSize);
 
         List<ProductPseudoActualsView> pseudoActuals = new ArrayList<>(forecastTotalSubscriptions.size());
@@ -76,17 +77,17 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
             double newSubscriptionCount = 0;
             //Please verify if this calculation is right without considering churns
             if(forecastTotalSubscriptions.get(i)> previousTotalSubscriptionCount) {
-                newSubscriptionCount = forecastTotalSubscriptions.get(i) - previousTotalSubscriptionCount + forecastChurnedSubscriptions.get(i);
+                newSubscriptionCount = forecastTotalSubscriptions.get(i) - previousTotalSubscriptionCount + 0.0;
             }else{
                // forecastChurnedSubscriptions.add(i,previousTotalSubscriptionCount-forecastTotalSubscriptions.get(i) + forecastChurnedSubscriptions.get(i));
-                newSubscriptionCount=previousTotalSubscriptionCount-forecastTotalSubscriptions.get(i)+forecastChurnedSubscriptions.get(i);
+                newSubscriptionCount=previousTotalSubscriptionCount-forecastTotalSubscriptions.get(i)+0.0;
             }
             // this needs further treatment- instead of directly adding chunkAggregationPeriod we should find out how many days that month would have and add those many days
             LocalDate newForecastEndDate = newForecastStartDate;
             ProductPseudoActualsView dailyPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, newForecastStartDate),
                     newForecastEndDate,
                     Double.valueOf(newSubscriptionCount).longValue(),
-                    Double.valueOf(forecastChurnedSubscriptions.get(i)).longValue(),
+                    Double.valueOf(0.0).longValue(),
                     Double.valueOf(forecastTotalSubscriptions.get(i)).longValue(),currentDate);
             pseudoActuals.add(dailyPseudoActualsView);
             previousTotalSubscriptionCount = forecastTotalSubscriptions.get(i);

@@ -83,11 +83,9 @@ public class ProductActualsView implements ProductSubscriptionMetricsView, Compa
 
     public void addToNewSubscriptionCount(long subscriptionCount){
         this.newSubscriptions+=subscriptionCount;
-        this.totalNumberOfExistingSubscriptions+=subscriptionCount;
     }
     public void addToChurnedSubscriptionCount(long subscriptionCount){
         this.churnedSubscriptions +=subscriptionCount;
-        this.totalNumberOfExistingSubscriptions-=subscriptionCount;
     }
     public void addToTotalSubscriptionCount(long subscriptionCount){
         this.totalNumberOfExistingSubscriptions+=subscriptionCount;
