@@ -35,8 +35,10 @@ public class Forecast {
         return new TripleExponentialSmoothingDemandForecaster();
     }
 
+/*
     @Bean
     public ARIMABasedDemandForecaster arimaForecaster() {
         return new ARIMABasedDemandForecaster();
     }
+*/
 }

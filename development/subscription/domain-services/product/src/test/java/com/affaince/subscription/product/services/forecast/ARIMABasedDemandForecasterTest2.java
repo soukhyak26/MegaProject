@@ -1,15 +1,12 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
-import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster2;
 import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
 import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +27,7 @@ import java.util.stream.Stream;
 @ContextConfiguration(classes = {Application.class})
 public class ARIMABasedDemandForecasterTest2 {
     @Autowired
-    ARIMABasedDemandForecaster2 forecaster;
+    ARIMABasedDemandForecaster forecaster;
     @Autowired
     private HistoryMinSizeConstraints historyMinSizeConstraints;
     @Autowired
@@ -68,8 +65,7 @@ public class ARIMABasedDemandForecasterTest2 {
         }
         forecaster.setHistoryMinSizeConstraints(this.historyMinSizeConstraints);
         forecaster.setHistoryMaxSizeConstraints(this.historyMaxSizeConstraints);
-        List<Double> result = forecaster.forecast(productVersionId.getProductId(), dataFrames);
-        System.out.println("ARIMA Precise prediction: " + (result == null ? "null" : result.get(0)));
+        List<DataFrameVO> result = forecaster.forecast(productVersionId.getProductId(), dataFrames);
     }
 
 }

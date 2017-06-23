@@ -42,11 +42,16 @@ public class ForecasterCreatorFactory {
                     forecaster = simpleExponentialSmoothingDemandForecaster;
                 } else if (name.equalsIgnoreCase("TripleExponentialSmoothingDemandForecaster")) {
                     forecaster = tripleExponentialSmoothingDemandForecaster;
-                } else if (name.equalsIgnoreCase("ARIMABasedDemandForecaster")) {
+                }else{
+                    forecaster = simpleExponentialSmoothingDemandForecaster;
+                }
+/*
+                else if (name.equalsIgnoreCase("ARIMABasedDemandForecaster")) {
                     forecaster = arimaBasedDemandForecaster;
                 } else {
                     forecaster = arimaBasedDemandForecaster;
                 }
+*/
 
                 String next = config.getNext();
                 if (next.equals("NULL")) {
