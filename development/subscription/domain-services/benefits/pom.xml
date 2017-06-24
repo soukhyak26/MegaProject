@@ -50,12 +50,14 @@
         <dependency>
             <groupId>com.affaince</groupId>
             <artifactId>logback-commons</artifactId>
+<!--
             <exclusions>
                 <exclusion>
                     <groupId>com.google.collections</groupId>
                     <artifactId>google-collections</artifactId>
                 </exclusion>
             </exclusions>
+-->
         </dependency>
         <dependency>
             <groupId>com.affaince</groupId>

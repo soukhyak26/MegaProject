@@ -74,7 +74,7 @@ import static java.util.concurrent.Executors.newScheduledThreadPool;
  * Created by NIKUNJ on 7/12/2015.
  */
 @Import(
-        {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Forecast.class}
+        {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Forecast.class,SparkConfig.class}
 )
 public class Default {
     //  private static final int DEFAULT_JGROUPS_PORT = 12001;

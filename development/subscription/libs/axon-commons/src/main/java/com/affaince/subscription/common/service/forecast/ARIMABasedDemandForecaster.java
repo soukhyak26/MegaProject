@@ -12,6 +12,7 @@ import com.cloudera.sparkts.models.ARIMA;
 import com.cloudera.sparkts.models.ARIMAModel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.spark.SparkConf;
+import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.mllib.linalg.DenseVector;
@@ -47,6 +48,12 @@ public class ARIMABasedDemandForecaster{
     private HistoryMinSizeConstraints historyMinSizeConstraints;
     @Autowired
     private HistoryMaxSizeConstraints historyMaxSizeConstraints;
+    @Autowired
+    private SparkContext context;
+/*
+    @Autowired
+    SQLContext sqlContext;
+*/
 
     public ARIMABasedDemandForecaster() {
     }
@@ -80,12 +87,10 @@ public class ARIMABasedDemandForecaster{
 
     public List<DataFrameVO> forecast(String dataIdentifier, List<DataFrameVO> dataFrames) {
         if (dataFrames.size() > historyMinSizeConstraints.getArima()) {
-            SparkConf conf = new SparkConf().setAppName("Spark-based-ARIMA-Forecaster").setMaster("local");
-            conf.set("spark.io.compression.codec", "org.apache.spark.io.LZ4CompressionCodec");
-            JavaSparkContext context = new JavaSparkContext(conf);
-            SQLContext sqlContext = new SQLContext(context);
             String token=dataFrames.get(0).getToken();
-            DataFrame tickerObs = loadObservations(context, sqlContext, dataFrames);
+            JavaSparkContext javaSparkContext= JavaSparkContext.fromSparkContext(context);
+            SQLContext sqlContext = new SQLContext(javaSparkContext);
+            DataFrame tickerObs = loadObservations(javaSparkContext, sqlContext, dataFrames);
             // Create an daily DateTimeIndex over August and September 2015
             ZoneId zone = ZoneId.systemDefault();
             ZonedDateTime startDateTime=ZonedDateTime.of(dataFrames.get(0).getDate().getYear(), dataFrames.get(0).getDate().getMonthOfYear(), dataFrames.get(0).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
@@ -114,6 +119,10 @@ public class ARIMABasedDemandForecaster{
                 });
                 ARIMAModel arimaModel = ARIMA.fitModel(1, 0, 0, newVec, true, "css-cgd", null);
                 Vector forecasted = arimaModel.forecast(newVec, dataFrames.size() / 2);
+                Arrays.asList(ArrayUtils.toObject(forecasted.toArray())).forEach(x ->{
+                    x = (x == Double.NaN) ? 0.0 : x;
+                });
+
                 return new org.apache.spark.mllib.linalg.DenseVector(forecasted.toArray());//.slice(forecasted.size() - (dataFrames.size() / 2 + 1), forecasted.size() - 1));
             });//.toDF("timestamp", "token", "values");
             //df.registerTempTable("data");
@@ -133,8 +142,6 @@ public class ARIMABasedDemandForecaster{
                 }
             }
             sqlContext.clearCache();
-            context.close();
-
             return forecastedSubscriptionCounts;
 
         } else {

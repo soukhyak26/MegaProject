@@ -56,9 +56,7 @@ public class MonthlyAggregator<T extends ProductSubscriptionMetricsView> impleme
                     ex.printStackTrace();
                 }
             }
-            startDate = singleRecord.getProductVersionId().getFromDate();
             endDate = singleRecord.getEndDate();
-            monthwiseAggregateView.getProductVersionId().setFromDate(startDate);
             monthwiseAggregateView.setEndDate(endDate);
             monthwiseAggregateView.setNewSubscriptions(monthwiseAggregateView.getNewSubscriptions() + singleRecord.getNewSubscriptions());
             monthwiseAggregateView.setChurnedSubscriptions(monthwiseAggregateView.getChurnedSubscriptions() + singleRecord.getChurnedSubscriptions());

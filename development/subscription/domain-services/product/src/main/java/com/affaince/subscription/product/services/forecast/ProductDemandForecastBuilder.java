@@ -72,8 +72,8 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         forecastNewSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionNewCountList,forecastSize));
 
 
-        List<DataFrameVO> forecastChurnedSubscriptions=new ArrayList<>();
-        forecastChurnedSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionChurnCountList,forecastSize));
+        //List<DataFrameVO> forecastChurnedSubscriptions=new ArrayList<>();
+//        forecastChurnedSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionChurnCountList,forecastSize));
 
         List<DataFrameVO> forecastTotalSubscriptions=new ArrayList<>();
         forecastTotalSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalTotalSubscriptionCountList,forecastSize));
@@ -89,7 +89,8 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
             ProductPseudoActualsView dailyPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, forecastTotalSubscriptions.get(i).getDate()),
                     forecastTotalSubscriptions.get(i).getDate(),
                     Double.valueOf(forecastNewSubscriptions.get(i).getValue()).longValue(),
-                    Double.valueOf(forecastChurnedSubscriptions.get(i).getValue()).longValue(),
+          //          Double.valueOf(forecastChurnedSubscriptions.get(i).getValue()).longValue(),
+                    0,
                     Double.valueOf(forecastTotalSubscriptions.get(i).getValue()).longValue(),currentDate);
             pseudoActuals.add(dailyPseudoActualsView);
         }

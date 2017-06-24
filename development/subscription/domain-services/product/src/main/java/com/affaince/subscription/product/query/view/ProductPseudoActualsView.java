@@ -27,6 +27,7 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
+        this.productForecastStatus = ProductForecastStatus.ACTIVE;
         this.forecastDate=forecastDate;
     }
 
