@@ -20,12 +20,10 @@ import java.util.List;
 @Component
 public class SubscriptionForecastUpdatedEventListener {
     private final ProductForecastViewRepository productForecastViewRepository;
-    private final ProductConfigurationViewRepository productConfigurationViewRepository;
 
     @Autowired
     public SubscriptionForecastUpdatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository) {
         this.productForecastViewRepository = productForecastViewRepository;
-        this.productConfigurationViewRepository = productConfigurationViewRepository;
     }
 
     @EventHandler

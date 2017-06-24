@@ -4,10 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.product.command.AddManualForecastCommand;
-import com.affaince.subscription.product.command.AddSingularManualForecastCommand;
-import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
-import com.affaince.subscription.product.command.UpdatePseudoActualsFromActualsCommand;
+import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
 import com.affaince.subscription.product.vo.ProductTargetParameters;
@@ -255,10 +252,9 @@ public class ForecastController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/setnextforecastdate/{productid}")
     @Consumes("application/json")
-    public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable("productid") String productId) {
-        ProductConfigurationView productConfigurationView = this.productConfigurationViewRepository.findOne(productId);
-        productConfigurationView.setNextForecastDate(request.getNextForecastDate());
-        this.productConfigurationViewRepository.save(productConfigurationView);
+    public ResponseEntity<Object> setCalendarForNextForecast(@RequestBody @Valid NextCalendarRequest request, @PathVariable("productid") String productId) throws Exception {
+        UpdateForecastDateCommand updateForecastDateCommand= new UpdateForecastDateCommand(productId,request.getNextForecastDate());
+        commandGateway.executeAsync(updateForecastDateCommand);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

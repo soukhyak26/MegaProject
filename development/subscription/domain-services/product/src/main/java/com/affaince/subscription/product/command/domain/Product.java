@@ -31,7 +31,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -238,7 +237,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                     pseuoActualsViewList.get(i).getChurnedSubscriptions(),
                     pseuoActualsViewList.get(i).getTotalNumberOfExistingSubscriptions(),forecastDate));
         }
-
+        apply(new NextForecastDateUpdatedEvent(productId,forecastDate.plusMonths(3)));
         for (int i = 0; i < forecasts.size(); i++) {
             //why same start/end dates to all events??
             apply(new SubscriptionForecastUpdatedEvent(productId,
@@ -325,15 +324,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     public void calculatePrice(String productId,LocalDateTime fromDate,DefaultPriceDeterminator defaultPriceDeterminator, PricingOptions pricingOptions,ProductDemandTrend productDemandTrend) {
         PriceBucket priceBucket = defaultPriceDeterminator.calculateOfferedPrice(this, productDemandTrend);
-        //PriceBucket latestPriceBucket = this.findLatestActivePriceBucket();
-        //double newOfferedPriceOrPercent = priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit();
-        //Change price ONLY if difference between latest price and new price is more than 0.5 money
-       // if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - newOfferedPriceOrPercent) > 0.5) {
-
-            //PriceBucket newPriceBucket = createNewPriceBucket(productId, priceBucket.getLatestTaggedPriceVersion(), newOfferedPriceOrPercent, priceBucket.getEntityStatus(), priceBucket.getFromDate(),priceBucketFactory);
-
-            //cannot do expiration of latest pricebucket as this is just a recommended price bucket.
-            //latestPriceBucket.setToDate(event.getCurrentPriceDate());
             if (pricingOptions == PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION) {
                 //shall we keep the same date as mentioned in recommended bucket?? for now....yes
                 apply(new OfferedPriceChangedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(),priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(),EntityStatus.ACTIVE, priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(),productDemandTrend,pricingOptions));
@@ -341,7 +331,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
                 //this.getProductAccount().addNewPriceRecommendation(event.getCurrentPriceDate(), newPriceBucket);
                 apply(new OfferedPriceRecommendedEvent(this.productId, priceBucket.getPriceBucketId(), priceBucket.getProductPricingCategory(), priceBucket.getLatestTaggedPriceVersion(), priceBucket.getNumberOfNewSubscriptions(), priceBucket.getNumberOfChurnedSubscriptions(), priceBucket.getNumberOfExistingSubscriptions(), priceBucket.getFromDate(), priceBucket.getToDate(), EntityStatus.CREATED, priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), productDemandTrend));
             }
-        //}
     }
     public void acceptRecommendedPrice() {
         PriceBucket newPriceBucket=this.getLatestRecommendedPriceBucket();
@@ -354,7 +343,6 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
         //Change price ONLY if difference between latest price and new price is more than 0.5 money? BUT WHAT ABOUT PERCENT DICOUNT.. NEEDS CORRECTION
         if (Math.abs(latestPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit() - overriddenPriceOrPercent) > 0.5) {
-            //PriceBucket newPriceBucket = createNewPriceBucket(productId, latestRecommendedPriceBucket.getLatestTaggedPriceVersion(), overriddenPriceOrPercent, latestRecommendedPriceBucket.getEntityStatus(), latestRecommendedPriceBucket.getFromDate());
             apply(new OfferedPriceChangedEvent(productId, latestRecommendedPriceBucket.getPriceBucketId(), latestRecommendedPriceBucket.getProductPricingCategory(), latestRecommendedPriceBucket.getLatestTaggedPriceVersion(), latestRecommendedPriceBucket.getNumberOfNewSubscriptions(), latestRecommendedPriceBucket.getNumberOfChurnedSubscriptions(), latestRecommendedPriceBucket.getNumberOfExistingSubscriptions(), latestRecommendedPriceBucket.getFromDate(), latestRecommendedPriceBucket.getToDate(), latestRecommendedPriceBucket.getEntityStatus(), latestRecommendedPriceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), this.productDemandTrend,this.getProductConfiguration().getPricingOptions()));
         }
     }

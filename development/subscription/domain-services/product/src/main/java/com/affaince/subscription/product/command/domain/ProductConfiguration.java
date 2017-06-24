@@ -2,6 +2,7 @@ package com.affaince.subscription.product.command.domain;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.product.command.event.NextForecastDateUpdatedEvent;
 import com.affaince.subscription.product.command.event.SubscriptionForecastUpdatedEvent;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
@@ -10,7 +11,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
-import java.util.EnumSet;
 import java.util.List;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
@@ -178,8 +178,15 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler
     @EventSourcingHandler
     public void on(SubscriptionForecastUpdatedEvent event) {
-        this.productId = event.getProductId();
-        this.setNextForecastDate(event.getForecastEndDate().plusDays(1));
+    }
+
+    public void updateForecastDate(String productId,LocalDate nextForecastDate) {
+        apply(new NextForecastDateUpdatedEvent(productId,nextForecastDate));
+    }
+
+    @EventSourcingHandler
+    public void on(NextForecastDateUpdatedEvent event){
+        this.nextForecastDate=event.getNextForecastDate();
     }
 
 }
