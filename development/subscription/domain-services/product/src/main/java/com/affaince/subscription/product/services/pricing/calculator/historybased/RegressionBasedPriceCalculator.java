@@ -1,9 +1,6 @@
 package com.affaince.subscription.product.services.pricing.calculator.historybased;
 
-import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
-import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.domain.PriceBucket;
 import com.affaince.subscription.product.command.domain.Product;
@@ -18,7 +15,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +25,6 @@ import java.util.Map;
 public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
     @Autowired
     private RegressionBasedDemandFunctionProcessor regressionBasedDemandFunctionProcessor;
-    @Autowired
-    private DemandForecasterChain demandForecasterChain;
 
     public PriceBucket calculatePrice(Product product, ProductDemandTrend productDemandTrend) {
         String productId = product.getProductId();
@@ -40,12 +34,17 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
 
         if (pricingStrategyType == PricingStrategyType.DEMAND_BASED_PRICING_STRATEGY && bucketsWithSamePurchasePrice.size() > maxHistoryCountforDefaultPricing) {
             Map<Double, Double> historicalPriceVsDemand = new HashMap<>();
-            bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historicalPriceVsDemand.put(priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), Long.valueOf(priceBucket.getNumberOfNewSubscriptions()).doubleValue()));
+            //find out map of offer price and demand at that offer price
+            bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historicalPriceVsDemand.put(priceBucket.getFixedOfferedPriceOrPercentDiscountPerUnit(), Long.valueOf(priceBucket.getNumberOfExistingSubscriptions()).doubleValue()));
             FunctionCoefficients functionCoefficients = regressionBasedDemandFunctionProcessor.processFunction(historicalPriceVsDemand);
-            List<Double> historyOfSubscriptions = new ArrayList<>();
-            bucketsWithSamePurchasePrice.stream().forEach(priceBucket -> historyOfSubscriptions.add(Long.valueOf(priceBucket.getNumberOfNewSubscriptions()).doubleValue()));
-            //NEED TO VERIFY IF BELOW STEP IS CORRECT???
-            double expectedDemand = demandForecasterChain.forecast(productId, historyOfSubscriptions, null, historyOfSubscriptions.size() / 2).get(0);
+            //find expected demand
+            double expectedDemand=0;
+            if (productDemandTrend == ProductDemandTrend.DOWNWARD) {
+                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() - latestPriceBucket.getNumberOfNewSubscriptions() * product.getRevenueChangeThresholdForPriceChange();
+            } else {
+                expectedDemand = latestPriceBucket.getNumberOfNewSubscriptions() + latestPriceBucket.getNumberOfNewSubscriptions() * product.getRevenueChangeThresholdForPriceChange();
+            }
+
             double offeredPrice = calculateOfferedPrice(functionCoefficients.getIntercept(), functionCoefficients.getSlope(), expectedDemand);
             DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
             LocalDateTime currentDate = SysDateTime.now();
@@ -62,7 +61,5 @@ public class RegressionBasedPriceCalculator extends AbstractPriceCalculator {
                 throw new PricingEligibilityViolationException();
             }
         }
-
-
     }
 }

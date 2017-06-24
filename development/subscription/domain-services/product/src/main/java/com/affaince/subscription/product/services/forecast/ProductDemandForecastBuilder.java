@@ -1,7 +1,6 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
-import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.factory.AggregatorFactory;

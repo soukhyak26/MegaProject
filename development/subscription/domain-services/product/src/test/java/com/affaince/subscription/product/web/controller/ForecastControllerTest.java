@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.web.controller;
 
-import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
@@ -40,7 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by mandar on 05-07-2016.
  */
-//@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
@@ -56,8 +54,6 @@ public class ForecastControllerTest {
     @Autowired
     private ForecastController forecastController;
     @InjectMocks
-    @Autowired
-    private DemandForecasterChain chain;
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
