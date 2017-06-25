@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -52,11 +55,28 @@ public class ProductTestDataGenerator {
         generateProductDetailsCsvFile();
         generatePriceDetails();
         generateStepForecast();
-        generateSubscriptionData();
-        generateSubscriberData();
-        writeSubscriptionCountToFile ();
-        //createSysDateAndTime ();
+        writeProductIdsToFile ();
         return this;
+    }
+
+    private void writeProductIdsToFile() {
+        File file = new File(classLoader.getResource(".").getPath() + "/productids");
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            products.forEach(product -> {
+                    try {
+                        String IDString = product.getProductName() + "$" +
+                                product.getCategoryId() + "$" +
+                                product.getSubCategoryId() + "$" +
+                                product.getQuantity();
+                        fileOutputStream.write((new DefaultIdGenerator().generator(IDString) + "\n").getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*private void createSysDateAndTime() {
@@ -181,89 +201,5 @@ public class ProductTestDataGenerator {
             }
             product.setForecasts(forecasts);
         });
-    }
-
-    private void generateSubscriberData() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Subscriber> subscribers = new ArrayList<>();
-        for (int i = 0; i < this.subscriptionCount; i++) {
-            Subscriber subscriber = new Subscriber("Mr", "TestSubscriber" + i, "", "lastName" + i,
-                    "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
-                    "testemail" + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
-            );
-            subscribers.add(subscriber);
-        }
-        try {
-            File file = new File(classLoader.getResource(".").getPath() + "/Subscribers.json");
-            OutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(objectMapper.writeValueAsBytes(subscribers));
-            /*Files.write(Paths.get(classLoader.getResource(".").toURI().toString() + "/Subscribers.json"),
-                    objectMapper.writeValueAsBytes(subscribers),
-                    StandardOpenOption.CREATE);*/
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void generateSubscriptionData() throws JsonProcessingException {
-        Map<String, Integer> lineNumberTracker = new HashMap<>();
-        Map<String, SubscriptionItem> subscriptionItemMap = new HashMap<>();
-        products.forEach(product -> {
-            long totalForecastCounts = product.getForecasts().stream().mapToLong(ProductForecastParameter::getNumberOfNewSubscriptions).sum();
-            long totalBasketsToBeCreated = totalForecastCounts
-                    + (totalForecastCounts * product.getPercentageChangeInTrend() / 100);
-            ObjectMapper objectMapper = new ObjectMapper();
-            int i = 0;
-            while (totalBasketsToBeCreated >= 0) {
-                int noOfCycle = new Random().nextInt(9) + 3;
-                BasketItemRequest basketItemRequest = new BasketItemRequest(
-                        product.getGeneratedProductId(),
-                        1,
-                        new Period(1, PeriodUnit.MONTH),
-                        product.getForecasts().get(0).getMRP(),
-                        product.getForecasts().get(0).getMRP(),
-                        noOfCycle
-                );
-                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + "@affaince.com");
-                String fileName = classLoader.getResource(".").getPath() + "/" + subscriberId + ".json";
-                if (lineNumberTracker.get(fileName) != null &&
-                        lineNumberTracker.get(fileName).intValue() == 20) {
-                    i++;
-                    continue;
-                }
-                totalBasketsToBeCreated -= noOfCycle;
-                if (subscriptionItemMap.get(fileName) != null) {
-                    subscriptionItemMap.get(fileName).getBasketItemRequests().add(basketItemRequest);
-                } else {
-                    SubscriptionItem subscriptionItem = new SubscriptionItem();
-                    subscriptionItem.setBasketItemRequests(new ArrayList<>());
-                    subscriptionItemMap.put(fileName, subscriptionItem);
-                    subscriptionItemMap.get(fileName).getBasketItemRequests().add(basketItemRequest);
-                }
-                if (lineNumberTracker.containsKey(fileName)) {
-                    lineNumberTracker.put(fileName,
-                            lineNumberTracker.get(fileName).intValue() + 1);
-                } else {
-                    lineNumberTracker.put(fileName, 1);
-                }
-                i++;
-            }
-            this.subscriptionCount = subscriptionItemMap.size();
-
-        });
-        ObjectMapper objectMapper = new ObjectMapper();
-        for (String fileName:
-             subscriptionItemMap.keySet()) {
-            File file = new File(fileName);
-            try {
-                OutputStream outputStream = new FileOutputStream(file);
-                String s = objectMapper.writeValueAsString(subscriptionItemMap.get(fileName));
-                outputStream.write(s.getBytes());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

@@ -249,6 +249,18 @@ public class ForecastController {
         return objectMapper.writeValueAsString(productForecastViews);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "lastforecast/totalsubscription/{productid}")
+    public Long findActiveProductForecastByProductId(@PathVariable("productid") String productId) throws JsonProcessingException {
+        final List<ProductForecastView> productForecastViews = new ArrayList<>();
+        final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        productForecastViewRepository.
+                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateAsc
+                        (productId, ProductForecastStatus.ACTIVE).forEach
+                (productForecastMetricsView -> productForecastViews.add(productForecastMetricsView));
+        final ObjectMapper objectMapper = new ObjectMapper();
+        return productForecastViews.get(productForecastViews.size()-1).getNewSubscriptions();
+    }
+
 
     @RequestMapping(method = RequestMethod.PUT, value = "/setnextforecastdate/{productid}")
     @Consumes("application/json")

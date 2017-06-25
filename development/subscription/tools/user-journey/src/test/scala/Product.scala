@@ -61,7 +61,7 @@ object RegisterProduct {
               |    "complements":${complements},
               |    "productPricingCategory":0,
               |    "purchasePrice":"${purchasePrice}",
-              |    "MRP":"${mrp}"
+              |    "mrp":"${mrp}"
               |}
             """.stripMargin
           )

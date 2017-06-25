@@ -2,7 +2,7 @@ import java.util.concurrent.TimeUnit
 
 import com.affaince.subscription.date
 import com.affaince.subscription.date.SysDate
-import com.affaince.subscription.testdata.generator.ProductTestDataGenerator
+import com.affaince.subscription.testdata.generator.{SubscriptionTestDataGenerator}
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
 import io.gatling.core.structure.ChainBuilder
@@ -16,7 +16,11 @@ import scala.util.Random
   */
 class Subscriber extends BaseSimulator {
 
-  val productTestDataGenerator = new ProductTestDataGenerator().getSubscriptionCount();
+  var productTestDataGenerator = new SubscriptionTestDataGenerator().generate().getSubscriptionCount();
+
+  if (productTestDataGenerator > 2000) {
+    productTestDataGenerator = 2000;
+  }
 
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
     .pause(10)
@@ -31,13 +35,13 @@ class Subscriber extends BaseSimulator {
    // }.pause(1)
     //.repeat(1) {
      // CreateSubscriber.sysDateChange
-    }.pause(5)
+    }.pause(1)
     .repeat(1) {
       CreateSubscriber.confirmSubscription
     }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
-  setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(rampUsers(productTestDataGenerator) over(productTestDataGenerator/15)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
@@ -49,7 +53,8 @@ object CreateSubscriber {
   val createSubscriptionUrl = "http://localhost:8081/subscription"
   val sysDateChangeUrl= "http://localhost:8086/sysdate"
   val subscriberJsonFeeder = jsonFile ("Subscribers.json")
-  val sysdateFeeder = csv("sysdate.csv").queue;
+  val getDeliveryIdsUrl = "http://localhost:8081/delivery/getDeliveryIds"
+ // val sysdateFeeder = csv("sysdate.csv").queue;
 
   val createSubscriber = feed(subscriberJsonFeeder)
     .exec(
@@ -70,7 +75,7 @@ object CreateSubscriber {
               |    "pinCode":"${pinCode}"},
               |    "contactDetails":{"email":"${email}",
               |    "mobileNumber":"${mobileNumber}",
-              |    "alternativeNumber":"$alternativeNumber{}"}
+              |    "alternativeNumber":"$alternativeNumber"}
               |}
             """.stripMargin
           )
@@ -124,8 +129,14 @@ object CreateSubscriber {
         .put((createSubscriptionUrl + "/confirmsubscription/${subscriberId}").el[String])
     )
 
-  val sysDateChange = feed(sysdateFeeder).exec(
-    http ("Change SysDate Time")
+  val getDeliveryIds =
+    exec (
+      http("getDeliveryIds")
+        .get((getDeliveryIdsUrl + "/${subscriberId}/${subscriptionId}").el[String])
+        .asJSON
+    )
+
+ /* val sysDateChange = feed(sysdateFeeder).exec(
       .put(sysDateChangeUrl)
       .body(
         StringBody(
@@ -137,5 +148,5 @@ object CreateSubscriber {
           """.stripMargin
         )
       ).asJSON
-  )
+  )*/
 }

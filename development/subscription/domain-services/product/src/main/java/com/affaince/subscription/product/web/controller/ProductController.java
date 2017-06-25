@@ -7,7 +7,9 @@ import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
+import com.affaince.subscription.product.query.repository.TaggedPriceVersionsViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
+import com.affaince.subscription.product.query.view.TaggedPriceVersionsView;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.affaince.subscription.product.web.request.RegisterProductRequest;
 import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
@@ -36,15 +38,16 @@ public class ProductController {
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository productViewRepository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
+    private final TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository;
+    private final IdGenerator defaultIdGenerator;
 
     @Autowired
-    IdGenerator defaultIdGenerator;
-
-    @Autowired
-    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository) {
+    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, IdGenerator defaultIdGenerator) {
         this.commandGateway = commandGateway;
         this.productViewRepository = productViewRepository;
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
+        this.taggedPriceVersionsViewRepository = taggedPriceVersionsViewRepository;
+        this.defaultIdGenerator = defaultIdGenerator;
     }
 
     @RequestMapping(method = RequestMethod.POST, value="register")
@@ -110,6 +113,16 @@ public class ProductController {
         productViewRepository.findAll().forEach(productView -> productViews.add(productView));
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(productViews);
+        //return new ResponseEntity<List<ProductView>>(productViews, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/mrp/{productId}")
+    @Produces("application/json")
+    public Double getAllProducts (@PathVariable String productId) throws JsonProcessingException {
+        final List <ProductView> productViews = new ArrayList<>();
+        List<TaggedPriceVersionsView> taggedPriceVersionsView =
+                taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(productId);
+        return taggedPriceVersionsView.get(0).getMRP();
         //return new ResponseEntity<List<ProductView>>(productViews, HttpStatus.OK);
     }
 }
