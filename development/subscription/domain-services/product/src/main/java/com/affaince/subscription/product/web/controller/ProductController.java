@@ -3,10 +3,8 @@ package com.affaince.subscription.product.web.controller;
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
-import com.affaince.subscription.product.command.UpdateProductStatusCommand;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.view.ProductView;
@@ -71,7 +69,7 @@ public class ProductController {
                 receivedSensitivityCharactersistic,
                 request.getProductPricingCategory(),
                 request.getPurchasePrice(),
-                request.getMRP()
+                request.getMrp()
         );
         try {
             this.commandGateway.executeAsync(createCommand);

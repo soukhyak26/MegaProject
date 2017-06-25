@@ -67,7 +67,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
             if (product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.PRICE_COMMITMENT){
                 newPriceBucket =createNewPriceBucket(productId, minusOnePriceBucket.getPriceBucketId(),latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED, ProductPricingCategory.PRICE_COMMITMENT,currentDate);
             }else if(product.getProductAccount().getProductPricingCategory() == ProductPricingCategory.DISCOUNT_COMMITMENT){
-                double percentDiscount= (product.getLatestTaggedPriceVersion().getMRP()-offeredPrice)/product.getLatestTaggedPriceVersion().getMRP();
+                double percentDiscount= (product.getLatestTaggedPriceVersion().getMrp()-offeredPrice)/product.getLatestTaggedPriceVersion().getMrp();
                 newPriceBucket = createNewPriceBucket(productId, minusOnePriceBucket.getPriceBucketId(),latestPriceBucket.getLatestTaggedPriceVersion(), percentDiscount, EntityStatus.CREATED,ProductPricingCategory.DISCOUNT_COMMITMENT, currentDate);
             }else{
                 newPriceBucket = createNewPriceBucket(productId, minusOnePriceBucket.getPriceBucketId(),latestPriceBucket.getLatestTaggedPriceVersion(), offeredPrice, EntityStatus.CREATED,ProductPricingCategory.NO_COMMITMENT, currentDate);

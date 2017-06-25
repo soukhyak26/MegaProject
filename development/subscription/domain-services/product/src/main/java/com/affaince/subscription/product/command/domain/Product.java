@@ -82,7 +82,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
         this.productActivationStatusList.add(ProductStatus.PRODUCT_REGISTERED);
         */
         this.productAccount = new ProductAccount(event.getProductId(), event.getProductPricingCategory());
-        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(event.getTaggedPriceVersionId(), event.getPurchasePrice(), event.getMRP(), event.getRegistrationDate());
+        PriceTaggedWithProduct taggedPriceVersion = new PriceTaggedWithProduct(event.getTaggedPriceVersionId(), event.getPurchasePrice(), event.getMrp(), event.getRegistrationDate());
         this.productAccount.addNewTaggedPriceVersion(taggedPriceVersion);
     }
 

@@ -21,10 +21,10 @@ public class ProductRegisteredEvent {
     private ProductPricingCategory productPricingCategory;
     private String taggedPriceVersionId;
     private double purchasePrice;
-    private double MRP;
+    private double mrp;
     private LocalDate registrationDate;
 
-    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, String taggedPriceVersionId,double purchasePrice, double MRP,LocalDate registrationDate) {
+    public ProductRegisteredEvent(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, String taggedPriceVersionId, double purchasePrice, double mrp, LocalDate registrationDate) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -37,7 +37,7 @@ public class ProductRegisteredEvent {
         this.productPricingCategory = productPricingCategory;
         this.taggedPriceVersionId=taggedPriceVersionId;
         this.purchasePrice = purchasePrice;
-        this.MRP = MRP;
+        this.mrp = mrp;
         this.registrationDate=registrationDate;
     }
 
@@ -92,8 +92,8 @@ public class ProductRegisteredEvent {
         return purchasePrice;
     }
 
-    public double getMRP() {
-        return MRP;
+    public double getMrp() {
+        return mrp;
     }
 
     public LocalDate getRegistrationDate() {

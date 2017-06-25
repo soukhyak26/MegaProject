@@ -30,7 +30,7 @@ public class RegisterProductRequest {
     @NotNull
     private ProductPricingCategory productPricingCategory;
     private double purchasePrice;
-    private double MRP;
+    private double mrp;
 
 
 
@@ -114,11 +114,11 @@ public class RegisterProductRequest {
         this.purchasePrice = purchasePrice;
     }
 
-    public double getMRP() {
-        return MRP;
+    public double getMrp() {
+        return mrp;
     }
 
-    public void setMRP(double MRP) {
-        this.MRP = MRP;
+    public void setMrp(double mrp) {
+        this.mrp = mrp;
     }
 }
