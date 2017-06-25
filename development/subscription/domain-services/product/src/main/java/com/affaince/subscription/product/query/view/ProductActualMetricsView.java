@@ -42,8 +42,8 @@ public class ProductActualMetricsView {
     private double revenue;
     private double averageRevenuePerNewSubscriber;
     private double averageRevenuePerSubscriber;
-    private double subscriberLifetimeValue;
-    private double subscriberLifetimePeriod;
+    private double subscriptionLifetimeValue;
+    private double subscriptionLifetimePeriod;
     private double costOfAcquiringASubscriber;
     private double SLVToCASRatio;
     private double monthsToRecoverCAS;
@@ -216,20 +216,20 @@ public class ProductActualMetricsView {
         this.averageRevenuePerSubscriber = averageRevenuePerSubscriber;
     }
 
-    public double getSubscriberLifetimeValue() {
-        return subscriberLifetimeValue;
+    public double getSubscriptionLifetimeValue() {
+        return subscriptionLifetimeValue;
     }
 
-    public void setSubscriberLifetimeValue(double subscriberLifetimeValue) {
-        this.subscriberLifetimeValue = subscriberLifetimeValue;
+    public void setSubscriptionLifetimeValue(double subscriptionLifetimeValue) {
+        this.subscriptionLifetimeValue = subscriptionLifetimeValue;
     }
 
-    public double getSubscriberLifetimePeriod() {
-        return subscriberLifetimePeriod;
+    public double getSubscriptionLifetimePeriod() {
+        return subscriptionLifetimePeriod;
     }
 
-    public void setSubscriberLifetimePeriod(double subscriberLifetimePeriod) {
-        this.subscriberLifetimePeriod = subscriberLifetimePeriod;
+    public void setSubscriptionLifetimePeriod(double subscriptionLifetimePeriod) {
+        this.subscriptionLifetimePeriod = subscriptionLifetimePeriod;
     }
 
     public double getCostOfAcquiringASubscriber() {

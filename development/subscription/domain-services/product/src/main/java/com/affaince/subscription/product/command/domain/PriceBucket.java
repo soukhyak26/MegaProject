@@ -178,7 +178,6 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
         //Assumption is, this set is sorted in descending order of start date of tagged price version
         return deliveredSubscriptionsAgainstTaggedPrices.iterator().next();
     }
-    public void addNewTaggedPriceVersion(){}
     public double recalculateOfferedPriceBasedOnActualDemand() {
         if (slope != 0) {
             return (getLatestTaggedPriceVersion().getMRP() + slope * getNumberOfNewSubscriptions());

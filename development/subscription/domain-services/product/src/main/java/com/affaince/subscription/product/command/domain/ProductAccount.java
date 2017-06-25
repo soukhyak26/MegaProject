@@ -226,8 +226,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
             }
             apply(new FixedExpenseChangedEvent(command.getProductId(), SysDate.now(), newFixedExpenseVersion, taggedPriceVersions));
         }
-
-
     }
 
     public double findLatestFixedExpensePerUnitInDateRange(LocalDateTime fromDate, LocalDateTime toDate) {
@@ -443,10 +441,6 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     @EventSourcingHandler
     public void on(VariableExpenseChangedEvent event) {
         variableExpenseVersions.add(event.getVariableExpensePerProduct());
-/*
-        PriceTaggedWithProduct latestTaggedPriceVersion = getLatestTaggedPriceVersion();
-        latestTaggedPriceVersion.setBreakEvenPrice(event.getRevisedBreakEvenPrice());
-*/
         Set<PriceTaggedWithProduct> taggedPriceVersionsWithRevisedBEPrice = event.getUpdatedTaggedPriceVersions();
         for (PriceTaggedWithProduct taggedPriceVersionWithRevisedBEPrice : taggedPriceVersionsWithRevisedBEPrice) {
             if (taggedPriceVersions.contains(taggedPriceVersionWithRevisedBEPrice)) {

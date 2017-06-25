@@ -56,6 +56,7 @@ public class ProductRegisteredEventListener {
 
             TaggedPriceVersionsView taggedPriceVersionsView=new TaggedPriceVersionsView(event.getProductId(), SysDate.now().toString(),event.getPurchasePrice(),event.getMrp(),event.getRegistrationDate(),new LocalDate(999,12,31));
             taggedPriceVersionsViewRepository.save(taggedPriceVersionsView);
+
             final ProductActivationStatusView productActivationStatusView = new ProductActivationStatusView(event.getProductId(), new ArrayList<>());
             productActivationStatusView.addProductStatus(ProductStatus.PRODUCT_REGISTERED);
             productActivationStatusViewRepository.save(productActivationStatusView);

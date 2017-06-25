@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 31-12-2016.
  */
-@Document(collection = "TaggedPriceVersions")
+@Document(collection = "TaggedPriceVersionsView")
 public class TaggedPriceVersionsView {
     @Id
     private ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId ;
