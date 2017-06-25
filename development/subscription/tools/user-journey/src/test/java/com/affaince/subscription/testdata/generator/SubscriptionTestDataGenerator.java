@@ -70,10 +70,11 @@ public class SubscriptionTestDataGenerator {
     private void generateSubscriberData() {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Subscriber> subscribers = new ArrayList<>();
+        long sdc = getSubscriptionCount();
         for (int i = 0; i < this.subscriptionCount; i++) {
             Subscriber subscriber = new Subscriber("Mr", "TestSubscriber" + i, "", "lastName" + i,
                     "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
-                    "testemail" + getSubscriptionCount() + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
+                    "testemail" + sdc + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
             );
             subscribers.add(subscriber);
         }
@@ -97,6 +98,7 @@ public class SubscriptionTestDataGenerator {
                     + (totalForecastCounts * 10 / 100);
             ObjectMapper objectMapper = new ObjectMapper();
             int i = 0;
+            long sdc = getSubscriptionCount();
             while (totalBasketsToBeCreated >= 0) {
                 int noOfCycle = new Random().nextInt(9) + 3;
                 BasketItemRequest basketItemRequest = new BasketItemRequest(
@@ -107,7 +109,7 @@ public class SubscriptionTestDataGenerator {
                         getMrpByProductId(productId),
                         noOfCycle
                 );
-                String subscriberId = new DefaultIdGenerator().generator("testemail" + getSubscriptionCount() + i + "@affaince.com");
+                String subscriberId = new DefaultIdGenerator().generator("testemail" + sdc + i + "@affaince.com");
                 String fileName = classLoader.getResource(".").getPath() + "/" + subscriberId + ".json";
                 if (lineNumberTracker.get(fileName) != null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
