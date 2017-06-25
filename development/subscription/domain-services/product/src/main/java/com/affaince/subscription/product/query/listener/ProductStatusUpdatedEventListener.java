@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import com.affaince.subscription.product.command.RecalculateOfferPriceCommand;
 import com.affaince.subscription.product.command.event.ProductStatusUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
@@ -51,7 +52,8 @@ public class ProductStatusUpdatedEventListener {
         if (latestTaggedPriceVersionsViews.isEmpty() ||
                 (latestTaggedPriceVersionsViews.get(0).getPurchasePricePerUnit() != newTaggedPriceVersion.getPurchasePricePerUnit())) {
             //DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-            TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(), newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
+            ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId=new ProductwiseTaggedPriceVersionId(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId());
+            TaggedPriceVersionsView newTaggedPrice = new TaggedPriceVersionsView(productwiseTaggedPriceVersionId, newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(), newTaggedPriceVersion.getTaggedStartDate(),newTaggedPriceVersion.getTaggedEndDate());
             taggedPriceVersionsViewRepository.save(newTaggedPrice);
             RecalculateOfferPriceCommand command = new RecalculateOfferPriceCommand(event.getProductId(),newTaggedPriceVersion.getTaggedPriceVersionId(), newTaggedPriceVersion.getPurchasePricePerUnit(), newTaggedPriceVersion.getMRP(),newTaggedPriceVersion.getTaggedStartDate().toDateTimeAtCurrentTime().toLocalDateTime(),newTaggedPriceVersion.getTaggedEndDate().toDateTimeAtCurrentTime().toLocalDateTime());
             commandGateway.executeAsync(command);

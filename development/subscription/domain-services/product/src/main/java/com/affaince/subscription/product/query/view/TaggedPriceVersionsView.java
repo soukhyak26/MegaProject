@@ -18,8 +18,8 @@ public class TaggedPriceVersionsView {
     private LocalDate taggedStartDate;
     private LocalDate taggedEndDate;
 
-    public TaggedPriceVersionsView(String productId, String taggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
-        this.productwiseTaggedPriceVersionId = new ProductwiseTaggedPriceVersionId(productId,taggedPriceVersionId);
+    public TaggedPriceVersionsView(ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
+        this.productwiseTaggedPriceVersionId = productwiseTaggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.taggedStartDate = taggedStartDate;

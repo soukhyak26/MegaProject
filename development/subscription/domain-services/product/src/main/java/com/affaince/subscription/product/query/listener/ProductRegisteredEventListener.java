@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ProductStatus;
+import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.event.ProductRegisteredEvent;
 import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
@@ -53,8 +54,8 @@ public class ProductRegisteredEventListener {
                     event.getSensitiveTo()
             );
             itemRepository.save(productView);
-
-            TaggedPriceVersionsView taggedPriceVersionsView=new TaggedPriceVersionsView(event.getProductId(), SysDate.now().toString(),event.getPurchasePrice(),event.getMrp(),event.getRegistrationDate(),new LocalDate(999,12,31));
+            ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId = new ProductwiseTaggedPriceVersionId(event.getProductId(),SysDate.now().toString());
+            TaggedPriceVersionsView taggedPriceVersionsView=new TaggedPriceVersionsView(productwiseTaggedPriceVersionId,event.getPurchasePrice(),event.getMrp(),event.getRegistrationDate(),new LocalDate(999,12,31));
             taggedPriceVersionsViewRepository.save(taggedPriceVersionsView);
 
             final ProductActivationStatusView productActivationStatusView = new ProductActivationStatusView(event.getProductId(), new ArrayList<>());
