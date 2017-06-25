@@ -202,14 +202,23 @@ public class ProductAccount extends AbstractAnnotatedEntity {
     }
 
     public void updateSubscriptionSpecificExpenses(UpdateDeliveryExpenseToProductCommand command, List<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator) {
-        VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
-        if (null == latestVariableExpense || (null != latestVariableExpense && latestVariableExpense.getVariableOperatingExpPerUnit() != command.getOperationExpense())) {
+        if (null==variableExpenseVersions || variableExpenseVersions.size()==0) {
             final LocalDate startDate = SysDate.now();
             VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(command.getOperationExpense(), startDate);
-            CostHeader changedCostHeader = new CostHeader(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT, "variable expense per unit", latestVariableExpense.getVariableOperatingExpPerUnit(), command.getOperationExpense(), CostHeaderApplicability.ABSOLUTE);
+            CostHeader changedCostHeader = new CostHeader(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT, "variable expense per unit", command.getOperationExpense(), command.getOperationExpense(), CostHeaderApplicability.ABSOLUTE);
             List<CostHeader> changedCostHeaders = new ArrayList<>();
             changedCostHeaders.add(changedCostHeader);
             apply(new VariableExpenseChangedEvent(command.getProductId(), startDate, newVariableExpenseVersion, taggedPriceVersions));
+        }else{
+            VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
+            if( latestVariableExpense.getVariableOperatingExpPerUnit() != command.getOperationExpense()){
+                final LocalDate startDate = SysDate.now();
+                VariableExpensePerProduct newVariableExpenseVersion = new VariableExpensePerProduct(command.getOperationExpense(), startDate);
+                CostHeader changedCostHeader = new CostHeader(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT, "variable expense per unit", command.getOperationExpense(), command.getOperationExpense(), CostHeaderApplicability.ABSOLUTE);
+                List<CostHeader> changedCostHeaders = new ArrayList<>();
+                changedCostHeaders.add(changedCostHeader);
+                apply(new VariableExpenseChangedEvent(command.getProductId(), startDate, newVariableExpenseVersion, taggedPriceVersions));
+            }
         }
     }
 

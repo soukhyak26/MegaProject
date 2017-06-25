@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.forecast;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
+import com.affaince.subscription.product.build.ProductActualsViewBuilder;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
@@ -37,10 +38,10 @@ public class ProductDemandForecastBuilderTest {
     @Autowired
     ProductDemandForecastBuilder builder;
     @Autowired
-    private ProductActualsViewRepository productActualsViewRepository;
-
+    ProductActualsViewBuilder productActualsViewBuilder;
     @Before
     public void setup() throws Exception {
+/*
         List<ProductActualsView> productActualsViews = new ArrayList<>(365);
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/actualViewSim.csv"))))) {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
@@ -58,11 +59,13 @@ public class ProductDemandForecastBuilderTest {
             }
             productActualsViewRepository.save(productActualsViews);
         }
+*/
+        productActualsViewBuilder.buildProductActualsView();
     }
 
     @After
     public void shutdown() {
-        productActualsViewRepository.deleteAll();
+        productActualsViewBuilder.deleteProductActualsView();
     }
 
     @Test
