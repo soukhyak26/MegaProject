@@ -74,7 +74,7 @@ public class SubscriptionTestDataGenerator {
         for (int i = 0; i < this.subscriptionCount; i++) {
             Subscriber subscriber = new Subscriber("Mr", "TestSubscriber" + i, "", "lastName" + i,
                     "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
-                    "testemail" + sdc + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
+                    "testemail" + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
             );
             subscribers.add(subscriber);
         }
@@ -109,7 +109,7 @@ public class SubscriptionTestDataGenerator {
                         getMrpByProductId(productId),
                         noOfCycle
                 );
-                String subscriberId = new DefaultIdGenerator().generator("testemail" + sdc + i + "@affaince.com");
+                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + "@affaince.com");
                 String fileName = classLoader.getResource(".").getPath() + "/" + subscriberId + ".json";
                 if (lineNumberTracker.get(fileName) != null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
