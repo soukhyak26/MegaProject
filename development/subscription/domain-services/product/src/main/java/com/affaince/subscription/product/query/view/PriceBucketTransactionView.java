@@ -71,4 +71,16 @@ public class PriceBucketTransactionView {
     public void setMRP(double MRP) {
         this.MRP = MRP;
     }
+
+    public void setNumberOfNewSubscriptions(long numberOfNewSubscriptions) {
+        this.numberOfNewSubscriptions = numberOfNewSubscriptions;
+    }
+
+    public void setNumberOfChurnedSubscriptions(long numberOfChurnedSubscriptions) {
+        this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
+    }
+
+    public void setNumberOfExistingSubscriptions(long numberOfExistingSubscriptions) {
+        this.numberOfExistingSubscriptions = numberOfExistingSubscriptions;
+    }
 }

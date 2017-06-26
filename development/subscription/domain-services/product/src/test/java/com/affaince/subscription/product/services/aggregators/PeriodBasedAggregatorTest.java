@@ -35,7 +35,7 @@ public class PeriodBasedAggregatorTest {
 
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/actualViewSim.csv"))))) {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-yy");
             for (List<String> value : values) {
                 ProductForecastView productForecastView = new ProductForecastView(
                         new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter)),

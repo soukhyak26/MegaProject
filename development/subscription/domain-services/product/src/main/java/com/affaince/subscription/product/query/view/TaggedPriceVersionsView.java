@@ -73,4 +73,18 @@ public class TaggedPriceVersionsView {
     public void setBreakEvenPrice(double breakEvenPrice) {
         this.breakEvenPrice = breakEvenPrice;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TaggedPriceVersionsView that = (TaggedPriceVersionsView) o;
+        return productwiseTaggedPriceVersionId.equals(that.productwiseTaggedPriceVersionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return productwiseTaggedPriceVersionId.hashCode();
+    }
 }

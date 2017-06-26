@@ -31,7 +31,7 @@ public class ProductActualsViewBuilder {
         List<ProductActualsView> productActualsViews = new ArrayList<>(365);
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/actualViewSim.csv"))))) {
             List<List<String>> values = fileReader.lines().map(line -> Arrays.asList(line.trim().split(","))).collect(Collectors.toList());
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-yy");
             for (int i=0;i<11;i++) {
                 List<String> value=values.get(i);
                 ProductVersionId productVersionId = new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter));

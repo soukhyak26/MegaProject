@@ -321,7 +321,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>18.0</version>
+                <version>22.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
@@ -421,11 +421,13 @@
                 <artifactId>logback-core</artifactId>
                 <version>1.1.2</version>
             </dependency>
+<!--
             <dependency>
                 <groupId>com.google.collections</groupId>
                 <artifactId>google-collections</artifactId>
                 <version>1.0</version>
             </dependency>
+-->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>logback-commons</artifactId>
@@ -519,11 +521,13 @@
         </dependencies>
     </dependencyManagement>
     <repositories>
+<!--
         <repository>
             <id>scala-tools.org</id>
             <name>Scala-tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-releases</url>
         </repository>
+-->
         <repository>
             <id>maven-hadoop</id>
             <name>Hadoop Releases</name>
