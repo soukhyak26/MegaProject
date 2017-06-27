@@ -7,6 +7,7 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
+import com.affaince.subscription.pricing.exception.NoMatchingForecastForActualSubscriptionException;
 import com.affaince.subscription.pricing.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
@@ -33,53 +34,62 @@ public class ProductPricingTrigger {
     @Autowired
     private ProductConfigurationViewRepository productConfigurationViewRepository;
 
+/*
     @Autowired
     private ForecastInterpolatedSubscriptionCountFinder forecastInterpolatedSubscriptionCountFinder;
+*/
 
-    public WeightedProductDemandTrend triggerProductPricingNew(String productId){
+    public WeightedProductDemandTrend triggerProductPricingNew(String productId) {
         //get the actuals data from last to first in descending order
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         //instead of getting ProductActuals view of current day, we are taking latest view in order to eliminate the dependancy of running this job at end of day
         final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
-        final double totalActualSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+        final double totalActualSubscriptionCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
 
         //Get latest value of interpolated forecast.
-        final double totalInterpolatedForecastSubscriptionCountAsOfCurrentDate=forecastInterpolatedSubscriptionCountFinder.getDailyInterpolatedTotalSubscriptionCountAsOnDate(productId,SysDate.now());
-        final double changeOfActualDemandAgainstForecast = (totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate)/totalInterpolatedForecastSubscriptionCountAsOfCurrentDate;
-        final double changeThresholdForPriceChange =productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
+        //final double totalInterpolatedForecastSubscriptionCountAsOfCurrentDate=forecastInterpolatedSubscriptionCountFinder.getDailyInterpolatedTotalSubscriptionCountAsOnDate(productId,SysDate.now());
+        final List<ProductPseudoActualsView> forecastedPseudoActualViewsAsOfCurrentDate = productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDate(productId, latestProductActualsView.getEndDate());
+        double forecastedTotalSubscriptionCountAsOfCurrentDate = 0;
+        if (null != forecastedPseudoActualViewsAsOfCurrentDate && forecastedPseudoActualViewsAsOfCurrentDate.size() > 0) {
+            forecastedTotalSubscriptionCountAsOfCurrentDate = forecastedPseudoActualViewsAsOfCurrentDate.get(0).getTotalNumberOfExistingSubscriptions();
+        } else {
+            throw NoMatchingForecastForActualSubscriptionException.build(productId, latestProductActualsView.getEndDate());
+        }
+        final double changeOfActualDemandAgainstForecast = (totalActualSubscriptionCount - forecastedTotalSubscriptionCountAsOfCurrentDate) / forecastedTotalSubscriptionCountAsOfCurrentDate;
+        final double changeThresholdForPriceChange = productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
 
-        if(totalActualSubscriptionCount > totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
-            return new WeightedProductDemandTrend(ProductDemandTrend.UPWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate), productId);
-        }else if(totalActualSubscriptionCount < totalInterpolatedForecastSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
-            return new WeightedProductDemandTrend(ProductDemandTrend.DOWNWARD,(totalActualSubscriptionCount-totalInterpolatedForecastSubscriptionCountAsOfCurrentDate), productId);
-        }else{
-            return new WeightedProductDemandTrend(ProductDemandTrend.NOCHANGE,0, productId);
+        if (totalActualSubscriptionCount > forecastedTotalSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) > changeThresholdForPriceChange) {
+            return new WeightedProductDemandTrend(ProductDemandTrend.UPWARD, (totalActualSubscriptionCount - forecastedTotalSubscriptionCountAsOfCurrentDate), productId);
+        } else if (totalActualSubscriptionCount < forecastedTotalSubscriptionCountAsOfCurrentDate && Math.abs(changeOfActualDemandAgainstForecast) > changeThresholdForPriceChange) {
+            return new WeightedProductDemandTrend(ProductDemandTrend.DOWNWARD, (totalActualSubscriptionCount - forecastedTotalSubscriptionCountAsOfCurrentDate), productId);
+        } else {
+            return new WeightedProductDemandTrend(ProductDemandTrend.NOCHANGE, 0, productId);
         }
     }
 
-    public ProductDemandTrend triggerProductPricing2(String productId){
+    public ProductDemandTrend triggerProductPricing2(String productId) {
         //get the actuals data from last to first in descending order
         LocalDate currentDay = SysDate.now();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         //instead of getting ProductActuals view of current day, we are taking latest view in order to eliminate the dependancy of running this job at end of day
-        final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId( productId,sort).get(0);
-        final double totalActualSubscriptionCount=latestProductActualsView.getTotalNumberOfExistingSubscriptions();
+        final ProductActualsView latestProductActualsView = productActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
+        final double totalActualSubscriptionCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
 
         //find total subscription count for the current day(day of execution)
         //List<ProductPseudoActualsView> activePseudoActualsViews= productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(productId, ProductForecastStatus.ACTIVE);
-        ProductPseudoActualsView activePseudoActualsView=productPseudoActualsViewRepository.findByProductVersionId_ProductId(productId,sort).get(0);
+        ProductPseudoActualsView activePseudoActualsView = productPseudoActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
 
         //find value of total subscriptions in PseudoActuals on date of execution.
-        double  totalPseudoActualSubsctiptionCount=activePseudoActualsView.getTotalNumberOfExistingSubscriptions();
+        double totalPseudoActualSubsctiptionCount = activePseudoActualsView.getTotalNumberOfExistingSubscriptions();
 
-        final double changeOfActualDemandAgainstForecast = (totalActualSubscriptionCount-totalPseudoActualSubsctiptionCount)/totalPseudoActualSubsctiptionCount;
-        final double changeThresholdForPriceChange =productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
+        final double changeOfActualDemandAgainstForecast = (totalActualSubscriptionCount - totalPseudoActualSubsctiptionCount) / totalPseudoActualSubsctiptionCount;
+        final double changeThresholdForPriceChange = productConfigurationViewRepository.findOne(productId).getTargetChangeThresholdForPriceChange();
 
-        if(totalActualSubscriptionCount > totalPseudoActualSubsctiptionCount && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
+        if (totalActualSubscriptionCount > totalPseudoActualSubsctiptionCount && Math.abs(changeOfActualDemandAgainstForecast) > changeThresholdForPriceChange) {
             return ProductDemandTrend.UPWARD;
-        }else if(totalActualSubscriptionCount < totalPseudoActualSubsctiptionCount && Math.abs(changeOfActualDemandAgainstForecast) >changeThresholdForPriceChange){
+        } else if (totalActualSubscriptionCount < totalPseudoActualSubsctiptionCount && Math.abs(changeOfActualDemandAgainstForecast) > changeThresholdForPriceChange) {
             return ProductDemandTrend.DOWNWARD;
-        }else{
+        } else {
             return ProductDemandTrend.NOCHANGE;
         }
     }

@@ -3,6 +3,7 @@ package com.affaince.subscription.pricing.query.repository;
 import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.view.ProductPseudoActualsView;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
@@ -14,4 +15,5 @@ import java.util.List;
  */
 public interface ProductPseudoActualsViewRepository extends CrudRepository<ProductPseudoActualsView, ProductVersionId> {
     public List<ProductPseudoActualsView> findByProductVersionId_ProductId(String productId, Sort sort);
+    public List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDate(String productId,LocalDate endDate);
 }

@@ -2,12 +2,15 @@ package com.affaince.subscription.logback.common;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
+/*
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+*/
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,14 +42,14 @@ public class LogbackConfiguration {
     public DiagnosticInformation logbackDiagnosticInformation() {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         List<String> loggerList = getLoggerList(loggerContext);
-        Multimap<String, String> loggersByLevel = ArrayListMultimap.create();
+        Map<String, String> loggersByLevel = new HashMap<>();
         for (String logger : loggerList) {
             loggersByLevel.put(getLoggerLevel(logger, loggerContext), logger);
         }
         return new DiagnosticInformation() {
             @Override
             public Map<? extends String, ?> getInformation() {
-                return loggersByLevel.asMap();
+                return loggersByLevel;
             }
         };
     }
