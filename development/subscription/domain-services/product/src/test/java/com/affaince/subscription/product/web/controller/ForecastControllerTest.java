@@ -10,7 +10,9 @@ import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.spark.SparkContext;
 import org.joda.time.LocalDate;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +45,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class ForecastControllerTest {
+    @Autowired
+    SparkContext sparkContext;
     @Mock
     private static ProductViewRepository productViewRepository;
     @Mock
@@ -64,6 +68,7 @@ public class ForecastControllerTest {
         //this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).client();
         //chain = chain.buildForecasterChain(productForecastMetricsViewRepository,ProductActualsViewRepository);
         this.mockMvc=MockMvcBuilders.standaloneSetup(forecastController).build();
+        sparkContext.getOrCreate();
     }
 
     @Test
@@ -116,5 +121,9 @@ public class ForecastControllerTest {
 
     public WebApplicationContext getWac() {
         return wac;
+    }
+    @After
+    public void shutdown(){
+        sparkContext.stop();
     }
 }

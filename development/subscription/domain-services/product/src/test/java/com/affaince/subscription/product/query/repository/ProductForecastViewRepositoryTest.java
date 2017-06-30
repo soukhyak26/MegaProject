@@ -5,6 +5,7 @@ import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastView;
+import junit.framework.TestCase;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.After;

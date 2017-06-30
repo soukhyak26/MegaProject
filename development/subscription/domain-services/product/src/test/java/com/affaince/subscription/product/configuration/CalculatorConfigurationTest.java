@@ -17,6 +17,8 @@ import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+
+
 public class CalculatorConfigurationTest {
     @Autowired
     private CalculatorConfiguration calculatorConfiguration;

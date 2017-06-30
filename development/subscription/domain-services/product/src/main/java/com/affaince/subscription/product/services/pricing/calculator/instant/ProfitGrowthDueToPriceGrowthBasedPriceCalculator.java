@@ -26,7 +26,7 @@ public class ProfitGrowthDueToPriceGrowthBasedPriceCalculator extends AbstractPr
         final PriceTaggedWithProduct latestTaggedPriceVersion= product.getLatestTaggedPriceVersion();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
         final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
-        final PriceBucket minusOnePriceBucket = product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
+        final PriceBucket minusOnePriceBucket = latestPriceBucket;//product.findEarlierPriceBucketTo(latestPriceBucket, bucketsWithSamePurchasePrice);
         final PriceBucket minusTwoPriceBucket = product.findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
         if (pricingStrategyType != PricingStrategyType.DEFAULT_PRICING_STRATEGY && bucketsWithSamePurchasePrice.size() > maxHistoryCountforDefaultPricing) {
             return getNextCalculator().calculatePrice(product, productDemandTrend);

@@ -29,7 +29,7 @@ public class SingleHistoryPriceCalculator extends AbstractPriceCalculator {
         final PricingStrategyType pricingStrategyType = product.getProductConfiguration().getPricingStrategyType();
         List<PriceBucket> bucketsWithSamePurchasePrice = product.findBucketsWithSamePurchasePrice(latestPriceBucket);
 
-        final PriceBucket minusOnePriceBucket = product.findLatestActivePriceBucket();
+        final PriceBucket minusOnePriceBucket = latestPriceBucket;
         final PriceBucket minusTwoPriceBucket = product.findEarlierPriceBucketTo(minusOnePriceBucket, bucketsWithSamePurchasePrice);
         if (pricingStrategyType != PricingStrategyType.DEFAULT_PRICING_STRATEGY && bucketsWithSamePurchasePrice.size() > maxHistoryCountforDefaultPricing) {
             return getNextCalculator().calculatePrice(product, productDemandTrend);

@@ -7,7 +7,9 @@ import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductActualsView;
+import org.apache.spark.SparkContext;
 import org.joda.time.LocalDate;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +37,11 @@ public class ARIMABasedDemandForecasterTest2 {
 
     private List<ProductActualsView> productActualsViewList;
 
+    @Autowired
+    SparkContext sparkContext;
     @Before
     public void setUp() {
-
+        sparkContext.getOrCreate();
     }
 
     @Test
@@ -66,6 +70,11 @@ public class ARIMABasedDemandForecasterTest2 {
         forecaster.setHistoryMinSizeConstraints(this.historyMinSizeConstraints);
         forecaster.setHistoryMaxSizeConstraints(this.historyMaxSizeConstraints);
         List<DataFrameVO> result = forecaster.forecast(productVersionId.getProductId(), dataFrames);
+    }
+
+    @After
+    public void shutdown(){
+        sparkContext.stop();
     }
 
 }

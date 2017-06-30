@@ -94,31 +94,6 @@ public class NewSubscriptionAddedToValueCommittedPriceBucketEventListener {
             }
         }
 
-//
-//        //find today's productActualsView
-//        List<ProductActualsView> productActualsViewForSubscriptionChangeDate = productActualsViewRepository.findByProductVersionId(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()));
-//        //very first record of ProductActualsView
-//        if (null != productActualsViewForSubscriptionChangeDate && productActualsViewForSubscriptionChangeDate.size() > 0) {
-//            ProductActualsView productActualsView = productActualsViewForSubscriptionChangeDate.get(0);
-//            productActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
-//            productActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
-//            productActualsViewRepository.save(productActualsView);
-//        } else {
-//            long latestTotalSubscriptionCount=0;
-//            ProductActualsView  latestProductActualsView=
-//                    productActualsViewRepository.findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc
-//                            (event.getProductId());
-//            if(null !=latestProductActualsView) {
-//                latestTotalSubscriptionCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
-//            }
-//            latestProductActualsView = new ProductActualsView(new ProductVersionId(event.getProductId(), event.getSubscriptionChangedDate()), event.getSubscriptionChangedDate(), 0, 0, 0);
-//            latestProductActualsView.setNewSubscriptions(0);
-//            latestProductActualsView.setTotalNumberOfExistingSubscriptions(latestTotalSubscriptionCount);
-//            latestProductActualsView.addToNewSubscriptionCount(event.getAddedSubscriptionCount());
-//            latestProductActualsView.addToTotalSubscriptionCount(event.getAddedSubscriptionCount());
-//            productActualsViewRepository.save(latestProductActualsView);
-//            //latest record is of the later date of the event generated.. probably because event has reached here too late.. should not happen
-//        }
 
         PriceBucketView priceBucketView = priceBucketViewRepository.findOne(new ProductwisePriceBucketId(event.getProductId(), event.getPriceBucketId()));
         final long revisedNewSubscriptionCountOfPriceBucket = event.getNewSubscriptionCount();
