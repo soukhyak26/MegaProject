@@ -87,4 +87,44 @@ public interface PaymentGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPercent_value(PaymentGrammarParser.Percent_valueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PaymentGrammarParser#delivery_count}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelivery_count(PaymentGrammarParser.Delivery_countContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PaymentGrammarParser#delivery_count}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelivery_count(PaymentGrammarParser.Delivery_countContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PaymentGrammarParser#after_before}.
+	 * @param ctx the parse tree
+	 */
+	void enterAfter_before(PaymentGrammarParser.After_beforeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PaymentGrammarParser#after_before}.
+	 * @param ctx the parse tree
+	 */
+	void exitAfter_before(PaymentGrammarParser.After_beforeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PaymentGrammarParser#delivery_number_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelivery_number_list(PaymentGrammarParser.Delivery_number_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PaymentGrammarParser#delivery_number_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelivery_number_list(PaymentGrammarParser.Delivery_number_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PaymentGrammarParser#delivery_number_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelivery_number_expr(PaymentGrammarParser.Delivery_number_exprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PaymentGrammarParser#delivery_number_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelivery_number_expr(PaymentGrammarParser.Delivery_number_exprContext ctx);
 }

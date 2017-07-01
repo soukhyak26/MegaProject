@@ -7,6 +7,7 @@ CURRENT_SUBSCRIPTION_AMOUNT : 'current subscription amount';
 SUBSCRIPTION_CONFIRMATION : 'subscription confirmation';
 RESIDUAL_DUE_PAYMENT : 'residual due amount';
 AFTER : 'after';
+BEFORE : 'before';
 OF : 'of';
 DELIVERIES : 'deliveries';
 DELIVERY : 'delivery';
@@ -72,11 +73,17 @@ advance_payment_expr : PAY percent_value PERCENTAGE
                        ON SUBSCRIPTION_CONFIRMATION;
 
 residual_due_payment_expr: PAY RESIDUAL_DUE_PAYMENT
-                           AFTER delivery_value OF delivery_count DELIVERY
+                           after_before delivery_number_list DELIVERY
                            IN proportion_value PROPORTION;
 
 proportion_value : DEFAULT | DECIMAL;
 delivery_value : DECIMAL;
-percent_source : CURRENT_SUBSCRIPTION_AMOUNT;
+percent_source : CURRENT_SUBSCRIPTION_AMOUNT | DECIMAL DELIVERY | N DIV DECIMAL DELIVERY;
 percent_value: DECIMAL;
 delivery_count: N | REMAININGN;
+after_before : AFTER | BEFORE;
+delivery_number_list : delivery_number_list COMMA delivery_number_list |
+                        delivery_number_expr COMMA |
+                        delivery_number_expr;
+
+delivery_number_expr: DECIMAL DIV DECIMAL N | DECIMAL DIV DECIMAL REMAININGN;

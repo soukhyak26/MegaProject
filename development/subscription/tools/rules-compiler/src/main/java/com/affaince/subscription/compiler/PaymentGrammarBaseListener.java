@@ -107,6 +107,54 @@ public class PaymentGrammarBaseListener implements PaymentGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPercent_value(PaymentGrammarParser.Percent_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDelivery_count(PaymentGrammarParser.Delivery_countContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelivery_count(PaymentGrammarParser.Delivery_countContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAfter_before(PaymentGrammarParser.After_beforeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAfter_before(PaymentGrammarParser.After_beforeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDelivery_number_list(PaymentGrammarParser.Delivery_number_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelivery_number_list(PaymentGrammarParser.Delivery_number_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDelivery_number_expr(PaymentGrammarParser.Delivery_number_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelivery_number_expr(PaymentGrammarParser.Delivery_number_exprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
