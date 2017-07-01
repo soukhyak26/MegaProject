@@ -41,7 +41,11 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     protected double expectedProfit;
 
 
-
+    public PriceBucket(){
+        registeredProfit= new HashMap<>();
+        registeredRevenue= new HashMap<>();
+        registeredPurchaseCostOfDeliveredUnits= new HashMap<>();
+    }
     public String getProductId() {
         return productId;
     }
