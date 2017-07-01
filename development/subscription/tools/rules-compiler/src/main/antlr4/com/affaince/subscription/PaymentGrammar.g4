@@ -16,6 +16,7 @@ PERCENTAGE : '%';
 IN : 'in';
 ON : 'on';
 N : 'N';
+REMAININGN: 'remaining-N';
 
 IF   : 'if' ;
 THEN : 'then';
@@ -71,12 +72,11 @@ advance_payment_expr : PAY percent_value PERCENTAGE
                        ON SUBSCRIPTION_CONFIRMATION;
 
 residual_due_payment_expr: PAY RESIDUAL_DUE_PAYMENT
-                           AFTER delivery_value OF N DELIVERY
+                           AFTER delivery_value OF delivery_count DELIVERY
                            IN proportion_value PROPORTION;
 
 proportion_value : DEFAULT | DECIMAL;
-
 delivery_value : DECIMAL;
-
 percent_source : CURRENT_SUBSCRIPTION_AMOUNT;
 percent_value: DECIMAL;
+delivery_count: N | REMAININGN;
