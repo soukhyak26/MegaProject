@@ -59,7 +59,7 @@ object RegisterProduct {
               |    "quantityUnit":"${quantityUnit}",
               |    "substitutes":${substitute},
               |    "complements":${complements},
-              |    "productPricingCategory":0,
+              |    "productPricingCategory":1,
               |    "purchasePrice":"${purchasePrice}",
               |    "mrp":"${mrp}"
               |}
