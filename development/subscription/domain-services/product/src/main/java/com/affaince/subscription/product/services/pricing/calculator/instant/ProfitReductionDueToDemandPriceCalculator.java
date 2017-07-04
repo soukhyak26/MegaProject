@@ -34,7 +34,7 @@ public class ProfitReductionDueToDemandPriceCalculator extends AbstractPriceCalc
         }
 
         if (null != minusOnePriceBucket && null != minusTwoPriceBucket &&
-                minusOnePriceBucket.getTotalRegisteredProfit() < minusTwoPriceBucket.getTotalRegisteredProfit() &&
+                minusOnePriceBucket.getExpectedProfit() < minusTwoPriceBucket.getExpectedProfit() &&
                 minusOnePriceBucket.getNumberOfExistingSubscriptions() < minusTwoPriceBucket.getNumberOfExistingSubscriptions()) {
             double y2 = minusOnePriceBucket.recalculateOfferedPriceBasedOnActualDemand();
             double y1 = minusTwoPriceBucket.recalculateOfferedPriceBasedOnActualDemand();
