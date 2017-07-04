@@ -64,6 +64,18 @@ public class PaymentGrammarBaseListener implements PaymentGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPayment_source_expr(PaymentGrammarParser.Payment_source_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPayment_source_expr(PaymentGrammarParser.Payment_source_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterProportion_value(PaymentGrammarParser.Proportion_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
