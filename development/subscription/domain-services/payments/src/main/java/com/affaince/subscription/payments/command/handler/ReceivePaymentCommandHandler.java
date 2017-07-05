@@ -8,15 +8,12 @@ import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by anayonkar on 21/8/16.
- */
 @Component
-public class PaymentReceivedCommandHandler {
+public class ReceivePaymentCommandHandler {
     private final Repository<PaymentAccount> repository;
 
     @Autowired
-    public PaymentReceivedCommandHandler(Repository<PaymentAccount> repository) {
+    public ReceivePaymentCommandHandler(Repository<PaymentAccount> repository) {
         this.repository = repository;
     }
 
