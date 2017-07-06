@@ -26,6 +26,7 @@ public class SubscriptionView {
     private double totalAmountAfterDiscount;
     private LocalDate basketCreatedDate;
     private LocalDate basketExpiredDate;
+    private String paymentSchemeId;
 
     public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItem> subscriptionItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate basketCreatedDate, LocalDate basketExpiredDate) {
         this.subscriptionId = subscriptionId;
@@ -118,5 +119,13 @@ public class SubscriptionView {
 
     public void setBasketExpiredDate(LocalDate basketExpiredDate) {
         this.basketExpiredDate = basketExpiredDate;
+    }
+
+    public String getPaymentSchemeId() {
+        return paymentSchemeId;
+    }
+
+    public void setPaymentSchemeId(String paymentSchemeId) {
+        this.paymentSchemeId = paymentSchemeId;
     }
 }

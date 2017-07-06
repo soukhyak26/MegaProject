@@ -2,17 +2,14 @@ package com.affaince.subscription.payments.command;
 
 import org.joda.time.LocalDate;
 
-/**
- * Created by anayonkar on 21/8/16.
- */
-public class PaymentReceivedCommand {
+public class ReceivePaymentCommand {
 
     private String susbcriberId;
     private String subscriptionId;
     private double paidAmount;
     private LocalDate paymentDate;
 
-    public PaymentReceivedCommand(String susbcriberId, String subscriptionId, double paidAmount, LocalDate paymentDate) {
+    public ReceivePaymentCommand(String susbcriberId, String subscriptionId, double paidAmount, LocalDate paymentDate) {
         this.susbcriberId = susbcriberId;
         this.subscriptionId = subscriptionId;
         this.paidAmount = paidAmount;

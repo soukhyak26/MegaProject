@@ -11,11 +11,13 @@ public class CreateSubscriptionSpecificPaymentAccountCommand {
     private String subscriberId;
     private String subscriptionId;
     private List<DeliveryCreatedEvent> totalSubscriptionDeliveries;
+    private String paymentSchemeId;
 
-    public CreateSubscriptionSpecificPaymentAccountCommand(String subscriberId, String subscriptionId, List<DeliveryCreatedEvent> totalSubscriptionDeliveries) {
+    public CreateSubscriptionSpecificPaymentAccountCommand(String subscriberId, String subscriptionId, List<DeliveryCreatedEvent> totalSubscriptionDeliveries,String paymentSchemeId) {
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
         this.totalSubscriptionDeliveries = totalSubscriptionDeliveries;
+        this.paymentSchemeId=paymentSchemeId;
     }
 
     public String getSubscriberId() {
@@ -28,5 +30,9 @@ public class CreateSubscriptionSpecificPaymentAccountCommand {
 
     public List<DeliveryCreatedEvent> getTotalSubscriptionDeliveries() {
         return totalSubscriptionDeliveries;
+    }
+
+    public String getPaymentSchemeId() {
+        return paymentSchemeId;
     }
 }

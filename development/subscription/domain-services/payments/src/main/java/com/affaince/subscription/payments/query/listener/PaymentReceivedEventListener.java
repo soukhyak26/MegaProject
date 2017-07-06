@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.query.listener;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.payments.command.PaymentReceivedCommand;
+import com.affaince.subscription.payments.command.ReceivePaymentCommand;
 import com.affaince.subscription.payments.command.event.PaymentReceivedEvent;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ public class PaymentReceivedEventListener {
     @EventHandler
     public void on(PaymentReceivedEvent event) throws Exception {
         //TODO: check if we are making changes to SubscriptionPaymentViewRepository if necessary
-        PaymentReceivedCommand paymentReceivedCommand = new PaymentReceivedCommand(event.getSusbcriberId(),
+        ReceivePaymentCommand receivePaymentCommand = new ReceivePaymentCommand(event.getSusbcriberId(),
                 event.getSubscriptionId(),
                 event.getPaidAmount(),
                 event.getPaymentDate());
-        commandGateway.executeAsync(paymentReceivedCommand);
+        commandGateway.executeAsync(receivePaymentCommand);
     }
 }

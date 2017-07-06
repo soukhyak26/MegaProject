@@ -25,7 +25,7 @@ public class CreateSubscriptionSpecificPaymentAccountCommandHandler {
 
     @CommandHandler
     public void handle(CreateSubscriptionSpecificPaymentAccountCommand command) {
-        PaymentAccount paymentAccount= new PaymentAccount(command.getSubscriberId(),command.getSubscriptionId());
+        PaymentAccount paymentAccount= new PaymentAccount(command.getSubscriberId(),command.getSubscriptionId(),command.getPaymentSchemeId());
         repository.add(paymentAccount);
         paymentAccount.registerSubscriptionDetails(command.getTotalSubscriptionDeliveries(),taggedPricingService,productDetailsService);
     }

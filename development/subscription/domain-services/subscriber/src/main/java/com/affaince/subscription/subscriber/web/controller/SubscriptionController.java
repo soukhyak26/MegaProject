@@ -193,7 +193,21 @@ public class SubscriptionController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
-
+    @RequestMapping(value = "selectpayment/{subscriberid}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> selectPaymentScheme(@PathVariable String subscriberId, @RequestBody @Valid SelectedPaymentSchemeRequest request) throws Exception{
+        final SubscriptionView subscriptionView = subscriptionViewRepository.
+                findBySubscriberIdAndConsumerBasketActivationStatus(subscriberId, ConsumerBasketActivationStatus.CREATED);
+        if (subscriptionView == null) {
+            throw ConsumerBasketNotFoundException.build(subscriberId);
+        }
+        ApplyPaymentSchemeCommand command= new ApplyPaymentSchemeCommand(subscriberId,request.getPaymentSchemeId());
+        try {
+            commandGateway.executeAsync(command);
+        } catch (Exception e) {
+            throw e;
+        }
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
     @RequestMapping(value = "confirmsubscription/{subscriberId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> confirmSubscription(@PathVariable String subscriberId) throws Exception {
         final SubscriptionView subscriptionView = subscriptionViewRepository.

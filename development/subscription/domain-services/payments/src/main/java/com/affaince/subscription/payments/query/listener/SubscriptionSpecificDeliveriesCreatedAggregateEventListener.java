@@ -16,7 +16,7 @@ public class SubscriptionSpecificDeliveriesCreatedAggregateEventListener {
     private SubscriptionCommandGateway commandGateway;
     @EventHandler
     public void on(SubscriptionSpecificDeliveriesCreatedAggregateEvent event) throws Exception{
-        CreateSubscriptionSpecificPaymentAccountCommand command = new CreateSubscriptionSpecificPaymentAccountCommand(event.getSubscriberId(),event.getSubscriptionId(),event.getTotalSubscriptionDeliveries());
+        CreateSubscriptionSpecificPaymentAccountCommand command = new CreateSubscriptionSpecificPaymentAccountCommand(event.getSubscriberId(),event.getSubscriptionId(),event.getTotalSubscriptionDeliveries(),event.getPaymentSchemeId());
         commandGateway.executeAsync(command);
 
     }

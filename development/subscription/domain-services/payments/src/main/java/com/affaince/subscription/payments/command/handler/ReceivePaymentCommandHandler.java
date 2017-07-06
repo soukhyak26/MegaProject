@@ -1,7 +1,8 @@
 package com.affaince.subscription.payments.command.handler;
 
-import com.affaince.subscription.payments.command.PaymentReceivedCommand;
+import com.affaince.subscription.payments.command.ReceivePaymentCommand;
 import com.affaince.subscription.payments.command.domain.PaymentAccount;
+import com.affaince.subscription.payments.exception.PaymentReceivedForNonExistentAccountException;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.AggregateNotFoundException;
 import org.axonframework.repository.Repository;
@@ -18,7 +19,7 @@ public class ReceivePaymentCommandHandler {
     }
 
     @CommandHandler
-    public void handle(PaymentReceivedCommand command) {
+    public void handle(ReceivePaymentCommand command) {
         /*Payment payment = repository.load(command.getSubscriptionId());
         if(payment == null) {
             payment = new Payment(command.getSubscriptionId(), command.getPaidAmount());
@@ -31,9 +32,7 @@ public class ReceivePaymentCommandHandler {
         try {
             paymentAccount = repository.load(command.getSubscriptionId());
         } catch (AggregateNotFoundException anfe) {
-            paymentAccount = new PaymentAccount(command.getSusbcriberId(),command.getSubscriptionId());
-            repository.add(paymentAccount);
-
+            throw PaymentReceivedForNonExistentAccountException.build(command.getSubscriptionId());
         }
         paymentAccount.addPayment(command.getSubscriptionId(),command.getPaidAmount(),command.getPaymentDate());
     }

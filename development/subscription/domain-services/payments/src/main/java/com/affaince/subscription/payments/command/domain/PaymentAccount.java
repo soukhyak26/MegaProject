@@ -42,6 +42,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     private RefundAccount refundAccount;
     private PaymentAccountStatus paymentAccountStatus;
 
+    private PaymentProcessingContext paymentProcessingContext;
     /**
      * When subscription cost increases, receivable increases
      * When balance increases, recievable decreases
@@ -52,8 +53,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public PaymentAccount() {
     }
 
-    public PaymentAccount(String subscriberId, String subscriptionId) {
-        apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId));
+    public PaymentAccount(String subscriberId, String subscriptionId,String schemeId) {
+        apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId,schemeId));
     }
 
     public void addPayment(String subscriptionId, double paidAmount, LocalDate paymentDate) {
@@ -248,6 +249,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.subscriptionId = event.getSubscriptionId();
         this.subscriberId = event.getSubscriberId();
         this.deliveryCostAccountMap = new HashMap<>();
+        //create Payment Processing Context to track payments against  selected payment scheme
+        this.paymentProcessingContext=new PaymentProcessingContext(event.getSubscriptionId(),event.getSchemeId());
     }
 
     @EventSourcingHandler

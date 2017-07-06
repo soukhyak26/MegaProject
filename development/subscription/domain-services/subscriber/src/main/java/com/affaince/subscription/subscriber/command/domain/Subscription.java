@@ -39,7 +39,7 @@ public class Subscription extends AbstractAnnotatedEntity {
     private double totalPaymentReceived;
     private LocalDate subscriptionCreatedDate;
     private LocalDate subscriptionExpiredDate;
-
+    private String paymentSchemeId;
     public Subscription(String subscriptionId) {
         this.subscriptionId = subscriptionId;
     }
@@ -176,6 +176,10 @@ public class Subscription extends AbstractAnnotatedEntity {
         return consumerBasketStatus;
     }
 
+    public String getPaymentSchemeId() {
+        return paymentSchemeId;
+    }
+
     public void addReceivedPayment(PaymentReceivedFromSourceCommand command) {
         apply(new PaymentProcessedEvent(this.subscriptionId, command.getSubscriberId(), command.getPaymentAmount(), command.getPaymentDate()));
     }
@@ -198,5 +202,14 @@ public class Subscription extends AbstractAnnotatedEntity {
 
     public void setSubscriptionExpiredDate(LocalDate subscriptionExpiredDate) {
         this.subscriptionExpiredDate = subscriptionExpiredDate;
+    }
+
+    public void setPaymentScheme(String paymentSchemeId) {
+        apply(new PaymentSchemeSelectedEvent(this.getSubscriptionId(),paymentSchemeId));
+    }
+
+    @EventSourcingHandler
+    public void on(PaymentSchemeSelectedEvent event){
+        this.paymentSchemeId=event.getPaymentSchemeId();
     }
 }
