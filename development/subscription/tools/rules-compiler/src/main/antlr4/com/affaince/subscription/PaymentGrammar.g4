@@ -22,14 +22,8 @@ AMOUNT : 'amount';
 FOR : 'for';
 EACH : 'each';
 
-IF   : 'if' ;
-THEN : 'then';
-
 AND : 'and' ;
 OR  : 'or' ;
-
-TRUE  : 'true' ;
-FALSE : 'false' ;
 
 MULT  : '*' ;
 DIV   : '/' ;
@@ -41,9 +35,6 @@ GE : '>=' ;
 LT : '<' ;
 LE : '<=' ;
 EQ : '=' ;
-
-LPAREN : '(' ;
-RPAREN : ')' ;
 
 // DECIMAL, IDENTIFIER, COMMENTS, WS are set using regular expressions
 
@@ -75,17 +66,15 @@ advance_payment_expr : PAY percent_value PERCENTAGE
                        OF percent_source
                        ON SUBSCRIPTION_CONFIRMATION;
 
-residual_due_payment_expr: PAY payment_source_expr
+residual_due_payment_expr: PAY RESIDUAL_DUE_PAYMENT
                            after_before delivery_number_list DELIVERY
-                           IN proportion_value PROPORTION |
-                           PAY payment_source_expr
-                           after_before delivery_number_list DELIVERY;
-
-payment_source_expr : RESIDUAL_DUE_PAYMENT |
-                      RESIDUAL_DUE_PAYMENT PLUS CURRENT_SUBSCRIPTION_AMOUNT FOR delivery_value DELIVERY;
+                           IN proportion_value PROPORTION;
 
 
-proportion_value : DEFAULT | DECIMAL;
+proportion_value :  DEFAULT |
+                    proportion_value COMMA proportion_value |
+                    DECIMAL COMMA |
+                    DECIMAL;
 delivery_value : DECIMAL;
 percent_source : CURRENT_SUBSCRIPTION_AMOUNT | DECIMAL DELIVERY | N DIV DECIMAL DELIVERY;
 percent_value: DECIMAL;
@@ -93,7 +82,6 @@ delivery_count: N | REMAININGN;
 after_before : AFTER | BEFORE;
 delivery_number_list : delivery_number_list COMMA delivery_number_list |
                         delivery_number_expr COMMA |
-                        delivery_number_expr |
-                        EACH;
+                        delivery_number_expr;
 
 delivery_number_expr: DECIMAL DIV DECIMAL N | DECIMAL DIV DECIMAL REMAININGN;

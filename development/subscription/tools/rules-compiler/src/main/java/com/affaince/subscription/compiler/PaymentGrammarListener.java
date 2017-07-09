@@ -48,16 +48,6 @@ public interface PaymentGrammarListener extends ParseTreeListener {
 	 */
 	void exitResidual_due_payment_expr(PaymentGrammarParser.Residual_due_payment_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PaymentGrammarParser#payment_source_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterPayment_source_expr(PaymentGrammarParser.Payment_source_exprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PaymentGrammarParser#payment_source_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitPayment_source_expr(PaymentGrammarParser.Payment_source_exprContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PaymentGrammarParser#proportion_value}.
 	 * @param ctx the parse tree
 	 */
