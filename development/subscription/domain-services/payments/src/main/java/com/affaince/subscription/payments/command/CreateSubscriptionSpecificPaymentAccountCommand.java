@@ -1,6 +1,7 @@
 package com.affaince.subscription.payments.command;
 
 import com.affaince.subscription.payments.command.event.DeliveryCreatedEvent;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -10,14 +11,11 @@ import java.util.List;
 public class CreateSubscriptionSpecificPaymentAccountCommand {
     private String subscriberId;
     private String subscriptionId;
-    private List<DeliveryCreatedEvent> totalSubscriptionDeliveries;
-    private String paymentSchemeId;
-
-    public CreateSubscriptionSpecificPaymentAccountCommand(String subscriberId, String subscriptionId, List<DeliveryCreatedEvent> totalSubscriptionDeliveries,String paymentSchemeId) {
+    private LocalDate creationDate;
+    public CreateSubscriptionSpecificPaymentAccountCommand(String subscriberId, String subscriptionId,LocalDate creationDate) {
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
-        this.totalSubscriptionDeliveries = totalSubscriptionDeliveries;
-        this.paymentSchemeId=paymentSchemeId;
+        this.creationDate = creationDate;
     }
 
     public String getSubscriberId() {
@@ -28,11 +26,7 @@ public class CreateSubscriptionSpecificPaymentAccountCommand {
         return subscriptionId;
     }
 
-    public List<DeliveryCreatedEvent> getTotalSubscriptionDeliveries() {
-        return totalSubscriptionDeliveries;
-    }
-
-    public String getPaymentSchemeId() {
-        return paymentSchemeId;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 }

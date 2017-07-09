@@ -2,14 +2,16 @@ package com.affaince.subscription.payments.command.event;
 
 import org.joda.time.LocalDate;
 
+import java.util.List;
+
 /**
  * Created by mandar on 5/17/2017.
  */
-public class PaymentAccountCreatedEvent {
+public class SubscriptionCreatedEvent {
     private String subscriberId;
     private String subscriptionId;
     private LocalDate creationDate;
-    public PaymentAccountCreatedEvent(String subscriberId,String subscriptionId,LocalDate creationDate) {
+    public SubscriptionCreatedEvent(String subscriberId, String subscriptionId,LocalDate creationDate) {
         this.subscriberId=subscriberId;
         this.subscriptionId=subscriptionId;
         this.creationDate=creationDate;

@@ -281,7 +281,6 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             apply(event);
             createSubscriptionSummaryEvent(delivery, true);
         }
-        apply( new SubscriptionSpecificDeliveriesCreatedAggregateEvent(this.subscriberId, subscription.getSubscriptionId(),TotalSubscriptionDeliveries,this.getSubscription().getPaymentSchemeId()));
     }
 
     private BenefitResult calculateBenefits(Map<String, Delivery> deliveries,

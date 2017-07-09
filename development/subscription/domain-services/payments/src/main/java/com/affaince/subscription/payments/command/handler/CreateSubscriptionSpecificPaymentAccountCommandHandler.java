@@ -1,5 +1,6 @@
 package com.affaince.subscription.payments.command.handler;
 
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.CreateSubscriptionSpecificPaymentAccountCommand;
 import com.affaince.subscription.payments.command.domain.PaymentAccount;
 import com.affaince.subscription.payments.service.ProductDetailsService;
@@ -25,8 +26,7 @@ public class CreateSubscriptionSpecificPaymentAccountCommandHandler {
 
     @CommandHandler
     public void handle(CreateSubscriptionSpecificPaymentAccountCommand command) {
-        PaymentAccount paymentAccount= new PaymentAccount(command.getSubscriberId(),command.getSubscriptionId(),command.getPaymentSchemeId());
+        PaymentAccount paymentAccount= new PaymentAccount(command.getSubscriberId(),command.getSubscriptionId(),command.getCreationDate());
         repository.add(paymentAccount);
-        paymentAccount.registerSubscriptionDetails(command.getTotalSubscriptionDeliveries(),taggedPricingService,productDetailsService);
     }
 }

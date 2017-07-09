@@ -14,6 +14,7 @@ public class DeliveryDetails {
     private List<DeliveredProductDetail> deliveredProductDetails;
     private LocalDate deliveryDate;
     private DeliveryStatus deliveryStatus;
+    private double totalDeliveryCost;
 
     public DeliveryDetails(String deliveryId, String subscriptionId) {
         this.deliveryId = deliveryId;
@@ -54,5 +55,13 @@ public class DeliveryDetails {
 
     public boolean isProductInDelivery(String productId){
         return deliveredProductDetails.stream().anyMatch(delivery->delivery.getDeliveryItemId().equals(productId));
+    }
+
+    public double getTotalDeliveryCost() {
+        return totalDeliveryCost;
+    }
+
+    public void setTotalDeliveryCost(double totalDeliveryCost) {
+        this.totalDeliveryCost = totalDeliveryCost;
     }
 }

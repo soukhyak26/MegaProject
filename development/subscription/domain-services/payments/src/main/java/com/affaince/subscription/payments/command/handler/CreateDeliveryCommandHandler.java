@@ -15,19 +15,17 @@ public class CreateDeliveryCommandHandler {
     private final Repository<PaymentAccount> repository;
     private final TaggedPricingService taggedPricingService;
     private final ProductDetailsService productDetailsService;
-    private final DuePaymentCorrectionEngine duePaymentCorrectionEngine;
 
     @Autowired
-    public CreateDeliveryCommandHandler(Repository<PaymentAccount> repository,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService,DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
+    public CreateDeliveryCommandHandler(Repository<PaymentAccount> repository,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
         this.repository = repository;
         this.taggedPricingService=taggedPricingService;
         this.productDetailsService=productDetailsService;
-        this.duePaymentCorrectionEngine=duePaymentCorrectionEngine;
     }
 
     @CommandHandler
     public void handle(CreateDeliveryCommand command) {
         PaymentAccount paymentAccount = repository.load(command.getSubscriptionId());
-        paymentAccount.createdNewDelivery(command,taggedPricingService,productDetailsService,duePaymentCorrectionEngine);
+        paymentAccount.createdNewDelivery(command,taggedPricingService,productDetailsService);
     }
 }

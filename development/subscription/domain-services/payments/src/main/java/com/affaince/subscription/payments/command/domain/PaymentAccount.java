@@ -53,8 +53,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public PaymentAccount() {
     }
 
-    public PaymentAccount(String subscriberId, String subscriptionId,String schemeId) {
-        apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId,schemeId));
+    public PaymentAccount(String subscriberId, String subscriptionId,LocalDate creationDate) {
+        apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId,creationDate));
     }
 
     public void addPayment(String subscriptionId, double paidAmount, LocalDate paymentDate) {
@@ -107,9 +107,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-
-    public void createdNewDelivery(CreateDeliveryCommand command,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService,DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
-        List<DeliveryCostAccount> deliveries=deliveryCostAccountMap.values().stream().collect(Collectors.toList());
+    public DeliveryDetails createdNewDelivery(CreateDeliveryCommand command,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
+        //List<DeliveryCostAccount> deliveries=deliveryCostAccountMap.values().stream().collect(Collectors.toList());
         DeliveryDetails newDeliveryDetails=new DeliveryDetails(command.getDeliveryId(),command.getSubscriptionId());
         newDeliveryDetails.setDeliveryDate(command.getDeliveryDate());
         List<DeliveryItem> deliveryItems= command.getDeliveryItems();
@@ -135,12 +134,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             deliveredProducts.add(deliveredProduct);
         }
         newDeliveryDetails.setDeliveredProductDetails(deliveredProducts);
+        newDeliveryDetails.setTotalDeliveryCost(totalDeliveryCost);
+        apply(new CostCalculatedForRegisteredDeliveryEvent(this.subscriberId,this.getSubscriptionId(), command.getDeliveryId(),command.getDeliveryDate(),newDeliveryDetails, newDeliveryDetails.getTotalDeliveryCost()));
+        return newDeliveryDetails;
 
-        DeliveryCostAccount newDeliveryCostAccount= new DeliveryCostAccount(command.getDeliveryId(), command.getSubscriptionId(), command.getDeliveryDate(),newDeliveryDetails,totalDeliveryCost);
-        deliveries.add(newDeliveryCostAccount);
-        ModifiedSubscriptionContent modifiedSubscriptionContent=duePaymentCorrectionEngine.correctTotalDues(command.getSubscriptionId(),deliveries);
-        apply(new DeliveryInitiatedEvent(command.getSubscriberId(),command.getSubscriptionId(),command.getDeliveryId(),newDeliveryCostAccount));
-        apply(new DeliveriesUpdatdWithCorrectedPaymentEvent(subscriberId,modifiedSubscriptionContent,command.getDeliveryDate()));
     }
 
     public void deleteDelivery(String subscriberId,String subscriptionId,String deliveryId,LocalDate deletionDate,DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
@@ -197,6 +194,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         return totalReceivedCostAccount;
     }
 
+/*
     public void registerSubscriptionDetails(List<DeliveryCreatedEvent> totalSubscriptionDeliveries, TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
         double totalTentativeSubscriptionAmount = 0;
         double totalRewardPoints = 0;
@@ -224,7 +222,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
         apply(new SubscriptionDetailsRegisteredEvent(this.subscriberId,this.getSubscriptionId(), totalTentativeSubscriptionAmount, totalRewardPoints, deliveries, SysDate.now()));
     }
+*/
 
+/*
     private DeliveryDetails createDeliveryDetails(DeliveryCreatedEvent delivery, TaggedPricingService taggedPricingService, ProductDetailsService productDetailsService) {
         DeliveryDetails deliveryDetail= new DeliveryDetails(delivery.getDeliveryId(),delivery.getSubscriptionId());
         deliveryDetail.setDeliveryDate(delivery.getDeliveryDate());
@@ -243,27 +243,27 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         deliveryDetail.setDeliveredProductDetails(deliveredProducts);
         return deliveryDetail;
     }
+*/
 
     @EventSourcingHandler
     public void on(PaymentAccountCreatedEvent event) {
         this.subscriptionId = event.getSubscriptionId();
         this.subscriberId = event.getSubscriberId();
         this.deliveryCostAccountMap = new HashMap<>();
+        this.totalReceivableCostAccount = new TotalReceivableCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
+        this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
+        this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(),0, event.getCreationDate());
+
         //create Payment Processing Context to track payments against  selected payment scheme
-        this.paymentProcessingContext=new PaymentProcessingContext(event.getSubscriptionId(),event.getSchemeId());
+        this.paymentProcessingContext=new PaymentProcessingContext(event.getSubscriptionId(),null);
     }
 
     @EventSourcingHandler
     public void on(CostCalculatedForRegisteredDeliveryEvent event) {
         DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getDeliveryDate(), event.getDeliveryDetails(),event.getTotalDeliveryCost());
+        this.totalReceivableCostAccount.credit(event.getTotalDeliveryCost(),SysDate.now());
+        this.totalSubscriptionCostAccount.credit(event.getTotalDeliveryCost(),SysDate.now());
         this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
-    }
-
-    @EventSourcingHandler
-    public void on(SubscriptionDetailsRegisteredEvent event) {
-        this.totalReceivableCostAccount = new TotalReceivableCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
-        this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getSubscriptionId(), 0, event.getRegistrationDate());
-        this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), event.getTotalTentativeSubscriptionAmount(), event.getRegistrationDate());
     }
 
     public void correctDues(CorrectDuePaymentCommand command, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
@@ -294,4 +294,12 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
+    public void setPaymentScheme(String paymentSchemeId) {
+        apply(new PaymentSchemeSetForPaymentEvent(this.subscriptionId,paymentSchemeId));
+    }
+
+    @EventSourcingHandler
+    public void on(PaymentSchemeSetForPaymentEvent event){
+        this.schemeId=event.getPaymentSchemeId();
+    }
 }
