@@ -32,4 +32,8 @@ public class TotalSubscriptionCostAccountView {
     public double getTotalSubscriptionCost() {
         return totalSubscriptionCost;
     }
+    public void setOrOverride(double amount){
+        this.totalSubscriptionCost= amount;
+    }
+
 }

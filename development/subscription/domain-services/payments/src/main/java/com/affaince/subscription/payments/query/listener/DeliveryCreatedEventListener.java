@@ -23,11 +23,13 @@ public class DeliveryCreatedEventListener {
         CreateDeliveryCommand createDeliveryCommand = new CreateDeliveryCommand(event.deliveryId,
                 event.getSubscriberId(),
                 event.getSubscriptionId(),
+                event.getSequence(),
                 event.getDeliveryItems(),
                 event.getDeliveryDate(),
                 event.getDispatchDate(),
                 event.getStatus(),
-                event.getDeliveryWeightInGrms());
+                event.getDeliveryWeightInGrms(),
+                event.getRewardPoints());
         commandGateway.executeAsync(createDeliveryCommand);
     }
 }

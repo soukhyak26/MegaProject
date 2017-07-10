@@ -13,10 +13,19 @@ public class TotalReceivableCostAccountView {
     @Id
     private String subscriptionId;
     private double totalReceivableCost;
+    private double rewardPoints;
 
     public TotalReceivableCostAccountView(String subscriptionId, double totalReceivableCost) {
         this.subscriptionId = subscriptionId;
         this.totalReceivableCost = totalReceivableCost;
+    }
+
+    public void addToRewardPoints(double rewardPoints){
+        this.rewardPoints+=rewardPoints;
+    }
+
+    public double getRewardPoints() {
+        return rewardPoints;
     }
 
     public void credit(double amount) {
@@ -34,5 +43,7 @@ public class TotalReceivableCostAccountView {
     public double getTotalReceivableCost() {
         return totalReceivableCost;
     }
-
+    public void setOrOverride(double amount){
+        this.totalReceivableCost= amount;
+    }
 }

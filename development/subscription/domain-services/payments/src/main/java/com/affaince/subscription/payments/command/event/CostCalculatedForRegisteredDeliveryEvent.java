@@ -11,15 +11,19 @@ public class CostCalculatedForRegisteredDeliveryEvent {
     private String subscriptionId;
     private String deliveryId;
     private LocalDate deliveryDate;
+    private int sequence;
     private DeliveryDetails deliveryDetails;
     private double totalDeliveryCost;
-    public CostCalculatedForRegisteredDeliveryEvent(String subscriberId,String subscriptionId, String deliveryId, LocalDate deliveryDate, DeliveryDetails deliveyDetails, double totalDeliveryCost) {
+    private double rewardPoints;
+    public CostCalculatedForRegisteredDeliveryEvent(String subscriberId,String subscriptionId, String deliveryId, LocalDate deliveryDate,int sequence, DeliveryDetails deliveyDetails, double totalDeliveryCost,double rewardPoints) {
         this.subscriberId=subscriberId;
         this.deliveryId=deliveryId;
         this.subscriptionId=subscriptionId;
         this.deliveryDate=deliveryDate;
+        this.sequence=sequence;
         this.deliveryDetails=deliveyDetails;
         this.totalDeliveryCost=totalDeliveryCost;
+        this.rewardPoints=rewardPoints;
     }
 
     public String getSubscriptionId() {
@@ -44,5 +48,13 @@ public class CostCalculatedForRegisteredDeliveryEvent {
 
     public String getSubscriberId() {
         return subscriberId;
+    }
+
+    public double getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public int getSequence() {
+        return sequence;
     }
 }

@@ -24,10 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -268,6 +265,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 calculateBenefits(deliveries, 0.0, benefitExecutionContext);
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         List<DeliveryCreatedEvent> TotalSubscriptionDeliveries=new ArrayList<>();
+        int sequence=0;
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
@@ -275,11 +273,12 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
             }
             DeliveryCreatedEvent event=new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
-                    delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
+                    sequence,delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                     delivery.getTotalWeight(), delivery.getRewardPoints());
             TotalSubscriptionDeliveries.add(event);
             apply(event);
             createSubscriptionSummaryEvent(delivery, true);
+            sequence++;
         }
     }
 
@@ -334,13 +333,26 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
         final BenefitResult benefitResult = calculateBenefits(this.deliveries, delivery.getTotalDeliveryPrice(), benefitExecutionContext);
         delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(delivery.getDeliveryId()));
-        apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
+        int sequence=findSequenceOfTheDeliveryToBeAdded(delivery);
+        apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),sequence,
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                 delivery.getTotalWeight(), delivery.getRewardPoints()));
 
         createSubscriptionSummaryEvent(delivery, true);
     }
-
+    private int findSequenceOfTheDeliveryToBeAdded(Delivery delivery){
+        Iterator<Map.Entry<String,Delivery>> deliveriesIterator=this.deliveries.entrySet().iterator();
+        int sequence=0;
+        while( deliveriesIterator.hasNext()){
+            Delivery tempDelivery=deliveriesIterator.next().getValue();
+            if(tempDelivery.getDeliveryDate().isAfter(delivery.getDeliveryDate())){
+                return sequence;
+            }else{
+                sequence++;
+            }
+        }
+        return -1;
+    }
     private void createSubscriptionSummaryEvent(Delivery delivery, boolean added) {
         Map <String, Map<String, Integer>> itemSubscribed = new HashMap<>();
         delivery.getDeliveryItems().forEach(deliveryItem -> {

@@ -13,6 +13,7 @@ public class DeliveryCreatedEvent {
     public String deliveryId;
     private String subscriberId;
     private String subscriptionId;
+    private int deliverySequence;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
@@ -20,10 +21,11 @@ public class DeliveryCreatedEvent {
     private double deliveryWeightInGrms;
     private double rewardPoints;
 
-    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms, double rewardPoints) {
+    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId,int deliverySequence, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms, double rewardPoints) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
+        this.deliverySequence=deliverySequence;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.dispatchDate = dispatchDate;
@@ -69,5 +71,9 @@ public class DeliveryCreatedEvent {
 
     public double getRewardPoints() {
         return rewardPoints;
+    }
+
+    public int getDeliverySequence() {
+        return deliverySequence;
     }
 }

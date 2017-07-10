@@ -9,12 +9,14 @@ import org.joda.time.LocalDate;
 public class DeliveryCostAccount extends Account {
     private String deliveryId;
     private String subscriptionId;
+    private int sequence;
     private double paymentReceived;
     private DeliveryDetails deliveryDetail;
 
-    public DeliveryCostAccount(String deliveryId, String subscriptionId, LocalDate deliveryDate,DeliveryDetails deliveryDetail, double totalDeliveryCost) {
+    public DeliveryCostAccount(String deliveryId, String subscriptionId,int sequence, LocalDate deliveryDate,DeliveryDetails deliveryDetail, double totalDeliveryCost) {
         super(totalDeliveryCost,deliveryDate);
         this.deliveryId = deliveryId;
+        this.sequence=sequence;
         this.deliveryDetail=deliveryDetail;
         this.subscriptionId = subscriptionId;
     }
@@ -48,6 +50,10 @@ public class DeliveryCostAccount extends Account {
     }
     public boolean isProductInDelivery(String productId){
         return this.deliveryDetail.isProductInDelivery(productId);
+    }
+
+    public int getSequence() {
+        return sequence;
     }
 
     @Override

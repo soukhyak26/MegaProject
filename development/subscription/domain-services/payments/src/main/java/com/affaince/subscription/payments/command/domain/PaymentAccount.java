@@ -45,14 +45,16 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     private PaymentProcessingContext paymentProcessingContext;
     /**
      * When subscription cost increases, receivable increases
-     * When balance increases, recievable decreases
-     * At the end, everything balance and recievable should be 0
+     * When balance increases, receivable decreases
+     * At the end, everything balance and receivable should be 0
      */
 
 
     public PaymentAccount() {
     }
 
+
+    //PaymentAccount should get created when subscription is created in subscriber domain
     public PaymentAccount(String subscriberId, String subscriptionId,LocalDate creationDate) {
         apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId,creationDate));
     }
@@ -107,7 +109,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         }
     }
 
-    public DeliveryDetails createdNewDelivery(CreateDeliveryCommand command,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
+    public void createdNewDelivery(CreateDeliveryCommand command,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
         //List<DeliveryCostAccount> deliveries=deliveryCostAccountMap.values().stream().collect(Collectors.toList());
         DeliveryDetails newDeliveryDetails=new DeliveryDetails(command.getDeliveryId(),command.getSubscriptionId());
         newDeliveryDetails.setDeliveryDate(command.getDeliveryDate());
@@ -135,8 +137,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         }
         newDeliveryDetails.setDeliveredProductDetails(deliveredProducts);
         newDeliveryDetails.setTotalDeliveryCost(totalDeliveryCost);
-        apply(new CostCalculatedForRegisteredDeliveryEvent(this.subscriberId,this.getSubscriptionId(), command.getDeliveryId(),command.getDeliveryDate(),newDeliveryDetails, newDeliveryDetails.getTotalDeliveryCost()));
-        return newDeliveryDetails;
+        apply(new CostCalculatedForRegisteredDeliveryEvent(this.subscriberId,this.getSubscriptionId(), command.getDeliveryId(),command.getDeliveryDate(),command.getSequence(),newDeliveryDetails, newDeliveryDetails.getTotalDeliveryCost(),command.getRewardPoints()));
 
     }
 
@@ -253,15 +254,15 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalReceivableCostAccount = new TotalReceivableCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
         this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
         this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(),0, event.getCreationDate());
-
         //create Payment Processing Context to track payments against  selected payment scheme
         this.paymentProcessingContext=new PaymentProcessingContext(event.getSubscriptionId(),null);
     }
 
     @EventSourcingHandler
     public void on(CostCalculatedForRegisteredDeliveryEvent event) {
-        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getDeliveryDate(), event.getDeliveryDetails(),event.getTotalDeliveryCost());
+        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getSequence(),event.getDeliveryDate(), event.getDeliveryDetails(),event.getTotalDeliveryCost());
         this.totalReceivableCostAccount.credit(event.getTotalDeliveryCost(),SysDate.now());
+        this.totalReceivableCostAccount.addToRewardPoints(event.getRewardPoints());
         this.totalSubscriptionCostAccount.credit(event.getTotalDeliveryCost(),SysDate.now());
         this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
     }
