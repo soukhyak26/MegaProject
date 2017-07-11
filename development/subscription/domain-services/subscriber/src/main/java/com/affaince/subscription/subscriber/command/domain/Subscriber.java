@@ -146,7 +146,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                 this.subscription.getSubscriptionExpiredDate().isBefore(event.getDeliveryDate())) {
             this.subscription.setSubscriptionExpiredDate(event.getDeliveryDate());
         }
-        deliveries.put(event.getDeliveryId(), new Delivery(event.getDeliveryId(), event.getDeliveryItems(), event.getDeliveryDate(), event.getDispatchDate(),
+        deliveries.put(event.getDeliveryId(), new Delivery(event.getDeliveryId(),event.getDeliverySequence(), event.getDeliveryItems(), event.getDeliveryDate(), event.getDispatchDate(),
                 event.getStatus(), event.getRewardPoints()));
     }
 
@@ -317,7 +317,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                             List<com.affaince.subscription.subscriber.web.request.DeliveryItem> deliveryItems,
                             DeliveryChargesRule deliveryChargesRule,
                             BenefitExecutionContext benefitExecutionContext) {
-        final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", new ArrayList<>(),
+        final Delivery delivery = new Delivery(deliveryDate.getWeekOfWeekyear() + SysDate.now().getYear() + "", -1,new ArrayList<>(),
                 deliveryDate, null, DeliveryStatus.CREATED, 0.0);
         deliveryItems.forEach(deliveryItem -> {
             for (int i = 0; i < deliveryItem.getQuantity(); i++) {

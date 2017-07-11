@@ -2,24 +2,26 @@ package com.affaince.subscription.payments.vo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by mandar on 7/6/2017.
  */
 public class PaymentProcessingContext {
-        private String subscriptionId;
-        private String schemeId;
-        private short totalDeliveryCount;
-        private double totalDueAmount;
-        private List<DeliverywisePaymentTracker> deliverywisePaymentTrackers;
-        private short latestCompletedDeliverySequence;
-        private PaymentAccountStatus paymentAccountStatus;
+    private String subscriptionId;
+    private String schemeId;
+    private short totalDeliveryCount;
+    private double totalDueAmount;
+    private List<DeliverywisePaymentTracker> deliverywisePaymentTrackers;
+    private int latestCompletedDeliverySequence;
+    private int deliverySequenceAwaitingPayment;
+    private PaymentAccountStatus paymentAccountStatus;
 
     public PaymentProcessingContext(String subscriptionId, String schemeId) {
         this.subscriptionId = subscriptionId;
         this.schemeId = schemeId;
-        this.paymentAccountStatus=PaymentAccountStatus.ACTIVE;
-        this.deliverywisePaymentTrackers= new ArrayList<>();
+        this.paymentAccountStatus = PaymentAccountStatus.ACTIVE;
+        this.deliverywisePaymentTrackers = new ArrayList<>();
     }
 
     public String getSubscriptionId() {
@@ -38,11 +40,31 @@ public class PaymentProcessingContext {
         return totalDueAmount;
     }
 
-    public List<DeliverywisePaymentTracker> getDeliverywisePaymentTracker() {
+    public void receiveIncomingPayment(double amount) {
+        this.deductFromTotalDueAmount(amount);
+        final List<DeliverywisePaymentTracker> unfulfilledTrackers = this.deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getPaymentExpected() > dwpt.getPaymentReceived()).collect(Collectors.toList());
+        for (DeliverywisePaymentTracker unfulfilledTracker : unfulfilledTrackers) {
+            if (amount >= unfulfilledTracker.getPaymentExpected()) {
+                unfulfilledTracker.addToPaymentReceived(unfulfilledTracker.getPaymentExpected());
+                amount -= unfulfilledTracker.getPaymentExpected();
+                this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence() + 1;
+            } else {
+                unfulfilledTracker.addToPaymentReceived(amount);
+                this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence();
+            }
+        }
+        ;
+    }
+
+    public List<DeliverywisePaymentTracker> getDeliverywisePaymentTrackers() {
         return deliverywisePaymentTrackers;
     }
 
-    public short getLatestCompletedDeliverySequence() {
+    public DeliverywisePaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
+        return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliverySequence() == sequenceId).collect(Collectors.toList()).get(0);
+    }
+
+    public int getLatestCompletedDeliverySequence() {
         return latestCompletedDeliverySequence;
     }
 
@@ -50,22 +72,27 @@ public class PaymentProcessingContext {
         return paymentAccountStatus;
     }
 
-    public void setTotalDeliveryCount(short totalDeliveryCount){
-        this.totalDeliveryCount= totalDeliveryCount;
+    public void setTotalDeliveryCount(short totalDeliveryCount) {
+        this.totalDeliveryCount = totalDeliveryCount;
     }
-    public void addToTotalDeliveryCount(short additionalCount){
-        this.totalDeliveryCount +=additionalCount;
+
+    public void addToTotalDeliveryCount(short additionalCount) {
+        this.totalDeliveryCount += additionalCount;
     }
-    public void deductFromTotalDeliveryCount(short deductibleCount){
-        this.totalDeliveryCount -=deductibleCount;
+
+    public void deductFromTotalDeliveryCount(short deductibleCount) {
+        this.totalDeliveryCount -= deductibleCount;
     }
-    public void setTotalDueAmount(double totalDueAmount){
+
+    public void setTotalDueAmount(double totalDueAmount) {
         this.totalDueAmount = totalDueAmount;
     }
-    public void addToTotalDueAmount(double additionalAmount){
-        this.totalDueAmount +=additionalAmount;
+
+    public void addToTotalDueAmount(double additionalAmount) {
+        this.totalDueAmount += additionalAmount;
     }
-    public void deductFromTotalDueAmount(double deductibleAmount){
+
+    public void deductFromTotalDueAmount(double deductibleAmount) {
         this.totalDueAmount -= deductibleAmount;
     }
 
@@ -77,16 +104,29 @@ public class PaymentProcessingContext {
         this.paymentAccountStatus = paymentAccountStatus;
     }
 
-    public void trackReceivedPayment(short deliverySequence,double incomingPayment){
-        DeliverywisePaymentTracker tracketObjForCOmparison=   new DeliverywisePaymentTracker(deliverySequence);
+    public void setSchemeId(String schemeId) {
+        this.schemeId = schemeId;
+    }
 
-        DeliverywisePaymentTracker deliverywisePaymentTracker=null;
-        if(deliverywisePaymentTrackers.contains(tracketObjForCOmparison)) {
-            deliverywisePaymentTracker = deliverywisePaymentTrackers.get(deliverywisePaymentTrackers.indexOf(tracketObjForCOmparison));
-        }else{
-            deliverywisePaymentTracker= new DeliverywisePaymentTracker(deliverySequence);
+    //This method should be used to create trackers accordin to the scheme definition where the deliveries BEFORe which payment is expected.
+    public void createTrackersForExpectingPayments(int deliverySequence) {
+        DeliverywisePaymentTracker tracketObjForComparison = new DeliverywisePaymentTracker(deliverySequence);
+
+        DeliverywisePaymentTracker deliverywisePaymentTracker = null;
+        if (deliverywisePaymentTrackers.contains(tracketObjForComparison)) {
+            deliverywisePaymentTracker = deliverywisePaymentTrackers.get(deliverywisePaymentTrackers.indexOf(tracketObjForComparison));
+        } else {
+            deliverywisePaymentTracker = new DeliverywisePaymentTracker(deliverySequence);
             deliverywisePaymentTrackers.add(deliverywisePaymentTracker);
         }
-        deliverywisePaymentTracker.addToPaymentreceived(incomingPayment);
+    }
+
+    public void correctDues(ModifiedSubscriptionContent modifiedSubscriptionContent) {
+
+    }
+
+    public boolean validateIfDeliveryCanBeDispatched(String deliveryId, int sequence) {
+        DeliverywisePaymentTracker tracker = deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliverySequence() == sequence).collect(Collectors.toList()).get(0);
+        return (tracker.getPaymentExpected() <= tracker.getPaymentReceived());
     }
 }

@@ -7,15 +7,15 @@ package com.affaince.subscription.payments.vo;
 //amount of payment expected
 //amount of payment fulfilled
 public class DeliverywisePaymentTracker {
-    private short deliverySequence;
+    private int deliverySequence;
     private double paymentExpected;
     private double paymentReceived;
 
-    public DeliverywisePaymentTracker(short deliverySequence) {
+    public DeliverywisePaymentTracker(int deliverySequence) {
         this.deliverySequence = deliverySequence;
     }
 
-    public short getDeliverySequence() {
+    public int getDeliverySequence() {
         return deliverySequence;
     }
 
@@ -35,8 +35,9 @@ public class DeliverywisePaymentTracker {
         this.paymentExpected -=amount;
     }
 
-    public void addToPaymentreceived(double amount){
+    public void addToPaymentReceived(double amount){
         this.paymentReceived +=amount;
+        this.paymentExpected-=amount;
     }
 
     public void deductFromPaymentReceived(double amount){

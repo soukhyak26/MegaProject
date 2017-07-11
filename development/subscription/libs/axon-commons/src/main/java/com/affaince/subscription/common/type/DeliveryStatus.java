@@ -4,7 +4,7 @@ package com.affaince.subscription.common.type;
  * Created by rbsavaliya on 02-10-2015.
  */
 public enum DeliveryStatus {
-    CREATED(0), READYFORDELIVERY(1), DELIVERED(2), FAILURE(3), PARTIAL(4), DELETED(5);
+    CREATED(0), READYFORDELIVERY(1), DELIVERED(2), FAILURE(3), PARTIAL(4), DELETED(5),HALTED(6);
 
     private int deliveryStatusCode;
 
@@ -26,6 +26,8 @@ public enum DeliveryStatus {
                 return PARTIAL;
             case 5:
                 return DELETED;
+            case 6:
+                return HALTED;
             default:
                 return READYFORDELIVERY;
         }

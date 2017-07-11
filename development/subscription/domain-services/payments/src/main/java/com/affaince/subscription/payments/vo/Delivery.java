@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Delivery {
     private String deliveryId;
+    private int sequence;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
@@ -22,8 +23,9 @@ public class Delivery {
     private double rewardPoints;
     private ReasonCode reasonCode;
 
-    public Delivery(String deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double rewardPoints) {
+    public Delivery(String deliveryId, int sequence,List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double rewardPoints) {
         this.deliveryId = deliveryId;
+        this.sequence=sequence;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.dispatchDate = dispatchDate;
@@ -115,6 +117,10 @@ public class Delivery {
 
     public ReasonCode getReasonCode() {
         return reasonCode;
+    }
+
+    public int getSequence() {
+        return sequence;
     }
 
     public void calculateTotalWeightInGrams() {

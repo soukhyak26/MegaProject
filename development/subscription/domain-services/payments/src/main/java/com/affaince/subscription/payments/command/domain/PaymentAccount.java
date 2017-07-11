@@ -1,5 +1,6 @@
 package com.affaince.subscription.payments.command.domain;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.CreateDeliveryCommand;
@@ -77,6 +78,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             double deliveryAmount = deliveryCostAccount.getAmount();
             //get payment made so far for this delivery
             double paymentReceivedForDelivery = deliveryCostAccount.getPaymentReceived();
+
             //find payment to be made from the incoming payment to the current delivery
             double paymentMadeForDelivery = 0;
             //if delivery cost is more than total payment received for this delivery so far
@@ -100,6 +102,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void on(PaymentInitiatedEvent event) {
         this.totalReceivedCostAccount.credit(event.getPaidAmount(), event.getPaymentDate());
         this.totalReceivableCostAccount.debit(event.getPaidAmount(), event.getPaymentDate());
+
         Map<String, Double> paymentToBeAdjustedAgainstDeliveries = event.getPaymentToBeAdjustedAgainstDeliveries();
         java.util.Iterator<String> deliveryCostAccountKeysIterator = deliveryCostAccountMap.keySet().iterator();
         while (deliveryCostAccountKeysIterator.hasNext()) {
@@ -107,6 +110,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             DeliveryCostAccount deliveryCostAccount = deliveryCostAccountMap.get(deliveryId);
             deliveryCostAccount.creditToPaymentReceived(paymentToBeAdjustedAgainstDeliveries.get(deliveryId));
         }
+        //payment expecting trackers are updated with incoming payment.
+        this.paymentProcessingContext.receiveIncomingPayment(event.getPaidAmount());
     }
 
     public void createdNewDelivery(CreateDeliveryCommand command,TaggedPricingService taggedPricingService,ProductDetailsService productDetailsService) {
@@ -278,7 +283,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         ModifiedSubscriptionContent modifiedSubscriptionContent=event.getModifiedSubscriptionContent();
         this.totalReceivableCostAccount.setAmount(modifiedSubscriptionContent.getModifiedTotalSubscriptionPayment());
         this.totalReceivableCostAccount.setTransactionDate(event.getChangeDate());
-
+        this.paymentProcessingContext.correctDues(modifiedSubscriptionContent);
         List<ModifiedDeliveryContent> modifiedDeliveries=modifiedSubscriptionContent.getModifiedDeliveries();
         List<DeliveryCostAccount> deliveryCostAccounts=this.deliveryCostAccountMap.values().stream().collect(Collectors.toList());
         for(ModifiedDeliveryContent modifiedDeliveryContent: modifiedDeliveries){
@@ -302,5 +307,18 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(PaymentSchemeSetForPaymentEvent event){
         this.schemeId=event.getPaymentSchemeId();
+        this.paymentProcessingContext.setSchemeId(event.getPaymentSchemeId());
+    }
+
+    public void validateAndApproveDelivery(String deliveryId, int sequence) {
+        boolean validateForDispatchFlag=paymentProcessingContext.validateIfDeliveryCanBeDispatched(deliveryId,sequence);
+
+        apply(new DeliveryDispatchApprovalSentEvent(this.subscriberId,this.subscriptionId,deliveryId,validateForDispatchFlag));
+    }
+
+    @EventSourcingHandler
+    public void on(DeliveryDispatchApprovalSentEvent event){
+        DeliveryCostAccount deliveryCostAccount=this.deliveryCostAccountMap.get(event.getDeliveryId());
+        deliveryCostAccount.getDeliveryDetail().setDeliveryStatus(event.isValidateForDispatchFlag()? DeliveryStatus.DELIVERED:DeliveryStatus.HALTED);
     }
 }
