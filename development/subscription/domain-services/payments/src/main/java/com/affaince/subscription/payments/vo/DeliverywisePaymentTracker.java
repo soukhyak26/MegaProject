@@ -64,6 +64,9 @@ public class DeliverywisePaymentTracker {
         this.paymentReceived -=amount;
     }
 
+    public boolean isDeliveryDueAmountFulfilled(){
+        return (paymentExpected==paymentReceived);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

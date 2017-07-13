@@ -270,8 +270,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalReceivedCostAccount = new TotalReceivedCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
         this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
         this.refundAccount= new RefundAccount(event.getSubscriptionId(),0,event.getCreationDate());
-        //create Payment Processing Context to track payments against  selected payment scheme
-        this.paymentProcessingContext = new PaymentProcessingContext(event.getSubscriptionId(), null);
         this.paymentAccountStatus = PaymentAccountStatus.CREATED;
     }
 
@@ -285,6 +283,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalReceivableCostAccount.addToRewardPoints(event.getRewardPoints());
         this.totalSubscriptionCostAccount.credit(event.getTotalDeliveryCost(), SysDate.now());
         this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
+        this.paymentProcessingContext.addToTotalDueAmount(event.getTotalDeliveryCost());
+        this.paymentProcessingContext.addToTotalDeliveryCount(1);
     }
 
     // On Delivery ready for dispatch the due amounts should be recalculated to accomodate price variations.
@@ -327,7 +327,8 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(PaymentSchemeSetForPaymentEvent event) {
         this.schemeId = event.getPaymentSchemeId();
-        this.paymentProcessingContext.setSchemeId(event.getPaymentSchemeId());
+        //create Payment Processing Context to track payments against  selected payment scheme
+        this.paymentProcessingContext = new PaymentProcessingContext(event.getSubscriptionId(), event.getPaymentSchemeId());
     }
 
     public void validateAndApproveDelivery(String deliveryId, int sequence) {
@@ -340,6 +341,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void on(DeliveryDispatchApprovalSentEvent event) {
         DeliveryCostAccount deliveryCostAccount = this.deliveryCostAccountMap.get(event.getDeliveryId());
         deliveryCostAccount.getDeliveryDetail().setDeliveryStatus(event.isValidateForDispatchFlag() ? DeliveryStatus.DELIVERED : DeliveryStatus.HALTED);
+        if(event.isValidateForDispatchFlag()){
+            paymentProcessingContext.setLatestCompletedDeliverySequence(findDeliverySequenceFromDeliveryId(event.getDeliveryId()));
+        }
     }
 
     public void updateDeliveryStatus(UpdateDeliveryStatusCommand command,ProductDetailsService productDetailsService,TaggedPricingService taggedPricingService) {
@@ -350,11 +354,15 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new DeliveryStatusUpdatedToPaymentAccountEvent(command.getSubscriptionId(),command.getDeliveryId(),command.getDeliveryDate(),command.getDeliveryStatus(),command.getItemWiseDispatchStatus(),command.getDeliveryCharges()));
     }
 
+    private int findDeliverySequenceFromDeliveryId(String deliveryId){
+        return deliveryCostAccountMap.values().stream().filter(dca->dca.getDeliveryId().equals(deliveryId)).collect(Collectors.toList()).get(0).getSequence();
+    }
     @EventSourcingHandler
     public void on(DeliveryStatusUpdatedToPaymentAccountEvent event){
         if(event.getDeliveryStatus()==DeliveryStatus.DELIVERED){
             DeliveryCostAccount deliveryCostAccount=this.deliveryCostAccountMap.values().stream().filter(dca->dca.getDeliveryId().equals(event.getDeliveryId())).collect(Collectors.toList()).get(0);
             deliveryCostAccount.getDeliveryDetail().setDeliveryStatus(DeliveryStatus.DELIVERED);
+
         }
     }
 
@@ -388,6 +396,14 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     @EventSourcingHandler
     public void on(RefundProcessedForUndeliveredItemsEvent event){
-        refundAccount.credit(event.getTotalRefundableAmount(),event.getRefundDate());
+        boolean isDeliveryDueFulfilled=paymentProcessingContext.isDeliveryDueAmountFulfilled(event.getDeliveryId());
+        if(!isDeliveryDueFulfilled) {
+            this.totalReceivableCostAccount.debit(event.getTotalRefundableAmount(), event.getRefundDate());
+        }else {
+            this.totalReceivedCostAccount.debit(event.getTotalRefundableAmount(), event.getRefundDate());
+            refundAccount.credit(event.getTotalRefundableAmount(),event.getRefundDate());
+        }
+        paymentProcessingContext.revertAmountForADelivery(event.getDeliveryId(),event.getTotalRefundableAmount());
+        paymentProcessingContext.setLatestCompletedDeliverySequence(findDeliverySequenceFromDeliveryId(event.getDeliveryId()));
     }
 }

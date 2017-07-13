@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class PaymentProcessingContext {
     private String subscriptionId;
     private String schemeId;
-    private short totalDeliveryCount;
+    private int totalDeliveryCount;
     private double totalDueAmount;
     private List<DeliverywisePaymentTracker> deliverywisePaymentTrackers;
     private int latestCompletedDeliverySequence;
@@ -32,7 +32,7 @@ public class PaymentProcessingContext {
         return schemeId;
     }
 
-    public short getTotalDeliveryCount() {
+    public int getTotalDeliveryCount() {
         return totalDeliveryCount;
     }
 
@@ -59,10 +59,14 @@ public class PaymentProcessingContext {
         return deliverywisePaymentTrackers;
     }
 
+
     public DeliverywisePaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
         return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliverySequence() == sequenceId).collect(Collectors.toList()).get(0);
     }
 
+    public void setDeliverySequenceAwaitingPayment(int deliverySequenceAwaitingPayment) {
+        this.deliverySequenceAwaitingPayment = deliverySequenceAwaitingPayment;
+    }
 
     public int getLatestCompletedDeliverySequence() {
         return latestCompletedDeliverySequence;
@@ -72,15 +76,15 @@ public class PaymentProcessingContext {
         return paymentAccountStatus;
     }
 
-    public void setTotalDeliveryCount(short totalDeliveryCount) {
+    public void setTotalDeliveryCount(int totalDeliveryCount) {
         this.totalDeliveryCount = totalDeliveryCount;
     }
 
-    public void addToTotalDeliveryCount(short additionalCount) {
+    public void addToTotalDeliveryCount(int additionalCount) {
         this.totalDeliveryCount += additionalCount;
     }
 
-    public void deductFromTotalDeliveryCount(short deductibleCount) {
+    public void deductFromTotalDeliveryCount(int deductibleCount) {
         this.totalDeliveryCount -= deductibleCount;
     }
 
@@ -96,10 +100,24 @@ public class PaymentProcessingContext {
         this.totalDueAmount -= deductibleAmount;
     }
 
-    public void setLatestCompletedDeliverySequence(short latestCompletedDeliverySequence) {
+    public void setLatestCompletedDeliverySequence(int latestCompletedDeliverySequence) {
         this.latestCompletedDeliverySequence = latestCompletedDeliverySequence;
     }
 
+    public boolean isDeliveryDueAmountFulfilled(String deliveryId){
+        return getPaymentTrackerForADelivery(deliveryId).isDeliveryDueAmountFulfilled();
+    }
+
+    public void revertAmountForADelivery(String deliveryId,double amount){
+        DeliverywisePaymentTracker tracker=getPaymentTrackerForADelivery(deliveryId);
+        tracker.deductFromPaymentExpected(amount);
+        if(isDeliveryDueAmountFulfilled(deliveryId)) {
+            tracker.deductFromPaymentReceived(amount);
+        }
+    }
+    public DeliverywisePaymentTracker getPaymentTrackerForADelivery(String deliveryId){
+        return deliverywisePaymentTrackers.stream().filter(dwpt->dwpt.getDeliveryId().equals(deliveryId)).collect(Collectors.toList()).get(0);
+    }
     public void setPaymentAccountStatus(PaymentAccountStatus paymentAccountStatus) {
         this.paymentAccountStatus = paymentAccountStatus;
     }
@@ -108,7 +126,7 @@ public class PaymentProcessingContext {
         this.schemeId = schemeId;
     }
 
-    //This method should be used to create trackers according to the scheme definition where the deliveries BEFORe which payment is expected.
+    //This method should be used to create trackers according to the scheme definition where the deliveries BEFORE which payment is expected.
     public void createTrackersForExpectingPayments(int deliverySequence) {
         DeliverywisePaymentTracker tracketObjForComparison = new DeliverywisePaymentTracker(deliverySequence);
 
