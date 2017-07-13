@@ -103,7 +103,7 @@ public class DuePaymentCorrectionEngine {
             double totalDuePaymentOfADelivery = 0;
 
             //if delivery is already made and total due for the delivery is 0, skip that delivery
-            ModifiedDeliveryContent modifiedDeliveryContent = new ModifiedDeliveryContent(delivery.getSubscriptionId(), delivery.getDeliveryId());
+            ModifiedDeliveryContent modifiedDeliveryContent = new ModifiedDeliveryContent(delivery.getSubscriptionId(), delivery.getDeliveryId(),deliveryCostAccount.getSequence());
             List<DeliveredProductDetail> itemsInDelivery = delivery.getDeliveredProductDetails();
             //for each product/item listed in delivery
             for (DeliveredProductDetail item : itemsInDelivery) {

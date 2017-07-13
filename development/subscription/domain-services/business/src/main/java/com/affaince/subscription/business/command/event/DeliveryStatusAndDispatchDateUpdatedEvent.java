@@ -4,9 +4,6 @@ import com.affaince.subscription.command.ItemDispatchStatus;
 
 import java.util.List;
 
-/**
- * Created by anayonkar on 17/5/16.
- */
 public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private String subscriptionId;
     private String basketId;

@@ -11,14 +11,20 @@ import java.util.Map;
 public class ModifiedDeliveryContent {
     private String subscriptionId;
     private String deliveryId;
+    private int sequence;
     private List<DeliveredProductDetail> items;
     private double correctedTotalPayment;
     private double correctedRemainingDuePayment;
 
-    public ModifiedDeliveryContent(String subscriptionId,String deliveryId) {
+    public ModifiedDeliveryContent(String subscriptionId,String deliveryId,int sequence) {
         this.subscriptionId = subscriptionId;
         this.deliveryId=deliveryId;
+        this.sequence=sequence;
         this.items=new ArrayList<>();
+    }
+
+    public int getSequence() {
+        return sequence;
     }
 
     public String getSubscriptionId() {

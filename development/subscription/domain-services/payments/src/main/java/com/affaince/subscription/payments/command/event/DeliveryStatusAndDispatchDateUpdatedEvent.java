@@ -2,6 +2,7 @@ package com.affaince.subscription.payments.command.event;
 
 import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -9,12 +10,12 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private String subscriptionId;
     private String basketId;
     private DeliveryStatus basketDeliveryStatus;
-    private String dispatchDate;
+    private LocalDate dispatchDate;
     private List<ItemDispatchStatus> itemDispatchStatuses;
     private double deliveryCharges;
     private double totalDeliveryPrice;
 
-    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, String dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
+    public DeliveryStatusAndDispatchDateUpdatedEvent(String subscriptionId, String basketId, DeliveryStatus basketDeliveryStatus, LocalDate dispatchDate, List<ItemDispatchStatus> itemDispatchStatuses, double deliveryCharges, double totalDeliveryPrice) {
         this.subscriptionId = subscriptionId;
         this.basketId = basketId;
         this.basketDeliveryStatus = basketDeliveryStatus;
@@ -51,11 +52,11 @@ public class DeliveryStatusAndDispatchDateUpdatedEvent {
         this.basketDeliveryStatus = basketDeliveryStatus;
     }
 
-    public String getDispatchDate() {
+    public LocalDate getDispatchDate() {
         return dispatchDate;
     }
 
-    public void setDispatchDate(String dispatchDate) {
+    public void setDispatchDate(LocalDate dispatchDate) {
         this.dispatchDate = dispatchDate;
     }
 

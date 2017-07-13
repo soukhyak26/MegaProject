@@ -6,7 +6,6 @@ import com.affaince.subscription.common.type.DeliveryStatus;
  * Created by rbsavaliya on 04-10-2015.
  */
 public class ItemDispatchStatus {
-
     private String itemId;
     private DeliveryStatus itemDeliveryStatus;
     private String priceBucketId;
@@ -41,5 +40,21 @@ public class ItemDispatchStatus {
 
     public void setPriceBucketId(String priceBucketId) {
         this.priceBucketId = priceBucketId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ItemDispatchStatus that = (ItemDispatchStatus) o;
+
+        return itemId.equals(that.itemId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return itemId.hashCode();
     }
 }

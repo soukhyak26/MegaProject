@@ -53,7 +53,6 @@ public class PaymentProcessingContext {
                 this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence();
             }
         }
-        ;
     }
 
     public List<DeliverywisePaymentTracker> getDeliverywisePaymentTrackers() {
@@ -63,6 +62,7 @@ public class PaymentProcessingContext {
     public DeliverywisePaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
         return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliverySequence() == sequenceId).collect(Collectors.toList()).get(0);
     }
+
 
     public int getLatestCompletedDeliverySequence() {
         return latestCompletedDeliverySequence;
@@ -108,7 +108,7 @@ public class PaymentProcessingContext {
         this.schemeId = schemeId;
     }
 
-    //This method should be used to create trackers accordin to the scheme definition where the deliveries BEFORe which payment is expected.
+    //This method should be used to create trackers according to the scheme definition where the deliveries BEFORe which payment is expected.
     public void createTrackersForExpectingPayments(int deliverySequence) {
         DeliverywisePaymentTracker tracketObjForComparison = new DeliverywisePaymentTracker(deliverySequence);
 
@@ -122,7 +122,11 @@ public class PaymentProcessingContext {
     }
 
     public void correctDues(ModifiedSubscriptionContent modifiedSubscriptionContent) {
-
+        List<ModifiedDeliveryContent> modifiedDeliveries = modifiedSubscriptionContent.getModifiedDeliveries();
+        for (ModifiedDeliveryContent modifiedDeliveryContent : modifiedDeliveries) {
+            DeliverywisePaymentTracker  tracker=findPaymentTrackerByDeliverySequence(modifiedDeliveryContent.getSequence());
+           // tracker.se
+        }
     }
 
     public boolean validateIfDeliveryCanBeDispatched(String deliveryId, int sequence) {

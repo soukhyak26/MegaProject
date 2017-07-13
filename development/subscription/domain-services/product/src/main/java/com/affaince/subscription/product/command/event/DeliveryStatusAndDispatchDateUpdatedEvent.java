@@ -11,6 +11,7 @@ import java.util.Map;
 /**
  * Created by rbsavaliya on 10-10-2015.
  */
+//TODO: this event needs to be used in Product to update count of delivered subscriptions
 public class DeliveryStatusAndDispatchDateUpdatedEvent {
     private String subscriberId;
     private String subscriptionId;

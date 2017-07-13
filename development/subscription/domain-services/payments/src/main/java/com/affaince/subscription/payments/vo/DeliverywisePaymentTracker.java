@@ -1,5 +1,7 @@
 package com.affaince.subscription.payments.vo;
 
+import com.affaince.subscription.common.type.DeliveryStatus;
+
 /**
  * Created by mandar on 7/6/2017.
  */
@@ -7,12 +9,22 @@ package com.affaince.subscription.payments.vo;
 //amount of payment expected
 //amount of payment fulfilled
 public class DeliverywisePaymentTracker {
+    private String deliveryId;
     private int deliverySequence;
     private double paymentExpected;
     private double paymentReceived;
+    private DeliveryStatus deliveryStatus;
 
     public DeliverywisePaymentTracker(int deliverySequence) {
         this.deliverySequence = deliverySequence;
+    }
+
+    public void setDeliveryId(String deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public String getDeliveryId() {
+        return deliveryId;
     }
 
     public int getDeliverySequence() {
@@ -38,6 +50,14 @@ public class DeliverywisePaymentTracker {
     public void addToPaymentReceived(double amount){
         this.paymentReceived +=amount;
         this.paymentExpected-=amount;
+    }
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 
     public void deductFromPaymentReceived(double amount){
