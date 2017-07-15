@@ -332,7 +332,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void validateAndApproveDelivery(String deliveryId, int sequence) {
-        boolean validateForDispatchFlag = paymentProcessingContext.validateIfDeliveryCanBeDispatched(deliveryId, sequence);
+        boolean validateForDispatchFlag = paymentProcessingContext.validateIfDeliveryCanBeDispatched(sequence);
 
         apply(new DeliveryDispatchApprovalSentEvent(this.subscriberId, this.subscriptionId, deliveryId, validateForDispatchFlag));
     }

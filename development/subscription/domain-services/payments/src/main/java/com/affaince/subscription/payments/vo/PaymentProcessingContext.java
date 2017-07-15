@@ -2,6 +2,7 @@ package com.affaince.subscription.payments.vo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +62,7 @@ public class PaymentProcessingContext {
 
 
     public DeliverywisePaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
-        return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliverySequence() == sequenceId).collect(Collectors.toList()).get(0);
+        return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.isGivenDeliverySequenceManagedByTracker(sequenceId)).collect(Collectors.toList()).get(0);
     }
 
     public void setDeliverySequenceAwaitingPayment(int deliverySequenceAwaitingPayment) {
@@ -104,20 +105,22 @@ public class PaymentProcessingContext {
         this.latestCompletedDeliverySequence = latestCompletedDeliverySequence;
     }
 
-    public boolean isDeliveryDueAmountFulfilled(String deliveryId){
+    public boolean isDeliveryDueAmountFulfilled(String deliveryId) {
         return getPaymentTrackerForADelivery(deliveryId).isDeliveryDueAmountFulfilled();
     }
 
-    public void revertAmountForADelivery(String deliveryId,double amount){
-        DeliverywisePaymentTracker tracker=getPaymentTrackerForADelivery(deliveryId);
+    public void revertAmountForADelivery(String deliveryId, double amount) {
+        DeliverywisePaymentTracker tracker = getPaymentTrackerForADelivery(deliveryId);
         tracker.deductFromPaymentExpected(amount);
-        if(isDeliveryDueAmountFulfilled(deliveryId)) {
+        if (isDeliveryDueAmountFulfilled(deliveryId)) {
             tracker.deductFromPaymentReceived(amount);
         }
     }
-    public DeliverywisePaymentTracker getPaymentTrackerForADelivery(String deliveryId){
-        return deliverywisePaymentTrackers.stream().filter(dwpt->dwpt.getDeliveryId().equals(deliveryId)).collect(Collectors.toList()).get(0);
+
+    public DeliverywisePaymentTracker getPaymentTrackerForADelivery(String deliveryId) {
+        return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliveryId().equals(deliveryId)).collect(Collectors.toList()).get(0);
     }
+
     public void setPaymentAccountStatus(PaymentAccountStatus paymentAccountStatus) {
         this.paymentAccountStatus = paymentAccountStatus;
     }
@@ -127,28 +130,46 @@ public class PaymentProcessingContext {
     }
 
     //This method should be used to create trackers according to the scheme definition where the deliveries BEFORE which payment is expected.
-    public void createTrackersForExpectingPayments(int deliverySequence) {
-        DeliverywisePaymentTracker tracketObjForComparison = new DeliverywisePaymentTracker(deliverySequence);
+    public void createTrackersForExpectingPayments(int totalDeliveryCount, Map<Integer, Double> deliverySequenceWisePaymentsExpected) {
+        List<Integer> deliverySequencesHandledByATracker = new ArrayList<>();
+        for (int i = 0; i < totalDeliveryCount; i++) {
 
-        DeliverywisePaymentTracker deliverywisePaymentTracker = null;
-        if (deliverywisePaymentTrackers.contains(tracketObjForComparison)) {
-            deliverywisePaymentTracker = deliverywisePaymentTrackers.get(deliverywisePaymentTrackers.indexOf(tracketObjForComparison));
-        } else {
-            deliverywisePaymentTracker = new DeliverywisePaymentTracker(deliverySequence);
-            deliverywisePaymentTrackers.add(deliverywisePaymentTracker);
+            boolean isCurrentDeliverySequenceAPaymentReceiver = deliverySequenceWisePaymentsExpected.keySet().contains(i);
+            if (isCurrentDeliverySequenceAPaymentReceiver) {
+                DeliverywisePaymentTracker deliverywisePaymentTracker = new DeliverywisePaymentTracker(i);
+                deliverySequencesHandledByATracker.add(i);
+                deliverywisePaymentTracker.setDeliverySequencesManagedByATracker(deliverySequencesHandledByATracker);
+                deliverywisePaymentTracker.setPaymentExpected(deliverySequenceWisePaymentsExpected.get(i));
+                deliverywisePaymentTrackers.add(deliverywisePaymentTracker);
+                deliverySequencesHandledByATracker = new ArrayList<>();
+            } else {
+                deliverySequencesHandledByATracker.add(i);
+            }
         }
     }
 
     public void correctDues(ModifiedSubscriptionContent modifiedSubscriptionContent) {
         List<ModifiedDeliveryContent> modifiedDeliveries = modifiedSubscriptionContent.getModifiedDeliveries();
+        double revisedInstalment = 0;
         for (ModifiedDeliveryContent modifiedDeliveryContent : modifiedDeliveries) {
-            DeliverywisePaymentTracker  tracker=findPaymentTrackerByDeliverySequence(modifiedDeliveryContent.getSequence());
-           // tracker.se
+            revisedInstalment += modifiedDeliveryContent.getCorrectedRemainingDuePayment();
+            DeliverywisePaymentTracker tracker = findPaymentTrackerByDeliverySequence(modifiedDeliveryContent.getSequence());
+            if (modifiedDeliveryContent.getSequence() == tracker.getDeliverySequence()) {
+                tracker.setPaymentExpected(revisedInstalment);
+                revisedInstalment = 0;
+            }
         }
     }
-
-    public boolean validateIfDeliveryCanBeDispatched(String deliveryId, int sequence) {
-        DeliverywisePaymentTracker tracker = deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliverySequence() == sequence).collect(Collectors.toList()).get(0);
-        return (tracker.getPaymentExpected() <= tracker.getPaymentReceived());
+    private DeliverywisePaymentTracker findTrackerEarlierTo(DeliverywisePaymentTracker tracker){
+        return deliverywisePaymentTrackers.get(deliverywisePaymentTrackers.indexOf(tracker)-1);
+    }
+    public boolean validateIfDeliveryCanBeDispatched(int sequence) {
+        DeliverywisePaymentTracker tracker=findPaymentTrackerByDeliverySequence(sequence);
+        if(sequence== tracker.getDeliverySequence()){
+            return tracker.getPaymentExpected()== tracker.getPaymentReceived();
+        }else {
+            DeliverywisePaymentTracker earlierTracker=findTrackerEarlierTo(tracker);
+            return earlierTracker.getPaymentExpected()==earlierTracker.getPaymentReceived();
+        }
     }
 }

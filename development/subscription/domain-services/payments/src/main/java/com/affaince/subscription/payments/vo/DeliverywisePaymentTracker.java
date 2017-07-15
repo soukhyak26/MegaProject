@@ -2,15 +2,18 @@ package com.affaince.subscription.payments.vo;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 
+import java.util.List;
+
 /**
  * Created by mandar on 7/6/2017.
  */
-//deliveries before which payment is expected.
+//deliveries "before" which payment is expected.
 //amount of payment expected
 //amount of payment fulfilled
 public class DeliverywisePaymentTracker {
     private String deliveryId;
     private int deliverySequence;
+    private List<Integer> deliverySequencesManagedByATracker;
     private double paymentExpected;
     private double paymentReceived;
     private DeliveryStatus deliveryStatus;
@@ -52,6 +55,26 @@ public class DeliverywisePaymentTracker {
         this.paymentExpected-=amount;
     }
 
+    public void setDeliverySequence(int deliverySequence) {
+        this.deliverySequence = deliverySequence;
+    }
+
+    public List<Integer> getDeliverySequencesManagedByATracker() {
+        return deliverySequencesManagedByATracker;
+    }
+
+    public void setDeliverySequencesManagedByATracker(List<Integer> deliverySequencesManagedByATracker) {
+        this.deliverySequencesManagedByATracker = deliverySequencesManagedByATracker;
+    }
+
+    public void setPaymentExpected(double paymentExpected) {
+        this.paymentExpected = paymentExpected;
+    }
+
+    public void setPaymentReceived(double paymentReceived) {
+        this.paymentReceived = paymentReceived;
+    }
+
     public DeliveryStatus getDeliveryStatus() {
         return deliveryStatus;
     }
@@ -66,6 +89,12 @@ public class DeliverywisePaymentTracker {
 
     public boolean isDeliveryDueAmountFulfilled(){
         return (paymentExpected==paymentReceived);
+    }
+    public boolean isGivenDeliverySequenceManagedByTracker(int deliverySequence){
+        if(deliverySequencesManagedByATracker.contains(deliverySequence)){
+            return true;
+        }
+        return false;
     }
     @Override
     public boolean equals(Object o) {
