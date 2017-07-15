@@ -31,4 +31,13 @@ public class DeliveryExpression {
     public int getDivisor() {
         return divisor;
     }
+
+    public static <R> DeliveryExpression create(String s) {
+        DeliveryExpression deliveryExpression = new DeliveryExpression(
+                (s.charAt(3) == 'N')? TotalDeliveryBase.N: TotalDeliveryBase.REMAINING_N,
+                Integer.parseInt(s.charAt(0) + ""),
+                Integer.parseInt(s.charAt(2) + "")
+        );
+        return deliveryExpression;
+    }
 }
