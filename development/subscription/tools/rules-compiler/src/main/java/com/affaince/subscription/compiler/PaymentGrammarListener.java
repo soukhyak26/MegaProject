@@ -38,6 +38,16 @@ public interface PaymentGrammarListener extends ParseTreeListener {
 	 */
 	void exitAdvance_payment_expr(PaymentGrammarParser.Advance_payment_exprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PaymentGrammarParser#payment_event}.
+	 * @param ctx the parse tree
+	 */
+	void enterPayment_event(PaymentGrammarParser.Payment_eventContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PaymentGrammarParser#payment_event}.
+	 * @param ctx the parse tree
+	 */
+	void exitPayment_event(PaymentGrammarParser.Payment_eventContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PaymentGrammarParser#residual_due_payment_expr}.
 	 * @param ctx the parse tree
 	 */
@@ -58,16 +68,6 @@ public interface PaymentGrammarListener extends ParseTreeListener {
 	 */
 	void exitProportion_value(PaymentGrammarParser.Proportion_valueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PaymentGrammarParser#delivery_value}.
-	 * @param ctx the parse tree
-	 */
-	void enterDelivery_value(PaymentGrammarParser.Delivery_valueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PaymentGrammarParser#delivery_value}.
-	 * @param ctx the parse tree
-	 */
-	void exitDelivery_value(PaymentGrammarParser.Delivery_valueContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PaymentGrammarParser#percent_source}.
 	 * @param ctx the parse tree
 	 */
@@ -87,16 +87,6 @@ public interface PaymentGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPercent_value(PaymentGrammarParser.Percent_valueContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PaymentGrammarParser#delivery_count}.
-	 * @param ctx the parse tree
-	 */
-	void enterDelivery_count(PaymentGrammarParser.Delivery_countContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PaymentGrammarParser#delivery_count}.
-	 * @param ctx the parse tree
-	 */
-	void exitDelivery_count(PaymentGrammarParser.Delivery_countContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PaymentGrammarParser#after_before}.
 	 * @param ctx the parse tree

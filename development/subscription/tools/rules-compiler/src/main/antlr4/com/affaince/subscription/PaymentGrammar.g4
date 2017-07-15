@@ -64,7 +64,9 @@ payment_rule : advance_payment_expr AND residual_due_payment_expr
 
 advance_payment_expr : PAY percent_value PERCENTAGE
                        OF percent_source
-                       ON SUBSCRIPTION_CONFIRMATION;
+                       ON payment_event;
+
+payment_event: SUBSCRIPTION_CONFIRMATION;
 
 residual_due_payment_expr: PAY RESIDUAL_DUE_PAYMENT
                            after_before delivery_number_list DELIVERY
@@ -75,10 +77,8 @@ proportion_value :  DEFAULT |
                     proportion_value COMMA proportion_value |
                     DECIMAL COMMA |
                     DECIMAL;
-delivery_value : DECIMAL;
-percent_source : CURRENT_SUBSCRIPTION_AMOUNT | DECIMAL DELIVERY | N DIV DECIMAL DELIVERY;
+percent_source : CURRENT_SUBSCRIPTION_AMOUNT | DECIMAL DELIVERY | DECIMAL DIV DECIMAL N DELIVERY;
 percent_value: DECIMAL;
-delivery_count: N | REMAININGN;
 after_before : AFTER | BEFORE;
 delivery_number_list : delivery_number_list COMMA delivery_number_list |
                         delivery_number_expr COMMA |
