@@ -67,8 +67,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         //find only those cost accounts corresponding to deliveries which are not dispatched yet.
         List<DeliveryCostAccount> undeliveredDeliveryCostAccounts = this.deliveryCostAccountMap.values()
                 .stream()
-                .filter(dca -> this.paymentProcessingContext.findPaymentTrackerByDeliverySequence(dca.getSequence())
-                        .getDeliveryStatus() != DeliveryStatus.DELIVERED)
+                .filter(dca -> dca.getDeliveryDetail().getDeliveryStatus() != DeliveryStatus.DELIVERED)
                 .collect(Collectors.toList());
         //order them by date
         Collections.sort(undeliveredDeliveryCostAccounts, new Comparator<DeliveryCostAccount>() {
@@ -81,6 +80,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
         //this is total payment received
         double paymentReceived = paidAmount;
+        int deliverySequenceFulfilledWithPayment=-1;
         for (DeliveryCostAccount deliveryCostAccount : undeliveredDeliveryCostAccounts) {
             //get total delivery amount.. it has to be latest???
             double deliveryAmount = deliveryCostAccount.getAmount();
@@ -95,14 +95,19 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
                 double residualAmountForDelivery = deliveryAmount - paymentReceivedForDelivery;
                 if (paymentReceived > residualAmountForDelivery) {
                     paymentMadeForDelivery = residualAmountForDelivery;
+                    deliverySequenceFulfilledWithPayment=deliveryCostAccount.getSequence();
                 } else if (paymentReceived <= residualAmountForDelivery) {
                     paymentMadeForDelivery = paymentReceived;
+                    if(deliveryCostAccount.getAmount()==paymentMadeForDelivery){
+                        deliverySequenceFulfilledWithPayment=deliveryCostAccount.getSequence();
+                    }
                 }
                 paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(), paymentMadeForDelivery);
                 paymentReceived -= paymentMadeForDelivery;
             }
         }
-        apply(new PaymentInitiatedEvent(subscriptionId, paidAmount, paymentToBeAdjustedAgainstDeliveries, paymentDate));
+        Map<InstalmentPaymentTracker,Double> trackersGettingFulfilled=this.paymentProcessingContext.IdentifyTrackersGettingFulfilledByIncomingPayment(paidAmount);
+        apply(new PaymentInitiatedEvent(subscriptionId, paidAmount, paymentToBeAdjustedAgainstDeliveries,trackersGettingFulfilled,deliverySequenceFulfilledWithPayment, paymentDate));
     }
 
     @EventSourcingHandler
@@ -117,8 +122,10 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             DeliveryCostAccount deliveryCostAccount = deliveryCostAccountMap.get(deliveryId);
             deliveryCostAccount.creditToPaymentReceived(paymentToBeAdjustedAgainstDeliveries.get(deliveryId));
         }
+
         //payment expecting trackers are updated with incoming payment.
-        this.paymentProcessingContext.receiveIncomingPayment(event.getPaidAmount());
+        this.paymentProcessingContext.addIncomingPaymentToTrackers(event.getPaidAmount(),event.getTrackersGettingFulfilledByIncomingPayment());
+        this.paymentProcessingContext.setDeliverySequenceAwaitingPayment(event.getDeliverySequenceFulfilledWithPayment()+1);
     }
 
     //each delivery getting created in Subscriber domain will fill the amount data needed for all Accounts inside PaymentAccount

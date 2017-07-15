@@ -10,7 +10,7 @@ import java.util.List;
 //deliveries "before" which payment is expected.
 //amount of payment expected
 //amount of payment fulfilled
-public class DeliverywisePaymentTracker {
+public class InstalmentPaymentTracker {
     private String deliveryId;
     private int deliverySequence;
     private List<Integer> deliverySequencesManagedByATracker;
@@ -18,7 +18,7 @@ public class DeliverywisePaymentTracker {
     private double paymentReceived;
     private DeliveryStatus deliveryStatus;
 
-    public DeliverywisePaymentTracker(int deliverySequence) {
+    public InstalmentPaymentTracker(int deliverySequence) {
         this.deliverySequence = deliverySequence;
     }
 
@@ -53,6 +53,7 @@ public class DeliverywisePaymentTracker {
     public void addToPaymentReceived(double amount){
         this.paymentReceived +=amount;
         this.paymentExpected-=amount;
+
     }
 
     public void setDeliverySequence(int deliverySequence) {
@@ -101,7 +102,7 @@ public class DeliverywisePaymentTracker {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DeliverywisePaymentTracker that = (DeliverywisePaymentTracker) o;
+        InstalmentPaymentTracker that = (InstalmentPaymentTracker) o;
 
         return deliverySequence == that.deliverySequence;
 

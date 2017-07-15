@@ -1,8 +1,6 @@
 package com.affaince.subscription.payments.vo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -13,7 +11,7 @@ public class PaymentProcessingContext {
     private String schemeId;
     private int totalDeliveryCount;
     private double totalDueAmount;
-    private List<DeliverywisePaymentTracker> deliverywisePaymentTrackers;
+    private List<InstalmentPaymentTracker> instalmentPaymentTrackers;
     private int latestCompletedDeliverySequence;
     private int deliverySequenceAwaitingPayment;
     private PaymentAccountStatus paymentAccountStatus;
@@ -22,7 +20,7 @@ public class PaymentProcessingContext {
         this.subscriptionId = subscriptionId;
         this.schemeId = schemeId;
         this.paymentAccountStatus = PaymentAccountStatus.ACTIVE;
-        this.deliverywisePaymentTrackers = new ArrayList<>();
+        this.instalmentPaymentTrackers = new ArrayList<>();
     }
 
     public String getSubscriptionId() {
@@ -41,28 +39,42 @@ public class PaymentProcessingContext {
         return totalDueAmount;
     }
 
-    public void receiveIncomingPayment(double amount) {
-        this.deductFromTotalDueAmount(amount);
-        final List<DeliverywisePaymentTracker> unfulfilledTrackers = this.deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getPaymentExpected() > dwpt.getPaymentReceived()).collect(Collectors.toList());
-        for (DeliverywisePaymentTracker unfulfilledTracker : unfulfilledTrackers) {
-            if (amount >= unfulfilledTracker.getPaymentExpected()) {
-                unfulfilledTracker.addToPaymentReceived(unfulfilledTracker.getPaymentExpected());
-                amount -= unfulfilledTracker.getPaymentExpected();
-                this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence() + 1;
-            } else {
-                unfulfilledTracker.addToPaymentReceived(amount);
-                this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence();
-            }
+    public void addIncomingPaymentToTrackers(double totalIncomingAmount,Map<InstalmentPaymentTracker,Double> trackersWithPayments){
+        this.deductFromTotalDueAmount(totalIncomingAmount);
+        Iterator<InstalmentPaymentTracker> trackersIterator=trackersWithPayments.keySet().iterator();
+        while(trackersIterator.hasNext()){
+            InstalmentPaymentTracker tracker=trackersIterator.next();
+            tracker.addToPaymentReceived(trackersWithPayments.get(tracker));
         }
     }
 
-    public List<DeliverywisePaymentTracker> getDeliverywisePaymentTrackers() {
-        return deliverywisePaymentTrackers;
+    public Map<InstalmentPaymentTracker,Double> IdentifyTrackersGettingFulfilledByIncomingPayment(double amount) {
+        this.deductFromTotalDueAmount(amount);
+        final List<InstalmentPaymentTracker> unfulfilledTrackers = this.instalmentPaymentTrackers.stream().filter(dwpt -> dwpt.getPaymentExpected() > dwpt.getPaymentReceived()).collect(Collectors.toList());
+        Map<InstalmentPaymentTracker,Double> trackersGettingFulfilled= new HashMap<>();
+        for (InstalmentPaymentTracker unfulfilledTracker : unfulfilledTrackers) {
+            if (amount >= unfulfilledTracker.getPaymentExpected()) {
+                //unfulfilledTracker.addToPaymentReceived(unfulfilledTracker.getPaymentExpected());
+                trackersGettingFulfilled.put(unfulfilledTracker,unfulfilledTracker.getPaymentExpected());
+                amount -= unfulfilledTracker.getPaymentExpected();
+                //this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence() + 1;
+            } else {
+                trackersGettingFulfilled.put(unfulfilledTracker,amount);
+                //amount should be zero here
+                //unfulfilledTracker.addToPaymentReceived(amount);
+                //this.deliverySequenceAwaitingPayment = unfulfilledTracker.getDeliverySequence();
+            }
+        }
+        return trackersGettingFulfilled;
+    }
+
+    public List<InstalmentPaymentTracker> getInstalmentPaymentTrackers() {
+        return instalmentPaymentTrackers;
     }
 
 
-    public DeliverywisePaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
-        return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.isGivenDeliverySequenceManagedByTracker(sequenceId)).collect(Collectors.toList()).get(0);
+    public InstalmentPaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
+        return instalmentPaymentTrackers.stream().filter(dwpt -> dwpt.isGivenDeliverySequenceManagedByTracker(sequenceId)).collect(Collectors.toList()).get(0);
     }
 
     public void setDeliverySequenceAwaitingPayment(int deliverySequenceAwaitingPayment) {
@@ -110,15 +122,15 @@ public class PaymentProcessingContext {
     }
 
     public void revertAmountForADelivery(String deliveryId, double amount) {
-        DeliverywisePaymentTracker tracker = getPaymentTrackerForADelivery(deliveryId);
+        InstalmentPaymentTracker tracker = getPaymentTrackerForADelivery(deliveryId);
         tracker.deductFromPaymentExpected(amount);
         if (isDeliveryDueAmountFulfilled(deliveryId)) {
             tracker.deductFromPaymentReceived(amount);
         }
     }
 
-    public DeliverywisePaymentTracker getPaymentTrackerForADelivery(String deliveryId) {
-        return deliverywisePaymentTrackers.stream().filter(dwpt -> dwpt.getDeliveryId().equals(deliveryId)).collect(Collectors.toList()).get(0);
+    public InstalmentPaymentTracker getPaymentTrackerForADelivery(String deliveryId) {
+        return instalmentPaymentTrackers.stream().filter(dwpt -> dwpt.getDeliveryId().equals(deliveryId)).collect(Collectors.toList()).get(0);
     }
 
     public void setPaymentAccountStatus(PaymentAccountStatus paymentAccountStatus) {
@@ -136,11 +148,11 @@ public class PaymentProcessingContext {
 
             boolean isCurrentDeliverySequenceAPaymentReceiver = deliverySequenceWisePaymentsExpected.keySet().contains(i);
             if (isCurrentDeliverySequenceAPaymentReceiver) {
-                DeliverywisePaymentTracker deliverywisePaymentTracker = new DeliverywisePaymentTracker(i);
+                InstalmentPaymentTracker instalmentPaymentTracker = new InstalmentPaymentTracker(i);
                 deliverySequencesHandledByATracker.add(i);
-                deliverywisePaymentTracker.setDeliverySequencesManagedByATracker(deliverySequencesHandledByATracker);
-                deliverywisePaymentTracker.setPaymentExpected(deliverySequenceWisePaymentsExpected.get(i));
-                deliverywisePaymentTrackers.add(deliverywisePaymentTracker);
+                instalmentPaymentTracker.setDeliverySequencesManagedByATracker(deliverySequencesHandledByATracker);
+                instalmentPaymentTracker.setPaymentExpected(deliverySequenceWisePaymentsExpected.get(i));
+                instalmentPaymentTrackers.add(instalmentPaymentTracker);
                 deliverySequencesHandledByATracker = new ArrayList<>();
             } else {
                 deliverySequencesHandledByATracker.add(i);
@@ -153,22 +165,22 @@ public class PaymentProcessingContext {
         double revisedInstalment = 0;
         for (ModifiedDeliveryContent modifiedDeliveryContent : modifiedDeliveries) {
             revisedInstalment += modifiedDeliveryContent.getCorrectedRemainingDuePayment();
-            DeliverywisePaymentTracker tracker = findPaymentTrackerByDeliverySequence(modifiedDeliveryContent.getSequence());
+            InstalmentPaymentTracker tracker = findPaymentTrackerByDeliverySequence(modifiedDeliveryContent.getSequence());
             if (modifiedDeliveryContent.getSequence() == tracker.getDeliverySequence()) {
                 tracker.setPaymentExpected(revisedInstalment);
                 revisedInstalment = 0;
             }
         }
     }
-    private DeliverywisePaymentTracker findTrackerEarlierTo(DeliverywisePaymentTracker tracker){
-        return deliverywisePaymentTrackers.get(deliverywisePaymentTrackers.indexOf(tracker)-1);
+    private InstalmentPaymentTracker findTrackerEarlierTo(InstalmentPaymentTracker tracker){
+        return instalmentPaymentTrackers.get(instalmentPaymentTrackers.indexOf(tracker)-1);
     }
     public boolean validateIfDeliveryCanBeDispatched(int sequence) {
-        DeliverywisePaymentTracker tracker=findPaymentTrackerByDeliverySequence(sequence);
+        InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(sequence);
         if(sequence== tracker.getDeliverySequence()){
             return tracker.getPaymentExpected()== tracker.getPaymentReceived();
         }else {
-            DeliverywisePaymentTracker earlierTracker=findTrackerEarlierTo(tracker);
+            InstalmentPaymentTracker earlierTracker=findTrackerEarlierTo(tracker);
             return earlierTracker.getPaymentExpected()==earlierTracker.getPaymentReceived();
         }
     }
