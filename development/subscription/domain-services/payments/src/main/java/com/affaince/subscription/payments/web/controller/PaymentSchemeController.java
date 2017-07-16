@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-@RestController(value = "/paymentscheme")
+@RestController
+@RequestMapping("paymentscheme")
 public class PaymentSchemeController {
 
     private final SubscriptionCommandGateway commandGateway;
@@ -34,6 +35,7 @@ public class PaymentSchemeController {
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
+
     @RequestMapping(value= "/expire/{schemeId}",  method = RequestMethod.POST)
     public ResponseEntity<Object> expirePaymentScheme(String schemeId) throws Exception {
         final ExpirePaymentSchemeCommand command= new ExpirePaymentSchemeCommand(schemeId, SysDate.now());

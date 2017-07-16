@@ -5,6 +5,7 @@ import com.affaince.subscription.payments.command.domain.PaymentAccount;
 import com.affaince.subscription.payments.service.DuePaymentCorrectionEngine;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +16,7 @@ public class CorrectDuePaymentCommandHandler {
     private final Repository<PaymentAccount> paymentAccounts;
     private final DuePaymentCorrectionEngine duePaymentCorrectionEngine;
 
+    @Autowired
     public CorrectDuePaymentCommandHandler(Repository<PaymentAccount> paymentAccounts, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
         this.paymentAccounts = paymentAccounts;
         this.duePaymentCorrectionEngine = duePaymentCorrectionEngine;

@@ -10,5 +10,5 @@ import java.util.List;
  * Created by mandar on 5/18/2017.
  */
 public interface PaymentTransactionViewRepository  extends CrudRepository<PaymentTransactionView, String> {
-    List<PaymentTransactionView> findBySusbcriptionId(String subscriptionId);
+    List<PaymentTransactionView> findBySubscriptionId(String subscriptionId);
 }

@@ -8,6 +8,7 @@ import com.affaince.subscription.pojos.PaymentExpression;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class CreatePaymentSchemeCommandHandler {
         this.paymentSchemes = paymentSchemes;
     }
 
+    @CommandHandler
     public void handle(CreatePaymentSchemeCommand command) {
         PaymentSchemeCompiler paymentSchemeCompiler = new PaymentSchemeCompiler();
         PaymentExpression paymentExpression = paymentSchemeCompiler.compile(command.getPaymentSchemeRule());
@@ -37,5 +39,6 @@ public class CreatePaymentSchemeCommandHandler {
             e.printStackTrace();
         }
         PaymentScheme paymentScheme = new PaymentScheme(command.getPaymentSchemeId(), command.getPaymentSchemeName(), command.getPaymentSchemeDescription(), jsonString,command.getPaymentSchemeRule(), command.getStartDate(), command.getEndDate());
+        paymentSchemes.add(paymentScheme);
     }
 }

@@ -24,15 +24,18 @@ public class PaymentScheme extends AbstractAnnotatedAggregateRoot<String>{
         apply(new PaymentSchemeCreatedEvent(schemeId,schemeName,schemeDescription, schemeRuleInJsonFormat,schemeRule,schemeStartDate,schemeEndDate));
     }
 
+    public PaymentScheme() {
+    }
+
     @EventSourcingHandler
     public void on(PaymentSchemeCreatedEvent event){
-        this.schemeId = schemeId;
-        this.schemeName = schemeName;
-        this.schemeDescription = schemeDescription;
-        this.schemeRuleInJsonFormat = schemeRuleInJsonFormat;
-        this.schemeRule = schemeRule;
-        this.schemeStartDate = schemeStartDate;
-        this.schemeEndDate = schemeEndDate;
+        this.schemeId = event.getSchemeId();
+        this.schemeName = event.getSchemeName();
+        this.schemeDescription = event.getSchemeDescription();
+        this.schemeRuleInJsonFormat = event.getSchemeEquationInJsonFormat();
+        this.schemeRule = event.getSchemeRule();
+        this.schemeStartDate = event.getSchemeStartDate();
+        this.schemeEndDate = event.getSchemeEndDate();
     }
 
     public void expireScheme(LocalDate expiryDate) {

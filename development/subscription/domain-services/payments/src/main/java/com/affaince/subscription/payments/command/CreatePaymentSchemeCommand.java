@@ -1,11 +1,13 @@
 package com.affaince.subscription.payments.command;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.joda.time.LocalDate;
 
 /**
  * Created by mandar on 5/20/2017.
  */
 public class CreatePaymentSchemeCommand {
+    @TargetAggregateIdentifier
     private String paymentSchemeId;
     private String paymentSchemeName;
     private String paymentSchemeDescription;

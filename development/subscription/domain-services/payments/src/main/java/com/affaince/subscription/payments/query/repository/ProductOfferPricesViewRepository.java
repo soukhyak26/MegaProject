@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ProductOfferPricesViewRepository extends CrudRepository<ProductOfferPricesView,ProductwisePriceBucketId>{
     public List<ProductOfferPricesView> findByProductwisePriceBucketId_ProductId(String productId);
-    public List<ProductOfferPricesView> findByProductwisePriceBucketId_ProductIdAndEndDate(String productId,LocalDateTime endDate);
+    public List<ProductOfferPricesView> findByProductwisePriceBucketId_ProductIdAndToDate(String productId,LocalDateTime toDate);
     public List<ProductOfferPricesView> findByProductwisePriceBucketId_ProductId(String productId,Sort sort);
 
 }

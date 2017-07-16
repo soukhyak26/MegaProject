@@ -11,6 +11,6 @@ import java.util.List;
  * Created by mandar on 5/28/2017.
  */
 public interface DeliveryDetailsViewRepository extends CrudRepository<DeliveryDetailsView,DeliveryId> {
-    public List<DeliveryDetailsView> findByDeliveryId_SubscriptionId(String subscriptionId);
+    public List<DeliveryDetailsView> findBySubscriptionwiseDeliveryId_SubscriptionId(String subscriptionId);
     public List<DeliveryDetailsView> findByDeliveredProductDetailsIn(List<DeliveredProductDetail> products);
 }

@@ -21,7 +21,7 @@ public class DeliveriesDetailsService {
     }
 
     public List<DeliveryDetailsView> findDeliveriesBySubscriptionId(String subscriptionId){
-            return deliveryDetailsViewRepository.findByDeliveryId_SubscriptionId(subscriptionId);
+            return deliveryDetailsViewRepository.findBySubscriptionwiseDeliveryId_SubscriptionId(subscriptionId);
     }
 
     public List<DeliveryDetailsView> findDeliveriesContainingProduct(String productId){

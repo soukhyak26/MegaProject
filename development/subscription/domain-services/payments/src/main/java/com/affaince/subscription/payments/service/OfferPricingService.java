@@ -22,7 +22,7 @@ public class OfferPricingService {
     }
 
     public double findLatestOfferPriceOrPercentForAProduct(String productId){
-        List<ProductOfferPricesView> productWiseActivePriceBuckets=productOfferPricesViewRepository.findByProductwisePriceBucketId_ProductIdAndEndDate(productId,new LocalDateTime(9999,12,31,23,59,00));
+        List<ProductOfferPricesView> productWiseActivePriceBuckets=productOfferPricesViewRepository.findByProductwisePriceBucketId_ProductIdAndToDate(productId,new LocalDateTime(9999,12,31,23,59,00));
         if(productWiseActivePriceBuckets.size()>1){
             throw MultipleActiveOfferPricesException.build(productId);
         }else{

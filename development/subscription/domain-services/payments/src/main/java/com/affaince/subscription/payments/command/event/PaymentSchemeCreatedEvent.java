@@ -24,6 +24,9 @@ public class PaymentSchemeCreatedEvent {
         this.schemeEndDate = schemeEndDate;
     }
 
+    public PaymentSchemeCreatedEvent() {
+    }
+
     public String getSchemeId() {
         return schemeId;
     }
