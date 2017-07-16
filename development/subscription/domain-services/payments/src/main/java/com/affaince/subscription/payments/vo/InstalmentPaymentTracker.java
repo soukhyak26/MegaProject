@@ -2,7 +2,7 @@ package com.affaince.subscription.payments.vo;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mandar on 7/6/2017.
@@ -13,7 +13,7 @@ import java.util.List;
 public class InstalmentPaymentTracker {
     private String deliveryId;
     private int deliverySequence;
-    private List<Integer> deliverySequencesManagedByATracker;
+    private Map<Integer, Double> deliverySequencesManagedByATracker;
     private double paymentExpected;
     private double paymentReceived;
     private DeliveryStatus deliveryStatus;
@@ -42,29 +42,28 @@ public class InstalmentPaymentTracker {
         return paymentReceived;
     }
 
-    public void addToPaymentExpected(double amount){
-        this.paymentExpected +=amount;
+    public void addToPaymentExpected(double amount) {
+        this.paymentExpected += amount;
     }
 
-    public void deductFromPaymentExpected(double amount){
-        this.paymentExpected -=amount;
+    public void deductFromPaymentExpected(double amount) {
+        this.paymentExpected -= amount;
     }
 
-    public void addToPaymentReceived(double amount){
-        this.paymentReceived +=amount;
-        this.paymentExpected-=amount;
-
+    public void addToPaymentReceived(double amount) {
+        this.paymentReceived += amount;
+        this.paymentExpected -= amount;
     }
 
     public void setDeliverySequence(int deliverySequence) {
         this.deliverySequence = deliverySequence;
     }
 
-    public List<Integer> getDeliverySequencesManagedByATracker() {
+    public Map<Integer, Double> getDeliverySequencesManagedByATracker() {
         return deliverySequencesManagedByATracker;
     }
 
-    public void setDeliverySequencesManagedByATracker(List<Integer> deliverySequencesManagedByATracker) {
+    public void setDeliverySequencesManagedByATracker(Map<Integer, Double> deliverySequencesManagedByATracker) {
         this.deliverySequencesManagedByATracker = deliverySequencesManagedByATracker;
     }
 
@@ -84,19 +83,21 @@ public class InstalmentPaymentTracker {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public void deductFromPaymentReceived(double amount){
-        this.paymentReceived -=amount;
+    public void deductFromPaymentReceived(double amount) {
+        this.paymentReceived -= amount;
     }
 
-    public boolean isDeliveryDueAmountFulfilled(){
-        return (paymentExpected==paymentReceived);
+    public boolean isDeliveryDueAmountFulfilled() {
+        return (paymentExpected == paymentReceived);
     }
-    public boolean isGivenDeliverySequenceManagedByTracker(int deliverySequence){
-        if(deliverySequencesManagedByATracker.contains(deliverySequence)){
+
+    public boolean isGivenDeliverySequenceManagedByTracker(int deliverySequence) {
+        if (deliverySequencesManagedByATracker.containsKey(deliverySequence)) {
             return true;
         }
         return false;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,5 +112,9 @@ public class InstalmentPaymentTracker {
     @Override
     public int hashCode() {
         return (int) deliverySequence;
+    }
+
+    public void setTotalDuePaymentToDelivery(int sequence, double totalDeliveryCost) {
+        this.deliverySequencesManagedByATracker.put(sequence, totalDeliveryCost);
     }
 }
