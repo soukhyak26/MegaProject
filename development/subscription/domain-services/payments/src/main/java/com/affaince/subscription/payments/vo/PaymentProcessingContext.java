@@ -166,6 +166,15 @@ public class PaymentProcessingContext {
         tracker.addToPaymentExpected(paymentExpected);
         tracker.addToPaymentReceived(paymentReceived);
     }
+    public void deleteDeliverySequenceFromContext(int deliverySequence,double paymentExpected,double paymentReceived){
+        this.deductFromTotalDeliveryCount(1);
+        this.deductFromTotalDueAmount(paymentExpected);
+        InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(deliverySequence);
+        //TODO: check if payment should be deducted from both??
+        tracker.deductFromPaymentReceived(paymentReceived);
+        tracker.deductFromPaymentExpected(paymentExpected);
+        tracker.removeFromDeliverySequencesManagedByTracker(deliverySequence);
+    }
     public void correctDues(ModifiedSubscriptionContent modifiedSubscriptionContent) {
         List<ModifiedDeliveryContent> modifiedDeliveries = modifiedSubscriptionContent.getModifiedDeliveries();
         double revisedInstalment = 0;
@@ -209,13 +218,5 @@ public class PaymentProcessingContext {
             InstalmentPaymentTracker tracker= findPaymentTrackerByDeliverySequence(deliverySequenceReceivingPayment);
             tracker.addToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequenceReceivingPayment));
         }
-    }
-
-    public void distributeOutgoingPaymentAcrossInstalmentTrackers(int deliverySequence, double paymentReceived, String subscriptionId) {
-        InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(deliverySequence);
-        //TODO: check if payment should be deducted from both??
-        tracker.deductFromPaymentReceived(paymentReceived);
-        tracker.deductFromPaymentExpected(paymentReceived);
-        tracker.removeFromDeliverySequencesManagedByTracker(deliverySequence);
     }
 }

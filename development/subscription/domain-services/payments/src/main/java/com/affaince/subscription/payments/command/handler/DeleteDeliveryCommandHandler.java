@@ -23,6 +23,6 @@ public class DeleteDeliveryCommandHandler {
     public void handle(DeleteDeliveryCommand command) {
         //TODO: change this to subscription id once event/command contains it (in other domains)
         PaymentAccount paymentAccount = repository.load(command.getSubscriptionId());
-        paymentAccount.deleteDelivery(command.getSubscriberId(),command.getSubscriptionId(),command.getDeliveryId(),command.getDeletionDate(),duePaymentCorrectionEngine);
+        paymentAccount.deleteDelivery(command.getSubscriberId(),command.getSubscriptionId(),command.getDeliveryId(),command.getSequence(),command.getDeletionDate(),duePaymentCorrectionEngine);
     }
 }

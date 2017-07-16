@@ -333,14 +333,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         // TODO: This is wrong place to call benefit calculation. new delivery is not added to deliveries map
         final BenefitResult benefitResult = calculateBenefits(this.deliveries, delivery.getTotalDeliveryPrice(), benefitExecutionContext);
         delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(delivery.getDeliveryId()));
-        int sequence=findSequenceOfTheDeliveryToBeAdded(delivery);
+        int sequence= findSequenceOfTheDelivery(delivery);
         apply(new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),sequence,
                 delivery.getDeliveryItems(), delivery.getDeliveryDate(), delivery.getDispatchDate(), delivery.getStatus(),
                 delivery.getTotalWeight(), delivery.getRewardPoints()));
 
         createSubscriptionSummaryEvent(delivery, true);
     }
-    private int findSequenceOfTheDeliveryToBeAdded(Delivery delivery){
+    private int findSequenceOfTheDelivery(Delivery delivery){
         Iterator<Map.Entry<String,Delivery>> deliveriesIterator=this.deliveries.entrySet().iterator();
         int sequence=0;
         while( deliveriesIterator.hasNext()){
@@ -390,13 +390,14 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
 
     public void deleteDelivery(String deliveryId, String subscriptionId, BenefitExecutionContext benefitExecutionContext) {
         Delivery tempDelivery = deliveries.get(deliveryId);
+        int sequence =findSequenceOfTheDelivery(tempDelivery);
         final BenefitResult benefitResult =
                 calculateBenefits(this.deliveries, tempDelivery.getTotalDeliveryPrice() * (-1), benefitExecutionContext);
         for (String deliveryKey : benefitResult.getRewardPointsDistribution().keySet()) {
             Delivery delivery = deliveries.get(deliveryKey);
             delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryKey));
         }
-        apply(new DeliveryDeletedEvent(this.subscriberId, subscriptionId, deliveryId));
+        apply(new DeliveryDeletedEvent(this.subscriberId, subscriptionId, deliveryId,sequence));
     }
 
     public void prepareDeliveryForDispatch(String subscriptionId, String deliveryId, Map<String, LatestPriceBucket> latestPriceBucketMap) {

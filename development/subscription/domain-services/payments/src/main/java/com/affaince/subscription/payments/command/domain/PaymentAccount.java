@@ -232,14 +232,15 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
 
-    public void deleteDelivery(String subscriberId, String subscriptionId, String deliveryId, LocalDate deletionDate, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
+    public void deleteDelivery(String subscriberId, String subscriptionId, String deliveryId, int seqeunce,LocalDate deletionDate, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
         if (this.deliveryCostAccountMap.containsKey(deliveryId)) {
            // List<DeliveryCostAccount> deliveries = deliveryCostAccountMap.values().stream().collect(Collectors.toList());
             List<DeliveryCostAccount> deliveriesToBeRemoved = deliveryCostAccountMap.values().stream().filter(dca -> dca.getDeliveryId().equals(deliveryId) && dca.getSubscriptionId().equals(subscriptionId)).collect(Collectors.toList());
             depositPaidAmountOfDeletedDeliveriesToRefundAccount(deliveriesToBeRemoved);
             //deliveries.removeAll(deliveriesToBeRemoved);
             //ModifiedSubscriptionContent modifiedSubscriptionContent = duePaymentCorrectionEngine.correctTotalDues(subscriptionId, deliveries);
-            apply(new DeliveryDestroyedEvent(subscriberId, subscriptionId, deliveryId, deletionDate));
+            DeliveryCostAccount deliveryCostAccount=deliveriesToBeRemoved.get(0);
+            apply(new DeliveryDestroyedEvent(subscriberId, subscriptionId, deliveryId,seqeunce, deliveryCostAccount.getAmount(),deliveryCostAccount.getPaymentReceived(),deletionDate));
             //apply(new DeliveriesUpdatedWithCorrectedPaymentEvent(subscriberId, modifiedSubscriptionContent, deletionDate));
         }
 
@@ -262,7 +263,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(RefundProcessedForDeletedDeliveriesEvent event){
         this.refundAccount.credit(event.getPaymentReceived(),event.getRefundProcessingDate());
-        this.paymentProcessingContext.distributeOutgoingPaymentAcrossInstalmentTrackers(event.getDeliverySequence(),event.getPaymentReceived(),event.getSubscriptionId());
 
     }
     @EventSourcingHandler
@@ -270,7 +270,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         if (this.deliveryCostAccountMap.containsKey(event.getDeliveryId())) {
             this.deliveryCostAccountMap.remove(event.getDeliveryId());
         }
-        this.paymentProcessingContext.deductFromTotalDeliveryCount(1);
+        this.paymentProcessingContext.deleteDeliverySequenceFromContext(event.getSequence(),event.getTotalDeliveryCost(),event.getPaymentReceived());
     }
 
     public String getSubscriptionId() {

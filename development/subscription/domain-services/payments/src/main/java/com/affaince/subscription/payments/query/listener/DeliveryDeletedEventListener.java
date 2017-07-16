@@ -18,7 +18,7 @@ public class DeliveryDeletedEventListener {
 
     @EventHandler
     public void on(DeliveryDeletedEvent event) throws Exception {
-        DeleteDeliveryCommand deleteDeliveryCommand = new DeleteDeliveryCommand(event.getSubscriberId(), event.getSubscriptionId(),event.getDeliveryId(), SysDate.now());
+        DeleteDeliveryCommand deleteDeliveryCommand = new DeleteDeliveryCommand(event.getSubscriberId(), event.getSubscriptionId(),event.getDeliveryId(), event.getSequence(),SysDate.now());
         commandGateway.executeAsync(deleteDeliveryCommand);
     }
 }
