@@ -143,9 +143,9 @@ public class PaymentProcessingContext {
 
     //This method should be used to create trackers according to the scheme definition where the deliveries BEFORE which payment is expected.
     public void createTrackersForExpectingPayments(int totalDeliveryCount, Map<Integer, Double> milestoneWisePaymentsExpected) {
-        Map<Integer, Double> deliverySequencesHandledByATracker = new HashMap<>();
+        List<Integer> deliverySequencesHandledByATracker = new ArrayList<>();
         for (int i = 0; i < totalDeliveryCount; i++) {
-
+            deliverySequencesHandledByATracker.add(i);
             boolean isCurrentDeliverySequenceAPaymentReceiver = milestoneWisePaymentsExpected.keySet().contains(i);
             if (isCurrentDeliverySequenceAPaymentReceiver) {
                 InstalmentPaymentTracker instalmentPaymentTracker = new InstalmentPaymentTracker(i);
@@ -153,19 +153,25 @@ public class PaymentProcessingContext {
                 instalmentPaymentTracker.setDeliverySequencesManagedByATracker(deliverySequencesHandledByATracker);
                 instalmentPaymentTracker.setPaymentExpected(milestoneWisePaymentsExpected.get(i));
                 instalmentPaymentTrackers.add(instalmentPaymentTracker);
-                deliverySequencesHandledByATracker = new HashMap<>();
+                deliverySequencesHandledByATracker = new ArrayList<>();
             }
-            deliverySequencesHandledByATracker.put(i, 0.0);
         }
     }
 
+    public void addNewDeliverySequenceToContext(int deliverySequence,double paymentExpected,double paymentReceived){
+        this.addToTotalDeliveryCount(1);
+        this.addToTotalDueAmount(paymentExpected);
+        InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(deliverySequence);
+        tracker.addToDeliverySequencesManagedByTracker(deliverySequence);
+        tracker.addToPaymentExpected(paymentExpected);
+        tracker.addToPaymentReceived(paymentReceived);
+    }
     public void correctDues(ModifiedSubscriptionContent modifiedSubscriptionContent) {
         List<ModifiedDeliveryContent> modifiedDeliveries = modifiedSubscriptionContent.getModifiedDeliveries();
         double revisedInstalment = 0;
         for (ModifiedDeliveryContent modifiedDeliveryContent : modifiedDeliveries) {
             revisedInstalment += modifiedDeliveryContent.getCorrectedRemainingDuePayment();
             InstalmentPaymentTracker tracker = findPaymentTrackerByDeliverySequence(modifiedDeliveryContent.getSequence());
-            tracker.setTotalDuePaymentToDelivery(modifiedDeliveryContent.getSequence(),modifiedDeliveryContent.getCorrectedTotalPayment());
             if (modifiedDeliveryContent.getSequence() == tracker.getDeliverySequence()) {
                 tracker.setPaymentExpected(revisedInstalment);
                 revisedInstalment = 0;
@@ -195,8 +201,21 @@ public class PaymentProcessingContext {
 
     }
 
-    public void setDeliverywiseDuePayment(int sequence, double totalDeliveryCost) {
-        InstalmentPaymentTracker tracker = findPaymentTrackerByDeliverySequence(sequence);
-        tracker.setTotalDuePaymentToDelivery(sequence, totalDeliveryCost);
+    //when amount in refund account is brought back on creation of new delivery, it gets distributed across trackers
+    public void distributeIncomingPaymentAcrossInstalmentTrackers(Map<Integer, Double> deliverySequenceWiseMoneyDistribution) {
+        Iterator<Integer> deliverySequencesReceivingPaymentIterator=deliverySequenceWiseMoneyDistribution.keySet().iterator();
+        while(deliverySequencesReceivingPaymentIterator.hasNext()){
+            int deliverySequenceReceivingPayment=deliverySequencesReceivingPaymentIterator.next();
+            InstalmentPaymentTracker tracker= findPaymentTrackerByDeliverySequence(deliverySequenceReceivingPayment);
+            tracker.addToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequenceReceivingPayment));
+        }
+    }
+
+    public void distributeOutgoingPaymentAcrossInstalmentTrackers(int deliverySequence, double paymentReceived, String subscriptionId) {
+        InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(deliverySequence);
+        //TODO: check if payment should be deducted from both??
+        tracker.deductFromPaymentReceived(paymentReceived);
+        tracker.deductFromPaymentExpected(paymentReceived);
+        tracker.removeFromDeliverySequencesManagedByTracker(deliverySequence);
     }
 }

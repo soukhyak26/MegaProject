@@ -63,72 +63,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         apply(new PaymentAccountCreatedEvent(subscriberId, subscriptionId, creationDate));
     }
 
-    public void addPayment(String subscriptionId, double paidAmount, LocalDate paymentDate) {
-        //find only those cost accounts corresponding to deliveries which are not dispatched yet.
-        List<DeliveryCostAccount> undeliveredDeliveryCostAccounts = this.deliveryCostAccountMap.values()
-                .stream()
-                .filter(dca -> dca.getDeliveryDetail().getDeliveryStatus() != DeliveryStatus.DELIVERED)
-                .collect(Collectors.toList());
-        //order them by date
-        Collections.sort(undeliveredDeliveryCostAccounts, new Comparator<DeliveryCostAccount>() {
-            @Override
-            public int compare(DeliveryCostAccount account1, DeliveryCostAccount account2) {
-                return account1.getTransactionDate().compareTo(account2.getTransactionDate());
-            }
-        });
-        Map<String, Double> paymentToBeAdjustedAgainstDeliveries = new HashMap<>();
-
-        //this is total payment received
-        double paymentReceived = paidAmount;
-        int deliverySequenceFulfilledWithPayment = -1;
-        for (DeliveryCostAccount deliveryCostAccount : undeliveredDeliveryCostAccounts) {
-            //get total delivery amount.. it has to be latest???
-            double deliveryAmount = deliveryCostAccount.getAmount();
-            //get payment made so far for this delivery
-            double paymentReceivedForDelivery = deliveryCostAccount.getPaymentReceived();
-
-            //find payment to be made from the incoming payment to the current delivery
-            double paymentMadeForDelivery = 0;
-            //if delivery cost is more than total payment received for this delivery so far
-            //Then try to finish remaining payment to this delivery by making ALL/maximum payment to it.
-            if (deliveryAmount > paymentReceivedForDelivery) {
-                double residualAmountForDelivery = deliveryAmount - paymentReceivedForDelivery;
-                if (paymentReceived > residualAmountForDelivery) {
-                    paymentMadeForDelivery = residualAmountForDelivery;
-                    deliverySequenceFulfilledWithPayment = deliveryCostAccount.getSequence();
-                } else if (paymentReceived <= residualAmountForDelivery) {
-                    paymentMadeForDelivery = paymentReceived;
-                    if (deliveryCostAccount.getAmount() == paymentMadeForDelivery) {
-                        deliverySequenceFulfilledWithPayment = deliveryCostAccount.getSequence();
-                    }
-                }
-                paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(), paymentMadeForDelivery);
-                paymentReceived -= paymentMadeForDelivery;
-            }
-        }
-        Map<InstalmentPaymentTracker, Double> trackersGettingFulfilled = this.paymentProcessingContext.IdentifyTrackersGettingFulfilledByIncomingPayment(paidAmount);
-        apply(new PaymentInitiatedEvent(subscriptionId, paidAmount, paymentToBeAdjustedAgainstDeliveries, trackersGettingFulfilled, deliverySequenceFulfilledWithPayment, paymentDate));
-    }
-
-    @EventSourcingHandler
-    public void on(PaymentInitiatedEvent event) {
-        this.totalReceivedCostAccount.credit(event.getPaidAmount(), event.getPaymentDate());
-        this.totalReceivableCostAccount.debit(event.getPaidAmount(), event.getPaymentDate());
-
-        Map<String, Double> paymentToBeAdjustedAgainstDeliveries = event.getPaymentToBeAdjustedAgainstDeliveries();
-        java.util.Iterator<String> deliveryCostAccountKeysIterator = deliveryCostAccountMap.keySet().iterator();
-        while (deliveryCostAccountKeysIterator.hasNext()) {
-            String deliveryId = deliveryCostAccountKeysIterator.next();
-            DeliveryCostAccount deliveryCostAccount = deliveryCostAccountMap.get(deliveryId);
-            deliveryCostAccount.creditToPaymentReceived(paymentToBeAdjustedAgainstDeliveries.get(deliveryId));
-        }
-
-        //payment expecting trackers are updated with incoming payment.
-        this.paymentProcessingContext.addIncomingPaymentToTrackers(event.getPaidAmount(), event.getTrackersGettingFulfilledByIncomingPayment());
-        this.paymentProcessingContext.setDeliverySequenceAwaitingPayment(event.getDeliverySequenceFulfilledWithPayment() + 1);
-    }
-
-
     //each delivery getting created in Subscriber domain will fill the amount data needed for all Accounts inside PaymentAccount
     public void createdNewDelivery(CreateDeliveryCommand command, TaggedPricingService taggedPricingService, ProductDetailsService productDetailsService) {
         DeliveryDetails newDeliveryDetails = new DeliveryDetails(command.getDeliveryId(), command.getSubscriptionId());
@@ -205,13 +139,99 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             return null;
         }
     }
-    private void depositPaidAmountOfDeletedDeliveriesToRefundAccount(List<DeliveryCostAccount> deliveriesToBeRemoved){
-        for(DeliveryCostAccount accountBeingRemoved: deliveriesToBeRemoved){
-            if(accountBeingRemoved.getPaymentReceived()>0){
-                apply(new RefundProcessedForDeletedDeliveriesEvent(accountBeingRemoved.getSubscriptionId(),accountBeingRemoved.getDeliveryId(),accountBeingRemoved.getPaymentReceived(),SysDate.now()));
+
+    @EventSourcingHandler
+    public void on(CostCalculatedForRegisteredDeliveryEvent event) {
+        if (this.paymentAccountStatus == PaymentAccountStatus.CREATED) {
+            this.paymentAccountStatus = PaymentAccountStatus.ACTIVE;
+        }
+        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getSequence(), event.getDeliveryDate(), event.getDeliveryDetails(), event.getTotalDeliveryCost());
+        this.totalReceivableCostAccount.credit(event.getTotalDeliveryCost(), SysDate.now());
+        this.totalReceivableCostAccount.addToRewardPoints(event.getRewardPoints());
+        this.totalSubscriptionCostAccount.credit(event.getTotalDeliveryCost(), SysDate.now());
+        Map<Integer,Double> deliverySequenceWiseMoneyDistribution=event.getDeliverySequencewiseMoneyDistribution();
+        if(null !=deliverySequenceWiseMoneyDistribution){
+            Iterator<Integer> deliveriesIterator=deliverySequenceWiseMoneyDistribution.keySet().iterator();
+            while(deliveriesIterator.hasNext()){
+                int deliverySequence=deliveriesIterator.next();
+                if(deliverySequence == event.getSequence()){
+                    deliveryCostAccount.creditToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequence));
+                    paymentProcessingContext.addNewDeliverySequenceToContext(event.getSequence(),event.getTotalDeliveryCost(),deliverySequenceWiseMoneyDistribution.get(deliverySequence));
+                }else{
+                    findDeliveryCostAccountByDeliverySequence(deliverySequence).creditToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequence));
+                }
+            }
+            this.paymentProcessingContext.distributeIncomingPaymentAcrossInstalmentTrackers(deliverySequenceWiseMoneyDistribution);
+        }
+        this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
+    }
+
+    public void addPayment(String subscriptionId, double paidAmount, LocalDate paymentDate) {
+        //find only those cost accounts corresponding to deliveries which are not dispatched yet.
+        List<DeliveryCostAccount> undeliveredDeliveryCostAccounts = this.deliveryCostAccountMap.values()
+                .stream()
+                .filter(dca -> dca.getDeliveryDetail().getDeliveryStatus() != DeliveryStatus.DELIVERED)
+                .collect(Collectors.toList());
+        //order them by date
+        Collections.sort(undeliveredDeliveryCostAccounts, new Comparator<DeliveryCostAccount>() {
+            @Override
+            public int compare(DeliveryCostAccount account1, DeliveryCostAccount account2) {
+                return account1.getTransactionDate().compareTo(account2.getTransactionDate());
+            }
+        });
+        Map<String, Double> paymentToBeAdjustedAgainstDeliveries = new HashMap<>();
+
+        //this is total payment received
+        double paymentReceived = paidAmount;
+        int deliverySequenceFulfilledWithPayment = -1;
+        for (DeliveryCostAccount deliveryCostAccount : undeliveredDeliveryCostAccounts) {
+            //get total delivery amount.. it has to be latest???
+            double deliveryAmount = deliveryCostAccount.getAmount();
+            //get payment made so far for this delivery
+            double paymentReceivedForDelivery = deliveryCostAccount.getPaymentReceived();
+
+            //find payment to be made from the incoming payment to the current delivery
+            double paymentMadeForDelivery = 0;
+            //if delivery cost is more than total payment received for this delivery so far
+            //Then try to finish remaining payment to this delivery by making ALL/maximum payment to it.
+            if (deliveryAmount > paymentReceivedForDelivery) {
+                double residualAmountForDelivery = deliveryAmount - paymentReceivedForDelivery;
+                if (paymentReceived > residualAmountForDelivery) {
+                    paymentMadeForDelivery = residualAmountForDelivery;
+                    deliverySequenceFulfilledWithPayment = deliveryCostAccount.getSequence();
+                } else if (paymentReceived <= residualAmountForDelivery) {
+                    paymentMadeForDelivery = paymentReceived;
+                    if (deliveryCostAccount.getAmount() == paymentMadeForDelivery) {
+                        deliverySequenceFulfilledWithPayment = deliveryCostAccount.getSequence();
+                    }
+                }
+                paymentToBeAdjustedAgainstDeliveries.put(deliveryCostAccount.getDeliveryId(), paymentMadeForDelivery);
+                paymentReceived -= paymentMadeForDelivery;
             }
         }
+        Map<InstalmentPaymentTracker, Double> trackersGettingFulfilled = this.paymentProcessingContext.IdentifyTrackersGettingFulfilledByIncomingPayment(paidAmount);
+        apply(new PaymentInitiatedEvent(subscriptionId, paidAmount, paymentToBeAdjustedAgainstDeliveries, trackersGettingFulfilled, deliverySequenceFulfilledWithPayment, paymentDate));
     }
+
+    @EventSourcingHandler
+    public void on(PaymentInitiatedEvent event) {
+        this.totalReceivedCostAccount.credit(event.getPaidAmount(), event.getPaymentDate());
+        this.totalReceivableCostAccount.debit(event.getPaidAmount(), event.getPaymentDate());
+
+        Map<String, Double> paymentToBeAdjustedAgainstDeliveries = event.getPaymentToBeAdjustedAgainstDeliveries();
+        java.util.Iterator<String> deliveryCostAccountKeysIterator = deliveryCostAccountMap.keySet().iterator();
+        while (deliveryCostAccountKeysIterator.hasNext()) {
+            String deliveryId = deliveryCostAccountKeysIterator.next();
+            DeliveryCostAccount deliveryCostAccount = deliveryCostAccountMap.get(deliveryId);
+            deliveryCostAccount.creditToPaymentReceived(paymentToBeAdjustedAgainstDeliveries.get(deliveryId));
+        }
+
+        //payment expecting trackers are updated with incoming payment.
+        this.paymentProcessingContext.addIncomingPaymentToTrackers(event.getPaidAmount(), event.getTrackersGettingFulfilledByIncomingPayment());
+        this.paymentProcessingContext.setDeliverySequenceAwaitingPayment(event.getDeliverySequenceFulfilledWithPayment() + 1);
+    }
+
+
     public void deleteDelivery(String subscriberId, String subscriptionId, String deliveryId, LocalDate deletionDate, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
         if (this.deliveryCostAccountMap.containsKey(deliveryId)) {
            // List<DeliveryCostAccount> deliveries = deliveryCostAccountMap.values().stream().collect(Collectors.toList());
@@ -225,6 +245,14 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
+    private void depositPaidAmountOfDeletedDeliveriesToRefundAccount(List<DeliveryCostAccount> deliveriesToBeRemoved){
+        for(DeliveryCostAccount accountBeingRemoved: deliveriesToBeRemoved){
+            if(accountBeingRemoved.getPaymentReceived()>0){
+                apply(new RefundProcessedForDeletedDeliveriesEvent(accountBeingRemoved.getSubscriptionId(),accountBeingRemoved.getDeliveryId(),accountBeingRemoved.getSequence(),accountBeingRemoved.getPaymentReceived(),SysDate.now()));
+            }
+        }
+    }
+
     @EventSourcingHandler
     public void on(DeliveryInitiatedEvent event) {
         DeliveryCostAccount newDeliveryCostAccount = event.getNewDeliveryCostAccount();
@@ -234,12 +262,15 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     @EventSourcingHandler
     public void on(RefundProcessedForDeletedDeliveriesEvent event){
         this.refundAccount.credit(event.getPaymentReceived(),event.getRefundProcessingDate());
+        this.paymentProcessingContext.distributeOutgoingPaymentAcrossInstalmentTrackers(event.getDeliverySequence(),event.getPaymentReceived(),event.getSubscriptionId());
+
     }
     @EventSourcingHandler
     public void on(DeliveryDestroyedEvent event) {
         if (this.deliveryCostAccountMap.containsKey(event.getDeliveryId())) {
             this.deliveryCostAccountMap.remove(event.getDeliveryId());
         }
+        this.paymentProcessingContext.deductFromTotalDeliveryCount(1);
     }
 
     public String getSubscriptionId() {
@@ -287,32 +318,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         return this.deliveryCostAccountMap.values().stream().filter(dca->dca.getSequence()== deliverySequence).collect(Collectors.toList()).get(0);
     }
 
-    @EventSourcingHandler
-    public void on(CostCalculatedForRegisteredDeliveryEvent event) {
-        if (this.paymentAccountStatus == PaymentAccountStatus.CREATED) {
-            this.paymentAccountStatus = PaymentAccountStatus.ACTIVE;
-        }
-        DeliveryCostAccount deliveryCostAccount = new DeliveryCostAccount(event.getDeliveryId(), event.getSubscriptionId(), event.getSequence(), event.getDeliveryDate(), event.getDeliveryDetails(), event.getTotalDeliveryCost());
-        this.totalReceivableCostAccount.credit(event.getTotalDeliveryCost(), SysDate.now());
-        this.totalReceivableCostAccount.addToRewardPoints(event.getRewardPoints());
-        this.totalSubscriptionCostAccount.credit(event.getTotalDeliveryCost(), SysDate.now());
-        this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
-        this.paymentProcessingContext.addToTotalDueAmount(event.getTotalDeliveryCost());
-        this.paymentProcessingContext.addToTotalDeliveryCount(1);
-        this.paymentProcessingContext.setDeliverywiseDuePayment(deliveryCostAccount.getSequence(), event.getTotalDeliveryCost());
-        Map<Integer,Double> deliverySequenceWiseMoneyDistribution=event.getDeliverySequencewiseMoneyDistribution();
-        if(null !=deliverySequenceWiseMoneyDistribution){
-            Iterator<Integer> deliveriesIterator=deliverySequenceWiseMoneyDistribution.keySet().iterator();
-            while(deliveriesIterator.hasNext()){
-                int deliverySequence=deliveriesIterator.next();
-                if(deliverySequence == event.getSequence()){
-                    deliveryCostAccount.creditToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequence));
-                }else{
-                    findDeliveryCostAccountByDeliverySequence(deliverySequence).creditToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequence));
-                }
-            }
-        }
-    }
 
     // On Delivery ready for dispatch the due amounts should be recalculated to accomodate price variations.
     public void correctDues(CorrectDuePaymentCommand command, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {

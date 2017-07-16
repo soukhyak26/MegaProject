@@ -8,12 +8,14 @@ import org.joda.time.LocalDate;
 public class RefundProcessedForDeletedDeliveriesEvent {
     private String subscriptionId;
     private String deliveryId;
+    private int deliverySequence;
     private double paymentReceived;
     private LocalDate refundProcessingDate;
 
-    public RefundProcessedForDeletedDeliveriesEvent(String subscriptionId, String deliveryId, double paymentReceived, LocalDate refundProcessingDate) {
+    public RefundProcessedForDeletedDeliveriesEvent(String subscriptionId, String deliveryId, int deliverySequence,double paymentReceived, LocalDate refundProcessingDate) {
         this.subscriptionId = subscriptionId;
         this.deliveryId = deliveryId;
+        this.deliverySequence=deliverySequence;
         this.paymentReceived = paymentReceived;
         this.refundProcessingDate = refundProcessingDate;
     }
@@ -24,6 +26,10 @@ public class RefundProcessedForDeletedDeliveriesEvent {
 
     public String getDeliveryId() {
         return deliveryId;
+    }
+
+    public int getDeliverySequence() {
+        return deliverySequence;
     }
 
     public double getPaymentReceived() {

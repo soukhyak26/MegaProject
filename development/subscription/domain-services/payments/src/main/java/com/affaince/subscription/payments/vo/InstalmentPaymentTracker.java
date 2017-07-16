@@ -2,7 +2,7 @@ package com.affaince.subscription.payments.vo;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by mandar on 7/6/2017.
@@ -13,7 +13,7 @@ import java.util.Map;
 public class InstalmentPaymentTracker {
     private String deliveryId;
     private int deliverySequence;
-    private Map<Integer, Double> deliverySequencesManagedByATracker;
+    private List<Integer> deliverySequencesManagedByATracker;
     private double paymentExpected;
     private double paymentReceived;
     private DeliveryStatus deliveryStatus;
@@ -59,14 +59,23 @@ public class InstalmentPaymentTracker {
         this.deliverySequence = deliverySequence;
     }
 
-    public Map<Integer, Double> getDeliverySequencesManagedByATracker() {
+    public List<Integer> getDeliverySequencesManagedByATracker() {
         return deliverySequencesManagedByATracker;
     }
 
-    public void setDeliverySequencesManagedByATracker(Map<Integer, Double> deliverySequencesManagedByATracker) {
+    public void setDeliverySequencesManagedByATracker(List<Integer> deliverySequencesManagedByATracker) {
         this.deliverySequencesManagedByATracker = deliverySequencesManagedByATracker;
     }
-
+    public void addToDeliverySequencesManagedByTracker(int deliverySequence){
+        if(!deliverySequencesManagedByATracker.contains(deliverySequence)){
+            deliverySequencesManagedByATracker.add(deliverySequence);
+        }
+    }
+    public void removeFromDeliverySequencesManagedByTracker(int deliverySequence){
+        if(!deliverySequencesManagedByATracker.contains(deliverySequence)){
+            deliverySequencesManagedByATracker.remove(deliverySequence);
+        }
+    }
     public void setPaymentExpected(double paymentExpected) {
         this.paymentExpected = paymentExpected;
     }
@@ -92,7 +101,7 @@ public class InstalmentPaymentTracker {
     }
 
     public boolean isGivenDeliverySequenceManagedByTracker(int deliverySequence) {
-        if (deliverySequencesManagedByATracker.containsKey(deliverySequence)) {
+        if (deliverySequencesManagedByATracker.contains(deliverySequence)) {
             return true;
         }
         return false;
@@ -114,7 +123,4 @@ public class InstalmentPaymentTracker {
         return (int) deliverySequence;
     }
 
-    public void setTotalDuePaymentToDelivery(int sequence, double totalDeliveryCost) {
-        this.deliverySequencesManagedByATracker.put(sequence, totalDeliveryCost);
-    }
 }
