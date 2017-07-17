@@ -8,17 +8,23 @@ import org.joda.time.LocalDate;
  */
 public class DeliveriesUpdatedWithCorrectedPaymentEvent {
     private String subscriberId;
+    private String subscriptionId;
     private ModifiedSubscriptionContent modifiedSubscriptionContent;
     private LocalDate changeDate;
 
-    public DeliveriesUpdatedWithCorrectedPaymentEvent(String subscriberId, ModifiedSubscriptionContent modifiedSubscriptionContent, LocalDate changeDate) {
+    public DeliveriesUpdatedWithCorrectedPaymentEvent(String subscriberId,String subscriptionId, ModifiedSubscriptionContent modifiedSubscriptionContent, LocalDate changeDate) {
         this.subscriberId = subscriberId;
+        this.subscriptionId=subscriptionId;
         this.modifiedSubscriptionContent = modifiedSubscriptionContent;
         this.changeDate=changeDate;
     }
 
     public String getSubscriberId() {
         return subscriberId;
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
     }
 
     public ModifiedSubscriptionContent getModifiedSubscriptionContent() {

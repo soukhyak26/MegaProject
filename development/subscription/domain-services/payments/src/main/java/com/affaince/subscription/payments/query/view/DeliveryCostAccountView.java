@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 5/18/2017.
  */
-@Document(collection="DeliveryCostView")
-public class DeliveryCostView {
+@Document(collection="DeliveryCostAccountView")
+public class DeliveryCostAccountView {
     @Id
     private DeliveryId deliveryId;
     private String subscriptionId;
@@ -18,7 +18,7 @@ public class DeliveryCostView {
     private double paymentReceived;
     private LocalDate deliveryDate;
 
-    public DeliveryCostView(String deliveryId, String subscriberId,String subscriptionId, int deliverySequence, double deliveryAmount,LocalDate deliveryDate) {
+    public DeliveryCostAccountView(String deliveryId, String subscriberId, String subscriptionId, int deliverySequence, double deliveryAmount, LocalDate deliveryDate) {
         this.deliveryId = new DeliveryId(deliveryId,subscriberId,subscriptionId);
         this.subscriptionId = subscriptionId;
         this.deliverySequence = deliverySequence;
@@ -59,4 +59,8 @@ public class DeliveryCostView {
     public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
+    public void setOrOverride(double amount){
+        this.deliveryAmount= amount;
+    }
+
 }

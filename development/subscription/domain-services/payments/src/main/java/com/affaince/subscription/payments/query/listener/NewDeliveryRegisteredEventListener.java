@@ -4,44 +4,48 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.payments.command.CorrectDuePaymentCommand;
 import com.affaince.subscription.payments.command.event.NewDeliveryRegisteredEvent;
-import com.affaince.subscription.payments.query.repository.DeliveryCostViewRepository;
+import com.affaince.subscription.payments.query.repository.DeliveryCostAccountViewRepository;
 import com.affaince.subscription.payments.query.repository.TotalReceivableCostAccountViewRepository;
+import com.affaince.subscription.payments.query.repository.TotalReceivedCostAccountViewRepository;
 import com.affaince.subscription.payments.query.repository.TotalSubscriptionCostAccountViewRepository;
-import com.affaince.subscription.payments.query.view.DeliveryCostView;
+import com.affaince.subscription.payments.query.view.DeliveryCostAccountView;
 import com.affaince.subscription.payments.query.view.TotalReceivableCostAccountView;
+import com.affaince.subscription.payments.query.view.TotalReceivedCostAccountView;
 import com.affaince.subscription.payments.query.view.TotalSubscriptionCostAccountView;
-import org.apache.activemq.broker.region.Subscription;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NewDeliveryRegisteredEventListener {
-    private final DeliveryCostViewRepository deliveryCostViewRepository;
+    private final DeliveryCostAccountViewRepository deliveryCostAccountViewRepository;
     private final TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository;
     private final TotalSubscriptionCostAccountViewRepository totalSubscriptionCostAccountViewRepository;
+    private final TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository;
     private final SubscriptionCommandGateway commandGateway;
 
     @Autowired
-    public NewDeliveryRegisteredEventListener(DeliveryCostViewRepository deliveryCostViewRepository,
+    public NewDeliveryRegisteredEventListener(DeliveryCostAccountViewRepository deliveryCostAccountViewRepository,
                                               TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository,
                                               TotalSubscriptionCostAccountViewRepository totalSubscriptionCostAccountViewRepository,
+                                              TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository,
                                               SubscriptionCommandGateway commandGateway) {
 
-        this.deliveryCostViewRepository = deliveryCostViewRepository;
+        this.deliveryCostAccountViewRepository = deliveryCostAccountViewRepository;
         this.totalReceivableCostAccountViewRepository = totalReceivableCostAccountViewRepository;
         this.totalSubscriptionCostAccountViewRepository = totalSubscriptionCostAccountViewRepository;
+        this.totalReceivedCostAccountViewRepository=totalReceivedCostAccountViewRepository;
         this.commandGateway=commandGateway;
     }
 
     @EventHandler
     public void on(NewDeliveryRegisteredEvent event) throws Exception {
-        DeliveryCostView deliveryCostView = deliveryCostViewRepository.findOne(new DeliveryId(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId()));
-        if (deliveryCostView == null) {
+        DeliveryCostAccountView deliveryCostAccountView = deliveryCostAccountViewRepository.findOne(new DeliveryId(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId()));
+        if (deliveryCostAccountView == null) {
             //TODO:Presently delivery sequence is hardcoded just as a placeholder. It should come from Delivery AggregateEvent coming from subscriber domain
-            deliveryCostView = new DeliveryCostView(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId(), event.getSequence(), event.getTotalDeliveryCost(), event.getDeliveryDate());
+            deliveryCostAccountView = new DeliveryCostAccountView(event.getDeliveryId(), event.getSubscriberId(), event.getSubscriptionId(), event.getSequence(), event.getTotalDeliveryCost(), event.getDeliveryDate());
         }
-        deliveryCostViewRepository.save(deliveryCostView);
+        deliveryCostAccountViewRepository.save(deliveryCostAccountView);
         TotalReceivableCostAccountView totalReceivableCostAccountView= totalReceivableCostAccountViewRepository.findOne(event.getSubscriptionId());
         if(null== totalReceivableCostAccountView){
             totalReceivableCostAccountView= new TotalReceivableCostAccountView(event.getSubscriptionId(),event.getTotalDeliveryCost());
@@ -59,6 +63,15 @@ public class NewDeliveryRegisteredEventListener {
             totalSubscriptionCostAccountView.credit(event.getTotalDeliveryCost());
         }
         totalSubscriptionCostAccountViewRepository.save(totalSubscriptionCostAccountView);
+        if( event.getAmountReceived()>0) {
+            TotalReceivedCostAccountView totalReceivedCostAccountView = totalReceivedCostAccountViewRepository.findOne(event.getSubscriptionId());
+            if(null== totalReceivedCostAccountView){
+                totalReceivedCostAccountView=new TotalReceivedCostAccountView(event.getSubscriptionId(),event.getAmountReceived());
+            }else{
+                totalReceivedCostAccountView.credit(event.getAmountReceived());
+            }
+            totalReceivedCostAccountViewRepository.save(totalReceivedCostAccountView);
+        }
 
         CorrectDuePaymentCommand command=new CorrectDuePaymentCommand(event.getSubscriptionId(),event.getDeliveryCreationDate());
         commandGateway.executeAsync(command);

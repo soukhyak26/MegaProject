@@ -1,11 +1,11 @@
 package com.affaince.subscription.payments.query.listener;
 
 import com.affaince.subscription.payments.command.event.PaymentInitiatedEvent;
-import com.affaince.subscription.payments.query.repository.DeliveryCostViewRepository;
+import com.affaince.subscription.payments.query.repository.DeliveryCostAccountViewRepository;
 import com.affaince.subscription.payments.query.repository.PaymentTransactionViewRepository;
 import com.affaince.subscription.payments.query.repository.TotalReceivableCostAccountViewRepository;
 import com.affaince.subscription.payments.query.repository.TotalReceivedCostAccountViewRepository;
-import com.affaince.subscription.payments.query.view.DeliveryCostView;
+import com.affaince.subscription.payments.query.view.DeliveryCostAccountView;
 import com.affaince.subscription.payments.query.view.PaymentTransactionView;
 import com.affaince.subscription.payments.query.view.TotalReceivableCostAccountView;
 import com.affaince.subscription.payments.query.view.TotalReceivedCostAccountView;
@@ -21,14 +21,14 @@ import java.util.Map;
 public class PaymentInitiatedEventListener {
     private TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository;
     private TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository;
-    private DeliveryCostViewRepository deliveryCostViewRepository;
+    private DeliveryCostAccountViewRepository deliveryCostAccountViewRepository;
     private PaymentTransactionViewRepository paymentTransactionViewRepository;
 
     @Autowired
-    public PaymentInitiatedEventListener(TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository, TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository, DeliveryCostViewRepository deliveryCostViewRepository,  PaymentTransactionViewRepository paymentTransactionViewRepository) {
+    public PaymentInitiatedEventListener(TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository, TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository, DeliveryCostAccountViewRepository deliveryCostAccountViewRepository, PaymentTransactionViewRepository paymentTransactionViewRepository) {
         this.totalReceivableCostAccountViewRepository = totalReceivableCostAccountViewRepository;
         this.totalReceivedCostAccountViewRepository = totalReceivedCostAccountViewRepository;
-        this.deliveryCostViewRepository=deliveryCostViewRepository;
+        this.deliveryCostAccountViewRepository = deliveryCostAccountViewRepository;
         this.paymentTransactionViewRepository = paymentTransactionViewRepository;
     }
 
@@ -45,13 +45,13 @@ public class PaymentInitiatedEventListener {
         PaymentTransactionView paymentTransactionView = new PaymentTransactionView(event.getPaymentDate(),event.getSubscriptionId(),event.getPaidAmount(), PaymentTransactionType.PAYMENT_BY_MONEY);
         paymentTransactionViewRepository.save(paymentTransactionView);
 
-        List<DeliveryCostView> deliveriesForASubscription=deliveryCostViewRepository.findByDeliveryId_SubscriptionId(event.getSubscriptionId());
+        List<DeliveryCostAccountView> deliveriesForASubscription= deliveryCostAccountViewRepository.findByDeliveryId_SubscriptionId(event.getSubscriptionId());
         Map<String,Double> paymentToBeAdjustedAgainstDeliveries= event.getPaymentToBeAdjustedAgainstDeliveries();
-        for(DeliveryCostView deliveryCostView: deliveriesForASubscription){
-            Double paymentToBeAdjustedAgainstDelivery=paymentToBeAdjustedAgainstDeliveries.get(deliveryCostView.getDeliveryId().getDeliveryId());
+        for(DeliveryCostAccountView deliveryCostAccountView : deliveriesForASubscription){
+            Double paymentToBeAdjustedAgainstDelivery=paymentToBeAdjustedAgainstDeliveries.get(deliveryCostAccountView.getDeliveryId().getDeliveryId());
             if(null != paymentToBeAdjustedAgainstDelivery && paymentToBeAdjustedAgainstDelivery.doubleValue()>0) {
-                deliveryCostView.creditToPaymentReceived(paymentToBeAdjustedAgainstDelivery);
-                deliveryCostViewRepository.save(deliveryCostView);
+                deliveryCostAccountView.creditToPaymentReceived(paymentToBeAdjustedAgainstDelivery);
+                deliveryCostAccountViewRepository.save(deliveryCostAccountView);
             }
         }
 

@@ -101,7 +101,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         deliverySequenceWiseMoneyDistribution.remove(command.getSequence());
         deliverySequenceWiseMoneyDistribution.keySet().stream().forEach(ds-> {
             final String deliveryId=findDeliveryCostAccountByDeliverySequence(ds).getDeliveryId();
-            apply(new DeliveryCostAccountCreditedEvent(deliveryId,ds,deliverySequenceWiseMoneyDistribution.get(ds)));
+            apply(new DeliveryCostAccountCreditedEvent(this.subscriberId,this.subscriptionId,deliveryId,ds,deliverySequenceWiseMoneyDistribution.get(ds)));
         });
 
     }
@@ -156,7 +156,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalReceivableCostAccount.addToRewardPoints(event.getRewardPoints());
         this.totalSubscriptionCostAccount.credit(event.getTotalDeliveryCost(), SysDate.now());
         this.deliveryCostAccountMap.put(event.getDeliveryId(), deliveryCostAccount);
-        this.totalReceivedCostAccount.credit(event.getAmountReceived(),SysDate.now());
+        if(event.getAmountReceived()>0) {
+            this.totalReceivedCostAccount.credit(event.getAmountReceived(), SysDate.now());
+        }
         this.paymentProcessingContext.addNewDeliveryToContext(event.getSequence(),event.getTotalDeliveryCost());
         this.paymentProcessingContext.depositIncomingPaymentToDesignatedInstalmentTracker(event.getSequence(),event.getAmountReceived());
     }
@@ -260,11 +262,6 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.paymentProcessingContext.deleteDeliverySequenceFromContext(event.getSequence(),event.getTotalDeliveryCost(),event.getPaymentReceived());
     }
 
-    @EventSourcingHandler
-    public void on(DeliveryInitiatedEvent event) {
-        DeliveryCostAccount newDeliveryCostAccount = event.getNewDeliveryCostAccount();
-        this.deliveryCostAccountMap.put(newDeliveryCostAccount.getDeliveryId(), newDeliveryCostAccount);
-    }
 
     @EventSourcingHandler
     public void on(RefundProcessedForDeletedDeliveriesEvent event){
@@ -322,7 +319,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void correctDues(CorrectDuePaymentCommand command, DuePaymentCorrectionEngine duePaymentCorrectionEngine) {
         String subscriptionId = command.getSubscriptionId();
         ModifiedSubscriptionContent modifiedSubscriptionContent = duePaymentCorrectionEngine.correctTotalDues(subscriptionId, this.deliveryCostAccountMap.values().stream().collect(Collectors.toList()));
-        apply(new DeliveriesUpdatedWithCorrectedPaymentEvent(this.subscriberId, modifiedSubscriptionContent, command.getDueCorrectionDate()));
+        apply(new DeliveriesUpdatedWithCorrectedPaymentEvent(this.subscriberId,this.getSubscriptionId(), modifiedSubscriptionContent, command.getDueCorrectionDate()));
     }
 
     //Here all CostAccounts should be updated with latest/revised due amount
@@ -330,13 +327,14 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void on(DeliveriesUpdatedWithCorrectedPaymentEvent event) {
         ModifiedSubscriptionContent modifiedSubscriptionContent = event.getModifiedSubscriptionContent();
         this.totalReceivableCostAccount.setAmount(modifiedSubscriptionContent.getModifiedTotalSubscriptionPayment());
+        this.totalSubscriptionCostAccount.setAmount(modifiedSubscriptionContent.getModifiedTotalSubscriptionPayment());
         this.totalSubscriptionCostAccount.setTransactionDate(event.getChangeDate());
         this.paymentProcessingContext.correctDues(modifiedSubscriptionContent);
 
         List<ModifiedDeliveryContent> modifiedDeliveries = modifiedSubscriptionContent.getModifiedDeliveries();
         List<DeliveryCostAccount> deliveryCostAccounts = this.deliveryCostAccountMap.values().stream().collect(Collectors.toList());
         for (ModifiedDeliveryContent modifiedDeliveryContent : modifiedDeliveries) {
-            DeliveryCostAccount deliveryCostAccount = deliveryCostAccounts.stream().filter(dca -> (dca.getDeliveryDetail().getDeliveryId().equals(modifiedDeliveryContent.getDeliveryId()))).collect(Collectors.toList()).get(0);
+            DeliveryCostAccount deliveryCostAccount = deliveryCostAccounts.get(deliveryCostAccounts.indexOf(modifiedDeliveryContent.getDeliveryId()));
             deliveryCostAccount.setAmount(modifiedDeliveryContent.getCorrectedTotalPayment());
 
             List<DeliveredProductDetail> deliverableItems = modifiedDeliveryContent.getItems();

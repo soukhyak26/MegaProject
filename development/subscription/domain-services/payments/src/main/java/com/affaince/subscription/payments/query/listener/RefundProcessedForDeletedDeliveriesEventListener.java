@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
  * Created by mandar on 7/17/2017.
  */
 @Component
-public class RefundProcessedForDeletedDeliveryEventListener {
+public class RefundProcessedForDeletedDeliveriesEventListener {
     private final RefundViewRepository refundViewRepository;
     private final RefundTransactionsViewRepository refundTransactionsViewRepository;
     @Autowired
-    public RefundProcessedForDeletedDeliveryEventListener(RefundViewRepository refundViewRepository, RefundTransactionsViewRepository refundTransactionsViewRepository) {
+    public RefundProcessedForDeletedDeliveriesEventListener(RefundViewRepository refundViewRepository, RefundTransactionsViewRepository refundTransactionsViewRepository) {
         this.refundViewRepository = refundViewRepository;
         this.refundTransactionsViewRepository = refundTransactionsViewRepository;
     }

@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.service;
 
-import com.affaince.subscription.payments.query.repository.DeliveryCostViewRepository;
-import com.affaince.subscription.payments.query.view.DeliveryCostView;
+import com.affaince.subscription.payments.query.repository.DeliveryCostAccountViewRepository;
+import com.affaince.subscription.payments.query.view.DeliveryCostAccountView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +12,14 @@ import java.util.List;
  */
 @Component
 public class DeliverywisePaymentsService {
-    private DeliveryCostViewRepository deliveryCostViewRepository;
+    private DeliveryCostAccountViewRepository deliveryCostAccountViewRepository;
     @Autowired
-    public DeliverywisePaymentsService(DeliveryCostViewRepository deliveryCostViewRepository) {
-        this.deliveryCostViewRepository = deliveryCostViewRepository;
+    public DeliverywisePaymentsService(DeliveryCostAccountViewRepository deliveryCostAccountViewRepository) {
+        this.deliveryCostAccountViewRepository = deliveryCostAccountViewRepository;
     }
 
-    public List<DeliveryCostView> findDeliveriesBySubscriptionId(String subscriptionId){
-            return deliveryCostViewRepository.findByDeliveryId_SubscriptionId(subscriptionId);
+    public List<DeliveryCostAccountView> findDeliveriesBySubscriptionId(String subscriptionId){
+            return deliveryCostAccountViewRepository.findByDeliveryId_SubscriptionId(subscriptionId);
     }
 
 }
