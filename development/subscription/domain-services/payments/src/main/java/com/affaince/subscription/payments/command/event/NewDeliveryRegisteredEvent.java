@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by mandar on 5/17/2017.
  */
-public class CostCalculatedForRegisteredDeliveryEvent {
+public class NewDeliveryRegisteredEvent {
     private String subscriberId;
     private String subscriptionId;
     private String deliveryId;
@@ -17,8 +17,9 @@ public class CostCalculatedForRegisteredDeliveryEvent {
     private DeliveryDetails deliveryDetails;
     private double totalDeliveryCost;
     private double rewardPoints;
-    private Map<Integer,Double> deliverySequencewiseMoneyDistribution;
-    public CostCalculatedForRegisteredDeliveryEvent(String subscriberId,String subscriptionId, String deliveryId, LocalDate deliveryDate,int sequence, DeliveryDetails deliveyDetails, double totalDeliveryCost,double rewardPoints,Map<Integer,Double> deliverySequencewiseMoneyDistribution) {
+    private double amountReceived;
+    private LocalDate deliveryCreationDate;
+    public NewDeliveryRegisteredEvent(String subscriberId, String subscriptionId, String deliveryId, LocalDate deliveryDate, int sequence, DeliveryDetails deliveyDetails, double totalDeliveryCost, double rewardPoints, double amountReceived,LocalDate deliveryCreationDate) {
         this.subscriberId=subscriberId;
         this.deliveryId=deliveryId;
         this.subscriptionId=subscriptionId;
@@ -27,12 +28,10 @@ public class CostCalculatedForRegisteredDeliveryEvent {
         this.deliveryDetails=deliveyDetails;
         this.totalDeliveryCost=totalDeliveryCost;
         this.rewardPoints=rewardPoints;
-        this.deliverySequencewiseMoneyDistribution=deliverySequencewiseMoneyDistribution;
+        this.amountReceived=amountReceived;
+        this.deliveryCreationDate=deliveryCreationDate;
     }
 
-    public Map<Integer, Double> getDeliverySequencewiseMoneyDistribution() {
-        return deliverySequencewiseMoneyDistribution;
-    }
 
     public String getSubscriptionId() {
         return subscriptionId;
@@ -64,5 +63,13 @@ public class CostCalculatedForRegisteredDeliveryEvent {
 
     public int getSequence() {
         return sequence;
+    }
+
+    public double getAmountReceived() {
+        return amountReceived;
+    }
+
+    public LocalDate getDeliveryCreationDate() {
+        return deliveryCreationDate;
     }
 }

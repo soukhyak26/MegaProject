@@ -1,6 +1,7 @@
 package com.affaince.subscription.payments.query.listener;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.CreateDeliveryCommand;
 import com.affaince.subscription.payments.command.event.DeliveryCreatedEvent;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -29,7 +30,7 @@ public class DeliveryCreatedEventListener {
                 event.getDispatchDate(),
                 event.getStatus(),
                 event.getDeliveryWeightInGrms(),
-                event.getRewardPoints());
+                event.getRewardPoints(), SysDate.now());
         commandGateway.executeAsync(createDeliveryCommand);
     }
 }

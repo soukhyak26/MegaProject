@@ -39,7 +39,7 @@ public class PaymentProcessingContext {
         return totalDueAmount;
     }
 
-    public void addIncomingPaymentToTrackers(double totalIncomingAmount, Map<InstalmentPaymentTracker, Double> trackersWithPayments) {
+    public void distributeIncomingPaymentAcrossTrackers(double totalIncomingAmount, Map<InstalmentPaymentTracker, Double> trackersWithPayments) {
         this.deductFromTotalDueAmount(totalIncomingAmount);
         Iterator<InstalmentPaymentTracker> trackersIterator = trackersWithPayments.keySet().iterator();
         while (trackersIterator.hasNext()) {
@@ -158,13 +158,12 @@ public class PaymentProcessingContext {
         }
     }
 
-    public void addNewDeliverySequenceToContext(int deliverySequence,double paymentExpected,double paymentReceived){
+    public void addNewDeliveryToContext(int deliverySequence,double paymentExpected){
         this.addToTotalDeliveryCount(1);
         this.addToTotalDueAmount(paymentExpected);
         InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(deliverySequence);
         tracker.addToDeliverySequencesManagedByTracker(deliverySequence);
         tracker.addToPaymentExpected(paymentExpected);
-        tracker.addToPaymentReceived(paymentReceived);
     }
     public void deleteDeliverySequenceFromContext(int deliverySequence,double paymentExpected,double paymentReceived){
         this.deductFromTotalDeliveryCount(1);
@@ -211,12 +210,8 @@ public class PaymentProcessingContext {
     }
 
     //when amount in refund account is brought back on creation of new delivery, it gets distributed across trackers
-    public void distributeIncomingPaymentAcrossInstalmentTrackers(Map<Integer, Double> deliverySequenceWiseMoneyDistribution) {
-        Iterator<Integer> deliverySequencesReceivingPaymentIterator=deliverySequenceWiseMoneyDistribution.keySet().iterator();
-        while(deliverySequencesReceivingPaymentIterator.hasNext()){
-            int deliverySequenceReceivingPayment=deliverySequencesReceivingPaymentIterator.next();
-            InstalmentPaymentTracker tracker= findPaymentTrackerByDeliverySequence(deliverySequenceReceivingPayment);
-            tracker.addToPaymentReceived(deliverySequenceWiseMoneyDistribution.get(deliverySequenceReceivingPayment));
-        }
+    public void depositIncomingPaymentToDesignatedInstalmentTracker(int deliverySequence,double amount) {
+            InstalmentPaymentTracker tracker= findPaymentTrackerByDeliverySequence(deliverySequence);
+            tracker.addToPaymentReceived(amount);
     }
 }

@@ -1,13 +1,16 @@
 package com.affaince.subscription.payments.command.event;
 
-/**
- * Created by anayonkar on 24/8/16.
- */
 public class DeliveryCostAccountCreditedEvent extends CreditedEvent {
+    private int sequence;
     public DeliveryCostAccountCreditedEvent() {
     }
 
-    public DeliveryCostAccountCreditedEvent(String id, double amountToCredit) {
+    public DeliveryCostAccountCreditedEvent(String id, int sequence,double amountToCredit) {
         super(id, amountToCredit);
+        this.sequence=sequence;
+    }
+
+    public int getSequence() {
+        return sequence;
     }
 }

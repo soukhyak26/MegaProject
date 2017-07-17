@@ -17,8 +17,9 @@ public class CreateDeliveryCommand {
     private DeliveryStatus status;
     private double deliveryWeightInGrms;
     private double rewardPoints;
+    private LocalDate deliveryCreationDate;
 
-    public CreateDeliveryCommand(String deliveryId, String subscriberId, String subscriptionId,int sequence, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms,double rewardPoints) {
+    public CreateDeliveryCommand(String deliveryId, String subscriberId, String subscriptionId,int sequence, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms,double rewardPoints,LocalDate deliveryCreationDate ) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
@@ -29,6 +30,7 @@ public class CreateDeliveryCommand {
         this.status = status;
         this.deliveryWeightInGrms = deliveryWeightInGrms;
         this.rewardPoints=rewardPoints;
+        this.deliveryCreationDate=deliveryCreationDate;
     }
 
     public CreateDeliveryCommand() {
@@ -72,5 +74,9 @@ public class CreateDeliveryCommand {
 
     public int getSequence() {
         return sequence;
+    }
+
+    public LocalDate getDeliveryCreationDate() {
+        return deliveryCreationDate;
     }
 }

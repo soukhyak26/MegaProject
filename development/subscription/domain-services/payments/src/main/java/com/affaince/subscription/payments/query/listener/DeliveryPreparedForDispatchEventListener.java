@@ -18,9 +18,7 @@ public class DeliveryPreparedForDispatchEventListener {
     public void on(DeliveryPreparedForDispatchEvent event) throws Exception {
 
         CorrectDuePaymentCommand command =
-                new CorrectDuePaymentCommand(event.getSubscriptionId(), event.getDelivery().getDeliveryId(),
-                        event.getDelivery().getStatus(), event.getDelivery().getDispatchDate(),
-                        event.getDelivery().getDeliveryCharges(), event.getDelivery().getTotalDeliveryPrice());
+                new CorrectDuePaymentCommand(event.getSubscriptionId(),event.getDelivery().getDispatchDate());
         commandGateway.executeAsync(command);
         ApproveDeliveryDispatchCommand approveCommand= new ApproveDeliveryDispatchCommand(event.getSubscriptionId(), event.getDelivery().getDeliveryId(),event.getDelivery().getSequence());
         commandGateway.executeAsync(approveCommand);
