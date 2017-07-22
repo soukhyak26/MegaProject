@@ -62,6 +62,7 @@ public class Axon extends Default {
             put("com.affaince.subscription.integration.command.event.paymentreceipt.PaymentReceivedEvent", PaymentReceivedEvent.class.getName());
 
             put("com.affaince.subscription.subscriber.command.event.DeliveryDeletedEvent", DeliveryDeletedEvent.class.getName());
+            put("com.affaince.subscription.subscriber.command.event.DeliveryPriceCalculatedEvent", DeliveryPriceCalculatedEvent.class.getName());
 
         }};
     }

@@ -266,6 +266,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         Map<String, Double> rewardsPointsDistribution = benefitResult.getRewardPointsDistribution();
         List<DeliveryCreatedEvent> TotalSubscriptionDeliveries=new ArrayList<>();
         int sequence=0;
+        Map <LocalDate, Double> deliveryWisePriceMap = new TreeMap<>();
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
@@ -279,7 +280,9 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
             apply(event);
             createSubscriptionSummaryEvent(delivery, true);
             sequence++;
+            deliveryWisePriceMap.put(delivery.getDeliveryDate(), delivery.getTotalDeliveryPrice());
         }
+        apply(new DeliveryPriceCalculatedEvent(this.subscription.getSubscriptionId(), deliveryWisePriceMap));
     }
 
     private BenefitResult calculateBenefits(Map<String, Delivery> deliveries,
