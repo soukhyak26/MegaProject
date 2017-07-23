@@ -4,6 +4,7 @@ import com.affaince.subscription.command.ItemDispatchStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.payments.calculator.PaymentCalculatorChain;
 import com.affaince.subscription.payments.command.CreateDeliveryCommand;
 import com.affaince.subscription.payments.command.CorrectDuePaymentCommand;
 import com.affaince.subscription.payments.command.UpdateDeliveryStatusCommand;
@@ -13,6 +14,7 @@ import com.affaince.subscription.payments.service.DuePaymentCorrectionEngine;
 import com.affaince.subscription.payments.service.ProductDetailsService;
 import com.affaince.subscription.payments.service.TaggedPricingService;
 import com.affaince.subscription.payments.vo.*;
+import com.affaince.subscription.pojos.PaymentExpression;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcedMember;
@@ -437,4 +439,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         paymentProcessingContext.setLatestCompletedDeliverySequence(findDeliverySequenceFromDeliveryId(event.getDeliveryId()));
     }
 
+    public void calculatePaymentInstallment(Map<LocalDate, Double> deliveryWisePriceMap, PaymentExpression paymentExpression, PaymentCalculatorChain paymentCalculatorChain) {
+        paymentCalculatorChain.calculate (deliveryWisePriceMap, paymentExpression);
+    }
 }

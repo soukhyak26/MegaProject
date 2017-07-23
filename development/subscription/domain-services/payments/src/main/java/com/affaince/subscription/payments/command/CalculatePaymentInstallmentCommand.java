@@ -7,11 +7,12 @@ import java.util.Map;
 public class CalculatePaymentInstallmentCommand {
     private final String subscriptionId;
     private final Map<LocalDate, Double> deliveryWisePriceMap;
+    private String paymentScheme;
 
-    public CalculatePaymentInstallmentCommand(String subscriptionId, Map<LocalDate, Double> deliveryWisePriceMap) {
-
+    public CalculatePaymentInstallmentCommand(String subscriptionId, Map<LocalDate, Double> deliveryWisePriceMap, String paymentScheme) {
         this.subscriptionId = subscriptionId;
         this.deliveryWisePriceMap = deliveryWisePriceMap;
+        this.paymentScheme = paymentScheme;
     }
 
     public String getSubscriptionId() {
@@ -20,5 +21,9 @@ public class CalculatePaymentInstallmentCommand {
 
     public Map<LocalDate, Double> getDeliveryWisePriceMap() {
         return deliveryWisePriceMap;
+    }
+
+    public String getPaymentScheme() {
+        return paymentScheme;
     }
 }
