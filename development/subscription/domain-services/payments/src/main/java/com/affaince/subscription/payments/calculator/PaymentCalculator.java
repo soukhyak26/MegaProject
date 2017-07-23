@@ -11,7 +11,8 @@ import java.util.Map;
  * Created by rahul on 17/7/17.
  */
 public interface PaymentCalculator {
-    void setNextCalculator(ResidualDuePaymentCalculator nextCalculator);
+
+    void setNextCalculator(PaymentCalculator nextCalculator);
 
     List<InstalmentPaymentTracker> calculate(Map<LocalDate, Double> deliveryPrices, PaymentExpression paymentExpression);
 }

@@ -16,10 +16,10 @@ import java.util.Map;
  * Created by rahul on 17/7/17.
  */
 public class AdvancePaymentCalculator implements PaymentCalculator {
-    private ResidualDuePaymentCalculator nextCalculator;
+    private PaymentCalculator nextCalculator;
 
     @Override
-    public void setNextCalculator(ResidualDuePaymentCalculator nextCalculator) {
+    public void setNextCalculator(PaymentCalculator nextCalculator) {
         this.nextCalculator = nextCalculator;
     }
 
