@@ -7,9 +7,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
-/**
- * Created by anayonkar on 9/5/16.
- */
 public class RevenueAccount extends AbstractAnnotatedEntity {
     private double currentAmount;
     private LocalDate startDate;
