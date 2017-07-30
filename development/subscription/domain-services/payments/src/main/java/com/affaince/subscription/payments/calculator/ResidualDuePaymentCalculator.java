@@ -6,6 +6,7 @@ import com.affaince.subscription.pojos.DeliveryExpression;
 import com.affaince.subscription.pojos.PaymentExpression;
 import com.affaince.subscription.pojos.ResidualDuePaymentParameters;
 import org.joda.time.LocalDate;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * Created by rahul on 17/7/17.
  */
+@Component
 public class ResidualDuePaymentCalculator implements PaymentCalculator {
 
     private PaymentCalculator nextCalculator;

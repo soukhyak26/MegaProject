@@ -4,6 +4,7 @@ import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.payments.command.domain.PaymentAccount;
 import com.affaince.subscription.payments.command.domain.PaymentScheme;
 import com.affaince.subscription.payments.command.event.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -41,6 +42,11 @@ public class Axon extends Default {
     @Bean
     public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
         return new SimpleMongoDbFactory(mongo, dbName);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new ObjectMapper();
     }
 
     @Override
