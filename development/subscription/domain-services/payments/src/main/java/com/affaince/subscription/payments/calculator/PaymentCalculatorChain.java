@@ -27,6 +27,10 @@ public class PaymentCalculatorChain {
     }
 
     public List<InstalmentPaymentTracker> calculate(Map<LocalDate, Double> deliveryWisePriceMap, PaymentExpression paymentExpression) {
-        return advancePaymentCalculator.calculate(deliveryWisePriceMap, paymentExpression);
+        PaymentInstallmentCalculationRequest request = new PaymentInstallmentCalculationRequest();
+        request.setDeliveryPrices(deliveryWisePriceMap);
+        request.setPaymentExpression(paymentExpression);
+        advancePaymentCalculator.calculate(request);
+        return request.getPaymentInstallments();
     }
 }
