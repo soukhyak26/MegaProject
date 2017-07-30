@@ -24,37 +24,40 @@ public class AdvancePaymentCalculator implements PaymentCalculator {
     }
 
     @Override
-    public List<InstalmentPaymentTracker> calculate(Map<LocalDate, Double> deliveryPrices, PaymentExpression paymentExpression) {
-        AdvancePaymentParameters advancePaymentParameters = paymentExpression.getAdvancePaymentParameters();
+    public void calculate(PaymentInstallmentCalculationRequest request) {
+        AdvancePaymentParameters advancePaymentParameters = request.getPaymentExpression().getAdvancePaymentParameters();
         InstalmentPaymentTracker tracker = null;
-        final List <InstalmentPaymentTracker> paymentTrackers = new ArrayList<>();
+        final List<InstalmentPaymentTracker> paymentTrackers = new ArrayList<>();
+        final Map<LocalDate, Double> deliveryPrices = request.getDeliveryPrices();
         if (advancePaymentParameters.getPaymentEvent().equals(PaymentEvent.SUBSCRIPTION_CONFIRMATION)) {
             tracker = new InstalmentPaymentTracker(1);
         }
 
-        if(advancePaymentParameters.getPaymentSource().equals(PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT)) {
+        if (advancePaymentParameters.getPaymentSource().equals(PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT)) {
             tracker.addToPaymentReceived(
                     deliveryPrices.values().stream().mapToDouble(Double::doubleValue).sum()
-                    * (advancePaymentParameters.getPercentValue()/100)
+                            * (advancePaymentParameters.getPercentValue() / 100)
             );
         }
 
-        if(advancePaymentParameters.getPaymentSource().equals(PaymentSource.DELIVERY)) {
+        if (advancePaymentParameters.getPaymentSource().equals(PaymentSource.DELIVERY)) {
             final DeliveryExpression deliveryExpression = advancePaymentParameters.getDeliveryExpression();
             int baseDeliveryCountForAdvancePayment = (deliveryExpression.getDividend() / deliveryExpression.getDivisor())
                     * deliveryPrices.size();
             double baseTotalAmount = 0;
-            for (int i=0;i<baseDeliveryCountForAdvancePayment;i++) {
+            for (int i = 0; i < baseDeliveryCountForAdvancePayment; i++) {
                 baseTotalAmount += deliveryPrices.get(i).doubleValue();
             }
             tracker.addToPaymentReceived(
-                    baseTotalAmount * (advancePaymentParameters.getPercentValue()/100)
+                    baseTotalAmount * (advancePaymentParameters.getPercentValue() / 100)
             );
         }
-        paymentTrackers.add(tracker);
+        InstalmentPaymentTracker finalTracker = tracker;
+        request.addAllPaymentInstallments(new ArrayList<InstalmentPaymentTracker>() {{
+            add(finalTracker);
+        }});
         if (this.nextCalculator != null) {
-            paymentTrackers.addAll(nextCalculator.calculate(deliveryPrices, paymentExpression));
+            this.nextCalculator.calculate(request);
         }
-        return paymentTrackers;
     }
 }

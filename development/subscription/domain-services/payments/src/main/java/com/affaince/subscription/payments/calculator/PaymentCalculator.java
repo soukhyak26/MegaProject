@@ -14,5 +14,5 @@ public interface PaymentCalculator {
 
     void setNextCalculator(PaymentCalculator nextCalculator);
 
-    List<InstalmentPaymentTracker> calculate(Map<LocalDate, Double> deliveryPrices, PaymentExpression paymentExpression);
+    void calculate(PaymentInstallmentCalculationRequest request);
 }
