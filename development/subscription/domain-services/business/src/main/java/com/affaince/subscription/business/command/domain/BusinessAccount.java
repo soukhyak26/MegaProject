@@ -154,7 +154,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
             throw new ProvisionNotCreatedException(INIT_ERROR_MESSAGE, npe);
         }
     }
-
+    //TODO: The transfer should happen only if the delivery status is 'delivered'
     public void transferFromBookingAmountToRevenue(String contributorId, double basketAmount, double deliveryAmount) {
         try {
             this.bookingAmountAccount.debitFromBookingAmount(this.id, contributorId, basketAmount);
