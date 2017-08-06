@@ -4,9 +4,8 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.payments.command.CreatePaymentSchemeCommand;
 import com.affaince.subscription.payments.command.ExpirePaymentSchemeCommand;
-import com.affaince.subscription.payments.command.ModifyPaymentSchemeCommand;
+import com.affaince.subscription.payments.query.repository.PaymentSchemesViewRepository;
 import com.affaince.subscription.payments.web.request.CreatePaymentSchemeRequest;
-import com.affaince.subscription.payments.web.request.ModifyPaymentSchemeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +21,12 @@ import java.util.UUID;
 public class PaymentSchemeController {
 
     private final SubscriptionCommandGateway commandGateway;
+    private final PaymentSchemesViewRepository paymentSchemesViewRepository;
 
     @Autowired
-    public PaymentSchemeController(SubscriptionCommandGateway commandGateway) {
+    public PaymentSchemeController(SubscriptionCommandGateway commandGateway, PaymentSchemesViewRepository paymentSchemesViewRepository) {
         this.commandGateway = commandGateway;
+        this.paymentSchemesViewRepository = paymentSchemesViewRepository;
     }
 
     @RequestMapping(value= "/create",  method = RequestMethod.POST)
@@ -41,5 +42,10 @@ public class PaymentSchemeController {
         final ExpirePaymentSchemeCommand command= new ExpirePaymentSchemeCommand(schemeId, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    @RequestMapping (value = "random", method = RequestMethod.GET)
+    public String getPaymentSchemeId () {
+        return paymentSchemesViewRepository.findAll().iterator().next().getSchemeId();
     }
 }

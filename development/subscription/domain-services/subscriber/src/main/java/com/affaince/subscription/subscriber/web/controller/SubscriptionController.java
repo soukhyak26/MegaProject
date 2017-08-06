@@ -193,7 +193,7 @@ public class SubscriptionController {
         }
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
-    @RequestMapping(value = "selectpayment/{subscriberid}", method = RequestMethod.PUT)
+    @RequestMapping(value = "selectpayment/{subscriberId}", method = RequestMethod.PUT)
     public ResponseEntity<Object> selectPaymentScheme(@PathVariable String subscriberId, @RequestBody @Valid SelectedPaymentSchemeRequest request) throws Exception{
         final SubscriptionView subscriptionView = subscriptionViewRepository.
                 findBySubscriberIdAndConsumerBasketActivationStatus(subscriberId, ConsumerBasketActivationStatus.CREATED);

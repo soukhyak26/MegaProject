@@ -3,6 +3,7 @@ package com.affaince.subscription.payments.query.listener;
 import com.affaince.subscription.payments.command.event.PaymentSchemeSetForPaymentEvent;
 import com.affaince.subscription.payments.query.repository.PaymentAccountViewRepository;
 import com.affaince.subscription.payments.query.view.PaymentAccountView;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class PaymentSchemeSetForPaymentEventListener {
         this.paymentAccountViewRepository = paymentAccountViewRepository;
     }
 
+    @EventHandler
     public void on(PaymentSchemeSetForPaymentEvent event){
         PaymentAccountView paymentAccountView= paymentAccountViewRepository.findOne(event.getSubscriptionId());
         paymentAccountView.setPaymentSchemeId(event.getPaymentSchemeId());

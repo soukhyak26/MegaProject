@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,7 +46,24 @@ public class SubscriptionTestDataGenerator {
         generateSubscriptionData();
         generateSubscriberData();
         writeSubscriptionCountToFile ();
+        createPaymentScheme();
         return this;
+    }
+
+    public void createPaymentScheme () {
+        try {
+            PaymentScheme paymentScheme = new PaymentScheme();
+            paymentScheme.setPaymentSchemeId(fetchDataByGetRequest("http://localhost:8086/paymentscheme/random"));
+            File file = new File(classLoader.getResource(".").getPath() + "/paymentscheme.json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                fileOutputStream.write(objectMapper.writeValueAsBytes(paymentScheme));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void readProductIdsToFile() {
@@ -74,7 +92,7 @@ public class SubscriptionTestDataGenerator {
         for (int i = 0; i < this.subscriptionCount; i++) {
             Subscriber subscriber = new Subscriber("Mr", "TestSubscriber" + i, "", "lastName" + i,
                     "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
-                    "testemail" + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
+                    "testemail" + i + sdc + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
             );
             subscribers.add(subscriber);
         }
@@ -109,7 +127,7 @@ public class SubscriptionTestDataGenerator {
                         getMrpByProductId(productId),
                         noOfCycle
                 );
-                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + "@affaince.com");
+                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + sdc + "@affaince.com");
                 String fileName = classLoader.getResource(".").getPath() + "/" + subscriberId + ".json";
                 if (lineNumberTracker.get(fileName) != null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
@@ -154,23 +172,10 @@ public class SubscriptionTestDataGenerator {
     private long getTotalSubscriptionCountFromActiveForecast (String productId) {
         Long totalForecstedSubscription = 0L;
         try {
-            URL url = new URL("http://localhost:8082/forecast/lastforecast/totalsubscription/" + productId);
+            totalForecstedSubscription = Long.parseLong(fetchDataByGetRequest(
+                    "http://localhost:8082/forecast/lastforecast/totalsubscription/" + productId
+            ));
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
-
-            totalForecstedSubscription = Long.parseLong(br.readLine());
-
-            conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -180,9 +185,19 @@ public class SubscriptionTestDataGenerator {
     private Double getMrpByProductId (String productId) {
         Double totalForecstedSubscription = 0.0;
         try {
-            URL url = new URL("http://localhost:8082/product/mrp/" + productId);
+            Double.parseDouble(fetchDataByGetRequest("http://localhost:8082/product/mrp/" + productId));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return totalForecstedSubscription;
+    }
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    private String fetchDataByGetRequest (String fetchUrl) throws IOException {
+        BufferedReader br;
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL(fetchUrl);
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 
@@ -191,15 +206,11 @@ public class SubscriptionTestDataGenerator {
                         + conn.getResponseCode());
             }
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
+            br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
-
-            totalForecstedSubscription = Double.parseDouble(br.readLine());
-
+            return br.readLine();
+        } finally {
             conn.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return totalForecstedSubscription;
     }
 }

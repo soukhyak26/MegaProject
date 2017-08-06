@@ -36,12 +36,17 @@ class Subscriber extends BaseSimulator {
     //.repeat(1) {
      // CreateSubscriber.sysDateChange
     }.pause(1)
+      .repeat(1){
+        CreateSubscriber.selectPaymentScheme
+      }
     .repeat(1) {
       CreateSubscriber.confirmSubscription
     }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
-  setUp(scn.inject(rampUsers(productTestDataGenerator) over(productTestDataGenerator/15)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+  //setUp(scn.inject(rampUsers(productTestDataGenerator) over(productTestDataGenerator/15)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+
+  setUp(scn.inject(atOnceUsers(1)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
@@ -54,6 +59,7 @@ object CreateSubscriber {
   val sysDateChangeUrl= "http://localhost:8086/sysdate"
   val subscriberJsonFeeder = jsonFile ("Subscribers.json")
   val getDeliveryIdsUrl = "http://localhost:8081/delivery/getDeliveryIds"
+  val selectPaymentUrl = "http://localhost:8081/subscription/selectpayment"
  // val sysdateFeeder = csv("sysdate.csv").queue;
 
   val createSubscriber = feed(subscriberJsonFeeder)
@@ -123,6 +129,15 @@ object CreateSubscriber {
         ).asJSON
     )
 
+  val selectPaymentScheme =
+    exec(
+      http("Select Payment Scheme")
+        .put((selectPaymentUrl + "/${subscriberId}").el[String])
+        .body(
+          ElFileBody("paymentscheme.json")
+        ).asJSON
+    )
+
   val confirmSubscription =
     exec(
       http("Confirm Subscription")
@@ -135,18 +150,4 @@ object CreateSubscriber {
         .get((getDeliveryIdsUrl + "/${subscriberId}/${subscriptionId}").el[String])
         .asJSON
     )
-
- /* val sysDateChange = feed(sysdateFeeder).exec(
-      .put(sysDateChangeUrl)
-      .body(
-        StringBody(
-          """
-            |{
-            | "sysDate":"${sysDate}",
-            | "sysDateTime":"${sysDateTime}"
-            |}
-          """.stripMargin
-        )
-      ).asJSON
-  )*/
 }

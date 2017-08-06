@@ -15,6 +15,9 @@ public class PaymentAccountCreatedEvent {
         this.creationDate=creationDate;
     }
 
+    public PaymentAccountCreatedEvent() {
+    }
+
     public String getSubscriberId() {
         return subscriberId;
     }
