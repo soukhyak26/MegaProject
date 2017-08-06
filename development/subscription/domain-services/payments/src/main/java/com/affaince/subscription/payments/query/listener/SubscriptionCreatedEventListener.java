@@ -16,7 +16,7 @@ public class SubscriptionCreatedEventListener {
     private SubscriptionCommandGateway commandGateway;
     @EventHandler
     public void on(SubscriptionCreatedEvent event) throws Exception{
-        CreateSubscriptionSpecificPaymentAccountCommand command = new CreateSubscriptionSpecificPaymentAccountCommand(event.getSubscriberId(),event.getSubscriptionId(),event.getCreationDate());
+        CreateSubscriptionSpecificPaymentAccountCommand command = new CreateSubscriptionSpecificPaymentAccountCommand(event.getSubscriberId(),event.getSubscriptionId(),event.getBasketCreatedDate());
         commandGateway.executeAsync(command);
 
     }

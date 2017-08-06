@@ -1,5 +1,6 @@
 package com.affaince.subscription.payments.command.event;
 
+import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -8,24 +9,61 @@ import java.util.List;
  * Created by mandar on 5/17/2017.
  */
 public class SubscriptionCreatedEvent {
-    private String subscriberId;
+
     private String subscriptionId;
-    private LocalDate creationDate;
-    public SubscriptionCreatedEvent(String subscriberId, String subscriptionId,LocalDate creationDate) {
-        this.subscriberId=subscriberId;
-        this.subscriptionId=subscriptionId;
-        this.creationDate=creationDate;
+    private String subscriberId;
+    private LocalDate basketCreatedDate;
+    private LocalDate basketExpiredDate;
+    private ConsumerBasketActivationStatus consumerBasketStatus;
+
+    public SubscriptionCreatedEvent(String subscriptionId, String subscriberId, LocalDate basketCreatedDate, LocalDate basketExpiredDate, ConsumerBasketActivationStatus consumerBasketStatus) {
+        this.subscriptionId = subscriptionId;
+        this.subscriberId = subscriberId;
+        this.basketCreatedDate = basketCreatedDate;
+        this.basketExpiredDate = basketExpiredDate;
+        this.consumerBasketStatus = consumerBasketStatus;
     }
 
-    public String getSubscriberId() {
-        return subscriberId;
+    public SubscriptionCreatedEvent() {
     }
 
     public String getSubscriptionId() {
         return subscriptionId;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
+    }
+
+    public String getSubscriberId() {
+        return subscriberId;
+    }
+
+    public void setSubscriberId(String subscriberId) {
+        this.subscriberId = subscriberId;
+    }
+
+    public LocalDate getBasketCreatedDate() {
+        return basketCreatedDate;
+    }
+
+    public void setBasketCreatedDate(LocalDate basketCreatedDate) {
+        this.basketCreatedDate = basketCreatedDate;
+    }
+
+    public LocalDate getBasketExpiredDate() {
+        return basketExpiredDate;
+    }
+
+    public void setBasketExpiredDate(LocalDate basketExpiredDate) {
+        this.basketExpiredDate = basketExpiredDate;
+    }
+
+    public ConsumerBasketActivationStatus getConsumerBasketStatus() {
+        return consumerBasketStatus;
+    }
+
+    public void setConsumerBasketStatus(ConsumerBasketActivationStatus consumerBasketStatus) {
+        this.consumerBasketStatus = consumerBasketStatus;
     }
 }

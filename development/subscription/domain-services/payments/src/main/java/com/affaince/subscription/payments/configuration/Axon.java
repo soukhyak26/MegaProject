@@ -54,10 +54,10 @@ public class Axon extends Default {
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.product.command.event.ProductRegisteredEvent",ProductRegisteredEvent.class.getName());
-            put("com.affaince.subscription.product.command.event.SubscriptionCreatedEvent", SubscriptionCreatedEvent.class.getName());
+            put("com.affaince.subscription.subscriber.command.event.SubscriptionCreatedEvent", SubscriptionCreatedEvent.class.getName());
             put("com.affaince.subscription.subscriber.command.event.PaymentSchemeSelectedEvent", PaymentSchemeSelectedEvent.class.getName());
             //Delivery Created event also indicates SubscriptionConfirmation for the first time.
-            put("com.affaince.subscription.product.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
+            put("com.affaince.subscription.subscriber.command.event.DeliveryCreatedEvent", DeliveryCreatedEvent.class.getName());
             //The most important event. Here the due amount is revised as per the latest changes in prices.
             put("com.affaince.subscription.subscriber.command.event.DeliveryPreparedForDispatchEvent",DeliveryPreparedForDispatchEvent.class.getName());
 

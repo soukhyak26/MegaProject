@@ -8,10 +8,12 @@ import com.affaince.subscription.payments.service.TaggedPricingService;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by mandar on 5/17/2017.
  */
+@Component
 public class CreateSubscriptionSpecificPaymentAccountCommandHandler {
     private final Repository<PaymentAccount> repository;
     private final TaggedPricingService taggedPricingService;
