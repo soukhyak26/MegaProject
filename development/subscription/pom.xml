@@ -29,7 +29,8 @@
         <module>batch/AnnualBatch</module>
         <module>tools/spring-cloud-source</module>
         <module>tools/spring-cloud-sink</module>
-
+        <module>tools/spring-cloud-dataflow-server</module>
+        <module>tools/spring-cloud-dataflow-myshell</module>
     </modules>
     <dependencies>
         <dependency>
@@ -40,7 +41,6 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring-boot</artifactId>
         </dependency>
-
     </dependencies>
     <properties>
         <axon.version>2.4.2</axon.version>
@@ -563,6 +563,11 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dataflow-rest-client</artifactId>
                 <version>1.2.1.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dataflow-server-core</artifactId>
+                <version>1.2.3.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
