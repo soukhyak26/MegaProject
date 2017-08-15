@@ -2,7 +2,6 @@ package com.affaince.subscription.pricing.determine;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.WeightedProductDemandTrend;
-import org.apache.avro.test.specialtypes.builder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
