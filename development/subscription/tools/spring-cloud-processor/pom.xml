@@ -9,7 +9,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-cloud-source</artifactId>
+    <artifactId>spring-cloud-processor</artifactId>
     <build>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>
@@ -54,12 +54,6 @@
     </build>
 
     <dependencies>
-<!--
-        <dependency>
-            <groupId>com.affaince</groupId>
-            <artifactId>sysdate</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -113,6 +107,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+            <version>RELEASE</version>
         </dependency>
     </dependencies>
 </project>
