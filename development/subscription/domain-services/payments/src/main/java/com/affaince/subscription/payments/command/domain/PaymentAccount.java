@@ -99,7 +99,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         //If the delivery getting created as a replacement of earlier delivery which got dropped,
         // then find out if there is any amount  already paid for earlier delivery which is now deposited in refund account
         Map<Integer,Double>deliverySequenceWiseMoneyDistribution= assignAmountDepositedToRefundAccountToDeliveries(command.getSequence(),totalDeliveryCost);
-        apply(new NewDeliveryRegisteredEvent(this.subscriberId, this.getSubscriptionId(), command.getDeliveryId(), command.getDeliveryDate(), command.getSequence(), newDeliveryDetails, newDeliveryDetails.getTotalDeliveryCost(), command.getRewardPoints(),deliverySequenceWiseMoneyDistribution.get(command.getSequence()),command.getDeliveryCreationDate()));
+        apply(new NewDeliveryRegisteredEvent(this.subscriberId, this.getSubscriptionId(), command.getDeliveryId(), command.getDeliveryDate(),
+                command.getSequence(), newDeliveryDetails, newDeliveryDetails.getTotalDeliveryCost(), command.getRewardPoints(),
+                (deliverySequenceWiseMoneyDistribution==null)?0:deliverySequenceWiseMoneyDistribution.get(command.getSequence()),command.getDeliveryCreationDate()));
         deliverySequenceWiseMoneyDistribution.remove(command.getSequence());
         deliverySequenceWiseMoneyDistribution.keySet().stream().forEach(ds-> {
             final String deliveryId=findDeliveryCostAccountByDeliverySequence(ds).getDeliveryId();

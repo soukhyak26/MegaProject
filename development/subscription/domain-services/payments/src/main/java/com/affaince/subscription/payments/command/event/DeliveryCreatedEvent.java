@@ -10,7 +10,7 @@ public class DeliveryCreatedEvent {
     public String deliveryId;
     private String subscriberId;
     private String subscriptionId;
-    private int sequence;
+    private int deliverySequence;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate dispatchDate;
@@ -19,7 +19,7 @@ public class DeliveryCreatedEvent {
     private double rewardPoints;
 
 
-    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, int sequence,List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms,double rewardPoints) {
+    public DeliveryCreatedEvent(String deliveryId, String subscriberId, String subscriptionId, int deliverySequence, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, LocalDate dispatchDate, DeliveryStatus status, double deliveryWeightInGrms, double rewardPoints) {
         this.deliveryId = deliveryId;
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;
@@ -29,7 +29,7 @@ public class DeliveryCreatedEvent {
         this.status = status;
         this.deliveryWeightInGrms = deliveryWeightInGrms;
         this.rewardPoints=rewardPoints;
-        this.sequence=sequence;
+        this.deliverySequence = deliverySequence;
     }
 
     public DeliveryCreatedEvent() {
@@ -71,7 +71,7 @@ public class DeliveryCreatedEvent {
         return rewardPoints;
     }
 
-    public int getSequence() {
-        return sequence;
+    public int getDeliverySequence() {
+        return deliverySequence;
     }
 }
