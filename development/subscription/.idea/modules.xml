@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/batch/AnnualBatch/AnnualBatch.iml" filepath="$PROJECT_DIR$/batch/AnnualBatch/AnnualBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/batch/ExpenseDistributionBatch/ExpenseDistributionBatch.iml" filepath="$PROJECT_DIR$/batch/ExpenseDistributionBatch/ExpenseDistributionBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/batch/ForecastBatch/ForecastBatch.iml" filepath="$PROJECT_DIR$/batch/ForecastBatch/ForecastBatch.iml" />
       <module fileurl="file://$PROJECT_DIR$/batch/PrepareDeliveryForDispatchBatch/PrepareDeliveryForDispatchBatch.iml" filepath="$PROJECT_DIR$/batch/PrepareDeliveryForDispatchBatch/PrepareDeliveryForDispatchBatch.iml" />

@@ -22,6 +22,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="AnnualBatch" />
         <module name="application-simulator" />
         <module name="axon-commons" />
         <module name="benefits" />
@@ -38,12 +39,14 @@
         <module name="ProductMetricsBatch" />
         <module name="ProductPricingBatch" />
         <module name="rules-compiler" />
+        <module name="spring-dataflow-server" />
         <module name="subscriber" />
         <module name="sysdate" />
         <module name="user-journey" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="AnnualBatch" target="1.8" />
       <module name="application-simulator" target="1.8" />
       <module name="axon-commons" target="1.8" />
       <module name="benefits" target="1.8" />
@@ -59,6 +62,16 @@
       <module name="ProductMetricsBatch" target="1.8" />
       <module name="ProductPricingBatch" target="1.8" />
       <module name="rules-compiler" target="1.8" />
+      <module name="spring-cloud-dataflow-myshell" target="1.8" />
+      <module name="spring-cloud-dataflow-server" target="1.8" />
+      <module name="spring-cloud-dataflow-shell" target="1.8" />
+      <module name="spring-cloud-dataflow-shell (1)" target="1.8" />
+      <module name="spring-cloud-dataflow-shell (2)" target="1.8" />
+      <module name="spring-cloud-processor" target="1.8" />
+      <module name="spring-cloud-sink" target="1.8" />
+      <module name="spring-cloud-source" target="1.8" />
+      <module name="spring-data-flow-server" target="1.8" />
+      <module name="spring-dataflow-server" target="1.8" />
       <module name="subscriber" target="1.8" />
       <module name="subscription" target="1.8" />
       <module name="sysdate" target="1.8" />

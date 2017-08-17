@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mandar on 8/14/2017.
@@ -21,12 +23,16 @@ public class HttpSource {
     @Autowired
     private Source source;
 
-    @RequestMapping(value="/src/", method= RequestMethod.POST, consumes={"application/json"})
+    @RequestMapping(value="/src/{entityId}", method= RequestMethod.POST, consumes={"application/json"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void handleRequest(@RequestBody String body, @RequestHeader(HttpHeaders.CONTENT_TYPE) Object contentType){
-        sendMessage(body,contentType);
+    public void handleRequest(@RequestBody String body, @RequestHeader(value="entity-type") Object entityType,@RequestHeader(value="entity-id") Object entityId){
+
+        sendMessage(body,entityType,entityId);
     }
-    private void sendMessage(Object body,Object contentType){
-        source.output().send(MessageBuilder.createMessage(body,new MessageHeaders(Collections.singletonMap(MessageHeaders.CONTENT_TYPE,contentType))));
+    private void sendMessage(Object body,Object entityType,Object entityId){
+        Map<String,Object> headers= new HashMap<>();
+        headers.put("entity-type",entityType);
+        headers.put("entity-id",entityId);
+        source.output().send(MessageBuilder.createMessage(body,new MessageHeaders(headers)));
     }
 }

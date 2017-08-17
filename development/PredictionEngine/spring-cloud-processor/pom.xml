@@ -113,5 +113,10 @@
             <artifactId>spring-cloud-stream</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>libs</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
