@@ -46,7 +46,6 @@
         <aspectj.version>1.8.8</aspectj.version>
         <spark.version>1.6.2</spark.version>
         <sparkts.version>0.3.0</sparkts.version>
-        <spring-cloud.version>Dalston.SR1</spring-cloud.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -530,47 +529,6 @@
                 <version>1.2</version>
                 <scope>provided</scope>
             </dependency>
-            <!--
-                        <dependency>
-                            <groupId>com.sun.jersey</groupId>
-                            <artifactId>jersey-core</artifactId>
-                            <version>RELEASE</version>
-                        </dependency>
-            -->
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-stream-binder-kafka</artifactId>
-                <version>1.0.0.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dataflow-shell-core</artifactId>
-                <version>1.2.3.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dataflow-rest-client</artifactId>
-                <version>1.2.1.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dataflow-server-core</artifactId>
-                <version>1.2.3.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-dataflow-server-local</artifactId>
-                <version>1.2.3.RELEASE</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
     <repositories>
