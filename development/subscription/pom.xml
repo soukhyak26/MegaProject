@@ -27,11 +27,6 @@
         <module>batch/PrepareDeliveryForDispatchBatch</module>
         <module>batch/ProductMetricsBatch</module>
         <module>batch/AnnualBatch</module>
-        <module>tools/spring-cloud-source</module>
-        <module>tools/spring-cloud-sink</module>
-        <module>tools/spring-cloud-dataflow-server</module>
-        <module>tools/spring-cloud-dataflow-myshell</module>
-        <module>tools/spring-cloud-processor</module>
     </modules>
     <dependencies>
         <dependency>
@@ -113,7 +108,7 @@
                         <dependency>
                             <groupId>org.springframework</groupId>
                             <artifactId>springloaded</artifactId>
-                            <version>1.2.3.RELEASE</version>
+                            <version>1.2.5.RELEASE</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -570,6 +565,12 @@
                 <artifactId>spring-cloud-dataflow-server-core</artifactId>
                 <version>1.2.3.RELEASE</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-dataflow-server-local</artifactId>
+                <version>1.2.3.RELEASE</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <repositories>
