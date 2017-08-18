@@ -21,21 +21,6 @@ import java.util.Map;
 @EnableBinding(Processor.class)
 @SpringBootApplication
 public class Application {
-    @Autowired
-    ARIMABasedDemandForecaster arimaBasedDemandForecaster;
-    @Autowired
-    DataFrameVODeserializer dataFrameVODeserializer;
-
-    @Transformer(inputChannel = Processor.INPUT,
-            outputChannel = Processor.OUTPUT)
-    public Object transform(String historicalRecords,Map<String,Object> headers) throws IOException {
-        Object id=headers.get("entity-id");
-        ObjectMapper mapper=new ObjectMapper();
-        List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,List.class);
-        List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id.toString(),dataFrameVOs);
-        String forecastedDataFrameVOString = mapper.writeValueAsString(forecastedRecords);
-        return forecastedDataFrameVOString;
-    }
     public static void main(String[] args) {
         SpringApplication.run(
                 Application.class, args);
