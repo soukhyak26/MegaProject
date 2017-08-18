@@ -164,7 +164,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
             this.totalReceivedCostAccount.credit(event.getAmountReceived(), SysDate.now());
         }
         this.paymentProcessingContext.addNewDeliveryToContext(event.getSequence(),event.getTotalDeliveryCost());
-        this.paymentProcessingContext.depositIncomingPaymentToDesignatedInstalmentTracker(event.getSequence(),event.getAmountReceived());
+        if(event.getAmountReceived()>0) {
+            this.paymentProcessingContext.depositIncomingPaymentToDesignatedInstalmentTracker(event.getSequence(), event.getAmountReceived());
+        }
     }
 
     @EventSourcingHandler
