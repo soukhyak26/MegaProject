@@ -10,6 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-cloud-source</artifactId>
+    <packaging>war</packaging>
     <build>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>

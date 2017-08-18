@@ -17,13 +17,14 @@ import java.util.Map;
 /**
  * Created by mandar on 8/14/2017.
  */
-@Controller
+@RestController
+@RequestMapping(value = "/forecast")
 @EnableBinding(Source.class)
 public class HttpSource {
     @Autowired
     private Source source;
 
-    @RequestMapping(value="/src/{entityId}", method= RequestMethod.POST, consumes={"application/json"})
+    @RequestMapping(value="/src", method= RequestMethod.POST, consumes={"application/json"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void handleRequest(@RequestBody String body, @RequestHeader(value="entity-type") Object entityType,@RequestHeader(value="entity-id") Object entityId){
 
