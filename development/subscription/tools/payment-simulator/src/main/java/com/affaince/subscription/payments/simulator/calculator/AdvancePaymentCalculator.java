@@ -34,7 +34,7 @@ public class AdvancePaymentCalculator implements PaymentCalculator {
         }
 
         if (advancePaymentParameters.getPaymentSource().equals(PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT)) {
-            tracker.addToPaymentReceived(
+            tracker.setPaymentExpected(
                     deliveryPrices.values().stream().mapToDouble(Double::doubleValue).sum()
                             * (advancePaymentParameters.getPercentValue() / 100)
             );
@@ -48,7 +48,7 @@ public class AdvancePaymentCalculator implements PaymentCalculator {
             for (int i = 0; i < baseDeliveryCountForAdvancePayment; i++) {
                 baseTotalAmount += deliveryPrices.get(i).doubleValue();
             }
-            tracker.addToPaymentReceived(
+            tracker.setPaymentExpected(
                     baseTotalAmount * (advancePaymentParameters.getPercentValue() / 100)
             );
         }

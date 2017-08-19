@@ -39,14 +39,20 @@ public class ResidualDuePaymentCalculator implements PaymentCalculator {
         final List <DeliveryExpression> deliveryExpressions = residualDuePaymentParameters.getDeliveries();
         final List <Integer> proportionValues = residualDuePaymentParameters.getProportionValues();
 
-        for (int i=0; i<proportionValues.size();i++) {
-            DeliveryExpression deliveryExpression = deliveryExpressions.get(0);
-            int deliveryCount = (deliveryExpression.getDividend() / deliveryExpression.getDivisor())
-                * (deliveryExpression.getTotalDeliveryBase().equals(TotalDeliveryBase.N)?size:remainingDelivery);
+        for (int i=0; i<deliveryExpressions.size();i++) {
+            DeliveryExpression deliveryExpression = deliveryExpressions.get(i);
+            double deliveryCountBase = (double) deliveryExpression.getDividend() / deliveryExpression.getDivisor();
+            Double deliveryCount = deliveryCountBase
+                    * (deliveryExpression.getTotalDeliveryBase().equals(TotalDeliveryBase.N)?size:remainingDelivery);
+            int finalDeliveryCount = deliveryCount.intValue();
             InstalmentPaymentTracker tracker = new InstalmentPaymentTracker(
-                    residualDuePaymentParameters.isBefore()?deliveryCount:deliveryCount+1
+                    residualDuePaymentParameters.isBefore()?finalDeliveryCount:finalDeliveryCount+1
             );
-            tracker.setPaymentExpected((remainingPayment*proportionValues.get(0))/10);
+            if (proportionValues != null) {
+                tracker.setPaymentExpected((remainingPayment * proportionValues.get(i)) / 10);
+            } else {
+                tracker.setPaymentExpected(remainingPayment/deliveryExpressions.size());
+            }
             paymentTrackers.add(tracker);
         }
         request.addAllPaymentInstallments(paymentTrackers);
