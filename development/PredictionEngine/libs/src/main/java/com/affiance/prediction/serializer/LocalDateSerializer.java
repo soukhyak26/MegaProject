@@ -1,4 +1,4 @@
-package serializer;
+package com.affiance.prediction.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

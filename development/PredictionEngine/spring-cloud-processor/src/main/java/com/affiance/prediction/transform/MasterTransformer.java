@@ -3,7 +3,7 @@ package com.affiance.prediction.transform;
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
 import com.affiance.prediction.vo.DataFrameVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import deserializer.DataFrameVODeserializer;
+import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
@@ -28,6 +28,7 @@ public class MasterTransformer {
     @Transformer(inputChannel = Processor.INPUT,
             outputChannel = Processor.OUTPUT)
     public Object transform(String historicalRecords,Map<String,Object> headers) throws IOException {
+        System.out.println("@@@@IN processor");
         Object id=headers.get("entity-id");
         ObjectMapper mapper=new ObjectMapper();
         List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,List.class);

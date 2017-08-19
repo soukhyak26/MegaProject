@@ -11,6 +11,6 @@ import org.springframework.cloud.stream.messaging.Sink;
 public class MasterMessageListener {
     @StreamListener(Sink.INPUT)
     public void listen(String data){
-
+        System.out.println("@@@IN Sink: "+ data);
     }
 }

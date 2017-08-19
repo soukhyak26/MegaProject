@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by mandar on 6/3/2017.
  */
-@Component
+
 public class ForecasterCreatorFactory {
     @Autowired
     SimpleLinearForecaster simpleLinearForecaster;

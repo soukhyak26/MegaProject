@@ -34,6 +34,8 @@ public class HttpSource {
         Map<String,Object> headers= new HashMap<>();
         headers.put("entity-type",entityType);
         headers.put("entity-id",entityId);
+        System.out.println("@@@@In HttSource");
+
         source.output().send(MessageBuilder.createMessage(body,new MessageHeaders(headers)));
     }
 }

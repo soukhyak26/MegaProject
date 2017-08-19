@@ -1,15 +1,12 @@
 package com.affiance.prediction.algos;
 
-import com.affiance.prediction.config.HistoryMaxSizeConstraints;
-import com.affiance.prediction.config.HistoryMinSizeConstraints;
+import com.affiance.prediction.config.Forecast;
 import com.affiance.prediction.vo.DataFrameVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import deserializer.DataFrameVODeserializer;
+import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.spark.SparkContext;
 import org.joda.time.LocalDate;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,13 +29,12 @@ import java.util.stream.Stream;
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
 
-    private String forecastUrl="http://localahost:5656/forecast/src";
+    private String forecastUrl="http://localhost:9080/forecast/src";
 
-    @Autowired
-    DataFrameVODeserializer dataFrameVODeserializer;
+
     @Test
     public void testPrecisePrediction() throws IOException {
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));

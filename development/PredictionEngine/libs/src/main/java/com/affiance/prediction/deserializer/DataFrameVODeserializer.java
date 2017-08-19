@@ -1,4 +1,4 @@
-package deserializer;
+package com.affiance.prediction.deserializer;
 
 import com.affiance.prediction.vo.DataFrameVO;
 import com.fasterxml.jackson.core.JsonParser;
@@ -8,14 +8,12 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 /**
  * Created by mandar on 8/14/2017.
  */
-@Component
 public class DataFrameVODeserializer extends JsonDeserializer<DataFrameVO> {
     private static DateTimeFormatter formatter =
             DateTimeFormat.forPattern("dd-MM-yyyy");

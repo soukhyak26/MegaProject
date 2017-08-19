@@ -41,7 +41,7 @@ import java.util.*;
 /**
  * Created by mandar on 19-06-2016.
  */
-@Component
+
 public class ARIMABasedDemandForecaster{
     private TimeSeriesBasedForecaster nextForecaster;
     @Autowired

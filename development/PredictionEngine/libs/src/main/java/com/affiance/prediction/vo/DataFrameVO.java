@@ -2,9 +2,9 @@ package com.affiance.prediction.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import deserializer.DataFrameVODeserializer;
+import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import org.joda.time.LocalDate;
-import serializer.DataFrameVOSerializer;
+import com.affiance.prediction.serializer.DataFrameVOSerializer;
 
 import java.io.Serializable;
 

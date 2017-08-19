@@ -1,4 +1,4 @@
-package deserializer;
+package com.affiance.prediction.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

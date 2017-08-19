@@ -1,4 +1,4 @@
-package serializer;
+package com.affiance.prediction.serializer;
 
 import com.affiance.prediction.vo.DataFrameVO;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -6,14 +6,12 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 /**
  * Created by mandar on 8/14/2017.
  */
-@Component
 public class DataFrameVOSerializer extends JsonSerializer<DataFrameVO> {
     private static DateTimeFormatter formatter =
             DateTimeFormat.forPattern("dd-MM-yyyy");

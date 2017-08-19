@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by mandar on 5/14/2017.
  */
-@Configuration
+//@Configuration
 @ConfigurationProperties(prefix="forecast")
 public class ForecasterConfiguration {
     @NestedConfigurationProperty()
