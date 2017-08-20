@@ -27,6 +27,8 @@
         <module>batch/PrepareDeliveryForDispatchBatch</module>
         <module>batch/ProductMetricsBatch</module>
         <module>batch/AnnualBatch</module>
+        <module>tools/payment-simulator</module>
+        <module>tools/benefit-simulator</module>
     </modules>
     <dependencies>
         <dependency>
