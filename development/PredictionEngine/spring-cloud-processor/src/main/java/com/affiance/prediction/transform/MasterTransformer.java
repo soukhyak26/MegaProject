@@ -17,13 +17,10 @@ import java.util.Map;
 /**
  * Created by mandar on 8/17/2017.
  */
-@Component
-@EnableBinding(Processor.class)
 public class MasterTransformer {
+/*
     @Autowired
     ARIMABasedDemandForecaster arimaBasedDemandForecaster;
-    @Autowired
-    DataFrameVODeserializer dataFrameVODeserializer;
 
     @Transformer(inputChannel = Processor.INPUT,
             outputChannel = Processor.OUTPUT)
@@ -38,4 +35,5 @@ public class MasterTransformer {
     }
 
 
+*/
 }

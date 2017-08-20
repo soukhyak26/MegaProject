@@ -52,6 +52,9 @@
             </plugin>
         </plugins>
     </build>
+    <properties>
+        <spring-cloud-dependencies.version>Brixton.SR7</spring-cloud-dependencies.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -113,17 +116,15 @@
             <artifactId>spring-cloud-stream</artifactId>
         </dependency>
     </dependencies>
-    <!--
-        <dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-dependencies</artifactId>
-                    <version>${spring-cloud.version}</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-                </dependency>
-            </dependencies>
-        </dependencyManagement>
-    -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

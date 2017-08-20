@@ -4,6 +4,6 @@ app register --name transform-processor --type processor --uri maven://com.affai
 
 app register --name spring-cloud-sink --type sink --uri maven://com.affaince:spring-cloud-sink:jar:0.1-SNAPSHOT
 
-stream create --definition "http-source|transform-processor|spring-cloud-sink" --name affiance-stream
+stream create --definition "http-source --server.port=9080 |transform-processor|spring-cloud-sink" --name affiance-stream
 
 stream deploy --name affiance-stream
