@@ -29,7 +29,6 @@ public class PointConversionState implements BenefitCalculationState {
                 rule.getPointConversionParameters();
         pointCalculationParameters.setCurrentSubscriptionAmount (request.getCurrentSubscriptionAmount());
         pointCalculationParameters.setCurrentSubscriptionPeriod(request.getCurrentSubscriptionPeriod());
-        pointCalculationParameters.setTotalSubscriptionAmount(request.getTotalSubscriptionAmount());
         ExpressionParser expressionParser = new SpelExpressionParser();
         Expression expression = expressionParser.parseExpression(rule.getPointConversionExpression());
         EvaluationContext evaluationContext = new StandardEvaluationContext(pointCalculationParameters);
