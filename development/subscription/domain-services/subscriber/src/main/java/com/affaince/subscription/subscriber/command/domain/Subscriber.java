@@ -270,7 +270,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         for (Delivery delivery : deliveries.values()) {
             delivery.calculateTotalWeightInGrams();
             delivery.calculateItemLevelDeliveryCharges(deliveryChargesRule);
-            if (rewardsPointsDistribution.get(delivery.getDeliveryId()) != null) {
+            if (rewardsPointsDistribution != null && rewardsPointsDistribution.get(delivery.getDeliveryId()) != null) {
                 delivery.setRewardPoints(rewardsPointsDistribution.get(delivery.getDeliveryId()));
             }
             DeliveryCreatedEvent event=new DeliveryCreatedEvent(delivery.getDeliveryId(), this.subscriberId, subscription.getSubscriptionId(),
