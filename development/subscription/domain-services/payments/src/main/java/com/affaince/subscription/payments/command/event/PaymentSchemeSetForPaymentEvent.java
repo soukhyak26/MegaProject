@@ -11,6 +11,9 @@ public class PaymentSchemeSetForPaymentEvent {
         this.paymentSchemeId=paymentSchemeId;
     }
 
+    public PaymentSchemeSetForPaymentEvent() {
+    }
+
     public String getSubscriptionId() {
         return subscriptionId;
     }
