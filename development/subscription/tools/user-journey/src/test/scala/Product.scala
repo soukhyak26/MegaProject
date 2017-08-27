@@ -155,7 +155,7 @@ object BenefitEquation {
         StringBody(
           """
             |{
-              | "benefitEquation":"given 1000 currency and 2 month = 3 point configure as (currentSubscriptionAmount/subscriptionValue/subscriptionPeriod)*currentSubscriptionPeriod eligible when totalSubscriptionAmount >= 1000 and (currentSubscriptionPeriod > 50 or totalLoyaltyPeriod > 36) apply as incremental;",
+              | "benefitEquation":"given 1000 currency and 2 month = 3 point configure as (currentSubscriptionAmount/subscriptionValue/subscriptionPeriod)*currentSubscriptionPeriod eligible when totalSubscriptionAmount >= 500 and (currentSubscriptionPeriod > 5 or totalLoyaltyPeriod > 36) apply as incremental;",
               |	"activationStartTime":"2016-09-29",
               |	"activationEndTime":"2020-12-30"
             |}
