@@ -72,6 +72,9 @@ public class PaymentProcessingContext {
         return instalmentPaymentTrackers;
     }
 
+    public void setInstalmentPaymentTrackers(List<InstalmentPaymentTracker> instalmentPaymentTrackers) {
+        this.instalmentPaymentTrackers = instalmentPaymentTrackers;
+    }
 
     public InstalmentPaymentTracker findPaymentTrackerByDeliverySequence(int sequenceId) {
         return instalmentPaymentTrackers.stream().filter(dwpt -> dwpt.isGivenDeliverySequenceManagedByTracker(sequenceId)).collect(Collectors.toList()).get(0);

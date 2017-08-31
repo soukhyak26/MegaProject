@@ -443,7 +443,16 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         paymentProcessingContext.setLatestCompletedDeliverySequence(findDeliverySequenceFromDeliveryId(event.getDeliveryId()));
     }
 
+    @EventSourcingHandler
+    public void on (PaymentInstallmentCalculatedEvent event) {
+        this.subscriberId = event.getSubscriberId();
+        this.subscriptionId = event.getSubscriptionId();
+        this.paymentProcessingContext.setInstalmentPaymentTrackers(event.getInstalmentPaymentTrackers());
+    }
+
     public void calculatePaymentInstallment(Map<LocalDate, Double> deliveryWisePriceMap, PaymentExpression paymentExpression, PaymentCalculatorChain paymentCalculatorChain) {
-        paymentCalculatorChain.calculate (deliveryWisePriceMap, paymentExpression);
+        List<InstalmentPaymentTracker> instalmentPaymentTrackers =
+                paymentCalculatorChain.calculate (deliveryWisePriceMap, paymentExpression);
+        apply(new PaymentInstallmentCalculatedEvent (this.subscriberId, this.subscriptionId, instalmentPaymentTrackers));
     }
 }

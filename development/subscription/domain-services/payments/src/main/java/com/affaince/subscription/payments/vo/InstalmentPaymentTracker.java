@@ -22,6 +22,9 @@ public class InstalmentPaymentTracker {
         this.deliverySequence = deliverySequence;
     }
 
+    public InstalmentPaymentTracker() {
+    }
+
     public void setDeliveryId(String deliveryId) {
         this.deliveryId = deliveryId;
     }
