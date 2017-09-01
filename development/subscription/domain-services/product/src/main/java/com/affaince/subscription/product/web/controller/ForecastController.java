@@ -5,6 +5,7 @@ import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.*;
+import com.affaince.subscription.product.query.predictions.ProductHistoryRetriever;
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
 import com.affaince.subscription.product.vo.ProductTargetParameters;
@@ -37,21 +38,23 @@ import java.util.List;
 @RequestMapping(value = "/forecast")
 @Component
 public class ForecastController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ForecastController.class);
     private final ProductViewRepository productViewRepository;
     private final ProductForecastViewRepository productForecastViewRepository;
     //private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final SubscriptionCommandGateway commandGateway;
+    private final ProductHistoryRetriever productHistoryRetriever;
 
     @Autowired
-    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, SubscriptionCommandGateway commandGateway) {
+    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductHistoryRetriever productHistoryRetriever,SubscriptionCommandGateway commandGateway) {
         this.productViewRepository = productViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
         //this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
         this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
+        this.productHistoryRetriever = productHistoryRetriever;
         this.commandGateway = commandGateway;
     }
 
@@ -79,6 +82,13 @@ public class ForecastController {
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}")
+    public ResponseEntity<String> forecastDemand(@PathVariable("productid") String productId) throws Exception {
+        productHistoryRetriever.marshallSendAndReceive(productId);
+        return new ResponseEntity<String>(productId, HttpStatus.OK);
+    }
+
 
 /*
     //API to add single/one-by-one forecast manually

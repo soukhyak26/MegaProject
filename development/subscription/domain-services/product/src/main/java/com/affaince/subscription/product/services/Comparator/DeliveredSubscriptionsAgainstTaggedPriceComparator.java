@@ -7,7 +7,7 @@ import java.util.Comparator;
 /**
  * Created by mandar on 4/8/2017.
  */
-public class DeliveredSusbcriptionsAgainstTaggedPriceComparator implements Comparator<DeliveredSubscriptionsAgainstTaggedPrice> {
+public class DeliveredSubscriptionsAgainstTaggedPriceComparator implements Comparator<DeliveredSubscriptionsAgainstTaggedPrice> {
     @Override
     public int compare(DeliveredSubscriptionsAgainstTaggedPrice source, DeliveredSubscriptionsAgainstTaggedPrice destination) {
         return source.getTaggedPriceVersion().getTaggedStartDate().compareTo(destination.getTaggedPriceVersion().getTaggedStartDate());

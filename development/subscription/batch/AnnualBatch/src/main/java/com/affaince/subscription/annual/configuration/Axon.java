@@ -2,8 +2,6 @@ package com.affaince.subscription.annual.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.annual.client.ForecastingClient;
-import com.affaince.subscription.annual.build.ForecastingTrigger;
-import com.affaince.subscription.annual.build.ProductsRetriever;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -62,15 +60,6 @@ public class Axon extends Default {
         return new HashMap<String, String>();
     }
 
-    @Bean
-    public ProductsRetriever productsRetriever() {
-        return new ProductsRetriever();
-    }
-
-    @Bean
-    public ForecastingTrigger forecastingTrigger(){
-        return new ForecastingTrigger();
-    }
 
     @Bean
      public ForecastingClient forecastingClient(){

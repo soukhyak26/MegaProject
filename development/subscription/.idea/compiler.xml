@@ -25,6 +25,7 @@
         <module name="AnnualBatch" />
         <module name="application-simulator" />
         <module name="axon-commons" />
+        <module name="benefit-simulator" />
         <module name="benefits" />
         <module name="business" />
         <module name="ExpenseDistributionBatch" />
@@ -33,6 +34,7 @@
         <module name="item-registration" />
         <module name="logback-commons" />
         <module name="notifications" />
+        <module name="payment-simulator" />
         <module name="payments" />
         <module name="PrepareDeliveryForDispatchBatch" />
         <module name="product" />
@@ -49,6 +51,7 @@
       <module name="AnnualBatch" target="1.8" />
       <module name="application-simulator" target="1.8" />
       <module name="axon-commons" target="1.8" />
+      <module name="benefit-simulator" target="1.8" />
       <module name="benefits" target="1.8" />
       <module name="business" target="1.8" />
       <module name="ExpenseDistributionBatch" target="1.8" />
@@ -56,6 +59,7 @@
       <module name="integration" target="1.8" />
       <module name="logback-commons" target="1.8" />
       <module name="notifications" target="1.8" />
+      <module name="payment-simulator" target="1.8" />
       <module name="payments" target="1.8" />
       <module name="PrepareDeliveryForDispatchBatch" target="1.8" />
       <module name="product" target="1.8" />

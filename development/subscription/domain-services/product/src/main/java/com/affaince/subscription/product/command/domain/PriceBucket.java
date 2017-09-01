@@ -6,7 +6,7 @@ import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.event.DeliveredSubscriptionCountAddedToPriceBucketEvent;
 import com.affaince.subscription.product.command.event.PriceBucketExpiredEvent;
-import com.affaince.subscription.product.services.Comparator.DeliveredSusbcriptionsAgainstTaggedPriceComparator;
+import com.affaince.subscription.product.services.Comparator.DeliveredSubscriptionsAgainstTaggedPriceComparator;
 import com.affaince.subscription.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -193,7 +193,7 @@ public abstract class PriceBucket extends AbstractAnnotatedEntity {
     //local method for updating state - used from withing event sourcing handler
     private void addToDeliveredSubscriptions(long deliveredSubscriptionCount){
         if(null != deliveredSubscriptionsAgainstTaggedPrices){
-            deliveredSubscriptionsAgainstTaggedPrices= new TreeSet<>(new DeliveredSusbcriptionsAgainstTaggedPriceComparator());
+            deliveredSubscriptionsAgainstTaggedPrices= new TreeSet<>(new DeliveredSubscriptionsAgainstTaggedPriceComparator());
         }
         //we are assuming that this collection is sorted in descending order of start date of tagged price version
         DeliveredSubscriptionsAgainstTaggedPrice latestDeliveredSubscriptionsAgainstTaggedPrice= deliveredSubscriptionsAgainstTaggedPrices.iterator().next();

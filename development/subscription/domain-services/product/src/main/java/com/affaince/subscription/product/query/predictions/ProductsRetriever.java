@@ -1,8 +1,8 @@
-package com.affaince.subscription.annual.build;
+package com.affaince.subscription.product.query.predictions;
 
 import com.affaince.subscription.common.type.ProductStatus;
-import com.affaince.subscription.annual.query.repository.ProductActivationStatusViewRepository;
-import com.affaince.subscription.annual.query.view.ProductActivationStatusView;
+import com.affaince.subscription.product.query.repository.ProductActivationStatusViewRepository;
+import com.affaince.subscription.product.query.view.ProductActivationStatusView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
