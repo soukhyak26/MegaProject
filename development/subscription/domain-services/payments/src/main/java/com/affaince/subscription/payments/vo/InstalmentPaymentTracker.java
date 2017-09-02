@@ -1,6 +1,7 @@
 package com.affaince.subscription.payments.vo;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -99,10 +100,12 @@ public class InstalmentPaymentTracker {
         this.paymentReceived -= amount;
     }
 
+    @JsonIgnore
     public boolean isDeliveryDueAmountFulfilled() {
         return (paymentExpected == paymentReceived);
     }
 
+    @JsonIgnore
     public boolean isGivenDeliverySequenceManagedByTracker(int deliverySequence) {
         if (deliverySequencesManagedByATracker.contains(deliverySequence)) {
             return true;
