@@ -3,7 +3,6 @@ package com.affiance.prediction.algos;
 import com.affiance.prediction.config.Forecast;
 import com.affiance.prediction.vo.DataFrameVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import org.apache.http.impl.client.HttpClients;
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -11,6 +10,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,12 +27,11 @@ import java.util.stream.Stream;
 /**
  * Created by mandar on 19-06-2016.
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
 
-    private String forecastUrl="http://localhost:9080/forecast/src";
+    private String forecastUrl="http://192.168.1.100:9000";
 
 
     @Test
@@ -50,6 +49,7 @@ public class ARIMABasedDemandForecasterTest {
         }
         ObjectMapper mapper= new ObjectMapper();
         String requestString = mapper.writeValueAsString(actualsVOs);
+        System.out.println("@@@@requestString: " + requestString);
         initiateForecast(requestString);
     }
     private void initiateForecast(String requestString) {
@@ -59,8 +59,10 @@ public class ARIMABasedDemandForecasterTest {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         Map<String, Object> params = new HashMap<>();
         params.put("request", requestString);
+        HttpEntity<String> request=new HttpEntity<>(requestString);
         System.out.println("$$$$$$$$$$$$$$forecastUrl: " + forecastUrl);
-        restTemplate.put(forecastUrl, null, params);
+        Map<String, String> vars = new HashMap<String, String>();
+        restTemplate.postForLocation(forecastUrl,request);
     }
 
     @After

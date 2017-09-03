@@ -3,7 +3,6 @@ package com.affiance.prediction.transform;
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
 import com.affiance.prediction.vo.DataFrameVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;

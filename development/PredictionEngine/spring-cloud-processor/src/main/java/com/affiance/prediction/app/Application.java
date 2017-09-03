@@ -1,8 +1,8 @@
 package com.affiance.prediction.app;
 
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
-import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import com.affiance.prediction.vo.DataFrameVO;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -28,14 +28,18 @@ public class Application {
 
     @Transformer(inputChannel = Processor.INPUT,
             outputChannel = Processor.OUTPUT)
-    public Object transform(String historicalRecords,Map<String,Object> headers) throws IOException {
+    public String transform(String historicalRecords,Map<String,Object> headers) throws IOException {
         System.out.println("@@@@IN processor");
         Object id=headers.get("entity-id");
         ObjectMapper mapper=new ObjectMapper();
-        List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,List.class);
-        List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id.toString(),dataFrameVOs);
-        String forecastedDataFrameVOString = mapper.writeValueAsString(forecastedRecords);
-        return forecastedDataFrameVOString;
+        List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,new TypeReference<List<DataFrameVO>>(){});
+        for(DataFrameVO df:dataFrameVOs){
+            System.out.println("$$$$$$$$$$$$$$$ dataframevo value"+df.getValue());
+        }
+        //List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id.toString(),dataFrameVOs);
+        //String forecastedDataFrameVOString = mapper.writeValueAsString(forecastedRecords);
+        //return forecastedDataFrameVOString;
+        return mapper.writeValueAsString(dataFrameVOs);
     }
     public static void main(String[] args) {
         SpringApplication.run(

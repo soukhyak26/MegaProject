@@ -9,8 +9,10 @@ import org.springframework.cloud.stream.messaging.Sink;
  */
 @EnableBinding(Sink.class)
 public class MasterMessageListener {
+/*
     @StreamListener(Sink.INPUT)
     public void listen(String data){
-        System.out.println("@@@IN Sink: "+ data);
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@IN Sink: "+ data);
     }
+*/
 }

@@ -1,13 +1,11 @@
 package com.affiance.prediction.config;
 
 import com.affiance.prediction.algos.*;
-import com.affiance.prediction.deserializer.DataFrameVODeserializer;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import com.affiance.prediction.serializer.DataFrameVOSerializer;
 
 /**
  * Created by mandar on 10-01-2017.
@@ -47,13 +45,4 @@ public class Forecast {
         return new ARIMABasedDemandForecaster();
     }
 
-    @Bean
-    DataFrameVODeserializer dataFrameVODeserializer(){
-        return new DataFrameVODeserializer();
-    }
-
-    @Bean
-    DataFrameVOSerializer dataFrameVOSerializer(){
-        return new DataFrameVOSerializer();
-    }
 }
