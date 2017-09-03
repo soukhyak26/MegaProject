@@ -396,9 +396,11 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
         int sequence =findSequenceOfTheDelivery(tempDelivery);
         final BenefitResult benefitResult =
                 calculateBenefits(this.deliveries, tempDelivery.getTotalDeliveryPrice() * (-1), benefitExecutionContext);
-        for (String deliveryKey : benefitResult.getRewardPointsDistribution().keySet()) {
-            Delivery delivery = deliveries.get(deliveryKey);
-            delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryKey));
+        if (benefitResult.getRewardPointsDistribution() != null) {
+            for (String deliveryKey : benefitResult.getRewardPointsDistribution().keySet()) {
+                Delivery delivery = deliveries.get(deliveryKey);
+                delivery.setRewardPoints(benefitResult.getRewardPointsDistribution().get(deliveryKey));
+            }
         }
         apply(new DeliveryDeletedEvent(this.subscriberId, subscriptionId, deliveryId,sequence));
     }
