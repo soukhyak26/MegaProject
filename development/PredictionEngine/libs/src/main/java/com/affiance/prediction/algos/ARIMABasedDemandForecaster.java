@@ -11,7 +11,6 @@ import com.cloudera.sparkts.api.java.JavaTimeSeriesRDDFactory;
 import com.cloudera.sparkts.models.ARIMA;
 import com.cloudera.sparkts.models.ARIMAModel;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -26,17 +25,14 @@ import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import scala.Tuple2;
-import scala.runtime.AbstractFunction1;
-import scala.runtime.AbstractFunction2;
-import scala.runtime.BoxedUnit;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mandar on 19-06-2016.
@@ -86,19 +82,19 @@ public class ARIMABasedDemandForecaster{
     }
 
     public List<DataFrameVO> forecast(String dataIdentifier, List<DataFrameVO> dataFrames) {
+        System.out.println("@@@IN ARIMA");
+        ZoneId zone = ZoneId.systemDefault();
+        System.out.println("@@@dataFrames date"+ dataFrames.get(0).getDate());
+
+        ZonedDateTime startDateTime=ZonedDateTime.of(dataFrames.get(0).getDate().getYear(), dataFrames.get(0).getDate().getMonthOfYear(), dataFrames.get(0).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
+        ZonedDateTime endDateTime= ZonedDateTime.of(dataFrames.get(dataFrames.size() - 1).getDate().getYear(), dataFrames.get(dataFrames.size() - 1).getDate().getMonthOfYear(), dataFrames.get(dataFrames.size() - 1).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
         if (dataFrames.size() > historyMinSizeConstraints.getArima()) {
             String token=dataFrames.get(0).getToken();
             JavaSparkContext javaSparkContext= JavaSparkContext.fromSparkContext(context);
             SQLContext sqlContext = new SQLContext(javaSparkContext);
             DataFrame tickerObs = loadObservations(javaSparkContext, sqlContext, dataFrames);
             // Create an daily DateTimeIndex over August and September 2015
-            ZoneId zone = ZoneId.systemDefault();
-            ZonedDateTime startDateTime=ZonedDateTime.of(dataFrames.get(0).getDate().getYear(), dataFrames.get(0).getDate().getMonthOfYear(), dataFrames.get(0).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
-            ZonedDateTime endDateTime= ZonedDateTime.of(dataFrames.get(dataFrames.size() - 1).getDate().getYear(), dataFrames.get(dataFrames.size() - 1).getDate().getMonthOfYear(), dataFrames.get(dataFrames.size() - 1).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
-            DateTimeIndex dtIndex = DateTimeIndexFactory.uniformFromInterval(
-                    ZonedDateTime.of(dataFrames.get(0).getDate().getYear(), dataFrames.get(0).getDate().getMonthOfYear(), dataFrames.get(0).getDate().getDayOfMonth(), 0, 0, 0, 0, zone),
-                    ZonedDateTime.of(dataFrames.get(dataFrames.size() - 1).getDate().getYear(), dataFrames.get(dataFrames.size() - 1).getDate().getMonthOfYear(), dataFrames.get(dataFrames.size() - 1).getDate().getDayOfMonth(), 0, 0, 0, 0, zone),
-                    new DayFrequency(1));
+            DateTimeIndex dtIndex = DateTimeIndexFactory.uniformFromInterval(startDateTime, endDateTime,new DayFrequency(1));
 
             // Align the ticker data on the DateTimeIndex to create a TimeSeriesRDD
             JavaTimeSeriesRDD tickerTsrdd = JavaTimeSeriesRDDFactory.timeSeriesRDDFromObservations(

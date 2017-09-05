@@ -3,10 +3,11 @@ package com.affiance.prediction.algos;
 import com.affiance.prediction.config.ForecasterConfiguration;
 import com.affiance.prediction.config.ForecasterCreatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**A
  * Created by mandark on 01-05-2016.

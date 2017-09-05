@@ -2,6 +2,8 @@ package com.affiance.prediction.algos;
 
 import com.affiance.prediction.config.Forecast;
 import com.affiance.prediction.vo.DataFrameVO;
+import com.affiance.prediction.vo.EntityHistoryPacket;
+import com.affiance.prediction.vo.EntityType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.impl.client.HttpClients;
 import org.joda.time.LocalDate;
@@ -9,7 +11,6 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -27,6 +28,7 @@ import java.util.stream.Stream;
 /**
  * Created by mandar on 19-06-2016.
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
@@ -47,8 +49,9 @@ public class ARIMABasedDemandForecasterTest {
             System.out.println("total subscription:" + readings[i][0]);
             actualsVOs.add(actualsVO);
         }
+        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,"localahost",27017,"Product","ProductForecastView",actualsVOs);
         ObjectMapper mapper= new ObjectMapper();
-        String requestString = mapper.writeValueAsString(actualsVOs);
+        String requestString = mapper.writeValueAsString(entityHistoryPacket);
         System.out.println("@@@@requestString: " + requestString);
         initiateForecast(requestString);
     }

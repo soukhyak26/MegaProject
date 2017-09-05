@@ -2,7 +2,6 @@ package com.affiance.prediction.config;
 
 import com.affiance.prediction.algos.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;

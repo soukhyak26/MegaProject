@@ -2,10 +2,12 @@ package com.affiance.prediction.app;
 
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
 import com.affiance.prediction.vo.DataFrameVO;
+import com.affiance.prediction.vo.EntityHistoryPacket;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
@@ -22,6 +24,7 @@ import java.util.Map;
 @EnableBinding(Processor.class)
 @SpringBootApplication
 @ComponentScan ("com.affiance")
+@EnableAutoConfiguration
 public class Application {
     @Autowired
     ARIMABasedDemandForecaster arimaBasedDemandForecaster;
@@ -30,16 +33,16 @@ public class Application {
             outputChannel = Processor.OUTPUT)
     public String transform(String historicalRecords,Map<String,Object> headers) throws IOException {
         System.out.println("@@@@IN processor");
-        Object id=headers.get("entity-id");
         ObjectMapper mapper=new ObjectMapper();
-        List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,new TypeReference<List<DataFrameVO>>(){});
-        for(DataFrameVO df:dataFrameVOs){
-            System.out.println("$$$$$$$$$$$$$$$ dataframevo value"+df.getValue());
-        }
-        //List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id.toString(),dataFrameVOs);
-        //String forecastedDataFrameVOString = mapper.writeValueAsString(forecastedRecords);
-        //return forecastedDataFrameVOString;
-        return mapper.writeValueAsString(dataFrameVOs);
+        //List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,new TypeReference<List<DataFrameVO>>(){});
+        EntityHistoryPacket entityHistoryPacket=mapper.readValue(historicalRecords,new TypeReference<EntityHistoryPacket>(){});
+        Object id=entityHistoryPacket.getEntityId();
+        System.out.println("@@@EntityID:" + id.toString());
+        List<DataFrameVO> dataFrameVOs=entityHistoryPacket.getDataFrameVOs();
+        System.out.println("@@@dataframes:" + dataFrameVOs);
+        List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id.toString(),dataFrameVOs);
+        entityHistoryPacket.setDataFrameVOs(forecastedRecords);
+        return mapper.writeValueAsString(entityHistoryPacket);
     }
     public static void main(String[] args) {
         SpringApplication.run(

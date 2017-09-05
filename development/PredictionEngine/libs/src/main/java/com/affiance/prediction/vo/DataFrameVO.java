@@ -3,12 +3,9 @@ package com.affiance.prediction.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Created by mandar on 6/21/2017.
