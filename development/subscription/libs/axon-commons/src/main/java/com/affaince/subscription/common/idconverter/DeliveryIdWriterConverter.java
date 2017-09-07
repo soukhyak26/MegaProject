@@ -14,7 +14,7 @@ public class DeliveryIdWriterConverter implements Converter<DeliveryId, DBObject
         DBObject dbObject = new BasicDBObject();
         dbObject.put("deliveryId", deliveryId.getDeliveryId());
         dbObject.put("subscriberId", deliveryId.getSubscriberId());
-        dbObject.put("subscriptionId", deliveryId.getSubscriberId());
+        dbObject.put("subscriptionId", deliveryId.getSubscriptionId());
         return dbObject;
     }
 }
