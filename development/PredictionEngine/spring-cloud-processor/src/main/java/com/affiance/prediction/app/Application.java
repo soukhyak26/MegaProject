@@ -5,6 +5,7 @@ import com.affiance.prediction.vo.DataFrameVO;
 import com.affiance.prediction.vo.EntityHistoryPacket;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -34,6 +35,7 @@ public class Application {
     public String transform(String historicalRecords,Map<String,Object> headers) throws IOException {
         System.out.println("@@@@IN processor");
         ObjectMapper mapper=new ObjectMapper();
+        mapper.registerModule(new JodaModule());
         //List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,new TypeReference<List<DataFrameVO>>(){});
         EntityHistoryPacket entityHistoryPacket=mapper.readValue(historicalRecords,new TypeReference<EntityHistoryPacket>(){});
         Object id=entityHistoryPacket.getEntityId();

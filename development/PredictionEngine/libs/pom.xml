@@ -29,31 +29,6 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-<!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <configuration>
-                    <shadedArtifactAttached>false</shadedArtifactAttached>
-                    <artifactSet>
-                    <excludes>
-                        <exclude>com.fasterxml.jackson.core:jackson-databind:jar</exclude>
-                        <exclude>com.fasterxml.jackson.core:jackson-annotations:jar</exclude>
-                        <exclude>com.fasterxml.jackson.core:jackson-core:jar</exclude>
-                    </excludes>
-                    </artifactSet>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
--->
-
         </plugins>
     </build>
 
@@ -148,12 +123,11 @@
                     <groupId>com.fasterxml.jackson.datatype</groupId>
                     <artifactId>jackson-datatype-joda</artifactId>
                 </exclusion>
-
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
+            <groupId>org.scala-lang.modules</groupId>
+            <artifactId>scala-xml_2.11</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
@@ -223,25 +197,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-                <dependency>
-                    <groupId>org.apache.spark</groupId>
-                    <artifactId>spark-streaming_2.11</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.spark</groupId>
-                    <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
-                </dependency>
-        -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <!--<scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <!--            <scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

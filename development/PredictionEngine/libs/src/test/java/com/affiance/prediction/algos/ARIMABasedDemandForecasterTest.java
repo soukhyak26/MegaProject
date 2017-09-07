@@ -5,11 +5,13 @@ import com.affiance.prediction.vo.DataFrameVO;
 import com.affiance.prediction.vo.EntityHistoryPacket;
 import com.affiance.prediction.vo.EntityType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.apache.http.impl.client.HttpClients;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -33,7 +35,7 @@ import java.util.stream.Stream;
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
 
-    private String forecastUrl="http://192.168.1.100:9000";
+    private String forecastUrl="http://localhost:9000";
 
 
     @Test
@@ -48,9 +50,11 @@ public class ARIMABasedDemandForecasterTest {
             DataFrameVO actualsVO = new DataFrameVO(fromDate,"pro1", readings[i][0]);
             System.out.println("total subscription:" + readings[i][0]);
             actualsVOs.add(actualsVO);
+            fromDate=fromDate.plusDays(1);
         }
         EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,"localahost",27017,"Product","ProductForecastView",actualsVOs);
         ObjectMapper mapper= new ObjectMapper();
+        mapper.registerModule(new JodaModule());
         String requestString = mapper.writeValueAsString(entityHistoryPacket);
         System.out.println("@@@@requestString: " + requestString);
         initiateForecast(requestString);

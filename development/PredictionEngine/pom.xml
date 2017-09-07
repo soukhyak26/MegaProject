@@ -20,8 +20,8 @@
         <springboot.version>1.5.1.RELEASE</springboot.version>
         <jackson.verson>2.8.6</jackson.verson>
         <aspectj.version>1.8.8</aspectj.version>
-        <spark.version>1.6.3</spark.version>
-        <sparkts.version>0.3.0</sparkts.version>
+        <spark.version>2.0.0</spark.version>
+        <sparkts.version>0.4.0</sparkts.version>
         <logback.version>1.1.6</logback.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud-dependencies.version>Brixton.SR7</spring-cloud-dependencies.version>
@@ -269,18 +269,6 @@
                 <artifactId>spark-mllib_2.11</artifactId>
                 <version>${spark.version}</version>
             </dependency>
-<!--
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-streaming_2.11</artifactId>
-                <version>2.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
-                <version>2.0.0</version>
-            </dependency>
--->
 
             <dependency>
                 <groupId>com.cloudera.sparkts</groupId>
@@ -289,18 +277,12 @@
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.slf4j/log4j-over-slf4j -->
+
             <dependency>
                 <groupId>org.scala-lang.modules</groupId>
                 <artifactId>scala-xml_2.11</artifactId>
                 <version>1.0.6</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-library</artifactId>
-                <version>2.11.1</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>log4j-over-slf4j</artifactId>
@@ -388,13 +370,6 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.verson}</version>
             </dependency>
-<!--
-            <dependency>
-                <groupId>org.springframework.cloud.task.app</groupId>
-                <artifactId>spring-cloud-starter-task-spark-client</artifactId>
-                <version>1.2.0.RELEASE</version>
-            </dependency>
--->
         </dependencies>
     </dependencyManagement>
     <repositories>

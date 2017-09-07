@@ -16,10 +16,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.mllib.linalg.DenseVector;
 import org.apache.spark.mllib.linalg.Vector;
-import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.*;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
@@ -45,17 +42,14 @@ public class ARIMABasedDemandForecaster{
     @Autowired
     private HistoryMaxSizeConstraints historyMaxSizeConstraints;
     @Autowired
-    private SparkContext context;
-/*
-    @Autowired
-    SQLContext sqlContext;
-*/
+    private SparkSession spark;
 
     public ARIMABasedDemandForecaster() {
     }
 
-    private DataFrame loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext,
+    private Dataset<Row> loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext,
                                        List<DataFrameVO> dataFrames) {
+
         JavaRDD<DataFrameVO> dfRdd = sparkContext.parallelize(dataFrames);
         JavaRDD<Row> rowRdd = dfRdd.map((DataFrameVO dataFrameVO) -> {
             ZonedDateTime dt = ZonedDateTime.of(dataFrameVO.getDate().getYear(),
@@ -70,7 +64,7 @@ public class ARIMABasedDemandForecaster{
         fields.add(DataTypes.createStructField("token", DataTypes.StringType, true));
         fields.add(DataTypes.createStructField("value", DataTypes.DoubleType, true));
         StructType schema = DataTypes.createStructType(fields);
-        return sqlContext.createDataFrame(rowRdd, schema);
+        return spark.createDataFrame(rowRdd, schema);
     }
 
     public void addNextForecaster(TimeSeriesBasedForecaster forecaster) {
@@ -90,9 +84,9 @@ public class ARIMABasedDemandForecaster{
         ZonedDateTime endDateTime= ZonedDateTime.of(dataFrames.get(dataFrames.size() - 1).getDate().getYear(), dataFrames.get(dataFrames.size() - 1).getDate().getMonthOfYear(), dataFrames.get(dataFrames.size() - 1).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
         if (dataFrames.size() > historyMinSizeConstraints.getArima()) {
             String token=dataFrames.get(0).getToken();
-            JavaSparkContext javaSparkContext= JavaSparkContext.fromSparkContext(context);
+            JavaSparkContext javaSparkContext= JavaSparkContext.fromSparkContext(spark.sparkContext());
             SQLContext sqlContext = new SQLContext(javaSparkContext);
-            DataFrame tickerObs = loadObservations(javaSparkContext, sqlContext, dataFrames);
+            Dataset<Row> tickerObs = loadObservations(javaSparkContext, sqlContext, dataFrames);
             // Create an daily DateTimeIndex over August and September 2015
             DateTimeIndex dtIndex = DateTimeIndexFactory.uniformFromInterval(startDateTime, endDateTime,new DayFrequency(1));
 
@@ -119,9 +113,8 @@ public class ARIMABasedDemandForecaster{
                     x = (x == Double.NaN) ? 0.0 : x;
                 });
 
-                return new org.apache.spark.mllib.linalg.DenseVector(forecasted.toArray());//.slice(forecasted.size() - (dataFrames.size() / 2 + 1), forecasted.size() - 1));
-            });//.toDF("timestamp", "token", "values");
-            //df.registerTempTable("data");
+                return new org.apache.spark.mllib.linalg.DenseVector(forecasted.toArray());
+            });
             df=df.slice(endDateTime.plusDays(1),endDateTime.plusDays(Math.abs(dataFrames.size()/2)));
             List<Tuple2<ZonedDateTime, Vector>> forecasts = df.toInstants().collect();
             List<DataFrameVO> forecastedSubscriptionCounts = new ArrayList<>();
@@ -131,7 +124,6 @@ public class ARIMABasedDemandForecaster{
                 Vector vector=sample._2();
                 for (int j = 0; j < vector.size(); j++) {
                     double forecastedValue = vector.apply(j);
-                    //forecastedSubscriptionCounts.add(forecastedValue);
                     System.out.println("ARIMA $$$$$forecast: " + forecastedValue);
                     DataFrameVO outputVO= new DataFrameVO(new LocalDate(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth()),token,forecastedValue);
                     forecastedSubscriptionCounts.add(outputVO);
