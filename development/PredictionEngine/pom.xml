@@ -234,12 +234,6 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-mongodb-parent</artifactId>
-                <version>1.9.3.RELEASE</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-redis</artifactId>
                 <version>1.8.6.RELEASE</version>
             </dependency>
@@ -345,15 +339,9 @@
                 <version>1.2.0.RELEASE</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.cloud.stream.app</groupId>
-                <artifactId>mongodb-sink-kafka-10</artifactId>
-                <version>1.2.0.RELEASE</version>
-            </dependency>
-            <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.verson}</version>
-                <!--<scope>compile</scope>-->
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

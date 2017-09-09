@@ -9,6 +9,7 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jms.annotation.EnableJms;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 @AnnotationDriven
 @EnableAspectJAutoProxy
 @PropertySource({"classpath:Application.properties","classpath:common.properties"})
+@EnableJms
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

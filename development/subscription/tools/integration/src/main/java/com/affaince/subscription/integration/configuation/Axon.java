@@ -14,7 +14,14 @@ import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.jms.support.converter.MessageConverter;
+import org.springframework.jms.support.converter.MessageType;
+import org.springframework.jms.support.destination.DynamicDestinationResolver;
 
+import javax.jms.ConnectionFactory;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,4 +117,33 @@ public class Axon extends Default {
     protected Map<String, String> types() {
         return new HashMap<>();
     }
+
+    @Autowired
+    ConnectionFactory connectionFactory;
+    @Bean
+    public DefaultJmsListenerContainerFactory myFactory() {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setDestinationResolver(new DynamicDestinationResolver());
+        factory.setConcurrency("5");
+        return factory;
+    }
+/*
+    @Bean
+    public JmsListenerContainerFactory<?> myFactory(
+            ConnectionFactory connectionFactory,
+            DefaultJmsListenerContainerFactoryConfigurer configurer) {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        configurer.configure(factory, connectionFactory);
+        return factory;
+    }
+    // Serialize message content to json using TextMessage
+    @Bean
+    public MessageConverter jacksonJmsMessageConverter() {
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setTargetType(MessageType.TEXT);
+        converter.setTypeIdPropertyName("_type");
+        return converter;
+    }
+*/
 }

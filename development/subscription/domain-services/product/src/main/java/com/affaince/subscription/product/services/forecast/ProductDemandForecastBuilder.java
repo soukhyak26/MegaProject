@@ -52,31 +52,23 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         //TODO: else add some forecasted values in the actuals data set and recalculate forecast so that it reaches end of the year
         // TODO: This will be required only until initial few months when actuals data is less.
         final LocalDate lastActualsHistoricalRecordEndDate = historicalEndDates.get(historicalEndDates.size() - 1);
-        int forecastSize = 0;
+
         final LocalDate endOfYearDate = new LocalDate(lastActualsHistoricalRecordEndDate.getYear(), 12, 31);
         final int daysBetweenLatestActualsAndEndOfYear = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
-
-        if (daysBetweenLatestActualsAndEndOfYear < 90) {
-            final LocalDate nextYearEndDate = new LocalDate(lastActualsHistoricalRecordEndDate.getYear() + 1, 12, 31);
-            int differenceBetweenLastForecastDateAndEndOfNextYear = Days.daysBetween(lastActualsHistoricalRecordEndDate, nextYearEndDate).getDays();
-            forecastSize = differenceBetweenLastForecastDateAndEndOfNextYear;
-        } else {
-            forecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
-        }
-        forecastSize = 90;
+        final int minimumForecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
 /*
-        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, forecastSize);
-        List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, forecastSize);
+        List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, minimumForecastSize);
+        List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, minimumForecastSize);
 */
         List<DataFrameVO> forecastNewSubscriptions=new ArrayList<>();
-        forecastNewSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionNewCountList,forecastSize));
+        forecastNewSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionNewCountList,minimumForecastSize));
 
 
-        //List<DataFrameVO> forecastChurnedSubscriptions=new ArrayList<>();
-//        forecastChurnedSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionChurnCountList,forecastSize));
+        List<DataFrameVO> forecastChurnedSubscriptions=new ArrayList<>();
+        forecastChurnedSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionChurnCountList,minimumForecastSize));
 
         List<DataFrameVO> forecastTotalSubscriptions=new ArrayList<>();
-        forecastTotalSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalTotalSubscriptionCountList,forecastSize));
+        forecastTotalSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalTotalSubscriptionCountList,minimumForecastSize));
 
 
         List<ProductPseudoActualsView> pseudoActuals = new ArrayList<>(forecastTotalSubscriptions.size());
@@ -89,8 +81,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
             ProductPseudoActualsView dailyPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, forecastTotalSubscriptions.get(i).getDate()),
                     forecastTotalSubscriptions.get(i).getDate(),
                     Double.valueOf(forecastNewSubscriptions.get(i).getValue()).longValue(),
-          //          Double.valueOf(forecastChurnedSubscriptions.get(i).getValue()).longValue(),
-                    0,
+                    Double.valueOf(forecastChurnedSubscriptions.get(i).getValue()).longValue(),
                     Double.valueOf(forecastTotalSubscriptions.get(i).getValue()).longValue(),currentDate);
             pseudoActuals.add(dailyPseudoActualsView);
         }
