@@ -37,6 +37,12 @@ CURRENTSUBSCRIPTIONPERIOD: 'currentSubscriptionPeriod';
 INCREMENTAL: 'incremental';
 WITH_EACH_DELIVERY: 'ondeliverysize';
 
+N: 'N';
+REMAININGN: 'remainingN';
+IN: 'in';
+PROPORTION: 'proportion';
+DEFAULT: 'default';
+
 
 IS : 'is';
 AS : 'as';
@@ -68,6 +74,7 @@ DECIMAL : '-'?[0-9]+('.'[0-9]+)? ;
 IDENTIFIER : [a-zA-Z_][a-zA-Z_0-9]* ;
 
 SEMI : ';' ;
+COMMA : ',';
 
 // COMMENT and WS are stripped from the output token stream by sending
 // to a different channel 'skip'
@@ -180,7 +187,21 @@ conclusion:
     benefit_pay_method;
 
 //payment_percent: DECIMAL;
-benefit_pay_method: INCREMENTAL | WITH_EACH_DELIVERY;
+benefit_pay_method: INCREMENTAL | WITH_EACH_DELIVERY | proportion_expr;
+
+proportion_expr: delivery_number_list DELIVERY
+                 IN proportion_value PROPORTION;
+
+proportion_value :  DEFAULT |
+                    proportion_value COMMA proportion_value |
+                    DECIMAL COMMA |
+                    DECIMAL;
+percent_value: DECIMAL;
+delivery_number_list : delivery_number_list COMMA delivery_number_list |
+                        delivery_number_expr COMMA |
+                        delivery_number_expr;
+
+delivery_number_expr: DECIMAL DIV DECIMAL N | DECIMAL DIV DECIMAL REMAININGN;
 //which_delivey: EACH | ALTERNATE | LAST;
 //option: DELIVERY | SUBSCRIPTION;
 
