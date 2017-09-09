@@ -20,7 +20,7 @@ public class BenefitCompilerApplication {
                 "totalSubscriptionAmount = 1000 " +
                 "and (currentSubscriptionPeriod > 50 or totalLoyaltyPeriod > 36) " +
                 "apply as " +
-                "incremental;");
+                "1/2N, 3/4N delivery in 40, 60 proportion;");
         // JSON serialization
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -29,7 +29,7 @@ public class BenefitCompilerApplication {
         try {
             jsonString = mapper.writeValueAsString(ruleSet);
             Rule rule = mapper.readValue(jsonString, Rule.class);
-            System.out.println(rule.getPointConversionExpression());
+            System.out.println(rule.getBenefitDistributionParameters().getProportionValues());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

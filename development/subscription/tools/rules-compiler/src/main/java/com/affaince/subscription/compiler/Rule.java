@@ -1,5 +1,7 @@
 package com.affaince.subscription.compiler;
 
+import com.affaince.subscription.pojos.BenefitDistributionParameters;
+
 public class Rule {
 
     private String eligibilityCondition ;
@@ -9,6 +11,8 @@ public class Rule {
     private String pointConversionExpression;
 
     private String benefitPaymentMethod;
+
+    private BenefitDistributionParameters benefitDistributionParameters;
 
     public Rule() {
     }
@@ -43,5 +47,13 @@ public class Rule {
 
     public void setBenefitPaymentMethod(String benefitPaymentMethod) {
         this.benefitPaymentMethod = benefitPaymentMethod;
+    }
+
+    public BenefitDistributionParameters getBenefitDistributionParameters() {
+        return benefitDistributionParameters;
+    }
+
+    public void setBenefitDistributionParameters(BenefitDistributionParameters benefitDistributionParameters) {
+        this.benefitDistributionParameters = benefitDistributionParameters;
     }
 }

@@ -2,11 +2,16 @@ package com.affaince.subscription.compiler;
 
 import com.affaince.subscription.BenefitsRulesSetGrammarBaseListener;
 import com.affaince.subscription.BenefitsRulesSetGrammarParser;
+import com.affaince.subscription.PaymentGrammarParser;
+import com.affaince.subscription.pojos.BenefitDistributionParameters;
+import com.affaince.subscription.pojos.DeliveryExpression;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
 
@@ -15,6 +20,7 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
 
     private Conclusion applicability = new Conclusion();
     private Offer offer = new Offer();
+    private BenefitDistributionParameters benefitDistributionParameters;
 
     public RuleSet getRuleSet() {
         return ruleSet;
@@ -31,6 +37,7 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
     @Override
     public void enterSingle_rule(@NotNull BenefitsRulesSetGrammarParser.Single_ruleContext ctx) {
         this.rule = new Rule();
+        this.benefitDistributionParameters = new BenefitDistributionParameters();
     }
 
     @Override
@@ -42,6 +49,7 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
     @Override
     public void exitSingle_rule(@NotNull BenefitsRulesSetGrammarParser.Single_ruleContext ctx) {
         this.ruleSet.addRule(this.rule);
+        this.rule.setBenefitDistributionParameters(this.benefitDistributionParameters);
         this.rule = null;
     }
 
@@ -81,5 +89,23 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
         pointConversionParameters.setPointValue(Double.parseDouble(ctx.point_value().getText()));
         pointConversionParameters.setSubscriptionPeriod(Double.parseDouble(ctx.period_value().getText()));
         rule.setPointConversionParameters(pointConversionParameters);
+    }
+
+    @Override
+    public void exitDelivery_number_list(BenefitsRulesSetGrammarParser.Delivery_number_listContext ctx) {
+        List<DeliveryExpression> deliveryCounts =
+                Stream.of(ctx.getText().split(",")).
+                        <DeliveryExpression>map(DeliveryExpression::create).collect(Collectors.toList());
+        benefitDistributionParameters.setDeliveries(deliveryCounts);
+    }
+
+    @Override
+    public void exitProportion_value(BenefitsRulesSetGrammarParser.Proportion_valueContext ctx) {
+        if (!ctx.getText().equals("default")) {
+            List<Integer> proportionValues =
+                    Stream.of(ctx.getText().split(","))
+                            .mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+            benefitDistributionParameters.setProportionValues(proportionValues);
+        }
     }
 }
