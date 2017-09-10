@@ -52,7 +52,7 @@ public class ARIMABasedDemandForecasterTest {
             actualsVOs.add(actualsVO);
             fromDate=fromDate.plusDays(1);
         }
-        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,"localahost",27017,"Product","ProductForecastView",actualsVOs);
+        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,actualsVOs, LocalDate.now());
         ObjectMapper mapper= new ObjectMapper();
         mapper.registerModule(new JodaModule());
         String requestString = mapper.writeValueAsString(entityHistoryPacket);

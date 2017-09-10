@@ -1,6 +1,7 @@
 package com.affiance.prediction.vo;
 
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
+
 import java.util.List;
 
 /**
