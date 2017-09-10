@@ -1,5 +1,8 @@
 package com.affaince.subscription.benefit.simulator.benefit.state;
 
+
+import com.affaince.subscription.benefit.simulator.benefit.context.BenefitExecutionContext;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +11,9 @@ import java.util.Map;
  */
 public class IncrementalPaymentStrategy implements PaymentStrategy {
     @Override
-    public Map<String, Double> distributeRewardPoints(Map<String, Double> deliveryValues, double rewardPoints) {
+    public void distributeRewardPoints(BenefitExecutionContext context) {
+        final Map<String, Double> deliveryValues = context.getRequest().getDeliveryAmounts();
+        final double rewardPoints = context.getRewardPoints() - context.getRequest().getRewardPointAdjustment();
         final Map<String, Double> deliveryWiseRewardsDistributions = new HashMap<>(deliveryValues.size());
         double multiplier = findMultiplier(deliveryValues.size(), rewardPoints);
         int i = 0;
@@ -22,7 +27,7 @@ public class IncrementalPaymentStrategy implements PaymentStrategy {
                 isMiddlePointReached = true;
             }
         }
-        return deliveryWiseRewardsDistributions;
+        context.setRewardPointsDistribution(deliveryWiseRewardsDistributions);
     }
 
     private double findMultiplier(int size, double rewardPoints) {

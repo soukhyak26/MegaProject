@@ -6,10 +6,12 @@ import com.affaince.subscription.benefit.simulator.benefit.state.EligibilityStat
 import com.affaince.subscription.benefit.simulator.benefit.state.PointConversionState;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class Config {
     @Bean
+    @Scope("prototype")
     public BenefitCalculationState benefitCalculationState () {
         BenefitCalculationState benefitCalculationState = new EligibilityState(
                 new PointConversionState(

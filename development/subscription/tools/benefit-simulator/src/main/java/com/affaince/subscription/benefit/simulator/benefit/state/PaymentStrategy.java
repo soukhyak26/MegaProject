@@ -1,10 +1,11 @@
 package com.affaince.subscription.benefit.simulator.benefit.state;
 
-import java.util.Map;
+
+import com.affaince.subscription.benefit.simulator.benefit.context.BenefitExecutionContext;
 
 /**
  * Created by rbsavaliya on 17-09-2016.
  */
 public interface PaymentStrategy {
-    Map<String, Double> distributeRewardPoints(Map<String, Double> deliveryValues, double rewardPoints);
+    void distributeRewardPoints(BenefitExecutionContext context);
 }
