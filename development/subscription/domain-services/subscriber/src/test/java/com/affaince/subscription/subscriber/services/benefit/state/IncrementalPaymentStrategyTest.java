@@ -1,5 +1,7 @@
 package com.affaince.subscription.subscriber.services.benefit.state;
 
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitCalculationRequest;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,24 +33,34 @@ public class IncrementalPaymentStrategyTest {
 
     @Test
     public void testDistributeRewardPointsForEvenNOOfDeliveries() {
+        BenefitCalculationRequest request = new BenefitCalculationRequest();
+        request.setDeliveryAmounts(deliveryValuesEven);
+        request.setRewardPointAdjustment(0);
+        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
+        benefitExecutionContext.setRequest(request);
+        benefitExecutionContext.addRewardPoints(900);
         PaymentStrategy paymentStrategy = new IncrementalPaymentStrategy();
-        Map<String, Double> deliveryWiseRewardsDistributions =
-                paymentStrategy.distributeRewardPoints(deliveryValuesEven, 900);
+        paymentStrategy.distributeRewardPoints(benefitExecutionContext);
 
-        double totalRewardPoints = deliveryWiseRewardsDistributions.values().
-                stream().mapToDouble(i -> i.doubleValue()).sum();
+        double totalRewardPoints = benefitExecutionContext.getRewardPointsDistribution().values()
+                .stream().mapToDouble(i -> i.doubleValue()).sum();
 
         assertThat(totalRewardPoints, is(900.0));
     }
 
     @Test
     public void testDistributeRewardPointsForOddNOOfDeliveries() {
+        BenefitCalculationRequest request = new BenefitCalculationRequest();
+        request.setDeliveryAmounts(deliveryValuesOdd);
+        request.setRewardPointAdjustment(0);
+        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
+        benefitExecutionContext.setRequest(request);
+        benefitExecutionContext.addRewardPoints(900);
         PaymentStrategy paymentStrategy = new IncrementalPaymentStrategy();
-        Map<String, Double> deliveryWiseRewardsDistributions =
-                paymentStrategy.distributeRewardPoints(deliveryValuesOdd, 900);
+        paymentStrategy.distributeRewardPoints(benefitExecutionContext);
 
-        double totalRewardPoints = deliveryWiseRewardsDistributions.values().
-                stream().mapToDouble(i -> i.doubleValue()).sum();
+        double totalRewardPoints = benefitExecutionContext.getRewardPointsDistribution().values()
+                .stream().mapToDouble(i -> i.doubleValue()).sum();
 
         assertThat(totalRewardPoints, is(900.0));
     }

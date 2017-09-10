@@ -43,6 +43,10 @@ public class BenefitExecutionContext {
         return request;
     }
 
+    public void setRequest(BenefitCalculationRequest request) {
+        this.request = request;
+    }
+
     public void addRewardPoints(double rewardPoints) {
         this.rewardPoints = this.rewardPoints + rewardPoints;
     }

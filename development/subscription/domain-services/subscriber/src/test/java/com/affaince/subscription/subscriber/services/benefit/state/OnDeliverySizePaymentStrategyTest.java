@@ -1,5 +1,7 @@
 package com.affaince.subscription.subscriber.services.benefit.state;
 
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitCalculationRequest;
+import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,12 +28,17 @@ public class OnDeliverySizePaymentStrategyTest {
 
     @Test
     public void testDistributeRewardPoints() {
-        PaymentStrategy paymentStrategy = new OnDeliverySizePaymentStrategy();
-        Map<String, Double> deliveryWiseRewardsDistributions =
-                paymentStrategy.distributeRewardPoints(deliveryValues, 900);
+        BenefitCalculationRequest request = new BenefitCalculationRequest();
+        request.setDeliveryAmounts(deliveryValues);
+        request.setRewardPointAdjustment(0);
+        BenefitExecutionContext benefitExecutionContext = new BenefitExecutionContext();
+        benefitExecutionContext.setRequest(request);
+        benefitExecutionContext.addRewardPoints(900);
+        PaymentStrategy paymentStrategy = new IncrementalPaymentStrategy();
+        paymentStrategy.distributeRewardPoints(benefitExecutionContext);
 
-        double totalRewardPoints = deliveryWiseRewardsDistributions.values().
-                stream().mapToDouble(i -> i.doubleValue()).sum();
+        double totalRewardPoints = benefitExecutionContext.getRewardPointsDistribution().values()
+                .stream().mapToDouble(i -> i.doubleValue()).sum();
 
         assertThat(totalRewardPoints, is(900.0));
     }
