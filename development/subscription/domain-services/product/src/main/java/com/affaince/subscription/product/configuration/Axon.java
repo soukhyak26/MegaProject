@@ -104,6 +104,7 @@ public class Axon extends Default {
             put("com.affaince.subscription.product.command.event.*", "");
             //evene to be recieved from main application regarding current tagged price and stock
             put("com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent", ProductStatusReceivedEvent.class.getName());
+            put("com.affaince.subscription.integration.command.event.forecast.ProductForecastCreatedEvent", ProductForecastCreatedEvent.class.getName());
             //??
             put("com.affaince.subscription.integration.command.event.forecast.ShoppingItemForecastReceivedEvent", ProductForecastReceivedEvent.class.getName());
             //when a new subscription is added or an existing subscription is changed by subscriber then below event carry the changes from subscriber domain to product domain
