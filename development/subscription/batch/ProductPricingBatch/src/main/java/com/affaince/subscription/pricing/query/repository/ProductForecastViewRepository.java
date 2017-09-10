@@ -1,9 +1,8 @@
 package com.affaince.subscription.pricing.query.repository;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -13,6 +12,6 @@ import java.util.List;
  */
 
 public interface ProductForecastViewRepository extends CrudRepository<ProductForecastView, ProductVersionId> {
-    public List<ProductForecastView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
-    List<ProductForecastView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateAsc(String productId, ProductForecastStatus productForecastStatus);
+    public List<ProductForecastView> findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc(String productId, ForecastContentStatus forecastContentStatus);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateAsc(String productId, ForecastContentStatus forecastContentStatus);
 }

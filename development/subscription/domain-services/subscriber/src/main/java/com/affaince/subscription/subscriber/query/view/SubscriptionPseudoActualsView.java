@@ -6,27 +6,25 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by mandar on 8/30/2017.
+ * Created by mandar on 9/10/2017.
  */
-@Document(collection="SubscriptionForecastView")
-public class SubscriptionForecastView {
+@Document(collection="SubscriptionPseudoActualsView")
+public class SubscriptionPseudoActualsView {
     @Id
     private LocalDate registrationDate;
-    private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalSubscriptions;
     private ForecastContentStatus forecastContentStatus;
     private LocalDate forecastDate;
 
-    public SubscriptionForecastView(LocalDate registrationDate,LocalDate endDate,LocalDate forecastDate){
+    public SubscriptionPseudoActualsView(LocalDate registrationDate, LocalDate forecastDate){
         this.registrationDate = registrationDate;
-        this.endDate=endDate;
         this.forecastDate=forecastDate;
     }
-    public SubscriptionForecastView(LocalDate registrationDate, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions,LocalDate forecastDate) {
+
+    public SubscriptionPseudoActualsView(LocalDate registrationDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions,LocalDate forecastDate) {
         this.registrationDate = registrationDate;
-        this.endDate=endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalSubscriptions = totalSubscriptions;
@@ -93,11 +91,4 @@ public class SubscriptionForecastView {
         this.forecastDate = forecastDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 }

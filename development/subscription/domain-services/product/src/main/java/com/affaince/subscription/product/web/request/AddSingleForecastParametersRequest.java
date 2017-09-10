@@ -2,7 +2,7 @@ package com.affaince.subscription.product.web.request;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -22,16 +22,16 @@ public class AddSingleForecastParametersRequest {
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     //  private long numberOfTotalSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
-    public AddSingleForecastParametersRequest(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+    public AddSingleForecastParametersRequest(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
-        this.productForecastStatus=productForecastStatus.ACTIVE;
+        this.forecastContentStatus = forecastContentStatus.ACTIVE;
     }
 
     public LocalDate getStartDate() {
@@ -58,7 +58,7 @@ public class AddSingleForecastParametersRequest {
         return numberOfChurnedSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 }

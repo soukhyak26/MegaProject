@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.*;
@@ -100,7 +100,7 @@ public class ForecastController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        AddSingularManualForecastCommand command = new AddSingularManualForecastCommand(productId, request.getFromDate(),request.getEndDate(),request.getPurchasePricePerUnit(),request.getMrp(),request.getNumberOfNewSubscriptions(),request.getNumberOfChurnedSubscriptions(),request.getProductForecastStatus());
+        AddSingularManualForecastCommand command = new AddSingularManualForecastCommand(productId, request.getFromDate(),request.getEndDate(),request.getPurchasePricePerUnit(),request.getMrp(),request.getNumberOfNewSubscriptions(),request.getNumberOfChurnedSubscriptions(),request.getForecastContentStatus());
         commandGateway.executeAsync(command);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
@@ -164,7 +164,7 @@ public class ForecastController {
         if (null != existingForecastViews && existingForecastViews.size() == 0) {
             for (ProductForecastView eachView : existingForecastViews) {
                 //this.productForecastViewRepository.delete(eachView);
-                eachView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
+                eachView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
                 this.productForecastViewRepository.save(eachView);
                 modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions(),SysDate.now());
             }
@@ -206,7 +206,7 @@ public class ForecastController {
             lastEndDate = parameter.getEndDate();
 
             ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, parameter.getFromDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions);
-            productPseudoActualsView.setProductForecastStatus(ProductForecastStatus.ACTIVE);
+            productPseudoActualsView.setForecastContentStatus(ForecastContentStatus.ACTIVE);
             productPseudoActualsViewRepository.save(productPseudoActualsView);
         }
         AddManualPseudoActualsCommand command = new AddManualPseudoActualsCommand(productId, forecastParameters,totalSubscriptions, firstStartDate, lastEndDate);
@@ -234,10 +234,10 @@ public class ForecastController {
         if (null != existingPseudoActualsViews && existingPseudoActualsViews.size() == 0) {
             for (ProductPseudoActualsView eachView : existingPseudoActualsViews) {
                 //this.productForecastViewRepository.delete(eachView);
-                eachView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
+                eachView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
                 this.productPseudoActualsViewRepository.save(eachView);
                 modifiedView = new ProductPseudoActualsView(new ProductVersionId(productId, request.getFromDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions());
-                modifiedView.setProductForecastStatus(ProductForecastStatus.ACTIVE);
+                modifiedView.setForecastContentStatus(ForecastContentStatus.ACTIVE);
             }
         } else {
             throw ProductForecastModificationException.client(productId, request.getFromDate(), request.getEndDate());
@@ -264,8 +264,8 @@ public class ForecastController {
         final List<ProductForecastView> productForecastViews = new ArrayList<>();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         productForecastViewRepository.
-                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateAsc
-                        (productId, ProductForecastStatus.ACTIVE).forEach
+                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateAsc
+                        (productId, ForecastContentStatus.ACTIVE).forEach
                 (productForecastMetricsView -> productForecastViews.add(productForecastMetricsView));
         final ObjectMapper objectMapper = new ObjectMapper();
         return productForecastViews.get(productForecastViews.size()-1).getNewSubscriptions();

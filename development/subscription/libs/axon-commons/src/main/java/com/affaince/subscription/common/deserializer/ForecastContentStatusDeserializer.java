@@ -1,6 +1,6 @@
 package com.affaince.subscription.common.deserializer;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
@@ -12,13 +12,13 @@ import java.io.IOException;
 /**
  * Created by mandar on 09-10-2016.
  */
-public class ProductForecastStatusDeserializer extends JsonDeserializer<ProductForecastStatus> {
+public class ForecastContentStatusDeserializer extends JsonDeserializer<ForecastContentStatus> {
     @Override
-    public ProductForecastStatus deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public ForecastContentStatus deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonToken currentToken = jsonParser.getCurrentToken();
         if (currentToken == JsonToken.VALUE_STRING) {
             int forecastStatusValue = jsonParser.getIntValue();
-            for (ProductForecastStatus forecastStatus : ProductForecastStatus.values()) {
+            for (ForecastContentStatus forecastStatus : ForecastContentStatus.values()) {
                 if (forecastStatus.getForecastStatusValue() == forecastStatusValue) {
                     return forecastStatus;
                 }

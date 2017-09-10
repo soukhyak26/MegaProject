@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.query.repository;
 
 import com.affaince.subscription.business.query.view.ProductForecastView;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.domain.Sort;
@@ -22,7 +22,7 @@ public interface ProductForecastViewRepository extends CrudRepository<ProductFor
 
     ProductForecastView findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc(String productId);
 
-    List<ProductForecastView> findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(String productId, ProductForecastStatus productForecastStatus);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc(String productId, ForecastContentStatus forecastContentStatus);
 
     List<ProductForecastView> findByProductVersionId_ProductIdAndProductVersionId_FromDateGreaterThan(String productId, LocalDate fromDate);
 

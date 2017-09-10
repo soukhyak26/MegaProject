@@ -1,13 +1,11 @@
 package com.affaince.subscription.product.query.repository;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import junit.framework.TestCase;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,9 +91,9 @@ public class ProductForecastViewRepositoryTest {
     }
 
     @Test
-    public void testFindByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc () {
+    public void testFindByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc () {
         List<ProductForecastView> productForecastViewList = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc("1", ProductForecastStatus.ACTIVE);
+                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc("1", ForecastContentStatus.ACTIVE);
         assertThat(productForecastViewList.size(), is(3));
         ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
         assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));

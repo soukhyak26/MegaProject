@@ -1,11 +1,10 @@
 package com.affaince.subscription.pricing.build;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +30,14 @@ public class ProductForecastViewBuilder {
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110, ForecastContentStatus.ACTIVE
         );
         productForecastViewRepository.save(productForecastView1);
 
         ProductForecastView productForecastView2 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(31)),
                 localDate.plusDays(51),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110, ForecastContentStatus.ACTIVE
         );
 
         productForecastViewRepository.save(productForecastView2);
@@ -46,7 +45,7 @@ public class ProductForecastViewBuilder {
         ProductForecastView productForecastView3 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(52)),
                 localDate.plusDays(74),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110, ForecastContentStatus.ACTIVE
         );
 
         productForecastViewRepository.save(productForecastView3);
@@ -60,7 +59,7 @@ public class ProductForecastViewBuilder {
             for (int i = 0; i < readings.length; i++) {
                 LocalDate newDate = localDate.plusDays(i + 1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ACTIVE);
+                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000, ForecastContentStatus.ACTIVE);
                 productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }

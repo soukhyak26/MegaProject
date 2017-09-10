@@ -2,7 +2,7 @@ package com.affaince.subscription.expensedistribution.query.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -19,7 +19,7 @@ public class ProductForecastView {
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
     public ProductForecastView() {
     }
@@ -64,11 +64,11 @@ public class ProductForecastView {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 
-    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
-        this.productForecastStatus = productForecastStatus;
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
     }
 }

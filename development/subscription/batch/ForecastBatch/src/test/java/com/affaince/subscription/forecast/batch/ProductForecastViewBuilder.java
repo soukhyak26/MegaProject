@@ -1,7 +1,7 @@
 package com.affaince.subscription.forecast.batch;
 
 import com.affaince.subscription.common.dateutil.ForecastDatesProvider;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.forecast.product.ProductForecastClient;
 import com.affaince.subscription.repository.IdGenerator;
 import org.joda.time.LocalDateTime;
@@ -34,14 +34,14 @@ public class ProductForecastViewBuilder {
         ProductForecastView productForecastView1 = new ProductForecastView(
                 new ProductVersionId("1", localDate),
                 localDate.plusDays(30),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110, ForecastContentStatus.ACTIVE
         );
         productForecastViewRepository.save(productForecastView1);
 
         ProductForecastView productForecastView2 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(31)),
                 localDate.plusDays(51),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110, ForecastContentStatus.ACTIVE
         );
 
         productForecastViewRepository.save(productForecastView2);
@@ -49,7 +49,7 @@ public class ProductForecastViewBuilder {
         ProductForecastView productForecastView3 = new ProductForecastView(
                 new ProductVersionId("1", localDate.plusDays(52)),
                 localDate.plusDays(74),
-                100, 20, 110, ProductForecastStatus.ACTIVE
+                100, 20, 110, ForecastContentStatus.ACTIVE
         );
 
         productForecastViewRepository.save(productForecastView3);
@@ -63,7 +63,7 @@ public class ProductForecastViewBuilder {
             for (int i = 0; i < readings.length; i++) {
                 LocalDateTime newDate = localDate.plusDays(i + 1);
                 ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000, ProductForecastStatus.ACTIVE);
+                        new LocalDateTime(9999, 12, 31, 0, 0, 0), readings[i][0], readings[i][1], 1000, ForecastContentStatus.ACTIVE);
                 productForecastViewList.add(productForecastView);
                 //productForecastMetricsViewRepository.save(actualMetrics);
             }
@@ -90,7 +90,7 @@ public class ProductForecastViewBuilder {
                                 forecastAttributeMapPerProduct.put("endDate", newForecastDates[1]);
                                 forecastAttributeMapPerProduct.put("numberOfNewSubscriptions", readings[i][0]);
                                 forecastAttributeMapPerProduct.put("numberOfChurnedSubscriptions", readings[i][1]);
-                                forecastAttributeMapPerProduct.put("productForecastStatus", ProductForecastStatus.ACTIVE.toString());
+                                forecastAttributeMapPerProduct.put("productForecastStatus", ForecastContentStatus.ACTIVE.toString());
                             }
                             productForecastClient.addForecast(productId, forecastAttributeMapPerProduct);
                         } catch (IOException ex2) {
@@ -122,7 +122,7 @@ public class ProductForecastViewBuilder {
                                 forecastAttributeMapPerProduct.put("endDate", newForecastDates[1]);
                                 forecastAttributeMapPerProduct.put("numberOfNewSubscriptions", readings[i][0]);
                                 forecastAttributeMapPerProduct.put("numberOfChurnedSubscriptions", readings[i][1]);
-                                forecastAttributeMapPerProduct.put("productForecastStatus", ProductForecastStatus.ACTIVE.toString());
+                                forecastAttributeMapPerProduct.put("productForecastStatus", ForecastContentStatus.ACTIVE.toString());
                             }
                             productForecastClient.addStepForecast(productId, forecastAttributeMapPerProduct);
                         } catch (IOException ex2) {

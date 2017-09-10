@@ -288,7 +288,7 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
 
 /*
-    public void registerSingularManualForecast(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+    public void registerSingularManualForecast(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ForecastContentStatus productForecastStatus) {
         apply(new ManualSingularForecastAddedEvent(productId, startDate, endDate, purchasePricePerUnit, mrp, numberOfNewSubscriptions, numberOfChurnedSubscriptions, productForecastStatus));
     }
 */

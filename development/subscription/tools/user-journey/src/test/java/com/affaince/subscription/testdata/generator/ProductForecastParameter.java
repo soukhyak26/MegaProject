@@ -56,7 +56,7 @@ public class ProductForecastParameter {
         return numberOfChurnedSubscriptions;
     }
 
-    public int getProductForecastStatus() {
+    public int getForecastContentStatus() {
         return productForecastStatus;
     }
 }

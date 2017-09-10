@@ -1,7 +1,6 @@
 package com.affaince.subscription.pricing.query.view;
 
-import com.affaince.subscription.common.type.EntityStatus;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -18,7 +17,7 @@ public class ProductPseudoActualsView {
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
 
     public ProductPseudoActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
@@ -27,7 +26,7 @@ public class ProductPseudoActualsView {
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.productForecastStatus= ProductForecastStatus.ACTIVE;
+        this.forecastContentStatus = ForecastContentStatus.ACTIVE;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -66,11 +65,11 @@ public class ProductPseudoActualsView {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 
-    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
-        this.productForecastStatus = productForecastStatus;
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
     }
 }

@@ -2,7 +2,7 @@ package com.affaince.subscription.common.vo;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -24,14 +24,14 @@ public class ProductForecastParameter implements Serializable {
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
   //  private long numberOfTotalSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
-    public ProductForecastParameter(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastParameter(LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.purchasePricePerUnit = purchasePricePerUnit;
         this.MRP = MRP;
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
-        this.productForecastStatus = productForecastStatus;
+        this.forecastContentStatus = forecastContentStatus;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -87,11 +87,11 @@ public class ProductForecastParameter implements Serializable {
         this.endDate = endDate;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 
-    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
-        this.productForecastStatus = productForecastStatus;
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
     }
 }

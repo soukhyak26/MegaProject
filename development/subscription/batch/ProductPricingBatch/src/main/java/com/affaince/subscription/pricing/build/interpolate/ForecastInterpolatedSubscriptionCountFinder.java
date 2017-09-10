@@ -1,7 +1,7 @@
 package com.affaince.subscription.pricing.build.interpolate;
 
 import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.pricing.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductForecastView;
 import org.joda.time.Days;
@@ -25,8 +25,8 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     public double[] getDailyInterpolatedTotalSubscriptionCounts(String productId) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc
-                        (productId, ProductForecastStatus.ACTIVE);
+                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc
+                        (productId, ForecastContentStatus.ACTIVE);
         ProductForecastView firstForecastView = registeredForecastValues.get(registeredForecastValues.size() - 1);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
         double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
@@ -51,8 +51,8 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     public double getDailyInterpolatedTotalSubscriptionCountAsOnDate(String productId, LocalDate date) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateAsc
-                        (productId, ProductForecastStatus.ACTIVE);
+                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateAsc
+                        (productId, ForecastContentStatus.ACTIVE);
         ProductForecastView firstForecastView = registeredForecastValues.get(0);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
         double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken

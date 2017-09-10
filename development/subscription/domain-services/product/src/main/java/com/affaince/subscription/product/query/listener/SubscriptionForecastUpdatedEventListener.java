@@ -1,12 +1,10 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.event.SubscriptionForecastUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
-import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +26,9 @@ public class SubscriptionForecastUpdatedEventListener {
 
     @EventHandler
     public void on(SubscriptionForecastUpdatedEvent event) {
-        List<ProductForecastView> earlierForecastsWithOverlappingPeriods = productForecastViewRepository.findByProductVersionId_ProductIdAndProductForecastStatusAndForecastDateLessThan(event.getProductId(), ProductForecastStatus.ACTIVE, event.getForecastDate());
+        List<ProductForecastView> earlierForecastsWithOverlappingPeriods = productForecastViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(event.getProductId(), ForecastContentStatus.ACTIVE, event.getForecastDate());
         for (ProductForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
-            earlierView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
+            earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
         if(null != earlierForecastsWithOverlappingPeriods && earlierForecastsWithOverlappingPeriods.size()>0){
             productForecastViewRepository.save(earlierForecastsWithOverlappingPeriods);

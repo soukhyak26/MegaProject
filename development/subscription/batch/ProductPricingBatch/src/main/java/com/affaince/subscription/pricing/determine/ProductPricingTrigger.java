@@ -1,25 +1,18 @@
 package com.affaince.subscription.pricing.determine;
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.common.type.ProductForecastStatus;
 import com.affaince.subscription.common.type.WeightedProductDemandTrend;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
 import com.affaince.subscription.pricing.exception.NoMatchingForecastForActualSubscriptionException;
 import com.affaince.subscription.pricing.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.pricing.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.pricing.query.view.ProductActualsView;
 import com.affaince.subscription.pricing.query.view.ProductPseudoActualsView;
-import org.apache.commons.math3.stat.inference.OneWayAnova;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,7 +69,7 @@ public class ProductPricingTrigger {
         final double totalActualSubscriptionCount = latestProductActualsView.getTotalNumberOfExistingSubscriptions();
 
         //find total subscription count for the current day(day of execution)
-        //List<ProductPseudoActualsView> activePseudoActualsViews= productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndProductForecastStatusOrderByProductVersionId_FromDateDesc(productId, ProductForecastStatus.ACTIVE);
+        //List<ProductPseudoActualsView> activePseudoActualsViews= productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc(productId, ForecastContentStatus.ACTIVE);
         ProductPseudoActualsView activePseudoActualsView = productPseudoActualsViewRepository.findByProductVersionId_ProductId(productId, sort).get(0);
 
         //find value of total subscriptions in PseudoActuals on date of execution.

@@ -1,11 +1,7 @@
 package com.affaince.subscription.business.query.view;
 
-import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,16 +15,16 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
     private final ProductVersionId productVersionId;
     private LocalDate endDate;
     private long totalNumberOfExistingSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
 /*
-    public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.productForecastStatus = productForecastStatus;
+        this.forecastContentStatus = forecastContentStatus;
     }
 */
 
@@ -36,7 +32,7 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.productForecastStatus = ProductForecastStatus.ACTIVE;
+        this.forecastContentStatus = ForecastContentStatus.ACTIVE;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -60,12 +56,12 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 
-    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
-        this.productForecastStatus = productForecastStatus;
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
     }
 
     public int compareTo(ProductForecastView o) {

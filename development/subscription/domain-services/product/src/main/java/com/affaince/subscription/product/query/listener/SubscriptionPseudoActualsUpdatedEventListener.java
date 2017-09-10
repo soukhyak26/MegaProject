@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.query.listener;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.event.SubscriptionPseudoActualsUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
@@ -26,9 +26,9 @@ public class SubscriptionPseudoActualsUpdatedEventListener {
 
     @EventHandler
     public void on(SubscriptionPseudoActualsUpdatedEvent event) {
-        List<ProductPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndProductForecastStatusAndForecastDateLessThan(event.getProductId(), ProductForecastStatus.ACTIVE, event.getForecastDate());
+        List<ProductPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(event.getProductId(), ForecastContentStatus.ACTIVE, event.getForecastDate());
         for (ProductPseudoActualsView earlierView : earlierPseudoActualsWithOverlappingPeriods) {
-            earlierView.setProductForecastStatus(ProductForecastStatus.EXPIRED);
+            earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
         if(null !=earlierPseudoActualsWithOverlappingPeriods && earlierPseudoActualsWithOverlappingPeriods.size()>0){
             productPseudoActualsViewRepository.save(earlierPseudoActualsWithOverlappingPeriods);

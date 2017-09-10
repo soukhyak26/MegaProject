@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -18,7 +18,7 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
     private LocalDate forecastDate;
 
     public ProductPseudoActualsView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions,LocalDate forecastDate) {
@@ -27,7 +27,7 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.productForecastStatus = ProductForecastStatus.ACTIVE;
+        this.forecastContentStatus = ForecastContentStatus.ACTIVE;
         this.forecastDate=forecastDate;
     }
 
@@ -67,12 +67,12 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 
-    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
-        this.productForecastStatus = productForecastStatus;
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
     }
 
     public LocalDate getForecastDate() {

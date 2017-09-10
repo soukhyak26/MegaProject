@@ -2,7 +2,7 @@ package com.affaince.subscription.product.command;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
@@ -25,9 +25,9 @@ public class AddSingularManualForecastCommand {
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
     //  private long numberOfTotalSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
-    public AddSingularManualForecastCommand(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+    public AddSingularManualForecastCommand(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double MRP, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.productId = productId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -35,7 +35,7 @@ public class AddSingularManualForecastCommand {
         this.MRP = MRP;
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
-        this.productForecastStatus = productForecastStatus;
+        this.forecastContentStatus = forecastContentStatus;
     }
 
     public String getProductId() {
@@ -66,7 +66,7 @@ public class AddSingularManualForecastCommand {
         return numberOfChurnedSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 }

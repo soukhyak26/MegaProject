@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.command.event;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import org.joda.time.LocalDate;
 
 /**
@@ -14,9 +14,9 @@ public class ManualSingularForecastAddedEvent {
     private double mrp;
     private long numberOfNewSubscriptions;
     private long numberOfChurnedSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
-    public ManualSingularForecastAddedEvent(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ManualSingularForecastAddedEvent(String productId, LocalDate startDate, LocalDate endDate, double purchasePricePerUnit, double mrp, long numberOfNewSubscriptions, long numberOfChurnedSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.productId = productId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -24,7 +24,7 @@ public class ManualSingularForecastAddedEvent {
         this.mrp = mrp;
         this.numberOfNewSubscriptions = numberOfNewSubscriptions;
         this.numberOfChurnedSubscriptions = numberOfChurnedSubscriptions;
-        this.productForecastStatus = productForecastStatus;
+        this.forecastContentStatus = forecastContentStatus;
     }
 
     public String getProductId() {
@@ -55,7 +55,7 @@ public class ManualSingularForecastAddedEvent {
         return numberOfChurnedSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 }

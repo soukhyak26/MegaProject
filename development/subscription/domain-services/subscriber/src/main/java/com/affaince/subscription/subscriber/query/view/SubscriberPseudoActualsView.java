@@ -6,33 +6,30 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Created by mandar on 9/1/2017.
+ * Created by mandar on 9/10/2017.
  */
-@Document(collection="SubscribersForecastView")
-public class SubscribersForecastView {
+@Document(collection="SubscriberPseudoActualsView")
+public class SubscriberPseudoActualsView {
     @Id
     private LocalDate registrationDate;
-    private LocalDate endDate;
     private long newSubscribers;
     private long churnedSubscribers;
     private long totalSubscribers;
     private ForecastContentStatus forecastContentStatus;
     private LocalDate forecastDate;
 
-    public SubscribersForecastView(LocalDate registrationDate,LocalDate endDate,LocalDate forecastDate){
+    public SubscriberPseudoActualsView(LocalDate registrationDate,LocalDate forecastDate){
         this.registrationDate = registrationDate;
-        this.endDate=endDate;
         this.forecastDate=forecastDate;
     }
 
-    public SubscribersForecastView(LocalDate registrationDate, LocalDate endDate,long newSubscribers, long churnedSubscribers, long totalSubscribers,LocalDate foreastDate) {
+    public SubscriberPseudoActualsView(LocalDate registrationDate, long newSubscribers, long churnedSubscribers, long totalSubscribers, LocalDate forecastDate) {
         this.registrationDate = registrationDate;
-        this.endDate=endDate;
         this.newSubscribers = newSubscribers;
         this.churnedSubscribers = churnedSubscribers;
         this.totalSubscribers = totalSubscribers;
         this.forecastContentStatus=ForecastContentStatus.ACTIVE;
-        this.forecastDate=foreastDate;
+        this.forecastDate=forecastDate;
     }
 
     public void addToNewSubscriptionCount(long subscriptionCount){
@@ -60,6 +57,7 @@ public class SubscribersForecastView {
     public long getTotalSubscribers() {
         return totalSubscribers;
     }
+
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
@@ -93,11 +91,4 @@ public class SubscribersForecastView {
         this.forecastDate = forecastDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 }

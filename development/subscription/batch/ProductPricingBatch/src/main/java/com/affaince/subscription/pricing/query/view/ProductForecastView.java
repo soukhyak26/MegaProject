@@ -1,6 +1,6 @@
 package com.affaince.subscription.pricing.query.view;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -17,15 +17,15 @@ public class ProductForecastView {
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
-    private ProductForecastStatus productForecastStatus;
+    private ForecastContentStatus forecastContentStatus;
 
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ProductForecastStatus productForecastStatus) {
+    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.productForecastStatus = productForecastStatus;
+        this.forecastContentStatus = forecastContentStatus;
     }
 
     public ProductVersionId getProductVersionId() {
@@ -64,11 +64,11 @@ public class ProductForecastView {
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
     }
 
-    public ProductForecastStatus getProductForecastStatus() {
-        return productForecastStatus;
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
     }
 
-    public void setProductForecastStatus(ProductForecastStatus productForecastStatus) {
-        this.productForecastStatus = productForecastStatus;
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
     }
 }

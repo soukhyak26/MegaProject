@@ -1,6 +1,6 @@
 package com.affaince.subscription.product.query.repository;
 
-import com.affaince.subscription.common.type.ProductForecastStatus;
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
 import org.joda.time.LocalDate;
@@ -30,5 +30,5 @@ public interface ProductPseudoActualsViewRepository extends CrudRepository<Produ
     List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateLessThan(String productId, LocalDateTime endDate,Sort sort);
 
     List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
-    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndProductForecastStatusAndForecastDateLessThan(String productId, ProductForecastStatus productForecastStatus, LocalDate forecastDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(String productId, ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
 }
