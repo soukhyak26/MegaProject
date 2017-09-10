@@ -72,13 +72,16 @@ public class SubscriptionController {
         final long productQuantity = productView.getNetQuantity();
         final QuantityUnit productQuantityUnit = productView.getQuantityUnit();
         double productQuantityInGrms = productQuantity;
+        final LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(
+                productView.getProductId()
+        );
         if (productQuantityUnit == QuantityUnit.KG || productQuantityUnit == QuantityUnit.LT) {
             productQuantityInGrms = productQuantity * 1000;
         } else if (productQuantityUnit == QuantityUnit.ml) {
             productQuantityInGrms = productQuantity;
         }
         final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriberId,
-                request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
+                request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), latestPriceBucketView.getOfferedPricePerUnit(),
                 request.getOfferedPriceWithBasketLevelDiscount(), request.getNoOfCycles(), productQuantityInGrms,
                 productView.getProductPricingCategory());
         try {
@@ -95,6 +98,9 @@ public class SubscriptionController {
                                                         @RequestBody @Valid AddSubscriptionRequest addSubscriptionRequest) throws Exception {
         for (BasketItemRequest request: addSubscriptionRequest.getBasketItemRequests()) {
             final ProductView productView = productViewRepository.findOne(request.getProductId());
+            final LatestPriceBucketView latestPriceBucketView = latestPriceBucketViewRepository.findOne(
+                    productView.getProductId()
+            );
             final long productQuantity = productView.getNetQuantity();
             final QuantityUnit productQuantityUnit = productView.getQuantityUnit();
             double productQuantityInGrms = productQuantity;
@@ -104,7 +110,7 @@ public class SubscriptionController {
                 productQuantityInGrms = productQuantity;
             }
             final AddItemToSubscriptionCommand command = new AddItemToSubscriptionCommand(subscriberId,
-                    request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), request.getDiscountedOfferedPrice(),
+                    request.getProductId(), request.getCountPerPeriod(), request.getPeriod(), latestPriceBucketView.getOfferedPricePerUnit(),
                     request.getOfferedPriceWithBasketLevelDiscount(), request.getNoOfCycles(), productQuantityInGrms,
                     productView.getProductPricingCategory());
             try {
