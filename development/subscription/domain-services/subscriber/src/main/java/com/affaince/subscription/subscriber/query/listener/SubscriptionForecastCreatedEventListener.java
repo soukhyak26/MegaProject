@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SubscriptionForecastCreatedEventListener {
 
     private final SubscriptionForecastViewRepository subscriptionForecastViewRepository;
-
+    @Autowired
     public SubscriptionForecastCreatedEventListener(SubscriptionForecastViewRepository subscriptionForecastViewRepository) {
         this.subscriptionForecastViewRepository = subscriptionForecastViewRepository;
     }
