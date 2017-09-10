@@ -155,7 +155,7 @@ object BenefitEquation {
         StringBody(
           """
             |{
-              | "benefitEquation":"given 100 currency and 2 month = 3 point configure as (currentSubscriptionAmount/subscriptionValue/subscriptionPeriod)*currentSubscriptionPeriod eligible when totalSubscriptionAmount >= 500 and (currentSubscriptionPeriod > 5 or totalLoyaltyPeriod > 5) apply as 1/2N, 3/4N delivery in 40, 60 proportion;",
+              | "benefitEquation":"given 100 currency and 2 month = 3 point configure as (currentSubscriptionAmount/subscriptionValue/subscriptionPeriod)*currentSubscriptionPeriod eligible when currentSubscriptionAmount >= 1000 and (currentSubscriptionPeriod > 5 or totalLoyaltyPeriod > 5) apply as 1/2N, 3/4N delivery in 40, 60 proportion;",
               |	"activationStartTime":"2016-09-29",
               |	"activationEndTime":"2020-12-30"
             |}
