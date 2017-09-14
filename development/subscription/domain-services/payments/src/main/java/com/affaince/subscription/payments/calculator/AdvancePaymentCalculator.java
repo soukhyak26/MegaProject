@@ -38,6 +38,7 @@ public class AdvancePaymentCalculator implements PaymentCalculator {
             tracker.setPaymentExpected(
                     deliveryPrices.values().stream().mapToDouble(Double::doubleValue).sum()
                             * (advancePaymentParameters.getPercentValue() / 100)
+
             );
         }
 

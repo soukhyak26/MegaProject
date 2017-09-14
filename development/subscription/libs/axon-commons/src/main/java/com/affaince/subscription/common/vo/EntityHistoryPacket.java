@@ -10,13 +10,15 @@ import java.util.List;
 public class EntityHistoryPacket {
     private Object entityId;
     private EntityType entityType;
+    private EntityMetricType entityMetricType;
     private List<DataFrameVO> dataFrameVOs;
     private LocalDate forecastDate;
 
     public EntityHistoryPacket(){}
-    public EntityHistoryPacket(Object entityId, EntityType entityType, List<DataFrameVO> dataFrameVOs,LocalDate forecastDate) {
+    public EntityHistoryPacket(Object entityId, EntityType entityType, EntityMetricType entityMetricType,List<DataFrameVO> dataFrameVOs,LocalDate forecastDate) {
         this.entityId = entityId;
         this.entityType = entityType;
+        this.entityMetricType=entityMetricType;
         this.dataFrameVOs = dataFrameVOs;
         this.forecastDate=forecastDate;
     }
@@ -51,5 +53,13 @@ public class EntityHistoryPacket {
 
     public void setForecastDate(LocalDate forecastDate) {
         this.forecastDate = forecastDate;
+    }
+
+    public EntityMetricType getEntityMetricType() {
+        return entityMetricType;
+    }
+
+    public void setEntityMetricType(EntityMetricType entityMetricType) {
+        this.entityMetricType = entityMetricType;
     }
 }

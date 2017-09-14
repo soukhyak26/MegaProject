@@ -15,23 +15,25 @@ import java.util.TreeMap;
 /**
  * Created by mandar on 4/17/2017.
  */
-public class MonthlyAggregator implements MetricsAggregator<Aggregatable>{
+public class MonthlyAggregator<T extends Aggregatable> implements MetricsAggregator<T> {
     private static final Logger LOGGER = LoggerFactory.getLogger(MonthlyAggregator.class);
-    private Class<Aggregatable> typeClass;
+    private Class<T> typeClass;
 
-    public MonthlyAggregator(Class<Aggregatable> typeClass){
-        this.typeClass=typeClass;
+    public MonthlyAggregator(Class<T> typeClass) {
+        this.typeClass = typeClass;
     }
 
-    public Class<Aggregatable> getTypeClass() {
+    public Class<T> getTypeClass() {
         return typeClass;
     }
 
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
-    public List<Aggregatable> aggregate(List<Aggregatable> historicalData, int period) {
+    @Override
+    //public List<? extends Aggregatable> aggregate(List<? extends Aggregatable> historicalData, int period) {
+    public List<T> aggregate(List<T> historicalData, int aggregationPeriod) {
         List<Aggregatable> aggregateViewList = new ArrayList<>();
         //are product actuals view sorted??
-        if (period == 1) {
+        if (aggregationPeriod == 1) {
             return historicalData;
         }
         Map<String, Aggregatable> monthwiseAggregatesMap = new TreeMap<>();
@@ -49,7 +51,7 @@ public class MonthlyAggregator implements MetricsAggregator<Aggregatable>{
                 monthwiseAggregate = monthwiseAggregatesMap.get(key);
             } else {
                 try {
-                    monthwiseAggregate= this.getTypeClass().newInstance().buildAggregatable(singleRecord);
+                    monthwiseAggregate = this.getTypeClass().newInstance().buildAggregatable(singleRecord);
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
@@ -58,13 +60,15 @@ public class MonthlyAggregator implements MetricsAggregator<Aggregatable>{
             }
             endDate = singleRecord.getEndDate();
             monthwiseAggregate.setEndDate(endDate);
-            if(singleRecord.getAggregationType()== AggregationType.DAILY_NEW) {
+            if (singleRecord.getAggregationType() == AggregationType.DAILY_NEW) {
                 monthwiseAggregate.setAggregateValue(monthwiseAggregate.getAggregateValue() + singleRecord.getAggregateValue());
-            }else{
+            } else {
                 monthwiseAggregate.setAggregateValue(singleRecord.getAggregateValue());
             }
-            monthwiseAggregatesMap.put(key,monthwiseAggregate);
+            monthwiseAggregatesMap.put(key, monthwiseAggregate);
         }
         return new ArrayList(monthwiseAggregatesMap.values());
     }
+
+
 }

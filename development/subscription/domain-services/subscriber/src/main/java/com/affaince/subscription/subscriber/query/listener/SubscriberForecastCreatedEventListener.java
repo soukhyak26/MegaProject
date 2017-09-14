@@ -1,7 +1,11 @@
 package com.affaince.subscription.subscriber.query.listener;
 
+import com.affaince.subscription.common.aggregate.AggregatorFactory;
+import com.affaince.subscription.common.aggregate.aggregators.MetricsAggregator;
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.EntityHistoryPacket;
+import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.subscriber.command.event.SubscriberForecastCreatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriberPseudoActualsViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscribersForecastViewRepository;
@@ -20,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,10 +35,12 @@ public class SubscriberForecastCreatedEventListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriberForecastCreatedEventListener.class);
     private final SubscribersForecastViewRepository subscribersForecastViewRepository;
     private final SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository;
+    private final AggregatorFactory<DataFrameVO> aggregatorFactory;
     @Autowired
-    public SubscriberForecastCreatedEventListener(SubscribersForecastViewRepository subscribersForecastViewRepository,SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository) {
+    public SubscriberForecastCreatedEventListener(SubscribersForecastViewRepository subscribersForecastViewRepository,SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository,AggregatorFactory<DataFrameVO> aggregatorFactory) {
         this.subscribersForecastViewRepository = subscribersForecastViewRepository;
         this.subscriberPseudoActualsViewRepository=subscriberPseudoActualsViewRepository;
+        this.aggregatorFactory=aggregatorFactory;
     }
 
     @EventHandler
@@ -45,6 +52,9 @@ public class SubscriberForecastCreatedEventListener {
             final EntityHistoryPacket forecastPacket=mapper.readValue(forecastData, new TypeReference<EntityHistoryPacket>(){});
             expireOverlappingActiveForecast(forecastPacket.getForecastDate());
             expireOverlappingActivePseudoActuals(forecastPacket.getForecastDate());
+            updatePseudoActuals(null, forecastPacket.getEntityMetricType(),forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate() );
+            updateForecast(null, forecastPacket.getEntityMetricType(),forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate() );
+
         } catch (IOException e) {
             LOGGER.error("Unable to deserialize forecasted content",e.getStackTrace());
         }
@@ -70,4 +80,47 @@ public class SubscriberForecastCreatedEventListener {
         }
     }
 
+    private void updateForecast(Object entityId, EntityMetricType entityMetricType, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate){
+        List<SubscribersForecastView> forecastViews= new ArrayList<>();
+        MetricsAggregator<DataFrameVO> aggregator= this.aggregatorFactory.getAggregator(30,DataFrameVO.class);
+        List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs,30);
+
+        for(DataFrameVO vo:dataFrameVOs){
+            SubscribersForecastView view= new SubscribersForecastView(vo.getStartDate(),vo.getEndDate(),forecastDate);
+            //view.
+            switch (entityMetricType) {
+                case NEW :
+                    view.setNewSubscribers(Double.valueOf(vo.getValue()).longValue());
+                    break;
+                case CHURN :
+                    view.setChurnedSubscribers(Double.valueOf(vo.getValue()).longValue());
+                    break;
+                case TOTAL :
+                    view.setTotalSubscribers(Double.valueOf(vo.getValue()).longValue());
+            }
+            forecastViews.add(view);
+        }
+        subscribersForecastViewRepository.save(forecastViews);
+
+
+    }
+    private void updatePseudoActuals(Object entityId, EntityMetricType entityMetricType,List<DataFrameVO> dataFrameVOs, LocalDate forecastDate){
+        List<SubscriberPseudoActualsView> pseudoActualsViews= new ArrayList<>();
+        for(DataFrameVO vo:dataFrameVOs){
+            SubscriberPseudoActualsView view= new SubscriberPseudoActualsView(vo.getDate(),forecastDate);
+            //view.
+            switch (entityMetricType) {
+                case NEW :
+                    view.setNewSubscribers(Double.valueOf(vo.getValue()).longValue());
+                    break;
+                case CHURN :
+                    view.setChurnedSubscribers(Double.valueOf(vo.getValue()).longValue());
+                    break;
+                case TOTAL :
+                    view.setTotalSubscribers(Double.valueOf(vo.getValue()).longValue());
+            }
+            pseudoActualsViews.add(view);
+        }
+        subscriberPseudoActualsViewRepository.save(pseudoActualsViews);
+    }
 }

@@ -1,5 +1,7 @@
 package com.affaince.subscription.payments.vo;
 
+import org.joda.time.LocalDate;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,11 @@ public class PaymentProcessingContext {
     private int deliverySequenceAwaitingPayment;
     private PaymentAccountStatus paymentAccountStatus;
 
+    public PaymentProcessingContext(String subscriptionId){
+        this.subscriptionId = subscriptionId;
+        this.paymentAccountStatus = PaymentAccountStatus.ACTIVE;
+        this.instalmentPaymentTrackers = new ArrayList<>();
+    }
     public PaymentProcessingContext(String subscriptionId, String schemeId) {
         this.subscriptionId = subscriptionId;
         this.schemeId = schemeId;
@@ -145,6 +152,7 @@ public class PaymentProcessingContext {
     }
 
     //This method should be used to create trackers according to the scheme definition where the deliveries BEFORE which payment is expected.
+/*
     public void createTrackersForExpectingPayments(int totalDeliveryCount, Map<Integer, Double> milestoneWisePaymentsExpected) {
         List<Integer> deliverySequencesHandledByATracker = new ArrayList<>();
         for (int i = 0; i < totalDeliveryCount; i++) {
@@ -160,13 +168,37 @@ public class PaymentProcessingContext {
             }
         }
     }
+*/
 
-    public void addNewDeliveryToContext(int deliverySequence,double paymentExpected){
+    public List<InstalmentPaymentTracker> createTrackersForExpectingPayments(int totalDeliveryCount, List<InstalmentPaymentTracker> trackersBySelectedScheme) {
+        List<InstalmentPaymentTracker> instalmentPaymentTrackers= new ArrayList<>();
+        List<Integer> deliverySequencesHandledByATracker = new ArrayList<>();
+        for (int i = 0; i < totalDeliveryCount; i++) {
+            deliverySequencesHandledByATracker.add(i);
+            boolean isCurrentDeliverySequenceAPaymentReceiver = trackersBySelectedScheme.get(i).getDeliverySequence()==i;
+            if (isCurrentDeliverySequenceAPaymentReceiver) {
+                InstalmentPaymentTracker instalmentPaymentTracker = new InstalmentPaymentTracker(i);
+                //deliverySequencesHandledByATracker.add(i);
+                instalmentPaymentTracker.setDeliverySequencesManagedByATracker(deliverySequencesHandledByATracker);
+                instalmentPaymentTracker.setPaymentExpected(trackersBySelectedScheme.get(i).getPaymentExpected());
+                instalmentPaymentTrackers.add(instalmentPaymentTracker);
+                deliverySequencesHandledByATracker = new ArrayList<>();
+            }
+        }
+        return instalmentPaymentTrackers;
+    }
+
+    //this method should only be used when a new delivery is getting 'added' in an already existing subscription.
+    //For newly created subscription following logic is already being taken care of.
+
+    public void addNewDeliveryToExistingSubscription(int deliverySequence, double paymentExpected){
         this.addToTotalDeliveryCount(1);
         this.addToTotalDueAmount(paymentExpected);
         InstalmentPaymentTracker tracker=findPaymentTrackerByDeliverySequence(deliverySequence);
-        tracker.addToDeliverySequencesManagedByTracker(deliverySequence);
-        tracker.addToPaymentExpected(paymentExpected);
+        if(null != tracker) {
+            tracker.addToDeliverySequencesManagedByTracker(deliverySequence);
+            tracker.addToPaymentExpected(paymentExpected);
+        }
     }
     public void deleteDeliverySequenceFromContext(int deliverySequence,double paymentExpected,double paymentReceived){
         this.deductFromTotalDeliveryCount(1);

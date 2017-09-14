@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.predictions;
 
 import com.affaince.subscription.common.transport.TransportationTransformer;
+import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.subscriber.query.repository.SubscribersActualsViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscribersActualsView;
@@ -27,7 +28,7 @@ public class SubscribersHistoryRetriever extends TransportationTransformer {
         Iterable<SubscribersActualsView> allSubscriptions = subscribersActualsViewRepository.findAll();
         List<DataFrameVO> subscribersHistoricalRecords = new ArrayList<>();
         allSubscriptions.forEach(subscriberActualsView -> {
-            DataFrameVO dataFrameVO = new DataFrameVO(subscriberActualsView.getRegistrationDate(), "subscription", subscriberActualsView.getTotalSubscribers());
+            DataFrameVO dataFrameVO = new DataFrameVO(subscriberActualsView.getRegistrationDate(), "subscription", subscriberActualsView.getTotalSubscribers(), AggregationType.INCREMENTAL);
             subscribersHistoricalRecords.add(dataFrameVO);
         });
         return subscribersHistoricalRecords;

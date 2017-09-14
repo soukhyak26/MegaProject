@@ -1,5 +1,6 @@
 package com.affaince.subscription.common.deserializer;
 
+import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -23,6 +24,7 @@ public class DataFrameVODeserializer extends JsonDeserializer<DataFrameVO> {
         JsonToken currentToken = jsonParser.getCurrentToken();
         LocalDate date = null;
         String token = null;
+        AggregationType aggregationType=null;
         double value = -1;
         if (currentToken == JsonToken.VALUE_STRING) {
             if (currentToken.name().equals("date")) {
@@ -30,10 +32,12 @@ public class DataFrameVODeserializer extends JsonDeserializer<DataFrameVO> {
                 date = LocalDate.parse(dateTimeAsString, formatter);
             } else if (currentToken.name().equals("token")) {
                 token = jsonParser.getText().trim();
+            }else{
+                aggregationType = AggregationType.valueOf(jsonParser.getText().trim());
             }
         } else if (currentToken == JsonToken.VALUE_NUMBER_INT) {
             value = jsonParser.getDoubleValue();
         }
-        return new DataFrameVO(date, token, value);
+        return new DataFrameVO(date, token, value,aggregationType);
     }
 }

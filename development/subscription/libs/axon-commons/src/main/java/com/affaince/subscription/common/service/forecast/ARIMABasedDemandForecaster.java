@@ -137,7 +137,7 @@ public class ARIMABasedDemandForecaster{
                     double forecastedValue = vector.apply(j);
                     //forecastedSubscriptionCounts.add(forecastedValue);
                     System.out.println("ARIMA $$$$$forecast: " + forecastedValue);
-                    DataFrameVO outputVO= new DataFrameVO(new LocalDate(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth()),token,forecastedValue);
+                    DataFrameVO outputVO= new DataFrameVO(new LocalDate(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth()),token,forecastedValue,dataFrames.get(0).getAggregationType());
                     forecastedSubscriptionCounts.add(outputVO);
                 }
             }

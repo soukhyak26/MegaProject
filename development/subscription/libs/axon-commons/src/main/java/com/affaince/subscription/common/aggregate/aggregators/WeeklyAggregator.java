@@ -15,20 +15,20 @@ import java.util.TreeMap;
 /**
  * Created by mandar on 4/17/2017.
  */
-public class WeeklyAggregator implements MetricsAggregator<Aggregatable> {
+public class WeeklyAggregator<T extends Aggregatable> implements MetricsAggregator<T> {
     private static final Logger LOGGER = LoggerFactory.getLogger(WeeklyAggregator.class);
-    private Class<Aggregatable> typeClass;
+    private Class<T> typeClass;
 
-    public WeeklyAggregator(Class<Aggregatable> typeClass) {
+    public WeeklyAggregator(Class<T> typeClass) {
         this.typeClass = typeClass;
     }
 
-    public Class<Aggregatable> getTypeClass() {
+    public Class<T> getTypeClass() {
         return typeClass;
     }
 
     //aggregate daily historical data to weekly/monthly/quarterly data based on "period"  value
-    public List<Aggregatable> aggregate(List<Aggregatable> historicalData, int period) {
+    public List<T> aggregate(List<T> historicalData, int period) {
         List<Aggregatable> aggregateViewList = new ArrayList<>();
         //are product actuals view sorted??
         if (period == 1) {

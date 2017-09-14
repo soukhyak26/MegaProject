@@ -163,7 +163,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         if(event.getAmountReceived()>0) {
             this.totalReceivedCostAccount.credit(event.getAmountReceived(), SysDate.now());
         }
-        this.paymentProcessingContext.addNewDeliveryToContext(event.getSequence(),event.getTotalDeliveryCost());
+        this.paymentProcessingContext.addNewDeliveryToExistingSubscription(event.getSequence(),event.getTotalDeliveryCost());
         if(event.getAmountReceived()>0) {
             this.paymentProcessingContext.depositIncomingPaymentToDesignatedInstalmentTracker(event.getSequence(), event.getAmountReceived());
         }
@@ -315,6 +315,7 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
         this.totalSubscriptionCostAccount = new TotalSubscriptionCostAccount(event.getSubscriptionId(), 0, event.getCreationDate());
         this.refundAccount = new RefundAccount(event.getSubscriptionId(), 0, event.getCreationDate());
         this.paymentAccountStatus = PaymentAccountStatus.CREATED;
+        this.paymentProcessingContext= new PaymentProcessingContext(event.getSubscriptionId());
     }
     private DeliveryCostAccount findDeliveryCostAccountByDeliverySequence(int deliverySequence){
         return this.deliveryCostAccountMap.values().stream().filter(dca->dca.getSequence()== deliverySequence).collect(Collectors.toList()).get(0);
@@ -363,12 +364,11 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     public void on(PaymentSchemeSetForPaymentEvent event) {
         this.schemeId = event.getPaymentSchemeId();
         //create Payment Processing Context to track payments against  selected payment scheme
-        this.paymentProcessingContext = new PaymentProcessingContext(event.getSubscriptionId(), event.getPaymentSchemeId());
+        this.paymentProcessingContext.setSchemeId(event.getPaymentSchemeId());
     }
 
     public void validateAndApproveDelivery(String deliveryId, int sequence) {
         boolean validateForDispatchFlag = paymentProcessingContext.validateIfDeliveryCanBeDispatched(sequence);
-
         apply(new DeliveryDispatchApprovalSentEvent(this.subscriberId, this.subscriptionId, deliveryId, validateForDispatchFlag));
     }
 
@@ -451,8 +451,9 @@ public class PaymentAccount extends AbstractAnnotatedAggregateRoot<String> {
     }
 
     public void calculatePaymentInstallment(Map<LocalDate, Double> deliveryWisePriceMap, PaymentExpression paymentExpression, PaymentCalculatorChain paymentCalculatorChain) {
-        List<InstalmentPaymentTracker> instalmentPaymentTrackers =
+        List<InstalmentPaymentTracker> trackersByScheme =
                 paymentCalculatorChain.calculate (deliveryWisePriceMap, paymentExpression);
+        List<InstalmentPaymentTracker> instalmentPaymentTrackers=this.paymentProcessingContext.createTrackersForExpectingPayments(deliveryWisePriceMap.size(),trackersByScheme);
         apply(new PaymentInstallmentCalculatedEvent (this.subscriberId, this.subscriptionId, instalmentPaymentTrackers));
     }
 }
