@@ -31,6 +31,7 @@ public class ProductForecastViewRepositoryTest {
     @Autowired
     private ProductForecastViewRepository productForecastViewRepository;
     private LocalDate localDate;
+
     @Before
     public void init() throws FileNotFoundException {
         // productForecastViewRepository.deleteAll();
@@ -59,48 +60,40 @@ public class ProductForecastViewRepositoryTest {
 
         productForecastViewRepository.save(productForecastView3);
 
-        for (int k = 0; k <= 1000; k++) {
-            List<ProductForecastView> productForecastViewList = new ArrayList<>();
+        List<ProductForecastView> productForecastViewList = new ArrayList<>();
 
-            BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
-            long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
+        BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
+        long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
 
-/*
-            ProductForecastMetricsView forecastView = new ProductForecastMetricsView(new ProductVersionId("product" + k, new LocalDateTime(2016, 1, 1, 0, 0, 0)), new LocalDateTime(9999, 12, 31, 0, 0, 0));
-            forecastView.setTotalNumberOfExistingSubscriptions(1250);
-*/
-            //localDate = new LocalDateTime(2016, 1, 1, 0, 0, 0);
-            for (int i = 0; i < readings.length; i++) {
-                LocalDate newDate = localDate.plusDays(i + 1);
-                ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + k, newDate),
-                        new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000,SysDate.now());
-                productForecastViewList.add(productForecastView);
-                //productForecastMetricsViewRepository.save(actualMetrics);
-            }
-            productForecastViewRepository.save(productForecastViewList);
+        for (int i = 0; i < readings.length; i++) {
+            LocalDate newDate = localDate.plusDays(i + 1);
+            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId("product" + i, newDate),
+                    new LocalDate(9999, 12, 31), readings[i][0], readings[i][1], 1000, SysDate.now());
+            productForecastViewList.add(productForecastView);
         }
+        productForecastViewRepository.save(productForecastViewList);
     }
 
     @Test
-    public void testFindFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc () {
+    public void testFindFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc() {
         ProductForecastView productForecastView =
                 productForecastViewRepository.
                         findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc("1");
         ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
-        assertThat (productForecastView.getProductVersionId(), is (productVersionId));
+        assertThat(productForecastView.getProductVersionId(), is(productVersionId));
     }
 
     @Test
-    public void testFindByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc () {
+    public void testFindByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc() {
         List<ProductForecastView> productForecastViewList = productForecastViewRepository.
                 findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc("1", ForecastContentStatus.ACTIVE);
         assertThat(productForecastViewList.size(), is(3));
         ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
-        assertThat (productForecastViewList.get(0).getProductVersionId(), is (productVersionId));
+        assertThat(productForecastViewList.get(0).getProductVersionId(), is(productVersionId));
     }
 
     @After
-    public void shutdown () {
+    public void shutdown() {
         productForecastViewRepository.deleteAll();
     }
 }
