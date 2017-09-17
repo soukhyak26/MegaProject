@@ -2,6 +2,7 @@ package com.affaince.subscription.product.query.predictions;
 
 import com.affaince.subscription.common.transport.TransportationTransformer;
 import com.affaince.subscription.common.type.ProductStatus;
+import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
@@ -29,7 +30,7 @@ public class ProductHistoryRetriever extends TransportationTransformer {
         Iterable<ProductActualsView> allProducts = productActualsViewRepository.findByProductVersionId_ProductId((String)productId);
         List<DataFrameVO> productHistoricalRecords = new ArrayList<>();
         allProducts.forEach(productActualsView -> {
-            DataFrameVO dataFrameVO=new DataFrameVO(productActualsView.getEndDate(),"productId",productActualsView.getTotalNumberOfExistingSubscriptions());
+            DataFrameVO dataFrameVO=new DataFrameVO(productActualsView.getEndDate(),"productId",productActualsView.getTotalNumberOfExistingSubscriptions(), AggregationType.INCREMENTAL);
             productHistoricalRecords.add(dataFrameVO);
         });
         return productHistoricalRecords;

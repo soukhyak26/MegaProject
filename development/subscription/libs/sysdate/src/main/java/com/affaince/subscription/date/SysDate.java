@@ -53,6 +53,7 @@ public final class SysDate {
         }
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("dd-MM-yyyy");
+        //System.out.println("###########################333" + dbCollection.getName());
         DBObject dbObject = dbCollection.find().next();
         return LocalDate.parse(dbObject.get("currentDate").toString(), formatter);
     }

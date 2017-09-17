@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
+import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.factory.AggregatorFactory;
@@ -40,9 +41,10 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         LocalDate startDate = currentDate.minusDays(Double.valueOf(demandCurvePeriod).intValue());
         List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, startDate, currentDate);
 
-        List<DataFrameVO> historicalSubscriptionNewCountList = productActualsViewList.stream().map(pamv -> new DataFrameVO(pamv.getEndDate(),"New",Long.valueOf(pamv.getNewSubscriptions()).doubleValue())).collect(Collectors.toCollection(ArrayList<DataFrameVO>::new));
-        List<DataFrameVO> historicalSubscriptionChurnCountList = productActualsViewList.stream().map(pamv -> new DataFrameVO(pamv.getEndDate(),"Churned",Long.valueOf(pamv.getChurnedSubscriptions()).doubleValue())).collect(Collectors.toCollection(ArrayList<DataFrameVO>::new));
-        List<DataFrameVO> historicalTotalSubscriptionCountList = productActualsViewList.stream().map(pamv -> new DataFrameVO(pamv.getEndDate(),"Total",Long.valueOf(pamv.getTotalNumberOfExistingSubscriptions()).doubleValue())).collect(Collectors.toCollection(ArrayList<DataFrameVO>::new));
+        List<DataFrameVO> historicalSubscriptionNewCountList =
+                productActualsViewList.stream().map(pamv -> new DataFrameVO(pamv.getEndDate(),"New",Long.valueOf(pamv.getNewSubscriptions()).doubleValue(), AggregationType.DAILY_NEW)).collect(Collectors.toCollection(ArrayList<DataFrameVO>::new));
+        List<DataFrameVO> historicalSubscriptionChurnCountList = productActualsViewList.stream().map(pamv -> new DataFrameVO(pamv.getEndDate(),"Churned",Long.valueOf(pamv.getChurnedSubscriptions()).doubleValue(), AggregationType.DAILY_NEW)).collect(Collectors.toCollection(ArrayList<DataFrameVO>::new));
+        List<DataFrameVO> historicalTotalSubscriptionCountList = productActualsViewList.stream().map(pamv -> new DataFrameVO(pamv.getEndDate(),"Total",Long.valueOf(pamv.getTotalNumberOfExistingSubscriptions()).doubleValue(), AggregationType.INCREMENTAL)).collect(Collectors.toCollection(ArrayList<DataFrameVO>::new));
 
         List<LocalDate> historicalEndDates = productActualsViewList.stream().map(pamv -> pamv.getEndDate()).collect(Collectors.toCollection((ArrayList<LocalDate>::new)));
 

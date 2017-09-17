@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.forecast;
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
 import com.affaince.subscription.common.service.forecast.config.HistoryMaxSizeConstraints;
 import com.affaince.subscription.common.service.forecast.config.HistoryMinSizeConstraints;
+import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.Application;
@@ -64,7 +65,7 @@ public class ARIMABasedDemandForecasterTest2 {
         // List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
         List<DataFrameVO> dataFrames = new ArrayList<>();
         for (ProductActualsView view : productActualsViewList) {
-            DataFrameVO vo = new DataFrameVO(view.getEndDate(), "totalsubscriptioncount", view.getTotalNumberOfExistingSubscriptions());
+            DataFrameVO vo = new DataFrameVO(view.getEndDate(), "totalsubscriptioncount", view.getTotalNumberOfExistingSubscriptions(), AggregationType.INCREMENTAL);
             dataFrames.add(vo);
         }
         forecaster.setHistoryMinSizeConstraints(this.historyMinSizeConstraints);
