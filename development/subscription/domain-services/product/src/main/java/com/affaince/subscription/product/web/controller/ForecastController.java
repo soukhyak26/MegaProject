@@ -90,22 +90,6 @@ public class ForecastController {
     }
 
 
-/*
-    //API to add single/one-by-one forecast manually
-    @RequestMapping(method = RequestMethod.PUT, value = "addSingleforecast/{productid}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> addSingleForecast(@RequestBody @Valid AddSingleForecastParametersRequest request,
-                                              @PathVariable("productid") String productId) throws Exception {
-        ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.build(productId);
-        }
-        AddSingularManualForecastCommand command = new AddSingularManualForecastCommand(productId, request.getFromDate(),request.getEndDate(),request.getPurchasePricePerUnit(),request.getMrp(),request.getNumberOfNewSubscriptions(),request.getNumberOfChurnedSubscriptions(),request.getForecastContentStatus());
-        commandGateway.executeAsync(command);
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
-*/
-
     //API to add forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")
     @Consumes("application/json")
