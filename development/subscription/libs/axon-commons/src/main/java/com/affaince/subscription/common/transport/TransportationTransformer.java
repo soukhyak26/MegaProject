@@ -4,6 +4,8 @@ import com.affaince.subscription.common.vo.DataFrameVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.impl.client.HttpClients;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,7 +23,7 @@ import java.util.Map;
  * Created by mandar on 8/31/2017.
  */
 public abstract class TransportationTransformer {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportationTransformer.class);
     private String convertToJsonString(List<DataFrameVO> objectsToTransform) throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(objectsToTransform);
     }
@@ -40,7 +42,7 @@ public abstract class TransportationTransformer {
            // final String requestString= convertToJsonString(dataFrames);
             return sendForForecast(url,dataFrames);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.error("Error in converting forecast payload to Json", e.getStackTrace());
         }
         return null;
     }
@@ -50,10 +52,6 @@ public abstract class TransportationTransformer {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-/*
-        Map<String, Object> params = new HashMap<>();
-        params.put("requestString", requestString);
-*/
         System.out.println("$$$$$$$$$$$$$$forecastUrl: " + url);
         HttpEntity<List<DataFrameVO>> request=new HttpEntity<>(dataFrames);
         ResponseEntity<List<DataFrameVO>> response=restTemplate.exchange(url, HttpMethod.POST,request,new ParameterizedTypeReference<List<DataFrameVO>>(){});

@@ -19,27 +19,6 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
     private LocalDate forecastDate;
-/*
-    public ProductForecastView(ProductVersionId productVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
-        this.productVersionId = productVersionId;
-        this.endDate = endDate;
-        this.newSubscriptions = newSubscriptions;
-        this.churnedSubscriptions = churnedSubscriptions;
-        this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
-        this.forecastContentStatus = forecastContentStatus;
-    }
-*/
-
-/*
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate){
-        this.productVersionId = productVersionId;
-        this.endDate = endDate;
-        this.newSubscriptions = 0;
-        this.churnedSubscriptions = 0;
-        this.totalNumberOfExistingSubscriptions = 0;
-        this.forecastContentStatus = ForecastContentStatus.ACTIVE;
-    }
-*/
     public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions,LocalDate forecastDate) {
         this.productVersionId = productVersionId;
         this.endDate = endDate;
