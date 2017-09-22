@@ -33,7 +33,9 @@ public class ProductConfigurationView {
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
     private List<CostHeaderType> costHeaderTypes;
-    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
+    private double contingencyStockPercentage=0.1;
+
+    public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions,Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes,double contingencyStockPercentage) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -44,6 +46,7 @@ public class ProductConfigurationView {
         this.demandCurvePeriod=demandCurvePeriod;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
         this.costHeaderTypes=costHeaderTypes;
+        this.contingencyStockPercentage=contingencyStockPercentage;
     }
 
     public String getProductId() {
@@ -132,5 +135,13 @@ public class ProductConfigurationView {
 
     public void setCostHeaderTypes(List<CostHeaderType> costHeaderTypes) {
         this.costHeaderTypes = costHeaderTypes;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
+    }
+
+    public void setContingencyStockPercentage(double contingencyStockPercentage) {
+        this.contingencyStockPercentage = contingencyStockPercentage;
     }
 }

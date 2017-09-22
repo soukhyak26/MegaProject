@@ -23,10 +23,11 @@ public class ProductBasedRecommendationService {
     @Autowired
     ProductConfigurationViewRepository productConfigurationViewRepository;
 
-    public List<ProductForecastTrendView> recommendIncrementalPurchaseBudget(String productId) {
+    public List<ProductForecastTrendView> determineTrendChange(String productId) {
         //first obtain latest active forecast
         //then obtain immediate previous forecast
-        //lastly obtain current actuals
+        //compare active forecast with previous forecast and determine if there is a change in trend.
+        //in case trend change is more than contingency stock then it needs additional demand for stock and budget required for the same.
         List<ProductForecastView> activeProductForecastList = productForecastViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.ACTIVE);
         List<ProductForecastView> expiredForecastList = productForecastViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.EXPIRED);
         LocalDate referenceForecastDate = expiredForecastList.get(0).getForecastDate();
@@ -34,7 +35,9 @@ public class ProductBasedRecommendationService {
         LocalDate dateOfComparison = SysDate.now();
         List<ProductForecastTrendView> changeInSubscriptionCountPerPeriod = new ArrayList<>();
         //find if aggregation period is weekly monthly or quarterly
-        int aggregationPeriod = productConfigurationViewRepository.findOne(productId).getActualsAggregationPeriodForTargetForecast();
+        ProductConfigurationView configView=productConfigurationViewRepository.findOne(productId);
+        int aggregationPeriod = configView.getActualsAggregationPeriodForTargetForecast();
+        double contingencyStockPercentage=configView.getContingencyStockPercentage();
 
         int recordsForComparision = determineNumberOfRecordsTobeCompared(aggregationPeriod, dateOfComparison);
         if(activeProductForecastList.size()>=recordsForComparision && latestExpiredForecastList.size()>=recordsForComparision)
@@ -43,8 +46,11 @@ public class ProductBasedRecommendationService {
             ProductForecastView expiredForecast = latestExpiredForecastList.get(i);
             if (activeForecast.getProductVersionId().getFromDate().equals(expiredForecast.getProductVersionId().getFromDate())) {
                 long trendChange = activeForecast.getTotalNumberOfExistingSubscriptions() - expiredForecast.getTotalNumberOfExistingSubscriptions();
-                ProductForecastTrendView trend = new ProductForecastTrendView(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate(), activeForecast.getEndDate(), trendChange);
-                changeInSubscriptionCountPerPeriod.set(i, trend);
+                //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
+                if((trendChange/activeForecast.getTotalNumberOfExistingSubscriptions())>contingencyStockPercentage) {
+                    ProductForecastTrendView trend = new ProductForecastTrendView(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate(), activeForecast.getEndDate(), trendChange);
+                    changeInSubscriptionCountPerPeriod.set(i, trend);
+                }
             }
         }
         return changeInSubscriptionCountPerPeriod;

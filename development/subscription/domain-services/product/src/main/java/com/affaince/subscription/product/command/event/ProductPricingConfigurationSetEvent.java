@@ -23,8 +23,9 @@ public class ProductPricingConfigurationSetEvent {
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
     private List<CostHeaderType> costHeaderTypes;
+    private double contingencyStockPercentage;
 
-    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
+    public ProductPricingConfigurationSetEvent(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes,double contingencyStockPercentage) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -35,6 +36,7 @@ public class ProductPricingConfigurationSetEvent {
         this.demandCurvePeriod = demandCurvePeriod;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
         this.costHeaderTypes=costHeaderTypes;
+        this.contingencyStockPercentage=contingencyStockPercentage;
     }
 
     public ProductPricingConfigurationSetEvent() {
@@ -110,5 +112,9 @@ public class ProductPricingConfigurationSetEvent {
 
     public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
     }
 }

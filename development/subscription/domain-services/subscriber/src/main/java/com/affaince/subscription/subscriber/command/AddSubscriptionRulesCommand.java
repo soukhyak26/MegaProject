@@ -14,8 +14,12 @@ public class AddSubscriptionRulesCommand {
     private int maximumPermissibleDiscountUnit;
     private int minimumAmountEligibleForFreeShipping;
     private int diffBetweenDeliveryPreparationAndDispatchDate;
+    private int actualsAggregationPeriodForTargetForecast=30;
+    //stock in excess to predicted count to be kept as a contingency
+    private double contingencyStockPercentage=0.1;
 
-    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate) {
+
+    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate,int actualsAggregationPeriodForTargetForecast,double contingencyStockPercentage) {
         BasketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
@@ -23,6 +27,8 @@ public class AddSubscriptionRulesCommand {
         this.maximumPermissibleDiscountUnit = maximumPermissibleDiscountUnit;
         this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
         this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
+        this.actualsAggregationPeriodForTargetForecast=actualsAggregationPeriodForTargetForecast;
+        this.contingencyStockPercentage=contingencyStockPercentage;
     }
 
     public AddSubscriptionRulesCommand() {
@@ -54,5 +60,13 @@ public class AddSubscriptionRulesCommand {
 
     public int getDiffBetweenDeliveryPreparationAndDispatchDate() {
         return diffBetweenDeliveryPreparationAndDispatchDate;
+    }
+
+    public int getActualsAggregationPeriodForTargetForecast() {
+        return actualsAggregationPeriodForTargetForecast;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
     }
 }

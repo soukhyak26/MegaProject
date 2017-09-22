@@ -26,7 +26,7 @@ public class SubscriptionRuleAddedEventListener {
         SubscriptionRuleView subscriptionRuleView = new SubscriptionRuleView(event.getBasketRuleId(),
                 event.getMaximumPermissibleAmount(), event.getMinimumAmountForDiscountEligibility(),
                 event.getMaximumPermissibleDiscount(), event.getMinimumAmountEligibleForFreeShipping(),
-                event.getDiffBetweenDeliveryPreparationAndDispatchDate());
+                event.getDiffBetweenDeliveryPreparationAndDispatchDate(),event.getActualsAggregationPeriodForTargetForecast(),event.getContingencyStockPercentage());
         subscriptionRuleViewRepository.save(subscriptionRuleView);
     }
 }

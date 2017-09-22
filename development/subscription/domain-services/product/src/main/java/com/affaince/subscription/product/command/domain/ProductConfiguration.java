@@ -30,8 +30,11 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private double tentativePercentageChangeInProductDemand;
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
     private List<CostHeaderType> costHeaderTypes;
+
+    //stock in excess to predicted count to be kept as a contingency
+    private double contingencyStockPercentage=0.1;
     //This constructor need/should not publish event as it is being invoked from event sourcing handler of already published event(ProductPricingConfigurationSetEvent)
-    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes, double contingencyStockPercentage) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.demandCurvePeriod = demandCurvePeriod;
@@ -42,6 +45,7 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         this.pricingStrategyType = pricingStrategyType;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
         this.costHeaderTypes=costHeaderTypes;
+        this.contingencyStockPercentage=contingencyStockPercentage;
     }
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -173,6 +177,14 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
         } else {
             return -1;
         }
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
+    }
+
+    public void setContingencyStockPercentage(double contingencyStockPercentage) {
+        this.contingencyStockPercentage = contingencyStockPercentage;
     }
 
     //subscription forecast should be updated on the read side. Hence no activity in the event sourcing handler

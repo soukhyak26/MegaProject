@@ -23,6 +23,7 @@ public class ProductPricingConfigurationRequest {
     private Period demandCurvePeriod;
     private double tentativePercentageChangeInProductDemand;
     private CostHeaderType [] costHeaderTypes;
+    private double contingencyStockPercentage;
 
     public double getTargetChangeThresholdForPriceChange() {
         return targetChangeThresholdForPriceChange;
@@ -94,5 +95,13 @@ public class ProductPricingConfigurationRequest {
 
     public void setCostHeaderTypes(CostHeaderType[] costHeaderTypes) {
         this.costHeaderTypes = costHeaderTypes;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
+    }
+
+    public void setContingencyStockPercentage(double contingencyStockPercentage) {
+        this.contingencyStockPercentage = contingencyStockPercentage;
     }
 }

@@ -11,6 +11,10 @@ public class SubscriptionRulesRequest {
     private int maximumPermissibleDiscountUnit;
     private int minimumAmountEligibleForFreeShipping;
     private int diffBetweenDeliveryPreparationAndDispatchDate;
+    private int actualsAggregationPeriodForTargetForecast=30;
+    //stock in excess to predicted count to be kept as a contingency
+    private double contingencyStockPercentage=0.1;
+
 
     public double getMaximumPermissibleAmount() {
         return maximumPermissibleAmount;
@@ -58,5 +62,21 @@ public class SubscriptionRulesRequest {
 
     public void setDiffBetweenDeliveryPreparationAndDispatchDate(int diffBetweenDeliveryPreparationAndDispatchDate) {
         this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
+    }
+
+    public int getActualsAggregationPeriodForTargetForecast() {
+        return actualsAggregationPeriodForTargetForecast;
+    }
+
+    public void setActualsAggregationPeriodForTargetForecast(int actualsAggregationPeriodForTargetForecast) {
+        this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
+    }
+
+    public void setContingencyStockPercentage(double contingencyStockPercentage) {
+        this.contingencyStockPercentage = contingencyStockPercentage;
     }
 }

@@ -26,10 +26,11 @@ public class SetProductPricingConfigurationCommand {
     //private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
     private double tentativePercentageChangeInProductDemand;
     private List<CostHeaderType> costHeaderTypes;
+    private double contingencyStockPercentage;
 
 
 
-    public SetProductPricingConfigurationCommand(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes) {
+    public SetProductPricingConfigurationCommand(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, Period demandCurvePeriod,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes,double contingencyStockPercentage) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
         this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
@@ -40,6 +41,7 @@ public class SetProductPricingConfigurationCommand {
         this.demandCurvePeriod = demandCurvePeriod;
         this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
         this.costHeaderTypes=costHeaderTypes;
+        this.contingencyStockPercentage=contingencyStockPercentage;
     }
 
     public String getProductId() {
@@ -82,5 +84,9 @@ public class SetProductPricingConfigurationCommand {
 
     public List<CostHeaderType> getCostHeaderTypes() {
         return costHeaderTypes;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
     }
 }

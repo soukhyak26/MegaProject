@@ -12,14 +12,20 @@ public class SubscriptionRuleAddedEvent {
     private Discount maximumPermissibleDiscount;
     private int minimumAmountEligibleForFreeShipping;
     private int diffBetweenDeliveryPreparationAndDispatchDate;
+    private int actualsAggregationPeriodForTargetForecast=30;
+    //stock in excess to predicted count to be kept as a contingency
+    private double contingencyStockPercentage=0.1;
 
-    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate) {
+
+    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate,int actualsAggregationPeriodForTargetForecast, double contingencyStockPercentage) {
         this.basketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
         this.maximumPermissibleDiscount = maximumPermissibleDiscount;
         this.minimumAmountEligibleForFreeShipping = minimumAmountEligibleForFreeShipping;
         this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
+        this.actualsAggregationPeriodForTargetForecast=actualsAggregationPeriodForTargetForecast;
+        this.contingencyStockPercentage=contingencyStockPercentage;
     }
 
     public SubscriptionRuleAddedEvent() {
@@ -47,5 +53,13 @@ public class SubscriptionRuleAddedEvent {
 
     public int getDiffBetweenDeliveryPreparationAndDispatchDate() {
         return diffBetweenDeliveryPreparationAndDispatchDate;
+    }
+
+    public int getActualsAggregationPeriodForTargetForecast() {
+        return actualsAggregationPeriodForTargetForecast;
+    }
+
+    public double getContingencyStockPercentage() {
+        return contingencyStockPercentage;
     }
 }

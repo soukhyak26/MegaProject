@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface SubscribersForecastViewRepository extends CrudRepository<SubscribersForecastView,LocalDate> {
     public List<SubscribersForecastView> findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
+    public List<SubscribersForecastView> findByForecastContentStatusOrderByForecastDateDesc(ForecastContentStatus forecastContentStatus);
 }

@@ -18,6 +18,10 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
     private Discount maximumPermissibleDiscount;
     private int minimumAmountEligibleForFreeShipping;
     private int diffBetweenDeliveryPreparationAndDispatchDate;
+    private int actualsAggregationPeriodForTargetForecast=30;
+    //stock in excess to predicted count to be kept as a contingency
+    private double contingencyStockPercentage=0.1;
+
 
     public SubscriptionRule() {
     }
@@ -27,10 +31,12 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
                             double minimumAmountForDiscountEligibility,
                             Discount maximumPermissibleDiscount,
                             int minimumAmountEligibleForFreeShipping,
-                            int diffBetweenDeliveryPreparationAndDispatchDate) {
+                            int diffBetweenDeliveryPreparationAndDispatchDate,
+                            int actualsAggregationPeriodForTargetForecast,
+                            double contingencyStockPercentage) {
         apply(new SubscriptionRuleAddedEvent(basketRuleId, maximumPermissibleAmount,
                 minimumAmountForDiscountEligibility, maximumPermissibleDiscount,
-                minimumAmountEligibleForFreeShipping, diffBetweenDeliveryPreparationAndDispatchDate));
+                minimumAmountEligibleForFreeShipping, diffBetweenDeliveryPreparationAndDispatchDate,actualsAggregationPeriodForTargetForecast,contingencyStockPercentage));
     }
 
     @EventSourcingHandler
@@ -40,5 +46,7 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
         this.minimumAmountForDiscountEligibility = event.getMinimumAmountForDiscountEligibility();
         this.maximumPermissibleDiscount = event.getMaximumPermissibleDiscount();
         this.diffBetweenDeliveryPreparationAndDispatchDate = event.getDiffBetweenDeliveryPreparationAndDispatchDate();
+        this.actualsAggregationPeriodForTargetForecast=event.getActualsAggregationPeriodForTargetForecast();
+        this.contingencyStockPercentage=event.getContingencyStockPercentage();
     }
 }

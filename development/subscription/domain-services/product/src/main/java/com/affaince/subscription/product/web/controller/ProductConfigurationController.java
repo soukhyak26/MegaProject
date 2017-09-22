@@ -47,7 +47,7 @@ public class ProductConfigurationController {
         }
         List<CostHeaderType> costHeaderTypes = Arrays.asList(request.getCostHeaderTypes());
         SetProductPricingConfigurationCommand command = new SetProductPricingConfigurationCommand(
-                productId, request.getActualsAggregationPeriodForTargetForecast(), request.getTargetChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(), request.getPricingOptions(), request.getPricingStrategyType(), request.getDemandCurvePeriod(),request.getTentativePercentageChangeInProductDemand(), costHeaderTypes);
+                productId, request.getActualsAggregationPeriodForTargetForecast(), request.getTargetChangeThresholdForPriceChange(), request.isCrossPriceElasticityConsidered(), request.isAdvertisingExpensesConsidered(), request.getPricingOptions(), request.getPricingStrategyType(), request.getDemandCurvePeriod(),request.getTentativePercentageChangeInProductDemand(), costHeaderTypes,request.getContingencyStockPercentage());
         try {
             this.commandGateway.executeAsync(command);
         } catch (Exception e) {

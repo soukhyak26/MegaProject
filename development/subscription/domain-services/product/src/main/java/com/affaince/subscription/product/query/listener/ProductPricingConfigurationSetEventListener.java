@@ -46,7 +46,7 @@ public class ProductPricingConfigurationSetEventListener {
         )) {
             ProductConfigurationView productConfigurationView = productConfigurationViewRepository.findOne(event.getProductId());
             if (null == productConfigurationView) {
-                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType(), event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand(),event.getCostHeaderTypes());
+                productConfigurationView = new ProductConfigurationView(event.getProductId(), event.getActualsAggregationPeriodForTargetForecast(), event.getTargetChangeThresholdForPriceChange(), event.isCrossPriceElasticityConsidered(), event.isAdvertisingExpensesConsidered(), event.getPricingStrategyType(), event.getPricingOptions(),event.getDemandCurvePeriod(),event.getTentativePercentageChangeInProductDemand(),event.getCostHeaderTypes(),event.getContingencyStockPercentage());
             } else {
                 productConfigurationView.setProductId(event.getProductId());
                 productConfigurationView.setTargetChangeThresholdForPriceChange(event.getTargetChangeThresholdForPriceChange());
