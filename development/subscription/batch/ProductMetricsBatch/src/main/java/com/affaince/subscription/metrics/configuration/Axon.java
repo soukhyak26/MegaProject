@@ -24,11 +24,6 @@ import java.util.Map;
 public class Axon extends Default {
 
     @Bean
-    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
-        return new SimpleMongoDbFactory(mongo, dbName);
-    }
-
-    @Bean
     public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);

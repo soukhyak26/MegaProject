@@ -40,11 +40,6 @@ public class Axon extends Default {
     }
 
     @Bean
-    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
-        return new SimpleMongoDbFactory(mongo, dbName);
-    }
-
-    @Bean
     public ObjectMapper objectMapper(){
         return new ObjectMapper();
     }

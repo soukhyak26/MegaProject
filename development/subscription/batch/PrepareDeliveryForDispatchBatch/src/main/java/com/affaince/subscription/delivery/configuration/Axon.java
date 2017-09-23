@@ -34,11 +34,6 @@ import java.util.Map;
 public class Axon extends Default {
 
     @Bean
-    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
-        return new SimpleMongoDbFactory(mongo, dbName);
-    }
-
-    @Bean
     public CustomConversions customConversions(){
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
         converters.add(new DeliveryIdReaderConverter());

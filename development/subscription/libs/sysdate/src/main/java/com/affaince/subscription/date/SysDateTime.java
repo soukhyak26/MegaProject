@@ -24,8 +24,13 @@ public final class SysDateTime {
     static {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("sysdatesetting");
         MongoClient mongoClient = null;
+        MongoClientURI mongoClientURI = new MongoClientURI("mongodb://affaince:affaince@"
+                + resourceBundle.getString("view.db.host")
+                + ":"
+                + resourceBundle.getString("view.db.port")
+                + "/test");
         try {
-            mongoClient = new MongoClient(resourceBundle.getString("view.db.host"), Integer.parseInt(resourceBundle.getString("view.db.port")));
+            mongoClient = new MongoClient(mongoClientURI);
         } catch (UnknownHostException e) {
             logger.info("Cannot connect to host: " + e.getMessage());
         }

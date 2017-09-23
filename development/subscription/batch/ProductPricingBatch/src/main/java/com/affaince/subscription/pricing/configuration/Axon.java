@@ -56,11 +56,6 @@ public class Axon extends Default {
         return new RestTemplate();
     }
 
-    @Bean
-    public MongoDbFactory mongoDbFactory(Mongo mongo, @Value("${view.db.name}") String dbName) throws Exception {
-        return new SimpleMongoDbFactory(mongo, dbName);
-    }
-
     @Override
     @Bean(name = "types")
     protected Map<String, String> types() {

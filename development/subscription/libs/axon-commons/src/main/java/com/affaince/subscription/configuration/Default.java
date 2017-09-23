@@ -2,31 +2,20 @@ package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
-import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.deserializer.PricingStrategyTypeDeserializer;
-import com.affaince.subscription.common.deserializer.QuantityUnitDeserializer;
 import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.serializer.PricingOptionsSerializer;
-import com.affaince.subscription.common.serializer.PricingStrategyTypeSerializer;
-import com.affaince.subscription.common.serializer.QuantityUnitSerializer;
 import com.affaince.subscription.common.service.forecast.config.Forecast;
-import com.affaince.subscription.common.type.PricingStrategyType;
-import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.transformation.MetadataDeserializer;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoURI;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.CommandDispatchInterceptor;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
@@ -47,17 +36,15 @@ import org.axonframework.eventstore.mongo.MongoTemplate;
 import org.axonframework.saga.ResourceInjector;
 import org.axonframework.saga.spring.SpringResourceInjector;
 import org.axonframework.serializer.AnnotationRevisionResolver;
-import org.axonframework.serializer.RevisionResolver;
-import org.axonframework.serializer.SerializedType;
 import org.axonframework.serializer.Serializer;
 import org.axonframework.serializer.json.JacksonSerializer;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.authentication.UserCredentials;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.util.ErrorHandler;
@@ -98,18 +85,30 @@ public class Default {
 
     @Bean(name = "axonmongo")
     public MongoTemplate mongoTemplate(Mongo mongo, @Value("${view.db.name}") String dbName) {
-        MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongo, dbName, "domainevents", "snapshotevents", null, null);
+        MongoTemplate mongoTemplate =
+                new DefaultMongoTemplate(mongo, dbName, "domainevents", "snapshotevents", null, null);
         return mongoTemplate;
     }
 
     @Bean
-    public Mongo mongo(@Value("${view.db.host}") String host, @Value("${view.db.port}") int port) {
+    public Mongo mongo(MongoClientURI mongoClientURI) {
         try {
-            return new Mongo(host, port);
+            return new Mongo(new MongoURI(mongoClientURI));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Bean
+    public MongoClientURI mongoClientURI(@Value("${view.db.host}") String host, @Value("${view.db.port}") int port,
+                                         @Value("${view.db.name}") String dbName) {
+        return new MongoClientURI("mongodb://affaince:affaince@"
+                + host
+                + ":"
+                + port
+                + "/" +
+                dbName);
     }
 
     @Bean
@@ -224,5 +223,10 @@ public class Default {
     @Bean
     public Locale locale (@Value("${subscription.locale}") String locale) {
         return new Locale(locale);
+    }
+
+    @Bean
+    public SimpleMongoDbFactory mongoDbFactory(MongoClientURI mongoClientURI) throws Exception {
+        return new SimpleMongoDbFactory(new MongoURI(mongoClientURI));
     }
 }
