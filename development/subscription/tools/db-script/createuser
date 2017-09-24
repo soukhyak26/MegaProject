@@ -1,0 +1,77 @@
+use admin
+db.system.users.remove({})    <== removing all users
+db.system.version.remove({}) <== removing current version
+db.system.version.insert({ "_id" : "authSchema", "currentVersion" : 3 })
+
+db.createUser(
+  {
+    user: "qwecxz1",
+    pwd: "qazplm159",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+sudo mongod --setParameter authenticationMechanisms=MONGODB-CR --auth
+
+mongo --port 27017 -u "qwecxz1" -p "qazplm159" --authenticationDatabase "admin"
+
+use sysdate
+db.createUser(
+  {
+    user: "affaince",
+    pwd: "qscvplmnb1029",
+    roles: [ { role: "dbAdmin", db: "sysdate" },
+             { role: "readWrite", db: "sysdate" } ]
+  }
+)
+
+use benefits
+db.createUser(
+  {
+    user: "affaince",
+    pwd: "qscvplmnb1029",
+    roles: [ { role: "dbAdmin", db: "benefits" },
+              { role: "readWrite", db: "benefits" } ]
+  }
+)
+
+use product
+db.createUser(
+  {
+    user: "affaince",
+    pwd: "qscvplmnb1029",
+    roles: [ { role: "dbAdmin", db: "product" },
+             { role: "readWrite", db: "product" } ]
+  }
+)
+
+use subscriber
+db.createUser(
+  {
+    user: "affaince",
+    pwd: "qscvplmnb1029",
+    roles: [ { role: "dbAdmin", db: "subscriber"},
+             { role: "readWrite", db: "subscriber"} ]
+  }
+)
+
+use business
+db.createUser(
+  {
+    user: "affaince",
+    pwd: "qscvplmnb1029",
+    roles: [ { role: "dbAdmin", db: "business" },
+             { role: "readWrite", db: "business" } ]
+  }
+)
+
+
+use payments
+db.createUser(
+  {
+    user: "affaince",
+    pwd: "qscvplmnb1029",
+    roles: [ { role: "dbAdmin", db: "payments" },
+             { role: "readWrite", db: "payments" } ]
+  }
+)
