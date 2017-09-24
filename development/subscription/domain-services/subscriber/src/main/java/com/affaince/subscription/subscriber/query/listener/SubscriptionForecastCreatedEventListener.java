@@ -6,6 +6,7 @@ import com.affaince.subscription.common.aggregate.aggregators.MetricsAggregator;
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.EntityHistoryPacket;
+import com.affaince.subscription.common.vo.EntityMetadata;
 import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.subscriber.command.event.SubscriptionForecastCreatedEvent;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionForecastViewRepository;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mandar on 9/10/2017.
@@ -51,8 +53,8 @@ public class SubscriptionForecastCreatedEventListener {
             final EntityHistoryPacket forecastPacket=mapper.readValue(forecastData, new TypeReference<EntityHistoryPacket>(){});
             expireOverlappingActiveForecast(forecastPacket.getForecastDate());
             expireOverlappingActivePseudoActuals(forecastPacket.getForecastDate());
-            updatePseudoActuals(null, forecastPacket.getEntityMetricType(),forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate() );
-            updateForecast(null, forecastPacket.getEntityMetricType(),forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate() );
+            updatePseudoActuals(null,forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate(),forecastPacket.getEntityMetadata() );
+            updateForecast(null, forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate(),forecastPacket.getEntityMetadata() );
         } catch (IOException e) {
             LOGGER.error("Unable to deserialize forecasted content",e.getStackTrace());
         }
@@ -68,10 +70,19 @@ public class SubscriptionForecastCreatedEventListener {
             subscriptionForecastViewRepository.save(earlierForecastsWithOverlappingPeriods);
         }
     }
-    private void updateForecast(Object entityId, EntityMetricType entityMetricType, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate){
+    private void updateForecast(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata){
         List<SubscriptionForecastView> forecastViews= new ArrayList<>();
         MetricsAggregator<DataFrameVO> aggregator= this.aggregatorFactory.getAggregator(30,DataFrameVO.class);
         List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs,30);
+        Map<String,Object> namedMetadata=entityMetadata.getNamedEntries();
+        EntityMetricType entityMetricType=null;
+        for (String s : namedMetadata.keySet()) {
+            switch(s){
+                case "ENTITY_METRIC_TYPE":
+                    entityMetricType=(EntityMetricType) namedMetadata.get(s);
+                    break;
+            }
+        }
 
         for(DataFrameVO vo:dataFrameVOs){
             SubscriptionForecastView view= new SubscriptionForecastView(vo.getStartDate(),vo.getEndDate(),forecastDate);
@@ -92,11 +103,20 @@ public class SubscriptionForecastCreatedEventListener {
 
 
     }
-    private void updatePseudoActuals(Object entityId, EntityMetricType entityMetricType,List<DataFrameVO> dataFrameVOs, LocalDate forecastDate){
+    private void updatePseudoActuals(Object entityId,List<DataFrameVO> dataFrameVOs, LocalDate forecastDate,EntityMetadata entityMetadata){
             List<SubscriptionPseudoActualsView> pseudoActualsViews= new ArrayList<>();
             for(DataFrameVO vo:dataFrameVOs){
                 SubscriptionPseudoActualsView view= new SubscriptionPseudoActualsView(vo.getDate(),forecastDate);
-                //view.
+                Map<String,Object> namedMetadata=entityMetadata.getNamedEntries();
+                EntityMetricType entityMetricType=null;
+                for (String s : namedMetadata.keySet()) {
+                    switch(s){
+                        case "ENTITY_METRIC_TYPE":
+                            entityMetricType=(EntityMetricType) namedMetadata.get(s);
+                            break;
+                    }
+                }
+
                 switch (entityMetricType) {
                     case NEW :
                         view.setNewSubscriptions(Double.valueOf(vo.getValue()).longValue());

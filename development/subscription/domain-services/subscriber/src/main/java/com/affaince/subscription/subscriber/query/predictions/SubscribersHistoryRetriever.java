@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mandar on 9/1/2017.
@@ -22,7 +23,7 @@ public class SubscribersHistoryRetriever extends TransportationTransformer {
     SubscribersActualsViewRepository subscribersActualsViewRepository;
     @Value("${subscription.forecast.subscribers.url}")
     private String url;
-    public List<DataFrameVO> prepare(Object subscriptionId) throws JsonProcessingException {
+    public List<DataFrameVO> prepare(Object subscriptionId,Map<String,Object> metadata) throws JsonProcessingException {
         System.out.println("in ProductsHistoryRetriever###############");
         //TODO: Need to change it to all records prior to upto 2 years
         Iterable<SubscribersActualsView> allSubscriptions = subscribersActualsViewRepository.findAll();
@@ -35,8 +36,8 @@ public class SubscribersHistoryRetriever extends TransportationTransformer {
     }
 
     @Override
-    public void marshallSendAndReceive(Object id) {
-        super.marshallSendAndReceive(id,url);
+    public void marshallSendAndReceive(Object id,Map<String,Object> metadata) {
+        super.marshallSendAndReceive(id,metadata,url);
     }
 
 }

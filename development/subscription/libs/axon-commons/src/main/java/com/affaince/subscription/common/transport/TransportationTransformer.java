@@ -1,9 +1,12 @@
 package com.affaince.subscription.common.transport;
 
-import com.affaince.subscription.common.vo.DataFrameVO;
+import com.affaince.subscription.common.vo.*;
+import com.affaince.subscription.date.SysDate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.apache.http.impl.client.HttpClients;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +36,35 @@ public abstract class TransportationTransformer {
         return (List<DataFrameVO>) new ObjectMapper().readValue(jsonString, DataFrameVO.class);
     }
 
-    public abstract List<DataFrameVO> prepare(Object id) throws JsonProcessingException;
+    public abstract List<DataFrameVO> prepare(Object id,Map<String,Object> metadata) throws JsonProcessingException;
 
-    public abstract void marshallSendAndReceive(Object id);
+    public abstract void marshallSendAndReceive(Object id,Map<String,Object> metadata);
 
-    public final List<DataFrameVO> marshallSendAndReceive(Object id,String url) {
+    public final List<DataFrameVO> marshallSendAndReceive(Object id, Map<String,Object> metadata, String url) {
         try {
-            final List<DataFrameVO> dataFrames = prepare(id);
-           // final String requestString= convertToJsonString(dataFrames);
+            final List<DataFrameVO> dataFrames = prepare(id,metadata);
+            Iterator<String> metadataKeys=metadata.keySet().iterator();
+            EntityType entityType=null;
+            EntityMetricType entityMetricType=null;
+            while(metadataKeys.hasNext()){
+                String key=metadataKeys.next();
+                switch (key){
+                    case "ENTITY_TYPE" :
+                        entityType=(EntityType)metadata.get(key);
+                        break;
+                    case "ENTITY_METRIC_TYPE" :
+                        entityMetricType=(EntityMetricType)metadata.get(key);
+                        break;
+                }
+            }
+            EntityMetadata entityMetadata= new EntityMetadata(metadata);
+            EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(id, entityType,dataFrames, SysDate.now(),entityMetadata);
+            ObjectMapper mapper= new ObjectMapper();
+            mapper.registerModule(new JodaModule());
+            String requestString = mapper.writeValueAsString(entityHistoryPacket);
+            System.out.println("@@@@requestString: " + requestString);
+
+            // final String requestString= convertToJsonString(dataFrames);
             return sendForForecast(url,dataFrames);
         } catch (JsonProcessingException e) {
             LOGGER.error("Error in converting forecast payload to Json", e.getStackTrace());

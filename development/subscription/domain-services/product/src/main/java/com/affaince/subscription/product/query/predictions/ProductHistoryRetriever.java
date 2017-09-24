@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mandar on 8/30/2017.
@@ -25,10 +26,11 @@ public class ProductHistoryRetriever extends TransportationTransformer {
     @Value("${subscription.forecast.product.url}")
     private String url;
 
-    public List<DataFrameVO> prepare(Object productId) throws JsonProcessingException {
+    public List<DataFrameVO> prepare(Object productId,Map<String,Object> metadata) throws JsonProcessingException {
         System.out.println("in ProductsHistoryRetriever###############");
         Iterable<ProductActualsView> allProducts = productActualsViewRepository.findByProductVersionId_ProductId((String)productId);
         List<DataFrameVO> productHistoricalRecords = new ArrayList<>();
+
         allProducts.forEach(productActualsView -> {
             DataFrameVO dataFrameVO=new DataFrameVO(productActualsView.getEndDate(),"productId",productActualsView.getTotalNumberOfExistingSubscriptions(), AggregationType.INCREMENTAL);
             productHistoricalRecords.add(dataFrameVO);
@@ -37,7 +39,7 @@ public class ProductHistoryRetriever extends TransportationTransformer {
     }
 
     @Override
-    public void marshallSendAndReceive(Object id) {
-        super.marshallSendAndReceive(id,url);
+    public void marshallSendAndReceive(Object id,Map<String,Object> metadata) {
+        super.marshallSendAndReceive(id,metadata,url);
     }
 }

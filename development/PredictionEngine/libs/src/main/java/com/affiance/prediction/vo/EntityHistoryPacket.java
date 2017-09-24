@@ -12,13 +12,15 @@ public class EntityHistoryPacket {
     private EntityType entityType;
     private List<DataFrameVO> dataFrameVOs;
     private LocalDate forecastDate;
+    private EntityMetadata entityMetadata;
 
     public EntityHistoryPacket(){}
-    public EntityHistoryPacket(Object entityId, EntityType entityType, List<DataFrameVO> dataFrameVOs,LocalDate forecastDate) {
+    public EntityHistoryPacket(Object entityId, EntityType entityType, List<DataFrameVO> dataFrameVOs,LocalDate forecastDate,EntityMetadata entityMetadata) {
         this.entityId = entityId;
         this.entityType = entityType;
         this.dataFrameVOs = dataFrameVOs;
         this.forecastDate=forecastDate;
+        this.entityMetadata=entityMetadata;
     }
 
     public Object getEntityId() {
@@ -51,5 +53,13 @@ public class EntityHistoryPacket {
 
     public void setForecastDate(LocalDate forecastDate) {
         this.forecastDate = forecastDate;
+    }
+
+    public EntityMetadata getEntityMetadata() {
+        return entityMetadata;
+    }
+
+    public void setEntityMetadata(EntityMetadata entityMetadata) {
+        this.entityMetadata = entityMetadata;
     }
 }

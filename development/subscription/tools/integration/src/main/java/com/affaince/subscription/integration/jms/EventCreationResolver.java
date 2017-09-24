@@ -1,6 +1,7 @@
 package com.affaince.subscription.integration.jms;
 
 import com.affaince.subscription.common.vo.EntityType;
+import com.affaince.subscription.integration.command.event.forecast.DeliveryForecastCreatedEvent;
 import com.affaince.subscription.integration.command.event.forecast.ProductForecastCreatedEvent;
 import com.affaince.subscription.integration.command.event.forecast.SubscriberForecastCreatedEvent;
 import com.affaince.subscription.integration.command.event.forecast.SubscriptionForecastCreatedEvent;
@@ -21,6 +22,8 @@ public class EventCreationResolver {
                 return new SubscriptionForecastCreatedEvent(forecastString,forecastDate);
             case PRODUCT:
                 return  new ProductForecastCreatedEvent(entityId,forecastString, forecastDate);
+            case DELIVERY:
+                return new DeliveryForecastCreatedEvent(forecastString,forecastDate);
         }
         return null;
     }

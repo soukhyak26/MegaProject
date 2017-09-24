@@ -2,6 +2,8 @@ package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.EntityMetricType;
+import com.affaince.subscription.common.vo.EntityType;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.*;
@@ -29,7 +31,9 @@ import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mandar on 04-07-2016.
@@ -85,7 +89,10 @@ public class ForecastController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}")
     public ResponseEntity<String> forecastDemand(@PathVariable("productid") String productId) throws Exception {
-        productHistoryRetriever.marshallSendAndReceive(productId);
+        Map<String,Object> metadata= new HashMap<>();
+        metadata.put("ENTITY_TYPE", EntityType.PRODUCT);
+        metadata.put("ENTITY_METRIC_TYPE", EntityMetricType.TOTAL);
+        productHistoryRetriever.marshallSendAndReceive(productId,metadata);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
