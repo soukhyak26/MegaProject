@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.forecast;
 import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
 import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.factory.AggregatorFactory;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
@@ -80,11 +81,11 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         for (int i = 0; i < forecastTotalSubscriptions.size(); i++) {
             // this needs further treatment- instead of directly adding chunkAggregationPeriod we should find out how many days that month would have and add those many days
            // LocalDate newForecastEndDate = newForecastStartDate;
-            ProductPseudoActualsView dailyPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, forecastTotalSubscriptions.get(i).getDate()),
+            ProductPseudoActualsView dailyPseudoActualsView = new ProductPseudoActualsView(new ForecastVersionId(productId, forecastTotalSubscriptions.get(i).getDate(),currentDate),
                     forecastTotalSubscriptions.get(i).getDate(),
                     Double.valueOf(forecastNewSubscriptions.get(i).getValue()).longValue(),
                     Double.valueOf(forecastChurnedSubscriptions.get(i).getValue()).longValue(),
-                    Double.valueOf(forecastTotalSubscriptions.get(i).getValue()).longValue(),currentDate);
+                    Double.valueOf(forecastTotalSubscriptions.get(i).getValue()).longValue());
             pseudoActuals.add(dailyPseudoActualsView);
         }
 

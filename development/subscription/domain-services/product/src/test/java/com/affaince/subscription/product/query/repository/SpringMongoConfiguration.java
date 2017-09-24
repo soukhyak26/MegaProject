@@ -16,8 +16,6 @@ import java.util.List;
 /**
  * Created by mandar on 02-07-2016.
  */
-//@Configuration
-//@EnableMongoRepositories
 public class SpringMongoConfiguration {
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {

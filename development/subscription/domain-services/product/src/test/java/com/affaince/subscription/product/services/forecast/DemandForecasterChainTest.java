@@ -2,6 +2,7 @@ package com.affaince.subscription.product.services.forecast;
 
 import com.affaince.subscription.common.service.forecast.DemandForecasterChain;
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
@@ -16,7 +17,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -59,8 +59,9 @@ public class DemandForecasterChainTest {
 
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
+        ForecastVersionId forecastVersionId = new ForecastVersionId("1", new LocalDate(2016, 1, 1), SysDate.now());
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250, SysDate.now());
+        ProductForecastView forecastView = new ProductForecastView(forecastVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
         //forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);
@@ -105,8 +106,9 @@ public class DemandForecasterChainTest {
     public void testForecastFor40HistoricalLinearRecords() throws IOException {
         List<ProductActualsView> productActualsViewList;
         productActualsViewList = new ArrayList<>();
+        ForecastVersionId forecastVersionId = new ForecastVersionId("1", new LocalDate(2016, 1, 1),SysDate.now());
         ProductVersionId productVersionId = new ProductVersionId("1", new LocalDate(2016, 1, 1));
-        ProductForecastView forecastView = new ProductForecastView(productVersionId, new LocalDate(9999, 12, 31),1250,0,1250,SysDate.now());
+        ProductForecastView forecastView = new ProductForecastView(forecastVersionId, new LocalDate(9999, 12, 31),1250,0,1250);
         //forecastView.setTotalNumberOfExistingSubscriptions(1250);
         List<ProductForecastView> forecasts = new ArrayList<>();
         forecasts.add(forecastView);

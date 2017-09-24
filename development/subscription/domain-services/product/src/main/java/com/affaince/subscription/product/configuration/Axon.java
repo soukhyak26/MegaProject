@@ -68,6 +68,8 @@ public class Axon extends Default {
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
         converters.add(new ProductVersionIdReaderConverter());
         converters.add(new ProductVersionIdWriterConverter());
+        converters.add(new ForecastVersionIdReaderConverter());
+        converters.add(new ForecastVersionIdWriterConverter());
         converters.add(new ProductwisePriceBucketIdReaderConverter());
         converters.add(new ProductwisePricebucketIdWriterConverter());
         converters.add(new ProductwiseTaggedPriceVersionIdReaderConverter());

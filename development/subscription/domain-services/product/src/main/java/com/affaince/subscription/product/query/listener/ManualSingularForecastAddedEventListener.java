@@ -3,6 +3,7 @@ package com.affaince.subscription.product.query.listener;
 import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ProductReadinessStatus;
 import com.affaince.subscription.common.type.ProductStatus;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.event.ManualForecastAddedEvent;
@@ -68,7 +69,7 @@ public class ManualSingularForecastAddedEventListener {
             } else {
                 totalSubscriptions = earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions() + event.getNumberOfNewSubscriptions() - event.getNumberOfChurnedSubscriptions();
             }
-            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(event.getProductId(), event.getStartDate()), event.getEndDate(), event.getNumberOfNewSubscriptions(), event.getNumberOfChurnedSubscriptions(), totalSubscriptions, SysDate.now());
+            ProductForecastView productForecastView = new ProductForecastView(new ForecastVersionId(event.getProductId(), event.getStartDate(), SysDate.now()), event.getEndDate(), event.getNumberOfNewSubscriptions(), event.getNumberOfChurnedSubscriptions(), totalSubscriptions);
             productForecastViewRepository.save(productForecastView);
             if (null == firstStartDate) {
                 firstStartDate = event.getStartDate();

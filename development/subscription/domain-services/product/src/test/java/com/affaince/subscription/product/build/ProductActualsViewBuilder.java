@@ -1,10 +1,9 @@
 package com.affaince.subscription.product.build;
 
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by mandar on 6/25/2017.

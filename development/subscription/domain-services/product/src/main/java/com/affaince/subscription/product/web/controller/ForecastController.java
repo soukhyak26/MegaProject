@@ -4,6 +4,7 @@ import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.common.vo.EntityType;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.*;
@@ -157,7 +158,7 @@ public class ForecastController {
                 //this.productForecastViewRepository.delete(eachView);
                 eachView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
                 this.productForecastViewRepository.save(eachView);
-                modifiedView = new ProductForecastView(new ProductVersionId(productId, request.getStartDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions(),SysDate.now());
+                modifiedView = new ProductForecastView(new ForecastVersionId(productId, request.getStartDate(),SysDate.now()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions());
             }
         } else {
             throw ProductForecastModificationException.build(productId, request.getStartDate(), request.getEndDate());

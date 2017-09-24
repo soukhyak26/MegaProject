@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.services.aggregators;
 
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.view.ProductActualsView;
@@ -38,11 +39,11 @@ public class PeriodBasedAggregatorTest {
             DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-yy");
             for (List<String> value : values) {
                 ProductForecastView productForecastView = new ProductForecastView(
-                        new ProductVersionId(value.get(0), LocalDate.parse(value.get(1), formatter)),
+                        new ForecastVersionId(value.get(0), LocalDate.parse(value.get(1), formatter),SysDate.now()),
                         LocalDate.parse(value.get(2), formatter),
                         Long.parseLong(value.get(3)),
                         Long.parseLong(value.get(4)),
-                        Long.parseLong(value.get(5)), SysDate.now());
+                        Long.parseLong(value.get(5)));
                 productForecastViews.add(productForecastView);
 
                 ProductActualsView productActualsView = new ProductActualsView(
@@ -60,7 +61,7 @@ public class PeriodBasedAggregatorTest {
         int period = 30;
         for (int periodIndex = 1; periodIndex <= 12; periodIndex++) {
             ProductForecastView firstView = productForecastViews.get(0);
-            ProductForecastView aggregateView = new ProductForecastView(firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0,SysDate.now());
+            ProductForecastView aggregateView = new ProductForecastView((ForecastVersionId)firstView.getProductVersionId(), firstView.getEndDate(), 0, 0, 0);
             String productId = null;
             LocalDate startDate = null;
             LocalDate endDate = null;

@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
@@ -93,7 +94,7 @@ public class ForecastControllerTest {
         ProductActualsView view4 = new ProductActualsView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),1250,0,totalSubscriptions);
         ProductActualsViewList.add(view4);
 
-        ProductForecastView forecastView = new ProductForecastView(new ProductVersionId("1", new LocalDate(2016, 1, 1)), new LocalDate(9999, 12, 31),1250,0,1250, SysDate.now());
+        ProductForecastView forecastView = new ProductForecastView(new ForecastVersionId("1", new LocalDate(2016, 1, 1),SysDate.now()), new LocalDate(9999, 12, 31),1250,0,1250);
         List<ProductForecastView> forecasts=new ArrayList<>();
         forecasts.add(forecastView);
 

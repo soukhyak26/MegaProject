@@ -1,17 +1,10 @@
 package com.affaince.subscription.product.services.forecast;
 
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.Application;
 import com.affaince.subscription.product.build.ProductActualsViewBuilder;
-import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
-import com.affaince.subscription.product.query.view.ProductActualsView;
-import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductSubscriptionMetricsView;
 import org.apache.spark.SparkContext;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -21,14 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by mandar on 02-10-2016.

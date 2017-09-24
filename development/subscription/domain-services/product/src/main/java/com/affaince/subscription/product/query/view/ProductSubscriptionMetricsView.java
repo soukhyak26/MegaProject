@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.view;
 
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 

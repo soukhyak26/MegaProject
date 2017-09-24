@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.event.SubscriptionForecastUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
@@ -35,11 +36,11 @@ public class SubscriptionForecastUpdatedEventListener {
         }
         //create and save new latest forecast
         final ProductForecastView productForecastView = new ProductForecastView(
-                new ProductVersionId(event.getProductId(), event.getForecastStartDate()),
+                new ForecastVersionId(event.getProductId(), event.getForecastStartDate(), event.getForecastDate()),
                 event.getForecastEndDate(),
                 event.getNewSubscriptionForecast(),
                 event.getChurnedSubscriptionForecast(),
-                event.getForecastedTotalSubscriptionCount(), event.getForecastDate());
+                event.getForecastedTotalSubscriptionCount());
         productForecastViewRepository.save(productForecastView);
     }
 }

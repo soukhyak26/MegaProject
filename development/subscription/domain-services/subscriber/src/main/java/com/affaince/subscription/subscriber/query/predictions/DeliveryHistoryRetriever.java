@@ -26,7 +26,7 @@ public class DeliveryHistoryRetriever extends TransportationTransformer {
     private String url;
 
     public List<DataFrameVO> prepare(Object subscriptionId,Map<String,Object> metadata) throws JsonProcessingException {
-        System.out.println("in ProductsHistoryRetriever###############");
+        System.out.println("in DeliveryHistoryRetriever###############");
         //TODO: Need to change it to all records prior to upto 2 years
         Iterable<DeliveryView> allDeliveries = deliveryViewRepository.findAll();
         Iterable<DeliveryView> deliveriesMatchFilterCriteria=filterDeliveries(allDeliveries,metadata);

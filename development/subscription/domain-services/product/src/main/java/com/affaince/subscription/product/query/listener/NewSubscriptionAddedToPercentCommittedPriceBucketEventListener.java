@@ -13,7 +13,6 @@ import com.affaince.subscription.product.query.view.PriceBucketView;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.vo.PriceBucketTransactionId;
 import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
-import org.apache.avro.Schema;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;

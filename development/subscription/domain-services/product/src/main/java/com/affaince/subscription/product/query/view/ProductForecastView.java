@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -10,28 +11,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Created by mandar on 10-07-2016.
  */
 @Document(collection = "ProductForecastView")
-public class ProductForecastView implements ProductSubscriptionMetricsView, Comparable<ProductForecastView> {
+public class ProductForecastView implements ProductSubscriptionMetricsView {
     @Id
-    private final ProductVersionId productVersionId;
+    private final ForecastVersionId forecastVersionId;
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
-    private LocalDate forecastDate;
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions,LocalDate forecastDate) {
-        this.productVersionId = productVersionId;
+    public ProductForecastView(ForecastVersionId forecastVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
+        this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalNumberOfExistingSubscriptions = totalNumberOfExistingSubscriptions;
         this.forecastContentStatus = ForecastContentStatus.ACTIVE;
-        this.forecastDate=forecastDate;
     }
 
-    public ProductVersionId getProductVersionId() {
-        return productVersionId;
-    }
 
     public LocalDate getEndDate() {
         return endDate;
@@ -72,12 +68,9 @@ public class ProductForecastView implements ProductSubscriptionMetricsView, Comp
     public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
         this.forecastContentStatus = forecastContentStatus;
     }
-
     public LocalDate getForecastDate() {
-        return forecastDate;
+        return this.forecastVersionId.getForecastDate();
     }
+    public ProductVersionId getProductVersionId(){return this.forecastVersionId;}
 
-    public int compareTo(ProductForecastView o) {
-        return this.getProductVersionId().compareTo(o.getProductVersionId());
-    }
 }

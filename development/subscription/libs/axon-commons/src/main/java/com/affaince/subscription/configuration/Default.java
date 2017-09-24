@@ -57,9 +57,6 @@ import java.util.concurrent.ThreadFactory;
 import static java.util.concurrent.Executors.defaultThreadFactory;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
-/**
- * Created by NIKUNJ on 7/12/2015.
- */
 @Import(
         {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Forecast.class,SparkConfig.class}
 )

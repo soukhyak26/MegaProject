@@ -1,6 +1,7 @@
 package com.affaince.subscription.product.query.listener;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.product.command.event.SubscriptionPseudoActualsUpdatedEvent;
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
@@ -34,11 +35,11 @@ public class SubscriptionPseudoActualsUpdatedEventListener {
             productPseudoActualsViewRepository.save(earlierPseudoActualsWithOverlappingPeriods);
         }
         final ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(
-                new ProductVersionId(event.getProductId(), event.getForecastStartDate()),
+                new ForecastVersionId(event.getProductId(), event.getForecastStartDate(),event.getForecastDate()),
                 event.getForecastEndDate(),
                 event.getNewSubscriptionForecast(),
                 event.getChurnedSubscriptionForecast(),
-                event.getForecastedTotalSubscriptionCount(),event.getForecastDate()
+                event.getForecastedTotalSubscriptionCount()
         );
         productPseudoActualsViewRepository.save(productPseudoActualsView);
     }
