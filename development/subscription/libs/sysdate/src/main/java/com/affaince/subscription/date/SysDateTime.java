@@ -7,6 +7,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Base64Utils;
 
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
@@ -24,11 +25,16 @@ public final class SysDateTime {
     static {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("sysdatesetting");
         MongoClient mongoClient = null;
-        MongoClientURI mongoClientURI = new MongoClientURI("mongodb://affaince:affaince@"
+        MongoClientURI mongoClientURI = new MongoClientURI("mongodb://"
+                + resourceBundle.getString("affaince.db.username")
+                + ":"
+                + resourceBundle.getString("affaince.db.password")
+                + "@"
                 + resourceBundle.getString("view.db.host")
                 + ":"
                 + resourceBundle.getString("view.db.port")
-                + "/test");
+                + "/"
+                + resourceBundle.getString("view.db.name"));
         try {
             mongoClient = new MongoClient(mongoClientURI);
         } catch (UnknownHostException e) {

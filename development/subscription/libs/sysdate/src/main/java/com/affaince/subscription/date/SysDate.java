@@ -23,11 +23,16 @@ public final class SysDate {
     static {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("sysdatesetting");
         MongoClient mongoClient = null;
-        MongoClientURI mongoClientURI = new MongoClientURI("mongodb://affaince:affaince@"
-            + resourceBundle.getString("view.db.host")
+        MongoClientURI mongoClientURI =  new MongoClientURI("mongodb://"
+                + resourceBundle.getString("affaince.db.username")
                 + ":"
-            + resourceBundle.getString("view.db.port")
-            + "/test");
+                + resourceBundle.getString("affaince.db.password")
+                + "@"
+                + resourceBundle.getString("view.db.host")
+                + ":"
+                + resourceBundle.getString("view.db.port")
+                + "/"
+                + resourceBundle.getString("view.db.name"));
         try {
             mongoClient = new MongoClient(mongoClientURI);
         } catch (UnknownHostException e) {

@@ -102,8 +102,10 @@ public class Default {
 
     @Bean
     public MongoClientURI mongoClientURI(@Value("${view.db.host}") String host, @Value("${view.db.port}") int port,
-                                         @Value("${view.db.name}") String dbName) {
-        return new MongoClientURI("mongodb://affaince:affaince@"
+                                         @Value("${view.db.name}") String dbName,
+                                         @Value("${affaince.db.username}") String username,
+                                         @Value("${affaince.db.password}") String password) {
+        return new MongoClientURI("mongodb://" + username + ":" + password + "@"
                 + host
                 + ":"
                 + port
