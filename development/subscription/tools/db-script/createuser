@@ -13,7 +13,7 @@ db.createUser(
 
 sudo mongod --setParameter authenticationMechanisms=MONGODB-CR --auth
 
-mongo --port 27017 -u "qwecxz1" -p "qazplm159" --authenticationDatabase "admin"
+mongo --host= 139.59.90.109 --port 27017 -u "qwecxz1" -p "qazplm159" --authenticationDatabase "admin"
 
 use sysdate
 db.createUser(
