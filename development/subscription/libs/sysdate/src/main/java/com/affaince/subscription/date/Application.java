@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan("com.affaince.subscription.date")
-@PropertySource({"classpath:Application.properties"})
+@PropertySource({"classpath:Application.properties" })
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
