@@ -1,7 +1,7 @@
 package com.affaince.subscription.pricing.query.view;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,15 +12,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ProductForecastView")
 public class ProductForecastView {
     @Id
-    private final ProductVersionId productVersionId;
+    private final ForecastVersionId forecastVersionId;
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
-    public ProductForecastView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
-        this.productVersionId = productVersionId;
+    public ProductForecastView(ForecastVersionId forecastVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
+        this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
@@ -28,8 +28,8 @@ public class ProductForecastView {
         this.forecastContentStatus = forecastContentStatus;
     }
 
-    public ProductVersionId getProductVersionId() {
-        return productVersionId;
+    public ForecastVersionId getForecastVersionId() {
+        return forecastVersionId;
     }
 
     public LocalDate getEndDate() {

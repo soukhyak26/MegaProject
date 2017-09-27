@@ -72,5 +72,6 @@ public class ProductForecastView implements ProductSubscriptionMetricsView {
         return this.forecastVersionId.getForecastDate();
     }
     public ProductVersionId getProductVersionId(){return this.forecastVersionId;}
+    public ForecastVersionId getForecastVersionId(){return this.forecastVersionId;}
 
 }

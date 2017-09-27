@@ -81,7 +81,7 @@ public class ProductForecastViewRepositoryTest {
     public void testFindFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc() {
         ProductForecastView productForecastView =
                 productForecastViewRepository.
-                        findFirstByProductVersionId_ProductIdOrderByProductVersionId_FromDateDesc("1");
+                        findFirstByForecastVersionId_ProductIdOrderByForecastVersionId_FromDateDesc("1");
         ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
         assertThat(productForecastView.getProductVersionId(), is(productVersionId));
     }
@@ -89,7 +89,7 @@ public class ProductForecastViewRepositoryTest {
     @Test
     public void testFindByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc() {
         List<ProductForecastView> productForecastViewList = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc("1", ForecastContentStatus.ACTIVE);
+                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateDesc("1", ForecastContentStatus.ACTIVE);
         assertThat(productForecastViewList.size(), is(3));
         ProductVersionId productVersionId = new ProductVersionId("1", localDate.plusDays(52));
         assertThat(productForecastViewList.get(0).getProductVersionId(), is(productVersionId));

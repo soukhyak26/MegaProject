@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 /**
  * Created by mandar on 19-06-2016.
  */
-@Ignore
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
@@ -52,7 +52,7 @@ public class ARIMABasedDemandForecasterTest {
             actualsVOs.add(actualsVO);
             fromDate=fromDate.plusDays(1);
         }
-        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,actualsVOs, LocalDate.now());
+        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,actualsVOs, LocalDate.now(),null);
         ObjectMapper mapper= new ObjectMapper();
         mapper.registerModule(new JodaModule());
         String requestString = mapper.writeValueAsString(entityHistoryPacket);

@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.integration.annotation.Transformer;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.Map;
 @EnableBinding(Processor.class)
 @SpringBootApplication
 @ComponentScan ("com.affiance")
+@PropertySource({"classpath:Application.properties"})
 @EnableAutoConfiguration
 public class Application {
     @Autowired

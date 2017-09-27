@@ -3,7 +3,7 @@ package com.affaince.subscription.expensedistribution.query.view;
 import com.affaince.subscription.common.deserializer.LocalDateTimeDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateTimeSerializer;
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
  * Created by mandar on 10-07-2016.
  */
 public class ProductForecastView {
-    private ProductVersionId productVersionId;
+    private ForecastVersionId forecastVersionId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate endDate;
@@ -24,12 +24,12 @@ public class ProductForecastView {
     public ProductForecastView() {
     }
 
-    public ProductVersionId getProductVersionId() {
-        return productVersionId;
+    public ForecastVersionId getForecastVersionId() {
+        return forecastVersionId;
     }
 
-    public void setProductVersionId(ProductVersionId productVersionId) {
-        this.productVersionId = productVersionId;
+    public void setForecastVersionId(ForecastVersionId forecastVersionId) {
+        this.forecastVersionId = forecastVersionId;
     }
 
     public LocalDate getEndDate() {

@@ -7,6 +7,7 @@ import com.affaince.subscription.business.query.repository.ProductForecastViewRe
 import com.affaince.subscription.business.query.repository.ProductViewRepository;
 import com.affaince.subscription.business.query.view.ProductForecastView;
 import com.affaince.subscription.business.query.view.ProductView;
+import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -54,7 +55,7 @@ public class AnnualForecastCreatedEventListener {
                 productForecastViewRepository.save(currentForecastView);
             }
         } else {
-            ProductForecastView productForecastView = new ProductForecastView(new ProductVersionId(event.getProductId(), event.getStartDate()), event.getEndDate(), event.getRevisedTotalSubscriptionCount());
+            ProductForecastView productForecastView = new ProductForecastView(new ForecastVersionId(event.getProductId(), event.getStartDate(),SysDate.now()), event.getEndDate(), event.getRevisedTotalSubscriptionCount());
             productForecastViewRepository.save(productForecastView);
         }
 

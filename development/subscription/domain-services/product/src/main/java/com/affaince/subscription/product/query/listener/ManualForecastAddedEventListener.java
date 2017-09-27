@@ -63,13 +63,13 @@ public class ManualForecastAddedEventListener {
 
             long totalSubscriptions = 0;
             for (ProductForecastParameter parameter : forecastParameters) {
-                List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(event.getProductId(), parameter.getStartDate(), parameter.getEndDate());
+                List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateBetween(event.getProductId(), parameter.getStartDate(), parameter.getEndDate());
                 //forecast should not be newly added if it already exists in the view
                 if (null != existingForecastViews && existingForecastViews.size() > 0) {
                     throw ProductForecastAlreadyExistsException.build(event.getProductId(), parameter.getStartDate(), parameter.getEndDate());
                 }
                 //find forecasts entered earlier to current forecast entry
-                List<ProductForecastView> earlierForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(event.getProductId(), parameter.getEndDate(), endDateSort);
+                List<ProductForecastView> earlierForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateLessThan(event.getProductId(), parameter.getEndDate(), endDateSort);
                 if (earlierForecastViews.isEmpty()) {
                     totalSubscriptions = parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
                 } else {
@@ -97,7 +97,7 @@ public class ManualForecastAddedEventListener {
 
     private double[] interpolateStepForecastFromForecast(String productId, int whomToInterpolate) {
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateAsc
+                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateAsc
                         (productId, ForecastContentStatus.ACTIVE);
         ProductForecastView firstForecastView = registeredForecastValues.get(0);
         LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();

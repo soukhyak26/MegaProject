@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.TreeMap;
 /**
  * Created by mandar on 9/23/2017.
  */
+@Component
 public class DeliveryHistoryRetriever extends TransportationTransformer {
     @Autowired
     private DeliveryViewRepository deliveryViewRepository;

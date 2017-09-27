@@ -22,11 +22,11 @@ public class ForecastFinderService {
     }
 
     public List<ProductForecastView> findForecastsBetweenDates(String productId,LocalDate startDate, LocalDate endDate) {
-        return this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, startDate, endDate);
+        return this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateBetween(productId, startDate, endDate);
     }
 
     public List<ProductForecastView> findForecastsEarlierThan(String productId,LocalDate endDate) {
         Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
-        return this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId, endDate, endDateSort);
+        return this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateLessThan(productId, endDate, endDateSort);
     }
 }

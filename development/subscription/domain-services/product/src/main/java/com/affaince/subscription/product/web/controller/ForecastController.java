@@ -150,7 +150,7 @@ public class ForecastController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
-        List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, request.getStartDate(), request.getEndDate());
+        List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateBetween(productId, request.getStartDate(), request.getEndDate());
         ProductForecastView modifiedView = null;
         //Set status of earlier forecast to OVVERRIDEN and insert new forecast
         if (null != existingForecastViews && existingForecastViews.size() == 0) {
@@ -245,7 +245,7 @@ public class ForecastController {
     public String findProductForecastByProductId(@PathVariable("productid") String productId) throws JsonProcessingException {
         final List<ProductForecastView> productForecastViews = new ArrayList<>();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
-        productForecastViewRepository.findByProductVersionId_ProductId(productId, sort).forEach
+        productForecastViewRepository.findByForecastVersionId_ProductId(productId, sort).forEach
                 (productForecastMetricsView -> productForecastViews.add(productForecastMetricsView));
         final ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(productForecastViews);
@@ -256,7 +256,7 @@ public class ForecastController {
         final List<ProductForecastView> productForecastViews = new ArrayList<>();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         productForecastViewRepository.
-                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateAsc
+                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateAsc
                         (productId, ForecastContentStatus.ACTIVE).forEach
                 (productForecastMetricsView -> productForecastViews.add(productForecastMetricsView));
         final ObjectMapper objectMapper = new ObjectMapper();

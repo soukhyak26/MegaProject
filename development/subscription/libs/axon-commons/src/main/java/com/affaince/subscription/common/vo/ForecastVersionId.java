@@ -8,8 +8,6 @@ import java.io.Serializable;
  * Created by mandar on 9/24/2017.
  */
 public class ForecastVersionId extends ProductVersionId implements Serializable{
-    private String productId;
-    private LocalDate fromDate;
     private LocalDate forecastDate;
 
     public ForecastVersionId(){}
@@ -30,19 +28,17 @@ public class ForecastVersionId extends ProductVersionId implements Serializable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         ForecastVersionId that = (ForecastVersionId) o;
 
-        if (!productId.equals(that.productId)) return false;
-        if (!fromDate.equals(that.fromDate)) return false;
         return forecastDate.equals(that.forecastDate);
 
     }
 
     @Override
     public int hashCode() {
-        int result = productId.hashCode();
-        result = 31 * result + fromDate.hashCode();
+        int result = super.hashCode();
         result = 31 * result + forecastDate.hashCode();
         return result;
     }

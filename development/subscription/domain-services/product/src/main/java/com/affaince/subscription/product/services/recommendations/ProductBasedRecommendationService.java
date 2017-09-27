@@ -28,8 +28,8 @@ public class ProductBasedRecommendationService {
         //then obtain immediate previous forecast
         //compare active forecast with previous forecast and determine if there is a change in trend.
         //in case trend change is more than contingency stock then it needs additional demand for stock and budget required for the same.
-        List<ProductForecastView> activeProductForecastList = productForecastViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.ACTIVE);
-        List<ProductForecastView> expiredForecastList = productForecastViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.EXPIRED);
+        List<ProductForecastView> activeProductForecastList = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.ACTIVE);
+        List<ProductForecastView> expiredForecastList = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.EXPIRED);
         LocalDate referenceForecastDate = expiredForecastList.get(0).getForecastDate();
         List<ProductForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();

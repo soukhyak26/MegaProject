@@ -89,7 +89,7 @@ public class DemandForecasterChainTest {
             allProducts.add(product);
 
             Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-            Mockito.when(productForecastViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+            Mockito.when(productForecastViewRepository.findByForecastVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
             Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
 
             List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
@@ -135,7 +135,7 @@ public class DemandForecasterChainTest {
             allProducts.add(product);
 
             Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-            Mockito.when(productForecastViewRepository.findByProductVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+            Mockito.when(productForecastViewRepository.findByForecastVersionId_ProductId(product.getProductId(), new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
             Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(productActualsViewList);
             List<Double> historicalDailySubscriptionCountList = productActualsViewList.stream().map(pamv -> Long.valueOf(pamv.getNewSubscriptions()).doubleValue()).collect(Collectors.toCollection(ArrayList<Double>::new));
             List<Double> forecast = chain.forecast(productVersionId.getProductId(), historicalDailySubscriptionCountList, null, historicalDailySubscriptionCountList.size() / 2);

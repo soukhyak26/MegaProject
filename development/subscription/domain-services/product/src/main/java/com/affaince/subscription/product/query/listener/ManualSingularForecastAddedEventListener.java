@@ -56,13 +56,13 @@ public class ManualSingularForecastAddedEventListener {
             LocalDate firstStartDate = null;
             LocalDate lastEndDate = null;Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
 
-            List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(event.getProductId(), event.getStartDate(), event.getEndDate());
+            List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateBetween(event.getProductId(), event.getStartDate(), event.getEndDate());
             //forecast should not be newly added if it already exists in the view
             if (null != existingForecastViews && existingForecastViews.size() > 0) {
                 throw ProductForecastAlreadyExistsException.build(event.getProductId(), event.getStartDate(), event.getEndDate());
             }
             //find forecasts entered earlier to current forecast entry
-            List<ProductForecastView> earlierForecastViews = this.productForecastViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(event.getProductId(), event.getEndDate(), endDateSort);
+            List<ProductForecastView> earlierForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateLessThan(event.getProductId(), event.getEndDate(), endDateSort);
             long totalSubscriptions = 0;
             if (earlierForecastViews.isEmpty()) {
                 totalSubscriptions = event.getNumberOfNewSubscriptions() - event.getNumberOfChurnedSubscriptions();

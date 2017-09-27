@@ -27,7 +27,7 @@ public class SubscriptionForecastUpdatedEventListener {
 
     @EventHandler
     public void on(SubscriptionForecastUpdatedEvent event) {
-        List<ProductForecastView> earlierForecastsWithOverlappingPeriods = productForecastViewRepository.findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(event.getProductId(), ForecastContentStatus.ACTIVE, event.getForecastDate());
+        List<ProductForecastView> earlierForecastsWithOverlappingPeriods = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(event.getProductId(), ForecastContentStatus.ACTIVE, event.getForecastDate());
         for (ProductForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }

@@ -25,10 +25,10 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     public double[] getDailyInterpolatedTotalSubscriptionCounts(String productId) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateDesc
+                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateDesc
                         (productId, ForecastContentStatus.ACTIVE);
         ProductForecastView firstForecastView = registeredForecastValues.get(registeredForecastValues.size() - 1);
-        LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
+        LocalDate dateOfPlatformBeginning = firstForecastView.getForecastVersionId().getFromDate();
         double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
         double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
         int count = 0;
@@ -51,10 +51,10 @@ public class ForecastInterpolatedSubscriptionCountFinder {
     public double getDailyInterpolatedTotalSubscriptionCountAsOnDate(String productId, LocalDate date) {
         Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
         List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByProductVersionId_ProductIdAndForecastContentStatusOrderByProductVersionId_FromDateAsc
+                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateAsc
                         (productId, ForecastContentStatus.ACTIVE);
         ProductForecastView firstForecastView = registeredForecastValues.get(0);
-        LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
+        LocalDate dateOfPlatformBeginning = firstForecastView.getForecastVersionId().getFromDate();
         double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
         double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
         int count = 0;

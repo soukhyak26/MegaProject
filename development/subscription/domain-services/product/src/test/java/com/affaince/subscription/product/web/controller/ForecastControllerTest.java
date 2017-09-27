@@ -104,7 +104,7 @@ public class ForecastControllerTest {
         allProducts.add(product);
 
         Mockito.when(productViewRepository.findAll()).thenReturn(allProducts);
-        Mockito.when(productForecastViewRepository.findByProductVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
+        Mockito.when(productForecastViewRepository.findByForecastVersionId_ProductId(product.getProductId(),new Sort(Sort.Direction.DESC, "productVersionId.fromDate"))).thenReturn(forecasts);
         Mockito.when(productActualsViewRepository.findByProductVersionId_ProductId(product.getProductId())).thenReturn(ProductActualsViewList);
 
         MvcResult result= this.mockMvc.perform(get("/forecast/findall"))
