@@ -31,5 +31,6 @@ public interface ProductForecastViewRepository extends CrudRepository<ProductFor
     List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastContentStatus(String productId, ForecastContentStatus forecastContentStatus);
     List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(String productId, ForecastContentStatus forecastContentStatus);
     List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(String productId, ForecastContentStatus forecastContentStatus, LocalDate newForecastDate);
+    List<ProductForecastView> findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDate(String productId, ForecastContentStatus forecastContentStatus, LocalDate newForecastDate);
     void deleteAll();
 }

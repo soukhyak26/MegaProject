@@ -31,4 +31,5 @@ public interface ProductPseudoActualsViewRepository extends CrudRepository<Produ
 
     List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndEndDateBetween(String productId, LocalDateTime startDate, LocalDateTime endDate);
     List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDateLessThan(String productId, ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
+    List<ProductPseudoActualsView> findByProductVersionId_ProductIdAndForecastContentStatusAndForecastDate(String productId, ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
 }

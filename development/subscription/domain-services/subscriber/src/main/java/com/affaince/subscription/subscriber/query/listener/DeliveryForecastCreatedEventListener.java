@@ -35,69 +35,64 @@ public class DeliveryForecastCreatedEventListener {
     private final DeliveryForecastViewRepository deliveryForecastViewRepository;
     private DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
+
     @Autowired
-    public DeliveryForecastCreatedEventListener(DeliveryForecastViewRepository deliveryForecastViewRepository,DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository,AggregatorFactory<DataFrameVO> aggregatorFactory) {
+    public DeliveryForecastCreatedEventListener(DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory) {
         this.deliveryForecastViewRepository = deliveryForecastViewRepository;
-        this.aggregatorFactory=aggregatorFactory;
-        this.deliveryPseudoActualsViewRepository=deliveryPseudoActualsViewRepository;
+        this.aggregatorFactory = aggregatorFactory;
+        this.deliveryPseudoActualsViewRepository = deliveryPseudoActualsViewRepository;
     }
 
-    public void on(DeliveryForecastCreatedEvent event){
-        final String forecastData=event.getForecastString();
-        ObjectMapper mapper= new ObjectMapper();
-        mapper.registerModule(new JodaModule());
-        try {
-            final EntityHistoryPacket forecastPacket=mapper.readValue(forecastData, new TypeReference<EntityHistoryPacket>(){});
-            expireOverlappingActiveForecast(forecastPacket.getForecastDate());
-            expireOverlappingActivePseudoActuals(forecastPacket.getForecastDate());
-            updatePseudoActuals(null,forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate(),forecastPacket.getEntityMetadata() );
-            updateForecast(null, forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate(),forecastPacket.getEntityMetadata() );
-
-        } catch (IOException e) {
-            LOGGER.error("Unable to deserialize forecasted content",e.getStackTrace());
-        }
+    public void on(DeliveryForecastCreatedEvent event) {
+        final List<DataFrameVO> forecastData = event.getDataFrameVOs();
+        final LocalDate forecastDate = event.getForecastDate();
+        final EntityMetadata entityMetadata = event.getEntityMetadata();
+        expireOverlappingActiveForecast(forecastDate);
+        expireOverlappingActivePseudoActuals(forecastDate);
+        updatePseudoActuals(null, forecastData, forecastDate, entityMetadata);
+        updateForecast(null, forecastData, forecastDate, entityMetadata);
 
     }
 
-    private void expireOverlappingActiveForecast(LocalDate forecastDate){
-        List<DeliveryForecastView> earlierForecastsWithOverlappingPeriods = deliveryForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan( ForecastContentStatus.ACTIVE, forecastDate);
+    private void expireOverlappingActiveForecast(LocalDate forecastDate) {
+        List<DeliveryForecastView> earlierForecastsWithOverlappingPeriods = deliveryForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (DeliveryForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
-        if(null != earlierForecastsWithOverlappingPeriods && earlierForecastsWithOverlappingPeriods.size()>0){
+        if (null != earlierForecastsWithOverlappingPeriods && earlierForecastsWithOverlappingPeriods.size() > 0) {
             deliveryForecastViewRepository.save(earlierForecastsWithOverlappingPeriods);
         }
     }
 
-    private void expireOverlappingActivePseudoActuals(LocalDate forecastDate){
-        List<DeliveryPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = deliveryPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan( ForecastContentStatus.ACTIVE, forecastDate);
+    private void expireOverlappingActivePseudoActuals(LocalDate forecastDate) {
+        List<DeliveryPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = deliveryPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (DeliveryPseudoActualsView earlierView : earlierPseudoActualsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
-        if(null != earlierPseudoActualsWithOverlappingPeriods && earlierPseudoActualsWithOverlappingPeriods.size()>0){
+        if (null != earlierPseudoActualsWithOverlappingPeriods && earlierPseudoActualsWithOverlappingPeriods.size() > 0) {
             deliveryPseudoActualsViewRepository.save(earlierPseudoActualsWithOverlappingPeriods);
         }
     }
 
-    private void updateForecast(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata){
-        List<DeliveryForecastView> forecastViews= new ArrayList<>();
-        MetricsAggregator<DataFrameVO> aggregator= this.aggregatorFactory.getAggregator(30,DataFrameVO.class);
-        List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs,30);
-        Map<String,Object> namedMetadata=entityMetadata.getNamedEntries();
-        double minWeight=0;
-        double maxWeight=0;
+    private void updateForecast(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata) {
+        List<DeliveryForecastView> forecastViews = new ArrayList<>();
+        MetricsAggregator<DataFrameVO> aggregator = this.aggregatorFactory.getAggregator(30, DataFrameVO.class);
+        List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs, 30);
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        double minWeight = 0;
+        double maxWeight = 0;
         for (String s : namedMetadata.keySet()) {
-            switch(s){
+            switch (s) {
                 case "MIN_WEIGHT":
-                    minWeight=(Double)namedMetadata.get(s);
+                    minWeight = (Double) namedMetadata.get(s);
                     break;
-                case "MAX_WEIGHT" :
-                    maxWeight = (Double)namedMetadata.get(s);
+                case "MAX_WEIGHT":
+                    maxWeight = (Double) namedMetadata.get(s);
                     break;
             }
         }
-        for(DataFrameVO vo:dataFrameVOs){
-            DeliveryForecastView view= new DeliveryForecastView(forecastDate,vo.getStartDate(),vo.getEndDate());
+        for (DataFrameVO vo : dataFrameVOs) {
+            DeliveryForecastView view = new DeliveryForecastView(forecastDate, vo.getStartDate(), vo.getEndDate());
             view.setDeliveryCount(Double.valueOf(vo.getValue()).longValue());
             view.setWeightRangeMin(minWeight);
             view.setWeightRangeMax(maxWeight);
@@ -105,24 +100,25 @@ public class DeliveryForecastCreatedEventListener {
         }
         deliveryForecastViewRepository.save(forecastViews);
     }
-    private void updatePseudoActuals(Object entityId,List<DataFrameVO> dataFrameVOs, LocalDate forecastDate,EntityMetadata entityMetadata){
-        List<DeliveryPseudoActualsView> pseudoActualsViews= new ArrayList<>();
-        double minWeight=0;
-        double maxWeight=0;
-        Map<String,Object> namedMetadata=entityMetadata.getNamedEntries();
+
+    private void updatePseudoActuals(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata) {
+        List<DeliveryPseudoActualsView> pseudoActualsViews = new ArrayList<>();
+        double minWeight = 0;
+        double maxWeight = 0;
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
         for (String s : namedMetadata.keySet()) {
-            switch(s){
+            switch (s) {
                 case "MIN_WEIGHT":
-                    minWeight=(Double)namedMetadata.get(s);
+                    minWeight = (Double) namedMetadata.get(s);
                     break;
-                case "MAX_WEIGHT" :
-                    maxWeight = (Double)namedMetadata.get(s);
+                case "MAX_WEIGHT":
+                    maxWeight = (Double) namedMetadata.get(s);
                     break;
             }
         }
 
-        for(DataFrameVO vo:dataFrameVOs){
-            DeliveryPseudoActualsView view= new DeliveryPseudoActualsView(forecastDate,vo.getDate());
+        for (DataFrameVO vo : dataFrameVOs) {
+            DeliveryPseudoActualsView view = new DeliveryPseudoActualsView(forecastDate, vo.getDate());
             view.setDeliveryCount(vo.getValue());
             view.setWeightRangeMin(minWeight);
             view.setWeightRangeMax(maxWeight);

@@ -30,7 +30,7 @@ public class ForecastReceiver {
         mapper.registerModule(new JodaModule());
         try {
             EntityHistoryPacket entityHistoryPacket=mapper.readValue(forecastString,new TypeReference<EntityHistoryPacket>(){});
-            Object event = eventCreationResolver.resolveEventForADomainEntity(entityHistoryPacket.getEntityType(),entityHistoryPacket.getEntityId(),mapper.writeValueAsString(entityHistoryPacket.getDataFrameVOs()),entityHistoryPacket.getForecastDate());
+            Object event = eventCreationResolver.resolveEventForADomainEntity(entityHistoryPacket.getEntityType(),entityHistoryPacket.getEntityId(),entityHistoryPacket.getDataFrameVOs(),entityHistoryPacket.getForecastDate(),entityHistoryPacket.getEntityMetadata());
             genericEventPublisher.publish(event);
         } catch (IOException e) {
             LOGGER.error("Failed to receive forecast", e.getStackTrace());

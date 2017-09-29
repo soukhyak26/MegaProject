@@ -3,6 +3,7 @@ package com.affaince.subscription.product.services.recommendations;
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
+import com.affaince.subscription.product.query.repository.ProductForecastTrendViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastTrendView;
@@ -22,6 +23,8 @@ public class ProductBasedRecommendationService {
     ProductForecastViewRepository productForecastViewRepository;
     @Autowired
     ProductConfigurationViewRepository productConfigurationViewRepository;
+    @Autowired
+    ProductForecastTrendViewRepository productForecastTrendViewRepository;
 
     public List<ProductForecastTrendView> determineTrendChange(String productId) {
         //first obtain latest active forecast
@@ -53,6 +56,7 @@ public class ProductBasedRecommendationService {
                 }
             }
         }
+        productForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
         return changeInSubscriptionCountPerPeriod;
     }
 

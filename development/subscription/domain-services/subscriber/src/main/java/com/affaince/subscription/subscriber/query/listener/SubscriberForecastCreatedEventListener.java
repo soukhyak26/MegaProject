@@ -38,75 +38,77 @@ public class SubscriberForecastCreatedEventListener {
     private final SubscribersForecastViewRepository subscribersForecastViewRepository;
     private final SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
+
     @Autowired
-    public SubscriberForecastCreatedEventListener(SubscribersForecastViewRepository subscribersForecastViewRepository,SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository,AggregatorFactory<DataFrameVO> aggregatorFactory) {
+    public SubscriberForecastCreatedEventListener(SubscribersForecastViewRepository subscribersForecastViewRepository, SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory) {
         this.subscribersForecastViewRepository = subscribersForecastViewRepository;
-        this.subscriberPseudoActualsViewRepository=subscriberPseudoActualsViewRepository;
-        this.aggregatorFactory=aggregatorFactory;
+        this.subscriberPseudoActualsViewRepository = subscriberPseudoActualsViewRepository;
+        this.aggregatorFactory = aggregatorFactory;
     }
 
     @EventHandler
-    public void on(SubscriberForecastCreatedEvent event){
-        final String forecastData=event.getForecastString();
-        ObjectMapper mapper= new ObjectMapper();
-        mapper.registerModule(new JodaModule());
-        try {
-            final EntityHistoryPacket forecastPacket=mapper.readValue(forecastData, new TypeReference<EntityHistoryPacket>(){});
-            expireOverlappingActiveForecast(forecastPacket.getForecastDate());
-            expireOverlappingActivePseudoActuals(forecastPacket.getForecastDate());
-            updatePseudoActuals(null, forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate(),forecastPacket.getEntityMetadata() );
-            updateForecast(null, forecastPacket.getDataFrameVOs(),forecastPacket.getForecastDate(),forecastPacket.getEntityMetadata() );
+    public void on(SubscriberForecastCreatedEvent event) {
+        final List<DataFrameVO> forecastData = event.getDataFrameVOs();
+        final LocalDate forecastDate = event.getForecastDate();
+        final EntityMetadata entityMetadata = event.getEntityMetadata();
+        expireOverlappingActiveForecast(forecastDate);
+        expireOverlappingActivePseudoActuals(forecastDate);
+        updatePseudoActuals(null, forecastData, forecastDate, entityMetadata);
+        updateForecast(null, forecastData, forecastDate, entityMetadata);
 
-        } catch (IOException e) {
-            LOGGER.error("Unable to deserialize forecasted content",e.getStackTrace());
-        }
     }
 
-    private void expireOverlappingActiveForecast(LocalDate forecastDate){
-        List<SubscribersForecastView> earlierForecastsWithOverlappingPeriods = subscribersForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan( ForecastContentStatus.ACTIVE, forecastDate);
+    private void expireOverlappingActiveForecast(LocalDate forecastDate) {
+        List<SubscribersForecastView> earlierForecastsWithOverlappingPeriods = subscribersForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (SubscribersForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
-        if(null != earlierForecastsWithOverlappingPeriods && earlierForecastsWithOverlappingPeriods.size()>0){
+        if (null != earlierForecastsWithOverlappingPeriods && earlierForecastsWithOverlappingPeriods.size() > 0) {
             subscribersForecastViewRepository.save(earlierForecastsWithOverlappingPeriods);
         }
     }
 
-    private void expireOverlappingActivePseudoActuals(LocalDate forecastDate){
-        List<SubscriberPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan( ForecastContentStatus.ACTIVE, forecastDate);
+    private void expireOverlappingActivePseudoActuals(LocalDate forecastDate) {
+        List<SubscriberPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (SubscriberPseudoActualsView earlierView : earlierPseudoActualsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
-        if(null != earlierPseudoActualsWithOverlappingPeriods && earlierPseudoActualsWithOverlappingPeriods.size()>0){
+        if (null != earlierPseudoActualsWithOverlappingPeriods && earlierPseudoActualsWithOverlappingPeriods.size() > 0) {
             subscriberPseudoActualsViewRepository.save(earlierPseudoActualsWithOverlappingPeriods);
         }
     }
 
-    private void updateForecast(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata){
-        List<SubscribersForecastView> forecastViews= new ArrayList<>();
-        MetricsAggregator<DataFrameVO> aggregator= this.aggregatorFactory.getAggregator(30,DataFrameVO.class);
-        List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs,30);
-        EntityMetricType entityMetricType=null;
-        Map<String,Object> namedMetadata=entityMetadata.getNamedEntries();
-        for(String s: namedMetadata.keySet()){
-            switch(s){
+    private void updateForecast(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata) {
+        List<SubscribersForecastView> forecastViews = new ArrayList<>();
+        MetricsAggregator<DataFrameVO> aggregator = this.aggregatorFactory.getAggregator(30, DataFrameVO.class);
+        List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs, 30);
+        EntityMetricType entityMetricType = null;
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
                 case "ENTITY_METRIC_TYPE":
-                    entityMetricType=(EntityMetricType)namedMetadata.get(s);
+                    entityMetricType = (EntityMetricType) namedMetadata.get(s);
                     break;
             }
         }
 
-        for(DataFrameVO vo:dataFrameVOs){
-            SubscribersForecastView view= new SubscribersForecastView(vo.getStartDate(),vo.getEndDate(),forecastDate);
+        for (DataFrameVO vo : dataFrameVOs) {
+            SubscribersForecastView view = null;
+            List<SubscribersForecastView> alreadySavedViews = subscribersForecastViewRepository.findByForecastContentStatusAndForecastDate(ForecastContentStatus.ACTIVE, forecastDate);
+            if (null == alreadySavedViews && alreadySavedViews.isEmpty()) {
+                view = new SubscribersForecastView(vo.getStartDate(), vo.getEndDate(), forecastDate);
+            } else {
+                view = alreadySavedViews.get(0);
+            }
             //view.
             switch (entityMetricType) {
-                case NEW :
+                case NEW:
                     view.setNewSubscribers(Double.valueOf(vo.getValue()).longValue());
                     break;
-                case CHURN :
+                case CHURN:
                     view.setChurnedSubscribers(Double.valueOf(vo.getValue()).longValue());
                     break;
-                case TOTAL :
+                case TOTAL:
                     view.setTotalSubscribers(Double.valueOf(vo.getValue()).longValue());
             }
             forecastViews.add(view);
@@ -115,28 +117,36 @@ public class SubscriberForecastCreatedEventListener {
 
 
     }
-    private void updatePseudoActuals(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate,EntityMetadata entityMetadata){
-        List<SubscriberPseudoActualsView> pseudoActualsViews= new ArrayList<>();
-        EntityMetricType entityMetricType=null;
-        Map<String,Object> namedMetadata=entityMetadata.getNamedEntries();
-        for(String s: namedMetadata.keySet()){
-            switch(s){
+
+    private void updatePseudoActuals(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata) {
+        List<SubscriberPseudoActualsView> pseudoActualsViews = new ArrayList<>();
+        EntityMetricType entityMetricType = null;
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
                 case "ENTITY_METRIC_TYPE":
-                    entityMetricType=(EntityMetricType)namedMetadata.get(s);
+                    entityMetricType = (EntityMetricType) namedMetadata.get(s);
                     break;
             }
         }
-        for(DataFrameVO vo:dataFrameVOs){
-            SubscriberPseudoActualsView view= new SubscriberPseudoActualsView(vo.getDate(),forecastDate);
+        for (DataFrameVO vo : dataFrameVOs) {
+            SubscriberPseudoActualsView view = null;
+            List<SubscriberPseudoActualsView> alreadySavedViews = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndForecastDate(ForecastContentStatus.ACTIVE, forecastDate);
+            if (null == alreadySavedViews && alreadySavedViews.isEmpty()) {
+                view = new SubscriberPseudoActualsView(vo.getDate(), forecastDate);
+            } else {
+                view = alreadySavedViews.get(0);
+            }
+
             //view.
             switch (entityMetricType) {
-                case NEW :
+                case NEW:
                     view.setNewSubscribers(Double.valueOf(vo.getValue()).longValue());
                     break;
-                case CHURN :
+                case CHURN:
                     view.setChurnedSubscribers(Double.valueOf(vo.getValue()).longValue());
                     break;
-                case TOTAL :
+                case TOTAL:
                     view.setTotalSubscribers(Double.valueOf(vo.getValue()).longValue());
             }
             pseudoActualsViews.add(view);

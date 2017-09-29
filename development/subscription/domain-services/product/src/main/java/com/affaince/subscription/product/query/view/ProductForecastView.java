@@ -19,6 +19,12 @@ public class ProductForecastView implements ProductSubscriptionMetricsView {
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
+
+    public ProductForecastView(ForecastVersionId forecastVersionId, LocalDate endDate){
+        this.forecastVersionId = forecastVersionId;
+        this.endDate = endDate;
+
+    }
     public ProductForecastView(ForecastVersionId forecastVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
         this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;

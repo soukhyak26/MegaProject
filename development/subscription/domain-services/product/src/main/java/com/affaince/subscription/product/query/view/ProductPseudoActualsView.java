@@ -21,6 +21,10 @@ public class ProductPseudoActualsView implements ProductSubscriptionMetricsView{
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
+    public ProductPseudoActualsView(ForecastVersionId forecastVersionId, LocalDate endDate){
+        this.forecastVersionId = forecastVersionId;
+        this.endDate = endDate;
+    }
     public ProductPseudoActualsView(ForecastVersionId forecastVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions) {
         this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;
