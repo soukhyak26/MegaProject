@@ -13,6 +13,7 @@ import com.affaince.subscription.subscriber.query.repository.SubscriptionForecas
 import com.affaince.subscription.subscriber.query.repository.SubscriptionPseudoActualsViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriptionForecastView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionPseudoActualsView;
+import com.affaince.subscription.subscriber.services.trend.SubscriptionTrendChangeDetector;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -37,12 +38,14 @@ public class SubscriptionForecastCreatedEventListener {
     private final SubscriptionForecastViewRepository subscriptionForecastViewRepository;
     private final SubscriptionPseudoActualsViewRepository subscriptionPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
+    private final SubscriptionTrendChangeDetector subscriptionTrendChangeDetector;
 
     @Autowired
-    public SubscriptionForecastCreatedEventListener(SubscriptionForecastViewRepository subscriptionForecastViewRepository, SubscriptionPseudoActualsViewRepository subscriptionPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory) {
+    public SubscriptionForecastCreatedEventListener(SubscriptionForecastViewRepository subscriptionForecastViewRepository, SubscriptionPseudoActualsViewRepository subscriptionPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,SubscriptionTrendChangeDetector subscriptionTrendChangeDetector) {
         this.subscriptionForecastViewRepository = subscriptionForecastViewRepository;
         this.subscriptionPseudoActualsViewRepository = subscriptionPseudoActualsViewRepository;
         this.aggregatorFactory = aggregatorFactory;
+        this.subscriptionTrendChangeDetector=subscriptionTrendChangeDetector;
     }
 
     @EventHandler
@@ -54,6 +57,21 @@ public class SubscriptionForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(forecastDate);
         updatePseudoActuals(null, forecastData, forecastDate, entityMetadata);
         updateForecast(null, forecastData, forecastDate, entityMetadata);
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        double minWeight = 0;
+        double maxWeight = 0;
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
+                case "MIN_WEIGHT":
+                    minWeight = (Double) namedMetadata.get(s);
+                    break;
+                case "MAX_WEIGHT":
+                    maxWeight = (Double) namedMetadata.get(s);
+                    break;
+
+            }
+        }
+        subscriptionTrendChangeDetector.determineTrendChange(null,minWeight,maxWeight);
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {

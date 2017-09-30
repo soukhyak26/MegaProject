@@ -1,4 +1,4 @@
-package com.affaince.subscription.product.services.recommendations;
+package com.affaince.subscription.product.services.trend;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
@@ -10,6 +10,7 @@ import com.affaince.subscription.product.query.view.ProductForecastTrendView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
 /**
  * Created by mandar on 9/21/2017.
  */
-public class ProductBasedRecommendationService {
+@Component
+public class ProductTrendChangeDetector {
     @Autowired
     ProductForecastViewRepository productForecastViewRepository;
     @Autowired

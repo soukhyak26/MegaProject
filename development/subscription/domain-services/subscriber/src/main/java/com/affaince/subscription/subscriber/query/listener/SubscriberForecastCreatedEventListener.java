@@ -14,6 +14,7 @@ import com.affaince.subscription.subscriber.query.view.SubscriberPseudoActualsVi
 import com.affaince.subscription.subscriber.query.view.SubscribersForecastView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionForecastView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionPseudoActualsView;
+import com.affaince.subscription.subscriber.services.trend.SubscriberTrendChangeDetector;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -38,12 +39,14 @@ public class SubscriberForecastCreatedEventListener {
     private final SubscribersForecastViewRepository subscribersForecastViewRepository;
     private final SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
+    private final SubscriberTrendChangeDetector subscriberTrendChangeDetector;
 
     @Autowired
-    public SubscriberForecastCreatedEventListener(SubscribersForecastViewRepository subscribersForecastViewRepository, SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory) {
+    public SubscriberForecastCreatedEventListener(SubscribersForecastViewRepository subscribersForecastViewRepository, SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,SubscriberTrendChangeDetector subscriberTrendChangeDetector) {
         this.subscribersForecastViewRepository = subscribersForecastViewRepository;
         this.subscriberPseudoActualsViewRepository = subscriberPseudoActualsViewRepository;
         this.aggregatorFactory = aggregatorFactory;
+        this.subscriberTrendChangeDetector=subscriberTrendChangeDetector;
     }
 
     @EventHandler
@@ -55,7 +58,7 @@ public class SubscriberForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(forecastDate);
         updatePseudoActuals(null, forecastData, forecastDate, entityMetadata);
         updateForecast(null, forecastData, forecastDate, entityMetadata);
-
+        subscriberTrendChangeDetector.determineTrendChange(null);
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {

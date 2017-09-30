@@ -12,9 +12,11 @@ import com.affaince.subscription.subscriber.query.repository.DeliveryForecastVie
 import com.affaince.subscription.subscriber.query.repository.DeliveryPseudoActualsViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastView;
 import com.affaince.subscription.subscriber.query.view.DeliveryPseudoActualsView;
+import com.affaince.subscription.subscriber.services.trend.DeliveryTrendChangeDetector;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +37,16 @@ public class DeliveryForecastCreatedEventListener {
     private final DeliveryForecastViewRepository deliveryForecastViewRepository;
     private DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
+    private final DeliveryTrendChangeDetector deliveryTrendChangeDetector;
 
     @Autowired
-    public DeliveryForecastCreatedEventListener(DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory) {
+    public DeliveryForecastCreatedEventListener(DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,DeliveryTrendChangeDetector deliveryTrendChangeDetector) {
         this.deliveryForecastViewRepository = deliveryForecastViewRepository;
         this.aggregatorFactory = aggregatorFactory;
         this.deliveryPseudoActualsViewRepository = deliveryPseudoActualsViewRepository;
+        this.deliveryTrendChangeDetector=deliveryTrendChangeDetector;
     }
-
+    @EventHandler
     public void on(DeliveryForecastCreatedEvent event) {
         final List<DataFrameVO> forecastData = event.getDataFrameVOs();
         final LocalDate forecastDate = event.getForecastDate();
@@ -51,7 +55,20 @@ public class DeliveryForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(forecastDate);
         updatePseudoActuals(null, forecastData, forecastDate, entityMetadata);
         updateForecast(null, forecastData, forecastDate, entityMetadata);
-
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        double minWeight = 0;
+        double maxWeight = 0;
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
+                case "MIN_WEIGHT":
+                    minWeight = (Double) namedMetadata.get(s);
+                    break;
+                case "MAX_WEIGHT":
+                    maxWeight = (Double) namedMetadata.get(s);
+                    break;
+            }
+        }
+        deliveryTrendChangeDetector.determineTrendChange(null,minWeight,maxWeight);
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {

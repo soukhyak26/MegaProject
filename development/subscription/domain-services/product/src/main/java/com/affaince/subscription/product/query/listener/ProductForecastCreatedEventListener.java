@@ -12,6 +12,7 @@ import com.affaince.subscription.product.query.repository.ProductForecastViewRep
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
+import com.affaince.subscription.product.services.trend.ProductTrendChangeDetector;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -29,11 +30,13 @@ public class ProductForecastCreatedEventListener {
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
+    private final ProductTrendChangeDetector productTrendChangeDetector;
 
-    public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory) {
+    public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,ProductTrendChangeDetector productTrendChangeDetector) {
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
         this.aggregatorFactory = aggregatorFactory;
+        this.productTrendChangeDetector=productTrendChangeDetector;
     }
 
     @EventHandler
@@ -46,6 +49,7 @@ public class ProductForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(productId, forecastDate);
         updatePseudoActuals(productId, forecastData, forecastDate, entityMetadata);
         updateForecast(productId, forecastData, forecastDate, entityMetadata);
+        productTrendChangeDetector.determineTrendChange((String)productId);
     }
 
     private void expireOverlappingActiveForecast(Object entityId,LocalDate forecastDate) {

@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.services.recommendations;
+package com.affaince.subscription.subscriber.services.trend;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
@@ -10,6 +10,7 @@ import com.affaince.subscription.subscriber.query.view.SubscriptionForecastView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionRuleView;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
 /**
  * Created by mandar on 9/21/2017.
  */
-public class SubscriptionBasedRecommendationService {
+@Component
+public class SubscriptionTrendChangeDetector {
 
     @Autowired
     SubscriptionForecastViewRepository subscriptionForecastViewRepository;
@@ -27,9 +29,9 @@ public class SubscriptionBasedRecommendationService {
     @Autowired
     SubscriptionForecastTrendViewRepository subscriptionForecastTrendViewRepository;
 
-    public List<SubscriptionForecastTrendView> determineTrendChange(String id) {
-        List<SubscriptionForecastView> activeProductForecastList = subscriptionForecastViewRepository.findByForecastContentStatusOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE);
-        List<SubscriptionForecastView> expiredForecastList = subscriptionForecastViewRepository.findByForecastContentStatusOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED);
+    public List<SubscriptionForecastTrendView> determineTrendChange(String id,double minWeight,double maxWeight) {
+        List<SubscriptionForecastView> activeProductForecastList = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_WeightRangeMinGreaterThanEqualAndSubscriptionVersionId_WeightRangeMaxLessThanOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE,minWeight,maxWeight);
+        List<SubscriptionForecastView> expiredForecastList = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_WeightRangeMinGreaterThanEqualAndSubscriptionVersionId_WeightRangeMaxLessThanOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED,minWeight,maxWeight);
         LocalDate referenceForecastDate = expiredForecastList.get(0).getSubscriptionVersionId().getForecastDate();
         List<SubscriptionForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getSubscriptionVersionId().getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();
