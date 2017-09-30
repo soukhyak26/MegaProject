@@ -34,7 +34,7 @@ public class SubscriptionRulesController {
         final AddSubscriptionRulesCommand command = new AddSubscriptionRulesCommand(subscriptionRulesId,
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
                 request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
-                request.getMinimumAmountEligibleForFreeShipping(), request.getDiffBetweenDeliveryPreparationAndDispatchDate(),request.getActualsAggregationPeriodForTargetForecast(),request.getContingencyStockPercentage());
+                request.getMinimumAmountEligibleForFreeShipping(), request.getDiffBetweenDeliveryPreparationAndDispatchDate(),request.getActualsAggregationPeriodForTargetForecast(),request.getContingencyStockPercentage(),request.getSubscriptionValueRanges());
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class SubscriptionRulesController {
         final AddSubscriptionRulesCommand command = new AddSubscriptionRulesCommand(basketRuleId,
                 request.getMaximumPermissibleAmount(), request.getMinimumAmountForDiscountEligibility(),
                 request.getMaximumPermissibleDiscount(), request.getMaximumPermissibleDiscountUnit(),
-                request.getMinimumAmountEligibleForFreeShipping(), request.getDiffBetweenDeliveryPreparationAndDispatchDate(),request.getActualsAggregationPeriodForTargetForecast(),request.getContingencyStockPercentage());
+                request.getMinimumAmountEligibleForFreeShipping(), request.getDiffBetweenDeliveryPreparationAndDispatchDate(),request.getActualsAggregationPeriodForTargetForecast(),request.getContingencyStockPercentage(),request.getSubscriptionValueRanges());
         try {
             commandGateway.executeAsync(command);
         } catch (Exception e) {

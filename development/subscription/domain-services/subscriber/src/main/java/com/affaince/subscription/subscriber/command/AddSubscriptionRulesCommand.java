@@ -1,6 +1,9 @@
 package com.affaince.subscription.subscriber.command;
 
+import com.affaince.subscription.subscriber.vo.SubscriptionValueRange;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 26-09-2015.
@@ -17,9 +20,10 @@ public class AddSubscriptionRulesCommand {
     private int actualsAggregationPeriodForTargetForecast=30;
     //stock in excess to predicted count to be kept as a contingency
     private double contingencyStockPercentage=0.1;
+    private List<SubscriptionValueRange> subscriptionValueRanges;
 
 
-    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate,int actualsAggregationPeriodForTargetForecast,double contingencyStockPercentage) {
+    public AddSubscriptionRulesCommand(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, float maximumPermissibleDiscount, int maximumPermissibleDiscountUnit, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate,int actualsAggregationPeriodForTargetForecast,double contingencyStockPercentage,List<SubscriptionValueRange> subscriptionValueRanges) {
         BasketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
@@ -29,6 +33,7 @@ public class AddSubscriptionRulesCommand {
         this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
         this.actualsAggregationPeriodForTargetForecast=actualsAggregationPeriodForTargetForecast;
         this.contingencyStockPercentage=contingencyStockPercentage;
+        this.subscriptionValueRanges=subscriptionValueRanges;
     }
 
     public AddSubscriptionRulesCommand() {
@@ -68,5 +73,9 @@ public class AddSubscriptionRulesCommand {
 
     public double getContingencyStockPercentage() {
         return contingencyStockPercentage;
+    }
+
+    public List<SubscriptionValueRange> getSubscriptionValueRanges() {
+        return subscriptionValueRanges;
     }
 }

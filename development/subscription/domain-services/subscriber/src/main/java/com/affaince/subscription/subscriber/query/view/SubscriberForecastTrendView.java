@@ -1,38 +1,31 @@
 package com.affaince.subscription.subscriber.query.view;
 
+import com.affaince.subscription.subscriber.vo.SubscriberTrendVersionId;
 import org.joda.time.LocalDate;
 
 /**
  * Created by mandar on 9/22/2017.
  */
 public class SubscriberForecastTrendView {
-    private LocalDate trendSettingDate;
-    private LocalDate startDate;
+    private SubscriberTrendVersionId subscriberTrendVersionId;
     private LocalDate endDate;
     private long changeInTotalSubscriberCount;
 
     public SubscriberForecastTrendView(LocalDate trendSettingDate, LocalDate startDate, LocalDate endDate, long changeInTotalSubscriberCount) {
-        this.trendSettingDate = trendSettingDate;
-        this.startDate = startDate;
+        this.subscriberTrendVersionId =new SubscriberTrendVersionId(trendSettingDate, startDate);
         this.endDate = endDate;
         this.changeInTotalSubscriberCount = changeInTotalSubscriberCount;
     }
 
     public LocalDate getTrendSettingDate() {
-        return trendSettingDate;
+        return this.subscriberTrendVersionId.getTrendSettingDate();
     }
 
-    public void setTrendSettingDate(LocalDate trendSettingDate) {
-        this.trendSettingDate = trendSettingDate;
-    }
 
     public LocalDate getStartDate() {
-        return startDate;
+        return this.subscriberTrendVersionId.getStartDate();
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
 
     public LocalDate getEndDate() {
         return endDate;

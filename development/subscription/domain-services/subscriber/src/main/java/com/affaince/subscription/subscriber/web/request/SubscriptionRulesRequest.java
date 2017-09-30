@@ -1,5 +1,9 @@
 package com.affaince.subscription.subscriber.web.request;
 
+import com.affaince.subscription.subscriber.vo.SubscriptionValueRange;
+
+import java.util.List;
+
 /**
  * Created by rbsavaliya on 26-09-2015.
  */
@@ -14,6 +18,7 @@ public class SubscriptionRulesRequest {
     private int actualsAggregationPeriodForTargetForecast=30;
     //stock in excess to predicted count to be kept as a contingency
     private double contingencyStockPercentage=0.1;
+    private List<SubscriptionValueRange> subscriptionValueRanges;
 
 
     public double getMaximumPermissibleAmount() {
@@ -78,5 +83,13 @@ public class SubscriptionRulesRequest {
 
     public void setContingencyStockPercentage(double contingencyStockPercentage) {
         this.contingencyStockPercentage = contingencyStockPercentage;
+    }
+
+    public List<SubscriptionValueRange> getSubscriptionValueRanges() {
+        return subscriptionValueRanges;
+    }
+
+    public void setSubscriptionValueRanges(List<SubscriptionValueRange> subscriptionValueRanges) {
+        this.subscriptionValueRanges = subscriptionValueRanges;
     }
 }

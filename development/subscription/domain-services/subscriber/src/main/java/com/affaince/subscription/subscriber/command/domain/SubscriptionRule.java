@@ -2,9 +2,12 @@ package com.affaince.subscription.subscriber.command.domain;
 
 import com.affaince.subscription.common.type.Discount;
 import com.affaince.subscription.subscriber.command.event.SubscriptionRuleAddedEvent;
+import com.affaince.subscription.subscriber.vo.SubscriptionValueRange;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 26-09-2015.
@@ -21,11 +24,13 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
     private int actualsAggregationPeriodForTargetForecast=30;
     //stock in excess to predicted count to be kept as a contingency
     private double contingencyStockPercentage=0.1;
-
+    // the range of subscription amounts.. used for forecasting susbcription count in each value range
+    private List<SubscriptionValueRange> subscriptionValueRanges;
 
     public SubscriptionRule() {
     }
 
+    //TODO: NO controller and commandHandler to set values for this aggregate.. to be implemented
     public SubscriptionRule(String basketRuleId,
                             double maximumPermissibleAmount,
                             double minimumAmountForDiscountEligibility,
@@ -33,10 +38,10 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
                             int minimumAmountEligibleForFreeShipping,
                             int diffBetweenDeliveryPreparationAndDispatchDate,
                             int actualsAggregationPeriodForTargetForecast,
-                            double contingencyStockPercentage) {
+                            double contingencyStockPercentage,List<SubscriptionValueRange> subscriptionValueRanges) {
         apply(new SubscriptionRuleAddedEvent(basketRuleId, maximumPermissibleAmount,
                 minimumAmountForDiscountEligibility, maximumPermissibleDiscount,
-                minimumAmountEligibleForFreeShipping, diffBetweenDeliveryPreparationAndDispatchDate,actualsAggregationPeriodForTargetForecast,contingencyStockPercentage));
+                minimumAmountEligibleForFreeShipping, diffBetweenDeliveryPreparationAndDispatchDate,actualsAggregationPeriodForTargetForecast,contingencyStockPercentage,subscriptionValueRanges));
     }
 
     @EventSourcingHandler
@@ -48,5 +53,6 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
         this.diffBetweenDeliveryPreparationAndDispatchDate = event.getDiffBetweenDeliveryPreparationAndDispatchDate();
         this.actualsAggregationPeriodForTargetForecast=event.getActualsAggregationPeriodForTargetForecast();
         this.contingencyStockPercentage=event.getContingencyStockPercentage();
+        this.subscriptionValueRanges=subscriptionValueRanges;
     }
 }

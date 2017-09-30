@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.subscriber.vo.SubscriptionVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,27 +12,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="SubscriptionForecastView")
 public class SubscriptionForecastView {
     @Id
-    private LocalDate registrationDate;
+    private SubscriptionVersionId subscriptionVersionId;
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalSubscriptions;
     private ForecastContentStatus forecastContentStatus;
-    private LocalDate forecastDate;
 
-    public SubscriptionForecastView(LocalDate registrationDate,LocalDate endDate,LocalDate forecastDate){
-        this.registrationDate = registrationDate;
+    public SubscriptionForecastView(LocalDate registrationDate,LocalDate endDate,LocalDate forecastDate,double valueRangeMin, double valueRangeMax){
+        this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,registrationDate,valueRangeMin,valueRangeMax);
         this.endDate=endDate;
-        this.forecastDate=forecastDate;
     }
-    public SubscriptionForecastView(LocalDate registrationDate, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions,LocalDate forecastDate) {
-        this.registrationDate = registrationDate;
+    public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions,LocalDate forecastDate,double valueRangeMin, double valueRangeMax) {
+        this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,startDate,valueRangeMin,valueRangeMax);
         this.endDate=endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalSubscriptions = totalSubscriptions;
         this.forecastContentStatus=ForecastContentStatus.ACTIVE;
-        this.forecastDate=forecastDate;
     }
 
     public void addToNewSubscriptionCount(long subscriptionCount){
@@ -44,9 +42,6 @@ public class SubscriptionForecastView {
         this.totalSubscriptions+=subscriptionCount;
     }
 
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
 
     public long getNewSubscriptions() {
         return newSubscriptions;
@@ -58,11 +53,6 @@ public class SubscriptionForecastView {
 
     public long getTotalSubscriptions() {
         return totalSubscriptions;
-    }
-
-
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
     }
 
     public void setNewSubscriptions(long newSubscriptions) {
@@ -84,20 +74,15 @@ public class SubscriptionForecastView {
     public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
         this.forecastContentStatus = forecastContentStatus;
     }
-
-    public LocalDate getForecastDate() {
-        return forecastDate;
-    }
-
-    public void setForecastDate(LocalDate forecastDate) {
-        this.forecastDate = forecastDate;
-    }
-
     public LocalDate getEndDate() {
         return endDate;
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public SubscriptionVersionId getSubscriptionVersionId() {
+        return subscriptionVersionId;
     }
 }

@@ -1,6 +1,9 @@
 package com.affaince.subscription.subscriber.command.event;
 
 import com.affaince.subscription.common.type.Discount;
+import com.affaince.subscription.subscriber.vo.SubscriptionValueRange;
+
+import java.util.List;
 
 /**
  * Created by rbsavaliya on 26-09-2015.
@@ -15,9 +18,10 @@ public class SubscriptionRuleAddedEvent {
     private int actualsAggregationPeriodForTargetForecast=30;
     //stock in excess to predicted count to be kept as a contingency
     private double contingencyStockPercentage=0.1;
+    private List<SubscriptionValueRange> subscriptionValueRanges;
 
 
-    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate,int actualsAggregationPeriodForTargetForecast, double contingencyStockPercentage) {
+    public SubscriptionRuleAddedEvent(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate,int actualsAggregationPeriodForTargetForecast, double contingencyStockPercentage,List<SubscriptionValueRange> subscriptionValueRanges) {
         this.basketRuleId = basketRuleId;
         this.maximumPermissibleAmount = maximumPermissibleAmount;
         this.minimumAmountForDiscountEligibility = minimumAmountForDiscountEligibility;
@@ -26,6 +30,7 @@ public class SubscriptionRuleAddedEvent {
         this.diffBetweenDeliveryPreparationAndDispatchDate = diffBetweenDeliveryPreparationAndDispatchDate;
         this.actualsAggregationPeriodForTargetForecast=actualsAggregationPeriodForTargetForecast;
         this.contingencyStockPercentage=contingencyStockPercentage;
+        this.subscriptionValueRanges=subscriptionValueRanges;
     }
 
     public SubscriptionRuleAddedEvent() {
@@ -61,5 +66,9 @@ public class SubscriptionRuleAddedEvent {
 
     public double getContingencyStockPercentage() {
         return contingencyStockPercentage;
+    }
+
+    public List<SubscriptionValueRange> getSubscriptionValueRanges() {
+        return subscriptionValueRanges;
     }
 }

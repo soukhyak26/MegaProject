@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.subscriber.vo.DeliveryVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,53 +12,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "DeliveryForecastView")
 public class DeliveryForecastView {
     @Id
-    private LocalDate forecastDate;
-    private double weightRangeMin;
-    private double weightRangeMax;
+    private DeliveryVersionId deliveryVersionId;
     private long deliveryCount;
-    private LocalDate startDate;
     private LocalDate endDate;
     private ForecastContentStatus forecastContentStatus;
 
-    public DeliveryForecastView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate) {
-        this.forecastDate = forecastDate;
-        this.startDate = startDate;
+    public DeliveryForecastView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate,double minWeight,double maxWeight) {
+        this.deliveryVersionId = new DeliveryVersionId(forecastDate,startDate,minWeight,maxWeight);
         this.endDate = endDate;
         this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
 
     public DeliveryForecastView(LocalDate forecastDate, double weightRangeMin, double weightRangeMax, long deliveryCount, LocalDate startDate, LocalDate endDate, ForecastContentStatus forecastContentStatus) {
-        this.forecastDate = forecastDate;
-        this.weightRangeMin = weightRangeMin;
-        this.weightRangeMax = weightRangeMax;
+        this.deliveryVersionId = new DeliveryVersionId(forecastDate,startDate,weightRangeMin,weightRangeMax);
         this.deliveryCount = deliveryCount;
-        this.startDate = startDate;
         this.endDate = endDate;
         this.forecastContentStatus = forecastContentStatus;
     }
 
-    public LocalDate getForecastDate() {
-        return forecastDate;
-    }
-
-    public void setForecastDate(LocalDate forecastDate) {
-        this.forecastDate = forecastDate;
-    }
-
-    public double getWeightRangeMin() {
-        return weightRangeMin;
-    }
-
-    public void setWeightRangeMin(double weightRangeMin) {
-        this.weightRangeMin = weightRangeMin;
-    }
-
-    public double getWeightRangeMax() {
-        return weightRangeMax;
-    }
-
-    public void setWeightRangeMax(double weightRangeMax) {
-        this.weightRangeMax = weightRangeMax;
+    public DeliveryVersionId getDeliveryVersionId() {
+        return deliveryVersionId;
     }
 
     public long getDeliveryCount() {
@@ -68,13 +42,6 @@ public class DeliveryForecastView {
         this.deliveryCount = deliveryCount;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
 
     public LocalDate getEndDate() {
         return endDate;

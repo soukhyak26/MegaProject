@@ -12,6 +12,7 @@ import com.affaince.subscription.subscriber.services.benefit.state.Applicability
 import com.affaince.subscription.subscriber.services.benefit.state.BenefitCalculationState;
 import com.affaince.subscription.subscriber.services.benefit.state.EligibilityState;
 import com.affaince.subscription.subscriber.services.benefit.state.PointConversionState;
+import com.affaince.subscription.subscriber.services.converters.*;
 import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
@@ -57,6 +58,13 @@ public class Axon extends Default {
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
         converters.add(new DeliveryIdReaderConverter());
         converters.add(new DeliveryIdWriterConverter());
+        converters.add(new DeliveryTrendVersionIdReaderConverter());
+        converters.add(new DeliveryTrendVersionIdWriterConverter());
+        converters.add(new SubscriberTrendVersionIdReaderConverter());
+        converters.add(new SubscriberTrendVersionIdWriterConverter());
+        converters.add(new SubscriptionVersionIdReaderConverter());
+        converters.add(new SubscriptionVersionIdWriterConverter());
+
         return new CustomConversions(converters);
     }
 

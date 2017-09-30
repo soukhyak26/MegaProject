@@ -2,6 +2,7 @@ package com.affaince.subscription.subscriber.services.recommendations;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
+import com.affaince.subscription.subscriber.query.repository.SubscriberForecastTrendViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscribersForecastViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionRuleViewRepository;
 import com.affaince.subscription.subscriber.query.view.*;
@@ -20,6 +21,8 @@ public class SubscriberBasedRecommendationService {
     SubscribersForecastViewRepository subscribersForecastViewRepository;
     @Autowired
     SubscriptionRuleViewRepository subscriptionRuleViewRepository;
+    @Autowired
+    SubscriberForecastTrendViewRepository subscriberForecastTrendViewRepository;
 
     public List<SubscriberForecastTrendView> determineTrendChange(String id){
         List<SubscribersForecastView> activeProductForecastList = subscribersForecastViewRepository.findByForecastContentStatusOrderByForecastDateDesc(ForecastContentStatus.ACTIVE);
@@ -38,15 +41,19 @@ public class SubscriberBasedRecommendationService {
         if(activeProductForecastList.size()>=recordsForComparision && latestExpiredForecastList.size()>=recordsForComparision)
             for (int i = 0; i < recordsForComparision; i++) {
                 SubscribersForecastView activeForecast = activeProductForecastList.get(i);
-                SubscribersForecastView expiredForecast = latestExpiredForecastList.get(i);
-                if (activeForecast.getRegistrationDate().equals(expiredForecast.getRegistrationDate())) {
-                    long trendChange = activeForecast.getTotalSubscribers() - expiredForecast.getTotalSubscribers();
-                    //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
-                    if((trendChange/activeForecast.getTotalSubscribers())>contingencyStockPercentage) {
-                        SubscriberForecastTrendView trend = new SubscriberForecastTrendView(dateOfComparison, activeForecast.getRegistrationDate(), activeForecast.getEndDate(), trendChange);
-                        changeInSubscriptionCountPerPeriod.set(i, trend);
+                for(int j=0;j<recordsForComparision;j++) {
+                    SubscribersForecastView expiredForecast = latestExpiredForecastList.get(j);
+                    if (activeForecast.getRegistrationDate().equals(expiredForecast.getRegistrationDate())) {
+                        long trendChange = activeForecast.getTotalSubscribers() - expiredForecast.getTotalSubscribers();
+                        //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
+                        if ((trendChange / activeForecast.getTotalSubscribers()) > contingencyStockPercentage) {
+                            SubscriberForecastTrendView trend = new SubscriberForecastTrendView(dateOfComparison, activeForecast.getRegistrationDate(), activeForecast.getEndDate(), trendChange);
+                            changeInSubscriptionCountPerPeriod.set(i, trend);
+                        }
+                        break;
                     }
                 }
+                subscriberForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
             }
         return changeInSubscriptionCountPerPeriod;
     }

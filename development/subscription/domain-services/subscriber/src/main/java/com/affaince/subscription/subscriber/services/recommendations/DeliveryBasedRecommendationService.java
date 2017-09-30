@@ -2,9 +2,8 @@ package com.affaince.subscription.subscriber.services.recommendations;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.subscriber.configuration.DeliveriesWeightRangeConfig;
+import com.affaince.subscription.subscriber.query.repository.DeliveryForecastTrendViewRepository;
 import com.affaince.subscription.subscriber.query.repository.DeliveryForecastViewRepository;
-import com.affaince.subscription.subscriber.query.repository.DeliveryViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionRuleViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastTrendView;
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastView;
@@ -25,12 +24,14 @@ public class DeliveryBasedRecommendationService {
     DeliveryForecastViewRepository deliveryForecastViewRepository;
     @Autowired
     SubscriptionRuleViewRepository subscriptionRuleViewRepository;
+    @Autowired
+    DeliveryForecastTrendViewRepository deliveryForecastTrendViewRepository;
 
     public List<DeliveryForecastTrendView> determineTrendChange(String id,double minWeight,double maxWeight){
-        List<DeliveryForecastView> activeProductForecastList = deliveryForecastViewRepository.findByForecastContentStatusAndWeightRangeMinGreaterThanEqualAndWeightRangeMaxLessThanOrderByForecastDateDesc(ForecastContentStatus.ACTIVE,minWeight,maxWeight);
-        List<DeliveryForecastView> expiredForecastList = deliveryForecastViewRepository.findByForecastContentStatusAndWeightRangeMinGreaterThanEqualAndWeightRangeMaxLessThanOrderByForecastDateDesc(ForecastContentStatus.EXPIRED,minWeight,maxWeight);
-        LocalDate referenceForecastDate = expiredForecastList.get(0).getForecastDate();
-        List<DeliveryForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
+        List<DeliveryForecastView> activeProductForecastList = deliveryForecastViewRepository.findByForecastContentStatusAndDeliveryVersionId_WeightRangeMinGreaterThanEqualAndDeliveryVersionId_WeightRangeMaxLessThanOrderByDeliveryVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE,minWeight,maxWeight);
+        List<DeliveryForecastView> expiredForecastList = deliveryForecastViewRepository.findByForecastContentStatusAndDeliveryVersionId_WeightRangeMinGreaterThanEqualAndDeliveryVersionId_WeightRangeMaxLessThanOrderByDeliveryVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED,minWeight,maxWeight);
+        LocalDate referenceForecastDate = expiredForecastList.get(0).getDeliveryVersionId().getForecastDate();
+        List<DeliveryForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getDeliveryVersionId().getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();
         List<DeliveryForecastTrendView> changeInSubscriptionCountPerPeriod = new ArrayList<>();
         //find if aggregation period is weekly monthly or quarterly
@@ -43,15 +44,19 @@ public class DeliveryBasedRecommendationService {
         if(activeProductForecastList.size()>=recordsForComparision && latestExpiredForecastList.size()>=recordsForComparision)
             for (int i = 0; i < recordsForComparision; i++) {
                 DeliveryForecastView activeForecast = activeProductForecastList.get(i);
-                DeliveryForecastView expiredForecast = latestExpiredForecastList.get(i);
-                if (activeForecast.getStartDate().equals(expiredForecast.getStartDate())) {
-                    long trendChange = activeForecast.getDeliveryCount() - expiredForecast.getDeliveryCount();
-                    //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
-                    if((trendChange/activeForecast.getDeliveryCount())> contingencyStockPercentage) {
-                        DeliveryForecastTrendView trend = new DeliveryForecastTrendView(dateOfComparison, activeForecast.getStartDate(), activeForecast.getEndDate(), trendChange);
-                        changeInSubscriptionCountPerPeriod.set(i, trend);
+                for(int j=0;j< recordsForComparision;j++) {
+                    DeliveryForecastView expiredForecast = latestExpiredForecastList.get(j);
+                    if (activeForecast.getDeliveryVersionId().getStartDate().equals(expiredForecast.getDeliveryVersionId().getStartDate())) {
+                        long trendChange = activeForecast.getDeliveryCount() - expiredForecast.getDeliveryCount();
+                        //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
+                        if ((trendChange / activeForecast.getDeliveryCount()) > contingencyStockPercentage) {
+                            DeliveryForecastTrendView trend = new DeliveryForecastTrendView(dateOfComparison, minWeight, maxWeight, activeForecast.getDeliveryVersionId().getStartDate(), activeForecast.getEndDate(), trendChange);
+                            changeInSubscriptionCountPerPeriod.set(i, trend);
+                        }
+                        break;
                     }
                 }
+                deliveryForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
             }
         return changeInSubscriptionCountPerPeriod;
     }

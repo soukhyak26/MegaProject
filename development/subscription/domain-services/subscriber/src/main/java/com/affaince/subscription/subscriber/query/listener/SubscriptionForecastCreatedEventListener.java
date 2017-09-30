@@ -57,7 +57,7 @@ public class SubscriptionForecastCreatedEventListener {
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {
-        List<SubscriptionForecastView> earlierForecastsWithOverlappingPeriods = subscriptionForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
+        List<SubscriptionForecastView> earlierForecastsWithOverlappingPeriods = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (SubscriptionForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
@@ -72,19 +72,28 @@ public class SubscriptionForecastCreatedEventListener {
         List<DataFrameVO> aggregatedVOs = aggregator.aggregate(dataFrameVOs, 30);
         Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
         EntityMetricType entityMetricType = null;
+        double minWeight = 0;
+        double maxWeight = 0;
         for (String s : namedMetadata.keySet()) {
             switch (s) {
                 case "ENTITY_METRIC_TYPE":
                     entityMetricType = (EntityMetricType) namedMetadata.get(s);
                     break;
+                case "MIN_WEIGHT":
+                    minWeight = (Double) namedMetadata.get(s);
+                    break;
+                case "MAX_WEIGHT":
+                    maxWeight = (Double) namedMetadata.get(s);
+                    break;
+
             }
         }
 
         for (DataFrameVO vo : dataFrameVOs) {
             SubscriptionForecastView view=null;
-            List<SubscriptionForecastView> alreadySavedViews=subscriptionForecastViewRepository.findByForecastContentStatusAndForecastDate(ForecastContentStatus.ACTIVE,forecastDate);
+            List<SubscriptionForecastView> alreadySavedViews=subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ForecastDate(ForecastContentStatus.ACTIVE,forecastDate);
             if(null==alreadySavedViews && alreadySavedViews.isEmpty()) {
-                view = new SubscriptionForecastView(vo.getStartDate(), vo.getEndDate(), forecastDate);
+                view = new SubscriptionForecastView(vo.getStartDate(), vo.getEndDate(), forecastDate,minWeight,maxWeight);
             }else{
                 view=alreadySavedViews.get(0);
             }
@@ -108,24 +117,35 @@ public class SubscriptionForecastCreatedEventListener {
 
     private void updatePseudoActuals(Object entityId, List<DataFrameVO> dataFrameVOs, LocalDate forecastDate, EntityMetadata entityMetadata) {
         List<SubscriptionPseudoActualsView> pseudoActualsViews = new ArrayList<>();
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        EntityMetricType entityMetricType = null;
+        double minWeight = 0;
+        double maxWeight = 0;
+
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
+                case "ENTITY_METRIC_TYPE":
+                    entityMetricType = (EntityMetricType) namedMetadata.get(s);
+                    break;
+                case "MIN_WEIGHT":
+                    minWeight = (Double) namedMetadata.get(s);
+                    break;
+                case "MAX_WEIGHT":
+                    maxWeight = (Double) namedMetadata.get(s);
+                    break;
+
+            }
+        }
+
+
         for (DataFrameVO vo : dataFrameVOs) {
             SubscriptionPseudoActualsView view=null;
-            List<SubscriptionPseudoActualsView> alreadySavedViews= subscriptionPseudoActualsViewRepository.findByForecastContentStatusAndForecastDate(ForecastContentStatus.ACTIVE,forecastDate);
+            List<SubscriptionPseudoActualsView> alreadySavedViews= subscriptionPseudoActualsViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ForecastDate(ForecastContentStatus.ACTIVE,forecastDate);
             if(null == alreadySavedViews && alreadySavedViews.isEmpty()) {
-                view = new SubscriptionPseudoActualsView(vo.getDate(), forecastDate);
+                view = new SubscriptionPseudoActualsView(forecastDate,vo.getStartDate(),minWeight,maxWeight);
             }else{
                 view=alreadySavedViews.get(0);
             }
-            Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
-            EntityMetricType entityMetricType = null;
-            for (String s : namedMetadata.keySet()) {
-                switch (s) {
-                    case "ENTITY_METRIC_TYPE":
-                        entityMetricType = (EntityMetricType) namedMetadata.get(s);
-                        break;
-                }
-            }
-
             switch (entityMetricType) {
                 case NEW:
                     view.setNewSubscriptions(Double.valueOf(vo.getValue()).longValue());
@@ -142,7 +162,7 @@ public class SubscriptionForecastCreatedEventListener {
     }
 
     private void expireOverlappingActivePseudoActuals(LocalDate forecastDate) {
-        List<SubscriptionPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = subscriptionPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
+        List<SubscriptionPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = subscriptionPseudoActualsViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (SubscriptionPseudoActualsView earlierView : earlierPseudoActualsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }

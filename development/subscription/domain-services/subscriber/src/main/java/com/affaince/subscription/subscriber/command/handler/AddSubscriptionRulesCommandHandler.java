@@ -29,7 +29,7 @@ public class AddSubscriptionRulesCommandHandler {
         final SubscriptionRule subscriptionRule = new SubscriptionRule(command.getBasketRuleId(), command.getMaximumPermissibleAmount(),
                 command.getMinimumAmountForDiscountEligibility(),
                 discount, command.getMinimumAmountEligibleForFreeShipping(),
-                command.getDiffBetweenDeliveryPreparationAndDispatchDate(),command.getActualsAggregationPeriodForTargetForecast(),command.getContingencyStockPercentage());
+                command.getDiffBetweenDeliveryPreparationAndDispatchDate(),command.getActualsAggregationPeriodForTargetForecast(),command.getContingencyStockPercentage(),command.getSubscriptionValueRanges());
         basketRuleRepository.add(subscriptionRule);
     }
 }

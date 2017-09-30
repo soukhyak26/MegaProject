@@ -55,7 +55,7 @@ public class DeliveryForecastCreatedEventListener {
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {
-        List<DeliveryForecastView> earlierForecastsWithOverlappingPeriods = deliveryForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
+        List<DeliveryForecastView> earlierForecastsWithOverlappingPeriods = deliveryForecastViewRepository.findByForecastContentStatusAndDeliveryVersionId_ForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (DeliveryForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
@@ -65,7 +65,7 @@ public class DeliveryForecastCreatedEventListener {
     }
 
     private void expireOverlappingActivePseudoActuals(LocalDate forecastDate) {
-        List<DeliveryPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = deliveryPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
+        List<DeliveryPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = deliveryPseudoActualsViewRepository.findByForecastContentStatusAndDeliveryVersionId_ForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (DeliveryPseudoActualsView earlierView : earlierPseudoActualsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
@@ -92,10 +92,8 @@ public class DeliveryForecastCreatedEventListener {
             }
         }
         for (DataFrameVO vo : dataFrameVOs) {
-            DeliveryForecastView view = new DeliveryForecastView(forecastDate, vo.getStartDate(), vo.getEndDate());
+            DeliveryForecastView view = new DeliveryForecastView(forecastDate, vo.getStartDate(), vo.getEndDate(),minWeight,maxWeight);
             view.setDeliveryCount(Double.valueOf(vo.getValue()).longValue());
-            view.setWeightRangeMin(minWeight);
-            view.setWeightRangeMax(maxWeight);
             forecastViews.add(view);
         }
         deliveryForecastViewRepository.save(forecastViews);
@@ -118,10 +116,8 @@ public class DeliveryForecastCreatedEventListener {
         }
 
         for (DataFrameVO vo : dataFrameVOs) {
-            DeliveryPseudoActualsView view = new DeliveryPseudoActualsView(forecastDate, vo.getDate());
-            view.setDeliveryCount(vo.getValue());
-            view.setWeightRangeMin(minWeight);
-            view.setWeightRangeMax(maxWeight);
+            DeliveryPseudoActualsView view = new DeliveryPseudoActualsView(forecastDate, vo.getStartDate(),minWeight,maxWeight);
+            view.setDeliveryCount(Double.valueOf(vo.getValue()).longValue());
             pseudoActualsViews.add(view);
         }
         deliveryPseudoActualsViewRepository.save(pseudoActualsViews);
