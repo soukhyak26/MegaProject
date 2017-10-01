@@ -74,9 +74,25 @@ public class ForecastController {
         return new ResponseEntity<List<String>>(target, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predictforecast/{productid}")
-    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable("productid") String productId) throws Exception {
-        UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productId, SysDate.now());
+    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}/{metricType}")
+    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable("productid") String productId,@PathVariable("metricType") String metricType ) throws Exception {
+        //hardcoded productanalyser id as 1
+        final int productAnalyserId=1;
+        EntityMetricType entityMetricType=null;
+        switch(metricType){
+            case "new":
+                entityMetricType=EntityMetricType.NEW;
+                break;
+            case "churn":
+                entityMetricType=EntityMetricType.CHURN;
+                break;
+            case "total":
+                entityMetricType=EntityMetricType.TOTAL;
+                break;
+            default:
+                entityMetricType=EntityMetricType.TOTAL;
+        }
+        UpdateForecastFromActualsCommand command = new UpdateForecastFromActualsCommand(productAnalyserId,productId,entityMetricType, SysDate.now());
         commandGateway.executeAsync(command);
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
@@ -88,14 +104,6 @@ public class ForecastController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}")
-    public ResponseEntity<String> forecastDemand(@PathVariable("productid") String productId) throws Exception {
-        Map<String,Object> metadata= new HashMap<>();
-        metadata.put("ENTITY_TYPE", EntityType.PRODUCT);
-        metadata.put("ENTITY_METRIC_TYPE", EntityMetricType.TOTAL);
-        productHistoryRetriever.marshallSendAndReceive(productId,metadata);
-        return new ResponseEntity<String>(productId, HttpStatus.OK);
-    }
 
 
     //API to add forecast manually

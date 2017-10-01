@@ -2,6 +2,8 @@ package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
 import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.command.domain.ProductAnalyser;
+import com.affaince.subscription.product.query.predictions.ProductHistoryRetriever;
 import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -18,19 +20,22 @@ import org.springframework.stereotype.Component;
 public class UpdateForecastFromActualsCommandHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateForecastFromActualsCommandHandler.class);
-    private Repository<Product> repository;
-    //private DemandForecasterChain demandForecasterChain;
-    private final ProductDemandForecastBuilder builder;
+    private Repository<ProductAnalyser> repository;
+    private ProductHistoryRetriever productHistoryRetriever;
 
     @Autowired
-    public UpdateForecastFromActualsCommandHandler(Repository<Product> repository, ProductDemandForecastBuilder builder) {
+    public UpdateForecastFromActualsCommandHandler(Repository<ProductAnalyser> repository,ProductHistoryRetriever productHistoryRetriever) {
         this.repository = repository;
-        this.builder = builder;
+        this.productHistoryRetriever = productHistoryRetriever;
     }
 
     @CommandHandler
     public void handle(UpdateForecastFromActualsCommand command) {
+/*
         Product product = repository.load(command.getProductId());
         product.updateForecastFromActuals(command.getForecastDate(), builder);
+*/
+        ProductAnalyser productAnalyser=repository.load(command.getProductAnalyserId());
+        productAnalyser.initiateForecast(command.getProductId(),command.getEntityMetricType(),productHistoryRetriever);
     }
 }

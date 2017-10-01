@@ -12,19 +12,35 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductForecastTrendView {
     @Id
     private ForecastVersionId forecastVersionId;
-    private LocalDate trendSettingDate;
-    private LocalDate startDate;
     private LocalDate endDate;
-    private long changeInTotalSusbcriptionCount;
+    private double changeInNewSubscriptionCount;
+    private double changeInChurnedSubscriptionCount;
+    private double changeInTotalSusbcriptionCount;
 
-    public ProductForecastTrendView(String productId, LocalDate trendSettingDate, LocalDate startDate, LocalDate endDate, long changeInTotalSusbcriptionCount) {
-        this.forecastVersionId = new ForecastVersionId(productId,startDate,trendSettingDate);
-        this.trendSettingDate = trendSettingDate;
-        this.startDate = startDate;
+    public ProductForecastTrendView(String productId, LocalDate forecastDate, LocalDate startDate, LocalDate endDate) {
+        this.forecastVersionId = new ForecastVersionId(productId,startDate,forecastDate);
         this.endDate = endDate;
-        this.changeInTotalSusbcriptionCount = changeInTotalSusbcriptionCount;
     }
 
+    public double getChangeInNewSubscriptionCount() {
+        return changeInNewSubscriptionCount;
+    }
+
+    public void setChangeInNewSubscriptionCount(double changeInNewSubscriptionCount) {
+        this.changeInNewSubscriptionCount = changeInNewSubscriptionCount;
+    }
+
+    public double getChangeInChurnedSubscriptionCount() {
+        return changeInChurnedSubscriptionCount;
+    }
+
+    public void setChangeInChurnedSubscriptionCount(double changeInChurnedSubscriptionCount) {
+        this.changeInChurnedSubscriptionCount = changeInChurnedSubscriptionCount;
+    }
+
+    public void setChangeInTotalSusbcriptionCount(double changeInTotalSusbcriptionCount) {
+        this.changeInTotalSusbcriptionCount = changeInTotalSusbcriptionCount;
+    }
 
     public ForecastVersionId getForecastVersionId() {
         return forecastVersionId;
@@ -34,19 +50,13 @@ public class ProductForecastTrendView {
         return this.forecastVersionId.getProductId();
     }
 
-    public LocalDate getTrendSettingDate() {
-        return trendSettingDate;
-    }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
 
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    public long getChangeInTotalSusbcriptionCount() {
+    public double getChangeInTotalSusbcriptionCount() {
         return changeInTotalSusbcriptionCount;
     }
 }

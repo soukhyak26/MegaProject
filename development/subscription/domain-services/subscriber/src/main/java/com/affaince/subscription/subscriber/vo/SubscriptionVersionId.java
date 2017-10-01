@@ -9,14 +9,14 @@ import scala.Serializable;
 public class SubscriptionVersionId implements Serializable{
     private final LocalDate forecastDate;
     private final LocalDate startDate;
-    private final double weightRangeMin;
-    private final double weightRangeMax;
+    private final double valueRangeMin;
+    private final double valueRangeMax;
 
-    public SubscriptionVersionId(LocalDate forecastDate, LocalDate startDate, double weightRangeMin, double weightRangeMax) {
+    public SubscriptionVersionId(LocalDate forecastDate, LocalDate startDate, double valueRangeMin, double valueRangeMax) {
         this.forecastDate = forecastDate;
         this.startDate=startDate;
-        this.weightRangeMin = weightRangeMin;
-        this.weightRangeMax = weightRangeMax;
+        this.valueRangeMin = valueRangeMin;
+        this.valueRangeMax = valueRangeMax;
     }
 
     public LocalDate getStartDate() {
@@ -27,11 +27,11 @@ public class SubscriptionVersionId implements Serializable{
         return forecastDate;
     }
 
-    public double getWeightRangeMin() {
-        return weightRangeMin;
+    public double getValueRangeMin() {
+        return valueRangeMin;
     }
 
-    public double getWeightRangeMax() {
-        return weightRangeMax;
+    public double getValueRangeMax() {
+        return valueRangeMax;
     }
 }

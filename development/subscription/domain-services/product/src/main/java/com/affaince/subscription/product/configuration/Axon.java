@@ -4,6 +4,7 @@ import com.affaince.subscription.common.idconverter.*;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.command.domain.ProductAnalyser;
 import com.affaince.subscription.product.command.event.*;
 import com.affaince.subscription.product.converters.*;
 import com.affaince.subscription.product.services.aggregators.PeriodBasedAggregator;
@@ -60,6 +61,12 @@ public class Axon extends Default {
     public Repository<Product> createRepository(DisruptorCommandBus commandBus) {
 
         Repository<Product> repository = commandBus.createRepository(new GenericAggregateFactory<>(Product.class));
+        return repository;
+    }
+
+    @Bean
+    public Repository<ProductAnalyser> productAnalyserRepository(DisruptorCommandBus commandBus) {
+        Repository<ProductAnalyser> repository = commandBus.createRepository(new GenericAggregateFactory<>(ProductAnalyser.class));
         return repository;
     }
 

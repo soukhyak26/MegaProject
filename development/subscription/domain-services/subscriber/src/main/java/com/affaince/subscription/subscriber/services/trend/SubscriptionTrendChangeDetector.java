@@ -1,6 +1,8 @@
 package com.affaince.subscription.subscriber.services.trend;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.EntityMetadata;
+import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionForecastTrendViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionForecastViewRepository;
@@ -8,12 +10,14 @@ import com.affaince.subscription.subscriber.query.repository.SubscriptionRuleVie
 import com.affaince.subscription.subscriber.query.view.SubscriptionForecastTrendView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionForecastView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionRuleView;
+import com.affaince.subscription.subscriber.vo.SubscriptionVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -29,9 +33,28 @@ public class SubscriptionTrendChangeDetector {
     @Autowired
     SubscriptionForecastTrendViewRepository subscriptionForecastTrendViewRepository;
 
-    public List<SubscriptionForecastTrendView> determineTrendChange(String id,double minWeight,double maxWeight) {
-        List<SubscriptionForecastView> activeProductForecastList = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_WeightRangeMinGreaterThanEqualAndSubscriptionVersionId_WeightRangeMaxLessThanOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE,minWeight,maxWeight);
-        List<SubscriptionForecastView> expiredForecastList = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_WeightRangeMinGreaterThanEqualAndSubscriptionVersionId_WeightRangeMaxLessThanOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED,minWeight,maxWeight);
+    public List<SubscriptionForecastTrendView> determineTrendChange(String id, EntityMetadata entityMetadata) {
+        EntityMetricType entityMetricType = null;
+        double minValue = 0;
+        double maxValue = 0;
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
+                case "ENTITY_METRIC_TYPE":
+                    entityMetricType = (EntityMetricType) namedMetadata.get(s);
+                    break;
+                case "MIN_WEIGHT":
+                    minValue = Double.valueOf((Double) namedMetadata.get(s)).doubleValue();
+                    break;
+                case "MAX_WEIGHT":
+                    maxValue = Double.valueOf((Double) namedMetadata.get(s)).doubleValue();
+                    break;
+
+            }
+        }
+
+        List<SubscriptionForecastView> activeProductForecastList = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinGreaterThanEqualAndSubscriptionVersionId_ValueRangeMaxLessThanOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE, minValue, maxValue);
+        List<SubscriptionForecastView> expiredForecastList = subscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinGreaterThanEqualAndSubscriptionVersionId_ValueRangeMaxLessThanOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED, minValue, maxValue);
         LocalDate referenceForecastDate = expiredForecastList.get(0).getSubscriptionVersionId().getForecastDate();
         List<SubscriptionForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getSubscriptionVersionId().getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();
@@ -43,18 +66,29 @@ public class SubscriptionTrendChangeDetector {
         double contingencyStockPercentage = configView.getContingencyStockPercentage();
 
         int recordsForComparision = determineNumberOfRecordsTobeCompared(aggregationPeriod, dateOfComparison);
+
         if (activeProductForecastList.size() >= recordsForComparision && latestExpiredForecastList.size() >= recordsForComparision)
             for (int i = 0; i < recordsForComparision; i++) {
                 SubscriptionForecastView activeForecast = activeProductForecastList.get(i);
                 for (int j = 0; j < recordsForComparision; j++) {
                     SubscriptionForecastView expiredForecast = latestExpiredForecastList.get(j);
                     if (activeForecast.getSubscriptionVersionId().getStartDate().equals(expiredForecast.getSubscriptionVersionId().getStartDate())) {
-                        long trendChange = activeForecast.getTotalSubscriptions() - expiredForecast.getTotalSubscriptions();
-                        //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
-                        if ((trendChange / activeForecast.getTotalSubscriptions()) > contingencyStockPercentage) {
-                            SubscriptionForecastTrendView trend = new SubscriptionForecastTrendView(dateOfComparison, activeForecast.getSubscriptionVersionId().getStartDate(), activeForecast.getEndDate(), trendChange);
-                            changeInSubscriptionCountPerPeriod.set(i, trend);
+                        SubscriptionVersionId subscriptionVersionId = new SubscriptionVersionId(dateOfComparison, activeForecast.getSubscriptionVersionId().getStartDate(), minValue, maxValue);
+                        SubscriptionForecastTrendView trend = subscriptionForecastTrendViewRepository.findOne(subscriptionVersionId);
+                        if (null == trend) {
+                            trend = new SubscriptionForecastTrendView(dateOfComparison, activeForecast.getSubscriptionVersionId().getStartDate(), activeForecast.getEndDate(), minValue, maxValue);
                         }
+                        if (entityMetricType == EntityMetricType.TOTAL) {
+                            long trendChangeInTotalCount = activeForecast.getTotalSubscriptions() - expiredForecast.getTotalSubscriptions();
+                            trend.setChangeInTotalSubscriptionCount(trendChangeInTotalCount);
+                        } else if (entityMetricType == EntityMetricType.NEW) {
+                            long trendChangeInNewCount = activeForecast.getNewSubscriptions() - expiredForecast.getNewSubscriptions();
+                            trend.setChangeInNewSubscriptionCount(trendChangeInNewCount);
+                        } else if (entityMetricType == EntityMetricType.CHURN) {
+                            long trendChangeInChurnedSubscriptionCount = activeForecast.getChurnedSubscriptions() - expiredForecast.getChurnedSubscriptions();
+                            trend.setChangeInChurnedSubscriptionCount(trendChangeInChurnedSubscriptionCount);
+                        }
+                        changeInSubscriptionCountPerPeriod.set(i, trend);
                         break;
                     }
                 }

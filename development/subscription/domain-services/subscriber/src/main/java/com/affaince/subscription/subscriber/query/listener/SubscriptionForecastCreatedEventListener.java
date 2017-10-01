@@ -71,7 +71,7 @@ public class SubscriptionForecastCreatedEventListener {
 
             }
         }
-        subscriptionTrendChangeDetector.determineTrendChange(null,minWeight,maxWeight);
+        subscriptionTrendChangeDetector.determineTrendChange(null,entityMetadata);
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {

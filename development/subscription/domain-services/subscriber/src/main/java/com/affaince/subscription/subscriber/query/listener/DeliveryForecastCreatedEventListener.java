@@ -68,7 +68,7 @@ public class DeliveryForecastCreatedEventListener {
                     break;
             }
         }
-        deliveryTrendChangeDetector.determineTrendChange(null,minWeight,maxWeight);
+        deliveryTrendChangeDetector.determineTrendChange(null,entityMetadata);
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {

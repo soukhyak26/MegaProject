@@ -1,5 +1,6 @@
 package com.affaince.subscription.product.query.listener;
 
+import com.affaince.subscription.SubscriptionCommandGateway;
 import com.affaince.subscription.common.aggregate.AggregatorFactory;
 import com.affaince.subscription.common.aggregate.aggregators.MetricsAggregator;
 import com.affaince.subscription.common.type.ForecastContentStatus;
@@ -7,12 +8,12 @@ import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.EntityMetadata;
 import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.common.vo.ForecastVersionId;
+import com.affaince.subscription.product.command.DetectChangeInProductTrendCommand;
 import com.affaince.subscription.product.command.event.ProductForecastCreatedEvent;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
-import com.affaince.subscription.product.services.trend.ProductTrendChangeDetector;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -30,17 +31,17 @@ public class ProductForecastCreatedEventListener {
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
-    private final ProductTrendChangeDetector productTrendChangeDetector;
+    private final SubscriptionCommandGateway commandGateway;
 
-    public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,ProductTrendChangeDetector productTrendChangeDetector) {
+    public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,SubscriptionCommandGateway commandGateway) {
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
         this.aggregatorFactory = aggregatorFactory;
-        this.productTrendChangeDetector=productTrendChangeDetector;
+        this.commandGateway=commandGateway;
     }
 
     @EventHandler
-    public void on(ProductForecastCreatedEvent event) {
+    public void on(ProductForecastCreatedEvent event) throws Exception{
         final List<DataFrameVO> forecastData = event.getDataFrameVOs();
         final LocalDate forecastDate = event.getForecastDate();
         final EntityMetadata entityMetadata = event.getEntityMetadata();
@@ -49,7 +50,10 @@ public class ProductForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(productId, forecastDate);
         updatePseudoActuals(productId, forecastData, forecastDate, entityMetadata);
         updateForecast(productId, forecastData, forecastDate, entityMetadata);
-        productTrendChangeDetector.determineTrendChange((String)productId);
+        //hardcoded productanalyserId
+        DetectChangeInProductTrendCommand command= new DetectChangeInProductTrendCommand(1,(String)productId,entityMetadata,forecastDate);
+        commandGateway.executeAsync(command);
+
     }
 
     private void expireOverlappingActiveForecast(Object entityId,LocalDate forecastDate) {

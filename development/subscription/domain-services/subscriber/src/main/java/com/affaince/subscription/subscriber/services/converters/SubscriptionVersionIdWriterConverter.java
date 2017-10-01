@@ -16,8 +16,8 @@ public class SubscriptionVersionIdWriterConverter implements Converter<Subscript
         DBObject dbo = new BasicDBObject();
         dbo.put("trendSettingDate", source.getForecastDate().toString());
         dbo.put("startDate", source.getStartDate().toString());
-        dbo.put("weightRangeMin", source.getWeightRangeMin());
-        dbo.put("weightRangeMax",source.getWeightRangeMax());
+        dbo.put("weightRangeMin", source.getValueRangeMin());
+        dbo.put("weightRangeMax",source.getValueRangeMax());
         return dbo;
     }
 }
