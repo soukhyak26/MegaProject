@@ -14,9 +14,9 @@ public class SubscriptionForecastTrendView {
     private SubscriptionVersionId subscriptionVersionId;
     private LocalDate startDate;
     private LocalDate endDate;
-    private long changeInNewSubscriptionCount;
-    private Long changeInChurnedSubscriptionCount;
-    private long changeInTotalSubscriptionCount;
+    private double changeInNewSubscriptionCount;
+    private double changeInChurnedSubscriptionCount;
+    private double changeInTotalSubscriptionCount;
 
 
     public SubscriptionForecastTrendView(LocalDate startDate, LocalDate endDate,LocalDate forecastDate, double valueRangeMin, double valueRangeMax) {
@@ -28,19 +28,19 @@ public class SubscriptionForecastTrendView {
         return subscriptionVersionId;
     }
 
-    public void setChangeInNewSubscriptionCount(long changeInNewSubscriptionCount) {
+    public void setChangeInNewSubscriptionCount(double changeInNewSubscriptionCount) {
         this.changeInNewSubscriptionCount = changeInNewSubscriptionCount;
     }
 
-    public void setChangeInChurnedSubscriptionCount(Long changeInChurnedSubscriptionCount) {
+    public void setChangeInChurnedSubscriptionCount(double changeInChurnedSubscriptionCount) {
         this.changeInChurnedSubscriptionCount = changeInChurnedSubscriptionCount;
     }
 
-    public long getChangeInNewSubscriptionCount() {
+    public double getChangeInNewSubscriptionCount() {
         return changeInNewSubscriptionCount;
     }
 
-    public Long getChangeInChurnedSubscriptionCount() {
+    public double getChangeInChurnedSubscriptionCount() {
         return changeInChurnedSubscriptionCount;
     }
 
@@ -60,11 +60,11 @@ public class SubscriptionForecastTrendView {
         this.endDate = endDate;
     }
 
-    public long getChangeInTotalSubscriptionCount() {
+    public double getChangeInTotalSubscriptionCount() {
         return changeInTotalSubscriptionCount;
     }
 
-    public void setChangeInTotalSubscriptionCount(long changeInTotalSubscriptionCount) {
+    public void setChangeInTotalSubscriptionCount(double changeInTotalSubscriptionCount) {
         this.changeInTotalSubscriptionCount = changeInTotalSubscriptionCount;
     }
 }

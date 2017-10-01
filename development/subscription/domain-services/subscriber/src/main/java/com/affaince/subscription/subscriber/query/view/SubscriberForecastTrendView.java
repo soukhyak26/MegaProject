@@ -1,31 +1,47 @@
 package com.affaince.subscription.subscriber.query.view;
 
-import com.affaince.subscription.subscriber.vo.SubscriberTrendVersionId;
+import com.affaince.subscription.subscriber.vo.SubscriberVersionId;
 import org.joda.time.LocalDate;
 
 /**
  * Created by mandar on 9/22/2017.
  */
 public class SubscriberForecastTrendView {
-    private SubscriberTrendVersionId subscriberTrendVersionId;
+    private SubscriberVersionId subscriberVersionId;
     private LocalDate endDate;
-    private long changeInTotalSubscriberCount;
+    private double changeInNewSubscriberCount;
+    private double changeInChurnedSubscriberCount;
+    private double changeInTotalSubscriberCount;
 
-    public SubscriberForecastTrendView(LocalDate trendSettingDate, LocalDate startDate, LocalDate endDate, long changeInTotalSubscriberCount) {
-        this.subscriberTrendVersionId =new SubscriberTrendVersionId(trendSettingDate, startDate);
+    public SubscriberForecastTrendView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate) {
+        this.subscriberVersionId =new SubscriberVersionId(forecastDate, startDate);
         this.endDate = endDate;
-        this.changeInTotalSubscriberCount = changeInTotalSubscriberCount;
-    }
-
-    public LocalDate getTrendSettingDate() {
-        return this.subscriberTrendVersionId.getTrendSettingDate();
     }
 
 
-    public LocalDate getStartDate() {
-        return this.subscriberTrendVersionId.getStartDate();
+    public SubscriberVersionId getSubscriberVersionId() {
+        return subscriberVersionId;
     }
 
+    public void setSubscriberVersionId(SubscriberVersionId subscriberVersionId) {
+        this.subscriberVersionId = subscriberVersionId;
+    }
+
+    public double getChangeInNewSubscriberCount() {
+        return changeInNewSubscriberCount;
+    }
+
+    public void setChangeInNewSubscriberCount(double changeInNewSubscriberCount) {
+        this.changeInNewSubscriberCount = changeInNewSubscriberCount;
+    }
+
+    public double getChangeInChurnedSubscriberCount() {
+        return changeInChurnedSubscriberCount;
+    }
+
+    public void setChangeInChurnedSubscriberCount(double changeInChurnedSubscriberCount) {
+        this.changeInChurnedSubscriberCount = changeInChurnedSubscriberCount;
+    }
 
     public LocalDate getEndDate() {
         return endDate;
@@ -35,11 +51,11 @@ public class SubscriberForecastTrendView {
         this.endDate = endDate;
     }
 
-    public long getChangeInTotalSubscriberCount() {
+    public double getChangeInTotalSubscriberCount() {
         return changeInTotalSubscriberCount;
     }
 
-    public void setChangeInTotalSubscriberCount(long changeInTotalSubscriberCount) {
+    public void setChangeInTotalSubscriberCount(double changeInTotalSubscriberCount) {
         this.changeInTotalSubscriberCount = changeInTotalSubscriberCount;
     }
 

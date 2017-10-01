@@ -1,17 +1,21 @@
 package com.affaince.subscription.subscriber.services.trend;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.vo.EntityMetadata;
+import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.query.repository.SubscriberForecastTrendViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscribersForecastViewRepository;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionRuleViewRepository;
 import com.affaince.subscription.subscriber.query.view.*;
+import com.affaince.subscription.subscriber.vo.SubscriberVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,11 +30,23 @@ public class SubscriberTrendChangeDetector {
     @Autowired
     SubscriberForecastTrendViewRepository subscriberForecastTrendViewRepository;
 
-    public List<SubscriberForecastTrendView> determineTrendChange(String id){
-        List<SubscribersForecastView> activeProductForecastList = subscribersForecastViewRepository.findByForecastContentStatusOrderByForecastDateDesc(ForecastContentStatus.ACTIVE);
-        List<SubscribersForecastView> expiredForecastList = subscribersForecastViewRepository.findByForecastContentStatusOrderByForecastDateDesc(ForecastContentStatus.EXPIRED);
-        LocalDate referenceForecastDate = expiredForecastList.get(0).getForecastDate();
-        List<SubscribersForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
+    public List<SubscriberForecastTrendView> determineTrendChange(String id, EntityMetadata entityMetadata){
+        EntityMetricType entityMetricType = null;
+        double minValue = 0;
+        double maxValue = 0;
+        Map<String, Object> namedMetadata = entityMetadata.getNamedEntries();
+        for (String s : namedMetadata.keySet()) {
+            switch (s) {
+                case "ENTITY_METRIC_TYPE":
+                    entityMetricType = (EntityMetricType) namedMetadata.get(s);
+                    break;
+            }
+        }
+
+        List<SubscribersForecastView> activeProductForecastList = subscribersForecastViewRepository.findByForecastContentStatusOrderBySubscriberVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE);
+        List<SubscribersForecastView> expiredForecastList = subscribersForecastViewRepository.findByForecastContentStatusOrderBySubscriberVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED);
+        LocalDate referenceForecastDate = expiredForecastList.get(0).getSubscriberVersionId().getForecastDate();
+        List<SubscribersForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getSubscriberVersionId().getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();
         List<SubscriberForecastTrendView> changeInSubscriptionCountPerPeriod = new ArrayList<>();
         //find if aggregation period is weekly monthly or quarterly
@@ -45,18 +61,28 @@ public class SubscriberTrendChangeDetector {
                 SubscribersForecastView activeForecast = activeProductForecastList.get(i);
                 for(int j=0;j<recordsForComparision;j++) {
                     SubscribersForecastView expiredForecast = latestExpiredForecastList.get(j);
-                    if (activeForecast.getRegistrationDate().equals(expiredForecast.getRegistrationDate())) {
-                        long trendChange = activeForecast.getTotalSubscribers() - expiredForecast.getTotalSubscribers();
-                        //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
-                        if ((trendChange / activeForecast.getTotalSubscribers()) > contingencyStockPercentage) {
-                            SubscriberForecastTrendView trend = new SubscriberForecastTrendView(dateOfComparison, activeForecast.getRegistrationDate(), activeForecast.getEndDate(), trendChange);
-                            changeInSubscriptionCountPerPeriod.set(i, trend);
+                    if (activeForecast.getSubscriberVersionId().getStartDate().equals(expiredForecast.getSubscriberVersionId().getStartDate())) {
+                        SubscriberVersionId subscriberVersionId = new SubscriberVersionId(dateOfComparison ,activeForecast.getSubscriberVersionId().getStartDate());
+                        SubscriberForecastTrendView trend=subscriberForecastTrendViewRepository.findOne(subscriberVersionId);
+                        if(null == trend){
+                            trend = new SubscriberForecastTrendView(dateOfComparison, activeForecast.getSubscriberVersionId().getStartDate(), activeForecast.getEndDate());
                         }
+                        if (entityMetricType == EntityMetricType.TOTAL) {
+                            double trendChangeInTotalCount = (activeForecast.getTotalSubscribers() - expiredForecast.getTotalSubscribers())/expiredForecast.getTotalSubscribers();
+                            trend.setChangeInTotalSubscriberCount(trendChangeInTotalCount);
+                        }else if(entityMetricType == EntityMetricType.NEW){
+                            double trendChangeInNewCount= (activeForecast.getNewSubscribers() - expiredForecast.getNewSubscribers())/expiredForecast.getNewSubscribers();
+                            trend.setChangeInNewSubscriberCount(trendChangeInNewCount);
+                        }else if(entityMetricType == EntityMetricType.CHURN){
+                            double trendChangeInChurnCount= (activeForecast.getChurnedSubscribers() - expiredForecast.getChurnedSubscribers())/expiredForecast.getChurnedSubscribers();
+                            trend.setChangeInChurnedSubscriberCount(trendChangeInChurnCount);
+                        }
+                        changeInSubscriptionCountPerPeriod.set(i, trend);
                         break;
                     }
                 }
-                subscriberForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
             }
+        subscriberForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
         return changeInSubscriptionCountPerPeriod;
     }
 

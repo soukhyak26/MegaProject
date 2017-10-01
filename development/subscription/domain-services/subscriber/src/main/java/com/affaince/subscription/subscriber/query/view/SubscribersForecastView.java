@@ -1,6 +1,7 @@
 package com.affaince.subscription.subscriber.query.view;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.subscriber.vo.SubscriberVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,28 +12,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="SubscribersForecastView")
 public class SubscribersForecastView {
     @Id
-    private LocalDate registrationDate;
+    private SubscriberVersionId subscriberVersionId;
     private LocalDate endDate;
     private long newSubscribers;
     private long churnedSubscribers;
     private long totalSubscribers;
     private ForecastContentStatus forecastContentStatus;
-    private LocalDate forecastDate;
 
-    public SubscribersForecastView(LocalDate registrationDate,LocalDate endDate,LocalDate forecastDate){
-        this.registrationDate = registrationDate;
+    public SubscribersForecastView(LocalDate startDate,LocalDate endDate,LocalDate forecastDate){
+        this.subscriberVersionId = new SubscriberVersionId(startDate,forecastDate);
         this.endDate=endDate;
-        this.forecastDate=forecastDate;
     }
 
-    public SubscribersForecastView(LocalDate registrationDate, LocalDate endDate,long newSubscribers, long churnedSubscribers, long totalSubscribers,LocalDate foreastDate) {
-        this.registrationDate = registrationDate;
+    public SubscribersForecastView(LocalDate startDate, LocalDate endDate,long newSubscribers, long churnedSubscribers, long totalSubscribers,LocalDate forecastDate) {
+        this.subscriberVersionId = new SubscriberVersionId(startDate,forecastDate);
         this.endDate=endDate;
         this.newSubscribers = newSubscribers;
         this.churnedSubscribers = churnedSubscribers;
         this.totalSubscribers = totalSubscribers;
         this.forecastContentStatus=ForecastContentStatus.ACTIVE;
-        this.forecastDate=foreastDate;
     }
 
     public void addToNewSubscriptionCount(long subscriptionCount){
@@ -45,9 +43,6 @@ public class SubscribersForecastView {
         this.totalSubscribers +=subscriptionCount;
     }
 
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
 
     public long getNewSubscribers() {
         return newSubscribers;
@@ -61,9 +56,6 @@ public class SubscribersForecastView {
         return totalSubscribers;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
-    }
 
     public void setNewSubscribers(long newSubscribers) {
         this.newSubscribers = newSubscribers;
@@ -85,19 +77,15 @@ public class SubscribersForecastView {
         this.forecastContentStatus = forecastContentStatus;
     }
 
-    public LocalDate getForecastDate() {
-        return forecastDate;
-    }
-
-    public void setForecastDate(LocalDate forecastDate) {
-        this.forecastDate = forecastDate;
-    }
-
     public LocalDate getEndDate() {
         return endDate;
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public SubscriberVersionId getSubscriberVersionId() {
+        return subscriberVersionId;
     }
 }

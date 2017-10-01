@@ -104,11 +104,6 @@
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.23" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.3.6" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-core:2.15.2" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-spring-boot:2.15.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.15.2" level="project" />
     <orderEntry type="library" name="Maven: io.gatling.highcharts:gatling-charts-highcharts:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.8" level="project" />
     <orderEntry type="library" name="Maven: io.gatling:gatling-charts:2.2.2" level="project" />
@@ -228,6 +223,7 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.inject:guice:3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.jersey:jersey-json:1.9" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3-1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.8.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.jackson:jackson-xc:1.8.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.jersey.contribs:jersey-guice:1.9" level="project" />
@@ -235,8 +231,8 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: asm:asm:3.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.hadoop:hadoop-yarn-common:2.6.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.hadoop:hadoop-yarn-api:2.6.0" level="project" />
-    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.2" level="project" />
-    <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: javax.xml.bind:jaxb-api:2.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.sun.jersey:jersey-client:1.9" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.mortbay.jetty:jetty-util:6.1.26" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.hadoop:hadoop-yarn-server-common:2.6.0" level="project" />

@@ -13,12 +13,12 @@ public class DeliveryForecastTrendView {
     @Id
     private DeliveryVersionId deliveryVersionId;
     private LocalDate endDate;
-    private long changeInTotalSubscriberCount;
+    private long changeInTotalDeliveriesCount;
 
-    public DeliveryForecastTrendView(LocalDate trendSettingDate,double weightRangeMin,double weightRangeMax, LocalDate startDate, LocalDate endDate, long changeInTotalSubscriberCount) {
+    public DeliveryForecastTrendView(LocalDate trendSettingDate,double weightRangeMin,double weightRangeMax, LocalDate startDate, LocalDate endDate, long changeInTotalDeliveriesCount) {
         this.deliveryVersionId = new DeliveryVersionId(trendSettingDate,startDate,weightRangeMin,weightRangeMax);
         this.endDate = endDate;
-        this.changeInTotalSubscriberCount = changeInTotalSubscriberCount;
+        this.changeInTotalDeliveriesCount = changeInTotalDeliveriesCount;
     }
 
     public LocalDate getTrendSettingDate() {
@@ -39,11 +39,11 @@ public class DeliveryForecastTrendView {
         this.endDate = endDate;
     }
 
-    public long getChangeInTotalSubscriberCount() {
-        return changeInTotalSubscriberCount;
+    public long getChangeInTotalDeliveriesCount() {
+        return changeInTotalDeliveriesCount;
     }
 
-    public void setChangeInTotalSubscriberCount(long changeInTotalSubscriberCount) {
-        this.changeInTotalSubscriberCount = changeInTotalSubscriberCount;
+    public void setChangeInTotalDeliveriesCount(long changeInTotalDeliveriesCount) {
+        this.changeInTotalDeliveriesCount = changeInTotalDeliveriesCount;
     }
 }

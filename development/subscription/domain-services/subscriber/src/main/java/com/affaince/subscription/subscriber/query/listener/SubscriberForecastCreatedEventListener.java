@@ -58,11 +58,11 @@ public class SubscriberForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(forecastDate);
         updatePseudoActuals(null, forecastData, forecastDate, entityMetadata);
         updateForecast(null, forecastData, forecastDate, entityMetadata);
-        subscriberTrendChangeDetector.determineTrendChange(null);
+        //subscriberTrendChangeDetector.determineTrendChange(null);
     }
 
     private void expireOverlappingActiveForecast(LocalDate forecastDate) {
-        List<SubscribersForecastView> earlierForecastsWithOverlappingPeriods = subscribersForecastViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
+        List<SubscribersForecastView> earlierForecastsWithOverlappingPeriods = subscribersForecastViewRepository.findByForecastContentStatusAndSubscriberVersionId_ForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (SubscribersForecastView earlierView : earlierForecastsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
@@ -97,7 +97,7 @@ public class SubscriberForecastCreatedEventListener {
 
         for (DataFrameVO vo : dataFrameVOs) {
             SubscribersForecastView view = null;
-            List<SubscribersForecastView> alreadySavedViews = subscribersForecastViewRepository.findByForecastContentStatusAndForecastDate(ForecastContentStatus.ACTIVE, forecastDate);
+            List<SubscribersForecastView> alreadySavedViews = subscribersForecastViewRepository.findByForecastContentStatusAndSubscriberVersionId_ForecastDate(ForecastContentStatus.ACTIVE, forecastDate);
             if (null == alreadySavedViews && alreadySavedViews.isEmpty()) {
                 view = new SubscribersForecastView(vo.getStartDate(), vo.getEndDate(), forecastDate);
             } else {

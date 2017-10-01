@@ -79,13 +79,13 @@ public class SubscriptionTrendChangeDetector {
                             trend = new SubscriptionForecastTrendView(dateOfComparison, activeForecast.getSubscriptionVersionId().getStartDate(), activeForecast.getEndDate(), minValue, maxValue);
                         }
                         if (entityMetricType == EntityMetricType.TOTAL) {
-                            long trendChangeInTotalCount = activeForecast.getTotalSubscriptions() - expiredForecast.getTotalSubscriptions();
+                            double trendChangeInTotalCount = (activeForecast.getTotalSubscriptions() - expiredForecast.getTotalSubscriptions())/expiredForecast.getTotalSubscriptions();
                             trend.setChangeInTotalSubscriptionCount(trendChangeInTotalCount);
                         } else if (entityMetricType == EntityMetricType.NEW) {
-                            long trendChangeInNewCount = activeForecast.getNewSubscriptions() - expiredForecast.getNewSubscriptions();
+                            double trendChangeInNewCount = (activeForecast.getNewSubscriptions() - expiredForecast.getNewSubscriptions())/expiredForecast.getNewSubscriptions();
                             trend.setChangeInNewSubscriptionCount(trendChangeInNewCount);
                         } else if (entityMetricType == EntityMetricType.CHURN) {
-                            long trendChangeInChurnedSubscriptionCount = activeForecast.getChurnedSubscriptions() - expiredForecast.getChurnedSubscriptions();
+                            double trendChangeInChurnedSubscriptionCount = (activeForecast.getChurnedSubscriptions() - expiredForecast.getChurnedSubscriptions())/expiredForecast.getChurnedSubscriptions();
                             trend.setChangeInChurnedSubscriptionCount(trendChangeInChurnedSubscriptionCount);
                         }
                         changeInSubscriptionCountPerPeriod.set(i, trend);
