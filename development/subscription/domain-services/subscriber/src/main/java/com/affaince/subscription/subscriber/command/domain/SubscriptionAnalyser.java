@@ -3,7 +3,7 @@ package com.affaince.subscription.subscriber.command.domain;
 import com.affaince.subscription.common.vo.EntityMetadata;
 import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.common.vo.EntityType;
-import com.affaince.subscription.subscriber.command.event.SubscriptionAnalyserCreatedEvent;
+import com.affaince.subscription.subscriber.command.event.*;
 import com.affaince.subscription.subscriber.query.predictions.DeliveryHistoryRetriever;
 import com.affaince.subscription.subscriber.query.predictions.SubscribersHistoryRetriever;
 import com.affaince.subscription.subscriber.query.predictions.SubscriptionsHistoryRetriever;
@@ -78,68 +78,70 @@ public class SubscriptionAnalyser extends AbstractAnnotatedAggregateRoot<Integer
         }
     }
 
-/*
-    public void analyseSubscriptionTrendChange(EntityMetadata entityMetadata, LocalDate forecastDate, SubscriptionTrendChangeDetector subscriptionTrendChangeDetector) {
+
+    public void analyseSubscriptionTrendChange(EntityMetadata entityMetadata, SubscriptionTrendChangeDetector subscriptionTrendChangeDetector) {
         List<SubscriptionForecastTrendView> futureTrend= subscriptionTrendChangeDetector.determineTrendChange(null,entityMetadata);
         for(SubscriptionForecastTrendView trend: futureTrend){
             double expectedChangeInTotalSubscriptionCount = trend.getChangeInTotalSubscriptionCount();
             double expectedChangeInChurnedSubscriptionCount=trend.getChangeInChurnedSubscriptionCount();
             double expectedChangeInNewSubscriptionCount=trend.getChangeInNewSubscriptionCount();
-            double contingencyStockPercentage=0.1;
-            if(expectedChangeInTotalSubscriptionCount > contingencyStockPercentage){
-                apply(new ChangeOfDeliveryCostNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                if(expectedChangeInNewSubscriptionCount > 0 || expectedChangeInChurnedSubscriptionCount <0){
-                    apply(new SubscriptionBusinessIncreaseNotificationEvent(expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+            if(expectedChangeInTotalSubscriptionCount > 0){
+                apply(new IncreaseInTotalSubscriptionCountNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+                if(expectedChangeInNewSubscriptionCount > 0 ){
+                    apply(new IncreaseInNewSubscriptionsNotificationEvent(expectedChangeInNewSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+                }
+                if(expectedChangeInChurnedSubscriptionCount < 0){
+                    apply(new DecreaseInSubscriptionChurnsNotificationEvent(expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
                 }
             }else if(expectedChangeInTotalSubscriptionCount < 0 ){
-                apply(new ChangeOfDeliveryCostNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                if(expectedChangeInNewSubscriptionCount < 0 || expectedChangeInChurnedSubscriptionCount >0){
-                    apply(new SubscriptionBusinessDecreaseNotificationEvent(expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+                apply(new DecreaseInTotalSubscriptionCountNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+                if(expectedChangeInNewSubscriptionCount < 0 ){
+                    apply(new DecreaseInNewSubscriptionsNotificationEvent(expectedChangeInNewSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+                }
+                if(expectedChangeInChurnedSubscriptionCount >0){
+                    apply(new IncreaseInSubscriptionChurnsNotificationEvent(expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
                 }
             }
         }
     }
 
 
-    public void analyseSubscriberTrendChange(EntityMetadata entityMetadata, LocalDate forecastDate, SubscriberTrendChangeDetector subscriberTrendChangeDetector) {
+    public void analyseSubscriberTrendChange(EntityMetadata entityMetadata, SubscriberTrendChangeDetector subscriberTrendChangeDetector) {
         List<SubscriberForecastTrendView> futureTrend= subscriberTrendChangeDetector.determineTrendChange(null,entityMetadata);
         for(SubscriberForecastTrendView trend: futureTrend){
             double expectedChangeInTotalSubscriberCount = trend.getChangeInTotalSubscriberCount();
             double expectedChangeInChurnedSubscriberCount=trend.getChangeInChurnedSubscriberCount();
             double expectedChangeInNewSubscriberCount=trend.getChangeInNewSubscriberCount();
-            double contingencyStockPercentage=0.1;
-            if(expectedChangeInTotalSubscriberCount > contingencyStockPercentage){
-                apply(new ChangeOfDeliveryCostNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                if(expectedChangeInNewSubscriptionCount > 0 || expectedChangeInChurnedSubscriptionCount <0){
-                    apply(new SubscriptionBusinessIncreaseNotificationEvent(expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+            if(expectedChangeInTotalSubscriberCount > 0){
+                apply(new IncreaseInTotalSubscriberCountNotificationEvent(expectedChangeInTotalSubscriberCount,trend.getSubscriberVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriberVersionId().getForecastDate()));
+                if(expectedChangeInNewSubscriberCount > 0 ){
+                    apply(new IncreaseInNewSubscribersNotificationEvent(expectedChangeInNewSubscriberCount,trend.getSubscriberVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriberVersionId().getForecastDate()));
                 }
-            }else if(expectedChangeInTotalSubscriptionCount < 0 ){
-                apply(new ChangeOfDeliveryCostNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                if(expectedChangeInNewSubscriptionCount < 0 || expectedChangeInChurnedSubscriptionCount >0){
-                    apply(new SubscriptionBusinessDecreaseNotificationEvent(expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
+                if(expectedChangeInChurnedSubscriberCount < 0){
+                    apply(new DecreaseInSubscriberChurnsNotificationEvent(expectedChangeInChurnedSubscriberCount,trend.getSubscriberVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriberVersionId().getForecastDate()));
+                }
+            }else if(expectedChangeInTotalSubscriberCount < 0 ){
+                apply(new DecreaseInTotalSubscriberCountNotificationEvent(expectedChangeInTotalSubscriberCount,trend.getSubscriberVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriberVersionId().getForecastDate()));
+                if(expectedChangeInNewSubscriberCount < 0 ){
+                    apply(new DecreaseInNewSubscribersNotificationEvent(expectedChangeInNewSubscriberCount,trend.getSubscriberVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriberVersionId().getForecastDate()));
+                }
+                if(expectedChangeInChurnedSubscriberCount >0){
+                    apply(new IncreaseInSubscriberChurnsNotificationEvent(expectedChangeInChurnedSubscriberCount,trend.getSubscriberVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriberVersionId().getForecastDate()));
                 }
             }
         }
     }
 
-    public void analyseDelliveryTrendChange(EntityMetadata entityMetadata, LocalDate forecastDate, DeliveryTrendChangeDetector deliveryTrendChangeDetector) {
+    public void analyseDeliveryTrendChange(EntityMetadata entityMetadata, DeliveryTrendChangeDetector deliveryTrendChangeDetector) {
         List<DeliveryForecastTrendView> futureTrend= deliveryTrendChangeDetector.determineTrendChange(null,entityMetadata);
         for(DeliveryForecastTrendView trend: futureTrend){
             double expectedChangeInTotalDeliveryCount = trend.getChangeInTotalDeliveriesCount();
-            double contingencyStockPercentage=0.1;
-            if(expectedChangeInTotalDeliveryCount > contingencyStockPercentage){
-                apply(new ChangeOfDeliveryCostNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                if(expectedChangeInNewSubscriptionCount > 0 || expectedChangeInChurnedSubscriptionCount <0){
-                    apply(new SubscriptionBusinessIncreaseNotificationEvent(expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                }
-            }else if(expectedChangeInTotalSubscriptionCount < 0 ){
-                apply(new ChangeOfDeliveryCostNotificationEvent(expectedChangeInTotalSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                if(expectedChangeInNewSubscriptionCount < 0 || expectedChangeInChurnedSubscriptionCount >0){
-                    apply(new SubscriptionBusinessDecreaseNotificationEvent(expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getSubscriptionVersionId().getStartDate(),trend.getEndDate(),trend.getSubscriptionVersionId().getForecastDate()));
-                }
+            if(expectedChangeInTotalDeliveryCount > 0){
+                apply(new IncreaseInTotalDeliveryCountNotificationEvent(expectedChangeInTotalDeliveryCount,trend.getDeliveryVersionId().getStartDate(),trend.getEndDate(),trend.getDeliveryVersionId().getForecastDate()));
+            }else if(expectedChangeInTotalDeliveryCount < 0 ){
+                apply(new DecreaseInTotalDeliveryCountNotificationEvent(expectedChangeInTotalDeliveryCount,trend.getDeliveryVersionId().getStartDate(),trend.getEndDate(),trend.getDeliveryVersionId().getForecastDate()));
             }
         }
     }
-*/
 
 }

@@ -46,4 +46,8 @@ public class DeliveryForecastTrendView {
     public void setChangeInTotalDeliveriesCount(long changeInTotalDeliveriesCount) {
         this.changeInTotalDeliveriesCount = changeInTotalDeliveriesCount;
     }
+
+    public DeliveryVersionId getDeliveryVersionId() {
+        return deliveryVersionId;
+    }
 }
