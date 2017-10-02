@@ -10,9 +10,14 @@ import com.affaince.subscription.subscriber.query.predictions.SubscriptionsHisto
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastTrendView;
 import com.affaince.subscription.subscriber.query.view.SubscriberForecastTrendView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionForecastTrendView;
+import com.affaince.subscription.subscriber.query.view.SubscriptionRuleView;
+import com.affaince.subscription.subscriber.services.config.DeliveryChargesRuleService;
+import com.affaince.subscription.subscriber.services.config.SubscriptionRuleService;
 import com.affaince.subscription.subscriber.services.trend.DeliveryTrendChangeDetector;
 import com.affaince.subscription.subscriber.services.trend.SubscriberTrendChangeDetector;
 import com.affaince.subscription.subscriber.services.trend.SubscriptionTrendChangeDetector;
+import com.affaince.subscription.subscriber.vo.RangeRule;
+import com.affaince.subscription.subscriber.vo.SubscriptionValueRange;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -47,19 +52,30 @@ public class SubscriptionAnalyser extends AbstractAnnotatedAggregateRoot<Integer
         subscribersHistoryRetriever.marshallSendAndReceive(null,metadata);
     }
 
-    public void initiateSubscriptionForecast(EntityMetricType entityMetricType, SubscriptionsHistoryRetriever subscriptionsHistoryRetriever){
-        Map<String,Object> metadata= new HashMap<>();
-        metadata.put("ENTITY_TYPE", EntityType.SUBSCRIPTION);
-        metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
-        subscriptionsHistoryRetriever.marshallSendAndReceive(null,metadata);
+    public void initiateSubscriptionForecast(EntityMetricType entityMetricType, SubscriptionsHistoryRetriever subscriptionsHistoryRetriever,SubscriptionRuleService subscriptionRuleService){
+        SubscriptionRuleView subscriptionRuleView= subscriptionRuleService.getSubscriptionConfig();
+        List<SubscriptionValueRange>valueRanges= subscriptionRuleView.getSubscriptionValueRanges();
+        for(SubscriptionValueRange valueRange: valueRanges) {
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("ENTITY_TYPE", EntityType.SUBSCRIPTION);
+            metadata.put("ENTITY_METRIC_TYPE", EntityMetricType.TOTAL);
+            metadata.put("MIN_WEIGHT", valueRange.getMinimumValue());
+            metadata.put("MAX_WEIGHT", valueRange.getMaximumValue());
+            subscriptionsHistoryRetriever.marshallSendAndReceive(null, metadata);
+        }
     }
 
 
-    public void initiateDeliveryForecast(EntityMetricType entityMetricType, DeliveryHistoryRetriever deliveryHistoryRetriever){
-        Map<String,Object> metadata= new HashMap<>();
-        metadata.put("ENTITY_TYPE", EntityType.DELIVERY);
-        metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
-        deliveryHistoryRetriever.marshallSendAndReceive(null,metadata);
+    public void initiateDeliveryForecast(EntityMetricType entityMetricType, DeliveryChargesRuleService deliveryChargesRuleService, DeliveryHistoryRetriever deliveryHistoryRetriever){
+        List<RangeRule> weightRanges= deliveryChargesRuleService.getDeliveryConfig().getRangeRules();
+        for(RangeRule rule: weightRanges) {
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("ENTITY_TYPE", EntityType.DELIVERY);
+            metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
+            metadata.put("MIN_WEIGHT", rule.getRuleMinimum());
+            metadata.put("MAX_WEIGHT",rule.getRuleMaximum());
+            deliveryHistoryRetriever.marshallSendAndReceive(null, metadata);
+        }
     }
 
 /*

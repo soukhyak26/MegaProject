@@ -74,8 +74,8 @@ public class ForecastController {
         return new ResponseEntity<List<String>>(target, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}/{metricType}")
-    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable("productid") String productId,@PathVariable("metricType") String metricType ) throws Exception {
+    @RequestMapping(method = RequestMethod.PUT, value = "/predict/{productid}/{metrictype}")
+    public ResponseEntity<String> forecastDemandAndChurn(@PathVariable("productid") String productId,@PathVariable("metrictype") String metricType ) throws Exception {
         //hardcoded productanalyser id as 1
         final int productAnalyserId=1;
         EntityMetricType entityMetricType=null;

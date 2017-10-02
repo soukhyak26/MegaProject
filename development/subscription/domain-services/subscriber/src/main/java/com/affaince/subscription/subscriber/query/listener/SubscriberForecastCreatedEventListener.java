@@ -72,7 +72,7 @@ public class SubscriberForecastCreatedEventListener {
     }
 
     private void expireOverlappingActivePseudoActuals(LocalDate forecastDate) {
-        List<SubscriberPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
+        List<SubscriberPseudoActualsView> earlierPseudoActualsWithOverlappingPeriods = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndSubscriberVersionId_ForecastDateLessThan(ForecastContentStatus.ACTIVE, forecastDate);
         for (SubscriberPseudoActualsView earlierView : earlierPseudoActualsWithOverlappingPeriods) {
             earlierView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
         }
@@ -134,7 +134,7 @@ public class SubscriberForecastCreatedEventListener {
         }
         for (DataFrameVO vo : dataFrameVOs) {
             SubscriberPseudoActualsView view = null;
-            List<SubscriberPseudoActualsView> alreadySavedViews = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndForecastDate(ForecastContentStatus.ACTIVE, forecastDate);
+            List<SubscriberPseudoActualsView> alreadySavedViews = subscriberPseudoActualsViewRepository.findByForecastContentStatusAndSubscriberVersionId_ForecastDate(ForecastContentStatus.ACTIVE, forecastDate);
             if (null == alreadySavedViews && alreadySavedViews.isEmpty()) {
                 view = new SubscriberPseudoActualsView(vo.getDate(), forecastDate);
             } else {
