@@ -27,7 +27,7 @@ public class ProvisionForPurchaseCostRegisteredEventListener {
 
     @EventHandler
     public void on(ProvisionForPurchaseCostRegisteredEvent event){
-        PurchaseCostAccountView purchaseCostAccountView= new PurchaseCostAccountView(event.getId(),event.getProvisionForPurchaseOfGoods(),event.getProvisionForPurchaseOfGoods(),event.getStartDate().toLocalDateTime(LocalTime.now()),event.getEndDate().toLocalDateTime(LocalTime.MIDNIGHT));
+        PurchaseCostAccountView purchaseCostAccountView= new PurchaseCostAccountView(event.getId(),event.getProvisionForPurchaseOfGoods(),event.getCalendar(),event.getProvisionForPurchaseOfGoods(),event.getStartDate().toLocalDateTime(LocalTime.now()),event.getEndDate().toLocalDateTime(LocalTime.MIDNIGHT));
         purchaseCostAccountViewRepository.save(purchaseCostAccountView);
         PurchaseCostAccountTransactionsView purchaseCostAccountTransactionsView= new PurchaseCostAccountTransactionsView(event.getStartDate(),event.getProvisionForPurchaseOfGoods(), TransactionType.CREDIT, TransactionReasonCode.PURCHASE_COST_PROVISION_REGISTERED);
         purchaseCostAccountTransactionsViewRepository.save(purchaseCostAccountTransactionsView);

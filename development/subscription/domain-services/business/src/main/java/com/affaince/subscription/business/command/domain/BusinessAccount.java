@@ -194,7 +194,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     }
 
 
-    //Evnt listener for register/upgrade fixed expense shoould fire UpdateFixedExpenseTOProducCommand
+    //Evnt listener for register/upgrade fixed expense should fire UpdateFixedExpenseTOProducCommand
     //TODO:Currently unused
     public void updateFixedExpenseToProduct(String productId, double distributionAmountPerUnit, LocalDate distributionDate) {
         apply(new FixedExpenseUpdatedToProductEvent(productId, distributionDate, distributionAmountPerUnit));

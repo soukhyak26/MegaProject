@@ -28,7 +28,9 @@ public class CostOfDeliveredGoodsDebitedEventListener {
 
     @EventHandler
     public void on(CostOfDeliveredGoodsDebitedEvent event){
-        PurchaseCostAccountView purchaseCostAccountView = new PurchaseCostAccountView(event.getBusinessAccountId(),event.getAmountToBeDebited()+event.getRevisedProvisionAmount(),event.getRevisedProvisionAmount(),event.getStartDate().toLocalDateTime(LocalTime.now()),event.getEndDate().toLocalDateTime(LocalTime.MIDNIGHT));
+        //PurchaseCostAccountView purchaseCostAccountView = new PurchaseCostAccountView(event.getBusinessAccountId(),event.getAmountToBeDebited()+event.getRevisedProvisionAmount(),event.getRevisedProvisionAmount(),event.getStartDate().toLocalDateTime(LocalTime.now()),event.getEndDate().toLocalDateTime(LocalTime.MIDNIGHT));
+        PurchaseCostAccountView purchaseCostAccountView=purchaseCostAccountViewRepository.findOne(event.getBusinessAccountId());
+        purchaseCostAccountView.debit(event.getAmountToBeDebited(),event.getStartDate());
         purchaseCostAccountViewRepository.save(purchaseCostAccountView);
 
         PurchaseCostAccountTransactionsView purchaseCostAccountTransactionsView= new PurchaseCostAccountTransactionsView(event.getStartDate(),event.getAmountToBeDebited(), TransactionType.DEBIT, TransactionReasonCode.PURCHASE_COST_PROVISION_DEBITED);

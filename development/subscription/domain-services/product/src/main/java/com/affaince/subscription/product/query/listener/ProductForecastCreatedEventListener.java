@@ -10,8 +10,10 @@ import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.product.command.DetectChangeInProductTrendCommand;
 import com.affaince.subscription.product.command.event.ProductForecastCreatedEvent;
+import com.affaince.subscription.product.query.repository.ProductConfigurationViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastViewRepository;
 import com.affaince.subscription.product.query.repository.ProductPseudoActualsViewRepository;
+import com.affaince.subscription.product.query.view.ProductConfigurationView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
 import com.affaince.subscription.product.query.view.ProductPseudoActualsView;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -30,12 +32,14 @@ public class ProductForecastCreatedEventListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductForecastCreatedEventListener.class);
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
+    private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
     private final SubscriptionCommandGateway commandGateway;
 
-    public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,SubscriptionCommandGateway commandGateway) {
+    public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository,ProductConfigurationViewRepository productConfigurationViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,SubscriptionCommandGateway commandGateway) {
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
+        this.productConfigurationViewRepository=productConfigurationViewRepository;
         this.aggregatorFactory = aggregatorFactory;
         this.commandGateway=commandGateway;
     }
@@ -50,6 +54,11 @@ public class ProductForecastCreatedEventListener {
         expireOverlappingActivePseudoActuals(productId, forecastDate);
         updatePseudoActuals(productId, forecastData, forecastDate, entityMetadata);
         updateForecast(productId, forecastData, forecastDate, entityMetadata);
+
+        ProductConfigurationView productConfigurationView=productConfigurationViewRepository.findOne((String)productId);
+        productConfigurationView.setNextForecastDate(forecastDate.plusMonths(2));
+        productConfigurationViewRepository.save(productConfigurationView);
+
         //hardcoded productanalyserId
         DetectChangeInProductTrendCommand command= new DetectChangeInProductTrendCommand(1,(String)productId,entityMetadata,forecastDate);
         commandGateway.executeAsync(command);

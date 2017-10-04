@@ -2,10 +2,7 @@ package com.affaince.subscription.business.command.domain;
 
 import com.affaince.subscription.business.command.event.*;
 import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
-import com.affaince.subscription.business.vo.AdditionalBudgetRecommendation;
-import com.affaince.subscription.business.vo.RecommendationReason;
-import com.affaince.subscription.business.vo.RecommendationReceiver;
-import com.affaince.subscription.business.vo.RecommenderType;
+import com.affaince.subscription.business.vo.*;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
@@ -21,6 +18,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
     //private double additionalRecommendedProvisionAmount;
     private List<AdditionalBudgetRecommendation> recommendations;
     private double provisionAmount;
+    private List<InstallmentPerCalendarPeriod> installmentCalendar;
     private LocalDate startDate;
     private LocalDate endDate;
     private long remainingProductCount;
@@ -30,6 +28,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.recommendations = new ArrayList<>();
+        this.installmentCalendar= new ArrayList<>();
     }
 
     public void debit(double amount) {
@@ -71,7 +70,19 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
     }
 
     public void registerProvisionForPurchaseCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
-        apply(new ProvisionForPurchaseCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
+        int startMonth= startDate.getMonthOfYear();
+        YearMonth month=new YearMonth(startDate.getYear(), startDate.getMonthOfYear());
+        int endMonth=endDate.getMonthOfYear();
+        int period= endMonth - startMonth +1;
+
+        List<InstallmentPerCalendarPeriod> calendar= new ArrayList<>();
+        double monthlyInstallment=provisionForPurchaseOfGoods/period;
+        for(int i=0;i<period;i++){
+            InstallmentPerCalendarPeriod installment= new InstallmentPerCalendarPeriod(startDate.dayOfMonth().withMinimumValue(),startDate.dayOfMonth().withMaximumValue());
+            installment.addAmount(monthlyInstallment);
+            startDate= startDate.plusMonths(1);
+        }
+        apply(new ProvisionForPurchaseCostRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods,calendar));
     }
 
 
@@ -81,6 +92,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         this.endDate = event.getEndDate();
         //Manual provision should be directly registered in provisionAmount
         this.provisionAmount = event.getProvisionForPurchaseOfGoods();
+        this.installmentCalendar=event.getCalendar();
     }
 
     @EventSourcingHandler
