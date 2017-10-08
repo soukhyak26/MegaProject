@@ -1,6 +1,5 @@
 package com.affaince.subscription.common.serializer;
 
-import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

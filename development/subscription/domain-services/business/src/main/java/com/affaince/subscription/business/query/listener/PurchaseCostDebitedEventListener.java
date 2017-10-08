@@ -24,8 +24,8 @@ public class PurchaseCostDebitedEventListener {
 
     @EventHandler
     public void on(PurchaseCostDebitedEvent event) {
-        PurchaseCostAccountView purchaseCostAccountView = purchaseCostAccountViewRepository.findOne(event.getYear());
-        purchaseCostAccountView.debit(event.getAmountToDebit());
+        PurchaseCostAccountView purchaseCostAccountView = purchaseCostAccountViewRepository.findOne(event.getId());
+        purchaseCostAccountView.debit(event.getExcessBudgetedAmount());
         purchaseCostAccountViewRepository.save(purchaseCostAccountView);
     }
 }

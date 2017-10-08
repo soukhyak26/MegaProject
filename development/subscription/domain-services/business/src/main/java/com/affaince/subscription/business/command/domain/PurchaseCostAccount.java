@@ -65,8 +65,9 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         recommendations.add(new AdditionalBudgetRecommendation(recommenderId, recommendationDate, recommenderType, recommendedAmount, recommendationReason));
     }
 
-    public void fireDebitedEvent(Integer businessAccountId, double amountToDebit) {
-        apply(new PurchaseCostDebitedEvent(businessAccountId, amountToDebit));
+    public void deductFromPurchaseCost(Integer businessAccountId,String productId,long totalSubscriptionsRegistered,double productPurchasePricePerUnit) {
+        double additionalBudgetedAmount = totalSubscriptionsRegistered * productPurchasePricePerUnit;
+        apply(new PurchaseCostDebitedEvent(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit, additionalBudgetedAmount));
     }
 
     public void registerProvisionForPurchaseCost(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {
@@ -97,7 +98,7 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
 
     @EventSourcingHandler
     public void on(PurchaseCostDebitedEvent event) {
-        debit(event.getAmountToDebit());
+        this.provisionAmount -=event.getExcessBudgetedAmount();
     }
 
     public void addToPurchaseCostDueToSubscriptionCountChange(Integer id, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
@@ -180,5 +181,10 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
     @EventSourcingHandler
     public void on(CostOfDeliveredGoodsDebitedEvent event){
         this.provisionAmount=event.getRevisedProvisionAmount();
+    }
+
+    public void addToPurchaseCost(Integer businessAccountId, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
+        double additionalBudgetedAmount = totalSubscriptionsRegistered * productPurchasePricePerUnit;
+        apply(new PurchaseCostCreditedEvent(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit, additionalBudgetedAmount));
     }
 }

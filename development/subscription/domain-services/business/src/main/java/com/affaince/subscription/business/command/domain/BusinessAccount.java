@@ -5,6 +5,7 @@ import com.affaince.subscription.business.exception.ProvisionNotCreatedException
 import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
 import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
 import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
+import com.affaince.subscription.business.vo.BudgetAdjustmentOptions;
 import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.ProductPricingCategory;
@@ -53,6 +54,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     private RevenueAccount revenueAccount;
     @EventSourcedMember
     private InterestsAccount interestsGainAccount;
+
+    private BusinessAccountConfiguration businessAccountConfiguration;
 
     private LocalDate dateForProvision;
 
@@ -191,6 +194,7 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.revenueAccount = new RevenueAccount(dateForProvision, endDate);
         this.interestsGainAccount = new InterestsAccount(dateForProvision, endDate);
         this.profitAccount = new ProfitAccount(dateForProvision, endDate);
+        this.businessAccountConfiguration= new BusinessAccountConfiguration(this.id);
     }
 
 
@@ -233,11 +237,19 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     }
 
     public void addToPurchaseCostAccount(Integer businessAccountId, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
-        this.provisionalPurchaseCostAccount.addToRecommendationForAdditionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+        if(businessAccountConfiguration.getBudgetAdjustmentOptions()==BudgetAdjustmentOptions.RECOMMEND_BUDGET_ADJUSTMENT) {
+            this.provisionalPurchaseCostAccount.addToRecommendationForAdditionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+        }else{
+            this.provisionalPurchaseCostAccount.addToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+        }
     }
 
     public void reduceFromPurchaseCostAccount(Integer businessAccountId, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
-        this.provisionalPurchaseCostAccount.addToRecommendationForReductionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+        if(businessAccountConfiguration.getBudgetAdjustmentOptions()==BudgetAdjustmentOptions.RECOMMEND_BUDGET_ADJUSTMENT) {
+            this.provisionalPurchaseCostAccount.addToRecommendationForReductionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+        }else{
+            this.provisionalPurchaseCostAccount.deductFromPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+        }
     }
 
     public void reconcilePurchaseCostProvision(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits) {
@@ -320,5 +332,14 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
     public void on(RegisteredProductCountAddedToBusinessAccountEvent event){
         this.registeredProductCount +=event.getRegisteredProductCount();
         this.getProvisionalPurchaseCostAccount().addToRemainingProductCount(event.getRegisteredProductCount());
+    }
+
+    public void configureBusinessAccount(BudgetAdjustmentOptions budgetAdjustmentOptions) {
+        apply(new BusinessAccountConfigurationSetEvent(this.id,budgetAdjustmentOptions));
+    }
+
+    @EventSourcingHandler
+    public void on(BusinessAccountConfigurationSetEvent event){
+        this.businessAccountConfiguration.setBudgetAdjustmentOptions(event.getBudgetAdjustmentOptions());
     }
 }
