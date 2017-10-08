@@ -1,15 +1,12 @@
 package com.affaince.subscription.date;
 
 import com.mongodb.*;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Base64Utils;
 
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 /**
@@ -35,11 +32,7 @@ public final class SysDateTime {
                 + resourceBundle.getString("view.db.port")
                 + "/"
                 + resourceBundle.getString("view.db.name"));
-        try {
-            mongoClient = new MongoClient(mongoClientURI);
-        } catch (UnknownHostException e) {
-            logger.info("Cannot connect to host: " + e.getMessage());
-        }
+        mongoClient = new MongoClient(mongoClientURI);
         DB db = mongoClient.getDB(resourceBundle.getString("view.db.name"));
         dbCollection = db.getCollection(resourceBundle.getString("sysdatetime.view.db.collection"));
         productionMode = Boolean.parseBoolean(resourceBundle.getString("subscription.productionMode"));

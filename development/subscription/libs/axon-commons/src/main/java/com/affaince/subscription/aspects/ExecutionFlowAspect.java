@@ -7,7 +7,7 @@ import com.affaince.subscription.repository.CommonViewRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Pointcut;
-import org.axonframework.domain.MetaData;
+import org.axonframework.messaging.MetaData;
 
 import java.util.HashMap;
 import java.util.UUID;

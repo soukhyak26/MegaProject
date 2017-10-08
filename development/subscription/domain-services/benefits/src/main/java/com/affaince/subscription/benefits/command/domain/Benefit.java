@@ -1,15 +1,18 @@
 package com.affaince.subscription.benefits.command.domain;
 
 import com.affaince.subscription.benefits.command.event.BenefitAddedEvent;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import org.axonframework.commandhandling.model.AggregateIdentifier;
+import org.axonframework.commandhandling.model.AggregateRoot;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.joda.time.LocalDate;
+
+import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 /**
  * Created by rbsavaliya on 25-10-2015.
  */
-public class Benefit extends AbstractAnnotatedAggregateRoot<String> {
+@AggregateRoot
+public class Benefit {
     @AggregateIdentifier
     private String benefitId;
     private String benefitEquation;

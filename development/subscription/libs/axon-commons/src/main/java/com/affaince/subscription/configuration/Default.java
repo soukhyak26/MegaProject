@@ -1,64 +1,46 @@
 package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
-import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
 import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
-import com.affaince.subscription.common.service.forecast.config.Forecast;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
-import com.affaince.subscription.transformation.MetadataDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoURI;
+import io.netty.handler.logging.LoggingHandler;
 import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.CommandDispatchInterceptor;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
-import org.axonframework.commandhandling.disruptor.DisruptorConfiguration;
-import org.axonframework.commandhandling.gateway.CommandGatewayFactoryBean;
 import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
 import org.axonframework.commandhandling.gateway.RetryScheduler;
-import org.axonframework.commandhandling.interceptors.BeanValidationInterceptor;
-import org.axonframework.domain.IdentifierFactory;
-import org.axonframework.domain.MetaData;
-import org.axonframework.eventhandling.*;
-import org.axonframework.eventhandling.async.AsynchronousCluster;
-import org.axonframework.eventhandling.async.SequentialPerAggregatePolicy;
-import org.axonframework.eventstore.EventStore;
-import org.axonframework.eventstore.mongo.DefaultMongoTemplate;
-import org.axonframework.eventstore.mongo.MongoEventStore;
-import org.axonframework.eventstore.mongo.MongoTemplate;
-import org.axonframework.saga.ResourceInjector;
-import org.axonframework.saga.spring.SpringResourceInjector;
-import org.axonframework.serializer.AnnotationRevisionResolver;
-import org.axonframework.serializer.Serializer;
-import org.axonframework.serializer.json.JacksonSerializer;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.axonframework.eventhandling.saga.ResourceInjector;
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
+import org.axonframework.eventsourcing.eventstore.EventStore;
+import org.axonframework.mongo.eventsourcing.eventstore.DefaultMongoTemplate;
+import org.axonframework.mongo.eventsourcing.eventstore.MongoEventStorageEngine;
+import org.axonframework.serialization.AnnotationRevisionResolver;
+import org.axonframework.serialization.Serializer;
+import org.axonframework.serialization.json.JacksonSerializer;
+import org.axonframework.spring.commandhandling.gateway.CommandGatewayFactoryBean;
+import org.axonframework.spring.saga.SpringResourceInjector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.authentication.UserCredentials;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
-import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.util.ErrorHandler;
 
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.ThreadFactory;
 
-import static java.util.concurrent.Executors.defaultThreadFactory;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
 @Import(
-        {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Forecast.class,SparkConfig.class}
+        {RabbitMQConfiguration.class, ActiveMQConfiguration.class}
 )
 public class Default {
     //  private static final int DEFAULT_JGROUPS_PORT = 12001;
@@ -70,31 +52,30 @@ public class Default {
     }
 
     @Bean
-    public IdentifierFactory identifierFactory() {
-        return IdentifierFactory.getInstance();
+    public EventStore eventStore(MongoEventStorageEngine eventStorageEngine) {
+        return new EmbeddedEventStore(eventStorageEngine);
     }
 
     @Bean
-    public EventStore eventStore(@Qualifier("axonmongo") MongoTemplate mongoTemplate) throws SQLException {
-        MongoEventStore mongoEventStore = new MongoEventStore(mongoTemplate);
-        return mongoEventStore;
+    public MongoEventStorageEngine eventStorageEngine(org.axonframework.mongo.eventsourcing.eventstore.MongoTemplate eventStoreMongoTemplate) {
+        return new MongoEventStorageEngine(eventStoreMongoTemplate);
+    }
+
+    @Bean
+    public MongoTemplate mongoSpringTemplate(MongoClient mongo, @Value("${view.db.name}") String dbName) throws UnknownHostException {
+        return new MongoTemplate(mongo, dbName);
     }
 
     @Bean(name = "axonmongo")
-    public MongoTemplate mongoTemplate(Mongo mongo, @Value("${view.db.name}") String dbName) {
-        MongoTemplate mongoTemplate =
-                new DefaultMongoTemplate(mongo, dbName, "domainevents", "snapshotevents", null, null);
+    public org.axonframework.mongo.eventsourcing.eventstore.MongoTemplate mongoTemplate(MongoClient mongo, @Value("${view.db.name}") String dbName) {
+        org.axonframework.mongo.eventsourcing.eventstore.MongoTemplate mongoTemplate =
+                new DefaultMongoTemplate(mongo, dbName, "domainevents", "snapshotevents");
         return mongoTemplate;
     }
 
     @Bean
-    public Mongo mongo(MongoClientURI mongoClientURI) {
-        try {
-            return new Mongo(new MongoURI(mongoClientURI));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public MongoClient mongo(MongoClientURI mongoClientURI) {
+        return new MongoClient(mongoClientURI);
     }
 
     @Bean
@@ -110,10 +91,6 @@ public class Default {
                 dbName);
     }
 
-    @Bean
-    public EventTemplate eventTemplate(EventBus eventBus) {
-        return new EventTemplate(eventBus);
-    }
 
     @Bean
     public ErrorHandler errorHandler() {
@@ -126,25 +103,6 @@ public class Default {
         };
     }
 
-    @Bean
-    public ClusterSelector selector(@Qualifier("asyncCluster") Cluster cluster) {
-        return new DefaultClusterSelector(cluster);
-        //return new AnnotationClusterSelector(EventHandler.class,cluster);
-    }
-
-    @Bean(name = "asyncCluster")
-    public Cluster asyncCluster(@Value("${asyncCluster.pool.size:20}") int maximumPoolSize,
-                                @Value("${asyncCluster.identifier}") String asyncClusterIdentifier) {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder().setThreadFactory(defaultThreadFactory())
-                .setNameFormat("asyncCluster-%d").build();
-        return new AsynchronousCluster(asyncClusterIdentifier,
-                newScheduledThreadPool(maximumPoolSize, threadFactory), new SequentialPerAggregatePolicy());
-    }
-
-    @Bean
-    public EventBus eventBus(ClusterSelector selector, EventBusTerminal eventBusTerminal) {
-        return new ClusteringEventBus(selector, eventBusTerminal);
-    }
 
     protected Map<String, String> types() {
         return new HashMap<>();
@@ -156,7 +114,6 @@ public class Default {
                 objectMapper, new AnnotationRevisionResolver(), types()
         );
         SimpleModule simpleModule = new SimpleModule("Axon");
-        simpleModule.addDeserializer(MetaData.class, new MetadataDeserializer());
         serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
 
@@ -164,12 +121,8 @@ public class Default {
     }
 
     @Bean
-    public DisruptorCommandBus localSegment(EventStore eventStore, EventBus eventBus) {
-        DisruptorConfiguration configuration = new DisruptorConfiguration();
-        List<CommandDispatchInterceptor> dispatchInterceptors = new ArrayList<>();
-        dispatchInterceptors.add(new BeanValidationInterceptor());
-        configuration.setDispatchInterceptors(dispatchInterceptors);
-        return new DisruptorCommandBus(eventStore, eventBus, configuration);
+    public DisruptorCommandBus localSegment(EventStore eventStore) {
+        return new DisruptorCommandBus(eventStore);
     }
 
     @Bean
@@ -179,7 +132,6 @@ public class Default {
         commandGatewayFactoryBean.setGatewayInterface(SubscriptionCommandGateway.class);
         commandGatewayFactoryBean.setCommandBus(commandBus);
         commandGatewayFactoryBean.setRetryScheduler(retryScheduler);
-        commandGatewayFactoryBean.setCommandDispatchInterceptors(new CommandLoggingInterceptor("commandlogging"));
         return commandGatewayFactoryBean;
     }
 
@@ -209,23 +161,8 @@ public class Default {
         return new CustomConversions(converters);
     }
 
-/*
-    @Bean(name="customConversionsForEndDate")
-    public CustomConversions customConversionsForEndDate() {
-        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
-        converters.add(new LocalDateWritingConverter());
-        converters.add(new LocalDateReadingConverter());
-        return new CustomConversions(converters);
-    }
-*/
-
     @Bean
     public Locale locale (@Value("${subscription.locale}") String locale) {
         return new Locale(locale);
-    }
-
-    @Bean
-    public SimpleMongoDbFactory mongoDbFactory(MongoClientURI mongoClientURI) throws Exception {
-        return new SimpleMongoDbFactory(new MongoURI(mongoClientURI));
     }
 }

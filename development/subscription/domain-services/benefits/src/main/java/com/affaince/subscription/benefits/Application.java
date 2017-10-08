@@ -1,11 +1,12 @@
 package com.affaince.subscription.benefits;
 
-import org.axonframework.contextsupport.spring.AnnotationDriven;
+import org.axonframework.spring.config.AnnotationDriven;
+import org.axonframework.spring.config.EnableAxon;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan("com.affaince")
 @AnnotationDriven
 @EnableAspectJAutoProxy
+@EnableAxon
 @PropertySource({"classpath:Application.properties","classpath:common.properties"})
 public class Application extends SpringBootServletInitializer {
 

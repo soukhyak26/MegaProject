@@ -1,7 +1,8 @@
 package com.affaince.subscription.configuration;
 
-import org.axonframework.domain.EventMessage;
-import org.axonframework.eventhandling.amqp.RoutingKeyResolver;
+
+import org.axonframework.amqp.eventhandling.RoutingKeyResolver;
+import org.axonframework.eventhandling.EventMessage;
 
 /**
  * Created by rsavaliya on 10/1/16.

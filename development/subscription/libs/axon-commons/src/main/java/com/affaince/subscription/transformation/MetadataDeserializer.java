@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import org.axonframework.domain.MetaData;
+import org.axonframework.messaging.MetaData;
 
 import java.io.IOException;
 import java.util.HashMap;
