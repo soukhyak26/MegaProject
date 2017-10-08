@@ -236,6 +236,10 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.provisionalPurchaseCostAccount.addToRecommendationForAdditionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
     }
 
+    public void reduceFromPurchaseCostAccount(Integer businessAccountId, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
+        this.provisionalPurchaseCostAccount.addToRecommendationForReductionToPurchaseCost(businessAccountId, productId, totalSubscriptionsRegistered, productPurchasePricePerUnit);
+    }
+
     public void reconcilePurchaseCostProvision(String productId, Double currentPurchasePrice, Double currentMRP, Integer currentStockInUnits) {
 
     }

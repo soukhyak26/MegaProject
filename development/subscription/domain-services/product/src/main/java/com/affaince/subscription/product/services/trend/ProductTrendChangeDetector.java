@@ -37,13 +37,8 @@ public class ProductTrendChangeDetector {
         //then obtain immediate previous forecast
         //compare active forecast with previous forecast and determine if there is a change in trend.
         //in case trend change is more than contingency stock then it needs additional demand for stock and budget required for the same.
-        List<ProductForecastView> activeProductForecastList = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.ACTIVE);
-        List<ProductForecastView> expiredForecastList = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.EXPIRED);
-        LocalDate referenceForecastDate = expiredForecastList.get(0).getForecastDate();
-        List<ProductForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();
         List<ProductForecastTrendView> changeInSubscriptionCountPerPeriod = new ArrayList<>();
-        //find if aggregation period is weekly monthly or quarterly
         ProductConfigurationView configView = productConfigurationViewRepository.findOne(productId);
         int aggregationPeriod = configView.getActualsAggregationPeriodForTargetForecast();
         double contingencyStockPercentage = configView.getContingencyStockPercentage();
@@ -58,35 +53,68 @@ public class ProductTrendChangeDetector {
             }
         }
 
-        if (activeProductForecastList.size() >= recordsForComparision && latestExpiredForecastList.size() >= recordsForComparision) {
-            for (int i = 0; i < recordsForComparision; i++) {
+        List<ProductForecastView> activeProductForecastList = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.ACTIVE);
+        List<ProductForecastView> expiredForecastList = productForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastDateDesc(productId, ForecastContentStatus.EXPIRED);
+        //for the first time of forecast there is no expired forecast
+        if (null == expiredForecastList && expiredForecastList.isEmpty()) {
+            for (int i = 0; i < activeProductForecastList.size(); i++) {
                 ProductForecastView activeForecast = activeProductForecastList.get(i);
-                for (int j = 0; j < recordsForComparision; j++) {
-                    ProductForecastView expiredForecast = latestExpiredForecastList.get(j);
-                    if (activeForecast.getProductVersionId().getFromDate().equals(expiredForecast.getProductVersionId().getFromDate())) {
-                        ForecastVersionId forecastVersionId = new ForecastVersionId(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate());
-                        ProductForecastTrendView trend = productForecastTrendViewRepository.findOne(forecastVersionId);
-                        if (null == trend) {
-                            trend = new ProductForecastTrendView(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate(), activeForecast.getEndDate());
-                        }
-                        if (entityMetricType == EntityMetricType.TOTAL) {
-                            long trendChangeInTotalCount = activeForecast.getTotalNumberOfExistingSubscriptions() - expiredForecast.getTotalNumberOfExistingSubscriptions();
-                            trend.setChangeInTotalSusbcriptionCount(trendChangeInTotalCount/expiredForecast.getTotalNumberOfExistingSubscriptions());
 
-                        } else if (entityMetricType == EntityMetricType.NEW) {
-                            long trendChangeInNewCount = activeForecast.getNewSubscriptions() - expiredForecast.getNewSubscriptions();
-                            trend.setChangeInNewSubscriptionCount(trendChangeInNewCount/ expiredForecast.getNewSubscriptions());
-                        } else if (entityMetricType == EntityMetricType.CHURN) {
-                            long trendChangeInChurnedCount = activeForecast.getChurnedSubscriptions() - expiredForecast.getChurnedSubscriptions();
-                            trend.setChangeInChurnedSubscriptionCount(trendChangeInChurnedCount/ expiredForecast.getChurnedSubscriptions());
+                ForecastVersionId forecastVersionId = new ForecastVersionId(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate());
+                ProductForecastTrendView trend = productForecastTrendViewRepository.findOne(forecastVersionId);
+                if (null == trend) {
+                    trend = new ProductForecastTrendView(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate(), activeForecast.getEndDate());
+                }
+                if (entityMetricType == EntityMetricType.TOTAL) {
+                    trend.setReferenceTotalSubscriptionCount(activeForecast.getTotalNumberOfExistingSubscriptions());
+                    trend.setChangeInTotalSusbcriptionCount(Double.MAX_VALUE);
+                } else if (entityMetricType == EntityMetricType.NEW) {
+                    long trendChangeInNewCount = activeForecast.getNewSubscriptions();
+                    trend.setReferenceNewSubscriptionCount(activeForecast.getNewSubscriptions());
+                    trend.setChangeInNewSubscriptionCount(Double.MAX_VALUE);
+                } else if (entityMetricType == EntityMetricType.CHURN) {
+                    trend.setReferenceChurnedSubscriptionCount(activeForecast.getChurnedSubscriptions());
+                    trend.setChangeInChurnedSubscriptionCount(Double.MAX_VALUE);
+                }
+                changeInSubscriptionCountPerPeriod.set(i, trend);
+            }
+        }else {
+            LocalDate referenceForecastDate = expiredForecastList.get(0).getForecastDate();
+            List<ProductForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
+            //find if aggregation period is weekly monthly or quarterly
+
+            if (activeProductForecastList.size() >= recordsForComparision && latestExpiredForecastList.size() >= recordsForComparision) {
+                for (int i = 0; i < recordsForComparision; i++) {
+                    ProductForecastView activeForecast = activeProductForecastList.get(i);
+                    for (int j = 0; j < recordsForComparision; j++) {
+                        ProductForecastView expiredForecast = latestExpiredForecastList.get(j);
+                        if (activeForecast.getProductVersionId().getFromDate().equals(expiredForecast.getProductVersionId().getFromDate())) {
+                            ForecastVersionId forecastVersionId = new ForecastVersionId(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate());
+                            ProductForecastTrendView trend = productForecastTrendViewRepository.findOne(forecastVersionId);
+                            if (null == trend) {
+                                trend = new ProductForecastTrendView(productId, dateOfComparison, activeForecast.getProductVersionId().getFromDate(), activeForecast.getEndDate());
+                            }
+                            if (entityMetricType == EntityMetricType.TOTAL) {
+                                long trendChangeInTotalCount = activeForecast.getTotalNumberOfExistingSubscriptions() - expiredForecast.getTotalNumberOfExistingSubscriptions();
+                                trend.setReferenceTotalSubscriptionCount(expiredForecast.getTotalNumberOfExistingSubscriptions());
+                                trend.setChangeInTotalSusbcriptionCount(trendChangeInTotalCount / expiredForecast.getTotalNumberOfExistingSubscriptions());
+                            } else if (entityMetricType == EntityMetricType.NEW) {
+                                long trendChangeInNewCount = activeForecast.getNewSubscriptions() - expiredForecast.getNewSubscriptions();
+                                trend.setReferenceNewSubscriptionCount(expiredForecast.getNewSubscriptions());
+                                trend.setChangeInNewSubscriptionCount(trendChangeInNewCount / expiredForecast.getNewSubscriptions());
+                            } else if (entityMetricType == EntityMetricType.CHURN) {
+                                long trendChangeInChurnedCount = activeForecast.getChurnedSubscriptions() - expiredForecast.getChurnedSubscriptions();
+                                trend.setReferenceChurnedSubscriptionCount(expiredForecast.getChurnedSubscriptions());
+                                trend.setChangeInChurnedSubscriptionCount(trendChangeInChurnedCount / expiredForecast.getChurnedSubscriptions());
+                            }
+                            changeInSubscriptionCountPerPeriod.set(i, trend);
+                            break;
                         }
-                        changeInSubscriptionCountPerPeriod.set(i, trend);
-                        break;
                     }
                 }
             }
-            productForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
         }
+        productForecastTrendViewRepository.save(changeInSubscriptionCountPerPeriod);
         return changeInSubscriptionCountPerPeriod;
     }
 

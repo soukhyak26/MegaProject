@@ -1,9 +1,9 @@
-package com.affaince.subscription.product.command.event;
+package com.affaince.subscription.business.command.event;
 
 import org.joda.time.LocalDate;
 
 /**
- * Created by mandar on 10/1/2017.
+ * Created by mandar on 10/7/2017.
  */
 public class ProductDemandIncreaseNotificationEvent {
     private String productId;
@@ -57,4 +57,5 @@ public class ProductDemandIncreaseNotificationEvent {
     public LocalDate getForecastDate() {
         return forecastDate;
     }
+
 }

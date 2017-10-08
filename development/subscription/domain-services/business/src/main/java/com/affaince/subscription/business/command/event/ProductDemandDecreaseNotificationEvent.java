@@ -1,11 +1,11 @@
-package com.affaince.subscription.product.command.event;
+package com.affaince.subscription.business.command.event;
 
 import org.joda.time.LocalDate;
 
 /**
- * Created by mandar on 10/1/2017.
+ * Created by mandar on 10/7/2017.
  */
-public class ProductDemandIncreaseNotificationEvent {
+public class ProductDemandDecreaseNotificationEvent {
     private String productId;
     private double referenceNewSubscriptionCount;
     private double expectedChangeInNewSubscriptionCount;
@@ -15,7 +15,7 @@ public class ProductDemandIncreaseNotificationEvent {
     private LocalDate endDate;
     private LocalDate forecastDate;
 
-    public ProductDemandIncreaseNotificationEvent(String productId,double referenceNewSubscriptionCount, double expectedChangeInNewSubscriptionCount,double referenceChurnedSubscriptionCount, double expectedChangeInChurnedSubscriptionCount, LocalDate fromDate, LocalDate endDate, LocalDate forecastDate) {
+    public ProductDemandDecreaseNotificationEvent(String productId,double referenceNewSubscriptionCount, double expectedChangeInNewSubscriptionCount,double referenceChurnedSubscriptionCount, double expectedChangeInChurnedSubscriptionCount, LocalDate fromDate, LocalDate endDate, LocalDate forecastDate) {
         this.productId = productId;
         this.referenceNewSubscriptionCount=referenceNewSubscriptionCount;
         this.expectedChangeInNewSubscriptionCount = expectedChangeInNewSubscriptionCount;
@@ -57,4 +57,5 @@ public class ProductDemandIncreaseNotificationEvent {
     public LocalDate getForecastDate() {
         return forecastDate;
     }
+
 }

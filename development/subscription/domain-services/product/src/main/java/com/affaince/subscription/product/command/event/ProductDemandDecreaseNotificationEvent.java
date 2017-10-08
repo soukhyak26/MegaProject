@@ -7,15 +7,19 @@ import org.joda.time.LocalDate;
  */
 public class ProductDemandDecreaseNotificationEvent {
     private String productId;
+    private double referenceNewSubscriptionCount;
     private double expectedChangeInNewSubscriptionCount;
+    private double referenceChurnedSubscriptionCount;
     private double expectedChangeInChurnedSubscriptionCount;
     private LocalDate fromDate;
     private LocalDate endDate;
     private LocalDate forecastDate;
 
-    public ProductDemandDecreaseNotificationEvent(String productId, double expectedChangeInNewSubscriptionCount, double expectedChangeInChurnedSubscriptionCount, LocalDate fromDate, LocalDate endDate, LocalDate forecastDate) {
+    public ProductDemandDecreaseNotificationEvent(String productId,double referenceNewSubscriptionCount, double expectedChangeInNewSubscriptionCount,double referenceChurnedSubscriptionCount, double expectedChangeInChurnedSubscriptionCount, LocalDate fromDate, LocalDate endDate, LocalDate forecastDate) {
         this.productId = productId;
+        this.referenceNewSubscriptionCount=referenceNewSubscriptionCount;
         this.expectedChangeInNewSubscriptionCount = expectedChangeInNewSubscriptionCount;
+        this.referenceChurnedSubscriptionCount=referenceChurnedSubscriptionCount;
         this.expectedChangeInChurnedSubscriptionCount = expectedChangeInChurnedSubscriptionCount;
         this.fromDate = fromDate;
         this.endDate = endDate;
@@ -44,5 +48,13 @@ public class ProductDemandDecreaseNotificationEvent {
 
     public LocalDate getForecastDate() {
         return forecastDate;
+    }
+
+    public double getReferenceNewSubscriptionCount() {
+        return referenceNewSubscriptionCount;
+    }
+
+    public double getReferenceChurnedSubscriptionCount() {
+        return referenceChurnedSubscriptionCount;
     }
 }

@@ -13,8 +13,11 @@ public class ProductForecastTrendView {
     @Id
     private ForecastVersionId forecastVersionId;
     private LocalDate endDate;
+    private double referenceNewSubscriptionCount;
     private double changeInNewSubscriptionCount;
+    private double referenceChurnedSubscriptionCount;
     private double changeInChurnedSubscriptionCount;
+    private double referenceTotalSubscriptionCount;
     private double changeInTotalSusbcriptionCount;
 
     public ProductForecastTrendView(String productId, LocalDate forecastDate, LocalDate startDate, LocalDate endDate) {
@@ -50,13 +53,35 @@ public class ProductForecastTrendView {
         return this.forecastVersionId.getProductId();
     }
 
-
-
     public LocalDate getEndDate() {
         return endDate;
     }
 
     public double getChangeInTotalSusbcriptionCount() {
         return changeInTotalSusbcriptionCount;
+    }
+
+    public double getReferenceNewSubscriptionCount() {
+        return referenceNewSubscriptionCount;
+    }
+
+    public void setReferenceNewSubscriptionCount(double referenceNewSubscriptionCount) {
+        this.referenceNewSubscriptionCount = referenceNewSubscriptionCount;
+    }
+
+    public double getReferenceChurnedSubscriptionCount() {
+        return referenceChurnedSubscriptionCount;
+    }
+
+    public void setReferenceChurnedSubscriptionCount(double referenceChurnedSubscriptionCount) {
+        this.referenceChurnedSubscriptionCount = referenceChurnedSubscriptionCount;
+    }
+
+    public double getReferenceTotalSubscriptionCount() {
+        return referenceTotalSubscriptionCount;
+    }
+
+    public void setReferenceTotalSubscriptionCount(double referenceTotalSubscriptionCount) {
+        this.referenceTotalSubscriptionCount = referenceTotalSubscriptionCount;
     }
 }

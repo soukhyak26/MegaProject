@@ -35,7 +35,9 @@ public class Axon extends Default {
     protected Map<String, String> types() {
         return new HashMap<String, String>() {{
             put("com.affaince.subscription.product.command.event.ProductRegisteredEvent", ProductRegisteredEvent.class.getName());
-            put("com.affaince.subscription.product.command.event.AnnualForecastCreatedEvent", AnnualForecastCreatedEvent.class.getName());
+            //put("com.affaince.subscription.product.command.event.AnnualForecastCreatedEvent", AnnualForecastCreatedEvent.class.getName());
+            put("com.affaince.subscription.product.command.event.ProductDemandIncreaseNotificationEvent", ProductDemandIncreaseNotificationEvent.class.getName());
+            put("com.affaince.subscription.product.command.event.ProductDemandDecreaseNotificationEvent", ProductDemandDecreaseNotificationEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ProductActivatedEvent", ProductActivatedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ExpectedProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent", ExpectedProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent.class.getName());
             put("com.affaince.subscription.product.command.event.ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent", ProductContributionToPurchaseExpenseRevenueAndProfitAddedEvent.class.getName());

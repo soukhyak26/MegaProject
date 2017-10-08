@@ -51,19 +51,22 @@ public class ProductAnalyser extends AbstractAnnotatedAggregateRoot<Integer> {
     public void analyseProductTrendChange(String productId, EntityMetadata entityMetadata, LocalDate forecastDate, ProductTrendChangeDetector productTrendChangeDetector) {
         List<ProductForecastTrendView> futureTrend= productTrendChangeDetector.determineTrendChange((String)productId,entityMetadata);
         for(ProductForecastTrendView trend: futureTrend){
+            double referenceTotalSubscriptionCount=trend.getReferenceTotalSubscriptionCount();
             double expectedChangeInTotalSubscriptionCount = trend.getChangeInTotalSusbcriptionCount();
+            double referenceChurnedSubscriptionCount=trend.getReferenceChurnedSubscriptionCount();
             double expectedChangeInChurnedSubscriptionCount=trend.getChangeInChurnedSubscriptionCount();
+            double referenceNewSubscriptionCount = trend.getReferenceNewSubscriptionCount();
             double expectedChangeInNewSubscriptionCount=trend.getChangeInNewSubscriptionCount();
             double contingencyStockPercentage=0.1;
             if(expectedChangeInTotalSubscriptionCount > contingencyStockPercentage){
-                apply(new ChangeOfTotalStockNotificationEvent(productId,expectedChangeInTotalSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
+                apply(new ChangeOfTotalStockNotificationEvent(productId,referenceTotalSubscriptionCount,expectedChangeInTotalSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
                 if(expectedChangeInNewSubscriptionCount > 0 || expectedChangeInChurnedSubscriptionCount <0){
-                    apply(new ProductDemandIncreaseNotificationEvent(productId,expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
+                    apply(new ProductDemandIncreaseNotificationEvent(productId,referenceNewSubscriptionCount,expectedChangeInNewSubscriptionCount,referenceChurnedSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
                 }
             }else if(expectedChangeInTotalSubscriptionCount < 0 ){
-                apply(new ChangeOfTotalStockNotificationEvent(productId,expectedChangeInTotalSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
+                apply(new ChangeOfTotalStockNotificationEvent(productId,referenceTotalSubscriptionCount,expectedChangeInTotalSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
                 if(expectedChangeInNewSubscriptionCount < 0 || expectedChangeInChurnedSubscriptionCount >0){
-                    apply(new ProductDemandDecreaseNotificationEvent(productId,expectedChangeInNewSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
+                    apply(new ProductDemandDecreaseNotificationEvent(productId,referenceNewSubscriptionCount,expectedChangeInNewSubscriptionCount,referenceChurnedSubscriptionCount,expectedChangeInChurnedSubscriptionCount,trend.getForecastVersionId().getFromDate(),trend.getEndDate(),trend.getForecastVersionId().getForecastDate()));
                 }
             }
         }

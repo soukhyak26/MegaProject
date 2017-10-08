@@ -56,6 +56,7 @@ public class ProductForecastCreatedEventListener {
         updateForecast(productId, forecastData, forecastDate, entityMetadata);
 
         ProductConfigurationView productConfigurationView=productConfigurationViewRepository.findOne((String)productId);
+        //this is a dummy next forecast date.. actual date will be overriden by the pricing calculator
         productConfigurationView.setNextForecastDate(forecastDate.plusMonths(2));
         productConfigurationViewRepository.save(productConfigurationView);
 

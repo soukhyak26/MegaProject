@@ -7,13 +7,15 @@ import org.joda.time.LocalDate;
  */
 public class ChangeOfTotalStockNotificationEvent {
     private String productId;
+    private double referenceTotalSubscription;
     private double expectedChangeInTotalSubscriptionCount;
     private LocalDate fromDate;
     private LocalDate endDate;
     private LocalDate notificationDate;
 
-    public ChangeOfTotalStockNotificationEvent(String productId, double expectedChangeInTotalSubscriptionCount, LocalDate fromDate, LocalDate endDate, LocalDate notificationDate) {
+    public ChangeOfTotalStockNotificationEvent(String productId,double referenceTotalSubscription, double expectedChangeInTotalSubscriptionCount, LocalDate fromDate, LocalDate endDate, LocalDate notificationDate) {
         this.productId = productId;
+        this.referenceTotalSubscription=referenceTotalSubscription;
         this.expectedChangeInTotalSubscriptionCount = expectedChangeInTotalSubscriptionCount;
         this.fromDate = fromDate;
         this.endDate = endDate;
@@ -38,5 +40,9 @@ public class ChangeOfTotalStockNotificationEvent {
 
     public LocalDate getNotificationDate() {
         return notificationDate;
+    }
+
+    public double getReferenceTotalSubscription() {
+        return referenceTotalSubscription;
     }
 }

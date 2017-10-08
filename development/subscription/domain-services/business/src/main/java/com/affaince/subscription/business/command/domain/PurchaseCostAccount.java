@@ -115,6 +115,11 @@ public class PurchaseCostAccount extends AbstractAnnotatedEntity {
         apply(new PurchaseCostRecommendationCreditedEvent(id, productId, SysDate.now(), additionalBudgetedAmount, RecommenderType.PRODUCT, RecommendationReason.SUBSCRIPTION_COUNT_INCREASED));
     }
 
+    public void addToRecommendationForReductionToPurchaseCost(Integer id, String productId, long totalSubscriptionsRegistered, double productPurchasePricePerUnit) {
+        double reducedBudgetedAmount = totalSubscriptionsRegistered * productPurchasePricePerUnit;
+        apply(new PurchaseCostRecommendationCreditedEvent(id, productId, SysDate.now(), reducedBudgetedAmount, RecommenderType.PRODUCT, RecommendationReason.SUBSCRIPTION_COUNT_DECREASED));
+    }
+
     @EventSourcingHandler
     public void on(PurchaseCostRecommendationCreditedEvent event) {
         this.addToAdditionalProvisionRecommendation(event.getProductId(), event.getRecommendationDate(), event.getRecommenderType(), event.getAdditionalBudgetedAmount(), event.getRecommendationReason());
