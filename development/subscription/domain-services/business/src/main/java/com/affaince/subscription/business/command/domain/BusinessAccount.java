@@ -6,6 +6,7 @@ import com.affaince.subscription.business.process.operatingexpenses.DefaultOpera
 import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
 import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
 import com.affaince.subscription.business.vo.BudgetAdjustmentOptions;
+import com.affaince.subscription.business.vo.OperatingExpenseVO;
 import com.affaince.subscription.business.vo.RecommendationReceiver;
 import com.affaince.subscription.common.type.ExpenseType;
 import com.affaince.subscription.common.type.ProductPricingCategory;
@@ -224,8 +225,8 @@ public class BusinessAccount extends AbstractAnnotatedAggregateRoot<Integer> {
         this.getProvisionalOthersAccount().registerProvisionForOtherCost(id,startDate,endDate,provisionForOtherCost);
     }
 
-    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods,DefaultOperatingExpensesDeterminator defaultOperatingExpensesDeterminator) {
-        this.provisionalCommonExpensesAccount.registerProvisionForCommonExpenses(id,startDate,endDate,provisionForPurchaseOfGoods,defaultOperatingExpensesDeterminator);
+    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, List<OperatingExpenseVO> expenses, DefaultOperatingExpensesDeterminator defaultOperatingExpensesDeterminator) {
+        this.provisionalCommonExpensesAccount.registerProvisionForCommonExpenses(id,startDate,endDate,expenses,defaultOperatingExpensesDeterminator);
     }
 
     public void registerProvisionForSubscriptionSpecificExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods) {

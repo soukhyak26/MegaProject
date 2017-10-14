@@ -118,25 +118,9 @@ public class BusinessAccountProvisionController {
     @RequestMapping(method = RequestMethod.POST, value = "registercommonexpense")
     @Consumes("application/json")
     public ResponseEntity<Object> setProvisionForCommonOperatingExpenses(@RequestBody @Valid CommonOperatingExpensesRequest request) throws Exception {
-        double monthlyCommonExpenseAmount = 0;
-        double yearlyCommonExpenseAmount = 0;
-        YearMonth monthOfYear = YearMonth.now();
-        //need to verify accuracy of this number
-        int remainingMonths = 12 - monthOfYear.getMonthOfYear() + 1;
-        for (OperatingExpenseVO expense : request.getExpenses()) {
-            CommonOperatingExpenseConfigView commonOperatingExpenseConfigView= new CommonOperatingExpenseConfigView(expense.getExpenseHeader(),expense.getAmount(),expense.getPeriod(),expense.getSensitivityCharacteristic());
-            commonOperatingExpenseConfigViewRepository.save(commonOperatingExpenseConfigView);
-            if (expense.getPeriod().getUnit() == PeriodUnit.WEEK) {
-                monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue()) * 4;
-            } else if (expense.getPeriod().getUnit() == PeriodUnit.MONTH) {
-                monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue());
-            } else if (expense.getPeriod().getUnit() == PeriodUnit.YEAR) {
-                monthlyCommonExpenseAmount = expense.getAmount() / (expense.getPeriod().getValue() * 12);
-            }
-            yearlyCommonExpenseAmount += monthlyCommonExpenseAmount * remainingMonths;
-        }
+        //todo: The limitation here is , you can set common operating expenes only from today(this month) not for future period.. needs to overcome.
         Integer id= YearMonth.now().getYear();
-        CreateProvisionForCommonExpensesCommand command= new CreateProvisionForCommonExpensesCommand(id,SysDate.now(),monthOfYear.plusMonths(remainingMonths).toLocalDate(31),yearlyCommonExpenseAmount);
+        CreateProvisionForCommonExpensesCommand command= new CreateProvisionForCommonExpensesCommand(id,request.getStartDate(),request.getEndDate(),request.getExpenses());
         try{
             commandGateway.executeAsync(command);
         }catch (Exception ex) {

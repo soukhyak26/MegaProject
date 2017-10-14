@@ -5,13 +5,17 @@ import com.affaince.subscription.business.process.operatingexpenses.DefaultOpera
 import com.affaince.subscription.business.process.operatingexpenses.OperatingExpensesDeterminator;
 import com.affaince.subscription.business.query.view.BudgetChangeRecommendationView;
 import com.affaince.subscription.business.vo.AdditionalBudgetRecommendation;
+import com.affaince.subscription.business.vo.OperatingExpenseVO;
 import com.affaince.subscription.business.vo.RecommendationReason;
 import com.affaince.subscription.business.vo.RecommenderType;
+import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
+import org.joda.time.Months;
+import org.joda.time.YearMonth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +63,25 @@ public class CommonExpensesAccount extends AbstractAnnotatedEntity {
         debit(event.getAmountToDebit());
     }
 
-    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, double provisionForPurchaseOfGoods,DefaultOperatingExpensesDeterminator defaultOperatingExpensesDeterminator) {
-        apply(new ProvisionForCommonExpensesRegisteredEvent(id, startDate, endDate, provisionForPurchaseOfGoods));
-        final Map<String, Double> perUnitOperatingExpenses = defaultOperatingExpensesDeterminator.calculateOperatingExpensesPerProduct(provisionForPurchaseOfGoods);
+    public void registerProvisionForCommonExpenses(Integer id, LocalDate startDate, LocalDate endDate, List<OperatingExpenseVO> expenses,DefaultOperatingExpensesDeterminator defaultOperatingExpensesDeterminator) {
+        double monthlyCommonExpenseAmount = 0;
+        double totalCommonExpenseAmount = 0;
+        int periodInMonths= Months.monthsBetween(startDate.withDayOfMonth(1),endDate.withDayOfMonth(endDate.dayOfMonth().withMaximumValue().getDayOfMonth())).getMonths();
+        //need to verify accuracy of this number
+        //int remainingMonths = 12 - monthOfYear.getMonthOfYear() + 1;
+        for (OperatingExpenseVO expense : expenses) {
+            if (expense.getPeriod().getUnit() == PeriodUnit.WEEK) {
+                monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue()) * 4;
+            } else if (expense.getPeriod().getUnit() == PeriodUnit.MONTH) {
+                monthlyCommonExpenseAmount = (expense.getAmount() / expense.getPeriod().getValue());
+            } else if (expense.getPeriod().getUnit() == PeriodUnit.YEAR) {
+                monthlyCommonExpenseAmount = expense.getAmount() / (expense.getPeriod().getValue() * 12);
+            }
+            totalCommonExpenseAmount += monthlyCommonExpenseAmount * periodInMonths;
+        }
+
+        apply(new ProvisionForCommonExpensesRegisteredEvent(id, startDate, endDate,expenses, totalCommonExpenseAmount));
+        final Map<String, Double> perUnitOperatingExpenses = defaultOperatingExpensesDeterminator.calculateOperatingExpensesPerProduct(totalCommonExpenseAmount);
         perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
                 new FixedExpenseUpdatedToProductEvent(productId, startDate, perUnitExpense)
         ));

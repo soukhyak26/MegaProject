@@ -1,7 +1,10 @@
 package com.affaince.subscription.business.command;
 
+import com.affaince.subscription.business.vo.OperatingExpenseVO;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.joda.time.LocalDate;
+
+import java.util.List;
 
 /**
  * Created by mandar on 17-01-2017.
@@ -11,13 +14,13 @@ public class CreateProvisionForCommonExpensesCommand {
     private final Integer id;
     private final LocalDate startDate;
     private final LocalDate endDate;
-    private final double provisionForCommonExpenses;
+    private final List<OperatingExpenseVO> expenses;
 
-    public CreateProvisionForCommonExpensesCommand(Integer id, LocalDate startDate, LocalDate endDate, double provisionForCommonExpenses) {
+    public CreateProvisionForCommonExpensesCommand(Integer id, LocalDate startDate, LocalDate endDate,List<OperatingExpenseVO> expenses) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.provisionForCommonExpenses = provisionForCommonExpenses;
+        this.expenses=expenses;
     }
 
     public Integer getId() {
@@ -32,7 +35,8 @@ public class CreateProvisionForCommonExpensesCommand {
         return endDate;
     }
 
-    public double getProvisionForCommonExpenses() {
-        return provisionForCommonExpenses;
+
+    public List<OperatingExpenseVO> getExpenses() {
+        return expenses;
     }
 }

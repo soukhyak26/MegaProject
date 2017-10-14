@@ -29,6 +29,6 @@ public class CreateProvisionForCommonExpensesCommandHandler {
         BusinessAccount businessAccount = repository.load(command.getId());
         LocalDate startDate=LocalDate.now();
         LocalDate endDate=startDate.year().withMaximumValue();
-        businessAccount.registerProvisionForCommonExpenses(command.getId(),command.getStartDate(),command.getEndDate(),command.getProvisionForCommonExpenses(),defaultOperatingExpensesDeterminator);
+        businessAccount.registerProvisionForCommonExpenses(command.getId(),command.getStartDate(),command.getEndDate(),command.getExpenses(),defaultOperatingExpensesDeterminator);
     }
 }
