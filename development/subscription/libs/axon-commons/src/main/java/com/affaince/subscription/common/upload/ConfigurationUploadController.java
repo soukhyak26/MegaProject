@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping(value = "upload")
 public class ConfigurationUploadController {
 
     private final StorageService storageService;
@@ -27,7 +28,7 @@ public class ConfigurationUploadController {
         this.storageService = storageService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value ="/")
+    @RequestMapping(method = RequestMethod.GET, value ="/list")
     public String listUploadedFiles(Model model) throws IOException {
 
         model.addAttribute("files", storageService.loadAll().map(

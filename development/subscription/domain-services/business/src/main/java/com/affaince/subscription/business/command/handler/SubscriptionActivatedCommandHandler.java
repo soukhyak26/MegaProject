@@ -20,5 +20,6 @@ public class SubscriptionActivatedCommandHandler {
     @CommandHandler
     public void handle(SubscriptionActivatedCommand command) {
         //TODO: THIS command coming from Subscriber domain may be useless as at the time of subscription exact benefits amount may not be calculated.
+        //TODO: THis command may be useful as it will add expected payment in the provisional revenue???
     }
 }

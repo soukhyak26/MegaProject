@@ -9,9 +9,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
-/**
- * Created by anayonkar on 9/5/16.
- */
 //For the advance payment makers,total booking amount should be kept here
 public class BookingAmountAccount extends AbstractAnnotatedEntity {
     private double currentAmount;
