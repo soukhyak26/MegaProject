@@ -5,12 +5,16 @@ import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.ReceiveProductStatusCommand;
 import com.affaince.subscription.product.command.RegisterProductCommand;
+import com.affaince.subscription.product.query.repository.CategoryDetailsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductForecastMetricsViewRepository;
 import com.affaince.subscription.product.query.repository.ProductViewRepository;
 import com.affaince.subscription.product.query.repository.TaggedPriceVersionsViewRepository;
+import com.affaince.subscription.product.query.view.CategoryDetailsView;
 import com.affaince.subscription.product.query.view.ProductView;
 import com.affaince.subscription.product.query.view.TaggedPriceVersionsView;
+import com.affaince.subscription.product.web.exception.CategoryAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
+import com.affaince.subscription.product.web.request.RegisterCategoryRequest;
 import com.affaince.subscription.product.web.request.RegisterProductRequest;
 import com.affaince.subscription.product.web.request.UpdateProductStatusRequest;
 import com.affaince.subscription.repository.IdGenerator;
@@ -39,17 +43,33 @@ public class ProductController {
     private final ProductViewRepository productViewRepository;
     private final ProductForecastMetricsViewRepository productForecastMetricsViewRepository;
     private final TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository;
+    private final CategoryDetailsViewRepository categoryDetailsViewRepository;
     private final IdGenerator defaultIdGenerator;
 
     @Autowired
-    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, IdGenerator defaultIdGenerator) {
+    public ProductController(SubscriptionCommandGateway commandGateway, ProductViewRepository productViewRepository, ProductForecastMetricsViewRepository productForecastMetricsViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository,CategoryDetailsViewRepository categoryDetailsViewRepository, IdGenerator defaultIdGenerator) {
         this.commandGateway = commandGateway;
         this.productViewRepository = productViewRepository;
         this.productForecastMetricsViewRepository = productForecastMetricsViewRepository;
         this.taggedPriceVersionsViewRepository = taggedPriceVersionsViewRepository;
+        this.categoryDetailsViewRepository=categoryDetailsViewRepository;
         this.defaultIdGenerator = defaultIdGenerator;
     }
-
+    @RequestMapping(method = RequestMethod.POST, value="registercategory")
+    @Consumes("application/json")
+    public ResponseEntity<Object> registerCategory(@RequestBody RegisterCategoryRequest request) throws Exception {
+        String IDString = request.getCategoryName() +"$" + request.getParentCategoryId();
+        final String categoryId = defaultIdGenerator.generator(IDString);
+        CategoryDetailsView categoryDetailsView = categoryDetailsViewRepository.findOne(categoryId);
+        if(null == categoryDetailsView) {
+            categoryDetailsView = new CategoryDetailsView(categoryId, request.getCategoryName(), request.getDescription(), request.getParentCategoryId());
+            categoryDetailsViewRepository.save(categoryDetailsView);
+        }else{
+            throw CategoryAlreadyExistsException.build(categoryId);
+        }
+        ProductController.LOGGER.info("Category is created: "  + categoryId + " on date: " + SysDate.now());
+        return new ResponseEntity<Object>(ImmutableMap.of("id", categoryId), HttpStatus.CREATED);
+    }
     @RequestMapping(method = RequestMethod.POST, value="register")
     @Consumes("application/json")
     public ResponseEntity<Object> registerProduct(@RequestBody @Valid RegisterProductRequest request) throws Exception {
@@ -72,7 +92,7 @@ public class ProductController {
                 receivedSensitivityCharactersistic,
                 request.getProductPricingCategory(),
                 request.getPurchasePrice(),
-                request.getMrp()
+                request.getMrp(),SysDate.now()
         );
         try {
             this.commandGateway.executeAsync(createCommand);
@@ -118,7 +138,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/mrp/{productId}")
     @Produces("application/json")
-    public Double getAllProducts (@PathVariable String productId) throws JsonProcessingException {
+    public Double getProductMRP (@PathVariable String productId) throws JsonProcessingException {
         final List <ProductView> productViews = new ArrayList<>();
         List<TaggedPriceVersionsView> taggedPriceVersionsView =
                 taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(productId);

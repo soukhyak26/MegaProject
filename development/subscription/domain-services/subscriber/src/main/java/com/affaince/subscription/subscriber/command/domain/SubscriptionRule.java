@@ -53,6 +53,6 @@ public class SubscriptionRule extends AbstractAnnotatedAggregateRoot<String> {
         this.diffBetweenDeliveryPreparationAndDispatchDate = event.getDiffBetweenDeliveryPreparationAndDispatchDate();
         this.actualsAggregationPeriodForTargetForecast=event.getActualsAggregationPeriodForTargetForecast();
         this.contingencyStockPercentage=event.getContingencyStockPercentage();
-        this.subscriptionValueRanges=subscriptionValueRanges;
+        this.subscriptionValueRanges=event.getSubscriptionValueRanges();
     }
 }

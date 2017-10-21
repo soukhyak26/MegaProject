@@ -11,6 +11,7 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductConfiguration extends AbstractAnnotatedEntity {
@@ -32,20 +33,59 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     private List<CostHeaderType> costHeaderTypes;
 
     //stock in excess to predicted count to be kept as a contingency
-    private double contingencyStockPercentage=0.1;
+    private double contingencyStockPercentage = 0.1;
+    //todo: to be implemented later
+    private double merchantExpetectedMarginPercentage;
     //This constructor need/should not publish event as it is being invoked from event sourcing handler of already published event(ProductPricingConfigurationSetEvent)
-    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType,double tentativePercentageChangeInProductDemand,List<CostHeaderType> costHeaderTypes, double contingencyStockPercentage) {
+    public ProductConfiguration(String productId, int actualsAggregationPeriodForTargetForecast, Period demandCurvePeriod, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingOptions pricingOptions, PricingStrategyType pricingStrategyType, double tentativePercentageChangeInProductDemand, List<CostHeaderType> costHeaderTypes, double contingencyStockPercentage) {
         this.productId = productId;
-        this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
-        this.demandCurvePeriod = demandCurvePeriod;
-        this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
+        if (0 == actualsAggregationPeriodForTargetForecast) {
+            this.actualsAggregationPeriodForTargetForecast = 30;
+        } else {
+            this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
+        }
+        if (null == demandCurvePeriod) {
+            demandCurvePeriod = new Period(2, PeriodUnit.YEAR);
+        } else {
+            this.demandCurvePeriod = demandCurvePeriod;
+        }
+        if (0 == targetChangeThresholdForPriceChange) {
+            this.targetChangeThresholdForPriceChange = 0.1;
+        } else {
+            this.targetChangeThresholdForPriceChange = targetChangeThresholdForPriceChange;
+        }
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
-        this.pricingOptions = pricingOptions;
-        this.pricingStrategyType = pricingStrategyType;
-        this.tentativePercentageChangeInProductDemand=tentativePercentageChangeInProductDemand;
-        this.costHeaderTypes=costHeaderTypes;
-        this.contingencyStockPercentage=contingencyStockPercentage;
+        if (null == pricingOptions) {
+            this.pricingOptions = PricingOptions.ACCEPT_AUTOMATED_PRICE_GENERATION;
+        } else {
+            this.pricingOptions = pricingOptions;
+        }
+        if (null == pricingStrategyType) {
+            this.pricingStrategyType = PricingStrategyType.DEFAULT_PRICING_STRATEGY;
+        } else {
+            this.pricingStrategyType = pricingStrategyType;
+        }
+        if (0 == tentativePercentageChangeInProductDemand) {
+            this.tentativePercentageChangeInProductDemand = 0.1;
+        } else {
+            this.tentativePercentageChangeInProductDemand = tentativePercentageChangeInProductDemand;
+        }
+        if (null == costHeaderTypes) {
+            this.costHeaderTypes = new ArrayList<>();
+            this.costHeaderTypes.add(CostHeaderType.FIXED_EXPENSE_PER_UNIT);
+            this.costHeaderTypes.add(CostHeaderType.VARIABLE_EXPENSE_PER_UNIT);
+            this.costHeaderTypes.add(CostHeaderType.PURCHASE_PRICE_PER_UNIT);
+            this.costHeaderTypes.add(CostHeaderType.MERCHANT_MARGIN_PER_UNIT);
+            this.costHeaderTypes.add(CostHeaderType.OTHERS_PER_UNIT);
+        } else {
+            this.costHeaderTypes = costHeaderTypes;
+        }
+        if (0 == contingencyStockPercentage) {
+            this.contingencyStockPercentage = 0.1;
+        } else {
+            this.contingencyStockPercentage = contingencyStockPercentage;
+        }
     }
 
     public int getActualsAggregationPeriodForTargetForecast() {
@@ -192,13 +232,13 @@ public class ProductConfiguration extends AbstractAnnotatedEntity {
     public void on(SubscriptionForecastUpdatedEvent event) {
     }
 
-    public void updateForecastDate(String productId,LocalDate nextForecastDate) {
-        apply(new NextForecastDateUpdatedEvent(productId,nextForecastDate));
+    public void updateForecastDate(String productId, LocalDate nextForecastDate) {
+        apply(new NextForecastDateUpdatedEvent(productId, nextForecastDate));
     }
 
     @EventSourcingHandler
-    public void on(NextForecastDateUpdatedEvent event){
-        this.nextForecastDate=event.getNextForecastDate();
+    public void on(NextForecastDateUpdatedEvent event) {
+        this.nextForecastDate = event.getNextForecastDate();
     }
 
 }

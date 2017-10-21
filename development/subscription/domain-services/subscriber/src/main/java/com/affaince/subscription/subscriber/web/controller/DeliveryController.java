@@ -7,6 +7,7 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.ReasonCode;
 import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.command.*;
 import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
@@ -24,6 +25,8 @@ import com.affaince.subscription.subscriber.web.request.BasketDispatchRequest;
 import com.affaince.subscription.subscriber.web.request.DeliveryItem;
 import com.affaince.subscription.subscriber.web.request.UpdateDeliveryRequest;
 import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +44,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "delivery")
 public class DeliveryController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final ProductViewRepository productViewRepository;
     private final LatestPriceBucketViewRepository latestPriceBucketViewRepository;
@@ -90,6 +93,7 @@ public class DeliveryController {
                 fetchDeliveryChargesRules()
         );
         commandGateway.executeAsync(command);
+        DeliveryController.LOGGER.info("Addition of delivery to subscription initiated for subscriber: " + subscriberId + " with deliveryId:" + deliveryId + "on date:" + SysDate.now());
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.CREATED);
     }
 
@@ -107,6 +111,7 @@ public class DeliveryController {
             deliveryItem.setPriceBucketId(latestPriceBucketView.getPriceBucketId());
             deliveryItem.setOfferedPricePerUnit(latestPriceBucketView.getOfferedPricePerUnit());
         }
+
     }
 
     @RequestMapping(value = "delete/{subscriberId}/{subscriptionId}/{deliveryId}", method = RequestMethod.DELETE)
@@ -120,6 +125,7 @@ public class DeliveryController {
         }
         final DeleteDeliveryCommand command = new DeleteDeliveryCommand(subscriberId, subscriberId, deliveryId);
         commandGateway.executeAsync(command);
+        DeliveryController.LOGGER.info("Delivery deletion is initiation for subscriber: " + subscriberId + " with deliveryId:" + deliveryId + "on date:" + SysDate.now());
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
     }
 
@@ -151,6 +157,7 @@ public class DeliveryController {
         final UpdateDeliveryCommand command = new UpdateDeliveryCommand(subscriberId, subscriberId, deliveryId, request.getDeliveryDate(),
                 Arrays.asList(request.getDeliveryItems()), fetchDeliveryChargesRules());
         commandGateway.executeAsync(command);
+        DeliveryController.LOGGER.info("Delivery updation is initiation for subscriber: " + subscriberId + " with deliveryId:" + deliveryId + "on date:" + SysDate.now());
         return new ResponseEntity<Object>(ImmutableMap.of("id", deliveryId), HttpStatus.OK);
     }
 
@@ -174,6 +181,7 @@ public class DeliveryController {
         } catch (Exception e) {
             throw e;
         }
+        DeliveryController.LOGGER.info("Delivery status and dispatch date is updated for subscriber: " + subscriberId + " with deliveryId:" + deliveryId + "on date:" + SysDate.now());
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -194,6 +202,7 @@ public class DeliveryController {
         final PrepareDeliveryForDispatchCommand command = new PrepareDeliveryForDispatchCommand(subscriberId, subscriptionId, deliveryId,
                 latestPriceBucketMap);
         commandGateway.executeAsync(command);
+        DeliveryController.LOGGER.info("Delivery is prepared for dispatch for subscriber: " + subscriberId + " with deliveryId:" + deliveryId + "on date:" + SysDate.now());
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

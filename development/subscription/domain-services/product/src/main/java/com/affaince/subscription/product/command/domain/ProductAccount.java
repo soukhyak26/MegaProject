@@ -624,7 +624,7 @@ public class ProductAccount extends AbstractAnnotatedEntity {
 
     }
 
-
+    //TODO: Need to review : Does not consider anything other than fixed and variable expenses
     public void calculateBreakEvenPrice(String productId,List<CostHeaderType> costHeaderTypes, BreakEvenPriceCalculator breakEvenPriceCalculator, OperatingExpenseService operatingExpenseService) {
         VariableExpensePerProduct latestVariableExpense = variableExpenseVersions.first();
         CostHeader variableExpenseHeader = null;

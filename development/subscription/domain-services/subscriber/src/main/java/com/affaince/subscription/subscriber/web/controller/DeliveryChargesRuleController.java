@@ -8,6 +8,8 @@ import com.affaince.subscription.subscriber.query.view.DeliveryChargesRuleView;
 import com.affaince.subscription.subscriber.web.request.DeliveryChargesRulesRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +25,9 @@ import java.util.List;
  * Created by rsavaliya on 27/2/16.
  */
 @RestController
-@RequestMapping (value = "deliverychargerules")
+@RequestMapping(value = "deliverychargerules")
 public class DeliveryChargesRuleController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryChargesRuleController.class);
     private final SubscriptionCommandGateway commandGateway;
 
     private final DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository;
@@ -39,26 +41,33 @@ public class DeliveryChargesRuleController {
     @RequestMapping(method = RequestMethod.POST)
     @Consumes("application/json")
     public ResponseEntity<Object> setDeliveryChargesRules(@RequestBody @Valid DeliveryChargesRulesRequest request) throws Exception {
+        DeliveryChargesRuleView deliveryChargesRuleView = null;
+        if (0 != request.getRuleId()) {
+            deliveryChargesRuleView = deliveryChargesRuleViewRepository.findOne(DeliveryChargesRuleType.valueOf(request.getRuleId()));
+            deliveryChargesRuleView.setRangeRules(Arrays.asList(request.getDeliveryChargesRules()));
+            deliveryChargesRuleView.setEffectiveDate(SysDate.now());
+            deliveryChargesRuleView.setCurrency(request.getCurrency());
+        } else {
+            deliveryChargesRuleView = new
+                    DeliveryChargesRuleView(DeliveryChargesRuleType.valueOf(0),
+                    Arrays.asList(request.getDeliveryChargesRules()), SysDate.now());
 
-        /*final AddDeliveryChargesRuleCommand addDeliveryChargesRuleCommand = new
-                AddDeliveryChargesRuleCommand (request.getRuleId(), Arrays.asList(request.getDeliveryChargesRules() ));
-        commandGateway.send(addDeliveryChargesRuleCommand);*/
-        final DeliveryChargesRuleView deliveryChargesRuleView = new
-                DeliveryChargesRuleView(DeliveryChargesRuleType.valueOf(request.getRuleId()),
-                Arrays.asList(request.getDeliveryChargesRules()), SysDate.now());
+            deliveryChargesRuleView.setCurrency(request.getCurrency());
+        }
         deliveryChargesRuleViewRepository.save(deliveryChargesRuleView);
+        DeliveryChargesRuleController.LOGGER.info(" delivery charges rules set" );
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @RequestMapping (method = RequestMethod.GET, value = "/all")
-    public ResponseEntity <List<DeliveryChargesRuleView>> findDeliveryChargesRules (){
+    @RequestMapping(method = RequestMethod.GET, value = "/all")
+    public ResponseEntity<List<DeliveryChargesRuleView>> findDeliveryChargesRules() {
         final List<DeliveryChargesRuleView> deliveryChargesRuleViews = new ArrayList<>();
         deliveryChargesRuleViewRepository.findAll().forEach(deliveryChargesRuleView -> deliveryChargesRuleViews.add(deliveryChargesRuleView));
         return new ResponseEntity<List<DeliveryChargesRuleView>>(deliveryChargesRuleViews, HttpStatus.OK);
     }
 
-    @RequestMapping (method = RequestMethod.GET, value = "{ruleId}")
-    public String findDeliveryChargesRulesById (@PathVariable("ruleId") Integer ruleId) throws JsonProcessingException {
+    @RequestMapping(method = RequestMethod.GET, value = "{ruleId}")
+    public String findDeliveryChargesRulesById(@PathVariable("ruleId") Integer ruleId) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(
                 deliveryChargesRuleViewRepository.findByRuleId(DeliveryChargesRuleType.valueOf(ruleId)));

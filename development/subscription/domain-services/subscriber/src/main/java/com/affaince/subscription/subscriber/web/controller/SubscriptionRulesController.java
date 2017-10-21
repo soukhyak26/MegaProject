@@ -1,10 +1,13 @@
 package com.affaince.subscription.subscriber.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.subscriber.command.AddSubscriptionRulesCommand;
 import com.affaince.subscription.subscriber.query.repository.SubscriptionViewRepository;
 import com.affaince.subscription.subscriber.web.request.SubscriptionRulesRequest;
 import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "subscriptionrules")
 public class SubscriptionRulesController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionRulesController.class);
     private final SubscriptionCommandGateway commandGateway;
     private final SubscriptionViewRepository repository;
 
@@ -40,6 +43,7 @@ public class SubscriptionRulesController {
         } catch (Exception e) {
             throw e;
         }
+        SubscriptionRulesController.LOGGER.info("Rules for subscription are defined:" + subscriptionRulesId +"on date:" + SysDate.now());
         return new ResponseEntity<Object>(ImmutableMap.of("id", subscriptionRulesId), HttpStatus.OK);
     }
 
@@ -55,6 +59,7 @@ public class SubscriptionRulesController {
         } catch (Exception e) {
             throw e;
         }
+        SubscriptionRulesController.LOGGER.info("Rules for subscription are updated:" + basketRuleId +"on date:" + SysDate.now());
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

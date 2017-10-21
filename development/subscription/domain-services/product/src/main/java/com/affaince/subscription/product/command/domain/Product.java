@@ -57,12 +57,10 @@ public class Product extends AbstractAnnotatedAggregateRoot<String> {
 
     }
 
-    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, double purchasePrice, double MRP) {
+    public Product(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory, double purchasePrice, double MRP,LocalDate creationDate) {
         DateTimeFormatter format = DateTimeFormat.forPattern("MMddyyyy");
-        final LocalDate currentDate = SysDate.now();
-        final String taggedPriceVersionId = productId + currentDate.toString(format);
-
-        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory, taggedPriceVersionId,purchasePrice, MRP,currentDate));
+        final String taggedPriceVersionId = productId + "$" + creationDate.toString(format);
+        apply(new ProductRegisteredEvent(productId, productName, categoryId, subCategoryId, netQuantity, quantityUnit, substitutes, complements, sensitiveTo, productPricingCategory, taggedPriceVersionId,purchasePrice, MRP,creationDate));
     }
 
 
