@@ -1,7 +1,6 @@
 package com.affaince.subscription.benefits.command;
 
-
-import org.axonframework.commandhandling.TargetAggregateIdentifier;
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 /**
  * Created by rbsavaliya on 25-10-2015.

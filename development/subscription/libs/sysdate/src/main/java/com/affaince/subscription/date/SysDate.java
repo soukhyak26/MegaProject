@@ -33,7 +33,11 @@ public final class SysDate {
                 + resourceBundle.getString("view.db.port")
                 + "/"
                 + resourceBundle.getString("view.db.name"));
-        mongoClient = new MongoClient(mongoClientURI);
+        try {
+            mongoClient = new MongoClient(mongoClientURI);
+        } catch (UnknownHostException e) {
+            logger.info("Cannot connect to host: " + e.getMessage());
+        }
         DB db = mongoClient.getDB(resourceBundle.getString("view.db.name"));
         dbCollection = db.getCollection(resourceBundle.getString("sysdate.view.db.collection"));
         productionMode = Boolean.parseBoolean(resourceBundle.getString("subscription.productionMode"));

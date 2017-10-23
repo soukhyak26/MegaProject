@@ -3,15 +3,19 @@ package com.affaince.subscription.configuration;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import org.axonframework.amqp.eventhandling.AMQPMessageConverter;
-import org.axonframework.amqp.eventhandling.DefaultAMQPMessageConverter;
-import org.axonframework.amqp.eventhandling.RoutingKeyResolver;
-import org.axonframework.serialization.Serializer;
+import org.axonframework.eventhandling.EventBusTerminal;
+import org.axonframework.eventhandling.amqp.AMQPMessageConverter;
+import org.axonframework.eventhandling.amqp.DefaultAMQPMessageConverter;
+import org.axonframework.eventhandling.amqp.RoutingKeyResolver;
+import org.axonframework.eventhandling.amqp.spring.ListenerContainerLifecycleManager;
+import org.axonframework.eventhandling.amqp.spring.SpringAMQPTerminal;
+import org.axonframework.serializer.Serializer;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.connection.CachingConnectionFactory;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -27,6 +31,18 @@ public class RabbitMQConfiguration {
 
     @Resource(name = "types")
     Map<String, String> types;
+
+    @Bean
+    public RabbitAdmin rabbitAdmin(CachingConnectionFactory connectionFactory) {
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
+        rabbitAdmin.setAutoStartup(true);
+        return rabbitAdmin;
+    }
+
+    @Bean
+    public CachingConnectionFactory connectionFactory() {
+        return new CachingConnectionFactory("localhost");
+    }
 
     @Bean
     public String exchange(@Value("${axon.eventBus.exchangeName}") String exchangeName,
@@ -56,10 +72,29 @@ public class RabbitMQConfiguration {
         return new EventTypeRoutingKeyResolver();
     }
 
+    @Bean
+    public EventBusTerminal eventBusTerminal(String exchange, ListenerContainerLifecycleManager listenerContainerLifecycleManager,
+                                             Serializer serializer, CachingConnectionFactory connectionFactory,
+                                             RoutingKeyResolver routingKeyResolver, AMQPMessageConverter messageConverter) {
+        SpringAMQPTerminal springAMQPTerminal = new SpringAMQPTerminal();
+        springAMQPTerminal.setExchangeName(exchange);
+        springAMQPTerminal.setListenerContainerLifecycleManager(listenerContainerLifecycleManager);
+        springAMQPTerminal.setSerializer(serializer);
+        springAMQPTerminal.setRoutingKeyResolver(routingKeyResolver);
+        springAMQPTerminal.setConnectionFactory(connectionFactory);
+        springAMQPTerminal.setMessageConverter(messageConverter);
+        return springAMQPTerminal;
+    }
 
     @Bean
     public AMQPMessageConverter messageConverter(Serializer serializer, RoutingKeyResolver routingKeyResolver) {
         return new DefaultAMQPMessageConverter(serializer, routingKeyResolver, true);
     }
 
+    @Bean
+    public ListenerContainerLifecycleManager listenerContainerLifecycleManager(CachingConnectionFactory connectionFactory) {
+        ListenerContainerLifecycleManager listenerContainerLifecycleManager = new ListenerContainerLifecycleManager();
+        listenerContainerLifecycleManager.setConnectionFactory(connectionFactory);
+        return listenerContainerLifecycleManager;
+    }
 }

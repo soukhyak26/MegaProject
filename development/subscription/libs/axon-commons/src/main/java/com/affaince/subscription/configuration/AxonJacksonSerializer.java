@@ -1,9 +1,10 @@
 package com.affaince.subscription.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.axonframework.serialization.RevisionResolver;
-import org.axonframework.serialization.SerializedType;
-import org.axonframework.serialization.json.JacksonSerializer;
+import org.axonframework.serializer.ConverterFactory;
+import org.axonframework.serializer.RevisionResolver;
+import org.axonframework.serializer.SerializedType;
+import org.axonframework.serializer.json.JacksonSerializer;
 
 import java.util.Map;
 

@@ -1,14 +1,21 @@
 package com.affaince.subscription.configuration;
 
 import com.affaince.subscription.events.ListenerContainerFactory;
+import com.affaince.subscription.events.SubscriptionEventBusTerminal;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventhandling.Cluster;
+import org.axonframework.eventhandling.EventBusTerminal;
+import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.serializer.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.jms.SubscribableJmsChannel;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.SimpleMessageConverter;
+import org.springframework.jms.support.converter.MessagingMessageConverter;
+import org.springframework.messaging.SubscribableChannel;
 import org.springframework.util.ErrorHandler;
 
 import javax.annotation.Resource;
@@ -34,13 +41,13 @@ public class ActiveMQConfiguration {
         jmsTemplate.setDefaultDestinationName(topicName);
         jmsTemplate.setPubSubDomain(true);
         jmsTemplate.setPubSubNoLocal(false);
-        jmsTemplate.setMessageConverter(new SimpleMessageConverter());
+        jmsTemplate.setMessageConverter(new MessagingMessageConverter());
         return jmsTemplate;
     }
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory();
+    public ConnectionFactory connectionFactory(@Value("${spring.activemq.broker-url}") String brokerURL) {
+        return new ActiveMQConnectionFactory(brokerURL);
         //return new CachingConnectionFactory(new ActiveMQConnectionFactory(brokerURL));
     }
 
@@ -60,5 +67,17 @@ public class ActiveMQConfiguration {
         containerFactory.setConsumedEventTypes(types);
         return containerFactory;
 
+    }
+
+    @Bean
+    public SubscribableChannel eventChannel(JmsTemplate jmsTemplate, ListenerContainerFactory listenerContainerFactory) throws Exception {
+
+        SubscribableChannel channel = new SubscribableJmsChannel(listenerContainerFactory.getObject(), jmsTemplate);
+        return channel;
+    }
+
+    @Bean
+    public EventBusTerminal subscriptionEventBusTerminal(Cluster asyncCluster, Serializer serializer, @Qualifier("eventChannel") final SubscribableChannel subscribableChannel) {
+        return new SubscriptionEventBusTerminal(serializer, subscribableChannel, asyncCluster);
     }
 }

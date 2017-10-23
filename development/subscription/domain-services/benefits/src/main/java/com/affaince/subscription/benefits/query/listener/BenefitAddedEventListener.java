@@ -3,7 +3,7 @@ package com.affaince.subscription.benefits.query.listener;
 import com.affaince.subscription.benefits.command.event.BenefitAddedEvent;
 import com.affaince.subscription.benefits.query.repository.BenefitViewRepository;
 import com.affaince.subscription.benefits.query.view.BenefitView;
-import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

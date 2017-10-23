@@ -13,11 +13,11 @@
         <module>libs/axon-commons</module>
         <module>libs/sysdate</module>
         <module>tools/rules-compiler</module>
-        <!--<module>domain-services/subscriber</module>
+        <module>domain-services/subscriber</module>
         <module>tools/integration</module>
-        <module>tools/application-simulator</module>-->
+        <module>tools/application-simulator</module>
         <module>domain-services/benefits</module>
-        <!--<module>domain-services/product</module>
+        <module>domain-services/product</module>
         <module>domain-services/business</module>
         <module>domain-services/payments</module>
         <module>tools/notifications</module>
@@ -28,7 +28,7 @@
         <module>batch/ProductMetricsBatch</module>
         <module>batch/AnnualBatch</module>
         <module>tools/payment-simulator</module>
-        <module>tools/benefit-simulator</module>-->
+        <module>tools/benefit-simulator</module>
     </modules>
 <!--
     <dependencies>
@@ -43,7 +43,7 @@
     </dependencies>
 -->
     <properties>
-        <axon.version>3.0.6</axon.version>
+        <axon.version>2.4.2</axon.version>
         <springboot.version>1.2.5.RELEASE</springboot.version>
         <jackson.verson>2.4.4</jackson.verson>
         <camel.version>2.15.2</camel.version>
@@ -55,8 +55,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <springdata.mongodb.version>1.5.2.RELEASE</springdata.mongodb.version>
-        <springdata.jpa.version>1.6.2.RELEASE</springdata.jpa.version>
     </properties>
     <build>
         <defaultGoal>clean install</defaultGoal>
@@ -101,6 +99,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${springboot.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -175,55 +174,32 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.spring.platform</groupId>
-                <artifactId>platform-bom</artifactId>
-                <version>Brussels-SR5</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-core</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-spring</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-mongo</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-amqp</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-mongodb</artifactId>
-                <version>${springdata.mongodb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>${springdata.jpa.version}</version>
-            </dependency>
-
-            <!--
-            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>${springboot.version}</version>
-            </dependency>-->
+            </dependency>
             <dependency>
                 <groupId>org.glassfish</groupId>
                 <artifactId>javax.el</artifactId>
                 <version>3.0.0</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-rsa</artifactId>
+                <version>1.0.0.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${springboot.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.validation</groupId>
@@ -259,6 +235,27 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-test</artifactId>
+                <version>${axon.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-core</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-mongo</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-monitoring-jmx</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>1.7.0</version>
@@ -281,7 +278,7 @@
                 <artifactId>groovy</artifactId>
                 <version>2.3.8</version>
             </dependency>
-            <!--<dependency>
+            <dependency>
                 <groupId>ch.qos.logback.contrib</groupId>
                 <artifactId>logback-json-classic</artifactId>
                 <version>0.1.2</version>
@@ -290,16 +287,16 @@
                 <groupId>ch.qos.logback.contrib</groupId>
                 <artifactId>logback-jackson</artifactId>
                 <version>0.1.2</version>
-            </dependency>-->
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>1.2.3</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.3</version>
+                <version>1.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-distributed-commandbus</artifactId>
+                <version>${axon.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jadira.usertype</groupId>
@@ -476,6 +473,17 @@
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-spring-boot</artifactId>
                 <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>1.9.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb-parent</artifactId>
+                <version>1.9.3.RELEASE</version>
+                <type>pom</type>
             </dependency>
 
             <dependency>

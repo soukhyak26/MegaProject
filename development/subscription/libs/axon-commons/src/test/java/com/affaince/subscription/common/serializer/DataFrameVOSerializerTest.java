@@ -4,9 +4,14 @@ import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.axonframework.serializer.Serializer;
 import org.joda.time.LocalDate;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;

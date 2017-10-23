@@ -1,5 +1,6 @@
 package com.affaince.subscription.common.vo;
 
+import com.affaince.subscription.common.service.MathsProcessingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class TrainingData {
 
     public void trainData() {
         final double[] dataToBeRegressed = formDataToBeregressed();
-        //this.regressionResult= MathsProcessingService.processMultipleLinearRegression(dataToBeRegressed, this.numberOfDataRecords, this.numberOfVariables);
+        this.regressionResult= MathsProcessingService.processMultipleLinearRegression(dataToBeRegressed, this.numberOfDataRecords, this.numberOfVariables);
 
     }
 
