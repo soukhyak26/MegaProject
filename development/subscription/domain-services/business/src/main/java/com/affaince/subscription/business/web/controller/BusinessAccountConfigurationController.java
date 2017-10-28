@@ -41,4 +41,5 @@ public class BusinessAccountConfigurationController {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+
 }

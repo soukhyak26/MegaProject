@@ -81,7 +81,7 @@ public class CommonExpensesAccount extends AbstractAnnotatedEntity {
         }
 
         apply(new ProvisionForCommonExpensesRegisteredEvent(id, startDate, endDate,expenses, totalCommonExpenseAmount));
-        final Map<String, Double> perUnitOperatingExpenses = defaultOperatingExpensesDeterminator.calculateOperatingExpensesPerProduct(totalCommonExpenseAmount);
+        final Map<String, Double> perUnitOperatingExpenses = defaultOperatingExpensesDeterminator.calculateOperatingExpensesPerProduct(totalCommonExpenseAmount,startDate, endDate);
         perUnitOperatingExpenses.forEach((productId, perUnitExpense) -> apply(
                 new FixedExpenseUpdatedToProductEvent(productId, startDate, perUnitExpense)
         ));

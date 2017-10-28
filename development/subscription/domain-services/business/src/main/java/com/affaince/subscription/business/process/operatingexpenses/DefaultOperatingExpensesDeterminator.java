@@ -27,17 +27,17 @@ public class DefaultOperatingExpensesDeterminator implements OperatingExpensesDe
     ProductForecastViewRepository productForecastViewRepository;
 
     @Override
-    public Map<String, Double> calculateOperatingExpensesPerProduct(double yearlyExpenseAmount) {
+    public Map<String, Double> calculateOperatingExpensesPerProduct(double totalExpenseAmount,LocalDate startDate, LocalDate endDate) {
         Iterable<ProductView> allActiveProducts = productViewrepository.findByProductStatus(ProductStatus.PRODUCT_ACTIVATED);
         Map<String, Double> perUnitOperatingExpenses = new HashMap<>();
         double totalForecastedCommonOperatingExpense = 0;
-        totalForecastedCommonOperatingExpense = yearlyExpenseAmount;
-        double totalAnnualForecastedRevenueForAllProducts = 0;
+        totalForecastedCommonOperatingExpense = totalExpenseAmount;
+        double totalForecastedRevenueForAllProductsForAPeriod = 0;
         for (ProductView tempProductView : allActiveProducts) {
-            List<ProductForecastView> currentProductForcastView = productForecastViewRepository.findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(tempProductView.getProductId(), new LocalDate(LocalDate.now().getYear(),1,1),new LocalDate(LocalDate.now().getYear(),12,31));
-            totalAnnualForecastedRevenueForAllProducts += (currentProductForcastView.get(0).getTotalNumberOfExistingSubscriptions() * tempProductView.getMRP());
+            List<ProductForecastView> currentProductForcastView = productForecastViewRepository.findByProductVersionId_ProductIdAndProductVersionId_FromDateBetween(tempProductView.getProductId(), startDate,endDate);
+            totalForecastedRevenueForAllProductsForAPeriod += (currentProductForcastView.get(0).getTotalNumberOfExistingSubscriptions() * tempProductView.getMRP());
         }
-        double contributorFactor = totalForecastedCommonOperatingExpense / totalAnnualForecastedRevenueForAllProducts;
+        double contributorFactor = totalForecastedCommonOperatingExpense / totalForecastedRevenueForAllProductsForAPeriod;
         for (ProductView productView : allActiveProducts) {
             perUnitOperatingExpenses.put(productView.getProductId(), productView.getSensitiveTo().entrySet().iterator().next().getValue() * contributorFactor * productView.getMRP());
         }
