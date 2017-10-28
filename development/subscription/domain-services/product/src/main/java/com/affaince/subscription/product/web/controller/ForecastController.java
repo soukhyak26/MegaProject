@@ -1,23 +1,26 @@
 package com.affaince.subscription.product.web.controller;
 
 import com.affaince.subscription.SubscriptionCommandGateway;
+import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.common.vo.EntityMetricType;
-import com.affaince.subscription.common.vo.EntityType;
-import com.affaince.subscription.common.vo.ForecastVersionId;
-import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.common.type.ProductReadinessStatus;
+import com.affaince.subscription.common.type.ProductStatus;
+import com.affaince.subscription.common.vo.*;
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.*;
 import com.affaince.subscription.product.query.predictions.ProductHistoryRetriever;
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
+import com.affaince.subscription.product.validator.ProductConfigurationValidator;
 import com.affaince.subscription.product.vo.ProductTargetParameters;
+import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import com.affaince.subscription.product.web.request.*;
 import com.affaince.subscription.query.exception.ProductForecastAlreadyExistsException;
 import com.affaince.subscription.product.web.exception.ProductForecastModificationException;
 import com.affaince.subscription.product.web.exception.ProductNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,21 +49,28 @@ public class ForecastController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ForecastController.class);
     private final ProductViewRepository productViewRepository;
     private final ProductForecastViewRepository productForecastViewRepository;
-    //private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
+    private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
+    private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final SubscriptionCommandGateway commandGateway;
     private final ProductHistoryRetriever productHistoryRetriever;
+    private final InterpolatorChain interpolatorChain;
+
+    private static final int INTERPOLATE_NEW_SUBSCRIPTIONS = 1;
+    private static final int INTERPOLATE_TOTAL_SUBSCRIPTIONS = 2;
 
     @Autowired
-    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductHistoryRetriever productHistoryRetriever,SubscriptionCommandGateway commandGateway) {
+    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository,ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository,ProductActivationStatusViewRepository productActivationStatusViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductHistoryRetriever productHistoryRetriever,SubscriptionCommandGateway commandGateway,InterpolatorChain interpolatorChain) {
         this.productViewRepository = productViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
-        //this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
+        this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
+        this.productActivationStatusViewRepository=productActivationStatusViewRepository;
         this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.productHistoryRetriever = productHistoryRetriever;
         this.commandGateway = commandGateway;
+        this.interpolatorChain=interpolatorChain;
     }
 
 
@@ -115,9 +125,97 @@ public class ForecastController {
         if (productView == null) {
             throw ProductNotFoundException.build(productId);
         }
+/*
         AddManualForecastCommand command = new AddManualForecastCommand(productId, request.getProductForecastParameters(),SysDate.now());
         commandGateway.executeAsync(command);
+*/
+        final LocalDate forecastDate= SysDate.now();
+        final List<ProductStatus> productStatuses = productActivationStatusViewRepository.
+                findByProductId(productId).getProductStatuses();
+        if (ProductConfigurationValidator.getProductReadinessStatus(productStatuses).contains(
+                ProductReadinessStatus.FORECASTABLE
+        )) {
+            ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
+            LocalDate firstStartDate = null;
+            LocalDate lastEndDate = null;Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
+
+            long totalSubscriptions = 0;
+            for (ProductForecastParameter parameter : forecastParameters) {
+                List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
+                //forecast should not be newly added if it already exists in the view
+                if (null != existingForecastViews && existingForecastViews.size() > 0) {
+                    throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
+                }
+                //find forecasts entered earlier to current forecast entry
+                List<ProductForecastView> earlierForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateLessThan(productId, parameter.getEndDate(), endDateSort);
+                if (earlierForecastViews.isEmpty()) {
+                    totalSubscriptions = parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
+                } else {
+                    totalSubscriptions = earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions() + parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
+                }
+                ProductForecastView productForecastView = new ProductForecastView(new ForecastVersionId(productId, parameter.getStartDate(),forecastDate), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions);
+                productForecastViewRepository.save(productForecastView);
+                if (null == firstStartDate) {
+                    firstStartDate = parameter.getStartDate();
+                }
+                lastEndDate = parameter.getEndDate();
+            }
+            ProductActivationStatusView view = productActivationStatusViewRepository.findOne(productId);
+            if (!view.getProductStatuses().contains(ProductStatus.PRODUCT_FORECASTED)) {
+                view.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
+                productActivationStatusViewRepository.save(view);
+            }
+            derivePseudoActualsFromForecast(productId,firstStartDate,forecastDate);
+        } else {
+            ProductReadinessException.build(productId, ProductStatus.PRODUCT_FORECASTED);
+        }
+
         return new ResponseEntity<Object>(HttpStatus.OK);
+    }
+
+    private double[] interpolateStepForecastFromForecast(String productId, int whomToInterpolate) {
+        List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
+                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateAsc
+                        (productId, ForecastContentStatus.ACTIVE);
+        ProductForecastView firstForecastView = registeredForecastValues.get(0);
+        LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
+        double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
+        double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
+        int count = 0;
+        for (ProductForecastView previousView : registeredForecastValues) {
+            LocalDate endDate = previousView.getEndDate();
+            int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //TODO- should we add/subtract 1 in the value?
+            x[count] = day;
+            if (whomToInterpolate == INTERPOLATE_TOTAL_SUBSCRIPTIONS) {
+                y[count] = previousView.getTotalNumberOfExistingSubscriptions();
+            } else if (whomToInterpolate == INTERPOLATE_NEW_SUBSCRIPTIONS) {
+                y[count] = previousView.getNewSubscriptions();
+            }
+            count++;
+        }
+        double[] interpolatedSubscriptionsPerDay = interpolatorChain.interpolate(x, y);
+        return interpolatedSubscriptionsPerDay;
+    }
+
+    private void derivePseudoActualsFromForecast(String productId,LocalDate firstStartDate,LocalDate forecastDate){
+
+        //Now add PseudoActuals by interpolating manual forecastAdded
+        double[] interpolatedPseudoActualsTotalSubscriptions = interpolateStepForecastFromForecast(productId, INTERPOLATE_TOTAL_SUBSCRIPTIONS);
+        double[] interpolatedPseudoActualsNewSubscriptions = interpolateStepForecastFromForecast(productId, INTERPOLATE_NEW_SUBSCRIPTIONS);
+        double previousDayTotalSubcriptionCount = 0;
+        double dailychurnedSubscriptionCount = 0;
+        for (int i = 0; i < interpolatedPseudoActualsTotalSubscriptions.length; i++) {
+            double interpolatedTotalSubscriptionCount = interpolatedPseudoActualsTotalSubscriptions[i];
+            double interpolatedNewSubscriptionCount = interpolatedPseudoActualsNewSubscriptions[i];
+            if (i == 0) {
+                dailychurnedSubscriptionCount = interpolatedTotalSubscriptionCount - interpolatedNewSubscriptionCount;
+            } else {
+                dailychurnedSubscriptionCount = previousDayTotalSubcriptionCount + interpolatedNewSubscriptionCount - interpolatedTotalSubscriptionCount;
+            }
+            previousDayTotalSubcriptionCount=interpolatedTotalSubscriptionCount;
+            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ForecastVersionId(productId, firstStartDate.plusDays(i),forecastDate), firstStartDate.plusDays(i), Double.valueOf(interpolatedNewSubscriptionCount).longValue(), Double.valueOf(dailychurnedSubscriptionCount).longValue(), Double.valueOf(interpolatedTotalSubscriptionCount).longValue());
+            productPseudoActualsViewRepository.save(productPseudoActualsView);
+        }
     }
 
     //API to add Targets manually
