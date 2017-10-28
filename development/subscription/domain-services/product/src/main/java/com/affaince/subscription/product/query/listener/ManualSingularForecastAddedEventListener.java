@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Component
 public class ManualSingularForecastAddedEventListener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ManualForecastAddedEventListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ManualSingularForecastAddedEventListener.class);
     private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
     private final ProductForecastViewRepository productForecastViewRepository;
     private final ProductPseudoActualsViewRepository productPseudoActualsViewRepository;

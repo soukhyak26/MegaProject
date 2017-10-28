@@ -21,7 +21,7 @@ public class DeliveryPseudoActualsView {
         this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
 
-    public DeliveryPseudoActualsView(LocalDate forecastDate, double weightRangeMin, double weightRangeMax, long deliveryCount, LocalDate startDate, ForecastContentStatus forecastContentStatus) {
+    public DeliveryPseudoActualsView(LocalDate startDate, LocalDate forecastDate,long deliveryCount, double weightRangeMin, double weightRangeMax,  ForecastContentStatus forecastContentStatus) {
         this.deliveryVersionId = new DeliveryVersionId(forecastDate,startDate,weightRangeMin,weightRangeMax);
         this.deliveryCount = deliveryCount;
         this.forecastContentStatus = forecastContentStatus;

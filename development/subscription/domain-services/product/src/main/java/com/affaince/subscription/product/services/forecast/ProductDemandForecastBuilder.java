@@ -1,6 +1,5 @@
 package com.affaince.subscription.product.services.forecast;
 
-import com.affaince.subscription.common.service.forecast.ARIMABasedDemandForecaster;
 import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.ForecastVersionId;
@@ -31,14 +30,18 @@ import java.util.stream.Collectors;
 public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsView> {
 
 
+
     private AggregatorFactory<ProductForecastView> aggregatorFactory;
+/*
     @Autowired
     private ARIMABasedDemandForecaster arimaBasedDemandForecaster;
+*/
     //private DemandForecasterChain demandForecasterChain;
     @Autowired
     private ProductActualsViewRepository productActualsViewRepository;
 
     public List<List<? extends ProductSubscriptionMetricsView>> buildForecast(String productId, LocalDate currentDate, int chunkAggregationPeriod, double demandCurvePeriod) {
+/*
         LocalDate startDate = currentDate.minusDays(Double.valueOf(demandCurvePeriod).intValue());
         List<ProductActualsView> productActualsViewList = productActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, startDate, currentDate);
 
@@ -59,10 +62,12 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         final LocalDate endOfYearDate = new LocalDate(lastActualsHistoricalRecordEndDate.getYear(), 12, 31);
         final int daysBetweenLatestActualsAndEndOfYear = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
         final int minimumForecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
+*/
 /*
         List<Double> forecastChurnedSubscriptions = demandForecasterChain.forecast(productId, historicalSubscriptionChurnCountList, null, minimumForecastSize);
         List<Double> forecastTotalSubscriptions = demandForecasterChain.forecast(productId, historicalTotalSubscriptionCountList, null, minimumForecastSize);
-*/
+*//*
+
         List<DataFrameVO> forecastNewSubscriptions=new ArrayList<>();
         forecastNewSubscriptions.addAll(this.forcastExpectedRecords(productId,historicalSubscriptionNewCountList,minimumForecastSize));
 
@@ -94,8 +99,11 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
         pseudoActualsAndForecastsList.add(pseudoActuals);
         pseudoActualsAndForecastsList.add(aggregatedForecastsList);
         return pseudoActualsAndForecastsList;
+*/
+        return null;
     }
 
+/*
     private List<DataFrameVO> forcastExpectedRecords(String productId,List<DataFrameVO> content,int forecastSize){
         List<DataFrameVO> forecastableContent= new ArrayList<>();
         List<DataFrameVO> forecasts=new ArrayList<>();
@@ -118,6 +126,7 @@ public class ProductDemandForecastBuilder<T extends ProductSubscriptionMetricsVi
             return getMonthStartEndDates(startDate);
         }
     }
+*/
 
     private LocalDate[] getMonthStartEndDates(LocalDate localDate) {
         LocalDate[] dates = new LocalDate[2];

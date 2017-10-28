@@ -12,6 +12,7 @@ import com.affaince.subscription.product.query.predictions.ProductHistoryRetriev
 import com.affaince.subscription.product.query.repository.*;
 import com.affaince.subscription.product.query.view.*;
 import com.affaince.subscription.product.validator.ProductConfigurationValidator;
+import com.affaince.subscription.product.vo.ManualProductForecastHelper;
 import com.affaince.subscription.product.vo.ProductTargetParameters;
 import com.affaince.subscription.product.web.exception.ProductReadinessException;
 import com.affaince.subscription.product.web.request.*;
@@ -55,13 +56,11 @@ public class ForecastController {
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final SubscriptionCommandGateway commandGateway;
     private final ProductHistoryRetriever productHistoryRetriever;
-    private final InterpolatorChain interpolatorChain;
+    private final ManualProductForecastHelper manualProductForecastHelper;
 
-    private static final int INTERPOLATE_NEW_SUBSCRIPTIONS = 1;
-    private static final int INTERPOLATE_TOTAL_SUBSCRIPTIONS = 2;
 
     @Autowired
-    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository,ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository,ProductActivationStatusViewRepository productActivationStatusViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductHistoryRetriever productHistoryRetriever,SubscriptionCommandGateway commandGateway,InterpolatorChain interpolatorChain) {
+    public ForecastController(ProductViewRepository productViewRepository, ProductForecastViewRepository productForecastViewRepository,ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository,ProductActivationStatusViewRepository productActivationStatusViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductHistoryRetriever productHistoryRetriever,ManualProductForecastHelper manualProductForecastHelper,SubscriptionCommandGateway commandGateway) {
         this.productViewRepository = productViewRepository;
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
@@ -69,8 +68,8 @@ public class ForecastController {
         this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.productHistoryRetriever = productHistoryRetriever;
+        this.manualProductForecastHelper=manualProductForecastHelper;
         this.commandGateway = commandGateway;
-        this.interpolatorChain=interpolatorChain;
     }
 
 
@@ -107,116 +106,15 @@ public class ForecastController {
         return new ResponseEntity<String>(productId, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/predictstepforecast/{productid}")
-    public ResponseEntity<String> forecastPseudoActualDemandAndChurn(@PathVariable("productid") String productId) throws Exception {
-        UpdatePseudoActualsFromActualsCommand command = new UpdatePseudoActualsFromActualsCommand(productId, SysDate.now());
-        commandGateway.executeAsync(command);
-        return new ResponseEntity<String>(productId, HttpStatus.OK);
-    }
-
-
-
     //API to add forecast manually
     @RequestMapping(method = RequestMethod.PUT, value = "addforecast/{productid}")
     @Consumes("application/json")
     public ResponseEntity<Object> addForecast(@RequestBody @Valid AddForecastParametersRequest request,
                                               @PathVariable("productid") String productId) throws Exception {
-        ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.build(productId);
-        }
-/*
-        AddManualForecastCommand command = new AddManualForecastCommand(productId, request.getProductForecastParameters(),SysDate.now());
-        commandGateway.executeAsync(command);
-*/
-        final LocalDate forecastDate= SysDate.now();
-        final List<ProductStatus> productStatuses = productActivationStatusViewRepository.
-                findByProductId(productId).getProductStatuses();
-        if (ProductConfigurationValidator.getProductReadinessStatus(productStatuses).contains(
-                ProductReadinessStatus.FORECASTABLE
-        )) {
-            ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
-            LocalDate firstStartDate = null;
-            LocalDate lastEndDate = null;Sort endDateSort = new Sort(Sort.Direction.DESC, "endDate");
-
-            long totalSubscriptions = 0;
-            for (ProductForecastParameter parameter : forecastParameters) {
-                List<ProductForecastView> existingForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateBetween(productId, parameter.getStartDate(), parameter.getEndDate());
-                //forecast should not be newly added if it already exists in the view
-                if (null != existingForecastViews && existingForecastViews.size() > 0) {
-                    throw ProductForecastAlreadyExistsException.build(productId, parameter.getStartDate(), parameter.getEndDate());
-                }
-                //find forecasts entered earlier to current forecast entry
-                List<ProductForecastView> earlierForecastViews = this.productForecastViewRepository.findByForecastVersionId_ProductIdAndEndDateLessThan(productId, parameter.getEndDate(), endDateSort);
-                if (earlierForecastViews.isEmpty()) {
-                    totalSubscriptions = parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
-                } else {
-                    totalSubscriptions = earlierForecastViews.get(0).getTotalNumberOfExistingSubscriptions() + parameter.getNumberOfNewSubscriptions() - parameter.getNumberOfChurnedSubscriptions();
-                }
-                ProductForecastView productForecastView = new ProductForecastView(new ForecastVersionId(productId, parameter.getStartDate(),forecastDate), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions);
-                productForecastViewRepository.save(productForecastView);
-                if (null == firstStartDate) {
-                    firstStartDate = parameter.getStartDate();
-                }
-                lastEndDate = parameter.getEndDate();
-            }
-            ProductActivationStatusView view = productActivationStatusViewRepository.findOne(productId);
-            if (!view.getProductStatuses().contains(ProductStatus.PRODUCT_FORECASTED)) {
-                view.addProductStatus(ProductStatus.PRODUCT_FORECASTED);
-                productActivationStatusViewRepository.save(view);
-            }
-            derivePseudoActualsFromForecast(productId,firstStartDate,forecastDate);
-        } else {
-            ProductReadinessException.build(productId, ProductStatus.PRODUCT_FORECASTED);
-        }
-
+        manualProductForecastHelper.addForecast(productId,request.getProductForecastParameters(),SysDate.now());
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    private double[] interpolateStepForecastFromForecast(String productId, int whomToInterpolate) {
-        List<ProductForecastView> registeredForecastValues = productForecastViewRepository.
-                findByForecastVersionId_ProductIdAndForecastContentStatusOrderByForecastVersionId_FromDateAsc
-                        (productId, ForecastContentStatus.ACTIVE);
-        ProductForecastView firstForecastView = registeredForecastValues.get(0);
-        LocalDate dateOfPlatformBeginning = firstForecastView.getProductVersionId().getFromDate();
-        double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
-        double[] y = new double[registeredForecastValues.size()];     //interpolated value of total subscription
-        int count = 0;
-        for (ProductForecastView previousView : registeredForecastValues) {
-            LocalDate endDate = previousView.getEndDate();
-            int day = Days.daysBetween(dateOfPlatformBeginning, endDate).getDays(); //TODO- should we add/subtract 1 in the value?
-            x[count] = day;
-            if (whomToInterpolate == INTERPOLATE_TOTAL_SUBSCRIPTIONS) {
-                y[count] = previousView.getTotalNumberOfExistingSubscriptions();
-            } else if (whomToInterpolate == INTERPOLATE_NEW_SUBSCRIPTIONS) {
-                y[count] = previousView.getNewSubscriptions();
-            }
-            count++;
-        }
-        double[] interpolatedSubscriptionsPerDay = interpolatorChain.interpolate(x, y);
-        return interpolatedSubscriptionsPerDay;
-    }
-
-    private void derivePseudoActualsFromForecast(String productId,LocalDate firstStartDate,LocalDate forecastDate){
-
-        //Now add PseudoActuals by interpolating manual forecastAdded
-        double[] interpolatedPseudoActualsTotalSubscriptions = interpolateStepForecastFromForecast(productId, INTERPOLATE_TOTAL_SUBSCRIPTIONS);
-        double[] interpolatedPseudoActualsNewSubscriptions = interpolateStepForecastFromForecast(productId, INTERPOLATE_NEW_SUBSCRIPTIONS);
-        double previousDayTotalSubcriptionCount = 0;
-        double dailychurnedSubscriptionCount = 0;
-        for (int i = 0; i < interpolatedPseudoActualsTotalSubscriptions.length; i++) {
-            double interpolatedTotalSubscriptionCount = interpolatedPseudoActualsTotalSubscriptions[i];
-            double interpolatedNewSubscriptionCount = interpolatedPseudoActualsNewSubscriptions[i];
-            if (i == 0) {
-                dailychurnedSubscriptionCount = interpolatedTotalSubscriptionCount - interpolatedNewSubscriptionCount;
-            } else {
-                dailychurnedSubscriptionCount = previousDayTotalSubcriptionCount + interpolatedNewSubscriptionCount - interpolatedTotalSubscriptionCount;
-            }
-            previousDayTotalSubcriptionCount=interpolatedTotalSubscriptionCount;
-            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ForecastVersionId(productId, firstStartDate.plusDays(i),forecastDate), firstStartDate.plusDays(i), Double.valueOf(interpolatedNewSubscriptionCount).longValue(), Double.valueOf(dailychurnedSubscriptionCount).longValue(), Double.valueOf(interpolatedTotalSubscriptionCount).longValue());
-            productPseudoActualsViewRepository.save(productPseudoActualsView);
-        }
-    }
 
     //API to add Targets manually
     @RequestMapping(method = RequestMethod.PUT, value = "settargets/{productid}")
@@ -273,78 +171,6 @@ public class ForecastController {
         productForecastViewRepository.save(modifiedView);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
-
-    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
-/*
-    //API to add immediate forecasts manually
-    @RequestMapping(method = RequestMethod.PUT, value = "addstepforecast/{productid}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> addPseudoActuals(@RequestBody @Valid AddForecastParametersRequest request,
-                                                   @PathVariable("productid") String productId) throws Exception {
-        ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.client(productId);
-        }
-        ProductForecastParameter[] forecastParameters = request.getProductForecastParameters();
-        LocalDateTime firstStartDate = null;
-        LocalDateTime lastEndDate = null;
-        Sort endDateSort=new Sort(Sort.Direction.DESC, "endDate");
-        long totalSubscriptions=0;
-        for (ProductForecastParameter parameter : forecastParameters) {
-            List<ProductPseudoActualsView> existingPseudoActualsViews = this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, parameter.getFromDate(), parameter.getEndDate());
-            //forecast should not be newly added if it already exists in the view
-            if (null != existingPseudoActualsViews && existingPseudoActualsViews.size() > 0) {
-                throw ProductForecastAlreadyExistsException.client(productId, parameter.getFromDate(), parameter.getEndDate());
-            }
-            List<ProductPseudoActualsView> earlierPseudoActualsViews=this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateLessThan(productId,parameter.getEndDate(),endDateSort);
-            totalSubscriptions=earlierPseudoActualsViews.get(0).getTotalNumberOfExistingSubscriptions()+ parameter.getNumberOfNewSubscriptions()-parameter.getNumberOfChurnedSubscriptions();
-            if (null == firstStartDate) {
-                firstStartDate = parameter.getFromDate();
-            }
-            lastEndDate = parameter.getEndDate();
-
-            ProductPseudoActualsView productPseudoActualsView = new ProductPseudoActualsView(new ProductVersionId(productId, parameter.getFromDate()), parameter.getEndDate(), parameter.getNumberOfNewSubscriptions(), parameter.getNumberOfChurnedSubscriptions(), totalSubscriptions);
-            productPseudoActualsView.setForecastContentStatus(ForecastContentStatus.ACTIVE);
-            productPseudoActualsViewRepository.save(productPseudoActualsView);
-        }
-        AddManualPseudoActualsCommand command = new AddManualPseudoActualsCommand(productId, forecastParameters,totalSubscriptions, firstStartDate, lastEndDate);
-        commandGateway.executeAsync(command);
-
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
-*/
-
-
-    //MOSTLY NOTION OF PSEUDOACTUALS IS NOT NEEDED
-/*
-    //API to override existing  immediate forecast manually
-    @RequestMapping(method = RequestMethod.PUT, value = "updatestepforecast/{productid}")
-    @Consumes("application/json")
-    public ResponseEntity<Object> updatePseudoActuals(@RequestBody @Valid UpdateForecastRequest request,
-                                                      @PathVariable("productid") String productId) throws Exception {
-        ProductView productView = this.productViewRepository.findOne(productId);
-        if (productView == null) {
-            throw ProductNotFoundException.client(productId);
-        }
-        List<ProductPseudoActualsView> existingPseudoActualsViews = this.productPseudoActualsViewRepository.findByProductVersionId_ProductIdAndEndDateBetween(productId, request.getFromDate(), request.getEndDate());
-        ProductPseudoActualsView modifiedView = null;
-        //Set status of earlier forecast to OVVERRIDEN and insert new forecast
-        if (null != existingPseudoActualsViews && existingPseudoActualsViews.size() == 0) {
-            for (ProductPseudoActualsView eachView : existingPseudoActualsViews) {
-                //this.productForecastViewRepository.delete(eachView);
-                eachView.setForecastContentStatus(ForecastContentStatus.EXPIRED);
-                this.productPseudoActualsViewRepository.save(eachView);
-                modifiedView = new ProductPseudoActualsView(new ProductVersionId(productId, request.getFromDate()), request.getEndDate(), request.getNumberofNewSubscriptions(), request.getNumberOfChurnedSubscriptions(), request.getNumberOfTotalSubscriptions());
-                modifiedView.setForecastContentStatus(ForecastContentStatus.ACTIVE);
-            }
-        } else {
-            throw ProductForecastModificationException.client(productId, request.getFromDate(), request.getEndDate());
-        }
-        //this has to change
-        productPseudoActualsViewRepository.save(modifiedView);
-        return new ResponseEntity<Object>(HttpStatus.OK);
-    }
-*/
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/{productid}")

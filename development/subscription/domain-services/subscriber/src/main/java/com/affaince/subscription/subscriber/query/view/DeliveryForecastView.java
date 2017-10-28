@@ -23,7 +23,7 @@ public class DeliveryForecastView {
         this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
 
-    public DeliveryForecastView(LocalDate forecastDate, double weightRangeMin, double weightRangeMax, long deliveryCount, LocalDate startDate, LocalDate endDate, ForecastContentStatus forecastContentStatus) {
+    public DeliveryForecastView( LocalDate startDate, LocalDate endDate,LocalDate forecastDate,long deliveryCount, double weightRangeMin, double weightRangeMax,ForecastContentStatus forecastContentStatus) {
         this.deliveryVersionId = new DeliveryVersionId(forecastDate,startDate,weightRangeMin,weightRangeMax);
         this.deliveryCount = deliveryCount;
         this.endDate = endDate;

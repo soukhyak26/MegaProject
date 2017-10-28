@@ -5,7 +5,7 @@ import com.affaince.subscription.command.interceptors.CommandLoggingInterceptor;
 import com.affaince.subscription.common.idconverter.ProductMonthlyVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
 import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
-import com.affaince.subscription.common.service.forecast.config.Forecast;
+import com.affaince.subscription.common.service.interpolate.config.Interpolate;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
 import com.affaince.subscription.transformation.MetadataDeserializer;
@@ -58,7 +58,7 @@ import static java.util.concurrent.Executors.defaultThreadFactory;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
 @Import(
-        {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Forecast.class,SparkConfig.class}
+        {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Interpolate.class,SparkConfig.class}
 )
 public class Default {
     //  private static final int DEFAULT_JGROUPS_PORT = 12001;
