@@ -4,6 +4,7 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.forecast.query.repository.ProductConfigurationViewRepository;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 /**
  * Created by mandar on 16-08-2016.
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ForecastingTrigger {
     @Autowired
     private ProductConfigurationViewRepository productConfigurationViewRepository;
+
     @Autowired
     public ForecastingTrigger() {
     }
@@ -23,4 +25,5 @@ public class ForecastingTrigger {
         }
         return null;
     }
+
 }
