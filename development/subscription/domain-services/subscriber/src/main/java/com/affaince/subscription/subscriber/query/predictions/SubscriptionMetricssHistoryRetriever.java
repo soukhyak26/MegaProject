@@ -23,11 +23,9 @@ import java.util.Map;
  * Created by mandar on 9/1/2017.
  */
 @Component
-public class SubscriptionsHistoryRetriever extends TransportationTransformer {
+public class SubscriptionMetricssHistoryRetriever extends TransportationTransformer {
     @Autowired
     SubscriptionActualsViewRepoitory subscriptionActualsViewRepoitory;
-    @Autowired
-    SubscriptionViewRepository subscriptionViewRepository;
     @Value("${subscription.forecast.subscriptions.url}")
     private String url;
 
@@ -56,21 +54,6 @@ public class SubscriptionsHistoryRetriever extends TransportationTransformer {
         return subscriptionHistoricalRecords;
     }
 
-/*
-    private Iterable<SubscriptionActualsView> filterSubscriptions(Iterable<SubscriptionActualsView> actualSubscriptions, Map<String, Object> metadata) {
-        final int minimumWeight = (Integer) metadata.get("MIN_WEIGHT");
-        final int maximumWeight = (Integer) metadata.get("MAX_WEIGHT");
-        List<SubscriptionView> deliveriesMatchingFilterCriteria = new ArrayList<>();
-
-        for (SubscriptionActualsView subscriptionActualsView : actualSubscriptions) {
-            double subscriptionAmount = subscriptionActualsView.getTotalSubscriptions().stream().mapToDouble(DeliveryItem::getWeightInGrms).sum();
-            if (deliverywiseWeight >= minimumWeight && deliverywiseWeight < maximumWeight) {
-                deliveriesMatchingFilterCriteria.add(deliveryView);
-            }
-        }
-        return deliveriesMatchingFilterCriteria;
-    }
-*/
 
     @Override
     public void marshallSendAndReceive(Object id, Map<String, Object> metadata) {

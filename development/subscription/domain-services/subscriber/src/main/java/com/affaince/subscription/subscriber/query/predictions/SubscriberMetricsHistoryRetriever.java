@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by mandar on 9/1/2017.
  */
 @Component
-public class SubscribersHistoryRetriever extends TransportationTransformer {
+public class SubscriberMetricsHistoryRetriever extends TransportationTransformer {
     @Autowired
     SubscribersActualsViewRepository subscribersActualsViewRepository;
     @Value("${subscription.forecast.subscribers.url}")

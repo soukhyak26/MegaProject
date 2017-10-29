@@ -5,8 +5,9 @@ import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.common.vo.EntityType;
 import com.affaince.subscription.subscriber.command.event.*;
 import com.affaince.subscription.subscriber.query.predictions.DeliveryHistoryRetriever;
-import com.affaince.subscription.subscriber.query.predictions.SubscribersHistoryRetriever;
-import com.affaince.subscription.subscriber.query.predictions.SubscriptionsHistoryRetriever;
+import com.affaince.subscription.subscriber.query.predictions.SubscriberMetricsHistoryRetriever;
+import com.affaince.subscription.subscriber.query.predictions.SubscriptionHistoryRetriever;
+import com.affaince.subscription.subscriber.query.predictions.SubscriptionMetricssHistoryRetriever;
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastTrendView;
 import com.affaince.subscription.subscriber.query.view.SubscriberForecastTrendView;
 import com.affaince.subscription.subscriber.query.view.SubscriptionForecastTrendView;
@@ -21,7 +22,6 @@ import com.affaince.subscription.subscriber.vo.SubscriptionValueRange;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import org.joda.time.LocalDate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,14 +45,14 @@ public class SubscriptionAnalyser extends AbstractAnnotatedAggregateRoot<Integer
     public void on(SubscriptionAnalyserCreatedEvent event){
         this.subscriptionAnalyserId=event.getSubscriptionAnalyserId();
     }
-    public void initiateSubscriberForecast(EntityMetricType entityMetricType, SubscribersHistoryRetriever subscribersHistoryRetriever){
+    public void initiateSubscriberMetricsForecast(EntityMetricType entityMetricType, SubscriberMetricsHistoryRetriever subscriberMetricsHistoryRetriever){
         Map<String,Object> metadata= new HashMap<>();
         metadata.put("ENTITY_TYPE", EntityType.SUBSCRIBER);
         metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
-        subscribersHistoryRetriever.marshallSendAndReceive(null,metadata);
+        subscriberMetricsHistoryRetriever.marshallSendAndReceive(null,metadata);
     }
 
-    public void initiateSubscriptionForecast(EntityMetricType entityMetricType, SubscriptionsHistoryRetriever subscriptionsHistoryRetriever,SubscriptionRuleService subscriptionRuleService){
+    public void initiateSubscriptionMetricsForecast(EntityMetricType entityMetricType, SubscriptionMetricssHistoryRetriever subscriptionMetricssHistoryRetriever, SubscriptionRuleService subscriptionRuleService){
         SubscriptionRuleView subscriptionRuleView= subscriptionRuleService.getSubscriptionConfig();
         List<SubscriptionValueRange>valueRanges= subscriptionRuleView.getSubscriptionValueRanges();
         for(SubscriptionValueRange valueRange: valueRanges) {
@@ -61,7 +61,19 @@ public class SubscriptionAnalyser extends AbstractAnnotatedAggregateRoot<Integer
             metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
             metadata.put("MIN_WEIGHT", valueRange.getMinimumValue());
             metadata.put("MAX_WEIGHT", valueRange.getMaximumValue());
-            subscriptionsHistoryRetriever.marshallSendAndReceive(null, metadata);
+            subscriptionMetricssHistoryRetriever.marshallSendAndReceive(null, metadata);
+        }
+    }
+
+    public void initiateSubscriptionForecast(EntityMetricType entityMetricType,SubscriptionRuleService subscriptionRuleService, SubscriptionHistoryRetriever subscriptionHistoryRetriever){
+        List<SubscriptionValueRange> subscriptionValueRanges=subscriptionRuleService.getSubscriptionConfig().getSubscriptionValueRanges();
+        for(SubscriptionValueRange rule: subscriptionValueRanges) {
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("ENTITY_TYPE", EntityType.SUBSCRIPTION);
+            metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
+            metadata.put("MIN_WEIGHT", rule.getMinimumValue());
+            metadata.put("MAX_WEIGHT",rule.getMaximumValue());
+            subscriptionHistoryRetriever.marshallSendAndReceive(null, metadata);
         }
     }
 
