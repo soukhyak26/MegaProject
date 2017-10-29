@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.apache.http.impl.client.HttpClients;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,17 @@ public abstract class TransportationTransformer {
     public final List<DataFrameVO> marshallSendAndReceive(Object id, Map<String,Object> metadata, String url) {
         try {
             final List<DataFrameVO> dataFrames = prepare(id,metadata);
+
+            //TODO: HERE we need to ensure that forecast shall be provided minimum until end of the current year in case actuals data is less to predict forecast
+            //TODO: typically we are having the rule of getting forecast values half of the actuals data size. Now we need to see that this half sized forecasts goes upto end of year
+            //TODO: else add some forecasted values in the actuals data set and recalculate forecast so that it reaches end of the year
+            // TODO: This will be required only until initial few months when actuals data is less.
+            final LocalDate lastActualsHistoricalRecordEndDate = dataFrames.stream().map(u -> u.getEndDate()).max(LocalDate::compareTo).get();
+
+            final LocalDate endOfYearDate = new LocalDate(lastActualsHistoricalRecordEndDate.getYear(), 12, 31);
+            final int minimumForecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
+
+
             Iterator<String> metadataKeys=metadata.keySet().iterator();
             EntityType entityType=null;
             EntityMetricType entityMetricType=null;
@@ -57,6 +69,7 @@ public abstract class TransportationTransformer {
                         break;
                 }
             }
+            metadata.put("MIN_FORECAST_SIZE",minimumForecastSize);
             EntityMetadata entityMetadata= new EntityMetadata(metadata);
             EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(id, entityType,dataFrames, SysDate.now(),entityMetadata);
             ObjectMapper mapper= new ObjectMapper();

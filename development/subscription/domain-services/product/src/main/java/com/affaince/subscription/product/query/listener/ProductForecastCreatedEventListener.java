@@ -20,6 +20,8 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.Map;
 /**
  * Created by mandar on 9/29/2017.
  */
+@Component
 public class ProductForecastCreatedEventListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductForecastCreatedEventListener.class);
     private final ProductForecastViewRepository productForecastViewRepository;
@@ -35,7 +38,7 @@ public class ProductForecastCreatedEventListener {
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final AggregatorFactory<DataFrameVO> aggregatorFactory;
     private final SubscriptionCommandGateway commandGateway;
-
+    @Autowired
     public ProductForecastCreatedEventListener(ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository,ProductConfigurationViewRepository productConfigurationViewRepository, AggregatorFactory<DataFrameVO> aggregatorFactory,SubscriptionCommandGateway commandGateway) {
         this.productForecastViewRepository = productForecastViewRepository;
         this.productPseudoActualsViewRepository = productPseudoActualsViewRepository;
@@ -50,6 +53,7 @@ public class ProductForecastCreatedEventListener {
         final LocalDate forecastDate = event.getForecastDate();
         final EntityMetadata entityMetadata = event.getEntityMetadata();
         final Object productId=event.getId();
+
         expireOverlappingActiveForecast(productId, forecastDate);
         expireOverlappingActivePseudoActuals(productId, forecastDate);
         updatePseudoActuals(productId, forecastData, forecastDate, entityMetadata);
