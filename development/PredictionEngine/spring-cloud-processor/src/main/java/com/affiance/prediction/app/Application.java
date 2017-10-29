@@ -17,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.integration.annotation.Transformer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,15 +39,27 @@ public class Application {
         System.out.println("@@@@IN processor");
         ObjectMapper mapper=new ObjectMapper();
         mapper.registerModule(new JodaModule());
-        //List<DataFrameVO> dataFrameVOs=mapper.readValue(historicalRecords,new TypeReference<List<DataFrameVO>>(){});
         EntityHistoryPacket entityHistoryPacket=mapper.readValue(historicalRecords,new TypeReference<EntityHistoryPacket>(){});
         Object id=entityHistoryPacket.getEntityId();
         System.out.println("@@@EntityID:" + id.toString());
         List<DataFrameVO> dataFrameVOs=entityHistoryPacket.getDataFrameVOs();
         System.out.println("@@@dataframes:" + dataFrameVOs);
-        List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id.toString(),dataFrameVOs);
+        int forecastRecordSize= (Integer)entityHistoryPacket.getEntityMetadata().getNamedEntries().get("MIN_FORECAST_SIZE");
+        List<DataFrameVO> forecastedRecords=forecast(id.toString(),dataFrameVOs,forecastRecordSize);
         entityHistoryPacket.setDataFrameVOs(forecastedRecords);
         return mapper.writeValueAsString(entityHistoryPacket);
+    }
+
+    private List<DataFrameVO> forecast(String id,List<DataFrameVO> historicalActualRecords,int forecastRecordSize){
+        List<DataFrameVO> forecastedRecords=arimaBasedDemandForecaster.forecast(id,historicalActualRecords);
+        //take a temporary collection just to get newly forecasted records and measure its size,if more or less than minimum forecastSize
+        List<DataFrameVO> tempForecastRecords=new ArrayList<>(forecastedRecords);
+        tempForecastRecords.removeAll(historicalActualRecords);
+        if(tempForecastRecords.size()< forecastRecordSize){
+            historicalActualRecords.addAll(tempForecastRecords);
+            forecastedRecords=forecast(id,historicalActualRecords,forecastRecordSize);
+        }
+        return forecastedRecords;
     }
     public static void main(String[] args) {
         SpringApplication.run(

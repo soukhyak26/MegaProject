@@ -51,4 +51,28 @@ public class DataFrameVO implements Serializable {
     public void setValue(double value) {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataFrameVO that = (DataFrameVO) o;
+
+        if (Double.compare(that.value, value) != 0) return false;
+        if (!date.equals(that.date)) return false;
+        return token.equals(that.token);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = date.hashCode();
+        result = 31 * result + token.hashCode();
+        temp = Double.doubleToLongBits(value);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }
