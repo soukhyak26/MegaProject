@@ -58,7 +58,7 @@ public class SubscriptionAnalyser extends AbstractAnnotatedAggregateRoot<Integer
         for(SubscriptionValueRange valueRange: valueRanges) {
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("ENTITY_TYPE", EntityType.SUBSCRIPTION);
-            metadata.put("ENTITY_METRIC_TYPE", EntityMetricType.TOTAL);
+            metadata.put("ENTITY_METRIC_TYPE", entityMetricType);
             metadata.put("MIN_WEIGHT", valueRange.getMinimumValue());
             metadata.put("MAX_WEIGHT", valueRange.getMaximumValue());
             subscriptionsHistoryRetriever.marshallSendAndReceive(null, metadata);

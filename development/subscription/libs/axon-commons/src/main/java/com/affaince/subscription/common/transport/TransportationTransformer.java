@@ -29,74 +29,63 @@ import java.util.Map;
  */
 public abstract class TransportationTransformer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportationTransformer.class);
-    private String convertToJsonString(List<DataFrameVO> objectsToTransform) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(objectsToTransform);
-    }
 
-    private List<DataFrameVO> convertJsonToObjectsCollection(String jsonString) throws IOException {
-        return (List<DataFrameVO>) new ObjectMapper().readValue(jsonString, DataFrameVO.class);
-    }
+    public abstract List<DataFrameVO> prepare(Object id, Map<String, Object> metadata) throws JsonProcessingException;
 
-    public abstract List<DataFrameVO> prepare(Object id,Map<String,Object> metadata) throws JsonProcessingException;
+    public abstract void marshallSendAndReceive(Object id, Map<String, Object> metadata);
 
-    public abstract void marshallSendAndReceive(Object id,Map<String,Object> metadata);
-
-    public final List<DataFrameVO> marshallSendAndReceive(Object id, Map<String,Object> metadata, String url) {
+    public final void marshallSendAndReceive(Object id, Map<String, Object> metadata, String url) {
         try {
-            final List<DataFrameVO> dataFrames = prepare(id,metadata);
-
+            final List<DataFrameVO> dataFrames = prepare(id, metadata);
             //TODO: HERE we need to ensure that forecast shall be provided minimum until end of the current year in case actuals data is less to predict forecast
             //TODO: typically we are having the rule of getting forecast values half of the actuals data size. Now we need to see that this half sized forecasts goes upto end of year
             //TODO: else add some forecasted values in the actuals data set and recalculate forecast so that it reaches end of the year
             // TODO: This will be required only until initial few months when actuals data is less.
             final LocalDate lastActualsHistoricalRecordEndDate = dataFrames.stream().map(u -> u.getEndDate()).max(LocalDate::compareTo).get();
-
             final LocalDate endOfYearDate = new LocalDate(lastActualsHistoricalRecordEndDate.getYear(), 12, 31);
-            final int minimumForecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
-
-
-            Iterator<String> metadataKeys=metadata.keySet().iterator();
-            EntityType entityType=null;
-            EntityMetricType entityMetricType=null;
-            while(metadataKeys.hasNext()){
-                String key=metadataKeys.next();
-                switch (key){
-                    case "ENTITY_TYPE" :
-                        entityType=(EntityType)metadata.get(key);
+            int minimumForecastSize = 0;
+            //size of forecast records should be minimum until end of year in case last actual record is in first half of that year
+            if (12 - lastActualsHistoricalRecordEndDate.getMonthOfYear() < 6) {
+                minimumForecastSize = Days.daysBetween(lastActualsHistoricalRecordEndDate, endOfYearDate).getDays();
+            } else {
+                minimumForecastSize = 12;
+            }
+            Iterator<String> metadataKeys = metadata.keySet().iterator();
+            EntityType entityType = null;
+            EntityMetricType entityMetricType = null;
+            while (metadataKeys.hasNext()) {
+                String key = metadataKeys.next();
+                switch (key) {
+                    case "ENTITY_TYPE":
+                        entityType = (EntityType) metadata.get(key);
                         break;
-                    case "ENTITY_METRIC_TYPE" :
-                        entityMetricType=(EntityMetricType)metadata.get(key);
+                    case "ENTITY_METRIC_TYPE":
+                        entityMetricType = (EntityMetricType) metadata.get(key);
                         break;
                 }
             }
-            metadata.put("MIN_FORECAST_SIZE",minimumForecastSize);
-            EntityMetadata entityMetadata= new EntityMetadata(metadata);
-            EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(id, entityType,dataFrames, SysDate.now(),entityMetadata);
-            ObjectMapper mapper= new ObjectMapper();
+            metadata.put("MIN_FORECAST_SIZE", minimumForecastSize);
+            EntityMetadata entityMetadata = new EntityMetadata(metadata);
+            EntityHistoryPacket entityHistoryPacket = new EntityHistoryPacket(id, entityType, dataFrames, SysDate.now(), entityMetadata);
+            ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JodaModule());
             String requestString = mapper.writeValueAsString(entityHistoryPacket);
             System.out.println("@@@@requestString: " + requestString);
 
             // final String requestString= convertToJsonString(dataFrames);
-            return sendForForecast(url,dataFrames);
+            sendForForecast(url, requestString);
         } catch (JsonProcessingException e) {
             LOGGER.error("Error in converting forecast payload to Json", e.getStackTrace());
         }
-        return null;
     }
 
-
-    private List<DataFrameVO> sendForForecast(String url,List<DataFrameVO> dataFrames) {
+    private void sendForForecast(String url, String requestString) {
         ClientHttpRequestFactory requestFactory = new
                 HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         System.out.println("$$$$$$$$$$$$$$forecastUrl: " + url);
-        HttpEntity<List<DataFrameVO>> request=new HttpEntity<>(dataFrames);
-        ResponseEntity<List<DataFrameVO>> response=restTemplate.exchange(url, HttpMethod.POST,request,new ParameterizedTypeReference<List<DataFrameVO>>(){});
-        return response.getBody();
-
-        //restTemplate.put(url, null, params);
-
+        HttpEntity<String> request = new HttpEntity<>(requestString);
+        restTemplate.exchange(url, HttpMethod.POST, request, String.class);
     }
 
 }

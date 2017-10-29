@@ -4,6 +4,7 @@ import com.affaince.subscription.common.transport.TransportationTransformer;
 import com.affaince.subscription.common.type.ProductStatus;
 import com.affaince.subscription.common.vo.AggregationType;
 import com.affaince.subscription.common.vo.DataFrameVO;
+import com.affaince.subscription.common.vo.EntityHistoryPacket;
 import com.affaince.subscription.common.vo.EntityMetricType;
 import com.affaince.subscription.product.query.repository.ProductActualsViewRepository;
 import com.affaince.subscription.product.query.view.ProductActualsView;
@@ -47,18 +48,15 @@ public class ProductHistoryRetriever extends TransportationTransformer {
                     break;
                 case TOTAL:
                     dataFrameVO = new DataFrameVO(productActualsView.getEndDate(), "productId", productActualsView.getTotalNumberOfExistingSubscriptions(), AggregationType.INCREMENTAL);
-
+                    break;
             }
             productHistoricalRecords.add(dataFrameVO);
         }
-
-
         return productHistoricalRecords;
     }
 
     @Override
     public void marshallSendAndReceive(Object id,Map<String,Object> metadata) {
-        List<DataFrameVO> forecastRecords = super.marshallSendAndReceive(id,metadata,url);
-
+        super.marshallSendAndReceive(id,metadata,url);
     }
 }
