@@ -14,4 +14,5 @@ import java.util.List;
 public interface SubscriptionPseudoActualsViewRepository extends CrudRepository<SubscriptionPseudoActualsView, SubscriptionVersionId> {
     public List<SubscriptionPseudoActualsView> findByForecastContentStatusAndSubscriptionVersionId_ForecastDateLessThan(ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
     public List<SubscriptionPseudoActualsView> findByForecastContentStatusAndSubscriptionVersionId_ForecastDate(ForecastContentStatus forecastContentStatus,LocalDate forecastDate);
+    public List<SubscriptionPseudoActualsView> findByForecastContentStatusAndSubscriptionVersionId_StartDateDesc(ForecastContentStatus forecastContentStatus);
 }

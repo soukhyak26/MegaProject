@@ -54,8 +54,8 @@ public class DeliveryTrendChangeDetector {
 
         List<DeliveryForecastView> activeProductForecastList = deliveryForecastViewRepository.findByForecastContentStatusAndDeliveryVersionId_WeightRangeMinGreaterThanEqualAndDeliveryVersionId_WeightRangeMaxLessThanOrderByDeliveryVersionId_ForecastDateDesc(ForecastContentStatus.ACTIVE,minValue,maxValue);
         List<DeliveryForecastView> expiredForecastList = deliveryForecastViewRepository.findByForecastContentStatusAndDeliveryVersionId_WeightRangeMinGreaterThanEqualAndDeliveryVersionId_WeightRangeMaxLessThanOrderByDeliveryVersionId_ForecastDateDesc(ForecastContentStatus.EXPIRED,minValue,maxValue);
-        LocalDate referenceForecastDate = expiredForecastList.get(0).getDeliveryVersionId().getForecastDate();
-        List<DeliveryForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getDeliveryVersionId().getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
+        LocalDate referenceForecastDate = expiredForecastList.get(0).getDeliveryForecastVersionId().getForecastDate();
+        List<DeliveryForecastView> latestExpiredForecastList = expiredForecastList.stream().filter(forecast -> forecast.getDeliveryForecastVersionId().getForecastDate().equals(referenceForecastDate)).collect(Collectors.toList());
         LocalDate dateOfComparison = SysDate.now();
         List<DeliveryForecastTrendView> changeInSubscriptionCountPerPeriod = new ArrayList<>();
         //find if aggregation period is weekly monthly or quarterly
@@ -71,12 +71,12 @@ public class DeliveryTrendChangeDetector {
                 DeliveryForecastView activeForecast = activeProductForecastList.get(i);
                 for(int j=0;j< recordsForComparision;j++) {
                     DeliveryForecastView expiredForecast = latestExpiredForecastList.get(j);
-                    if (activeForecast.getDeliveryVersionId().getStartDate().equals(expiredForecast.getDeliveryVersionId().getStartDate())) {
+                    if (activeForecast.getDeliveryForecastVersionId().getDeliveryDate().equals(expiredForecast.getDeliveryForecastVersionId().getDeliveryDate())) {
 
                         long trendChange = activeForecast.getDeliveryCount() - expiredForecast.getDeliveryCount();
                         //If change of trend(visible in active forecast) is more than contingency stock percent limit,it means additional demand needs to be raised.
                         if ((trendChange / activeForecast.getDeliveryCount()) > contingencyStockPercentage) {
-                            DeliveryForecastTrendView trend = new DeliveryForecastTrendView(dateOfComparison, minValue, maxValue, activeForecast.getDeliveryVersionId().getStartDate(), activeForecast.getEndDate(), trendChange);
+                            DeliveryForecastTrendView trend = new DeliveryForecastTrendView(dateOfComparison, minValue, maxValue, activeForecast.getDeliveryForecastVersionId().getDeliveryDate(), activeForecast.getEndDate(), trendChange);
                             changeInSubscriptionCountPerPeriod.set(i, trend);
                         }
                         break;

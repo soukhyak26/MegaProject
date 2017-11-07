@@ -1,4 +1,4 @@
-package com.affaince.subscription.forecast.vo;
+package com.affaince.subscription.subscriber.vo;
 
 import org.joda.time.LocalDate;
 import scala.Serializable;
@@ -6,21 +6,21 @@ import scala.Serializable;
 /**
  * Created by mandar on 9/30/2017.
  */
-public class DeliveryVersionId implements Serializable{
+public class DeliveryForecastVersionId implements Serializable{
     private final LocalDate forecastDate;
-    private final LocalDate startDate;
+    private final LocalDate deliveryDate;
     private final double weightRangeMin;
     private final double weightRangeMax;
 
-    public DeliveryVersionId(LocalDate forecastDate, LocalDate startDate, double weightRangeMin, double weightRangeMax) {
+    public DeliveryForecastVersionId(LocalDate forecastDate, LocalDate deliveryDate, double weightRangeMin, double weightRangeMax) {
         this.forecastDate = forecastDate;
-        this.startDate=startDate;
+        this.deliveryDate = deliveryDate;
         this.weightRangeMin = weightRangeMin;
         this.weightRangeMax = weightRangeMax;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
     public LocalDate getForecastDate() {

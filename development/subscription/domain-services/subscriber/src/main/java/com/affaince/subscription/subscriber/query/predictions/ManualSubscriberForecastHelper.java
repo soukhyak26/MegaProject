@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.vo;
+package com.affaince.subscription.subscriber.query.predictions;
 
 import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ForecastContentStatus;
@@ -8,6 +8,7 @@ import com.affaince.subscription.subscriber.query.repository.SubscriberPseudoAct
 import com.affaince.subscription.subscriber.query.repository.SubscribersForecastViewRepository;
 import com.affaince.subscription.subscriber.query.view.SubscriberPseudoActualsView;
 import com.affaince.subscription.subscriber.query.view.SubscribersForecastView;
+import com.affaince.subscription.subscriber.vo.SubscriberForecastParameter;
 import com.affaince.subscription.subscriber.web.exception.SubscriberForecastAlreadyExistsException;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;

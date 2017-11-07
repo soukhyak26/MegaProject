@@ -1,11 +1,11 @@
-package com.affaince.subscription.forecast.build;
+package com.affaince.subscription.subscriber.services.triggers;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
-import com.affaince.subscription.forecast.query.repository.SubscriberPseudoActualsViewRepository;
-import com.affaince.subscription.forecast.query.repository.SubscribersActualsViewRepository;
-import com.affaince.subscription.forecast.query.view.SubscriberPseudoActualsView;
-import com.affaince.subscription.forecast.query.view.SubscribersActualsView;
+import com.affaince.subscription.subscriber.query.repository.SubscriberPseudoActualsViewRepository;
+import com.affaince.subscription.subscriber.query.repository.SubscribersActualsViewRepository;
+import com.affaince.subscription.subscriber.query.view.SubscriberPseudoActualsView;
+import com.affaince.subscription.subscriber.query.view.SubscribersActualsView;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -20,7 +20,7 @@ public class SubscriberMetricsForecastingTrigger {
     @Autowired
     SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository;
     
-    public boolean triggerSubscribersMetricsForecast() {
+    public boolean shouldTriggerSubscribersMetricsForecast() {
         //get the actuals data from last to first in descending order
         LocalDate currentDay = SysDate.now();
         final Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");

@@ -2,19 +2,16 @@ package com.affaince.subscription.forecast.configuration;
 
 import com.affaince.subscription.configuration.Default;
 import com.affaince.subscription.forecast.client.ForecastingClient;
-import com.affaince.subscription.forecast.build.ForecastingTrigger;
 import com.affaince.subscription.forecast.build.ProductsRetriever;
 import com.mongodb.Mongo;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
@@ -62,10 +59,6 @@ public class Axon extends Default {
         return new ProductsRetriever();
     }
 
-    @Bean
-    public ForecastingTrigger forecastingTrigger(){
-        return new ForecastingTrigger();
-    }
 
     @Bean
      public ForecastingClient forecastingClient(){

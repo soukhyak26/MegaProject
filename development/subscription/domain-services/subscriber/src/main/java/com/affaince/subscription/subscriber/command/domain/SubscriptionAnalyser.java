@@ -149,9 +149,9 @@ public class SubscriptionAnalyser extends AbstractAnnotatedAggregateRoot<Integer
         for(DeliveryForecastTrendView trend: futureTrend){
             double expectedChangeInTotalDeliveryCount = trend.getChangeInTotalDeliveriesCount();
             if(expectedChangeInTotalDeliveryCount > 0){
-                apply(new IncreaseInTotalDeliveryCountNotificationEvent(expectedChangeInTotalDeliveryCount,trend.getDeliveryVersionId().getStartDate(),trend.getEndDate(),trend.getDeliveryVersionId().getForecastDate()));
+                apply(new IncreaseInTotalDeliveryCountNotificationEvent(expectedChangeInTotalDeliveryCount,trend.getDeliveryForecastVersionId().getDeliveryDate(),trend.getEndDate(),trend.getDeliveryForecastVersionId().getForecastDate()));
             }else if(expectedChangeInTotalDeliveryCount < 0 ){
-                apply(new DecreaseInTotalDeliveryCountNotificationEvent(expectedChangeInTotalDeliveryCount,trend.getDeliveryVersionId().getStartDate(),trend.getEndDate(),trend.getDeliveryVersionId().getForecastDate()));
+                apply(new DecreaseInTotalDeliveryCountNotificationEvent(expectedChangeInTotalDeliveryCount,trend.getDeliveryForecastVersionId().getDeliveryDate(),trend.getEndDate(),trend.getDeliveryForecastVersionId().getForecastDate()));
             }
         }
     }

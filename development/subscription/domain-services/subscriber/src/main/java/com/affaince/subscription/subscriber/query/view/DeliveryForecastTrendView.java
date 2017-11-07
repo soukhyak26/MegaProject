@@ -1,6 +1,6 @@
 package com.affaince.subscription.subscriber.query.view;
 
-import com.affaince.subscription.subscriber.vo.DeliveryVersionId;
+import com.affaince.subscription.subscriber.vo.DeliveryForecastVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,23 +11,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="DeliveryForecastTrendView")
 public class DeliveryForecastTrendView {
     @Id
-    private DeliveryVersionId deliveryVersionId;
+    private DeliveryForecastVersionId deliveryForecastVersionId;
     private LocalDate endDate;
     private long changeInTotalDeliveriesCount;
 
     public DeliveryForecastTrendView(LocalDate trendSettingDate,double weightRangeMin,double weightRangeMax, LocalDate startDate, LocalDate endDate, long changeInTotalDeliveriesCount) {
-        this.deliveryVersionId = new DeliveryVersionId(trendSettingDate,startDate,weightRangeMin,weightRangeMax);
+        this.deliveryForecastVersionId = new DeliveryForecastVersionId(trendSettingDate,startDate,weightRangeMin,weightRangeMax);
         this.endDate = endDate;
         this.changeInTotalDeliveriesCount = changeInTotalDeliveriesCount;
     }
 
     public LocalDate getTrendSettingDate() {
-        return this.deliveryVersionId.getForecastDate();
+        return this.deliveryForecastVersionId.getForecastDate();
     }
 
 
     public LocalDate getStartDate() {
-        return this.deliveryVersionId.getStartDate();
+        return this.deliveryForecastVersionId.getDeliveryDate();
     }
 
 
@@ -47,7 +47,7 @@ public class DeliveryForecastTrendView {
         this.changeInTotalDeliveriesCount = changeInTotalDeliveriesCount;
     }
 
-    public DeliveryVersionId getDeliveryVersionId() {
-        return deliveryVersionId;
+    public DeliveryForecastVersionId getDeliveryForecastVersionId() {
+        return deliveryForecastVersionId;
     }
 }

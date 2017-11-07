@@ -10,5 +10,5 @@ import java.util.List;
  * Created by mandar on 8/30/2017.
  */
 public interface SubscriptionActualsViewRepoitory extends CrudRepository<SubscriptionActualsView, LocalDate> {
-
+    public List<SubscriptionActualsView> findByRegistrationDateDesc();
 }

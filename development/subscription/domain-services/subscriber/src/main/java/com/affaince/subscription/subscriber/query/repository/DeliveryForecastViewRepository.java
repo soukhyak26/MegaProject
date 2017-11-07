@@ -2,7 +2,7 @@ package com.affaince.subscription.subscriber.query.repository;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastView;
-import com.affaince.subscription.subscriber.vo.DeliveryVersionId;
+import com.affaince.subscription.subscriber.vo.DeliveryForecastVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by mandar on 9/23/2017.
  */
-public interface DeliveryForecastViewRepository extends CrudRepository<DeliveryForecastView,DeliveryVersionId> {
+public interface DeliveryForecastViewRepository extends CrudRepository<DeliveryForecastView,DeliveryForecastVersionId> {
     public List<DeliveryForecastView> findByEndDateBetween(LocalDate endDate1, LocalDate endDate2);
     public List<DeliveryForecastView> findByEndDateLessThan(LocalDate endDate1, Sort sort);
     public List<DeliveryForecastView> findByForecastContentStatusOrderBydeliveryVersionId_StartDateAsc(ForecastContentStatus forecastContentStatus);

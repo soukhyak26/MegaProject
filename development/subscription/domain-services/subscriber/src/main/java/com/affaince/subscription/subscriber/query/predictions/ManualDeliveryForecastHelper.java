@@ -1,4 +1,4 @@
-package com.affaince.subscription.subscriber.vo;
+package com.affaince.subscription.subscriber.query.predictions;
 
 import com.affaince.subscription.common.service.interpolate.InterpolatorChain;
 import com.affaince.subscription.common.type.ForecastContentStatus;
@@ -6,6 +6,7 @@ import com.affaince.subscription.subscriber.query.repository.DeliveryForecastVie
 import com.affaince.subscription.subscriber.query.repository.DeliveryPseudoActualsViewRepository;
 import com.affaince.subscription.subscriber.query.view.DeliveryForecastView;
 import com.affaince.subscription.subscriber.query.view.DeliveryPseudoActualsView;
+import com.affaince.subscription.subscriber.vo.DeliveryForecastParameter;
 import com.affaince.subscription.subscriber.web.exception.DeliveryForecastAlreadyExistsException;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -59,7 +60,7 @@ public class ManualDeliveryForecastHelper {
                 findByForecastContentStatusOrderBydeliveryVersionId_StartDateAsc
                         (ForecastContentStatus.ACTIVE);
         DeliveryForecastView firstForecastView = registeredForecastValues.get(0);
-        LocalDate dateOfPlatformBeginning = firstForecastView.getDeliveryVersionId().getStartDate();
+        LocalDate dateOfPlatformBeginning = firstForecastView.getDeliveryForecastVersionId().getDeliveryDate();
         double[] x = new double[registeredForecastValues.size()];     //day on which interpolated value has been taken
         double[] y = new double[registeredForecastValues.size()];     //interpolated value of total delivery
         int count = 0;

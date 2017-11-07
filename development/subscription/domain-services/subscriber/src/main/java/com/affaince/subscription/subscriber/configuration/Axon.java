@@ -65,8 +65,10 @@ public class Axon extends Default {
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
         converters.add(new DeliveryIdReaderConverter());
         converters.add(new DeliveryIdWriterConverter());
-        converters.add(new DeliveryTrendVersionIdReaderConverter());
-        converters.add(new DeliveryTrendVersionIdWriterConverter());
+        converters.add(new DeliveryForecastVersionIdReaderConverter());
+        converters.add(new DeliveryForecastVersionIdWriterConverter());
+        converters.add(new DeliveryActualsVersionIdReaderConverter());
+        converters.add(new DeliveryActualsVersionIdWriterConverter());
         converters.add(new SubscriberTrendVersionIdReaderConverter());
         converters.add(new SubscriberTrendVersionIdWriterConverter());
         converters.add(new SubscriptionVersionIdReaderConverter());

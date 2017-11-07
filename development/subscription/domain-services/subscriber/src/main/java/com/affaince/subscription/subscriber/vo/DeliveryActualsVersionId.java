@@ -6,25 +6,19 @@ import scala.Serializable;
 /**
  * Created by mandar on 9/30/2017.
  */
-public class DeliveryVersionId implements Serializable{
-    private final LocalDate forecastDate;
-    private final LocalDate startDate;
+public class DeliveryActualsVersionId implements Serializable{
+    private final LocalDate deliveryDate;
     private final double weightRangeMin;
     private final double weightRangeMax;
 
-    public DeliveryVersionId(LocalDate forecastDate, LocalDate startDate, double weightRangeMin, double weightRangeMax) {
-        this.forecastDate = forecastDate;
-        this.startDate=startDate;
+    public DeliveryActualsVersionId(LocalDate deliveryDate, double weightRangeMin, double weightRangeMax) {
+        this.deliveryDate = deliveryDate;
         this.weightRangeMin = weightRangeMin;
         this.weightRangeMax = weightRangeMax;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getForecastDate() {
-        return forecastDate;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
     public double getWeightRangeMin() {
