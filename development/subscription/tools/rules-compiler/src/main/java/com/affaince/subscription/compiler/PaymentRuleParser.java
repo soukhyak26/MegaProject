@@ -2,8 +2,8 @@ package com.affaince.subscription.compiler;
 
 import com.affaince.subscription.PaymentGrammarBaseListener;
 import com.affaince.subscription.PaymentGrammarParser;
-import com.affaince.subscription.common.type.PaymentEvent;
-import com.affaince.subscription.common.type.TotalDeliveryBase;
+import com.affaince.subscription.commons.PaymentEvent;
+import com.affaince.subscription.commons.TotalDeliveryBase;
 import com.affaince.subscription.pojos.AdvancePaymentParameters;
 import com.affaince.subscription.pojos.DeliveryExpression;
 import com.affaince.subscription.pojos.PaymentExpression;
@@ -17,8 +17,8 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.affaince.subscription.common.type.PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT;
-import static com.affaince.subscription.common.type.PaymentSource.DELIVERY;
+import static com.affaince.subscription.commons.PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT;
+import static com.affaince.subscription.commons.PaymentSource.DELIVERY;
 
 /**
  * Created by rahul on 14/7/17.

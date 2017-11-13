@@ -1,7 +1,8 @@
 package com.affaince.subscription.pojos;
 
-import com.affaince.subscription.common.type.PaymentEvent;
-import com.affaince.subscription.common.type.PaymentSource;
+
+import com.affaince.subscription.commons.PaymentEvent;
+import com.affaince.subscription.commons.PaymentSource;
 
 /**
  * Created by rahul on 15/7/17.

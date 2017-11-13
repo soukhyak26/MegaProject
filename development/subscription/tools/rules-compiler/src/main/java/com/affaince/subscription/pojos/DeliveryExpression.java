@@ -1,6 +1,7 @@
 package com.affaince.subscription.pojos;
 
-import com.affaince.subscription.common.type.TotalDeliveryBase;
+
+import com.affaince.subscription.commons.TotalDeliveryBase;
 
 /**
  * Created by rahul on 15/7/17.

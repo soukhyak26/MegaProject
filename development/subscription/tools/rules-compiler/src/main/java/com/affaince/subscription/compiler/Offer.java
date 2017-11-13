@@ -1,6 +1,6 @@
 package com.affaince.subscription.compiler;
 
-import com.affaince.subscription.common.type.DiscountUnit;
+import com.affaince.subscription.commons.DiscountUnit;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
