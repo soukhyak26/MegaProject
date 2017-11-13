@@ -12,7 +12,7 @@
         <module>libs/logback-commons</module>
         <module>libs/axon-commons</module>
         <module>libs/sysdate</module>
-        <module>tools/rules-compiler</module>
+<!--        <module>tools/rules-compiler</module>-->
         <module>domain-services/subscriber</module>
         <module>tools/integration</module>
         <module>tools/application-simulator</module>
