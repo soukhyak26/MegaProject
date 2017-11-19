@@ -5,6 +5,7 @@ import com.affaince.subscription.BenefitsRulesSetGrammarParser;
 import com.affaince.subscription.PaymentGrammarParser;
 import com.affaince.subscription.pojos.BenefitDistributionParameters;
 import com.affaince.subscription.pojos.DeliveryExpression;
+import com.affaince.subscription.pojos.EligibilityParameter;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -21,6 +22,7 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
     private Conclusion applicability = new Conclusion();
     private Offer offer = new Offer();
     private BenefitDistributionParameters benefitDistributionParameters;
+    private List <EligibilityParameter> eligibilityParameters = new ArrayList<>();
 
     public RuleSet getRuleSet() {
         return ruleSet;
@@ -50,6 +52,7 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
     public void exitSingle_rule(@NotNull BenefitsRulesSetGrammarParser.Single_ruleContext ctx) {
         this.ruleSet.addRule(this.rule);
         this.rule.setBenefitDistributionParameters(this.benefitDistributionParameters);
+        this.rule.setEligibilityParameters(eligibilityParameters);
         this.rule = null;
     }
 
@@ -69,6 +72,11 @@ public class BenefitRuleParser extends BenefitsRulesSetGrammarBaseListener {
         eligibilityCondition = eligibilityCondition.replace("or", " or ");
         eligibilityCondition = eligibilityCondition.replace("and", " and ");
         rule.setEligibilityCondition(eligibilityCondition);
+    }
+
+    @Override
+    public void exitComparison_operand(BenefitsRulesSetGrammarParser.Comparison_operandContext ctx) {
+        eligibilityParameters.add(EligibilityParameter.valueOf(ctx.getText().toUpperCase()));
     }
 
     private List<ParseTree> createList(List<ParseTree> parseTrees) {

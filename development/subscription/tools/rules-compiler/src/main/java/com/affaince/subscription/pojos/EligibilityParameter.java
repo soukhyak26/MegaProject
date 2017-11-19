@@ -1,0 +1,9 @@
+package com.affaince.subscription.pojos;
+
+public enum EligibilityParameter {
+    TOTALSUBSCRIPTIONAMOUNT,
+    CURRENTSUBSCRIPTIONAMOUNT,
+    TOTALSUBSCRIPTIONPROFIT,
+    TOTALLOYALTYPERIOD,
+    CURRENTSUBSCRIPTIONPERIOD;
+}
