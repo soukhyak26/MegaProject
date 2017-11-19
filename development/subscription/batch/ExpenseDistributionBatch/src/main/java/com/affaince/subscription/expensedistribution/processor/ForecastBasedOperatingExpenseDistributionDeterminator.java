@@ -30,140 +30,25 @@ public class ForecastBasedOperatingExpenseDistributionDeterminator implements Op
 
     @Override
     public Map<String, Double> distributeDeliveryExpensesToProduct() throws IOException {
-        final List<ProductView> productViews = expenseDistributionClient.fetchAllProducts();
-        //List<ProductView> productViews1 = productViews.subList(0,100);
-        final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats
-                = createYearlyProductWiseDeliveryStats(productViews);
-        final List<DeliveryView> forecastDeliveries
-                = createDeliveriesFromForecastData(productWiseYearlyDeliveryStats, productViews);
-        double totalDeliveryExpenses = calculateTotalDeliveryCharges(forecastDeliveries);
-        final Map<String, Double> productWisePerUnitDeliveryExpenseMap
-                = calculateProductWisePerUnitDeliveryExpenses(totalDeliveryExpenses, productWiseYearlyDeliveryStats);
-        return productWisePerUnitDeliveryExpenseMap;
-    }
 
-    private Map<String, Double> calculateProductWisePerUnitDeliveryExpenses(double totalDeliveryExpenses, Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats) {
-        double totalMRPOfAllSubscriptions = calculateTotalMRPOfAllSubscriptions(productWiseYearlyDeliveryStats);
-        final Map<String, Double> productWisePerUnitDeliveryExpenseMap = new HashMap<>(productWiseYearlyDeliveryStats.size());
-        for (ProductWiseDeliveryStats productWiseDeliveryStats : productWiseYearlyDeliveryStats.values()) {
-            productWisePerUnitDeliveryExpenseMap.put(productWiseDeliveryStats.getProductId(),
-                    //(totalMRPOfProduct*totalDeliveryCost/totalMRPOfAllSubscription)/number of units sold
-                    ((productWiseDeliveryStats.getTotalMRP() * totalDeliveryExpenses) / totalMRPOfAllSubscriptions)
-                            / productWiseDeliveryStats.getTotalUnitsSold());
+        final List<ProductTotalForecastView> productTotalForecastViews = expenseDistributionClient.getProductTotalForecastViews();
+        final Double totalYearlyVariableExpenses = expenseDistributionClient.getTotalVariableExpenseOfFinancialYear();
+
+        double totalPurchasePrice = 0;
+        for (ProductTotalForecastView productTotalForecastView: productTotalForecastViews) {
+            totalPurchasePrice += productTotalForecastView.getPurchasePrice()*productTotalForecastView.getTotalForecast();
         }
-        return productWisePerUnitDeliveryExpenseMap;
+
+        return calculateProductWisePerUnitDeliveryExpenses(totalPurchasePrice, totalYearlyVariableExpenses, productTotalForecastViews);
     }
 
-    private double calculateTotalMRPOfAllSubscriptions(Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats) {
-        double totalMRPOfAllSubscriptions = 0;
-        for (ProductWiseDeliveryStats productWiseDeliveryStats : productWiseYearlyDeliveryStats.values()) {
-            totalMRPOfAllSubscriptions += productWiseDeliveryStats.getTotalMRP();
-        }
-        return totalMRPOfAllSubscriptions;
-    }
-
-    private double calculateTotalDeliveryCharges(List<DeliveryView> forecastDeliveries) {
-        double totalDeliveryExpenses = 0;
-        final Iterable<DeliveryChargesRuleView> deliveryChargesRuleViews = expenseDistributionClient.fetchAllDeliveryChargesRules();
-        final List<RangeRule> rangeRules = deliveryChargesRuleViews.iterator().next().getRangeRules();
-        for (DeliveryView deliveryView : forecastDeliveries) {
-            double totalDeliveryWeight = calculateTotalWeightOfDelivery(deliveryView.getDeliveryItems());
-            double deliveryCharges = calculateDeliveryCharges(totalDeliveryWeight, rangeRules);
-            totalDeliveryExpenses += deliveryCharges;
-        }
-        return totalDeliveryExpenses;
-    }
-
-    private double calculateDeliveryCharges(double totalDeliveryWeight, List<RangeRule> rangeRules) {
-        for (RangeRule rangeRule : rangeRules) {
-            if (totalDeliveryWeight <= rangeRule.getRuleMaximum() && totalDeliveryWeight >= rangeRule.getRuleMinimum()) {
-                return rangeRule.getApplicableValue();
-            }
-        }
-        return 0;
-    }
-
-    private double calculateTotalWeightOfDelivery(List<DeliveryItem> deliveryItems) {
-        return deliveryItems.stream().mapToDouble(DeliveryItem::getWeightInGrms).sum();
-    }
-
-    private List<DeliveryView> createDeliveriesFromForecastData(
-            Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats,
-            List<ProductView> productViews) {
-
-        final List<DeliveryView> deliveryViews = new ArrayList<>();
-        for (ProductView productView : productViews) {
-            long totalYearlySubscriptions = productWiseYearlyDeliveryStats.get(productView.getProductId()).getTotalUnitsSold();
-            int yearlyTargetConsumption = 14;//((Double) (productView.getTargetMonthlyConsumption() * 12)).intValue();
-            long totalDeliveries = totalYearlySubscriptions;
-            List<String> substitutes = productView.getSubstitutes();
-            double productQuantityInKG = productView.getQuantity();
-            if (productView.getQuantityUnit() == QuantityUnit.ml || productView.getQuantityUnit() == QuantityUnit.GM) {
-                productQuantityInKG = productQuantityInKG / 1000;
-            }
-            productView.setQuantity(productQuantityInKG);
-            productView.setQuantityUnit(QuantityUnit.KG);
-            for (int i = 0; i < totalDeliveries - deliveryViews.size(); i++) {
-                deliveryViews.add(createDeliveryView(productView));
-            }
-            for (DeliveryView deliveryView : deliveryViews) {
-                boolean isDeliveryItemAdded = addDeliveryItemToDeliveryView(productView, deliveryView, substitutes);
-                if (isDeliveryItemAdded) {
-                    totalDeliveries -= 1;
-                }
-                if (totalDeliveries == 0) {
-                    break;
-                }
-            }
-        }
-        return deliveryViews;
-    }
-
-    private DeliveryView createDeliveryView(ProductView productView) {
-        final DeliveryView deliveryView = new DeliveryView();
-        DeliveryItem deliveryItem = new DeliveryItem();
-        deliveryItem.setDeliveryItemId(productView.getProductId());
-        deliveryItem.setWeightInGrms(productView.getQuantity());
-        List<DeliveryItem> deliveryItems = new ArrayList<>();
-        deliveryView.setDeliveryItems(deliveryItems);
-        //deliveryView
-        return deliveryView;
-    }
-
-    private boolean addDeliveryItemToDeliveryView(ProductView productView, DeliveryView deliveryView, List<String> substitutes) {
-        final List<String> deliveriesItemsIds = deliveryView.getDeliveryItems().stream()
-                .map(deliveryItem -> deliveryItem.getDeliveryItemId()).collect(Collectors.toList());
-        for (String productId : substitutes) {
-            if (deliveriesItemsIds.contains(productId)) {
-                return false;
-            }
-        }
-        DeliveryItem deliveryItem = new DeliveryItem();
-        deliveryItem.setDeliveryItemId(productView.getProductId());
-        deliveryItem.setWeightInGrms(productView.getQuantity());
-        deliveryView.getDeliveryItems().add(deliveryItem);
-        return true;
-    }
-
-    private Map<String, ProductWiseDeliveryStats> createYearlyProductWiseDeliveryStats(List<ProductView> productViews) throws IOException {
-        final Map<String, ProductWiseDeliveryStats> productWiseYearlyDeliveryStats = new HashMap<>();
-        productViews.forEach(productView -> {
-            try {
-                for (ProductForecastView productForecastView : expenseDistributionClient.fetchProductForecastByProductId(productView.getProductId())) {
-                    final String productId = productView.getProductId();
-                    ProductWiseDeliveryStats productWiseDeliveryStats = productWiseYearlyDeliveryStats.get(productId);
-                    if (productWiseDeliveryStats == null) {
-                        productWiseDeliveryStats = new ProductWiseDeliveryStats(productId);
-                        productWiseYearlyDeliveryStats.put(productId, productWiseDeliveryStats);
-                    }
-                    productWiseDeliveryStats.addMRP(100 * productForecastView.getTotalNumberOfExistingSubscriptions());
-                    productWiseDeliveryStats.addUnitSold(productForecastView.getTotalNumberOfExistingSubscriptions());
-                }
-            } catch (IOException e) {
-                LOGGER.info("Cannot create product stats from client data: " + e.getMessage());
-            }
+    private Map<String, Double> calculateProductWisePerUnitDeliveryExpenses(double totalPurchasePrice, Double totalYearlyVariableExpenses, List<ProductTotalForecastView> productTotalForecastViews) {
+        final Map<String, Double> productWisePerUnitDeliveryExpenseMap = new HashMap<>(productTotalForecastViews.size());
+        productTotalForecastViews.forEach(productTotalForecastView -> {
+            productWisePerUnitDeliveryExpenseMap.put(productTotalForecastView.getProductId(),
+                        (productTotalForecastView.getPurchasePrice()*totalYearlyVariableExpenses)/totalPurchasePrice
+                    );
         });
-
-        return productWiseYearlyDeliveryStats;
+        return productWisePerUnitDeliveryExpenseMap;
     }
 }
