@@ -5,6 +5,8 @@ import com.affaince.subscription.common.type.Period;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
+import java.util.Date;
+
 @CsvRecord(separator = ",", skipFirstLine = true)
 public class OperatingExpenseReceivedEvent {
     @DataField(name = "EXPENSE_TYPE", pos = 1, trim = true)
@@ -15,13 +17,10 @@ public class OperatingExpenseReceivedEvent {
     private String expenseHeader;
     @DataField(name = "EXPENSE_AMOUNT", pos = 4, trim = true)
     private double expenseAmount;
-    @DataField(name = "EXPENSE_PERIOD", pos = 5, trim = true)
-    private Period period;
-    @DataField(name = "FOR_MONTH", pos = 6, trim = true)
-    private int forMonth;
-    @DataField(name = "FOR_YEAR", pos = 7, trim = true)
-    private int forYear;
-
+    @DataField(name = "EXPENSE_PERIOD_START",pattern = "yyyyddMM", pos = 5, trim = true)
+    private Date startDate;
+    @DataField(name = "EXPENSE_PERIOD_END",pattern = "yyyyddMM", pos = 6, trim = true)
+    private Date endDate;
 
     public ExpenseType getExpenseType() {
         return expenseType;
@@ -47,39 +46,31 @@ public class OperatingExpenseReceivedEvent {
         this.expenseAmount = expenseAmount;
     }
 
-    public Period getPeriod() {
-        return period;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public int getForMonth() {
-        return this.forMonth;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setForMonth(int forMonth) {
-        this.forMonth = forMonth;
-    }
-
-    public int getForYear() {
-        return this.forYear;
-    }
-
-    public void setForYear(int forYear) {
-        this.forYear = forYear;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     @Override
     public String toString() {
         return "OperatingExpenseReceivedEvent{" +
                 "expenseType=" + expenseType +
+                ", expenseId='" + expenseId + '\'' +
                 ", expenseHeader='" + expenseHeader + '\'' +
                 ", expenseAmount=" + expenseAmount +
-                ", period=" + period +
-                ", forMonth=" + forMonth +
-                ", forYear=" + forYear +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 '}';
     }
 

@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 /**
  * Created by mandar on 19-06-2016.
  */
-//@Ignore
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
