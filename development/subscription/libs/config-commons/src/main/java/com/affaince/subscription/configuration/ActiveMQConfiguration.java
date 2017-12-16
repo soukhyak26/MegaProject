@@ -1,11 +1,10 @@
 package com.affaince.subscription.configuration;
 
-import com.affaince.subscription.events.ListenerContainerFactory;
 import com.affaince.subscription.events.SubscriptionEventBusTerminal;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.axonframework.eventhandling.Cluster;
 import org.axonframework.eventhandling.EventBusTerminal;
-import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.eventhandling.amqp.spring.ListenerContainerFactory;
 import org.axonframework.serializer.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,13 +13,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.jms.SubscribableJmsChannel;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.listener.AbstractMessageListenerContainer;
 import org.springframework.jms.support.converter.MessagingMessageConverter;
 import org.springframework.messaging.SubscribableChannel;
-import org.springframework.util.ErrorHandler;
 
 import javax.annotation.Resource;
 import javax.jms.ConnectionFactory;
-import javax.jms.Session;
 import java.util.Map;
 
 /**
@@ -51,28 +49,10 @@ public class ActiveMQConfiguration {
         //return new CachingConnectionFactory(new ActiveMQConnectionFactory(brokerURL));
     }
 
-
     @Bean
-    public ListenerContainerFactory listenerContainerFactory(
-            @Value("${axon.eventBus.queueName}") String queueName,
-            ConnectionFactory connectionFactory, ErrorHandler errorHandler) {
-        ListenerContainerFactory containerFactory = new ListenerContainerFactory();
-        containerFactory.setDestinationName(queueName);
-        containerFactory.setConnectionFactory(connectionFactory);
-        containerFactory.setErrorHandler(errorHandler);
-        containerFactory.setConcurrency("2-20");
-        containerFactory.setIdleConsumerLimit(10);
-        containerFactory.setAnnotation(EventHandler.class);
-        containerFactory.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
-        containerFactory.setConsumedEventTypes(types);
-        return containerFactory;
+    public SubscribableChannel eventChannel(JmsTemplate jmsTemplate, AbstractMessageListenerContainer container) throws Exception {
 
-    }
-
-    @Bean
-    public SubscribableChannel eventChannel(JmsTemplate jmsTemplate, ListenerContainerFactory listenerContainerFactory) throws Exception {
-
-        SubscribableChannel channel = new SubscribableJmsChannel(listenerContainerFactory.getObject(), jmsTemplate);
+        SubscribableChannel channel = new SubscribableJmsChannel(container, jmsTemplate);
         return channel;
     }
 
