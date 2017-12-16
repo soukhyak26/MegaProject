@@ -2,19 +2,15 @@ package com.affaince.subscription.delivery.configuration;
 
 import com.affaince.subscription.common.idconverter.DeliveryIdReaderConverter;
 import com.affaince.subscription.common.idconverter.DeliveryIdWriterConverter;
-import com.affaince.subscription.common.idconverter.ProductVersionIdReaderConverter;
-import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConverter;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.delivery.build.DeliveryRetriever;
 import com.mongodb.Mongo;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
@@ -31,7 +27,7 @@ import java.util.Map;
  */
 @Configuration
 @ComponentScan("com.affaince")
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Bean
     public CustomConversions customConversions(){

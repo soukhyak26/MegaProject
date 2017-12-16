@@ -8,7 +8,6 @@ import com.affaince.subscription.common.idconverter.ProductVersionIdWriterConver
 import com.affaince.subscription.common.service.interpolate.config.Interpolate;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
-import com.affaince.subscription.transformation.MetadataDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -60,9 +59,9 @@ import static java.util.concurrent.Executors.newScheduledThreadPool;
 @Import(
         {RabbitMQConfiguration.class, ActiveMQConfiguration.class, Interpolate.class,SparkConfig.class}
 )
-public class Default {
+public class CommonConfig {
     //  private static final int DEFAULT_JGROUPS_PORT = 12001;
-    //private static final Logger = getLogger (Default.class);
+    //private static final Logger = getLogger (CommonConfig.class);
 
     @Bean
     public LoggingHandler loggingHandler() {
@@ -156,7 +155,6 @@ public class Default {
                 objectMapper, new AnnotationRevisionResolver(), types()
         );
         SimpleModule simpleModule = new SimpleModule("Axon");
-        simpleModule.addDeserializer(MetaData.class, new MetadataDeserializer());
         serializer.getObjectMapper().registerModule(simpleModule);
         serializer.getObjectMapper().registerModule(new JodaModule());
 

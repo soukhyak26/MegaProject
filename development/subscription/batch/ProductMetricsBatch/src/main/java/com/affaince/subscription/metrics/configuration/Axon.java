@@ -1,16 +1,14 @@
 package com.affaince.subscription.metrics.configuration;
 
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.metrics.build.ProductsRetriever;
 import com.affaince.subscription.metrics.client.ProductMetricsCalculator;
 import com.mongodb.Mongo;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
@@ -21,7 +19,7 @@ import java.util.Map;
 
 @Configuration
 @ComponentScan("com.affaince")
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Bean
     public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {

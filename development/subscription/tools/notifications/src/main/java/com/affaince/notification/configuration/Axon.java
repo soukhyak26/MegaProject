@@ -2,7 +2,7 @@ package com.affaince.notification.configuration;
 
 import com.affaince.notification.events.PaymentProcessedEvent;
 import com.affaince.notification.publisher.GenericMailEventPublisher;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Configuration
 @EnableAutoConfiguration
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Autowired
     CamelContext camelContext;

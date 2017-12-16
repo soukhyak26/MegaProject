@@ -1,6 +1,6 @@
 package com.affaince.subscription.payments.configuration;
 
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.payments.domain.PaymentAccount;
 import com.affaince.subscription.payments.domain.PaymentScheme;
 import com.affaince.subscription.payments.event.*;
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
 
     @Bean

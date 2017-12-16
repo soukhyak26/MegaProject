@@ -2,7 +2,7 @@ package com.affaince.subscription.business.configuration;
 
 import com.affaince.subscription.business.domain.BusinessAccount;
 import com.affaince.subscription.business.event.*;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Bean
     public Repository<BusinessAccount> createBusinessAccountRepository(DisruptorCommandBus commandBus) {

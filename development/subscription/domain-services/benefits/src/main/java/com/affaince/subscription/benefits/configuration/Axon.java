@@ -1,7 +1,7 @@
 package com.affaince.subscription.benefits.configuration;
 
 import com.affaince.subscription.benefits.domain.Benefit;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableJms
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Bean
     public Repository<Benefit> createRepository(DisruptorCommandBus commandBus) {

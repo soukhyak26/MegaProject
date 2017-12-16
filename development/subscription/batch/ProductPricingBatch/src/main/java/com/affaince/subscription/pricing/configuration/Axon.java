@@ -1,8 +1,7 @@
 package com.affaince.subscription.pricing.configuration;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.common.type.ProductDemandTrend;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.pricing.build.interpolate.ForecastInterpolatedSubscriptionCountFinder;
 import com.affaince.subscription.common.service.interpolate.CubicSplineInterpolator;
 import com.affaince.subscription.pricing.determine.PricingClient;
@@ -17,12 +16,10 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.axonframework.eventhandling.EventTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
@@ -41,7 +38,7 @@ import static org.apache.camel.builder.PredicateBuilder.or;
 @Configuration
 @EnableJms
 @ComponentScan("com.affaince")
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Autowired
     private CamelContext camelContext;

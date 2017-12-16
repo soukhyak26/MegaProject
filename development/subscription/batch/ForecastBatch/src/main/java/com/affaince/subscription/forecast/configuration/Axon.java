@@ -1,6 +1,6 @@
 package com.affaince.subscription.forecast.configuration;
 
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.forecast.client.ForecastingClient;
 import com.affaince.subscription.forecast.build.ProductsRetriever;
 import com.mongodb.Mongo;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Configuration
 @EnableJms
 @ComponentScan("com.affaince")
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
     @Autowired
     private CamelContext camelContext;

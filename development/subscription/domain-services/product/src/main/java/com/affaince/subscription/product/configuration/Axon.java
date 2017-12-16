@@ -2,7 +2,7 @@ package com.affaince.subscription.product.configuration;
 
 import com.affaince.subscription.common.idconverter.*;
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.domain.ProductAnalyser;
 import com.affaince.subscription.product.converters.*;
@@ -47,7 +47,7 @@ import java.util.Map;
 @EnableAutoConfiguration(exclude = {EmbeddedServletContainerFactory.class})
 @ComponentScan("com.affaince")
 
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
 
     @Bean

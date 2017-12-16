@@ -1,7 +1,7 @@
 package com.affaince.subscription.integration.configuation;
 
 import com.affaince.subscription.common.publisher.GenericEventPublisher;
-import com.affaince.subscription.configuration.Default;
+import com.affaince.subscription.configuration.CommonConfig;
 import com.affaince.subscription.integration.command.event.basketdispatch.status.BasketDispatchedStatusEvent;
 import com.affaince.subscription.integration.command.event.productstatus.ProductStatusReceivedEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,10 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.config.JmsListenerContainerFactory;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
 import org.springframework.jms.support.destination.DynamicDestinationResolver;
 
 import javax.jms.ConnectionFactory;
@@ -29,7 +25,7 @@ import java.util.Map;
  * Created by mandark on 19-07-2015.
  */
 @Configuration
-public class Axon extends Default {
+public class Axon extends CommonConfig {
 
 
     public static final String OVERRIDEN_BY_EXPRESSION_VALUE = "overriden by expression value";
