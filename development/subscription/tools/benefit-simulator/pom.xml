@@ -114,6 +114,10 @@
             <groupId>com.affaince</groupId>
             <artifactId>sysdate</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>config-commons</artifactId>
+        </dependency>
     </dependencies>
 
 

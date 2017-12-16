@@ -28,7 +28,7 @@
     <dependencies>
         <dependency>
             <groupId>com.affaince</groupId>
-            <artifactId>axon-commons</artifactId>
+            <artifactId>config-commons</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>

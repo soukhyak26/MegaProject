@@ -10,7 +10,7 @@
     <version>0.1-SNAPSHOT</version>
     <modules>
         <module>libs/logback-commons</module>
-        <module>libs/axon-commons</module>
+        <module>libs/config-commons</module>
         <module>libs/sysdate</module>
 <!--        <module>tools/rules-compiler</module>-->
         <module>domain-services/subscriber</module>
@@ -435,7 +435,7 @@
             </dependency>
             <dependency>
                 <groupId>com.affaince</groupId>
-                <artifactId>axon-commons</artifactId>
+                <artifactId>config-commons</artifactId>
                 <version>0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
