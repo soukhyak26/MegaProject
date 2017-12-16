@@ -1,9 +1,6 @@
 package com.affaince.subscription.payments.command;
 
-import com.affaince.subscription.payments.command.event.DeliveryCreatedEvent;
 import org.joda.time.LocalDate;
-
-import java.util.List;
 
 /**
  * Created by mandar on 5/17/2017.

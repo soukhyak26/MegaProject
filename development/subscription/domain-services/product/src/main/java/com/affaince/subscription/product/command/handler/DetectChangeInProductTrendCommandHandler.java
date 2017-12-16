@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.DetectChangeInProductTrendCommand;
-import com.affaince.subscription.product.command.domain.ProductAnalyser;
+import com.affaince.subscription.product.domain.ProductAnalyser;
 import com.affaince.subscription.product.services.trend.ProductTrendChangeDetector;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

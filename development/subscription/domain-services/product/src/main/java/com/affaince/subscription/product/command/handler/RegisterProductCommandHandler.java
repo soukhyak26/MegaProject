@@ -2,7 +2,7 @@ package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.product.command.RegisterProductCommand;
-import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.domain.Product;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.slf4j.Logger;

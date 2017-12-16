@@ -5,20 +5,13 @@ import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.domain.PriceBucket;
-import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.domain.PriceBucket;
+import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.factory.PriceBucketFactory;
 import com.affaince.subscription.product.query.view.ProductActualsView;
 import com.affaince.subscription.product.query.view.ProductForecastView;
-import org.apache.commons.lang3.ArrayUtils;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by mandark on 27-03-2016.

@@ -1,9 +1,8 @@
 package com.affaince.subscription.product.command.handler;
 
-import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.date.SysDateTime;
 import com.affaince.subscription.product.command.RecalculateOfferPriceCommand;
-import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.services.pricing.determinator.DefaultPriceDeterminator;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

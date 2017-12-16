@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.CalculateBreakEvenPriceCommand;
-import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
 import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import org.axonframework.commandhandling.annotation.CommandHandler;

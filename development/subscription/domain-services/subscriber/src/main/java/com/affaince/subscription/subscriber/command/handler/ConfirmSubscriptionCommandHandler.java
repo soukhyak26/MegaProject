@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.subscriber.command.ConfirmSubscriptionCommand;
-import com.affaince.subscription.subscriber.command.domain.Subscriber;
+import com.affaince.subscription.subscriber.domain.Subscriber;
 import com.affaince.subscription.subscriber.services.benefit.context.BenefitExecutionContext;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

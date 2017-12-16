@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.subscriber.command.UpdateDeliveryForecastFromActualsCommand;
-import com.affaince.subscription.subscriber.command.domain.SubscriptionAnalyser;
+import com.affaince.subscription.subscriber.domain.SubscriptionAnalyser;
 import com.affaince.subscription.subscriber.query.predictions.DeliveryHistoryRetriever;
 import com.affaince.subscription.subscriber.services.config.DeliveryChargesRuleService;
 import org.axonframework.commandhandling.annotation.CommandHandler;

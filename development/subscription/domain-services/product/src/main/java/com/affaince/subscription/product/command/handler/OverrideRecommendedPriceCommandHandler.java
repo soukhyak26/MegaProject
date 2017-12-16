@@ -1,8 +1,7 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.OverrideRecommendedPriceCommand;
-import com.affaince.subscription.product.command.domain.Product;
-import com.affaince.subscription.product.factory.PriceBucketFactory;
+import com.affaince.subscription.product.domain.Product;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

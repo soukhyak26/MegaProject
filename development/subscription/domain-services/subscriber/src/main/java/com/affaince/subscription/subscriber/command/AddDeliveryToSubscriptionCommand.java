@@ -1,6 +1,6 @@
 package com.affaince.subscription.subscriber.command;
 
-import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
+import com.affaince.subscription.subscriber.domain.DeliveryChargesRule;
 import com.affaince.subscription.subscriber.web.request.DeliveryItem;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import org.joda.time.LocalDate;

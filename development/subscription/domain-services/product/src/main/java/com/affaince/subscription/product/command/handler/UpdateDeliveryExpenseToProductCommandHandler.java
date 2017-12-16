@@ -1,8 +1,7 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.UpdateDeliveryExpenseToProductCommand;
-import com.affaince.subscription.product.command.domain.Product;
-import com.affaince.subscription.product.services.operatingexpense.OperatingExpenseService;
+import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.breakevenprice.BreakEvenPriceCalculator;
 import com.affaince.subscription.product.vo.CostHeaderType;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -10,7 +9,6 @@ import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.EnumSet;
 import java.util.List;
 
 /**

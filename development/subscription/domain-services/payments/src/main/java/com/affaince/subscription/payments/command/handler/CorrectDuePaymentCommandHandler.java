@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.command.CorrectDuePaymentCommand;
-import com.affaince.subscription.payments.command.domain.PaymentAccount;
+import com.affaince.subscription.payments.domain.PaymentAccount;
 import com.affaince.subscription.payments.service.DuePaymentCorrectionEngine;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

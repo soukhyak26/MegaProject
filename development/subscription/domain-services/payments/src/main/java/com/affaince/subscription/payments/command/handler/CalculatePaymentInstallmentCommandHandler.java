@@ -2,7 +2,7 @@ package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.calculator.PaymentCalculatorChain;
 import com.affaince.subscription.payments.command.CalculatePaymentInstallmentCommand;
-import com.affaince.subscription.payments.command.domain.PaymentAccount;
+import com.affaince.subscription.payments.domain.PaymentAccount;
 import com.affaince.subscription.pojos.PaymentExpression;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.axonframework.commandhandling.annotation.CommandHandler;

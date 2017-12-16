@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.command.handler;
 
 import com.affaince.subscription.business.command.CreateProvisionForCommonExpensesCommand;
-import com.affaince.subscription.business.command.domain.BusinessAccount;
+import com.affaince.subscription.business.domain.BusinessAccount;
 import com.affaince.subscription.business.process.operatingexpenses.DefaultOperatingExpensesDeterminator;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

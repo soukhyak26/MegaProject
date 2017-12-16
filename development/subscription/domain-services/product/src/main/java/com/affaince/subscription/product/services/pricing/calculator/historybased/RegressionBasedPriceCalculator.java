@@ -2,8 +2,8 @@ package com.affaince.subscription.product.services.pricing.calculator.historybas
 
 import com.affaince.subscription.common.type.ProductDemandTrend;
 import com.affaince.subscription.date.SysDateTime;
-import com.affaince.subscription.product.command.domain.PriceBucket;
-import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.domain.PriceBucket;
+import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.services.pricing.calculator.AbstractPriceCalculator;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.FunctionCoefficients;
 import com.affaince.subscription.product.services.pricing.calculator.historybased.regression.RegressionBasedDemandFunctionProcessor;

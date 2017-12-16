@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.command.handler;
 
 import com.affaince.subscription.business.command.PaymentProcessedCommand;
-import com.affaince.subscription.business.command.domain.BusinessAccount;
+import com.affaince.subscription.business.domain.BusinessAccount;
 import com.affaince.subscription.date.SysDate;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

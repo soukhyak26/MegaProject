@@ -1,11 +1,8 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.UpdateForecastFromActualsCommand;
-import com.affaince.subscription.product.command.domain.Product;
-import com.affaince.subscription.product.command.domain.ProductAnalyser;
+import com.affaince.subscription.product.domain.ProductAnalyser;
 import com.affaince.subscription.product.query.predictions.ProductHistoryRetriever;
-import com.affaince.subscription.product.services.forecast.ForecastFinderService;
-import com.affaince.subscription.product.services.forecast.ProductDemandForecastBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.slf4j.Logger;

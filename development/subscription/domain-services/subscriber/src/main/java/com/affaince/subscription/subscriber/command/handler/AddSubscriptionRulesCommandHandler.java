@@ -3,7 +3,7 @@ package com.affaince.subscription.subscriber.command.handler;
 import com.affaince.subscription.common.type.Discount;
 import com.affaince.subscription.common.type.DiscountUnit;
 import com.affaince.subscription.subscriber.command.AddSubscriptionRulesCommand;
-import com.affaince.subscription.subscriber.command.domain.SubscriptionRule;
+import com.affaince.subscription.subscriber.domain.SubscriptionRule;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

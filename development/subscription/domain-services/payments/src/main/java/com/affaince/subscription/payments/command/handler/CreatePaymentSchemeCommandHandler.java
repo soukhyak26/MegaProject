@@ -1,9 +1,8 @@
 package com.affaince.subscription.payments.command.handler;
 
-import com.affaince.subscription.compiler.Rule;
 import com.affaince.subscription.compiler.paymentscheme.PaymentSchemeCompiler;
 import com.affaince.subscription.payments.command.CreatePaymentSchemeCommand;
-import com.affaince.subscription.payments.command.domain.PaymentScheme;
+import com.affaince.subscription.payments.domain.PaymentScheme;
 import com.affaince.subscription.pojos.PaymentExpression;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,17 +1,13 @@
 package com.affaince.subscription.business.configuration;
 
-import com.affaince.subscription.business.command.domain.BusinessAccount;
-import com.affaince.subscription.business.command.event.*;
+import com.affaince.subscription.business.domain.BusinessAccount;
+import com.affaince.subscription.business.event.*;
 import com.affaince.subscription.configuration.Default;
-import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.jms.annotation.EnableJms;
 
 import java.util.HashMap;

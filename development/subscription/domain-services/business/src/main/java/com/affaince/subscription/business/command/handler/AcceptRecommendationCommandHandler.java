@@ -1,7 +1,7 @@
 package com.affaince.subscription.business.command.handler;
 
 import com.affaince.subscription.business.command.AcceptRecommendationCommand;
-import com.affaince.subscription.business.command.domain.BusinessAccount;
+import com.affaince.subscription.business.domain.BusinessAccount;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,16 +1,12 @@
 package com.affaince.subscription.benefits.configuration;
 
-import com.affaince.subscription.benefits.command.domain.Benefit;
+import com.affaince.subscription.benefits.domain.Benefit;
 import com.affaince.subscription.configuration.Default;
-import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.jms.annotation.EnableJms;
 
 import java.util.HashMap;

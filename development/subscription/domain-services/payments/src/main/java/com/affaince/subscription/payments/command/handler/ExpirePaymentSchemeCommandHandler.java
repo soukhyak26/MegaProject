@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.command.ExpirePaymentSchemeCommand;
-import com.affaince.subscription.payments.command.domain.PaymentScheme;
+import com.affaince.subscription.payments.domain.PaymentScheme;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

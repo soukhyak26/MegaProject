@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.subscriber.command.SetSubscriberPasswordCommand;
-import com.affaince.subscription.subscriber.command.domain.Subscriber;
+import com.affaince.subscription.subscriber.domain.Subscriber;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.command.ReceivePaymentCommand;
-import com.affaince.subscription.payments.command.domain.PaymentAccount;
+import com.affaince.subscription.payments.domain.PaymentAccount;
 import com.affaince.subscription.payments.exception.PaymentReceivedForNonExistentAccountException;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.AggregateNotFoundException;

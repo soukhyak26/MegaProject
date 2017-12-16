@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.query.repository;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.subscriber.command.domain.Subscriber;
 import com.affaince.subscription.subscriber.query.view.SubscriberPseudoActualsView;
 import com.affaince.subscription.subscriber.vo.SubscriberVersionId;
 import org.joda.time.LocalDate;

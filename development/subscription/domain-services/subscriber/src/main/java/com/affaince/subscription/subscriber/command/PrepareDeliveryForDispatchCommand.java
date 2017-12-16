@@ -1,6 +1,6 @@
 package com.affaince.subscription.subscriber.command;
 
-import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
+import com.affaince.subscription.subscriber.domain.LatestPriceBucket;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 
 import java.util.Map;

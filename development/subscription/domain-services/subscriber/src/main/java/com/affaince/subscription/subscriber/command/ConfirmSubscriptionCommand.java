@@ -1,7 +1,7 @@
 package com.affaince.subscription.subscriber.command;
 
-import com.affaince.subscription.subscriber.command.domain.DeliveryChargesRule;
-import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
+import com.affaince.subscription.subscriber.domain.DeliveryChargesRule;
+import com.affaince.subscription.subscriber.domain.LatestPriceBucket;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.Map;

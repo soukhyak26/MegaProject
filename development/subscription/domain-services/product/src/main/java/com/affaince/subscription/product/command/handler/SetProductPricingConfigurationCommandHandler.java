@@ -1,8 +1,8 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.SetProductPricingConfigurationCommand;
-import com.affaince.subscription.product.command.domain.Product;
-import com.affaince.subscription.product.command.exception.ProductDeactivatedException;
+import com.affaince.subscription.product.domain.Product;
+import com.affaince.subscription.product.domain.exception.ProductDeactivatedException;
 import com.affaince.subscription.product.web.exception.InvalidProductStatusException;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

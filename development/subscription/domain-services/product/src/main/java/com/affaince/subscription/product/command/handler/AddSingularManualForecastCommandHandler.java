@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.command.handler;
 
 import com.affaince.subscription.product.command.AddSingularManualForecastCommand;
-import com.affaince.subscription.product.command.domain.Product;
+import com.affaince.subscription.product.domain.Product;
 import com.affaince.subscription.product.services.forecast.ForecastFinderService;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;

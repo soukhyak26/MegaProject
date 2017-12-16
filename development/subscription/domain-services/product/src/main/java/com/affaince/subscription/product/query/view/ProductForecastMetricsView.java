@@ -1,7 +1,7 @@
 package com.affaince.subscription.product.query.view;
 
 import com.affaince.subscription.common.vo.ProductVersionId;
-import com.affaince.subscription.product.command.domain.PriceBucket;
+import com.affaince.subscription.product.domain.PriceBucket;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;

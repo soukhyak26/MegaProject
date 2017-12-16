@@ -2,8 +2,7 @@ package com.affaince.subscription.payments.service;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
-import com.affaince.subscription.payments.command.accounting.DeliveryCostAccount;
-import com.affaince.subscription.payments.query.view.DeliveryDetailsView;
+import com.affaince.subscription.payments.domain.accounting.DeliveryCostAccount;
 import com.affaince.subscription.payments.query.view.ProductView;
 import com.affaince.subscription.payments.vo.DeliveredProductDetail;
 import com.affaince.subscription.payments.vo.DeliveryDetails;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**

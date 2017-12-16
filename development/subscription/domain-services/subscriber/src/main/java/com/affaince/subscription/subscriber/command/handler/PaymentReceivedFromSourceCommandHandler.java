@@ -1,8 +1,8 @@
 package com.affaince.subscription.subscriber.command.handler;
 
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
-import com.affaince.subscription.subscriber.command.domain.Subscriber;
-import com.affaince.subscription.subscriber.command.domain.Subscription;
+import com.affaince.subscription.subscriber.domain.Subscriber;
+import com.affaince.subscription.subscriber.domain.Subscription;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

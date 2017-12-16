@@ -1,8 +1,7 @@
 package com.affaince.subscription.payments.command.handler;
 
 import com.affaince.subscription.payments.command.CreateDeliveryCommand;
-import com.affaince.subscription.payments.command.domain.PaymentAccount;
-import com.affaince.subscription.payments.service.DuePaymentCorrectionEngine;
+import com.affaince.subscription.payments.domain.PaymentAccount;
 import com.affaince.subscription.payments.service.ProductDetailsService;
 import com.affaince.subscription.payments.service.TaggedPricingService;
 import org.axonframework.commandhandling.annotation.CommandHandler;

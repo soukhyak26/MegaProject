@@ -1,7 +1,6 @@
 package com.affaince.subscription.subscriber.web.request;
 
 import com.affaince.subscription.common.type.ProductPricingCategory;
-import com.affaince.subscription.subscriber.command.domain.LatestPriceBucket;
 
 /**
  * Created by rbsavaliya on 23-10-2016.

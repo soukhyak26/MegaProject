@@ -1,19 +1,15 @@
 package com.affaince.subscription.payments.configuration;
 
 import com.affaince.subscription.configuration.Default;
-import com.affaince.subscription.payments.command.domain.PaymentAccount;
-import com.affaince.subscription.payments.command.domain.PaymentScheme;
-import com.affaince.subscription.payments.command.event.*;
+import com.affaince.subscription.payments.domain.PaymentAccount;
+import com.affaince.subscription.payments.domain.PaymentScheme;
+import com.affaince.subscription.payments.event.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.Mongo;
 import org.axonframework.commandhandling.disruptor.DisruptorCommandBus;
 import org.axonframework.eventsourcing.GenericAggregateFactory;
 import org.axonframework.repository.Repository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.jms.annotation.EnableJms;
 
 import java.util.HashMap;

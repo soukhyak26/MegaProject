@@ -1,7 +1,7 @@
 package com.affaince.subscription.benefits.command.handler;
 
 import com.affaince.subscription.benefits.command.AddBenefitCommand;
-import com.affaince.subscription.benefits.command.domain.Benefit;
+import com.affaince.subscription.benefits.domain.Benefit;
 import com.affaince.subscription.compiler.BenefitCompiler;
 import com.affaince.subscription.compiler.Rule;
 import com.fasterxml.jackson.core.JsonProcessingException;
