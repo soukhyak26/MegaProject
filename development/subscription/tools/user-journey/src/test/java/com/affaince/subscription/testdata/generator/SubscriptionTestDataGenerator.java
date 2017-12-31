@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -37,12 +37,12 @@ public class SubscriptionTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        new SubscriptionTestDataGenerator().readProductIdsToFile();
+        new SubscriptionTestDataGenerator().findAllActiveProducts();
     }
 
     public SubscriptionTestDataGenerator generate() throws IOException {
 
-        readProductIdsToFile ();
+        findAllActiveProducts();
         generateSubscriptionData();
         generateSubscriberData();
         writeSubscriptionCountToFile ();
@@ -66,14 +66,11 @@ public class SubscriptionTestDataGenerator {
         }
     }
 
-    private void readProductIdsToFile() {
-        File file = new File(classLoader.getResource(".").getPath() + "/productids");
-        try (Stream<String> stream = Files.lines(Paths.get(classLoader.getResource(".").getPath() + "/productids"))) {
-            stream.forEach(productIds::add);
-            productIds.forEach(System.out::println);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void findAllActiveProducts() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String[] activeProductIds = objectMapper.readValue(fetchDataByGetRequest("http://localhost:8082/product/active/productsIds"),
+                String[].class);
+        productIds = Arrays.stream(activeProductIds).collect(Collectors.toList());
     }
 
     private void writeSubscriptionCountToFile() {
