@@ -19,7 +19,7 @@ object SetDeliveryChargesRules {
         StringBody(
           """
             |{
-            |   "ruleId":"1",
+            |   "ruleId":"0",
             |   "deliveryChargesRules":[{"ruleHeader":"1KG",
             |   "ruleMinimum":"0",
             |   "ruleMaximum":"1",

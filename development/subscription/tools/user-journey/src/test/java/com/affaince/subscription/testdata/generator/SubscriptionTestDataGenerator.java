@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -37,12 +37,12 @@ public class SubscriptionTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        new SubscriptionTestDataGenerator().readProductIdsToFile();
+        new SubscriptionTestDataGenerator().findAllActiveProducts();
     }
 
     public SubscriptionTestDataGenerator generate() throws IOException {
 
-        readProductIdsToFile ();
+        findAllActiveProducts();
         generateSubscriptionData();
         generateSubscriberData();
         writeSubscriptionCountToFile ();
@@ -66,14 +66,11 @@ public class SubscriptionTestDataGenerator {
         }
     }
 
-    private void readProductIdsToFile() {
-        File file = new File(classLoader.getResource(".").getPath() + "/productids");
-        try (Stream<String> stream = Files.lines(Paths.get(classLoader.getResource(".").getPath() + "/productids"))) {
-            stream.forEach(productIds::add);
-            productIds.forEach(System.out::println);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void findAllActiveProducts() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String[] activeProductIds = objectMapper.readValue(fetchDataByGetRequest("http://localhost:8082/product/active/productsIds"),
+                String[].class);
+        productIds = Arrays.stream(activeProductIds).collect(Collectors.toList());
     }
 
     private void writeSubscriptionCountToFile() {
@@ -88,11 +85,10 @@ public class SubscriptionTestDataGenerator {
     private void generateSubscriberData() {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Subscriber> subscribers = new ArrayList<>();
-        long sdc = getSubscriptionCount();
         for (int i = 0; i < this.subscriptionCount; i++) {
             Subscriber subscriber = new Subscriber("Mr", "TestSubscriber" + i, "", "lastName" + i,
                     "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
-                    "testemail" + i + sdc + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
+                    "testemail" + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
             );
             subscribers.add(subscriber);
         }
@@ -116,7 +112,6 @@ public class SubscriptionTestDataGenerator {
                     + (totalForecastCounts * 10 / 100);
             ObjectMapper objectMapper = new ObjectMapper();
             int i = 0;
-            long sdc = getSubscriptionCount();
             while (totalBasketsToBeCreated >= 0) {
                 int noOfCycle = new Random().nextInt(9) + 3;
                 BasketItemRequest basketItemRequest = new BasketItemRequest(
@@ -127,7 +122,7 @@ public class SubscriptionTestDataGenerator {
                         getMrpByProductId(productId),
                         noOfCycle
                 );
-                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + sdc + "@affaince.com");
+                String subscriberId = new DefaultIdGenerator().generator("testemail" + i + "@affaince.com");
                 String fileName = classLoader.getResource(".").getPath() + "/" + subscriberId + ".json";
                 if (lineNumberTracker.get(fileName) != null &&
                         lineNumberTracker.get(fileName).intValue() == 20) {
