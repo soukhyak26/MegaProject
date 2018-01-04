@@ -2,15 +2,19 @@ package com.affaince.subscription.testdata.generator;
 
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PeriodUnit;
+import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,7 +41,7 @@ public class SubscriptionTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        new SubscriptionTestDataGenerator().findAllActiveProducts();
+        new SubscriptionTestDataGenerator().generate();
     }
 
     public SubscriptionTestDataGenerator generate() throws IOException {
@@ -167,8 +171,10 @@ public class SubscriptionTestDataGenerator {
     private long getTotalSubscriptionCountFromActiveForecast (String productId) {
         Long totalForecstedSubscription = 0L;
         try {
+            org.joda.time.LocalDate date = SysDate.now().plusDays(7);
             totalForecstedSubscription = Long.parseLong(fetchDataByGetRequest(
-                    "http://localhost:8082/forecast/lastforecast/totalsubscription/" + productId
+                    "http://localhost:8082/forecast/totalsubscription/" + productId
+                    + "/" + date
             ));
 
         } catch (IOException e) {
@@ -190,8 +196,7 @@ public class SubscriptionTestDataGenerator {
     private String fetchDataByGetRequest (String fetchUrl) throws IOException {
         BufferedReader br;
         HttpURLConnection conn = null;
-        try {
-            URL url = new URL(fetchUrl);
+            /*URL url = new URL(fetchUrl);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -203,9 +208,10 @@ public class SubscriptionTestDataGenerator {
 
             br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
-            return br.readLine();
-        } finally {
-            conn.disconnect();
-        }
+            return br.readLine();*/
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(fetchUrl, String.class);
+        return responseEntity.getBody();
+
     }
 }

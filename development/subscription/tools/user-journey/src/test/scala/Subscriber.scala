@@ -18,10 +18,6 @@ class Subscriber extends BaseSimulator {
 
   var productTestDataGenerator = new SubscriptionTestDataGenerator().generate().getSubscriptionCount();
 
-  if (productTestDataGenerator > 2000) {
-    productTestDataGenerator = 2000;
-  }
-
   val scn = scenario("Create Subscriber").exec(CreateSubscriber.createSubscriber)
     .pause(10)
     .repeat(1) {
@@ -46,7 +42,7 @@ class Subscriber extends BaseSimulator {
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
   //setUp(scn.inject(rampUsers(productTestDataGenerator) over(productTestDataGenerator/15)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
-  setUp(scn.inject(atOnceUsers(1)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)

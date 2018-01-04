@@ -182,7 +182,7 @@ public class ProductTestDataGenerator {
             ProductForecastParameter productForecastParameters[] = new ProductForecastParameter[12];
             for (int i = 1; i <= 12; i++) {
                 startDate = endDate.plusDays(1);
-                endDate = startDate.plusDays(product.getActualsAggregationPeriodForTargetForecast());
+                endDate = startDate.dayOfMonth().withMaximumValue();
                 newSubscription = newSubscription + (newSubscription * (new Random().nextInt(product.getMaxPercentageIncreaseInForecast()
                         - product.getMinPercentageIncreaseInForecast()) + product.getMinPercentageIncreaseInForecast())) / newSubscription;
                 ProductForecastParameter forecast =
