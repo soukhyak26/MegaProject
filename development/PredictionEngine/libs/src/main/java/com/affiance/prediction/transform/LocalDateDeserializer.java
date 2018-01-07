@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class LocalDateDeserializer extends JsonDeserializer<LocalDate> {
     @Override
-    public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("dd-MM-yyyy");
         JsonToken currentToken = jsonParser.getCurrentToken();
