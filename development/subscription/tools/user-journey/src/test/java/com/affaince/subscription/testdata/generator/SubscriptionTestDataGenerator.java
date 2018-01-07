@@ -194,9 +194,10 @@ public class SubscriptionTestDataGenerator {
     }
 
     private String fetchDataByGetRequest (String fetchUrl) throws IOException {
-        BufferedReader br;
+        BufferedReader br = null;
         HttpURLConnection conn = null;
-            /*URL url = new URL(fetchUrl);
+        try {
+            URL url = new URL(fetchUrl);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -208,10 +209,14 @@ public class SubscriptionTestDataGenerator {
 
             br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
-            return br.readLine();*/
-        RestTemplate restTemplate = new RestTemplate();
+            return br.readLine();
+        } finally {
+            br.close();
+            conn.disconnect();
+        }
+        /*RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(fetchUrl, String.class);
-        return responseEntity.getBody();
+        return responseEntity.getBody();*/
 
     }
 }
