@@ -34,7 +34,7 @@ class Subscriber extends BaseSimulator {
     }.pause(1)
       .repeat(1){
         CreateSubscriber.selectPaymentScheme
-      }
+      }.pause(1)
     .repeat(1) {
       CreateSubscriber.confirmSubscription
     }
