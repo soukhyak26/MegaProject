@@ -12,6 +12,7 @@
         <module>libs</module>
         <module>spring-cloud-source</module>
         <module>spring-cloud-sink</module>
+        <module>spring-cloud-http-sink</module>
         <module>spring-cloud-dataflow-server</module>
         <module>spring-cloud-dataflow-myshell</module>
         <module>spring-cloud-processor</module>
@@ -393,6 +394,12 @@
                 <artifactId>freemarker</artifactId>
                 <version>2.3.21</version>
             </dependency>
+            <dependency>
+                <groupId>com.affaince</groupId>
+                <artifactId>affaince-valuepojos</artifactId>
+                <version>0.1-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <repositories>
