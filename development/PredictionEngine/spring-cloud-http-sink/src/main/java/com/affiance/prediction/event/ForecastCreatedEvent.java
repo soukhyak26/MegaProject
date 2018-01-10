@@ -1,5 +1,6 @@
 package com.affiance.prediction.event;
 
+import com.affaince.subscription.common.publish.event.PublishableEvent;
 import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affaince.subscription.common.vo.EntityMetadata;
 import com.affaince.subscription.common.vo.EntityType;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by mandar on 9/23/2017.
  */
-public class ForecastCreatedEvent {
+public class ForecastCreatedEvent implements PublishableEvent {
     private EntityType entityType;
     private Object entityId;
     private List<DataFrameVO> dataFrameVOs;
@@ -25,7 +26,10 @@ public class ForecastCreatedEvent {
         this.entityMetadata=entityMetadata;
         this.forecastDate = forecastDate;
     }
-
+    @Override
+    public String getEventDestination(){
+        return (String)entityMetadata.getNamedEntries().get("ENTITY_DESTINATION");
+    }
     public List<DataFrameVO> getDataFrameVOs() {
         return dataFrameVOs;
     }
