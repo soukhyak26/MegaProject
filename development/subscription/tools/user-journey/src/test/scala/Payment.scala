@@ -30,7 +30,7 @@ object PaymentScheme {
               |	"paymentSchemeDescription":"20% advance payment and default destribution of other payment",
               |	"paymentSchemeRule":"pay 20% of current subscription amount on subscription confirmation and pay residual due amount after 1/2remaining-N, 3/4remaining-N delivery in default proportion",
               |	"startDate":"2017-07-15",
-              |	"endDate":"2015-07-15"
+              |	"endDate":"2019-07-15"
               |}
             """.stripMargin
           )
