@@ -404,6 +404,12 @@
     </dependencyManagement>
     <repositories>
         <repository>
+            <id>spring-milestone</id>
+            <name>spring milestones</name>
+            <url>http://repo.spring.io/milestone/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
             <id>maven-hadoop</id>
             <name>Hadoop Releases</name>
             <url>https://repository.cloudera.com/content/repositories/releases/</url>
@@ -414,18 +420,10 @@
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
         <repository>
-            <id>spring-milestone</id>
+            <id>mvn</id>
             <name>axon framework repository</name>
             <url>http://mvnrepository.com/artifact</url>
             <layout>default</layout>
         </repository>
-        <repository>
-            <id>axon</id>
-            <name>spring milestones</name>
-            <url>http://repo.spring.io/milestone/</url>
-            <layout>default</layout>
-        </repository>
-
     </repositories>
-
 </project>
