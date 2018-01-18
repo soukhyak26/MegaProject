@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.io.IOException;
 @EnableAutoConfiguration
 @PropertySource({"classpath:Application.properties"})
 @EnableBinding(Sink.class)
+@ComponentScan ("com.affaince")
 public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     @Autowired
