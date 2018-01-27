@@ -1,9 +1,10 @@
 package com.affiance.prediction.algos;
 
+import com.affaince.subscription.common.vo.AggregationType;
+import com.affaince.subscription.common.vo.DataFrameVO;
+import com.affaince.subscription.common.vo.EntityHistoryPacket;
+import com.affaince.subscription.common.vo.EntityType;
 import com.affiance.prediction.config.Forecast;
-import com.affiance.prediction.vo.DataFrameVO;
-import com.affiance.prediction.vo.EntityHistoryPacket;
-import com.affiance.prediction.vo.EntityType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.apache.http.impl.client.HttpClients;
@@ -35,7 +36,7 @@ import java.util.stream.Stream;
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
 
-    private String forecastUrl="http://localhost:9000";
+    private String forecastUrl="http://localhost:9000/";
 
 
     @Test
@@ -47,7 +48,7 @@ public class ARIMABasedDemandForecasterTest {
         List<DataFrameVO> actualsVOs= new ArrayList<>();
         for (int i = 0; i < readings.length; i++) {
             totalSubscriptions = readings[i][0];
-            DataFrameVO actualsVO = new DataFrameVO(fromDate,"pro1", readings[i][0]);
+            DataFrameVO actualsVO = new DataFrameVO(fromDate,"pro1", readings[i][0], AggregationType.INCREMENTAL);
             System.out.println("total subscription:" + readings[i][0]);
             actualsVOs.add(actualsVO);
             fromDate=fromDate.plusDays(1);

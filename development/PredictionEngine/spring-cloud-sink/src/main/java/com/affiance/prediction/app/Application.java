@@ -38,12 +38,4 @@ public class Application {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@IN Sink:After convertAndSend");
 
     }
-
-/*
-    @StreamListener(Sink.INPUT)
-    public void listen(String data){
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@IN Sink: "+ data);
-    }
-*/
-
 }

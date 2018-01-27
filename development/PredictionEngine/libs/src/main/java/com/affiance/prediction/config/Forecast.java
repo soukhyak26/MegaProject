@@ -1,5 +1,6 @@
 package com.affiance.prediction.config;
 
+import com.affaince.subscription.common.publish.invoker.EventPublishInvoker;
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

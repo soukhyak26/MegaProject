@@ -1,8 +1,8 @@
 package com.affiance.prediction.algos;
 
+import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affiance.prediction.config.HistoryMaxSizeConstraints;
 import com.affiance.prediction.config.HistoryMinSizeConstraints;
-import com.affiance.prediction.vo.DataFrameVO;
 import com.cloudera.sparkts.DateTimeIndex;
 import com.cloudera.sparkts.DayFrequency;
 import com.cloudera.sparkts.api.java.DateTimeIndexFactory;
@@ -125,7 +125,7 @@ public class ARIMABasedDemandForecaster{
                 for (int j = 0; j < vector.size(); j++) {
                     double forecastedValue = vector.apply(j);
                     System.out.println("ARIMA $$$$$forecast: " + forecastedValue);
-                    DataFrameVO outputVO= new DataFrameVO(new LocalDate(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth()),token,forecastedValue);
+                    DataFrameVO outputVO= new DataFrameVO(new LocalDate(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth()),token,forecastedValue,dataFrames.get(0).getAggregationType());
                     forecastedSubscriptionCounts.add(outputVO);
                 }
             }

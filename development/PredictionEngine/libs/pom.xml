@@ -197,5 +197,9 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>affaince-valuepojos</artifactId>
+        </dependency>
     </dependencies>
 </project>

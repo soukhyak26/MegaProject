@@ -56,11 +56,4 @@ public class Application {
         System.out.println("Published event");
     }
 
-/*
-    @StreamListener(Sink.INPUT)
-    public void listen(String data){
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@IN Sink: "+ data);
-    }
-*/
-
 }

@@ -1,8 +1,9 @@
 package com.affiance.prediction.app;
 
+import com.affaince.subscription.common.vo.DataFrameVO;
+import com.affaince.subscription.common.vo.EntityHistoryPacket;
+import com.affaince.subscription.common.vo.EntityMetadata;
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
-import com.affiance.prediction.vo.DataFrameVO;
-import com.affiance.prediction.vo.EntityHistoryPacket;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -44,7 +45,13 @@ public class Application {
         System.out.println("@@@EntityID:" + id.toString());
         List<DataFrameVO> dataFrameVOs=entityHistoryPacket.getDataFrameVOs();
         System.out.println("@@@dataframes:" + dataFrameVOs);
-        int forecastRecordSize= (Integer)entityHistoryPacket.getEntityMetadata().getNamedEntries().get("MIN_FORECAST_SIZE");
+        EntityMetadata entityMetadata=entityHistoryPacket.getEntityMetadata();
+        int forecastRecordSize=0;
+        if(null != entityMetadata) {
+            forecastRecordSize = (Integer)entityMetadata.getNamedEntries().get("MIN_FORECAST_SIZE");
+        }else{
+            forecastRecordSize = dataFrameVOs.size()/2;
+        }
         List<DataFrameVO> forecastedRecords=forecast(id.toString(),dataFrameVOs,forecastRecordSize);
         entityHistoryPacket.setDataFrameVOs(forecastedRecords);
         return mapper.writeValueAsString(entityHistoryPacket);
