@@ -78,7 +78,10 @@ public class ARIMABasedDemandForecaster{
     public List<DataFrameVO> forecast(String dataIdentifier, List<DataFrameVO> dataFrames) {
         System.out.println("@@@IN ARIMA");
         ZoneId zone = ZoneId.systemDefault();
+        System.out.println("@@@dataframes toake:" + dataFrames.get(0).getToken());
+        System.out.println("@@@dataframes value:" + dataFrames.get(0).getValue());
         System.out.println("@@@dataFrames date"+ dataFrames.get(0).getDate());
+        System.out.println("@@@dataFrames AggregateType"+ dataFrames.get(0).getAggregationType());
 
         ZonedDateTime startDateTime=ZonedDateTime.of(dataFrames.get(0).getDate().getYear(), dataFrames.get(0).getDate().getMonthOfYear(), dataFrames.get(0).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);
         ZonedDateTime endDateTime= ZonedDateTime.of(dataFrames.get(dataFrames.size() - 1).getDate().getYear(), dataFrames.get(dataFrames.size() - 1).getDate().getMonthOfYear(), dataFrames.get(dataFrames.size() - 1).getDate().getDayOfMonth(), 0, 0, 0, 0, zone);

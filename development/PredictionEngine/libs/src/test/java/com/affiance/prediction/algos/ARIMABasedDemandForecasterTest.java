@@ -1,9 +1,6 @@
 package com.affiance.prediction.algos;
 
-import com.affaince.subscription.common.vo.AggregationType;
-import com.affaince.subscription.common.vo.DataFrameVO;
-import com.affaince.subscription.common.vo.EntityHistoryPacket;
-import com.affaince.subscription.common.vo.EntityType;
+import com.affaince.subscription.common.vo.*;
 import com.affiance.prediction.config.Forecast;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -14,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -35,27 +33,26 @@ import java.util.stream.Stream;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
-
-    private String forecastUrl="http://localhost:9000/";
-
+    @Autowired
+    ObjectMapper mapper;
+    private String forecastUrl="http://localhost:9000";
 
     @Test
     public void testPrecisePrediction() throws IOException {
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/test/resources/demands2.tsv"))));
         long[][] readings = fileReader.lines().map(l -> l.trim().split("\t")).map(sa -> Stream.of(sa).mapToLong(Long::parseLong).toArray()).toArray(long[][]::new);
-        long totalSubscriptions = 0;
         LocalDate fromDate=new LocalDate(2016, 5, 1);
         List<DataFrameVO> actualsVOs= new ArrayList<>();
         for (int i = 0; i < readings.length; i++) {
-            totalSubscriptions = readings[i][0];
             DataFrameVO actualsVO = new DataFrameVO(fromDate,"pro1", readings[i][0], AggregationType.INCREMENTAL);
             System.out.println("total subscription:" + readings[i][0]);
             actualsVOs.add(actualsVO);
             fromDate=fromDate.plusDays(1);
         }
-        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,actualsVOs, LocalDate.now(),null);
-        ObjectMapper mapper= new ObjectMapper();
-        mapper.registerModule(new JodaModule());
+        Map<String,Object> metadata =new HashMap<>();
+        metadata.put("MIN_FORECAST_SIZE",Math.round(actualsVOs.size()/2));
+        EntityMetadata entityMetadata= new EntityMetadata(metadata);
+        EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,actualsVOs, LocalDate.now(),entityMetadata);
         String requestString = mapper.writeValueAsString(entityHistoryPacket);
         System.out.println("@@@@requestString: " + requestString);
         initiateForecast(requestString);
@@ -69,7 +66,6 @@ public class ARIMABasedDemandForecasterTest {
         params.put("request", requestString);
         HttpEntity<String> request=new HttpEntity<>(requestString);
         System.out.println("$$$$$$$$$$$$$$forecastUrl: " + forecastUrl);
-        Map<String, String> vars = new HashMap<String, String>();
         restTemplate.postForLocation(forecastUrl,request);
     }
 

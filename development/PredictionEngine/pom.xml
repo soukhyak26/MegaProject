@@ -21,8 +21,8 @@
         <springboot.version>1.5.6.RELEASE</springboot.version>
         <jackson.verson>2.8.6</jackson.verson>
         <aspectj.version>1.8.8</aspectj.version>
-        <spark.version>2.0.0</spark.version>
-        <sparkts.version>0.4.0</sparkts.version>
+        <!--<spark.version>2.0.0</spark.version>-->
+        <!--<sparkts.version>0.4.0</sparkts.version>-->
         <logback.version>1.1.6</logback.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -273,6 +273,7 @@
                 <artifactId>commons-math3</artifactId>
                 <version>3.6.1</version>
             </dependency>
+<!--
             <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-core_2.11</artifactId>
@@ -305,14 +306,17 @@
                 <artifactId>sparkts</artifactId>
                 <version>${sparkts.version}</version>
             </dependency>
+-->
 
             <!-- https://mvnrepository.com/artifact/org.slf4j/log4j-over-slf4j -->
 
+<!--
             <dependency>
                 <groupId>org.scala-lang.modules</groupId>
                 <artifactId>scala-xml_2.11</artifactId>
                 <version>1.0.6</version>
             </dependency>
+-->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>log4j-over-slf4j</artifactId>

@@ -37,7 +37,7 @@ public class Application {
     @Transformer(inputChannel = Processor.INPUT,
             outputChannel = Processor.OUTPUT)
     public String transform(String historicalRecords,Map<String,Object> headers) throws IOException {
-        System.out.println("@@@@IN processor");
+        System.out.println("@@@@IN processor:" + historicalRecords);
         ObjectMapper mapper=new ObjectMapper();
         mapper.registerModule(new JodaModule());
         EntityHistoryPacket entityHistoryPacket=mapper.readValue(historicalRecords,new TypeReference<EntityHistoryPacket>(){});
@@ -46,6 +46,7 @@ public class Application {
         List<DataFrameVO> dataFrameVOs=entityHistoryPacket.getDataFrameVOs();
         System.out.println("@@@dataframes:" + dataFrameVOs);
         EntityMetadata entityMetadata=entityHistoryPacket.getEntityMetadata();
+
         int forecastRecordSize=0;
         if(null != entityMetadata) {
             forecastRecordSize = (Integer)entityMetadata.getNamedEntries().get("MIN_FORECAST_SIZE");
