@@ -76,7 +76,7 @@ object AddProjectionParameter {
     //feed(stepforecastJsonFileFeeder)
       exec(
       http("Add Projection Parameter to Product")
-        .put((RegisterProduct.createProjectionUrl + "/addforecast/${productId}").el[String])
+        .put((RegisterProduct.createProjectionUrl + "/manual/${productId}").el[String])
         .body(ElFileBody("${productId}.json")).asJSON
     )
 }
