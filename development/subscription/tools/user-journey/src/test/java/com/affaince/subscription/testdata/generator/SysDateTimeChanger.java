@@ -12,7 +12,7 @@ public class SysDateTimeChanger {
         while (true) {
             SysDate.setCurrentDate(SysDate.now().plusDays(1));
             SysDateTime.setCurrentDateTime(SysDateTime.now().plusDays(1));
-            Thread.sleep(300);
+            Thread.sleep(200);
         }
     }
 }

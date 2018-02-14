@@ -37,7 +37,7 @@ public class ProductTestDataGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        new ProductTestDataGenerator().generate(1).getSubscriptionCount();
+        new ProductTestDataGenerator().generate(4).getSubscriptionCount();
     }
 
     public ProductTestDataGenerator generate(int size) throws IOException {
@@ -170,8 +170,8 @@ public class ProductTestDataGenerator {
             product.setgeneratedProductId (productId);
             LocalDate startDate = LocalDate.now();
             LocalDate endDate = LocalDate.now();
-            int newSubscription = 500;
-            int churnSubscription = 20;
+            int newSubscription = 5000;
+            int churnSubscription = 200;
             int purchasePrice = new Random().nextInt(product.getMaxPrice() - product.getMinPrice()) +
                     product.getMinPrice();
             int profitMargin = new Random().nextInt(product.getMaxProfitMargin() - product.getMinProfitMargin()) +
