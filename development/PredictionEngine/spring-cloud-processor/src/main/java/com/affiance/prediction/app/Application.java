@@ -44,7 +44,11 @@ public class Application {
         Object id=entityHistoryPacket.getEntityId();
         System.out.println("@@@EntityID:" + id.toString());
         List<DataFrameVO> dataFrameVOs=entityHistoryPacket.getDataFrameVOs();
-        System.out.println("@@@dataframes:" + dataFrameVOs);
+        System.out.println("Application: "+ dataFrameVOs);
+        for( DataFrameVO vo: dataFrameVOs) {
+            System.out.println("@@@dataframe token:" + vo.getToken());
+            System.out.println("@@@dataframe value:" + vo.getValue());
+        }
         EntityMetadata entityMetadata=entityHistoryPacket.getEntityMetadata();
 
         int forecastRecordSize=0;

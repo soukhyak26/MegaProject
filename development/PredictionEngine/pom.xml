@@ -11,7 +11,7 @@
     <modules>
         <module>libs</module>
         <module>spring-cloud-source</module>
-        <module>spring-cloud-sink</module>
+<!--        <module>spring-cloud-sink</module>-->
         <module>spring-cloud-http-sink</module>
         <module>spring-cloud-dataflow-server</module>
         <module>spring-cloud-dataflow-myshell</module>

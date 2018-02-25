@@ -1,6 +1,7 @@
 package com.affiance.prediction.algos;
 
 import com.affaince.subscription.common.vo.*;
+import com.affiance.prediction.config.DateTimeModule;
 import com.affiance.prediction.config.Forecast;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -13,6 +14,8 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,12 +32,10 @@ import java.util.stream.Stream;
 /**
  * Created by mandar on 19-06-2016.
  */
-@Ignore
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {Forecast.class})
 public class ARIMABasedDemandForecasterTest {
-    @Autowired
-    ObjectMapper mapper;
     private String forecastUrl="http://localhost:9000";
 
     @Test
@@ -53,6 +54,9 @@ public class ARIMABasedDemandForecasterTest {
         metadata.put("MIN_FORECAST_SIZE",Math.round(actualsVOs.size()/2));
         EntityMetadata entityMetadata= new EntityMetadata(metadata);
         EntityHistoryPacket entityHistoryPacket= new EntityHistoryPacket(1, EntityType.PRODUCT,actualsVOs, LocalDate.now(),entityMetadata);
+        ObjectMapper mapper= new ObjectMapper();
+        mapper.registerModule(new JodaModule());
+       // mapper.registerModule(new DateTimeModule());
         String requestString = mapper.writeValueAsString(entityHistoryPacket);
         System.out.println("@@@@requestString: " + requestString);
         initiateForecast(requestString);
@@ -64,7 +68,9 @@ public class ARIMABasedDemandForecasterTest {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         Map<String, Object> params = new HashMap<>();
         params.put("request", requestString);
-        HttpEntity<String> request=new HttpEntity<>(requestString);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request=new HttpEntity<String>(requestString,headers);
         System.out.println("$$$$$$$$$$$$$$forecastUrl: " + forecastUrl);
         restTemplate.postForLocation(forecastUrl,request);
     }
