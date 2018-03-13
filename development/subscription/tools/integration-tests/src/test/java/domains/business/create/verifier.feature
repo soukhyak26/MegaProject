@@ -19,5 +19,5 @@ And path 'business/businessaccount'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == {"id":"d6d42ae8-89b3-3538-a267-17e8728138b8","merchantId":"merchant1","startDate":[2018,1,1],"endDate":[2018,12,31],"dateForProvision":[2018,1,1],"defaultPercentFixedExpensePerUnitPrice":1.0,"defaultPercentVariableExpensePerUnitPrice":1.0}
+And match response == {"id":"#ignore","merchantId":"merchant1","startDate":[2018,1,1],"endDate":[2018,12,31],"dateForProvision":[2018,1,1],"defaultPercentFixedExpensePerUnitPrice":"#ignore","defaultPercentVariableExpensePerUnitPrice":"#ignore"}
 
