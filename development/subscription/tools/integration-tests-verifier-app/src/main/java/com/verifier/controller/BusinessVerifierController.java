@@ -5,6 +5,7 @@ import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.business.repository.*;
 import com.verifier.domains.business.view.*;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class BusinessVerifierController {
     private final TaxesAccountViewRepository taxesAccountViewRepository;
     private final TaxesAccountTransactionsViewRepository taxesAccountTransactionsViewRepository;
 
-
+    @Autowired
     public BusinessVerifierController(BusinessAccountViewRepository businessAccountViewRepository, BusinessAccountConfigurationViewRepository businessAccountConfigurationViewRepository, PurchaseCostAccountViewRepository purchaseCostAccountViewRepository, PurchaseCostAccountTransactionsViewRepository purchaseCostAccountTransactionsViewRepository, BookingAmountAccountViewRepository bookingAmountAccountViewRepository, BookingAmountTransactionsViewRepository bookingAmountTransactionsViewRepository, BudgetChangeRecommendationViewRepository budgetChangeRecommendationViewRepository, BenefitAccountViewRepository benefitAccountViewRepository, BenefitAccountTransactionsViewRepository benefitAccountTransactionsViewRepository, CommonExpenseAccountViewRepository commonExpenseAccountViewRepository, CommonExpensesTransactionsViewRepository commonExpensesTransactionsViewRepository, VariableExpenseAccountViewRepository variableExpenseAccountViewRepository, VariableExpenseAccountTransactionsViewRepository variableExpenseAccountTransactionsViewRepository, ProductViewRepository productViewRepository, ProfitAccountViewRepository profitAccountViewRepository, ProfitAccountTransactionsViewRepository profitAccountTransactionsViewRepository, RevenueAccountViewRepository revenueAccountViewRepository, RevenueAccountTransactionsViewRepository revenueAccountTransactionsViewRepository, SubscriptionInfoViewRepository subscriptionInfoViewRepository, TaxesAccountViewRepository taxesAccountViewRepository, TaxesAccountTransactionsViewRepository taxesAccountTransactionsViewRepository) {
         this.businessAccountViewRepository = businessAccountViewRepository;
         this.businessAccountConfigurationViewRepository = businessAccountConfigurationViewRepository;
@@ -67,7 +68,11 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "businessaccount")
     ResponseEntity<BusinessAccountView> getBusinessAccount(){
-        BusinessAccountView businessAccountView = businessAccountViewRepository.findByEndDateGreaterThanEqual(SysDate.now()).get(0);
+        BusinessAccountView businessAccountView=null;
+        List<BusinessAccountView> views = businessAccountViewRepository.findByEndDateAfter(SysDate.now());
+        if(null != views && !views.isEmpty()) {
+            businessAccountView =views.get(0);
+        }
         return new ResponseEntity<BusinessAccountView>(businessAccountView,HttpStatus.OK);
     }
 

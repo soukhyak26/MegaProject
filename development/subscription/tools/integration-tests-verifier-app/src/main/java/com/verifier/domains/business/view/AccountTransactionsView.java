@@ -14,7 +14,7 @@ import org.springframework.data.annotation.Id;
 public abstract class AccountTransactionsView {
     @Id
     private final long transactionId;
-    private final LocalDateTime timeOfTransaction;
+    private final LocalDateTime dateOfTransaction;
     private final double transactedAmount;
     private final TransactionType transactionType;
     private final TransactionReasonCode transactionReasonCode;
@@ -23,7 +23,7 @@ public abstract class AccountTransactionsView {
         final LocalDateTime currentDateTime=dateOfTransaction.toLocalDateTime(LocalTime.now());
         //TODO- NEED TO check if this is going to be duplicate
         this.transactionId = currentDateTime.toDateTime().getMillis();
-        this.timeOfTransaction = currentDateTime;
+        this.dateOfTransaction = currentDateTime;
         this.transactedAmount = transactedAmount;
         this.transactionType = transactionType;
         this.transactionReasonCode = transactionReasonCode;
@@ -33,8 +33,8 @@ public abstract class AccountTransactionsView {
         return transactionId;
     }
 
-    public LocalDateTime getTimeOfTransaction() {
-        return timeOfTransaction;
+    public LocalDateTime getDateOfTransaction() {
+        return dateOfTransaction;
     }
 
     public double getTransactedAmount() {
