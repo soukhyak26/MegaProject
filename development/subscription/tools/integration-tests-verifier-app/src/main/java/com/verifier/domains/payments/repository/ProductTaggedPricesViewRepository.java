@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface ProductTaggedPricesViewRepository extends CrudRepository<ProductTaggedPricesView, ProductwiseTaggedPriceVersionId> {
     public List<ProductTaggedPricesView> findByProductwiseTaggedPriceVersionId_ProductIdAndTaggedPriceEndaDate(String productId, LocalDate endDate);
+    public List<ProductTaggedPricesView> findByProductwiseTaggedPriceVersionId_ProductId(String productId);
 }

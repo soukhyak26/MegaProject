@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface PaymentTransactionViewRepository  extends CrudRepository<PaymentTransactionView, String> {
     List<PaymentTransactionView> findBySubscriptionId(String subscriptionId);
+
 }
