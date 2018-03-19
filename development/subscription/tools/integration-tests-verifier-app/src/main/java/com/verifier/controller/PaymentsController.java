@@ -5,7 +5,6 @@ import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.payments.repository.*;
 import com.verifier.domains.payments.view.*;
-import com.verifier.domains.product.view.TaggedPriceVersionsView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.Path;
 import java.util.List;
 
 @RestController
@@ -24,11 +22,11 @@ public class PaymentsController {
     private final DeliveryDetailsViewRepository deliveryDetailsViewRepository;
     private final PaymentAccountViewRepository paymentAccountViewRepository;
     private final PaymentInstallmentViewRepository paymentInstallmentViewRepository;
-    private final PaymentSchemesViewRepository paymentSchemesViewRepository;
+    private final PaymentsPaymentSchemesViewRepository paymentsPaymentSchemesViewRepository;
     private final PaymentTransactionViewRepository paymentTransactionViewRepository;
     private final ProductOfferPricesViewRepository productOfferPricesViewRepository;
     private final ProductTaggedPricesViewRepository productTaggedPricesViewRepository;
-    private final ProductViewRepository productViewRepository;
+    private final PaymentsProductViewRepository paymentsProductViewRepository;
     private final RefundTransactionsViewRepository refundTransactionsViewRepository;
     private final RefundViewRepository refundViewRepository;
     private final TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository;
@@ -36,16 +34,16 @@ public class PaymentsController {
     private final TotalSubscriptionCostAccountViewRepository totalSubscriptionCostAccountViewRepository;
 
     @Autowired
-    public PaymentsController(DeliveryCostAccountViewRepository deliveryCostAccountViewRepository, DeliveryDetailsViewRepository deliveryDetailsViewRepository, PaymentAccountViewRepository paymentAccountViewRepository, PaymentInstallmentViewRepository paymentInstallmentViewRepository, PaymentSchemesViewRepository paymentSchemesViewRepository, PaymentTransactionViewRepository paymentTransactionViewRepository, ProductOfferPricesViewRepository productOfferPricesViewRepository, ProductTaggedPricesViewRepository productTaggedPricesViewRepository, ProductViewRepository productViewRepository, RefundTransactionsViewRepository refundTransactionsViewRepository, RefundViewRepository refundViewRepository, TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository, TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository, TotalSubscriptionCostAccountViewRepository totalSubscriptionCostAccountViewRepository) {
+    public PaymentsController(DeliveryCostAccountViewRepository deliveryCostAccountViewRepository, DeliveryDetailsViewRepository deliveryDetailsViewRepository, PaymentAccountViewRepository paymentAccountViewRepository, PaymentInstallmentViewRepository paymentInstallmentViewRepository, PaymentsPaymentSchemesViewRepository paymentsPaymentSchemesViewRepository, PaymentTransactionViewRepository paymentTransactionViewRepository, ProductOfferPricesViewRepository productOfferPricesViewRepository, ProductTaggedPricesViewRepository productTaggedPricesViewRepository, PaymentsProductViewRepository paymentsProductViewRepository, RefundTransactionsViewRepository refundTransactionsViewRepository, RefundViewRepository refundViewRepository, TotalReceivableCostAccountViewRepository totalReceivableCostAccountViewRepository, TotalReceivedCostAccountViewRepository totalReceivedCostAccountViewRepository, TotalSubscriptionCostAccountViewRepository totalSubscriptionCostAccountViewRepository) {
         this.deliveryCostAccountViewRepository = deliveryCostAccountViewRepository;
         this.deliveryDetailsViewRepository = deliveryDetailsViewRepository;
         this.paymentAccountViewRepository = paymentAccountViewRepository;
         this.paymentInstallmentViewRepository = paymentInstallmentViewRepository;
-        this.paymentSchemesViewRepository = paymentSchemesViewRepository;
+        this.paymentsPaymentSchemesViewRepository = paymentsPaymentSchemesViewRepository;
         this.paymentTransactionViewRepository = paymentTransactionViewRepository;
         this.productOfferPricesViewRepository = productOfferPricesViewRepository;
         this.productTaggedPricesViewRepository = productTaggedPricesViewRepository;
-        this.productViewRepository = productViewRepository;
+        this.paymentsProductViewRepository = paymentsProductViewRepository;
         this.refundTransactionsViewRepository = refundTransactionsViewRepository;
         this.refundViewRepository = refundViewRepository;
         this.totalReceivableCostAccountViewRepository = totalReceivableCostAccountViewRepository;
@@ -79,19 +77,19 @@ public class PaymentsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "paymentschemes/{schemeId}")
     public ResponseEntity<PaymentSchemesView> getPaymentSchemes(@PathVariable String schemeId) {
-        PaymentSchemesView paymentSchemesView = paymentSchemesViewRepository.findOne(schemeId);
+        PaymentSchemesView paymentSchemesView = paymentsPaymentSchemesViewRepository.findOne(schemeId);
         return new ResponseEntity<>(paymentSchemesView, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "paymentschemes")
     public ResponseEntity<List<PaymentSchemesView>> getAllPaymentSchemes() {
-        List<PaymentSchemesView> paymentSchemesViews = paymentSchemesViewRepository.findAll();
+        List<PaymentSchemesView> paymentSchemesViews = paymentsPaymentSchemesViewRepository.findAll();
         return new ResponseEntity<>(paymentSchemesViews, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "paymentschemes/active")
     public ResponseEntity<List<PaymentSchemesView>> getAllActivePaymentSchemes() {
-        List<PaymentSchemesView> paymentSchemesViews = paymentSchemesViewRepository.findBySchemeEndDateBefore(SysDate.now());
+        List<PaymentSchemesView> paymentSchemesViews = paymentsPaymentSchemesViewRepository.findBySchemeEndDateBefore(SysDate.now());
         return new ResponseEntity<>(paymentSchemesViews, HttpStatus.OK);
     }
 
@@ -113,7 +111,7 @@ public class PaymentsController {
         return new ResponseEntity<>(offerPricesViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "offerprice/{productId}")
+    @RequestMapping(method = RequestMethod.GET, value = "taggedprice/{productId}")
     public ResponseEntity<List<ProductTaggedPricesView>> getProductTaggedPrice(@PathVariable String productId) {
         List<ProductTaggedPricesView> taggedPricesForAProdct = productTaggedPricesViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(productId);
         return new ResponseEntity<>(taggedPricesForAProdct, HttpStatus.OK);
@@ -121,7 +119,7 @@ public class PaymentsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "product/{productId}")
     public ResponseEntity<ProductView> getProduct(@PathVariable String productId) {
-        ProductView productView = productViewRepository.findOne(productId);
+        ProductView productView = paymentsProductViewRepository.findOne(productId);
         return new ResponseEntity<>(productView, HttpStatus.OK);
     }
 

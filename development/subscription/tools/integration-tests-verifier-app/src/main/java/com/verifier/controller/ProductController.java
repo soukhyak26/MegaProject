@@ -4,7 +4,6 @@ import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.product.repository.*;
 import com.verifier.domains.product.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "product")
 public class ProductController {
-    private final BusinessAccountViewRepository businessAccountViewRepository;
+    private final ProductBusinessAccountViewRepository productBusinessAccountViewRepository;
     private final CategoryDetailsViewRepository categoryDetailsViewRepository;
     private final FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository;
     private final PriceBucketTransactionViewRepository priceBucketTransactionViewRepository;
@@ -38,8 +36,8 @@ public class ProductController {
     private final VariableExpensePerProductViewRepository variableExpensePerProductViewRepository;
 
     @Autowired
-    public ProductController(BusinessAccountViewRepository businessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository) {
-        this.businessAccountViewRepository = businessAccountViewRepository;
+    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository) {
+        this.productBusinessAccountViewRepository = productBusinessAccountViewRepository;
         this.categoryDetailsViewRepository = categoryDetailsViewRepository;
         this.fixedExpensePerProductViewRepository = fixedExpensePerProductViewRepository;
         this.priceBucketTransactionViewRepository = priceBucketTransactionViewRepository;
@@ -61,7 +59,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "businessaccount")
     public ResponseEntity<BusinessAccountView> getBusinessAccount() {
-        List<BusinessAccountView> views = businessAccountViewRepository.findByEndDateAfter(SysDate.now());
+        List<BusinessAccountView> views = productBusinessAccountViewRepository.findByEndDateAfter(SysDate.now());
         return new ResponseEntity<>(views.get(0), HttpStatus.OK);
     }
 

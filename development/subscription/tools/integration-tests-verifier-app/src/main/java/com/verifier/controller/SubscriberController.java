@@ -26,7 +26,7 @@ public class SubscriberController {
     private final DeliveryViewRepository deliveryViewRepository;
     private final LatestPriceBucketViewRepository latestPriceBucketViewRepository;
     private final PaymentSchemesViewRepository paymentSchemesViewRepository;
-    private final ProductViewRepository productViewRepository;
+    private final SubscriberProductViewRepository subscriberProductViewRepository;
     private final SubscriberForecastTrendViewRepository subscriberForecastTrendViewRepository;
     private final SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository;
     private final SubscribersActualsViewRepository subscribersActualsViewRepository;
@@ -42,7 +42,7 @@ public class SubscriberController {
     private final SubscriptionViewRepository subscriptionViewRepository;
 
     @Autowired
-    public SubscriberController(BenefitViewRepository benefitViewRepository, DeliveryActualsViewRepository deliveryActualsViewRepository, DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository, DeliveryForecastTrendViewRepository deliveryForecastTrendViewRepository, DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository, DeliveryViewRepository deliveryViewRepository, LatestPriceBucketViewRepository latestPriceBucketViewRepository, PaymentSchemesViewRepository paymentSchemesViewRepository, ProductViewRepository productViewRepository, SubscriberForecastTrendViewRepository subscriberForecastTrendViewRepository, SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository, SubscribersActualsViewRepository subscribersActualsViewRepository, SubscribersForecastViewRepository subscribersForecastViewRepository, SubscriberViewRepository subscriberViewRepository, SubscriptionActualsViewRepoitory subscriptionActualsViewRepoitory, SubscriptionForecastTrendViewRepository subscriptionForecastTrendViewRepository, SubscriptionForecastViewRepository subscriptionForecastViewRepository, SubscriptionPseudoActualsViewRepository subscriptionPseudoActualsViewRepository, SubscriptionReceivedPaymentViewRepository subscriptionReceivedPaymentViewRepository, SubscriptionRuleViewRepository subscriptionRuleViewRepository, SubscriptionSummaryViewRepository subscriptionSummaryViewRepository, SubscriptionViewRepository subscriptionViewRepository) {
+    public SubscriberController(BenefitViewRepository benefitViewRepository, DeliveryActualsViewRepository deliveryActualsViewRepository, DeliveryChargesRuleViewRepository deliveryChargesRuleViewRepository, DeliveryForecastTrendViewRepository deliveryForecastTrendViewRepository, DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveryPseudoActualsViewRepository deliveryPseudoActualsViewRepository, DeliveryViewRepository deliveryViewRepository, LatestPriceBucketViewRepository latestPriceBucketViewRepository, PaymentSchemesViewRepository paymentSchemesViewRepository, SubscriberProductViewRepository subscriberProductViewRepository, SubscriberForecastTrendViewRepository subscriberForecastTrendViewRepository, SubscriberPseudoActualsViewRepository subscriberPseudoActualsViewRepository, SubscribersActualsViewRepository subscribersActualsViewRepository, SubscribersForecastViewRepository subscribersForecastViewRepository, SubscriberViewRepository subscriberViewRepository, SubscriptionActualsViewRepoitory subscriptionActualsViewRepoitory, SubscriptionForecastTrendViewRepository subscriptionForecastTrendViewRepository, SubscriptionForecastViewRepository subscriptionForecastViewRepository, SubscriptionPseudoActualsViewRepository subscriptionPseudoActualsViewRepository, SubscriptionReceivedPaymentViewRepository subscriptionReceivedPaymentViewRepository, SubscriptionRuleViewRepository subscriptionRuleViewRepository, SubscriptionSummaryViewRepository subscriptionSummaryViewRepository, SubscriptionViewRepository subscriptionViewRepository) {
         this.benefitViewRepository = benefitViewRepository;
         this.deliveryActualsViewRepository = deliveryActualsViewRepository;
         this.deliveryChargesRuleViewRepository = deliveryChargesRuleViewRepository;
@@ -52,7 +52,7 @@ public class SubscriberController {
         this.deliveryViewRepository = deliveryViewRepository;
         this.latestPriceBucketViewRepository = latestPriceBucketViewRepository;
         this.paymentSchemesViewRepository = paymentSchemesViewRepository;
-        this.productViewRepository = productViewRepository;
+        this.subscriberProductViewRepository = subscriberProductViewRepository;
         this.subscriberForecastTrendViewRepository = subscriberForecastTrendViewRepository;
         this.subscriberPseudoActualsViewRepository = subscriberPseudoActualsViewRepository;
         this.subscribersActualsViewRepository = subscribersActualsViewRepository;
@@ -74,7 +74,7 @@ public class SubscriberController {
         return new ResponseEntity<>(schemes, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "deliveries")
+    @RequestMapping(method = RequestMethod.GET, value = "deliveries/actuals")
     public ResponseEntity<List<DeliveryActualsView>> getDeliveryActuals() {
         List<DeliveryActualsView> deliveryActuals = deliveryActualsViewRepository.findAll();
         return new ResponseEntity<>(deliveryActuals, HttpStatus.OK);
@@ -130,7 +130,7 @@ public class SubscriberController {
 
     @RequestMapping(method = RequestMethod.GET, value = "product/{productId}")
     public ResponseEntity<ProductView> getProduct(@PathVariable String productId) {
-        ProductView productView = productViewRepository.findOne(productId);
+        ProductView productView = subscriberProductViewRepository.findOne(productId);
         return new ResponseEntity<>(productView, HttpStatus.OK);
     }
 
