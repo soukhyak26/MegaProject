@@ -11,6 +11,7 @@ import java.util.List;
  * Created by mandar on 5/2/2017.
  */
 public interface PriceBucketTransactionViewRepository extends CrudRepository<PriceBucketTransactionView,PriceBucketTransactionId> {
+    public List<PriceBucketTransactionView> findByPriceBucketTransactionId_ProductId(String productId);
     public List<PriceBucketTransactionView> findByPriceBucketTransactionId_ProductIdAndPriceBucketTransactionId_PriceBucketId(String productId, String priceBucketId);
     public List<PriceBucketTransactionView> findByPriceBucketTransactionId_ProductIdAndPriceBucketTransactionId_PriceBucketIdAndPriceBucketTransactionId_TransactionDateBetween(String productId, String priceBucketId, LocalDate startDate, LocalDate endDate);
 }

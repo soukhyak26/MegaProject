@@ -12,6 +12,7 @@ import java.util.List;
  * Created by mandar on 9/10/2017.
  */
 public interface SubscriberPseudoActualsViewRepository extends CrudRepository<SubscriberPseudoActualsView, SubscriberVersionId> {
+    public List<SubscriberPseudoActualsView> findAll();
     public List<SubscriberPseudoActualsView> findByForecastContentStatus(ForecastContentStatus forecastContentStatus);
     public List<SubscriberPseudoActualsView> findByForecastContentStatusAndSubscriberVersionId_ForecastDateLessThan(ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
     public List<SubscriberPseudoActualsView> findByForecastContentStatusAndSubscriberVersionId_ForecastDate(ForecastContentStatus forecastContentStatus, LocalDate forecastDate);

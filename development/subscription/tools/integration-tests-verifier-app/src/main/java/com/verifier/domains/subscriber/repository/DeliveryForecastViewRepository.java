@@ -13,6 +13,7 @@ import java.util.List;
  * Created by mandar on 9/23/2017.
  */
 public interface DeliveryForecastViewRepository extends CrudRepository<DeliveryForecastView,DeliveryForecastVersionId> {
+    public List<DeliveryForecastView> findAll();
     public List<DeliveryForecastView> findByEndDateBetween(LocalDate endDate1, LocalDate endDate2);
     public List<DeliveryForecastView> findByEndDateLessThan(LocalDate endDate1, Sort sort);
     public List<DeliveryForecastView> findByForecastContentStatusOrderByDeliveryForecastVersionId_ForecastDateAsc(ForecastContentStatus forecastContentStatus);

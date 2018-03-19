@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by rbsavaliya on 16-01-2016.
  */
+//TODO: THis needs revision
 @Document(collection = "SubscriptionReceivedPaymentView")
 public class SubscriptionReceivedPaymentView {
 

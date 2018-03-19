@@ -131,4 +131,22 @@ public class PaymentsController {
         return new ResponseEntity<>(refundTransactionsView, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "totalreceivables/{paymentAccountId}")
+    public ResponseEntity<TotalReceivableCostAccountView> getTotalReceivables(@PathVariable String paymentAccountId) {
+        TotalReceivableCostAccountView totalReceivableCostAccountView = totalReceivableCostAccountViewRepository.findOne(paymentAccountId);
+        return new ResponseEntity<>(totalReceivableCostAccountView, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "totalreceived/{paymentAccountId}")
+    public ResponseEntity<TotalReceivedCostAccountView> getTotalReceived(@PathVariable String paymentAccountId) {
+        TotalReceivedCostAccountView totalReceivedCostAccountView = totalReceivedCostAccountViewRepository.findOne(paymentAccountId);
+        return new ResponseEntity<>(totalReceivedCostAccountView, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "totalsubscription/{paymentAccountId}")
+    public ResponseEntity<TotalSubscriptionCostAccountView> getTotalSubscriptionCost(@PathVariable String paymentAccountId) {
+        TotalSubscriptionCostAccountView totalSubscriptionCostAccountView = totalSubscriptionCostAccountViewRepository.findOne(paymentAccountId);
+        return new ResponseEntity<>(totalSubscriptionCostAccountView, HttpStatus.OK);
+    }
+
 }

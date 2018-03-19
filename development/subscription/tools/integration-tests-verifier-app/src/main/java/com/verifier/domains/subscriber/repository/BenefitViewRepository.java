@@ -10,5 +10,6 @@ import java.util.List;
  * Created by rbsavaliya on 25-10-2015.
  */
 public interface BenefitViewRepository extends CrudRepository<BenefitView, String> {
+    List<BenefitView> findAll();
     List<BenefitView> findByActivationStartTimeGreaterThanEqual(LocalDateTime localDateTime);
 }

@@ -11,5 +11,7 @@ import java.util.List;
  * Created by rbsavaliya on 02-10-2015.
  */
 public interface DeliveryViewRepository extends CrudRepository<DeliveryView, DeliveryId> {
+    public List<DeliveryView> findAll();
+
     public List<DeliveryView> findByDeliveryStatus(DeliveryStatus deliveryStatus);
 }
