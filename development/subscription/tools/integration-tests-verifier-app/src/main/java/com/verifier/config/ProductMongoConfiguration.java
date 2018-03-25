@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.net.UnknownHostException;
 
 @Configuration
-@EnableMongoRepositories(basePackageClasses = {ProductBusinessAccountViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef="productMongoTemplate",basePackageClasses = {ProductBusinessAccountViewRepository.class,
 com.verifier.domains.product.repository.CategoryDetailsViewRepository.class,
 com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.class,
         com.verifier.domains.product.repository.PriceBucketTransactionViewRepository.class,
@@ -37,9 +37,9 @@ com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.cla
         com.verifier.domains.product.repository.VariableExpensePerProductViewRepository.class})
 public class ProductMongoConfiguration {
     @Bean
-    @Qualifier("ProductMongoTemplate")
-    public MongoTemplate mongoTemplate(@Qualifier("ProductMongoDbFactory") MongoDbFactory factory) {
-        System.out.println("###INside MOngoTemplate creation");
+    @Qualifier("productMongoTemplate")
+    public MongoTemplate productMongoTemplate(@Qualifier("productMongoDbFactory") MongoDbFactory factory) {
+        System.out.println("###INside ProductMongoTemplate creation " + factory.getDb().getName());
         MongoTemplate mongoTemplate = new MongoTemplate(factory);
         return mongoTemplate;
     }
@@ -66,8 +66,8 @@ public class ProductMongoConfiguration {
     }
 
     @Bean
-    @Qualifier("ProductMongoDbFactory")
-    public MongoDbFactory mongoDbFactory(@Value("${view.db.product.host}") String host, @Value("${view.db.product.port}") int port,
+    @Qualifier("productMongoDbFactory")
+    public MongoDbFactory productMongoDbFactory(@Value("${view.db.product.host}") String host, @Value("${view.db.product.port}") int port,
                                          @Value("${view.db.product.name}") String dbName) throws UnknownHostException {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);

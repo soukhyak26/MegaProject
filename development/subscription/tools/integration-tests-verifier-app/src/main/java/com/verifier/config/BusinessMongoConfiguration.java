@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.net.UnknownHostException;
 @Configuration
-@EnableMongoRepositories(basePackageClasses = {BusinessBusinessAccountViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef="businessMongoTemplate",  basePackageClasses = {BusinessBusinessAccountViewRepository.class,
         BusinessBenefitAccountTransactionsViewRepository.class,
         BusinessBenefitAccountViewRepository.class,
         BusinessBookingAmountAccountViewRepository.class,
@@ -57,9 +57,10 @@ import java.net.UnknownHostException;
 })
 public class BusinessMongoConfiguration {
     @Bean
-    @Qualifier("BusinessMongoTemplate")
-    public MongoTemplate businessMongoTemplate(@Qualifier("BusinessMongoDbFactory") MongoDbFactory factory) {
-        System.out.println("###INside MOngoTemplate creation");
+    @Qualifier("businessMongoTemplate")
+    @Primary
+    public MongoTemplate businessMongoTemplate(@Qualifier("businessMongoDbFactory") MongoDbFactory factory) {
+        System.out.println("###INside BusinessMongoTemplate creation " + factory.getDb().getName());
         MongoTemplate businessMongoTemplate = new MongoTemplate(factory);
         return businessMongoTemplate;
     }
@@ -74,9 +75,7 @@ public class BusinessMongoConfiguration {
     @Bean
     @Qualifier("BusinessMongoClientURI")
     public MongoClientURI businessMongoClientURI(@Value("${view.db.business.host}") String host, @Value("${view.db.business.port}") int port,
-                                         @Value("${view.db.business.name}") String dbName,
-                                         @Value("${affaince.db.username}") String username,
-                                         @Value("${affaince.db.password}") String password) {
+                                         @Value("${view.db.business.name}") String dbName) {
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
@@ -87,7 +86,7 @@ public class BusinessMongoConfiguration {
 
     @Bean
     @Primary
-    @Qualifier("BusinessMongoDbFactory")
+    @Qualifier("businessMongoDbFactory")
     public MongoDbFactory businessMongoDbFactory(@Value("${view.db.business.host}") String host, @Value("${view.db.business.port}") int port,
                                          @Value("${view.db.business.name}") String dbName) throws UnknownHostException {
         System.out.println("###INside mongoDbFactory creation");

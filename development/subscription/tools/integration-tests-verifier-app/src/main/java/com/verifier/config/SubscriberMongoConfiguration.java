@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.net.UnknownHostException;
 
 @Configuration
-@EnableMongoRepositories(basePackageClasses = {com.verifier.domains.subscriber.repository.BenefitViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef ="subscriberMongoTemplate", basePackageClasses = {com.verifier.domains.subscriber.repository.BenefitViewRepository.class,
 com.verifier.domains.subscriber.repository.DeliveryActualsViewRepository.class,
 com.verifier.domains.subscriber.repository.DeliveryChargesRuleViewRepository.class,
         com.verifier.domains.subscriber.repository.DeliveryForecastTrendViewRepository.class,
@@ -43,9 +43,9 @@ com.verifier.domains.subscriber.repository.DeliveryChargesRuleViewRepository.cla
         })
 public class SubscriberMongoConfiguration {
     @Bean
-    @Qualifier("SubscriberMongoTemplate")
-    public MongoTemplate mongoTemplate(@Qualifier("SubscriberMongoDbFactory") MongoDbFactory factory) {
-        System.out.println("###INside MOngoTemplate creation");
+    @Qualifier("subscriberMongoTemplate")
+    public MongoTemplate subscriberMongoTemplate(@Qualifier("SubscriberMongoDbFactory") MongoDbFactory factory) {
+        System.out.println("###INside SubscriberMongoTemplate creation " + factory.getDb().getName());
         MongoTemplate mongoTemplate = new MongoTemplate(factory);
         return mongoTemplate;
     }

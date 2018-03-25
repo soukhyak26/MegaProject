@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.net.UnknownHostException;
 
 @Configuration
-@EnableMongoRepositories(basePackageClasses = {com.verifier.domains.payments.repository.DeliveryCostAccountViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef="paymentsMongoTemplate",basePackageClasses = {com.verifier.domains.payments.repository.DeliveryCostAccountViewRepository.class,
 com.verifier.domains.payments.repository.DeliveryDetailsViewRepository.class,
 com.verifier.domains.payments.repository.PaymentAccountViewRepository.class,
         com.verifier.domains.payments.repository.PaymentInstallmentViewRepository.class,
@@ -34,9 +34,9 @@ com.verifier.domains.payments.repository.PaymentAccountViewRepository.class,
         })
 public class PaymentsMongoConfiguration {
     @Bean
-    @Qualifier("PaymentsMongoTemplate")
-    public MongoTemplate mongoTemplate(@Qualifier("PaymentsMongoDbFactory") MongoDbFactory factory) {
-        System.out.println("###INside MOngoTemplate creation");
+    @Qualifier("paymentsMongoTemplate")
+    public MongoTemplate paymentsMongoTemplate(@Qualifier("paymentsMongoDbFactory") MongoDbFactory factory) {
+        System.out.println("###INside Payments MongoTemplate creation " + factory.getDb().getName());
         MongoTemplate mongoTemplate = new MongoTemplate(factory);
         return mongoTemplate;
     }
@@ -63,8 +63,8 @@ public class PaymentsMongoConfiguration {
     }
 
     @Bean
-    @Qualifier("PaymentsMongoDbFactory")
-    public MongoDbFactory mongoDbFactory(@Value("${view.db.payments.host}") String host, @Value("${view.db.payments.port}") int port,
+    @Qualifier("paymentsMongoDbFactory")
+    public MongoDbFactory paymentsMongoDbFactory(@Value("${view.db.payments.host}") String host, @Value("${view.db.payments.port}") int port,
                                          @Value("${view.db.payments.name}") String dbName) throws UnknownHostException {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);

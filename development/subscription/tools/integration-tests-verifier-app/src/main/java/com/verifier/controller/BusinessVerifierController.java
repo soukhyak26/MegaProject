@@ -78,8 +78,8 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "businessaccount/configure")
     ResponseEntity<BusinessAccountConfigurationView> getBusinessAccountConfiguration(){
-        Iterable<BusinessAccountConfigurationView> configurations = businessBusinessAccountConfigurationViewRepository.findAll();
-        return new ResponseEntity<BusinessAccountConfigurationView>(configurations.iterator().next(), HttpStatus.OK);
+        List<BusinessAccountConfigurationView> configurations = businessBusinessAccountConfigurationViewRepository.findAll();
+        return new ResponseEntity<BusinessAccountConfigurationView>(configurations.get(0), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "purchaseaccount/{id}")
