@@ -1,0 +1,7 @@
+{
+  "merchantId": "merchant1",
+  "budgetAdjustmentOptions": "ACCEPT_AUTOMATED_BUDGET_ADJUSTEMENT",
+  "startDateOfFinancialYear": "2018-01-01",
+  "endDateOfFinancialYear": "2018-12-31",
+  "taxAsPercentageOfAnnualRevenue": 0.2
+}
