@@ -5,3 +5,9 @@ Scenario: create categories
 
 Scenario: verify productcategory configuration from read side
 * def readResult = call read('classpath:domains/product/category/verify_product_category.feature')
+
+Scenario: create product
+* def result = call read('classpath:domains/product/create/create_product.feature')
+
+Scenario: verify product from read side
+* def readResult = call read('classpath:domains/product/create/verify_product.feature')
