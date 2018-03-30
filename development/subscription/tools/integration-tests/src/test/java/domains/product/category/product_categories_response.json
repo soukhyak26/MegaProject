@@ -1,0 +1,50 @@
+[
+  {
+  "categoryId":"#ignore",
+  "categoryName": "ToothPaste",
+  "description": "Toothpastes of various sizes and brands",
+  "parentCategoryId": "null"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Small ToothPaste",
+    "description": "Toothpastes of small sizes and various brands",
+    "parentCategoryId": "#ignore"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Medium ToothPaste",
+    "description": "Toothpastes of medium sizes and various brands",
+    "parentCategoryId": "#ignore"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Large ToothPaste",
+    "description": "Toothpastes of large sizes and various brands",
+    "parentCategoryId": "#ignore"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Soap",
+    "description": "Soaps of various sizes and brands",
+    "parentCategoryId": "null"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Small Soap",
+    "description": "Soaps of small sizes and various brands",
+    "parentCategoryId": "#ignore"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Medium Soap",
+    "description": "Soaps of medium sizes and various brands",
+    "parentCategoryId": "#ignore"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Large Soap",
+    "description": "Soaps of large sizes and various brands",
+    "parentCategoryId": "#ignore"
+  }
+]
