@@ -4,7 +4,6 @@ import com.affaince.subscription.common.type.PricingStrategyType;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.type.QuantityUnit;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
-import com.verifier.domains.product.vo.DemandWiseProfitSharingRule;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,11 +24,8 @@ public class ProductView {
     private List<String> substitutes;
     private List<String> complements;
     private Map<SensitivityCharacteristic, Double> sensitiveTo;
-
-    private short revenueChangeThresholdForPriceChange;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
-    private List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules;
     private double currentOperatingExpensePerUnit;
     private long currentStockInUnits;
     private ProductPricingCategory productPricingCategory;
@@ -37,7 +33,7 @@ public class ProductView {
     private PricingStrategyType pricingStrategyType;
 
 
-    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo) {
+    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements,Map<SensitivityCharacteristic, Double> sensitiveTo,ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -47,6 +43,8 @@ public class ProductView {
         this.substitutes = substitutes;
         this.complements = complements;
         this.sensitiveTo=sensitiveTo;
+        this.productPricingCategory=productPricingCategory;
+        this.pricingStrategyType = PricingStrategyType.DEFAULT_PRICING_STRATEGY;
     }
 
     public String getProductId() {
@@ -145,14 +143,6 @@ public class ProductView {
         this.creditPoints = creditPoints;
     }
 
-    public short getRevenueChangeThresholdForPriceChange() {
-        return revenueChangeThresholdForPriceChange;
-    }
-
-    public void setRevenueChangeThresholdForPriceChange(short revenueChangeThresholdForPriceChange) {
-        this.revenueChangeThresholdForPriceChange = revenueChangeThresholdForPriceChange;
-    }
-
 
     public boolean isCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;
@@ -170,19 +160,19 @@ public class ProductView {
         isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
     }
 
-    public List<DemandWiseProfitSharingRule> getDemandWiseProfitSharingRules() {
-        return demandWiseProfitSharingRules;
-    }
-
-    public void setDemandWiseProfitSharingRules(List<DemandWiseProfitSharingRule> demandWiseProfitSharingRules) {
-        this.demandWiseProfitSharingRules = demandWiseProfitSharingRules;
-    }
-
     public PricingStrategyType getPricingStrategyType() {
         return pricingStrategyType;
     }
 
     public void setPricingStrategyType(PricingStrategyType pricingStrategyType) {
         this.pricingStrategyType = pricingStrategyType;
+    }
+
+    public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
+        return sensitiveTo;
+    }
+
+    public void setSensitiveTo(Map<SensitivityCharacteristic, Double> sensitiveTo) {
+        this.sensitiveTo = sensitiveTo;
     }
 }

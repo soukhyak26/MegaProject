@@ -140,7 +140,7 @@ public class ProductController {
         List<RecommendedPriceBucketView> recommendations=recommendedPriceBucketViewRepository.findByProductwisePriceBucketId_ProductId(productId);
         return new ResponseEntity<>(recommendations,HttpStatus.OK);
     }
-    @RequestMapping(method = RequestMethod.GET, value = "taggedrice/{productId}")
+    @RequestMapping(method = RequestMethod.GET, value = "taggedprice/{productId}")
     public ResponseEntity<List<TaggedPriceVersionsView>> getTaggedPriceVersion(@PathVariable String productId){
         List<TaggedPriceVersionsView> taggedPrices = taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(productId);
         return new ResponseEntity<>(taggedPrices,HttpStatus.OK);

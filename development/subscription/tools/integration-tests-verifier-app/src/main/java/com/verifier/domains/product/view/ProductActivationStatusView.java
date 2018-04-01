@@ -35,14 +35,6 @@ public class ProductActivationStatusView {
         return productStatuses;
     }
 
-    public ProductStatus getLatestProductStatus() {
-        return productStatuses.get(productStatuses.size() -1);
-    }
-
-    public void flushProductStatuses() {
-        productStatuses.clear();
-    }
-
     public void addProductStatus(ProductStatus productStatus) {
             productStatuses.add(productStatus);
 
