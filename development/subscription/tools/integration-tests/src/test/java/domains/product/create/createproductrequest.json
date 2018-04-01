@@ -4,10 +4,10 @@
   "subCategoryId":"#(subCategoryId)",
   "quantity": "300",
   "quantityUnit": "GM",
-  "substitutes":"null",
-  "complements":"null",
-  "sensitiveTo":"null",
-  "productPricingCategory":"PRICE_COMMITMENT",
+  "substitutes":["0"],
+  "complements":["0"],
+  "sensitiveTo":{"NONE":"1.0"},
+  "productPricingCategory":"1",
   "purchasePrice":"200",
   "mrp": "240"
 }

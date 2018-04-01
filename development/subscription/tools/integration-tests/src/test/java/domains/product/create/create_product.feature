@@ -6,13 +6,16 @@ Background:
 
 Scenario:
 Given url platformProductUrl
-And path 'category/name/Large ToothPaste'
+And path 'product/category/name/Large ToothPaste'
 When method get
 Then status 200
-And match response == { categoryId: '#ignore', categoryName: 'Large ToothPaste', description: '#ignore', parentCategoryId: '#ignore' }
+And match response == {categoryId:'#notnull', categoryName:'Large ToothPaste', description:'#notnull', parentCategoryId:'#notnull'}
 
 * def categoryId = response.parentCategoryId
 * def subCategoryId = response.categoryId
+
+* print "###CategoryId:" + categoryId
+* print "####subCategoryId:" + subCategoryId
 
 Scenario:
 Given url platformProductUrl

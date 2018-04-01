@@ -5,10 +5,16 @@
   "subCategoryId":"#(subCategoryId)",
   "quantity": "300",
   "quantityUnit": "GM",
-  "substitutes":"null",
-  "complements":"null",
-  "sensitiveTo":"null",
-  "productPricingCategory":"PRICE_COMMITMENT",
-  "purchasePrice":"200",
-  "mrp": "240"
+  "substitutes":["0"],
+  "complements":["0"],
+  "sensitiveTo":{"NONE":"1.0"},
+  "revenueChangeThresholdForPriceChange":"#(ignore)",
+  "isCrossPriceElasticityConsidered":"false",
+  "isAdvertisingExpensesConsidered":"false",
+  "demandWiseProfitSharingRules":"#(ignore)",
+  "currentOperatingExpensePerUnit":"#(ignore)",
+  "currentStockInUnits":"#(ignore)",
+  "productPricingCategory":"1",
+  "creditPoints":"0",
+  "pricingStrategyType": "0"
 }

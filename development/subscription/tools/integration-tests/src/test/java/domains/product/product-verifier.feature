@@ -8,6 +8,8 @@ Scenario: verify productcategory configuration from read side
 
 Scenario: create product
 * def result = call read('classpath:domains/product/create/create_product.feature')
+* print result
+* def productId = $result.productId
+* print "##Global productId: " + productId
 
-Scenario: verify product from read side
-* def readResult = call read('classpath:domains/product/create/verify_product.feature')
+* def readResult = call read('classpath:domains/product/create/verify_product.feature') $result
