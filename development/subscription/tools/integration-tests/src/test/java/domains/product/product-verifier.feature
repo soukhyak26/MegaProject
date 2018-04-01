@@ -1,3 +1,4 @@
+@ignore
 Feature: verify category creation and product creation and configuration on read side
 
 Scenario: create categories

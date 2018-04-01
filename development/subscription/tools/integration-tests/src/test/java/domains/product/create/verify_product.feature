@@ -37,3 +37,30 @@ And header Accept = 'application/json'
 When method get
 Then status 200
 And match response == expectedResponseActivationStatus
+
+* def expectedResponseBusiness = read('classpath:domains/product/create/createproductresponse_business.json')
+Scenario:
+Given url businessReadUrl
+And path 'business/product/' + __arg.productId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == expectedResponseBusiness
+
+* def expectedTaggedPriceResponsePayments = read('classpath:domains/product/create/createtaggedpriceresponse_payments.json')
+Scenario:
+Given url paymentsReadUrl
+And path 'payments/taggedprice/' + __arg.productId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == expectedTaggedPriceResponsePayments
+
+* def expectedResponsePayments = read('classpath:domains/product/create/createproductresponse_payments.json')
+Scenario:
+Given url paymentsReadUrl
+And path 'payments/product/' + __arg.productId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == expectedResponsePayments
