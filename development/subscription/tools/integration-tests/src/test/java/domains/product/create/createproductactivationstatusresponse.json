@@ -1,4 +1,4 @@
 {
-  "productId":"#(ignore)",
+  "productId":"#notnull",
   "productStatuses":["PRODUCT_REGISTERED"]
 }

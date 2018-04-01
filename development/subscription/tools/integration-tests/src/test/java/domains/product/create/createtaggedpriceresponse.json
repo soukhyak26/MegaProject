@@ -1,8 +1,8 @@
-{
-  "productwiseTaggedPriceVersionId":{"productId":"#(ignore)","taggedPriceVersionId":"#(ignore)"},
-  "purchasePricePerUnit":"200",
-  "MRP":"240",
-  "breakEvenPrice":"#ignore",
-  "taggedStartDate":"#ignore",
-  "taggedEndDate":"#ignore"
-}
+[{
+  "productwiseTaggedPriceVersionId":{"productId":"#notnull","taggedPriceVersionId":"#notnull"},
+  "purchasePricePerUnit":200,
+  "mrp":240,
+  "breakEvenPrice":"#notnull",
+  "taggedStartDate":"#notnull",
+  "taggedEndDate":"#notnull"
+}]

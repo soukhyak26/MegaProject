@@ -20,7 +20,7 @@ When method get
 Then status 200
 And match response == expectedResponse
 
-* def expectedResponseTaggedPrice = read('classpath:domains/product/create/createaggedpriceresponse.json')
+* def expectedResponseTaggedPrice = read('classpath:domains/product/create/createtaggedpriceresponse.json')
 Scenario:
 Given url productReadUrl
 And path 'product/taggedprice/' + __arg.productId
