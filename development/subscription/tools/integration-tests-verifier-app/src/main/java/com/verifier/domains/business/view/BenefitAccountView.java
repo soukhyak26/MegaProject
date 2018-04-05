@@ -14,15 +14,15 @@ import java.util.List;
 @Document(collection = "BenefitAccountView")
 public class BenefitAccountView {
     @Id
-    private String year;
-    private double provisonAmount;
+    private String businessAccountId;
+    private double provisionAmount;
     private ProvisionCalendar provisionCalendar;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public BenefitAccountView(String year, double provisonAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
-        this.year = year;
-        this.provisonAmount = provisonAmount;
+    public BenefitAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
+        this.businessAccountId = businessAccountId;
+        this.provisionAmount = provisionAmount;
         this.startDate = startDate;
         this.endDate = endDate;
         this.provisionCalendar=new ProvisionCalendar(startDate,endDate);
@@ -30,20 +30,24 @@ public class BenefitAccountView {
 
     }
 
-    public String getYear() {
-        return year;
+    public String getBusinessAccountId() {
+        return businessAccountId;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setBusinessAccountId(String businessAccountId) {
+        this.businessAccountId = businessAccountId;
     }
 
-    public double getProvisonAmount() {
-        return provisonAmount;
+    public double getProvisionAmount() {
+        return provisionAmount;
     }
 
-    public void setProvisonAmount(double provisonAmount) {
-        this.provisonAmount = provisonAmount;
+    public void setProvisionAmount(double provisionAmount) {
+        this.provisionAmount = provisionAmount;
+    }
+
+    public void setProvisionCalendar(ProvisionCalendar provisionCalendar) {
+        this.provisionCalendar = provisionCalendar;
     }
 
     public LocalDate getStartDate() {
