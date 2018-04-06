@@ -1,4 +1,4 @@
-Feature: integration test suite convering operations in all the domains
+Feature: integration test suite covering operations in all the domains
 
 Scenario:verify business account creation and configuration on read side for the financial year
 * def businessResult = call read('classpath:domains/business/business-verifier.feature')

@@ -1,0 +1,22 @@
+{
+  "productId" : "#notnull",
+  "actualsAggregationPeriodForTargetForecast" : 30,
+  "targetChangeThresholdForPriceChange" : 0.1,
+  "isCrossPriceElasticityConsidered" : "false",
+  "isAdvertisingExpensesConsidered" : "false",
+  "pricingStrategyType" : "DEFAULT_PRICING_STRATEGY",
+  "pricingOptions" : "MANUAL_PRICE_INPUT",
+  "nextForecastDate" : "#ignore",
+  "demandCurvePeriod" : {
+    "value": 2 ,
+    "unit" : "YEAR"
+  },
+  "tentativePercentageChangeInProductDemand":0.1 ,
+  "costHeaderTypes" : [
+    "PURCHASE_PRICE_PER_UNIT",
+      "FIXED_EXPENSE_PER_UNIT",
+      "VARIABLE_EXPENSE_PER_UNIT",
+      "TAX_PER_UNIT"
+  ],
+  "contingencyStockPercentage" : 0.1
+}
