@@ -1,9 +1,5 @@
 @ignore
 Feature: define product categories
-Background:
-* url   platformProductUrl
-
-* print platformProductUrl
 
 Scenario:
 Given url platformProductUrl
@@ -11,10 +7,6 @@ And path 'product/category'
 And request read('classpath:domains/product/category/categoryrequest1.json')
 When method post
 Then status 201
-
-* def parentId1 = response.id
-
-* print "#####parent ID :" + parentId1
 
 Scenario:
 Given url platformProductUrl
@@ -44,9 +36,6 @@ And path 'product/category'
 And request read('classpath:domains/product/category/categoryrequest2.json')
 When method post
 Then status 201
-
-* def parentId2 = response.id
-* print "#####parent ID2 :" + parentId2
 
 Scenario:
 Given url platformProductUrl

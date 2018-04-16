@@ -8,5 +8,5 @@ Given url platformBusinessUrl
 And path 'business/provision/benefits'
 And request read('classpath:domains/business/benefits/set-budget-benefit.json')
 When method post
-Then status 200
+Then status 201
 

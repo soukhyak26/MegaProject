@@ -2,7 +2,6 @@
 Feature: read product categories configured
 
 Background:
-* url productReadUrl
 * def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
 
 Scenario:

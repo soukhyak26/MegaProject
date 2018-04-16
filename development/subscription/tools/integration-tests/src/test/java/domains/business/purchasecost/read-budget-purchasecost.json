@@ -1,5 +1,5 @@
 {
-  "businessAccountId":"#ignore",
+  "businessAccountId":"#notnull",
   "provisionAmount":1200000.00,
   "provisionCalendar": {
     "installmentCalendar": [

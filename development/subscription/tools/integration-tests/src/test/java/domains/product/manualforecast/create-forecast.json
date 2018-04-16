@@ -5,10 +5,9 @@
       "endDate" : "",
       "purchasePricePerUnit" : 200.0,
       "MRP" : 240.0,
-      "numberOfNewSubscriptions" :
-      "numberOfChurnedSubscriptions" :
+      "numberOfNewSubscriptions" : "" ,
+      "numberOfChurnedSubscriptions" : "" ,
       "forecastContentStatus" : "ACTIVE"
     }
   ]
-
 }

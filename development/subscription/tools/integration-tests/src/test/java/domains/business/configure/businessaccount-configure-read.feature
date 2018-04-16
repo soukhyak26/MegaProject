@@ -2,7 +2,6 @@
 Feature: read business account configured for the financial year
 
 Background:
-* url businessReadUrl
 * def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
 
 Scenario:
