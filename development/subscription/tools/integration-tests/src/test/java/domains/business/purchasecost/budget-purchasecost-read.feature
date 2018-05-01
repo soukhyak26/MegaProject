@@ -10,8 +10,7 @@ Scenario:
 * def expectedProvisionResponse = read('classpath:domains/business/purchasecost/read-budget-purchasecost.json')
 
 Given url businessReadUrl
-And path 'business/purchaseaccount/' + __arg.id
-And header Accept = 'application/json'
+And path 'business/purchaseaccount/' +__arg.id
 When method get
 Then status 200
 And match response == expectedProvisionResponse

@@ -13,6 +13,6 @@
   "productPricingCategory":1,
   "creditPoints":0,
   "pricingStrategyType": "DEFAULT_PRICING_STRATEGY",
-  "crossPriceElasticityConsidered":false,
-  "advertisingExpensesConsidered":false
+  "isCrossPriceElasticityConsidered":false,
+  "isAdvertisingExpensesConsidered":false
 }

@@ -8,6 +8,7 @@ When method get
 Then status 200
 And match response == read('classpath:domains/product/config/retrieveproductresponse1.json')
 
+* def derivedProductId = response[0].productId
 Scenario:
 Given url platformProductUrl
 And path 'product/config/' + derivedProductId

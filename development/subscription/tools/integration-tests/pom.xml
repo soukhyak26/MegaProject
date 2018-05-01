@@ -116,16 +116,6 @@
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
-<!--
-                <configuration>
-                    <skip>false</skip>
-                    <includes>
-                        <includes>
-                            <include>domains/DemoTest.java</include>
-                        </includes>
-                    </includes>
-                </configuration>
--->
             </plugin>
         </plugins>
     </build>

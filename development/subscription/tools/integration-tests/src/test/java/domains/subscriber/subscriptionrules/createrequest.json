@@ -1,0 +1,43 @@
+{
+  "maximumPermissibleAmount" : 50000,
+  "minimumAmountForDiscountEligibility" : 20000,
+  "maximumPermissibleDiscount":0.20,
+  "maximumPermissibleDiscountUnit":1,
+  "minimumAmountEligibleForFreeShipping": 1000,
+  "diffBetweenDeliveryPreparationAndDispatchDate" : 2,
+  "actualsAggregationPeriodForTargetForecast" : 30,
+  "contingencyStockPercentage" : 0.1,
+  "subscriptionValueRanges" :[
+    {"minimumValue":5000,
+    "maximumValue":8000
+    },
+    {"minimumValue":8001,
+      "maximumValue":10000
+    },
+    {"minimumValue":10001,
+      "maximumValue":13000
+    },
+    {"minimumValue":13001,
+      "maximumValue":18000
+    },
+
+    {"minimumValue":18001,
+      "maximumValue":25000
+    },
+    {"minimumValue":25001,
+      "maximumValue":30000
+    },
+    {"minimumValue":30001,
+      "maximumValue":35000
+    },
+    {"minimumValue":35001,
+      "maximumValue":40000
+    },
+    {"minimumValue":40001,
+      "maximumValue":50000
+    },
+    {"minimumValue":50001,
+      "maximumValue":-1
+    }
+  ]
+}

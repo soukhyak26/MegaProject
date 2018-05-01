@@ -10,6 +10,9 @@ Background:
 * url   platformPaymentsUrl
 * url   paymentsReadUrl
 
+Scenario:Create subscription rules and verify the same
+* call read('classpath:domains/subscriber/subscriptionrules/subscriptionrules-verifier.feature')
+
 Scenario:verify business account creation and configuration on read side for the financial year
 * call read('classpath:domains/business/business-verifier.feature')
 

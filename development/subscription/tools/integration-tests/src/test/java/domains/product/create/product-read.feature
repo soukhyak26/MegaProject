@@ -32,7 +32,6 @@ When method get
 Then status 200
 And match response == read('classpath:domains/product/create/createproductactivationstatusresponse.json')
 
-* def expectedResponseBusiness =
 Scenario:
 Given url businessReadUrl
 And path 'business/product/' + __arg.productId
