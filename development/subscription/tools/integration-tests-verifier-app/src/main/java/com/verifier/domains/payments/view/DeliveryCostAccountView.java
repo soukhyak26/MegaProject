@@ -18,6 +18,9 @@ public class DeliveryCostAccountView {
     private double paymentReceived;
     private LocalDate deliveryDate;
 
+    public DeliveryCostAccountView() {
+    }
+
     public DeliveryCostAccountView(String deliveryId, String subscriberId, String subscriptionId, int deliverySequence, double deliveryAmount, LocalDate deliveryDate) {
         this.deliveryId = new DeliveryId(deliveryId,subscriberId,subscriptionId);
         this.subscriptionId = subscriptionId;

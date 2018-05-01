@@ -8,6 +8,9 @@ public class ProductForecastMetricsForOpExView {
     private double mrp;
     private long totalNumberOfExistingSubscriptions;
 
+    public ProductForecastMetricsForOpExView() {
+    }
+
     public ProductForecastMetricsForOpExView(String productId, double mrp, long totalNumberOfExistingSubscriptions) {
         this.productId = productId;
         this.mrp = mrp;

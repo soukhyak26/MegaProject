@@ -18,6 +18,10 @@ public class SubscriptionForecastTrendView {
     private double referenceChurnedSubscriptionCount;
     private double changeInChurnedSubscriptionCount;
     private double referenceTotalSubscriptionCount;
+
+    public SubscriptionForecastTrendView() {
+    }
+
     private double changeInTotalSubscriptionCount;
 
 

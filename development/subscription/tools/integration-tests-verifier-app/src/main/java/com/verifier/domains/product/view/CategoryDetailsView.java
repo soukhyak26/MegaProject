@@ -14,6 +14,9 @@ public class CategoryDetailsView {
     private String description;
     private String parentCategoryId;
 
+    public CategoryDetailsView() {
+    }
+
     public CategoryDetailsView(String categoryId, String categoryName, String description, String parentCategoryId) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;

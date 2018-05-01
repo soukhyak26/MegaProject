@@ -19,7 +19,10 @@ public class SubscribersForecastView {
     private long totalSubscribers;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscribersForecastView(LocalDate startDate,LocalDate endDate,LocalDate forecastDate){
+    public SubscribersForecastView() {
+    }
+
+    public SubscribersForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate){
         this.subscriberVersionId = new SubscriberVersionId(startDate,forecastDate);
         this.endDate=endDate;
     }

@@ -16,6 +16,9 @@ public class VariableExpenseAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public VariableExpenseAccountView() {
+    }
+
     public VariableExpenseAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

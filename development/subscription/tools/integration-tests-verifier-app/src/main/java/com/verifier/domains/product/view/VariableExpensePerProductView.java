@@ -7,9 +7,12 @@ import org.joda.time.LocalDate;
  * Created by mandar on 4/26/2017.
  */
 public class VariableExpensePerProductView {
-    private final ProductwiseVariableExpenseId productwiseVariableExpenseId;
-    private final double variableExpensePerProductPerUnit;
+    private ProductwiseVariableExpenseId productwiseVariableExpenseId;
+    private double variableExpensePerProductPerUnit;
     private LocalDate endDate;
+
+    public VariableExpensePerProductView() {
+    }
 
     public VariableExpensePerProductView(ProductwiseVariableExpenseId productwiseVariableExpenseId, double variableExpensePerProductPerUnit) {
         this.productwiseVariableExpenseId = productwiseVariableExpenseId;

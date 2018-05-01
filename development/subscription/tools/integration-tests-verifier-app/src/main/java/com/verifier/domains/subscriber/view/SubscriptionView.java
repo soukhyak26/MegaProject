@@ -28,6 +28,9 @@ public class SubscriptionView {
     private LocalDate expirationDate;
     private String paymentSchemeId;
 
+    public SubscriptionView() {
+    }
+
     public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItem> subscriptionItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate creationDate, LocalDate expirationDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;

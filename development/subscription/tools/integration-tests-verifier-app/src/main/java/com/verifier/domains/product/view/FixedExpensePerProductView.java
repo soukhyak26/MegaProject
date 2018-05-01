@@ -9,9 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "FixedExpensePerProductView")
 public class FixedExpensePerProductView {
-    private final ProductwiseFixedExpenseId productwiseFixedExpenseId;
-    private final double fixedExpensePerProductPerUnit;
+    private ProductwiseFixedExpenseId productwiseFixedExpenseId;
+    private double fixedExpensePerProductPerUnit;
     private LocalDate endDate;
+
+    public FixedExpensePerProductView() {
+    }
 
     public FixedExpensePerProductView(ProductwiseFixedExpenseId productwiseFixedExpenseId, double fixedExpensePerProductPerUnit) {
         this.productwiseFixedExpenseId = productwiseFixedExpenseId;

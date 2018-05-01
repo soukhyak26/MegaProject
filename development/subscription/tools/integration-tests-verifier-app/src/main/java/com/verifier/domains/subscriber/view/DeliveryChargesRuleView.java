@@ -22,6 +22,8 @@ public class DeliveryChargesRuleView {
     private Currency currency;
     private LocalDate effectiveDate;
 
+    public DeliveryChargesRuleView() {
+    }
 
     public DeliveryChargesRuleView(DeliveryChargesRuleType ruleId, List<RangeRule> rangeRules, LocalDate effectiveDate) {
         this.ruleId = ruleId;

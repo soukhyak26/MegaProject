@@ -16,6 +16,9 @@ public class OthersAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public OthersAccountView() {
+    }
+
     public OthersAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

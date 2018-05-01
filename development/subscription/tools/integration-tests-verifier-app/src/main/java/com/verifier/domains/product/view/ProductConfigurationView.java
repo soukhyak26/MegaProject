@@ -30,6 +30,9 @@ public class ProductConfigurationView {
     private List<CostHeaderType> costHeaderTypes;
     private double contingencyStockPercentage=0.1;
 
+    public ProductConfigurationView() {
+    }
+
     public ProductConfigurationView(String productId, int actualsAggregationPeriodForTargetForecast, double targetChangeThresholdForPriceChange, boolean isCrossPriceElasticityConsidered, boolean isAdvertisingExpensesConsidered, PricingStrategyType pricingStrategyType, PricingOptions pricingOptions, Period demandCurvePeriod, double tentativePercentageChangeInProductDemand, List<CostHeaderType> costHeaderTypes, double contingencyStockPercentage) {
         this.productId = productId;
         this.actualsAggregationPeriodForTargetForecast = actualsAggregationPeriodForTargetForecast;
@@ -72,16 +75,16 @@ public class ProductConfigurationView {
         return isCrossPriceElasticityConsidered;
     }
 
-    public void setCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
-        isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;
+    public void setCrossPriceElasticityConsidered(boolean isCrossPriceElasticityConsidered) {
+        this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
     }
 
     public boolean isAdvertisingExpensesConsidered() {
         return isAdvertisingExpensesConsidered;
     }
 
-    public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
-        isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    public void setAdvertisingExpensesConsidered(boolean isAdvertisingExpensesConsidered) {
+        this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
     }
 
     public PricingStrategyType getPricingStrategyType() {

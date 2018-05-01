@@ -20,6 +20,9 @@ public class BenefitAccountView {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public BenefitAccountView() {
+    }
+
     public BenefitAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;

@@ -18,6 +18,8 @@ public class ProductOfferPricesView {
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
 
+    public ProductOfferPricesView() {
+    }
 
     public ProductOfferPricesView(ProductwisePriceBucketId productwisePriceBucketId, ProductPricingCategory productPricingCategory, double offerPriceOrPercent, LocalDateTime fromDate) {
         this.productwisePriceBucketId = productwisePriceBucketId;

@@ -18,6 +18,9 @@ public class CommonOperatingExpenseConfigView {
     private Period period;
     private SensitivityCharacteristic sensitivityCharacteristic;
 
+    public CommonOperatingExpenseConfigView() {
+    }
+
     public CommonOperatingExpenseConfigView(CommonOperatingExpenseHeader expenseHeader, double amount, Period period, SensitivityCharacteristic sensitivityCharacteristic) {
         this.expenseHeader = expenseHeader;
         this.amount = amount;

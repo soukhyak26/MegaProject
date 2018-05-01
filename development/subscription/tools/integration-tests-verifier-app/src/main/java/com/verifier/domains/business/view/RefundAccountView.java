@@ -19,6 +19,9 @@ public class RefundAccountView {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public RefundAccountView() {
+    }
+
     public RefundAccountView(String businessAccountId, double provisionAmount, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;

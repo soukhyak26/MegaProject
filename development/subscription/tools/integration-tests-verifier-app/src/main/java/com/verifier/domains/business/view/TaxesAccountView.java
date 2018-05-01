@@ -16,6 +16,9 @@ public class TaxesAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public TaxesAccountView() {
+    }
+
     public TaxesAccountView(String businessAccountId, double provisionAmount, double expectedProvisionAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;

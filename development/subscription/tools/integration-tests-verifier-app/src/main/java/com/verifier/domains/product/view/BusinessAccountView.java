@@ -18,6 +18,9 @@ public class BusinessAccountView {
     private double defaultPercentFixedExpensePerUnitPrice =1.0;
     private double defaultPercentVariableExpensePerUnitPrice=1.0;
 
+    public BusinessAccountView() {
+    }
+
     public BusinessAccountView(Integer id, LocalDateTime dateForProvision, LocalDateTime endDate, double defaultPercentFixedExpensePerUnitPrice, double defaultPercentVariableExpensePerUnitPrice) {
         this.id = id;
         this.dateForProvision = dateForProvision;

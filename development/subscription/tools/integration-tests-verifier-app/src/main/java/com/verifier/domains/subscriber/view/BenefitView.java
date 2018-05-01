@@ -19,6 +19,9 @@ public class BenefitView {
     private LocalDate activationEndTime;
     private List<String> canApplicableWith;
 
+    public BenefitView() {
+    }
+
     public BenefitView(String benefitId, String benefitEquation, String benefitEquationInJsonFormat, LocalDate activationStartTime, LocalDate activationEndTime, List<String> canApplicableWith) {
         this.benefitId = benefitId;
         this.benefitEquation = benefitEquation;

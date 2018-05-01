@@ -18,6 +18,9 @@ public class PaymentSchemesView {
     private LocalDate schemeStartDate;
     private LocalDate schemeEndDate;
 
+    public PaymentSchemesView() {
+    }
+
     public PaymentSchemesView(String schemeId, String schemeName, String schemeDescription, String schemeRuleInJsonFormat, String schemeRule, LocalDate schemeStartDate, LocalDate schemeEndDate) {
         this.schemeId = schemeId;
         this.schemeName = schemeName;

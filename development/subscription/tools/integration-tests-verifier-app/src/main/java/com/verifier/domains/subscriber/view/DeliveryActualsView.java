@@ -13,6 +13,9 @@ public class DeliveryActualsView {
     private DeliveryActualsVersionId deliveryActualsVersionId;
     private long deliveryCount;
 
+    public DeliveryActualsView() {
+    }
+
     public DeliveryActualsView(DeliveryActualsVersionId deliveryActualsVersionId, long deliveryCount) {
         this.deliveryActualsVersionId = deliveryActualsVersionId;
         this.deliveryCount = deliveryCount;

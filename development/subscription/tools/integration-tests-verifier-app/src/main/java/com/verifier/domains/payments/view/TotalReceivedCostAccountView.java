@@ -12,6 +12,9 @@ public class TotalReceivedCostAccountView {
     private String subscriptionId;
     private double totalReceivedCost;
 
+    public TotalReceivedCostAccountView() {
+    }
+
     public TotalReceivedCostAccountView(String subscriptionId, double totalReceivedCost) {
         this.subscriptionId = subscriptionId;
         this.totalReceivedCost = totalReceivedCost;

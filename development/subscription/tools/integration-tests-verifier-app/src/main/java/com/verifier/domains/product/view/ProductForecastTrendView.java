@@ -20,6 +20,9 @@ public class ProductForecastTrendView {
     private double referenceTotalSubscriptionCount;
     private double changeInTotalSusbcriptionCount;
 
+    public ProductForecastTrendView() {
+    }
+
     public ProductForecastTrendView(String productId, LocalDate forecastDate, LocalDate startDate, LocalDate endDate) {
         this.forecastVersionId = new ForecastVersionId(productId,startDate,forecastDate);
         this.endDate = endDate;

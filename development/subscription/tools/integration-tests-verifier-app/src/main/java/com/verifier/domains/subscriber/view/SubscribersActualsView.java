@@ -15,6 +15,9 @@ public class SubscribersActualsView {
     private long churnedSubscribers;
     private long totalSubscribers;
 
+    public SubscribersActualsView() {
+    }
+
     public SubscribersActualsView(LocalDate registrationDate, long newSubscribers, long churnedSubscribers, long totalSubscribers) {
         this.registrationDate = registrationDate;
         this.newSubscribers = newSubscribers;

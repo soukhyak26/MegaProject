@@ -12,12 +12,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ProductActualsView")
 public class ProductActualsView implements ProductSubscriptionMetricsView, Comparable<ProductActualsView> {
     @Id
-    private final ProductVersionId productVersionId;
+    private ProductVersionId productVersionId;
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;
     private long totalNumberOfExistingSubscriptions;
 
+    public ProductActualsView() {
+    }
 /*
     public ProductActualsView(ProductVersionId productVersionId, LocalDateTime endDate) {
         this.productVersionId=productVersionId;

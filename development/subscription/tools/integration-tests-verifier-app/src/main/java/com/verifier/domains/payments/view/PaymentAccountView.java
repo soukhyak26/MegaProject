@@ -13,6 +13,10 @@ public class PaymentAccountView {
     private String subscriptionId;
     private String subscriberId;
     private String paymentSchemeId;
+
+    public PaymentAccountView() {
+    }
+
     private LocalDate creationDate;
 
     public PaymentAccountView(String subscriptionId, String subscriberId,LocalDate creationDate) {

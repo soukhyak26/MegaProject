@@ -18,7 +18,10 @@ public class SubscriptionPseudoActualsView {
     private long totalSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscriptionPseudoActualsView(LocalDate startDate,LocalDate forecastDate,double valueRangeMin, double valueRangeMax){
+    public SubscriptionPseudoActualsView() {
+    }
+
+    public SubscriptionPseudoActualsView(LocalDate startDate, LocalDate forecastDate, double valueRangeMin, double valueRangeMax){
         this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,startDate,valueRangeMin,valueRangeMax);
     }
     public SubscriptionPseudoActualsView(LocalDate startDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions,LocalDate forecastDate,double valueRangeMin, double valueRangeMax) {

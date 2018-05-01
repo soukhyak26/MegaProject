@@ -29,6 +29,9 @@ public class RecommendedPriceBucketView implements Comparable<RecommendedPriceBu
     private double totalProfit;
     private double slope;
 
+    public RecommendedPriceBucketView() {
+    }
+
     public RecommendedPriceBucketView(ProductwisePriceBucketId productwisePriceBucketId) {
         this.productwisePriceBucketId = productwisePriceBucketId;
     }

@@ -16,7 +16,7 @@ import java.util.TreeSet;
 @Document(collection = "ProductActualMetricsView")
 public class ProductActualMetricsView {
     @Id
-    private final ProductVersionId productVersionId;
+    private ProductVersionId productVersionId;
     private LocalDate endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;
     private double fixedOperatingExpense;
@@ -48,6 +48,9 @@ public class ProductActualMetricsView {
     private double SLVToCASRatio;
     private double monthsToRecoverCAS;
     private double salesAndMarketingExpenses;
+
+    public ProductActualMetricsView() {
+    }
 
     public ProductActualMetricsView(ProductVersionId productVersionId, LocalDate endDate) {
         this.productVersionId= productVersionId;

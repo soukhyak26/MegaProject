@@ -15,6 +15,9 @@ public class SubscriptionActualsView {
     private long churnedSubscriptions;
     private long totalSubscriptions;
 
+    public SubscriptionActualsView() {
+    }
+
     public SubscriptionActualsView(SubscriptionActualsVersionId subscriptionActualsVersionId, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions) {
         this.subscriptionActualsVersionId = subscriptionActualsVersionId;
         this.newSubscriptions = newSubscriptions;

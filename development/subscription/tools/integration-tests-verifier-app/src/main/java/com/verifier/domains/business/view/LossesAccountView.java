@@ -16,6 +16,9 @@ public class LossesAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public LossesAccountView() {
+    }
+
     public LossesAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

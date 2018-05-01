@@ -14,6 +14,9 @@ public class ProductView {
     private String productName;
     private ProductPricingCategory productPricingCategory;
 
+    public ProductView() {
+    }
+
     public ProductView(String productId, String productName, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;

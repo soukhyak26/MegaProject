@@ -17,7 +17,10 @@ public class DeliveryForecastView {
     private LocalDate endDate;
     private ForecastContentStatus forecastContentStatus;
 
-    public DeliveryForecastView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate,double minWeight,double maxWeight) {
+    public DeliveryForecastView() {
+    }
+
+    public DeliveryForecastView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate, double minWeight, double maxWeight) {
         this.deliveryForecastVersionId = new DeliveryForecastVersionId(forecastDate,startDate,minWeight,maxWeight);
         this.endDate = endDate;
         this.forecastContentStatus= ForecastContentStatus.ACTIVE;

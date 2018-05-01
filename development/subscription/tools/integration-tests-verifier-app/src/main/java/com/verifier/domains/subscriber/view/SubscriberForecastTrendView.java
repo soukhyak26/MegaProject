@@ -16,6 +16,9 @@ public class SubscriberForecastTrendView {
     private double referenceTotalSubscriberCount;
     private double changeInTotalSubscriberCount;
 
+    public SubscriberForecastTrendView() {
+    }
+
     public SubscriberForecastTrendView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate) {
         this.subscriberVersionId =new SubscriberVersionId(forecastDate, startDate);
         this.endDate = endDate;

@@ -12,12 +12,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ProductForecastView")
 public class ProductForecastView implements Comparable<ProductForecastView> {
     @Id
-    private final ForecastVersionId forecastVersionId;
+    private ForecastVersionId forecastVersionId;
     private LocalDate endDate;
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
+    public ProductForecastView() {
+    }
+
 /*
+
     public ProductForecastView(ProductVersionId forecastVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;

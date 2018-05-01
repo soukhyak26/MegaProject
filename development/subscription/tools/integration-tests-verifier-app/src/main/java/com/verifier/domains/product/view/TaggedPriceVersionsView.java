@@ -18,6 +18,9 @@ public class TaggedPriceVersionsView {
     private LocalDate taggedStartDate;
     private LocalDate taggedEndDate;
 
+    public TaggedPriceVersionsView() {
+    }
+
     public TaggedPriceVersionsView(ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedStartDate, LocalDate taggedEndDate) {
         this.productwiseTaggedPriceVersionId = productwiseTaggedPriceVersionId;
         this.purchasePricePerUnit = purchasePricePerUnit;

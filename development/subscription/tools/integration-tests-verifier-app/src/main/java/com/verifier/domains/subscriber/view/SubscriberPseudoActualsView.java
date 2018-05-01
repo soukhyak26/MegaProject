@@ -18,7 +18,10 @@ public class SubscriberPseudoActualsView {
     private long totalSubscribers;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscriberPseudoActualsView(LocalDate startDate,LocalDate forecastDate){
+    public SubscriberPseudoActualsView() {
+    }
+
+    public SubscriberPseudoActualsView(LocalDate startDate, LocalDate forecastDate){
         this.subscriberVersionId =new SubscriberVersionId(forecastDate,startDate);
     }
 

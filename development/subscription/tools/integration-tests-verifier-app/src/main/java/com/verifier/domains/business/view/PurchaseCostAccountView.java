@@ -10,9 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-/**
- * Created by mandar on 31-12-2016.
- */
 @Document(collection = "PurchaseCostAccountView")
 public class PurchaseCostAccountView {
     @Id
@@ -22,10 +19,11 @@ public class PurchaseCostAccountView {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public PurchaseCostAccountView(){
+    }
     public PurchaseCostAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;
-        this.provisionCalendar=provisionCalendar;
         this.startDate = startDate;
         this.endDate = endDate;
         this.provisionCalendar=new ProvisionCalendar(startDate,endDate);

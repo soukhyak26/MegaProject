@@ -18,7 +18,10 @@ public class BusinessAccountView {
     private double defaultPercentFixedExpensePerUnitPrice =1.0;
     private double defaultPercentVariableExpensePerUnitPrice=1.0;
 
-    public BusinessAccountView(String id, String merchantId,LocalDate startDate,LocalDate endDate,LocalDate dateForProvision) {
+    public BusinessAccountView() {
+    }
+
+    public BusinessAccountView(String id, String merchantId, LocalDate startDate, LocalDate endDate, LocalDate dateForProvision) {
         this.id = id;
         this.merchantId=merchantId;
         this.startDate=startDate;

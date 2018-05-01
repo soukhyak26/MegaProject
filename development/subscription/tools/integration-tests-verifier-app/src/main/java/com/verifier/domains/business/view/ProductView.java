@@ -25,6 +25,9 @@ public class ProductView {
     private double currentOperatingExpensePerUnit;
     private double productPurchaseBudgetedAmount;
 
+    public ProductView() {
+    }
+
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, Map<SensitivityCharacteristic, Double> sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
         this.productId = productId;
         this.productName=productName;

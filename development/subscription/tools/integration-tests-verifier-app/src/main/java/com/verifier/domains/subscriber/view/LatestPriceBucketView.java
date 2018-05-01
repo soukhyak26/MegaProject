@@ -15,6 +15,9 @@ public class LatestPriceBucketView {
     private double offeredPricePerUnit;
     private LocalDateTime currentPriceDate;
 
+    public LatestPriceBucketView() {
+    }
+
     public LatestPriceBucketView(String productId, String priceBucketId, double offeredPricePerUnit, LocalDateTime currentPriceDate) {
         this.productId = productId;
         this.priceBucketId = priceBucketId;

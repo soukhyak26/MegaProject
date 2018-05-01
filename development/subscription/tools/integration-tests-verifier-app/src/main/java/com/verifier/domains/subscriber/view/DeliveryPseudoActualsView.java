@@ -14,6 +14,10 @@ public class DeliveryPseudoActualsView {
     @Id
     private DeliveryForecastVersionId deliveryForecastVersionId;
     private long deliveryCount;
+
+    public DeliveryPseudoActualsView() {
+    }
+
     private ForecastContentStatus forecastContentStatus;
 
     public DeliveryPseudoActualsView(LocalDate forecastDate, LocalDate startDate,double minWeight,double maxWeight) {

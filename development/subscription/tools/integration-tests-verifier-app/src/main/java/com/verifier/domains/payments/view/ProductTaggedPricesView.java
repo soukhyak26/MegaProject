@@ -17,6 +17,8 @@ public class ProductTaggedPricesView {
     private LocalDate taggedPriceStartDate;
     private LocalDate taggedPriceEndaDate;
 
+    public ProductTaggedPricesView() {
+    }
 
     public ProductTaggedPricesView(ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId, double purchasePricePerUnit, double MRP, LocalDate taggedPriceStartDate) {
         this.productwiseTaggedPriceVersionId = productwiseTaggedPriceVersionId;

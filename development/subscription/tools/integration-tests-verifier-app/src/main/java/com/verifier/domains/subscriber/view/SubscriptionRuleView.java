@@ -24,6 +24,8 @@ public class SubscriptionRuleView {
     private double contingencyStockPercentage=0.1;
     private List<SubscriptionValueRange> subscriptionValueRanges;
 
+    public SubscriptionRuleView() {
+    }
 
     public SubscriptionRuleView(String basketRuleId, double maximumPermissibleAmount, double minimumAmountForDiscountEligibility, Discount maximumPermissibleDiscount, int minimumAmountEligibleForFreeShipping, int diffBetweenDeliveryPreparationAndDispatchDate, int actualsAggregationPeriodForTargetForecast, double contingencyStockPercentage, List<SubscriptionValueRange> subscriptionValueRanges) {
         this.basketRuleId = basketRuleId;

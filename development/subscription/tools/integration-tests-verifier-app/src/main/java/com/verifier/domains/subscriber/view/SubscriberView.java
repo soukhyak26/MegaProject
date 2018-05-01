@@ -25,6 +25,10 @@ public class SubscriberView {
     private List<String> couponCodes;
     private int rewardPoints;
     private String password;
+
+    public SubscriberView() {
+    }
+
     private boolean subscriberStatus;
 
     public SubscriberView(String subscriberId, SubscriberName subscriberName, Address address, ContactDetails contactDetails, LocalDate creationDate, NetWorthSubscriberStatus status, List<String> couponCodes, int rewardPoints) {

@@ -20,6 +20,9 @@ public class DeliveryDetailsView {
     private LocalDate deliveryDate;
     private DeliveryStatus deliveryStatus;
 
+    public DeliveryDetailsView() {
+    }
+
     public DeliveryDetailsView(DeliveryId subscriptionwiseDeliveryId, List<DeliverableProductDetail> deliverableProductDetails, LocalDate deliveryDate) {
         this.subscriptionwiseDeliveryId = subscriptionwiseDeliveryId;
         this.deliverableProductDetails = deliverableProductDetails;

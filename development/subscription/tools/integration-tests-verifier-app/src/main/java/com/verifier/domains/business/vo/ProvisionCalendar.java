@@ -15,6 +15,8 @@ public class ProvisionCalendar {
     private List<ProvisionSegment> installmentCalendar;
     private LocalDate startDate;
     private LocalDate endDate;
+    public ProvisionCalendar(){
+    }
     public ProvisionCalendar(LocalDate startDate, LocalDate endDate) {
         this.startDate=startDate;
         this.endDate=endDate;

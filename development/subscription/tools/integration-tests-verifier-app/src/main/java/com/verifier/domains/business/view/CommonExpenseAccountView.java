@@ -16,6 +16,9 @@ public class CommonExpenseAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public CommonExpenseAccountView() {
+    }
+
     public CommonExpenseAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

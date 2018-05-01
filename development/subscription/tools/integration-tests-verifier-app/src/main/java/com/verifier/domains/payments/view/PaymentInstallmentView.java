@@ -14,6 +14,9 @@ public class PaymentInstallmentView {
     private String subscriptionId;
     private List<InstalmentPaymentTracker> instalmentPaymentTrackers;
 
+    public PaymentInstallmentView() {
+    }
+
     public PaymentInstallmentView(String subscriberId, String subscriptionId, List<InstalmentPaymentTracker> instalmentPaymentTrackers) {
         this.subscriberId = subscriberId;
         this.subscriptionId = subscriptionId;

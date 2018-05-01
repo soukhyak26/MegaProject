@@ -32,8 +32,10 @@ public class ProductView {
     private int creditPoints;
     private PricingStrategyType pricingStrategyType;
 
+    public ProductView() {
+    }
 
-    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements,Map<SensitivityCharacteristic, Double> sensitiveTo,ProductPricingCategory productPricingCategory) {
+    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -148,16 +150,16 @@ public class ProductView {
         return isCrossPriceElasticityConsidered;
     }
 
-    public void setCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
-        isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;
+    public void setCrossPriceElasticityConsidered(boolean isCrossPriceElasticityConsidered) {
+        this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
     }
 
     public boolean isAdvertisingExpensesConsidered() {
         return isAdvertisingExpensesConsidered;
     }
 
-    public void setAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
-        isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
+    public void setAdvertisingExpensesConsidered(boolean isAdvertisingExpensesConsidered) {
+        this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
     }
 
     public PricingStrategyType getPricingStrategyType() {

@@ -11,6 +11,10 @@ public class SubscriptionInfoView {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalSubscriptionAmount;
+
+    public SubscriptionInfoView() {
+    }
+
     private double bookingAmount;
     private double currentDueAmount;
 

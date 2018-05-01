@@ -14,6 +14,9 @@ public class BusinessAccountConfigurationView {
     private FiscalYearConfig fiscalYearConfig;
     private double taxAsPercentageOfAnnualRevenue;
 
+    public BusinessAccountConfigurationView() {
+    }
+
     public BusinessAccountConfigurationView(String businessAccountId, BudgetAdjustmentOptions budgetAdjustmentOptions, FiscalYearConfig fiscalYearConfig, double taxAsPercentageOfAnnualRevenue) {
         this.businessAccountId = businessAccountId;
         this.budgetAdjustmentOptions = budgetAdjustmentOptions;

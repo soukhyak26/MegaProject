@@ -15,6 +15,10 @@ public class PaymentSchemesView {
     private String schemeDescription;
     private String schemeRuleInJsonFormat;
     private String schemeRule;
+
+    public PaymentSchemesView() {
+    }
+
     private LocalDate schemeStartDate;
     private LocalDate schemeEndDate;
 

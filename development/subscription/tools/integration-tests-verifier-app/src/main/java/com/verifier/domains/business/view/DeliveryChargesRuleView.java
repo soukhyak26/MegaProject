@@ -22,6 +22,9 @@ public class DeliveryChargesRuleView {
     @Autowired
     private Currency currency;
 
+    public DeliveryChargesRuleView() {
+    }
+
     public DeliveryChargesRuleView(String ruleId, String ruleHeader, double ruleMinimum, double ruleMaximum, QuantityUnit ruleUnit, double applicableValue) {
         this.ruleId = ruleId;
         this.ruleHeader = ruleHeader;

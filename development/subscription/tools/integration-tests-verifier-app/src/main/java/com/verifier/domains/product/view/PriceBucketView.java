@@ -21,8 +21,8 @@ import java.util.Set;
 @Document (collection = "PriceBucketView")
 public class PriceBucketView  implements Comparable<PriceBucketView>{
     @Id
-    private final ProductwisePriceBucketId productwisePriceBucketId;
-    private final ProductPricingCategory productPricingCategory;
+    private ProductwisePriceBucketId productwisePriceBucketId;
+    private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
     private LocalDateTime fromDate;
     private LocalDateTime toDate;
@@ -42,6 +42,9 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     protected Map<LocalDate,Double> registeredRevenue;
 
     private double slope;
+
+    public PriceBucketView() {
+    }
 
     public PriceBucketView(ProductwisePriceBucketId productwisePriceBucketId, ProductPricingCategory productPricingCategory) {
         this.productwisePriceBucketId = productwisePriceBucketId;

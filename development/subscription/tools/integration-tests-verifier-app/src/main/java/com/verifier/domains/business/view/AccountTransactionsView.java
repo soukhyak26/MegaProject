@@ -13,11 +13,14 @@ import org.springframework.data.annotation.Id;
 
 public abstract class AccountTransactionsView {
     @Id
-    private final long transactionId;
-    private final LocalDateTime dateOfTransaction;
-    private final double transactedAmount;
-    private final TransactionType transactionType;
-    private final TransactionReasonCode transactionReasonCode;
+    private long transactionId;
+    private LocalDateTime dateOfTransaction;
+    private double transactedAmount;
+    private TransactionType transactionType;
+    private TransactionReasonCode transactionReasonCode;
+
+    public AccountTransactionsView() {
+    }
 
     public AccountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
         final LocalDateTime currentDateTime=dateOfTransaction.toLocalDateTime(LocalTime.now());

@@ -16,6 +16,9 @@ public class SubscriptionItem {
     private double weightInGrms;
     private ProductPricingCategory productPricingCategory;
 
+    public SubscriptionItem() {
+    }
+
     public SubscriptionItem(String productId, int countPerPeriod, Period period, double discountedOfferedPrice, double offeredPriceWithBasketLevelDiscount, int noOfCycles, double weightInGrms, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.countPerPeriod = countPerPeriod;

@@ -7,6 +7,7 @@ public class SubscriptionValueRange {
     private double minimumValue;
     private double maximumValue;
 
+    public SubscriptionValueRange(){}
     public SubscriptionValueRange(double minimumValue, double maximumValue) {
         this.minimumValue = minimumValue;
         this.maximumValue = maximumValue;

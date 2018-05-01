@@ -23,6 +23,9 @@ public class ProductView {
     private List<String> complements;
     private ProductPricingCategory productPricingCategory;
 
+    public ProductView() {
+    }
+
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, long netQuantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;

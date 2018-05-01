@@ -16,6 +16,9 @@ public class ProfitAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public ProfitAccountView() {
+    }
+
     public ProfitAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

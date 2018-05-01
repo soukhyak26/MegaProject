@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "TargetSettingView")
 public class TargetSettingView {
     @Id
-    private final ProductVersionId productVersionId;
+    private ProductVersionId productVersionId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate endDate;
@@ -30,6 +30,8 @@ public class TargetSettingView {
     private double fixedExpensesPerPeriod;
     private double variableExpensesPerPeriod;
 
+    public TargetSettingView() {
+    }
 
     public TargetSettingView(ProductVersionId productVersionId, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, double fixedExpensesPerPeriod, double variableExpensesPerPeriod) {
         this.productVersionId = productVersionId;

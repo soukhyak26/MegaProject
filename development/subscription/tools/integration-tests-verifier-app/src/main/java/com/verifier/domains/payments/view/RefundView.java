@@ -12,6 +12,9 @@ public class RefundView {
     private String subscriptionId;
     private double refundAmount;
 
+    public RefundView() {
+    }
+
     public RefundView(String subscriptionId) {
         this.subscriptionId = subscriptionId;
     }
