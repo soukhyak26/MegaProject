@@ -146,20 +146,20 @@ public class ProductView {
     }
 
 
-    public boolean isCrossPriceElasticityConsidered() {
+    public boolean getIsCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;
     }
 
-    public void setCrossPriceElasticityConsidered(boolean isCrossPriceElasticityConsidered) {
-        this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
+    public void setIsCrossPriceElasticityConsidered(boolean crossPriceElasticityConsidered) {
+        isCrossPriceElasticityConsidered = crossPriceElasticityConsidered;
     }
 
-    public boolean isAdvertisingExpensesConsidered() {
+    public boolean getIsAdvertisingExpensesConsidered() {
         return isAdvertisingExpensesConsidered;
     }
 
-    public void setAdvertisingExpensesConsidered(boolean isAdvertisingExpensesConsidered) {
-        this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
+    public void setIsAdvertisingExpensesConsidered(boolean advertisingExpensesConsidered) {
+        isAdvertisingExpensesConsidered = advertisingExpensesConsidered;
     }
 
     public PricingStrategyType getPricingStrategyType() {

@@ -1,8 +1,13 @@
 package com.verifier.domains.business.view;
 
+import com.verifier.domains.business.vo.ProvisionCalendar;
+import com.verifier.domains.business.vo.ProvisionSegment;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 /**
  * Created by mandar on 31-12-2016.
@@ -12,19 +17,18 @@ public class TaxesAccountView {
     @Id
     private String businessAccountId;
     private double provisionAmount;
-    private double expectedProvisionAmount;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private ProvisionCalendar provisionCalendar;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public TaxesAccountView() {
-    }
-
-    public TaxesAccountView(String businessAccountId, double provisionAmount, double expectedProvisionAmount, LocalDateTime startDate, LocalDateTime endDate) {
+    public TaxesAccountView(){}
+    public TaxesAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;
-        this.expectedProvisionAmount = expectedProvisionAmount;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.provisionCalendar=new ProvisionCalendar(startDate,endDate);
+        this.provisionCalendar.setInstallmentCalendar(distributionCalendar);
     }
 
     public String getBusinessAccountId() {
@@ -43,27 +47,27 @@ public class TaxesAccountView {
         this.provisionAmount = provisionAmount;
     }
 
-    public double getExpectedProvisionAmount() {
-        return expectedProvisionAmount;
+    public ProvisionCalendar getProvisionCalendar() {
+        return provisionCalendar;
     }
 
-    public void setExpectedProvisionAmount(double expectedProvisionAmount) {
-        this.expectedProvisionAmount = expectedProvisionAmount;
+    public void setProvisionCalendar(ProvisionCalendar provisionCalendar) {
+        this.provisionCalendar = provisionCalendar;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

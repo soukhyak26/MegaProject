@@ -71,19 +71,19 @@ public class ProductConfigurationView {
         this.targetChangeThresholdForPriceChange = changeThresholdForPriceChange;
     }
 
-    public boolean isCrossPriceElasticityConsidered() {
+    public boolean getIsCrossPriceElasticityConsidered() {
         return isCrossPriceElasticityConsidered;
     }
 
-    public void setCrossPriceElasticityConsidered(boolean isCrossPriceElasticityConsidered) {
+    public void setIsCrossPriceElasticityConsidered(boolean isCrossPriceElasticityConsidered) {
         this.isCrossPriceElasticityConsidered = isCrossPriceElasticityConsidered;
     }
 
-    public boolean isAdvertisingExpensesConsidered() {
+    public boolean getIsAdvertisingExpensesConsidered() {
         return isAdvertisingExpensesConsidered;
     }
 
-    public void setAdvertisingExpensesConsidered(boolean isAdvertisingExpensesConsidered) {
+    public void setIsAdvertisingExpensesConsidered(boolean isAdvertisingExpensesConsidered) {
         this.isAdvertisingExpensesConsidered = isAdvertisingExpensesConsidered;
     }
 
