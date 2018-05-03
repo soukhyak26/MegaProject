@@ -1,0 +1,4382 @@
+[
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": "#notnull" ,
+      "forecastDate": "#notnull"
+    },
+    "endDate": "#notnull",
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  }
+]

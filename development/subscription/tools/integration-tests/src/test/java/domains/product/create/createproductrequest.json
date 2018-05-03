@@ -6,7 +6,7 @@
   "quantityUnit": "GM",
   "substitutes":["0"],
   "complements":["0"],
-  "sensitiveTo":{"NONE":"1.0"},
+  "sensitiveTo":{"NONE":1.0},
   "productPricingCategory":"1",
   "purchasePrice":"200",
   "mrp": "240"

@@ -1,0 +1,17 @@
+[{
+  "productId": "#ignore",
+  "productName": "Colgate 300 gms",
+  "categoryId" : "#ignore",
+  "subCategoryId": "#ignore",
+  "quantity": 300,
+  "quantityUnit": "GM",
+  "substitutes": ["0"],
+  "complements": ["0"],
+  "currentOperatingExpensePerUnit":0.0,
+  "currentStockInUnits":0,
+  "productPricingCategory":1,
+  "creditPoints":0,
+  "pricingStrategyType": "DEFAULT_PRICING_STRATEGY",
+  "isCrossPriceElasticityConsidered":false,
+  "isAdvertisingExpensesConsidered":false
+}]

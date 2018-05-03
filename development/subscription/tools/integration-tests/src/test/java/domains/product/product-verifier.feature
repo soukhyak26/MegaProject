@@ -9,3 +9,6 @@ Scenario: Product creation and verification
 
 Scenario: Product configuration and verification
 * call read('classpath:domains/product/config/product-config-verifier.feature')
+
+Scenario: Product forecast creation and verification
+* call read('classpath:domains/product/manualforecast/forecast-verifier.feature')

@@ -2,144 +2,216 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,1,1],
+      "startDate": [
+        2018,
+        1,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,1,31],
-    "newSubscriptions": 2200,
-    "churnedSubscriptions": 0,
+    "endDate": [
+      2018,
+      1,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,2,1],
+      "startDate": [
+        2018,
+        2,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,2,28],
-    "newSubscriptions": 3400,
-    "churnedSubscriptions": 230,
+    "endDate": [
+      2018,
+      2,
+      28
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,3,1],
+      "startDate": [
+        2018,
+        3,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,3,31],
-    "newSubscriptions": 4320,
-    "churnedSubscriptions": 450,
+    "endDate": [
+      2018,
+      3,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,4,1],
+      "startDate": [
+        2018,
+        4,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,4,30],
-    "newSubscriptions": 4860,
-    "churnedSubscriptions": 480,
+    "endDate": [
+      2018,
+      4,
+      30
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,5,1],
+      "startDate": [
+        2018,
+        5,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,5,31],
-    "newSubscriptions": 5235,
-    "churnedSubscriptions": 640,
+    "endDate": [
+      2018,
+      5,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,6,1],
+      "startDate": [
+        2018,
+        6,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,6,30],
-    "newSubscriptions": 5670,
-    "churnedSubscriptions": 890,
+    "endDate": [
+      2018,
+      6,
+      30
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,7,1],
+      "startDate": [
+        2018,
+        7,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,7,31],
-    "newSubscriptions": 5300,
-    "churnedSubscriptions": 1020,
+    "endDate": [
+      2018,
+      7,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,8,1],
+      "startDate": [
+        2018,
+        8,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,8,31],
-    "newSubscriptions": 5660,
-    "churnedSubscriptions": 970,
+    "endDate": [
+      2018,
+      8,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,9,1],
+      "startDate": [
+        2018,
+        9,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,9,30],
-    "newSubscriptions": 6230,
-    "churnedSubscriptions": 780,
+    "endDate": [
+      2018,
+      9,
+      30
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,10,1],
+      "startDate": [
+        2018,
+        10,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,10,31],
-    "newSubscriptions": 5870,
-    "churnedSubscriptions": 910,
+    "endDate": [
+      2018,
+      10,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,11,1],
+      "startDate": [
+        2018,
+        11,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,11,30],
-    "newSubscriptions": 6870,
-    "churnedSubscriptions": 1190,
+    "endDate": [
+      2018,
+      11,
+      30
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": [2018,12,1],
+      "startDate": [
+        2018,
+        12,
+        1
+      ],
       "forecastDate": "#notnull"
     },
-    "endDate" : [2018,12,31],
-    "newSubscriptions": 7460,
-    "churnedSubscriptions": 1380,
+    "endDate": [
+      2018,
+      12,
+      31
+    ],
     "totalNumberOfExistingSubscriptions" : "#notnull",
     "forecastContentStatus": "ACTIVE"
   }
