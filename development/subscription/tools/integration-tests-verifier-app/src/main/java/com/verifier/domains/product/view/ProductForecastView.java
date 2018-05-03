@@ -3,6 +3,7 @@ package com.verifier.domains.product.view;
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.affaince.subscription.common.vo.ProductVersionId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -77,9 +78,11 @@ public class ProductForecastView implements ProductSubscriptionMetricsView {
     public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
         this.forecastContentStatus = forecastContentStatus;
     }
+    @JsonIgnore
     public LocalDate getForecastDate() {
         return this.forecastVersionId.getForecastDate();
     }
+    @JsonIgnore
     public ProductVersionId getProductVersionId(){return this.forecastVersionId;}
     public ForecastVersionId getForecastVersionId(){return this.forecastVersionId;}
 

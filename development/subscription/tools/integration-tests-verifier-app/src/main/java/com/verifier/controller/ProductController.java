@@ -129,6 +129,12 @@ public class ProductController {
         return new ResponseEntity<>(productView,HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "name/{productName}")
+    public ResponseEntity<List<ProductView>> getProductByName(@PathVariable String productName){
+        List<ProductView> productViews=productViewRepository.findByProductName(productName);
+        return new ResponseEntity<>(productViews,HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<List<ProductView>> getProducts(){
         List<ProductView> productViews=productViewRepository.findAll();

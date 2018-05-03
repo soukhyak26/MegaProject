@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ProductViewRepository extends CrudRepository<ProductView, String> {
     public List<ProductView> findAll();
+    public List<ProductView> findByProductName(String productName);
 }
