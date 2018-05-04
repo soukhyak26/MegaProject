@@ -1,6 +1,5 @@
 package domains;
 
-import com.affiance.mock.MongoReader;
 import com.intuit.karate.cucumber.CucumberRunner;
 import com.intuit.karate.cucumber.KarateStats;
 import cucumber.api.CucumberOptions;

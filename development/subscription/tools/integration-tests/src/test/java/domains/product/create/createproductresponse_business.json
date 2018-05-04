@@ -5,7 +5,7 @@
   "subCategoryId": "#ignore",
   "purchasePrice":200.0,
   "mrp":240.0,
-  "sensitiveTo":{"NONE":1.0},
+  "sensitiveTo":"NONE",
   "productStatus":"PRODUCT_REGISTERED",
   "totalAnticipatedSubscriptions": 0,
   "currentOperatingExpensePerUnit":0.0,
