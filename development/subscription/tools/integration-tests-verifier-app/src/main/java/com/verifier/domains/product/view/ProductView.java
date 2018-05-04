@@ -23,7 +23,7 @@ public class ProductView {
     private QuantityUnit quantityUnit;
     private List<String> substitutes;
     private List<String> complements;
-    private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    private SensitivityCharacteristic sensitiveTo;
     private boolean isCrossPriceElasticityConsidered;
     private boolean isAdvertisingExpensesConsidered;
     private double currentOperatingExpensePerUnit;
@@ -35,7 +35,7 @@ public class ProductView {
     public ProductView() {
     }
 
-    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, Map<SensitivityCharacteristic, Double> sensitiveTo, ProductPricingCategory productPricingCategory) {
+    public ProductView(String productId, String productName, String categoryId, String subCategoryId, long quantity, QuantityUnit quantityUnit, List<String> substitutes, List<String> complements, SensitivityCharacteristic sensitiveTo, ProductPricingCategory productPricingCategory) {
         this.productId = productId;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -170,11 +170,11 @@ public class ProductView {
         this.pricingStrategyType = pricingStrategyType;
     }
 
-    public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
+    public SensitivityCharacteristic getSensitiveTo() {
         return sensitiveTo;
     }
 
-    public void setSensitiveTo(Map<SensitivityCharacteristic, Double> sensitiveTo) {
+    public void setSensitiveTo(SensitivityCharacteristic sensitiveTo) {
         this.sensitiveTo = sensitiveTo;
     }
 }

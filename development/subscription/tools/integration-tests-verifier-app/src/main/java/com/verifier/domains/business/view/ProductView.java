@@ -19,7 +19,7 @@ public class ProductView {
     private String subCategoryId;
     private double purchasePrice;
     private double MRP;
-    private Map<SensitivityCharacteristic, Double> sensitiveTo;
+    private SensitivityCharacteristic sensitiveTo;
     private ProductStatus productStatus;
     private long totalAnticipatedSubscriptions;
     private double currentOperatingExpensePerUnit;
@@ -28,7 +28,7 @@ public class ProductView {
     public ProductView() {
     }
 
-    public ProductView(String productId, String productName, String categoryId, String subCategoryId, Map<SensitivityCharacteristic, Double> sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
+    public ProductView(String productId, String productName, String categoryId, String subCategoryId, SensitivityCharacteristic sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
         this.productId = productId;
         this.productName=productName;
         this.categoryId=categoryId;
@@ -50,11 +50,11 @@ public class ProductView {
         this.productId = productId;
     }
 
-    public Map<SensitivityCharacteristic, Double> getSensitiveTo() {
+    public SensitivityCharacteristic getSensitiveTo() {
         return this.sensitiveTo;
     }
 
-    public void setSensitiveTo(Map<SensitivityCharacteristic, Double> sensitiveTo) {
+    public void setSensitiveTo(SensitivityCharacteristic sensitiveTo) {
         this.sensitiveTo = sensitiveTo;
     }
 
