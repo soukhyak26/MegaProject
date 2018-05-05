@@ -1,12 +1,7 @@
 package com.affiance.prediction.config;
 
-import com.affaince.subscription.common.deserializer.DataFrameVODeserializer;
-import com.affaince.subscription.common.publish.invoker.EventPublishInvoker;
-import com.affaince.subscription.common.serializer.DataFrameVOSerializer;
-import com.affaince.subscription.common.vo.DataFrameVO;
 import com.affiance.prediction.algos.ARIMABasedDemandForecaster;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
