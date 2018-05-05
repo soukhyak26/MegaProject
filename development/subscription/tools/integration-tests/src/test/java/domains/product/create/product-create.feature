@@ -7,9 +7,9 @@ And path 'product/category/name/Large ToothPaste'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == {categoryId:'#notnull', categoryName:'Large ToothPaste', description:'#notnull', parentCategoryId:'#notnull'}
+And match response == {categoryId:'#notnull', categoryName:'Large ToothPaste', description:'#notnull', parentCategoryId:'#ignore'}
 
-* def categoryId = response.parentCategoryId
+* def categoryId = response.categoryId
 * def subCategoryId = response.categoryId
 
 Scenario:
