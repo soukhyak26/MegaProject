@@ -17,5 +17,6 @@ public interface BusinessProductForecastViewRepository extends CrudRepository<Pr
     List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastVersionId_StartDateBetween(String productId, LocalDate startDate, LocalDate endDate);
     List<ProductForecastView> findByForecastVersionId_ProductIdAndEndDateBetween(String productId, LocalDate startDate, LocalDate endDate);
     List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastContentStatus(String productId, ForecastContentStatus forecastContentStatus);
+    List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastContentStatusOrderByEndDateAsc(String productId, ForecastContentStatus forecastContentStatus);
     List<ProductForecastView> findByForecastVersionId_ProductIdAndForecastVersionId_StartDateAndEndDateAndForecastContentStatus(String productId, LocalDate startDate, LocalDate endDate, ForecastContentStatus forecastContentStatus);
 }

@@ -149,7 +149,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "product/forecast/{id}")
     ResponseEntity<List<ProductForecastView>> getProductForecastViews(@PathVariable String id){
-        return new ResponseEntity<List<ProductForecastView>>(businessProductForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatus(id, ForecastContentStatus.ACTIVE),HttpStatus.OK);
+        return new ResponseEntity<List<ProductForecastView>>(businessProductForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByEndDateAsc(id, ForecastContentStatus.ACTIVE),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "subscription/{id}")
