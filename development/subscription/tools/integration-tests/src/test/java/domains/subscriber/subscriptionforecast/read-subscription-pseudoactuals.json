@@ -1,0 +1,4382 @@
+[
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  },
+  {
+    "subscriptionVersionId": {
+      "startDate": "#notnull",
+      "forecastDate": "#notnull",
+      "valueRangeMin": 10001.0,
+      "valueRangeMax": 13000.0
+    },
+    "newSubscriptions": "#notnull",
+    "churnedSubscriptions": "#notnull",
+    "totalSubscriptions": "#notnull",
+    "forecastContentStatus": "ACTIVE"
+  }
+]

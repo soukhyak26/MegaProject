@@ -1,5 +1,5 @@
 @ignore
-Feature: read product forecast
+Feature: read subscription forecast
 
 Background:
 * def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
@@ -8,23 +8,23 @@ Scenario:
 #Introduce delay
 * call afterScenario
 
-#Forecast on Subscriber Read side
+#Forecast on Subscription Read side
 Scenario:
 Given url subscriberReadUrl
-And path 'subscriber/forecast/'
+And path 'subscriber/subscriptions/forecast'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/subscriber/subscriberforecast/read-subscriber-forecast.json')
+And match response == read('classpath:domains/subscriber/subscriptionforecast/read-subscription-forecast.json')
 
-#PseudoActuals on Subscriber Read side
+#PseudoActuals on Subscription Read side
 Scenario:
 Given url subscriberReadUrl
-And path 'subscriber/pseudoactuals/'
+And path 'subscriber/subscriptions/pseudoactuals'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/subscriber/subscriberforecast/read-subscriber-pseudoactuals.json')
+And match response == read('classpath:domains/subscriber/subscriptionsforecast/read-subscription-pseudoactuals.json')
 
 
 #Updated Product Activation status

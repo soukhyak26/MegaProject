@@ -1,5 +1,5 @@
 @ignore
-Feature: read product forecast
+Feature: read subscriber forecast
 
 Background:
 * def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
