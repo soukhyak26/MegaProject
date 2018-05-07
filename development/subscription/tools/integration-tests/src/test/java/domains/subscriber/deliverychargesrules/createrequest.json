@@ -1,0 +1,48 @@
+{
+  "deliveryChargesRules" :[
+    {
+      "ruleHeader": "Less than 3 kg",
+      "ruleMinimum":0.0,
+      "ruleMaximum":3.0,
+      "ruleUnit" : "KG",
+      "applicableValue" : 40.0
+
+    },
+    {
+      "ruleHeader": "3-5 kg",
+      "ruleMinimum":3.1,
+      "ruleMaximum":5.0,
+      "ruleUnit" : "KG",
+      "applicableValue" : 60.0
+    },
+    {
+      "ruleHeader": "5-7 kg",
+      "ruleMinimum":5.1,
+      "ruleMaximum":7.0,
+      "ruleUnit" : "KG",
+      "applicableValue" : 90.0
+    },
+    {
+      "ruleHeader": "7-10 kg",
+      "ruleMinimum":7.1,
+      "ruleMaximum":10.0,
+      "ruleUnit" : "KG",
+      "applicableValue" : 120.0
+    },
+    {
+      "ruleHeader": "10-15 kg",
+      "ruleMinimum":10.1,
+      "ruleMaximum":15.0,
+      "ruleUnit" : "KG",
+      "applicableValue" : 140.0
+    },
+    {
+      "ruleHeader": "15-20 kg",
+      "ruleMinimum":15.1,
+      "ruleMaximum":20.0,
+      "ruleUnit" : "KG",
+      "applicableValue" : 170.0
+    }
+  ],
+  "currency" : "rupees"
+}
