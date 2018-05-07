@@ -6,7 +6,6 @@
       "ruleMaximum":3.0,
       "ruleUnit" : "KG",
       "applicableValue" : 40.0
-
     },
     {
       "ruleHeader": "3-5 kg",
@@ -43,6 +42,5 @@
       "ruleUnit" : "KG",
       "applicableValue" : 170.0
     }
-  ],
-  "currency" : "rupees"
+  ]
 }

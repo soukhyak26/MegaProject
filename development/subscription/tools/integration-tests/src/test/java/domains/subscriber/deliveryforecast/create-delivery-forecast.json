@@ -1,0 +1,101 @@
+{
+  "deliveryForecastParameters" :
+  [
+    {
+      "startDate": "01-01-2018",
+      "endDate" : "31-01-2018",
+      "deliveryCount" : 2200 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-02-2018",
+      "endDate" : "28-02-2018",
+      "deliveryCount" : 3400 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-03-2018",
+      "endDate" : "31-03-2018",
+      "deliveryCount" : 4320 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-04-2018",
+      "endDate" : "30-04-2018",
+      "deliveryCount" : 4860 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-05-2018",
+      "endDate" : "31-05-2018",
+      "deliveryCount" : 5235 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-06-2018",
+      "endDate" : "30-06-2018",
+      "deliveryCount" : 5670 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-07-2018",
+      "endDate" : "31-07-2018",
+      "deliveryCount" : 5300 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-08-2018",
+      "endDate" : "31-08-2018",
+      "deliveryCount" : 5660 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-09-2018",
+      "endDate" : "30-09-2018",
+      "deliveryCount" : 6230 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-10-2018",
+      "endDate" : "31-10-2018",
+      "deliveryCount" : 5870 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-11-2018",
+      "endDate" : "30-11-2018",
+      "deliveryCount" : 6870 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "01-12-2018",
+      "endDate" : "31-12-2018",
+      "deliveryCount" : 7460 ,
+      "valueRangeMin" : 10.1,
+      "valueRangeMax" : 15.0,
+      "forecastContentStatus" : 1
+    }
+  ]
+}

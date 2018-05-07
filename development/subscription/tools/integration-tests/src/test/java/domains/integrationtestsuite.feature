@@ -10,11 +10,20 @@ Background:
 * url   platformPaymentsUrl
 * url   paymentsReadUrl
 
-Scenario:Create subscription rules and verify the same
-* call read('classpath:domains/subscriber/subscriptionrules/subscriptionrules-verifier.feature')
+Scenario:Subscriber initial setup and verification
+* call read('classpath:domains/subscriber/subscriber-initial-setup-verifier.feature')
 
 Scenario:verify business account creation and configuration on read side for the financial year
 * call read('classpath:domains/business/business-verifier.feature')
 
 Scenario:verify product category creation and product creation and configuration on read side
 * call read('classpath:domains/product/product-verifier.feature')
+
+Scenario:subscriber manual forecast and verification
+* call read('classpath:domains/subscriber/subscriberforecast/subscriber-forecast-verifier.feature')
+
+Scenario:subscription manual forecast and verification
+* call read('classpath:domains/subscriber/subscriptionforecast/subscription-forecast-verifier.feature')
+
+Scenario:delivery manual forecast and verification
+* call read('classpath:domains/subscriber/deliveryforecast/delivery-forecast-verifier.feature')

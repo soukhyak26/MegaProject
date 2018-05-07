@@ -1,6 +1,6 @@
 [
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-01-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -13,7 +13,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-02-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -26,7 +26,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-03-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -39,7 +39,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-04-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -52,7 +52,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-05-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -65,7 +65,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-06-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -78,7 +78,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-07-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -91,7 +91,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-08-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -104,7 +104,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-09-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -117,7 +117,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-10-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -130,7 +130,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-11-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
@@ -143,7 +143,7 @@
     "forecastContentStatus": 1
   },
   {
-    "SubscriptionVersionId": {
+    "subscriptionVersionId": {
       "startDate": "01-12-2018",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
