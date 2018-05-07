@@ -134,31 +134,31 @@ public class SubscriberController {
         return new ResponseEntity<>(productView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscriber/forecast/trend")
+    @RequestMapping(method = RequestMethod.GET, value = "forecast/trend")
     public ResponseEntity<List<SubscriberForecastTrendView>> getSubscriberForecastTrend() {
         List<SubscriberForecastTrendView> subscriberForecastTrendViews = subscriberForecastTrendViewRepository.findAll();
         return new ResponseEntity<>(subscriberForecastTrendViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscriber/pseudoactuals")
+    @RequestMapping(method = RequestMethod.GET, value = "pseudoactuals")
     public ResponseEntity<List<SubscriberPseudoActualsView>> getSubscriberPseudoactuals() {
         List<SubscriberPseudoActualsView> pseudoActualsViews = subscriberPseudoActualsViewRepository.findAll();
         return new ResponseEntity<>(pseudoActualsViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscriber/actuals")
+    @RequestMapping(method = RequestMethod.GET, value = "actuals")
     public ResponseEntity<List<SubscribersActualsView>> getSubscriberActuals() {
         List<SubscribersActualsView> actualsViews = subscribersActualsViewRepository.findAllByOrderByRegistrationDateDesc();
         return new ResponseEntity<>(actualsViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscriber/forecast")
+    @RequestMapping(method = RequestMethod.GET, value = "forecast")
     public ResponseEntity<List<SubscribersForecastView>> getSubscriberForecast() {
         List<SubscribersForecastView> forecastViews = subscribersForecastViewRepository.findAll();
         return new ResponseEntity<>(forecastViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscriber/{subscriberId}")
+    @RequestMapping(method = RequestMethod.GET, value = "{subscriberId}")
     public ResponseEntity<SubscriberView> getSubscriber(@PathVariable String subscriberId) {
         SubscriberView subscriber = subscriberViewRepository.findOne(subscriberId);
         return new ResponseEntity<>(subscriber, HttpStatus.OK);
