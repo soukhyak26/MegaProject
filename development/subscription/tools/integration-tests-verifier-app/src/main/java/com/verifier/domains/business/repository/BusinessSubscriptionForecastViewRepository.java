@@ -16,6 +16,7 @@ import java.util.List;
 public interface BusinessSubscriptionForecastViewRepository extends CrudRepository<SubscriptionForecastView, SubscriptionVersionId> {
     public List<SubscriptionForecastView> findByEndDateBetween(LocalDate endDate1, LocalDate endDate2);
     public List<SubscriptionForecastView> findByEndDateLessThan(LocalDate endDate1, Sort sort);
+    public List<SubscriptionForecastView> findByForecastContentStatus(ForecastContentStatus forecastContentStatus);
     public List<SubscriptionForecastView> findByForecastContentStatusOrderBySubscriptionVersionId_StartDateAsc(ForecastContentStatus forecastContentStatus);
     public List<SubscriptionForecastView> findByForecastContentStatusAndSubscriptionVersionId_ForecastDateLessThan(ForecastContentStatus forecastContentStatus, LocalDate forecastDate);
     public List<SubscriptionForecastView> findByForecastContentStatusOrderBySubscriptionVersionId_ForecastDateDesc(ForecastContentStatus forecastContentStatus);

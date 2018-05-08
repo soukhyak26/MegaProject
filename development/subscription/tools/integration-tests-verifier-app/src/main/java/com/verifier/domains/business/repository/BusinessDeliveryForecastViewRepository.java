@@ -12,5 +12,6 @@ import java.util.List;
  * Created by mandar on 9/23/2017.
  */
 public interface BusinessDeliveryForecastViewRepository extends CrudRepository<DeliveryForecastView,DeliveryForecastVersionId> {
+    public List<DeliveryForecastView> findByForecastContentStatus(ForecastContentStatus forecastContentStatus);
     public List<DeliveryForecastView> findByForecastContentStatusAndDeliveryForecastVersionId_WeightRangeMinAndDeliveryForecastVersionId_WeightRangeMaxAndDeliveryForecastVersionId_DeliveryDateBetween(ForecastContentStatus forecastContentStatus, double weightRangeMin, double weightRangeMax, LocalDate startDate, LocalDate endDate);
 }
