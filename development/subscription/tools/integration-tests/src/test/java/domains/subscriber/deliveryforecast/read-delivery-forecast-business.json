@@ -1,0 +1,134 @@
+[
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-01-2018",
+    "deliveryCount": 2200,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "28-02-2018",
+    "deliveryCount": 3400,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-03-2018",
+    "deliveryCount": 4320,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "30-04-2018",
+    "deliveryCount": 4860,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-05-2018",
+    "deliveryCount": 5235,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "30-06-2018",
+    "deliveryCount": 5670,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-07-2018",
+    "deliveryCount": 5300,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-08-2018",
+    "deliveryCount": 5660,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "30-09-2018",
+    "deliveryCount": 6230,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-10-2018",
+    "deliveryCount": 5870,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "30-11-2018",
+    "deliveryCount": 6870,
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate" : "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "endDate": "31-12-2018",
+    "deliveryCount": 7460,
+    "forecastContentStatus": 1
+  }
+]

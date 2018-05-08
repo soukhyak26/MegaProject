@@ -1,0 +1,7 @@
+{
+  "businessAccountId": "#notnull",
+  "startAmount" : "#notnull",
+  "currentAmount": "#notnull",
+  "startDate"  : "#notnull",
+  "endDate": "#notnull"
+}
