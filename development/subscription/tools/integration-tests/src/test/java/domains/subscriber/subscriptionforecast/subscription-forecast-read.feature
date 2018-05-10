@@ -38,7 +38,7 @@ And match response == read('classpath:domains/subscriber/deliveryforecast/read-d
 #Obtain business account Id to be fed to the next scenario
 Scenario:
 Given url businessReadUrl
-And path 'business/businessaccount
+And path 'business/businessaccount'
 And header Accept = 'application/json'
 When method get
 Then status 200
