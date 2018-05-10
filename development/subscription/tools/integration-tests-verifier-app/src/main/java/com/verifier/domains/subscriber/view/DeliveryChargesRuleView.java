@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Currency;
 import java.util.List;
 
 /**
@@ -18,8 +17,6 @@ public class DeliveryChargesRuleView {
     @Id
     private DeliveryChargesRuleType ruleId;
     private List <RangeRule> rangeRules;
-    @Autowired
-    private Currency currency;
     private LocalDate effectiveDate;
 
     public DeliveryChargesRuleView() {
@@ -45,14 +42,6 @@ public class DeliveryChargesRuleView {
 
     public void setRangeRules(List<RangeRule> rangeRules) {
         this.rangeRules = rangeRules;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
     }
 
     public LocalDate getEffectiveDate() {

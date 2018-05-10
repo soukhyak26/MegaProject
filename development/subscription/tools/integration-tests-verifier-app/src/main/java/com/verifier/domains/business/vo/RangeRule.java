@@ -3,8 +3,6 @@ package com.verifier.domains.business.vo;
 import com.affaince.subscription.common.type.QuantityUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Currency;
-
 /**
  * Created by rbsavaliya on 15-01-2016.
  */
@@ -14,8 +12,6 @@ public class RangeRule {
     private double ruleMaximum;
     private QuantityUnit ruleUnit;
     private double applicableValue;
-    @Autowired
-    private Currency currency;
 
 
     public String getRuleHeader() {
@@ -58,9 +54,6 @@ public class RangeRule {
         this.ruleUnit = ruleUnit;
     }
 
-    public Currency getCurrency() {
-        return currency;
-    }
 
     @Override
     public boolean equals(Object o) {

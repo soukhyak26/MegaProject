@@ -51,4 +51,24 @@ public abstract class AccountTransactionsView {
     public TransactionReasonCode getTransactionReasonCode() {
         return transactionReasonCode;
     }
+
+    public void setTransactionId(long transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public void setDateOfTransaction(LocalDateTime dateOfTransaction) {
+        this.dateOfTransaction = dateOfTransaction;
+    }
+
+    public void setTransactedAmount(double transactedAmount) {
+        this.transactedAmount = transactedAmount;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public void setTransactionReasonCode(TransactionReasonCode transactionReasonCode) {
+        this.transactionReasonCode = transactionReasonCode;
+    }
 }

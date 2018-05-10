@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Currency;
 
 /**
  * Created by rsavaliya on 21/1/16.
@@ -19,8 +18,6 @@ public class DeliveryChargesRuleView {
     private double ruleMaximum;
     private QuantityUnit ruleUnit;
     private double applicableValue;
-    @Autowired
-    private Currency currency;
 
     public DeliveryChargesRuleView() {
     }
@@ -82,11 +79,4 @@ public class DeliveryChargesRuleView {
         this.applicableValue = applicableValue;
     }
 
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
 }

@@ -8,10 +8,14 @@ import java.io.Serializable;
  * Created by mandar on 9/30/2017.
  */
 public class DeliveryVersionId implements Serializable{
-    private final LocalDate forecastDate;
-    private final LocalDate startDate;
-    private final double weightRangeMin;
-    private final double weightRangeMax;
+    private LocalDate forecastDate;
+    private LocalDate startDate;
+    private double weightRangeMin;
+
+    public DeliveryVersionId() {
+    }
+
+    private double weightRangeMax;
 
     public DeliveryVersionId(LocalDate forecastDate, LocalDate startDate, double weightRangeMin, double weightRangeMax) {
         this.forecastDate = forecastDate;
@@ -34,5 +38,21 @@ public class DeliveryVersionId implements Serializable{
 
     public double getWeightRangeMax() {
         return weightRangeMax;
+    }
+
+    public void setForecastDate(LocalDate forecastDate) {
+        this.forecastDate = forecastDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setWeightRangeMin(double weightRangeMin) {
+        this.weightRangeMin = weightRangeMin;
+    }
+
+    public void setWeightRangeMax(double weightRangeMax) {
+        this.weightRangeMax = weightRangeMax;
     }
 }
