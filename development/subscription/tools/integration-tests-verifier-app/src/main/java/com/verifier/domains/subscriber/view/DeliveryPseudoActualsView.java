@@ -14,19 +14,16 @@ public class DeliveryPseudoActualsView {
     @Id
     private DeliveryForecastVersionId deliveryForecastVersionId;
     private long deliveryCount;
-
-    public DeliveryPseudoActualsView() {
-    }
-
     private ForecastContentStatus forecastContentStatus;
 
-    public DeliveryPseudoActualsView(LocalDate forecastDate, LocalDate startDate,double minWeight,double maxWeight) {
-        this.deliveryForecastVersionId = new DeliveryForecastVersionId(forecastDate,startDate,minWeight,maxWeight);
+    public DeliveryPseudoActualsView(){}
+    public DeliveryPseudoActualsView(LocalDate startDate,LocalDate forecastDate, double minWeight,double maxWeight) {
+        this.deliveryForecastVersionId = new DeliveryForecastVersionId(startDate,forecastDate,minWeight,maxWeight);
         this.forecastContentStatus= ForecastContentStatus.ACTIVE;
     }
 
     public DeliveryPseudoActualsView(LocalDate startDate, LocalDate forecastDate,long deliveryCount, double weightRangeMin, double weightRangeMax,  ForecastContentStatus forecastContentStatus) {
-        this.deliveryForecastVersionId = new DeliveryForecastVersionId(forecastDate,startDate,weightRangeMin,weightRangeMax);
+        this.deliveryForecastVersionId = new DeliveryForecastVersionId(startDate,forecastDate,weightRangeMin,weightRangeMax);
         this.deliveryCount = deliveryCount;
         this.forecastContentStatus = forecastContentStatus;
     }

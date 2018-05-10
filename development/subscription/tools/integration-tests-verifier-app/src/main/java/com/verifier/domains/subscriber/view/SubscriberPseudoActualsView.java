@@ -18,19 +18,17 @@ public class SubscriberPseudoActualsView {
     private long totalSubscribers;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscriberPseudoActualsView() {
-    }
-
-    public SubscriberPseudoActualsView(LocalDate startDate, LocalDate forecastDate){
-        this.subscriberVersionId =new SubscriberVersionId(forecastDate,startDate);
+    public SubscriberPseudoActualsView(){}
+    public SubscriberPseudoActualsView(LocalDate startDate,LocalDate forecastDate){
+        this.subscriberVersionId =new SubscriberVersionId(startDate,forecastDate);
     }
 
     public SubscriberPseudoActualsView(LocalDate startDate, long newSubscribers, long churnedSubscribers, long totalSubscribers, LocalDate forecastDate) {
-        this.subscriberVersionId =new SubscriberVersionId(forecastDate,startDate);
+        this.subscriberVersionId =new SubscriberVersionId(startDate,forecastDate);
         this.newSubscribers = newSubscribers;
         this.churnedSubscribers = churnedSubscribers;
         this.totalSubscribers = totalSubscribers;
-        this.forecastContentStatus= ForecastContentStatus.ACTIVE;
+        this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
 
     public void addToNewSubscriptionCount(long subscriptionCount){

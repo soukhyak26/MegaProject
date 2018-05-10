@@ -12,8 +12,9 @@ public class SubscriptionVersionId implements Serializable{
     private LocalDate startDate;
     private double valueRangeMin;
     private double valueRangeMax;
+
     public SubscriptionVersionId(){}
-    public SubscriptionVersionId(LocalDate forecastDate, LocalDate startDate, double valueRangeMin, double valueRangeMax) {
+    public SubscriptionVersionId(LocalDate startDate,LocalDate forecastDate, double valueRangeMin, double valueRangeMax) {
         this.forecastDate = forecastDate;
         this.startDate=startDate;
         this.valueRangeMin = valueRangeMin;

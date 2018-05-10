@@ -1,19 +1,31 @@
 package com.verifier.config;
 
+import com.affaince.subscription.common.idconverter.DeliveryIdReaderConverter;
+import com.affaince.subscription.common.idconverter.DeliveryIdWriterConverter;
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
 import com.verifier.domains.subscriber.repository.SubscriberProductViewRepository;
+import com.verifier.domains.subscriber.services.converters.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.CustomConversions;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableMongoRepositories(mongoTemplateRef ="subscriberMongoTemplate", basePackageClasses = {com.verifier.domains.subscriber.repository.BenefitViewRepository.class,
@@ -78,4 +90,32 @@ public class SubscriberMongoConfiguration {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
+    @Bean
+    public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {
+        MongoMappingContext mappingContext = new MongoMappingContext();
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
+        MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
+        converter.setCustomConversions(customConversions());
+        return converter;
+    }
+
+    @Bean
+    public CustomConversions customConversions(){
+        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new DeliveryIdReaderConverter());
+        converters.add(new DeliveryIdWriterConverter());
+        converters.add(new DeliveryForecastVersionIdReaderConverter());
+        converters.add(new DeliveryForecastVersionIdWriterConverter());
+        converters.add(new DeliveryActualsVersionIdReaderConverter());
+        converters.add(new DeliveryActualsVersionIdWriterConverter());
+        converters.add(new SubscriberTrendVersionIdReaderConverter());
+        converters.add(new SubscriberTrendVersionIdWriterConverter());
+        converters.add(new SubscriptionVersionIdReaderConverter());
+        converters.add(new SubscriptionVersionIdWriterConverter());
+        converters.add(new SubscriptionActualsVersionIdReaderConverter());
+        converters.add(new SubscriptionActualsVersionIdWriterConverter());
+
+        return new CustomConversions(converters);
+    }
+
 } 

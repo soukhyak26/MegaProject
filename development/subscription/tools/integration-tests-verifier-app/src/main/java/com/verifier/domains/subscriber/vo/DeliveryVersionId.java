@@ -11,13 +11,12 @@ public class DeliveryVersionId implements Serializable{
     private LocalDate forecastDate;
     private LocalDate startDate;
     private double weightRangeMin;
+    private double weightRangeMax;
 
     public DeliveryVersionId() {
     }
 
-    private double weightRangeMax;
-
-    public DeliveryVersionId(LocalDate forecastDate, LocalDate startDate, double weightRangeMin, double weightRangeMax) {
+    public DeliveryVersionId(LocalDate startDate,LocalDate forecastDate, double weightRangeMin, double weightRangeMax) {
         this.forecastDate = forecastDate;
         this.startDate=startDate;
         this.weightRangeMin = weightRangeMin;

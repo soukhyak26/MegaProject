@@ -20,14 +20,14 @@ public class DeliveryForecastView {
     public DeliveryForecastView() {
     }
 
-    public DeliveryForecastView(LocalDate forecastDate, LocalDate startDate, LocalDate endDate, double minWeight, double maxWeight) {
-        this.deliveryForecastVersionId = new DeliveryForecastVersionId(forecastDate,startDate,minWeight,maxWeight);
+    public DeliveryForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, double minWeight, double maxWeight) {
+        this.deliveryForecastVersionId = new DeliveryForecastVersionId(startDate,forecastDate,minWeight,maxWeight);
         this.endDate = endDate;
         this.forecastContentStatus= ForecastContentStatus.ACTIVE;
     }
 
     public DeliveryForecastView( LocalDate startDate, LocalDate endDate,LocalDate forecastDate,long deliveryCount, double weightRangeMin, double weightRangeMax,ForecastContentStatus forecastContentStatus) {
-        this.deliveryForecastVersionId = new DeliveryForecastVersionId(forecastDate,startDate,weightRangeMin,weightRangeMax);
+        this.deliveryForecastVersionId = new DeliveryForecastVersionId(startDate,forecastDate,weightRangeMin,weightRangeMax);
         this.deliveryCount = deliveryCount;
         this.endDate = endDate;
         this.forecastContentStatus = forecastContentStatus;

@@ -18,18 +18,16 @@ public class SubscriptionPseudoActualsView {
     private long totalSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscriptionPseudoActualsView() {
-    }
-
-    public SubscriptionPseudoActualsView(LocalDate startDate, LocalDate forecastDate, double valueRangeMin, double valueRangeMax){
-        this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,startDate,valueRangeMin,valueRangeMax);
+    public SubscriptionPseudoActualsView(){}
+    public SubscriptionPseudoActualsView(LocalDate startDate,LocalDate forecastDate,double valueRangeMin, double valueRangeMax){
+        this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
     }
     public SubscriptionPseudoActualsView(LocalDate startDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions,LocalDate forecastDate,double valueRangeMin, double valueRangeMax) {
-        this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,startDate,valueRangeMin,valueRangeMax);
+        this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalSubscriptions = totalSubscriptions;
-        this.forecastContentStatus= ForecastContentStatus.ACTIVE;
+        this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
 
     public void addToNewSubscriptionCount(long subscriptionCount){

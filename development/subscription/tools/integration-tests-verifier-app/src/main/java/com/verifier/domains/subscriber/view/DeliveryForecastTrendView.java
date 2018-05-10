@@ -16,20 +16,13 @@ public class DeliveryForecastTrendView {
     private double referenceTotalDeliveriesCount;
     private double changeInTotalDeliveriesCount;
 
-    public DeliveryForecastTrendView() {
-    }
-
-    public DeliveryForecastTrendView(LocalDate trendSettingDate, double weightRangeMin, double weightRangeMax, LocalDate startDate, LocalDate endDate, double referenceTotalDeliveriesCount, double changeInTotalDeliveriesCount) {
-        this.deliveryForecastVersionId = new DeliveryForecastVersionId(trendSettingDate,startDate,weightRangeMin,weightRangeMax);
+    public DeliveryForecastTrendView(){}
+    public DeliveryForecastTrendView(LocalDate startDate, LocalDate endDate,LocalDate forecastDate,double weightRangeMin,double weightRangeMax, double referenceTotalDeliveriesCount, double changeInTotalDeliveriesCount) {
+        this.deliveryForecastVersionId = new DeliveryForecastVersionId(startDate,forecastDate,weightRangeMin,weightRangeMax);
         this.endDate = endDate;
         this.changeInTotalDeliveriesCount = changeInTotalDeliveriesCount;
         this.referenceTotalDeliveriesCount=referenceTotalDeliveriesCount;
     }
-
-    public LocalDate getTrendSettingDate() {
-        return this.deliveryForecastVersionId.getForecastDate();
-    }
-
 
     public LocalDate getStartDate() {
         return this.deliveryForecastVersionId.getDeliveryDate();
