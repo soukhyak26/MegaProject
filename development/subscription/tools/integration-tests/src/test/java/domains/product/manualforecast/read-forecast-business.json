@@ -15,7 +15,7 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 2200,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -33,7 +33,7 @@
       28
     ],
     "totalNumberOfExistingSubscriptions" : 5370,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -51,7 +51,7 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 9240,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -69,7 +69,7 @@
       30
     ],
     "totalNumberOfExistingSubscriptions" : 13620,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -87,7 +87,7 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 18215,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -105,7 +105,7 @@
       30
     ],
     "totalNumberOfExistingSubscriptions" : 22995,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -123,7 +123,7 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 27275,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -141,7 +141,7 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 31965,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -159,7 +159,7 @@
       30
     ],
     "totalNumberOfExistingSubscriptions" : 37415,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -177,7 +177,7 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 42375,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -195,7 +195,7 @@
       30
     ],
     "totalNumberOfExistingSubscriptions" : 48055,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -213,6 +213,6 @@
       31
     ],
     "totalNumberOfExistingSubscriptions" : 54135,
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   }
 ]

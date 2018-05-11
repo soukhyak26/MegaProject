@@ -1,10 +1,10 @@
 [
   {
     "subscriberVersionId" : {
-      "startDate": "01-01-2018",
+      "startDate": [2018,1,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "31-01-2018",
+    "endDate": [2018,1,31],
     "newSubscribers": 2200,
     "churnedSubscribers": 0,
     "totalSubscribers": "#notnull",
@@ -12,10 +12,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": "01-02-2018",
+    "startDate": [2018,2,1],
      "forecastDate" : "#notnull"
     },
-    "endDate": "28-02-2018",
+    "endDate": [2018,2,28],
     "newSubscribers": 3400,
     "churnedSubscribers": 230,
     "totalSubscribers": "#notnull",
@@ -23,10 +23,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": "01-03-2018",
+    "startDate": [2018,3,1],
     "forecastDate" : "#notnull"
     },
-    "endDate": "31-03-2018",
+    "endDate": [2018,3,31],
     "newSubscribers": 4320,
     "churnedSubscribers": 450,
     "totalSubscribers": "#notnull",
@@ -34,10 +34,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": "01-04-2018",
+      "startDate": [2018,4,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "30-04-2018",
+    "endDate": [2018,4,30],
     "newSubscribers": 4860,
     "churnedSubscribers": 480,
     "totalSubscribers": "#notnull",
@@ -45,10 +45,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": "01-05-2018",
+    "startDate": [2018,5,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "31-05-2018",
+    "endDate": [2018,5,31],
     "newSubscribers": 5235,
     "churnedSubscribers": 640,
     "totalSubscribers": "#notnull",
@@ -56,10 +56,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": "01-06-2018",
+    "startDate": [2018,6,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "30-06-2018",
+    "endDate": [2018,6,30],
     "newSubscribers": 5670,
     "churnedSubscribers": 890,
     "totalSubscribers": "#notnull",
@@ -67,10 +67,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": "01-07-2018",
+      "startDate": [2018,7,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "31-07-2018",
+    "endDate": [2018,7,31],
     "newSubscribers": 5300,
     "churnedSubscribers": 1020,
     "totalSubscribers": "#notnull",
@@ -78,10 +78,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": "01-08-2018",
+      "startDate": [2018,8,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "31-08-2018",
+    "endDate": [2018,8,31],
     "newSubscribers": 5660,
     "churnedSubscribers": 970,
     "totalSubscribers": "#notnull",
@@ -89,10 +89,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": "01-09-2018",
+      "startDate": [2018,9,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "30-09-2018",
+    "endDate": [2018,9,30],
     "newSubscribers": 6230,
     "churnedSubscribers": 780,
     "totalSubscribers": "#notnull",
@@ -100,10 +100,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": "01-10-2018",
+    "startDate": [2018,10,1],
     "forecastDate" : "#notnull"
     },
-    "endDate": "31-10-2018",
+    "endDate":  [2018,10,31],
     "newSubscribers": 5870,
     "churnedSubscribers": 910,
     "totalSubscribers": "#notnull",
@@ -111,10 +111,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": "01-11-2018",
+      "startDate": [2018,11,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "30-11-2018",
+    "endDate": [2018,11,30],
     "newSubscribers": 6870,
     "churnedSubscribers": 1190,
     "totalSubscribers": "#notnull",
@@ -122,10 +122,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": "01-12-2018",
+      "startDate": [2018,12,1],
       "forecastDate" : "#notnull"
     },
-    "endDate": "31-12-2018",
+    "endDate": [2018,12,31],
     "newSubscribers": 7460,
     "churnedSubscribers": 1380,
     "totalSubscribers": "#notnull",

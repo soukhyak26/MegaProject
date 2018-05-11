@@ -9,7 +9,7 @@
     "newSubscriptions": 2200,
     "churnedSubscriptions": 0,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -21,7 +21,7 @@
     "newSubscriptions": 3400,
     "churnedSubscriptions": 230,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -33,7 +33,7 @@
     "newSubscriptions": 4320,
     "churnedSubscriptions": 450,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -45,7 +45,7 @@
     "newSubscriptions": 4860,
     "churnedSubscriptions": 480,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -57,7 +57,7 @@
     "newSubscriptions": 5235,
     "churnedSubscriptions": 640,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -69,7 +69,7 @@
     "newSubscriptions": 5670,
     "churnedSubscriptions": 890,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -81,7 +81,7 @@
     "newSubscriptions": 5300,
     "churnedSubscriptions": 1020,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -93,7 +93,7 @@
     "newSubscriptions": 5660,
     "churnedSubscriptions": 970,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -105,7 +105,7 @@
     "newSubscriptions": 6230,
     "churnedSubscriptions": 780,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -117,7 +117,7 @@
     "newSubscriptions": 5870,
     "churnedSubscriptions": 910,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -129,7 +129,7 @@
     "newSubscriptions": 6870,
     "churnedSubscriptions": 1190,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -141,6 +141,6 @@
     "newSubscriptions": 7460,
     "churnedSubscriptions": 1380,
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   }
 ]

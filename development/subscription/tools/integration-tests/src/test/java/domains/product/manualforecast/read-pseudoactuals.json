@@ -9,7 +9,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -21,7 +21,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -33,7 +33,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -45,7 +45,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -57,7 +57,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -69,7 +69,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -81,7 +81,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -93,7 +93,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -105,7 +105,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -117,7 +117,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -129,7 +129,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -141,7 +141,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -153,7 +153,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -165,7 +165,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -177,7 +177,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -189,7 +189,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -201,7 +201,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -213,7 +213,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -225,7 +225,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -237,7 +237,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -249,7 +249,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -261,7 +261,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -273,7 +273,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -285,7 +285,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -297,7 +297,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -309,7 +309,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -321,7 +321,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -333,7 +333,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -345,7 +345,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -357,7 +357,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -369,7 +369,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -381,7 +381,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -393,7 +393,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -405,7 +405,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -417,7 +417,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -429,7 +429,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -441,7 +441,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -453,7 +453,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -465,7 +465,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -477,7 +477,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -489,7 +489,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -501,7 +501,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -513,7 +513,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -525,7 +525,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -537,7 +537,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -549,7 +549,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -561,7 +561,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -573,7 +573,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -585,7 +585,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -597,7 +597,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -609,7 +609,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -621,7 +621,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -633,7 +633,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -645,7 +645,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -657,7 +657,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -669,7 +669,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -681,7 +681,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -693,7 +693,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -705,7 +705,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -717,7 +717,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -729,7 +729,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -741,7 +741,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -753,7 +753,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -765,7 +765,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -777,7 +777,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -789,7 +789,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -801,7 +801,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -813,7 +813,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -825,7 +825,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -837,7 +837,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -849,7 +849,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -861,7 +861,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -873,7 +873,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -885,7 +885,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -897,7 +897,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -909,7 +909,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -921,7 +921,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -933,7 +933,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -945,7 +945,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -957,7 +957,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -969,7 +969,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -981,7 +981,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -993,7 +993,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1005,7 +1005,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1017,7 +1017,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1029,7 +1029,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1041,7 +1041,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1053,7 +1053,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1065,7 +1065,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1077,7 +1077,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1089,7 +1089,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1101,7 +1101,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1113,7 +1113,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1125,7 +1125,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1137,7 +1137,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1149,7 +1149,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1161,7 +1161,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1173,7 +1173,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1185,7 +1185,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1197,7 +1197,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1209,7 +1209,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1221,7 +1221,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1233,7 +1233,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1245,7 +1245,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1257,7 +1257,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1269,7 +1269,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1281,7 +1281,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1293,7 +1293,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1305,7 +1305,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1317,7 +1317,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1329,7 +1329,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1341,7 +1341,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1353,7 +1353,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1365,7 +1365,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1377,7 +1377,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1389,7 +1389,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1401,7 +1401,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1413,7 +1413,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1425,7 +1425,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1437,7 +1437,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1449,7 +1449,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1461,7 +1461,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1473,7 +1473,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1485,7 +1485,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1497,7 +1497,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1509,7 +1509,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1521,7 +1521,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1533,7 +1533,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1545,7 +1545,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1557,7 +1557,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1569,7 +1569,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1581,7 +1581,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1593,7 +1593,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1605,7 +1605,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1617,7 +1617,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1629,7 +1629,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1641,7 +1641,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1653,7 +1653,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1665,7 +1665,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1677,7 +1677,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1689,7 +1689,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1701,7 +1701,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1713,7 +1713,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1725,7 +1725,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1737,7 +1737,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1749,7 +1749,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1761,7 +1761,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1773,7 +1773,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1785,7 +1785,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1797,7 +1797,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1809,7 +1809,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1821,7 +1821,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1833,7 +1833,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1845,7 +1845,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1857,7 +1857,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1869,7 +1869,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1881,7 +1881,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1893,7 +1893,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1905,7 +1905,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1917,7 +1917,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1929,7 +1929,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1941,7 +1941,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1953,7 +1953,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1965,7 +1965,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1977,7 +1977,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -1989,7 +1989,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2001,7 +2001,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2013,7 +2013,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2025,7 +2025,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2037,7 +2037,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2049,7 +2049,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2061,7 +2061,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2073,7 +2073,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2085,7 +2085,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2097,7 +2097,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2109,7 +2109,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2121,7 +2121,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2133,7 +2133,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2145,7 +2145,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2157,7 +2157,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2169,7 +2169,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2181,7 +2181,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2193,7 +2193,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2205,7 +2205,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2217,7 +2217,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2229,7 +2229,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2241,7 +2241,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2253,7 +2253,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2265,7 +2265,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2277,7 +2277,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2289,7 +2289,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2301,7 +2301,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2313,7 +2313,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2325,7 +2325,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2337,7 +2337,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2349,7 +2349,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2361,7 +2361,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2373,7 +2373,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2385,7 +2385,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2397,7 +2397,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2409,7 +2409,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2421,7 +2421,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2433,7 +2433,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2445,7 +2445,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2457,7 +2457,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2469,7 +2469,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2481,7 +2481,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2493,7 +2493,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2505,7 +2505,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2517,7 +2517,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2529,7 +2529,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2541,7 +2541,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2553,7 +2553,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2565,7 +2565,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2577,7 +2577,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2589,7 +2589,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2601,7 +2601,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2613,7 +2613,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2625,7 +2625,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2637,7 +2637,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2649,7 +2649,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2661,7 +2661,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2673,7 +2673,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2685,7 +2685,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2697,7 +2697,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2709,7 +2709,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2721,7 +2721,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2733,7 +2733,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2745,7 +2745,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2757,7 +2757,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2769,7 +2769,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2781,7 +2781,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2793,7 +2793,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2805,7 +2805,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2817,7 +2817,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2829,7 +2829,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2841,7 +2841,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2853,7 +2853,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2865,7 +2865,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2877,7 +2877,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2889,7 +2889,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2901,7 +2901,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2913,7 +2913,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2925,7 +2925,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2937,7 +2937,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2949,7 +2949,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2961,7 +2961,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2973,7 +2973,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2985,7 +2985,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -2997,7 +2997,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3009,7 +3009,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3021,7 +3021,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3033,7 +3033,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3045,7 +3045,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3057,7 +3057,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3069,7 +3069,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3081,7 +3081,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3093,7 +3093,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3105,7 +3105,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3117,7 +3117,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3129,7 +3129,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3141,7 +3141,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3153,7 +3153,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3165,7 +3165,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3177,7 +3177,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3189,7 +3189,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3201,7 +3201,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3213,7 +3213,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3225,7 +3225,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3237,7 +3237,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3249,7 +3249,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3261,7 +3261,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3273,7 +3273,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3285,7 +3285,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3297,7 +3297,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3309,7 +3309,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3321,7 +3321,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3333,7 +3333,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3345,7 +3345,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3357,7 +3357,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3369,7 +3369,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3381,7 +3381,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3393,7 +3393,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3405,7 +3405,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3417,7 +3417,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3429,7 +3429,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3441,7 +3441,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3453,7 +3453,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3465,7 +3465,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3477,7 +3477,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3489,7 +3489,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3501,7 +3501,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3513,7 +3513,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3525,7 +3525,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3537,7 +3537,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3549,7 +3549,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3561,7 +3561,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3573,7 +3573,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3585,7 +3585,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3597,7 +3597,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3609,7 +3609,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3621,7 +3621,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3633,7 +3633,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3645,7 +3645,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3657,7 +3657,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3669,7 +3669,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3681,7 +3681,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3693,7 +3693,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3705,7 +3705,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3717,7 +3717,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3729,7 +3729,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3741,7 +3741,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3753,7 +3753,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3765,7 +3765,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3777,7 +3777,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3789,7 +3789,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3801,7 +3801,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3813,7 +3813,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3825,7 +3825,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3837,7 +3837,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3849,7 +3849,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3861,7 +3861,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3873,7 +3873,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3885,7 +3885,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3897,7 +3897,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3909,7 +3909,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3921,7 +3921,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3933,7 +3933,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3945,7 +3945,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3957,7 +3957,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3969,7 +3969,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3981,7 +3981,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -3993,7 +3993,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4005,7 +4005,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4017,7 +4017,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4029,7 +4029,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4041,7 +4041,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4053,7 +4053,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4065,7 +4065,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4077,7 +4077,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4089,7 +4089,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4101,7 +4101,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4113,7 +4113,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4125,7 +4125,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4137,7 +4137,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4149,7 +4149,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4161,7 +4161,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4173,7 +4173,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4185,7 +4185,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4197,7 +4197,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4209,7 +4209,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4221,7 +4221,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4233,7 +4233,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4245,7 +4245,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4257,7 +4257,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4269,7 +4269,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4281,7 +4281,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4293,7 +4293,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4305,7 +4305,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4317,7 +4317,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4329,7 +4329,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4341,7 +4341,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4353,7 +4353,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4365,7 +4365,7 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
@@ -4377,6 +4377,6 @@
     "newSubscriptions": "#notnull",
     "churnedSubscriptions": "#notnull",
     "totalNumberOfExistingSubscriptions" : "#notnull",
-    "forecastContentStatus": "ACTIVE"
+    "forecastContentStatus": 1
   }
 ]
