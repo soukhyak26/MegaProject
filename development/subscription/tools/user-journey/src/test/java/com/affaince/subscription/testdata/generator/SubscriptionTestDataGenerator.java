@@ -52,7 +52,7 @@ public class SubscriptionTestDataGenerator {
     public void createPaymentScheme () {
         try {
             PaymentScheme paymentScheme = new PaymentScheme();
-            paymentScheme.setPaymentSchemeId(fetchDataByGetRequest("http://localhost:8086/paymentscheme/random"));
+            paymentScheme.setPaymentSchemeId(fetchDataByGetRequest("http://localhost:8086/payments/scheme/random"));
             File file = new File(classLoader.getResource(".").getPath() + "/paymentscheme.json");
             ObjectMapper objectMapper = new ObjectMapper();
             try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
