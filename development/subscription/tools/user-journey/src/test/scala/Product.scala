@@ -35,7 +35,7 @@ class Product extends BaseSimulator {
 object RegisterProduct {
 
   val createProductUrl = "http://localhost:8082/product/register"
-  val createProductConfigUrl = "http://localhost:8082/productconfig"
+  val createProductConfigUrl = "http://localhost:8082/product/config"
   val createProjectionUrl = "http://localhost:8082/forecast"
   val registerOpeningPriceUrl = "http://localhost:8082/pricing/openprice"
   val businessProvisionUrl = "http://localhost:8085/businessacount/setProvision"
@@ -66,7 +66,7 @@ object RegisterProduct {
             """.stripMargin
           )
         ).asJSON
-        .check(jsonPath("$.id").saveAs("productId"))
+        .check(jsonPath("$.productId").saveAs("productId"))
     )
 }
 
@@ -76,7 +76,7 @@ object AddProjectionParameter {
     //feed(stepforecastJsonFileFeeder)
       exec(
       http("Add Projection Parameter to Product")
-        .put((RegisterProduct.createProjectionUrl + "/manual/${productId}").el[String])
+        .post((RegisterProduct.createProjectionUrl + "/manual/${productId}").el[String])
         .body(ElFileBody("${productId}.json")).asJSON
     )
 }
