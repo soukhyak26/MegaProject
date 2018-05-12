@@ -6,18 +6,13 @@ import com.affaince.subscription.date.SysDate;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import org.joda.time.LocalDate;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by rbsavaliya on 26-12-2016.
@@ -171,7 +166,7 @@ public class SubscriptionTestDataGenerator {
     private long getTotalSubscriptionCountFromActiveForecast (String productId) {
         Long totalForecstedSubscription = 0L;
         try {
-            org.joda.time.LocalDate date = SysDate.now().plusDays(7);
+            LocalDate date = SysDate.now().plusDays(7);
             totalForecstedSubscription = Long.parseLong(fetchDataByGetRequest(
                     "http://localhost:8082/forecast/totalsubscription/" + productId
                     + "/" + date

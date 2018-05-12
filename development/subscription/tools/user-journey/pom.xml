@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.affaince</groupId>
-            <artifactId>config-commons</artifactId>
+            <artifactId>affaince-config</artifactId>
             <version>0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
@@ -30,6 +30,16 @@
                     <artifactId>spark-core_2.10</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>affaince-valuepojos</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
+            <artifactId>sysdate</artifactId>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.gatling.highcharts</groupId>

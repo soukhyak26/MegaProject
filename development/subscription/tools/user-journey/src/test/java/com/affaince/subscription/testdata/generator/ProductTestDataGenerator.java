@@ -1,18 +1,14 @@
 package com.affaince.subscription.testdata.generator;
 
-import com.affaince.subscription.common.type.Period;
-import com.affaince.subscription.common.type.PeriodUnit;
 import com.affaince.subscription.repository.DefaultIdGenerator;
 import com.affaince.subscription.repository.IdGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by rbsavaliya on 26-12-2016.
