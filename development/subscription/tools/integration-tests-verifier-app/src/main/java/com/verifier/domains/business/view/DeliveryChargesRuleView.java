@@ -1,82 +1,52 @@
 package com.verifier.domains.business.view;
 
+import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.common.vo.RangeRule;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 
-/**
- * Created by rsavaliya on 21/1/16.
- */
+
 @Document(collection = "DeliveryChargesRuleView")
 public class DeliveryChargesRuleView {
     @Id
-    private String ruleId;
-    private String ruleHeader;
-    private double ruleMinimum;
-    private double ruleMaximum;
-    private QuantityUnit ruleUnit;
-    private double applicableValue;
+    private DeliveryChargesRuleType ruleId;
+    private List<RangeRule> rangeRules;
+    private LocalDate effectiveDate;
 
-    public DeliveryChargesRuleView() {
-    }
 
-    public DeliveryChargesRuleView(String ruleId, String ruleHeader, double ruleMinimum, double ruleMaximum, QuantityUnit ruleUnit, double applicableValue) {
+    public DeliveryChargesRuleView(){}
+    public DeliveryChargesRuleView(DeliveryChargesRuleType ruleId, List<RangeRule> rangeRules, LocalDate effectiveDate) {
         this.ruleId = ruleId;
-        this.ruleHeader = ruleHeader;
-        this.ruleMinimum = ruleMinimum;
-        this.ruleMaximum = ruleMaximum;
-        this.ruleUnit = ruleUnit;
-        this.applicableValue = applicableValue;
+        this.rangeRules = rangeRules;
+        this.effectiveDate = effectiveDate;
     }
 
-    public String getRuleId() {
+    public DeliveryChargesRuleType getRuleId() {
         return ruleId;
     }
 
-    public void setRuleId(String ruleId) {
+    public void setRuleId(DeliveryChargesRuleType ruleId) {
         this.ruleId = ruleId;
     }
 
-    public String getRuleHeader() {
-        return ruleHeader;
+    public List<RangeRule> getRangeRules() {
+        return rangeRules;
     }
 
-    public void setRuleHeader(String ruleHeader) {
-        this.ruleHeader = ruleHeader;
+    public void setRangeRules(List<RangeRule> rangeRules) {
+        this.rangeRules = rangeRules;
     }
 
-    public double getRuleMinimum() {
-        return ruleMinimum;
+    public LocalDate getEffectiveDate() {
+        return effectiveDate;
     }
 
-    public void setRuleMinimum(double ruleMinimum) {
-        this.ruleMinimum = ruleMinimum;
+    public void setEffectiveDate(LocalDate effectiveDate) {
+        this.effectiveDate = effectiveDate;
     }
-
-    public double getRuleMaximum() {
-        return ruleMaximum;
-    }
-
-    public void setRuleMaximum(double ruleMaximum) {
-        this.ruleMaximum = ruleMaximum;
-    }
-
-    public QuantityUnit getRuleUnit() {
-        return ruleUnit;
-    }
-
-    public void setRuleUnit(QuantityUnit ruleUnit) {
-        this.ruleUnit = ruleUnit;
-    }
-
-    public double getApplicableValue() {
-        return applicableValue;
-    }
-
-    public void setApplicableValue(double applicableValue) {
-        this.applicableValue = applicableValue;
-    }
-
 }

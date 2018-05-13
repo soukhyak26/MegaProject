@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mandar on 31-12-2016.
@@ -23,7 +23,7 @@ public class BenefitAccountView {
     public BenefitAccountView() {
     }
 
-    public BenefitAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
+    public BenefitAccountView(String businessAccountId, double provisionAmount, Set<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;
         this.startDate = startDate;

@@ -156,14 +156,16 @@ public class BusinessVerifierController {
         return new ResponseEntity<List<ProductForecastView>>(businessProductForecastViewRepository.findByForecastVersionId_ProductIdAndForecastContentStatusOrderByEndDateAsc(id, ForecastContentStatus.ACTIVE),HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "delivery/forecast")
-    ResponseEntity<List<DeliveryForecastView>> getDeliveryForecastViews(@PathVariable String id){
-        return new ResponseEntity<List<DeliveryForecastView>>(businessDeliveryForecastViewRepository.findByForecastContentStatus(ForecastContentStatus.ACTIVE),HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value = "delivery/forecast/{minWeight}/{maxWeight}")
+    ResponseEntity<List<DeliveryForecastView>> getDeliveryForecastViews(@PathVariable("minWeight") double minWeight,@PathVariable("minWeight") double maxWeight ){
+        List<DeliveryForecastView> forecasts = businessDeliveryForecastViewRepository.findByForecastContentStatusAndDeliveryForecastVersionId_WeightRangeMinAndDeliveryForecastVersionId_WeightRangeMaxOrderByDeliveryForecastVersionId_DeliveryDateAsc(ForecastContentStatus.ACTIVE,minWeight,maxWeight);
+        return new ResponseEntity<List<DeliveryForecastView>>(forecasts,HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscription/forecast")
-    ResponseEntity<List<SubscriptionForecastView>> getSubscriptionForecastViews(@PathVariable String id){
-        return new ResponseEntity<List<SubscriptionForecastView>>(businessSubscriptionForecastViewRepository.findByForecastContentStatus(ForecastContentStatus.ACTIVE),HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value = "subscription/forecast/{valueRangeMin}/{valueRangeMax}")
+    ResponseEntity<List<SubscriptionForecastView>> getSubscriptionForecastViews(@PathVariable("valueRangeMin") double valueRangeMin, @PathVariable("valueRangeMax") double valueRangeMax){
+        List<SubscriptionForecastView> forecasts = businessSubscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMax(ForecastContentStatus.ACTIVE,valueRangeMin,valueRangeMax);
+        return new ResponseEntity<List<SubscriptionForecastView>>(forecasts,HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "subscription/{id}")

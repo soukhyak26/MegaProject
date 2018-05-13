@@ -6,30 +6,34 @@ import org.joda.time.YearMonth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
  * Created by mandar on 11/22/2017.
  */
 public class ProvisionCalendar {
-    private List<ProvisionSegment> installmentCalendar;
+    private Set<ProvisionSegment> installmentCalendar;
     private LocalDate startDate;
     private LocalDate endDate;
     public ProvisionCalendar(){
+        this.installmentCalendar=new TreeSet<>();
     }
     public ProvisionCalendar(LocalDate startDate, LocalDate endDate) {
         this.startDate=startDate;
         this.endDate=endDate;
+        this.installmentCalendar=new TreeSet<>();
     }
 
-    public ProvisionCalendar(LocalDate startDate, LocalDate endDate,List<ProvisionSegment> installmentCalendar) {
+    public ProvisionCalendar(LocalDate startDate, LocalDate endDate, Set<ProvisionSegment> installmentCalendar) {
         this.startDate=startDate;
         this.endDate=endDate;
         this.installmentCalendar=installmentCalendar;
     }
 
-    private List<ProvisionSegment> buildInstallationCalendar(LocalDate startDate, LocalDate endDate){
-        installmentCalendar = new ArrayList<>();
+    private Set<ProvisionSegment> buildInstallationCalendar(LocalDate startDate, LocalDate endDate){
+        installmentCalendar = new TreeSet<>();
         int startMonth = startDate.getMonthOfYear();
         YearMonth month = new YearMonth(startDate.getYear(), startDate.getMonthOfYear());
         int endMonth = endDate.getMonthOfYear();
@@ -103,11 +107,11 @@ public class ProvisionCalendar {
         return requiredProvisionAmount;
     }
 
-    public List<ProvisionSegment> getInstallmentCalendar() {
+    public Set<ProvisionSegment> getInstallmentCalendar() {
         return installmentCalendar;
     }
 
-    public void setInstallmentCalendar(List<ProvisionSegment> installmentCalendar) {
+    public void setInstallmentCalendar(Set<ProvisionSegment> installmentCalendar) {
         this.installmentCalendar = installmentCalendar;
     }
 
@@ -116,8 +120,8 @@ public class ProvisionCalendar {
     }
     //TODO:distribute available provision equally... this API should not be used.
     //TODO:ONce the forecasting is available the budget distribution will not be required.
-    public List<ProvisionSegment> distributeProvisionAcrossYear(double provisionAmount,LocalDate startDate,LocalDate endDate){
-        List<ProvisionSegment> distributionCalender=buildInstallationCalendar(startDate,endDate);
+    public Set<ProvisionSegment> distributeProvisionAcrossYear(double provisionAmount, LocalDate startDate, LocalDate endDate){
+        Set<ProvisionSegment> distributionCalender=buildInstallationCalendar(startDate,endDate);
         int calendarSize=distributionCalender.size();
         double amountPerPeriod=provisionAmount/calendarSize;
 

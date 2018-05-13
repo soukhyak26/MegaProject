@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Document(collection = "PurchaseCostAccountView")
 public class PurchaseCostAccountView {
@@ -21,7 +21,7 @@ public class PurchaseCostAccountView {
 
     public PurchaseCostAccountView(){
     }
-    public PurchaseCostAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
+    public PurchaseCostAccountView(String businessAccountId, double provisionAmount, Set<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;
         this.startDate = startDate;

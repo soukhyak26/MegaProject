@@ -3,11 +3,10 @@ package com.verifier.domains.business.view;
 import com.verifier.domains.business.vo.ProvisionCalendar;
 import com.verifier.domains.business.vo.ProvisionSegment;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mandar on 31-12-2016.
@@ -22,7 +21,7 @@ public class TaxesAccountView {
     private LocalDate endDate;
 
     public TaxesAccountView(){}
-    public TaxesAccountView(String businessAccountId, double provisionAmount, List<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
+    public TaxesAccountView(String businessAccountId, double provisionAmount, Set<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;
         this.startDate = startDate;
