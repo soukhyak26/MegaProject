@@ -1,4 +1,463 @@
-[
+[  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "deliveryForecastVersionId": {
+      "forecastDate": "#notnull",
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
+    },
+    "deliveryCount": "#notnull",
+    "forecastContentStatus": 1
+  },
   {
     "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
@@ -460,3191 +919,2731 @@
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1
   },
   {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
+    "deliveryForecastVersionId": {
       "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
-    },
-    "deliveryCount": "#notnull",
-    "forecastContentStatus": 1
-  },
-  {
-    "subscriptionVersionId": {
-      "startDate": "#notnull",
-      "forecastDate": "#notnull",
-      "valueRangeMin": 10001.0,
-      "valueRangeMax": 13000.0
+      "deliveryDate": "#notnull",
+      "weightRangeMin": 10.1,
+      "weightRangeMax": 15.0
     },
     "deliveryCount": "#notnull",
     "forecastContentStatus": 1

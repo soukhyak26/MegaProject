@@ -17,6 +17,9 @@ When method get
 Then status 200
 And match response == read('classpath:domains/subscriber/deliveryforecast/read-delivery-forecast.json')
 
+* def weightRangeMin = response[0].deliveryForecastVersionId.weightRangeMin
+* def weightRangeMax = response[0].deliveryForecastVersionId.weightRangeMax
+
 #PseudoActuals on Delivery Read side
 Scenario:
 Given url subscriberReadUrl
@@ -29,7 +32,7 @@ And match response == read('classpath:domains/subscriber/deliveryforecast/read-d
 #Delivery Forecast on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/delivery/forecast/'
+And path 'business/delivery/forecast/' + weightRangeMin + '/' + weightRangeMax
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -48,7 +51,7 @@ Then status 200
 #Modification to Variable Expense on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/variableexpnse/' + response.id
+And path 'business/variableexpense/' + response.id
 And header Accept = 'application/json'
 When method get
 Then status 200

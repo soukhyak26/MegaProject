@@ -7,6 +7,7 @@ Background:
 Scenario:
 #Introduce delay
 * call afterScenario
+* def purchaseAccountValue = read('classpath:domains/product/manualforecast/read-purchaseaccount-business.json')
 
 #Forecast on Product Read side
 Scenario:
