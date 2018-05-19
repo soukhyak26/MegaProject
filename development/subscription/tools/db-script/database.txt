@@ -1,0 +1,29 @@
+use product
+db.dropDatabase()
+use subscriber
+db.dropDatabase()
+use benefits
+db.dropDatabase()
+use payments
+db.dropDatabase()
+use business
+db.dropDatabase()
+
+nohup mvn spring-boot:run -f product/ > ~/logs/product.log &1
+nohup mvn spring-boot:run -f payments/ > ~/logs/payments.log &1
+nohup mvn spring-boot:run -f benefits/ > ~/logs/benefits.log &1
+nohup mvn spring-boot:run -f subscriber/ > ~/logs/subscriber.log &1
+
+var now=new Date();
+for (var i = 0; i < 180; i++) {
+  var yesterdayMs = new Date (now.getTime() + 1000*60*60*24*i);
+  var month = (yesterdayMs.getMonth() + 1);
+  var day = (yesterdayMs.getDate());
+  var year = (yesterdayMs.getFullYear());
+  var date = day + "-" + month + "-" + year;
+  var dateTime = date + "-03:42:55"
+  db.sysDateView.save({ "_id" : 1, "currentDate" : date })
+  db.sysDateTimeView.save({ "_id" : 1, "currentDate" : dateTime })
+}
+
+
