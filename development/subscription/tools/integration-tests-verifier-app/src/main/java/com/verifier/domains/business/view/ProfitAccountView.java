@@ -1,6 +1,6 @@
 package com.verifier.domains.business.view;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,13 +13,11 @@ public class ProfitAccountView {
     private String businessAccountId;
     private double startAmount;
     private double currentAmount;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public ProfitAccountView() {
-    }
-
-    public ProfitAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
+    public ProfitAccountView(){}
+    public ProfitAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;
         this.currentAmount = currentAmount;
@@ -51,19 +49,19 @@ public class ProfitAccountView {
         this.currentAmount = currentAmount;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

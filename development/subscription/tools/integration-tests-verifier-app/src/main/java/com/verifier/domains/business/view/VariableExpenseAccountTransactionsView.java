@@ -10,7 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class VariableExpenseAccountTransactionsView extends AccountTransactionsView{
-    public VariableExpenseAccountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
-        super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
+    public VariableExpenseAccountTransactionsView(){super();}
+    public VariableExpenseAccountTransactionsView(LocalDate dateOfTransaction, String contributorId, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
+        super(dateOfTransaction,contributorId,transactedAmount,transactionType, transactionReasonCode);
     }
 }

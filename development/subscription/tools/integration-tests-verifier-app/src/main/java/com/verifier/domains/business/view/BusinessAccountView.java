@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "BusinessAccountView")
 public class BusinessAccountView {
 
-    //TODO: Check if business account would be singleton - and hence only one id (as of now it will use year of provision date as id)
+    //TODO: Check if business account would be singleton - and hence only one businessAccountId (as of now it will use year of provision date as businessAccountId)
     @Id
-    private String id;
+    private String businessAccountId;
     private String merchantId;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -18,23 +18,21 @@ public class BusinessAccountView {
     private double defaultPercentFixedExpensePerUnitPrice =1.0;
     private double defaultPercentVariableExpensePerUnitPrice=1.0;
 
-    public BusinessAccountView() {
-    }
-
-    public BusinessAccountView(String id, String merchantId, LocalDate startDate, LocalDate endDate, LocalDate dateForProvision) {
-        this.id = id;
+    public BusinessAccountView(){}
+    public BusinessAccountView(String businessAccountId, String merchantId, LocalDate startDate, LocalDate endDate, LocalDate dateForProvision) {
+        this.businessAccountId = businessAccountId;
         this.merchantId=merchantId;
         this.startDate=startDate;
         this.endDate = endDate;
         this.dateForProvision = dateForProvision;
     }
 
-    public String getId() {
-        return id;
+    public String getBusinessAccountId() {
+        return businessAccountId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBusinessAccountId(String businessAccountId) {
+        this.businessAccountId = businessAccountId;
     }
 
     public LocalDate getDateForProvision() {
@@ -83,16 +81,5 @@ public class BusinessAccountView {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-    }
-
-    @Override
-    public String toString() {
-        return "BusinessAccountView{" +
-                "id='" + id + '\'' +
-                ", merchantId='" + merchantId + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", dateForProvision=" + dateForProvision +
-                '}';
     }
 }

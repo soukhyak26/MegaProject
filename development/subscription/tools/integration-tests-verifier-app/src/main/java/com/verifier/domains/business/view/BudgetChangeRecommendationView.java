@@ -7,7 +7,6 @@ import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 /**
  * Created by mandar on 18-02-2017.
  */
@@ -24,9 +23,7 @@ public class BudgetChangeRecommendationView {
     private RecommendationReceiver recommendationReceiver;
     private boolean recommendationAccepted;
 
-    public BudgetChangeRecommendationView() {
-    }
-
+    public BudgetChangeRecommendationView(){}
     public BudgetChangeRecommendationView(String recommendationId, String businessAccountId, String recommenderId, LocalDate recommendationDate, double additionalBudgetedAmount, RecommenderType recommenderType, RecommendationReason recommendationReason, RecommendationReceiver recommendationReceiver, boolean recommendationAccepted) {
         this.recommendationId = recommendationId;
         this.businessAccountId = businessAccountId;

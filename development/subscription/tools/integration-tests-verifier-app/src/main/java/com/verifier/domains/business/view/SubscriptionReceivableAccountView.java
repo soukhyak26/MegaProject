@@ -15,9 +15,7 @@ public class SubscriptionReceivableAccountView {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public SubscriptionReceivableAccountView() {
-    }
-
+    public SubscriptionReceivableAccountView(){}
     public SubscriptionReceivableAccountView(String businessAccountId, double receivableAmount, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.receivableAmount = receivableAmount;

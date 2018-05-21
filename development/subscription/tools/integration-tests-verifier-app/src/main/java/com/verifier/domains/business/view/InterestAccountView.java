@@ -2,24 +2,17 @@ package com.verifier.domains.business.view;
 
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Created by mandar on 31-12-2016.
- */
-@Document(collection = "LossesAccountView")
-public class LossesAccountView {
+public class InterestAccountView {
     @Id
     private String businessAccountId;
-    private double startAmount;
     private double currentAmount;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public LossesAccountView(){}
-    public LossesAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDate startDate, LocalDate endDate) {
+    public InterestAccountView(){}
+    public InterestAccountView(String businessAccountId, double currentAmount, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
-        this.startAmount = startAmount;
         this.currentAmount = currentAmount;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -31,14 +24,6 @@ public class LossesAccountView {
 
     public void setBusinessAccountId(String businessAccountId) {
         this.businessAccountId = businessAccountId;
-    }
-
-    public double getStartAmount() {
-        return startAmount;
-    }
-
-    public void setStartAmount(double startAmount) {
-        this.startAmount = startAmount;
     }
 
     public double getCurrentAmount() {
@@ -64,15 +49,4 @@ public class LossesAccountView {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-
-    public void debit(double amount) {
-        this.currentAmount -= amount;
-        //transactionList.add(new Transaction(amount, TransactionType.DEBIT, currentAmount));
-    }
-
-    public void credit(double amount) {
-        this.currentAmount += amount;
-        //transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
-    }
-
 }

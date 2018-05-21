@@ -16,9 +16,7 @@ public class BookingAmountAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public BookingAmountAccountView() {
-    }
-
+    public BookingAmountAccountView(){}
     public BookingAmountAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

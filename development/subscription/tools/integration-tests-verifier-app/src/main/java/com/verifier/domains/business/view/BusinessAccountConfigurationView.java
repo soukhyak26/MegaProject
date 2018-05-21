@@ -2,6 +2,7 @@ package com.verifier.domains.business.view;
 
 import com.affaince.subscription.common.vo.FiscalYearConfig;
 import com.verifier.domains.business.vo.BudgetAdjustmentOptions;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -9,14 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection="BusinessAccountConfigurationView")
 public class BusinessAccountConfigurationView {
+    @Id
     private String businessAccountId;
     private BudgetAdjustmentOptions budgetAdjustmentOptions;
     private FiscalYearConfig fiscalYearConfig;
     private double taxAsPercentageOfAnnualRevenue;
-
-    public BusinessAccountConfigurationView() {
-    }
-
+    public BusinessAccountConfigurationView(){}
     public BusinessAccountConfigurationView(String businessAccountId, BudgetAdjustmentOptions budgetAdjustmentOptions, FiscalYearConfig fiscalYearConfig, double taxAsPercentageOfAnnualRevenue) {
         this.businessAccountId = businessAccountId;
         this.budgetAdjustmentOptions = budgetAdjustmentOptions;

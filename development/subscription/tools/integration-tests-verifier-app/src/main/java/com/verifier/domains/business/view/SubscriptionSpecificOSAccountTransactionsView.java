@@ -10,8 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class SubscriptionSpecificOSAccountTransactionsView extends AccountTransactionsView {
-    public SubscriptionSpecificOSAccountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
-        super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
+    public SubscriptionSpecificOSAccountTransactionsView(){
+        super();
+    }
+    public SubscriptionSpecificOSAccountTransactionsView(LocalDate dateOfTransaction, String contributorId, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
+        super(dateOfTransaction,contributorId,transactedAmount,transactionType, transactionReasonCode);
     }
 
 }

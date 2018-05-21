@@ -5,8 +5,6 @@ import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Map;
-
 /**
  * Created by mandark on 26-01-2016.
  */
@@ -25,9 +23,7 @@ public class ProductView {
     private double currentOperatingExpensePerUnit;
     private double productPurchaseBudgetedAmount;
 
-    public ProductView() {
-    }
-
+    public ProductView(){}
     public ProductView(String productId, String productName, String categoryId, String subCategoryId, SensitivityCharacteristic sensitiveTo, double purchasePrice, double MRP, ProductStatus productStatus) {
         this.productId = productId;
         this.productName=productName;

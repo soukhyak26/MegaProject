@@ -11,8 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class ProfitAccountTransactionView extends AccountTransactionsView {
     private String productId;
-    public ProfitAccountTransactionView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode, String productId) {
-        super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
+    public ProfitAccountTransactionView(){super();}
+    public ProfitAccountTransactionView(LocalDate dateOfTransaction, String contributorId, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode, String productId) {
+        super(dateOfTransaction,contributorId,transactedAmount,transactionType, transactionReasonCode);
         this.productId=productId;
     }
 

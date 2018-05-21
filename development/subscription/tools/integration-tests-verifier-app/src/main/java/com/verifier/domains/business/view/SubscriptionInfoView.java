@@ -11,13 +11,10 @@ public class SubscriptionInfoView {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalSubscriptionAmount;
-
-    public SubscriptionInfoView() {
-    }
-
     private double bookingAmount;
     private double currentDueAmount;
 
+    public SubscriptionInfoView(){}
     public SubscriptionInfoView(String subscriptionId, LocalDate startDate, LocalDate endDate, double totalSubscriptionAmount) {
         this.subscriptionId = subscriptionId;
         this.startDate = startDate;

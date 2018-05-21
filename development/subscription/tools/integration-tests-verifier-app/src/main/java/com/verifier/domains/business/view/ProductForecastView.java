@@ -17,11 +17,7 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
     private long totalNumberOfExistingSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
-    public ProductForecastView() {
-    }
-
 /*
-
     public ProductForecastView(ProductVersionId forecastVersionId, LocalDateTime endDate, long newSubscriptions, long churnedSubscriptions, long totalNumberOfExistingSubscriptions, ForecastContentStatus forecastContentStatus) {
         this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;
@@ -31,7 +27,7 @@ public class ProductForecastView implements Comparable<ProductForecastView> {
         this.forecastContentStatus = forecastContentStatus;
     }
 */
-
+    public ProductForecastView(){}
     public ProductForecastView(ForecastVersionId forecastVersionId, LocalDate endDate, long totalNumberOfExistingSubscriptions) {
         this.forecastVersionId = forecastVersionId;
         this.endDate = endDate;

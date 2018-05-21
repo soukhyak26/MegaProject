@@ -1,80 +1,23 @@
 package com.verifier.domains.business.view;
 
-import org.joda.time.LocalDateTime;
-import org.springframework.data.annotation.Id;
+import com.verifier.domains.business.vo.ProvisionSegment;
+import org.joda.time.LocalDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Set;
 
 /**
  * Created by mandar on 31-12-2016.
  */
 @Document(collection = "OthersAccountView")
-public class OthersAccountView {
-    @Id
-    private String businessAccountId;
-    private double startAmount;
-    private double currentAmount;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+public class OthersAccountView extends ProvisionAccountView{
 
-    public OthersAccountView() {
+    public OthersAccountView(){super();}
+    public OthersAccountView(String businessAccountId, double provisionAmount, LocalDate startDate, LocalDate endDate) {
+        super(businessAccountId, provisionAmount, startDate, endDate);
     }
 
-    public OthersAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
-        this.businessAccountId = businessAccountId;
-        this.startAmount = startAmount;
-        this.currentAmount = currentAmount;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public OthersAccountView(String businessAccountId, double provisionAmount, Set<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
+        super(businessAccountId, provisionAmount, distributionCalendar, startDate, endDate);
     }
-
-    public String getBusinessAccountId() {
-        return businessAccountId;
-    }
-
-    public void setBusinessAccountId(String businessAccountId) {
-        this.businessAccountId = businessAccountId;
-    }
-
-    public double getStartAmount() {
-        return startAmount;
-    }
-
-    public void setStartAmount(double startAmount) {
-        this.startAmount = startAmount;
-    }
-
-    public double getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(double currentAmount) {
-        this.currentAmount = currentAmount;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
-
-    public void debit(double amount) {
-        this.currentAmount -= amount;
-        //transactionList.add(new Transaction(amount, TransactionType.DEBIT, currentAmount));
-    }
-
-    public void credit(double amount) {
-        this.currentAmount += amount;
-        //transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
-    }
-
 }

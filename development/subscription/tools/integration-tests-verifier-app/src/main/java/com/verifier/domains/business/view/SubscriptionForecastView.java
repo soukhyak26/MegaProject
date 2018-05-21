@@ -19,15 +19,13 @@ public class SubscriptionForecastView {
     private long totalSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscriptionForecastView() {
-    }
-
+    public SubscriptionForecastView(){}
     public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, double valueRangeMin, double valueRangeMax){
-        this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,startDate,valueRangeMin,valueRangeMax);
+        this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
         this.endDate=endDate;
     }
     public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions, LocalDate forecastDate, double valueRangeMin, double valueRangeMax) {
-        this.subscriptionVersionId = new SubscriptionVersionId(forecastDate,startDate,valueRangeMin,valueRangeMax);
+        this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
         this.endDate=endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;

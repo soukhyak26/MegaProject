@@ -5,7 +5,9 @@ import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.business.repository.*;
 import com.verifier.domains.business.view.*;
+import org.apache.tomcat.jni.Local;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,8 @@ public class BusinessVerifierController {
     private final BusinessVariableExpenseAccountTransactionsViewRepository businessVariableExpenseAccountTransactionsViewRepository;
     private final BusinessProductViewRepository businessProductViewRepository;
     private final BusinessProductForecastViewRepository businessProductForecastViewRepository;
+    private final BusinessOthersAccountViewRepository businessOthersAccountViewRepository;
+    private final BusinessOthersAccountTransactionsViewRepository businessOthersAccountTransactionsViewRepository;
     private final BusinessProfitAccountViewRepository businessProfitAccountViewRepository;
     private final BusinessProfitAccountTransactionsViewRepository businessProfitAccountTransactionsViewRepository;
     private final BusinessRevenueAccountViewRepository businessRevenueAccountViewRepository;
@@ -46,7 +50,7 @@ public class BusinessVerifierController {
     private final BusinessTaxesAccountTransactionsViewRepository businessTaxesAccountTransactionsViewRepository;
 
     @Autowired
-    public BusinessVerifierController(BusinessBusinessAccountViewRepository businessBusinessAccountViewRepository, BusinessBusinessAccountConfigurationViewRepository businessBusinessAccountConfigurationViewRepository, BusinessPurchaseCostAccountViewRepository businessPurchaseCostAccountViewRepository, BusinessPurchaseCostAccountTransactionsViewRepository businessPurchaseCostAccountTransactionsViewRepository, BusinessBookingAmountAccountViewRepository businessBookingAmountAccountViewRepository, BusinessBookingAmountTransactionsViewRepository businessBookingAmountTransactionsViewRepository, BusinessBudgetChangeRecommendationViewRepository businessBudgetChangeRecommendationViewRepository, BusinessBenefitAccountViewRepository businessBenefitAccountViewRepository, BusinessBenefitAccountTransactionsViewRepository businessBenefitAccountTransactionsViewRepository, BusinessCommonExpenseAccountViewRepository businessCommonExpenseAccountViewRepository, BusinessCommonExpensesTransactionsViewRepository businessCommonExpensesTransactionsViewRepository, BusinessVariableExpenseAccountViewRepository businessVariableExpenseAccountViewRepository, BusinessVariableExpenseAccountTransactionsViewRepository businessVariableExpenseAccountTransactionsViewRepository, BusinessProductViewRepository businessProductViewRepository, BusinessProfitAccountViewRepository businessProfitAccountViewRepository, BusinessProfitAccountTransactionsViewRepository businessProfitAccountTransactionsViewRepository, BusinessRevenueAccountViewRepository businessRevenueAccountViewRepository, BusinessRevenueAccountTransactionsViewRepository businessRevenueAccountTransactionsViewRepository, BusinessSubscriptionInfoViewRepository businessSubscriptionInfoViewRepository, BusinessTaxesAccountViewRepository businessTaxesAccountViewRepository, BusinessTaxesAccountTransactionsViewRepository businessTaxesAccountTransactionsViewRepository,BusinessProductForecastViewRepository businessProductForecastViewRepository,BusinessDeliveryForecastViewRepository businessDeliveryForecastViewRepository,BusinessSubscriptionForecastViewRepository businessSubscriptionForecastViewRepository) {
+    public BusinessVerifierController(BusinessBusinessAccountViewRepository businessBusinessAccountViewRepository, BusinessBusinessAccountConfigurationViewRepository businessBusinessAccountConfigurationViewRepository, BusinessPurchaseCostAccountViewRepository businessPurchaseCostAccountViewRepository, BusinessPurchaseCostAccountTransactionsViewRepository businessPurchaseCostAccountTransactionsViewRepository, BusinessBookingAmountAccountViewRepository businessBookingAmountAccountViewRepository, BusinessBookingAmountTransactionsViewRepository businessBookingAmountTransactionsViewRepository, BusinessBudgetChangeRecommendationViewRepository businessBudgetChangeRecommendationViewRepository, BusinessBenefitAccountViewRepository businessBenefitAccountViewRepository, BusinessBenefitAccountTransactionsViewRepository businessBenefitAccountTransactionsViewRepository, BusinessCommonExpenseAccountViewRepository businessCommonExpenseAccountViewRepository, BusinessCommonExpensesTransactionsViewRepository businessCommonExpensesTransactionsViewRepository, BusinessVariableExpenseAccountViewRepository businessVariableExpenseAccountViewRepository, BusinessVariableExpenseAccountTransactionsViewRepository businessVariableExpenseAccountTransactionsViewRepository, BusinessProductViewRepository businessProductViewRepository, BusinessProfitAccountViewRepository businessProfitAccountViewRepository, BusinessProfitAccountTransactionsViewRepository businessProfitAccountTransactionsViewRepository, BusinessRevenueAccountViewRepository businessRevenueAccountViewRepository, BusinessRevenueAccountTransactionsViewRepository businessRevenueAccountTransactionsViewRepository, BusinessSubscriptionInfoViewRepository businessSubscriptionInfoViewRepository, BusinessTaxesAccountViewRepository businessTaxesAccountViewRepository, BusinessTaxesAccountTransactionsViewRepository businessTaxesAccountTransactionsViewRepository,BusinessProductForecastViewRepository businessProductForecastViewRepository,BusinessDeliveryForecastViewRepository businessDeliveryForecastViewRepository,BusinessSubscriptionForecastViewRepository businessSubscriptionForecastViewRepository,BusinessOthersAccountViewRepository businessOthersAccountViewRepository,BusinessOthersAccountTransactionsViewRepository businessOthersAccountTransactionsViewRepository) {
         this.businessBusinessAccountViewRepository = businessBusinessAccountViewRepository;
         this.businessBusinessAccountConfigurationViewRepository = businessBusinessAccountConfigurationViewRepository;
         this.businessPurchaseCostAccountViewRepository = businessPurchaseCostAccountViewRepository;
@@ -71,6 +75,8 @@ public class BusinessVerifierController {
         this.businessSubscriptionInfoViewRepository = businessSubscriptionInfoViewRepository;
         this.businessTaxesAccountViewRepository = businessTaxesAccountViewRepository;
         this.businessTaxesAccountTransactionsViewRepository = businessTaxesAccountTransactionsViewRepository;
+        this.businessOthersAccountTransactionsViewRepository=businessOthersAccountTransactionsViewRepository;
+        this.businessOthersAccountViewRepository = businessOthersAccountViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "businessaccount")
@@ -97,7 +103,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "purchaseaccount/transaction/{dateOfTransaction}")
     ResponseEntity<List<PurchaseCostAccountTransactionsView>> getPurchaseAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        List<PurchaseCostAccountTransactionsView> purchaseCostAccountTransactionsViews = businessPurchaseCostAccountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction);
+        List<PurchaseCostAccountTransactionsView> purchaseCostAccountTransactionsViews = businessPurchaseCostAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(org.joda.time.LocalTime.now()));
         return new ResponseEntity<List<PurchaseCostAccountTransactionsView>>(purchaseCostAccountTransactionsViews,HttpStatus.OK);
     }
 
@@ -108,7 +114,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "bookingaccount/transaction/{dateOfTransaction}")
     ResponseEntity<List<BookingAmountTransactionsView>> getBookingAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<BookingAmountTransactionsView>>(businessBookingAmountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<BookingAmountTransactionsView>>(businessBookingAmountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "budgetchange/recommend/{recommendationDate}")
@@ -123,7 +129,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "benefitaccount/transaction/{dateOfTransaction}")
     ResponseEntity<List<BenefitsAccountTransactionsView>> getBenefitAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<BenefitsAccountTransactionsView>>(businessBenefitAccountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<BenefitsAccountTransactionsView>>(businessBenefitAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "commonexpense/{id}")
@@ -133,7 +139,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "commonexpense/transaction/{dateOfTransaction}")
     ResponseEntity<List<CommonExpensesTransactionsView>> getCommonOpExpeseAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<CommonExpensesTransactionsView>>(businessCommonExpensesTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<CommonExpensesTransactionsView>>(businessCommonExpensesTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "variableexpense/{id}")
@@ -143,7 +149,17 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "variableexpense/transaction/{dateOfTransaction}")
     ResponseEntity<List<VariableExpenseAccountTransactionsView>> getVariableExpenseAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<VariableExpenseAccountTransactionsView>>(businessVariableExpenseAccountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<VariableExpenseAccountTransactionsView>>(businessVariableExpenseAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "others/{id}")
+    ResponseEntity<OthersAccountView> getOthersAccount(@PathVariable String id){
+        return new ResponseEntity<OthersAccountView>(businessOthersAccountViewRepository.findOne(id),HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "others/transaction/{dateOfTransaction}")
+    ResponseEntity<List<OthersAccountTransactionsView>> getOthersAccountTransaction(@PathVariable LocalDate dateOfTransaction){
+        return new ResponseEntity<List<OthersAccountTransactionsView>>(businessOthersAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "product/{id}")
@@ -180,7 +196,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "profitaccount/transaction/{dateOfTransaction}")
     ResponseEntity<List<ProfitAccountTransactionView>> getProfitAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<ProfitAccountTransactionView>>(businessProfitAccountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<ProfitAccountTransactionView>>(businessProfitAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "revenueaccount/{id}")
@@ -191,7 +207,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "revenueaccount/transaction/{dateOfTransaction}")
     ResponseEntity<List<RevenueAccountTransactionsView>> getRevenueAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<RevenueAccountTransactionsView>>(businessRevenueAccountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<RevenueAccountTransactionsView>>(businessRevenueAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "taxesaccount/{id}")
@@ -201,7 +217,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "taxesaccount/transaction/{dateOfTransaction}")
     ResponseEntity<List<TaxesAccountTransactionsView>> getTaxesAccountTransaction(@PathVariable LocalDate dateOfTransaction){
-        return new ResponseEntity<List<TaxesAccountTransactionsView>>(businessTaxesAccountTransactionsViewRepository.findByDateOfTransaction(dateOfTransaction),HttpStatus.OK);
+        return new ResponseEntity<List<TaxesAccountTransactionsView>>(businessTaxesAccountTransactionsViewRepository.findByTimeOfTransaction(dateOfTransaction.toLocalDateTime(LocalTime.now())),HttpStatus.OK);
     }
 
 }

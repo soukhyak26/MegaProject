@@ -12,7 +12,7 @@ public class ProvisionSegment implements Comparable<ProvisionSegment> {
     private LocalDate endDate;
     private double expectedAmount;
     private double provisionedAmount;
-
+    public ProvisionSegment(){}
     public ProvisionSegment(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -45,6 +45,10 @@ public class ProvisionSegment implements Comparable<ProvisionSegment> {
         this.expectedAmount = expectedAmount;
     }
 
+    public void setProvisionedAmount(double provisionedAmount) {
+        this.provisionedAmount = provisionedAmount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,7 +65,6 @@ public class ProvisionSegment implements Comparable<ProvisionSegment> {
 
     @Override
     public int compareTo(ProvisionSegment o) {
-        return this.startDate.compareTo(o.startDate) & this.endDate.compareTo(o.endDate);
+       return this.startDate.compareTo(o.startDate) & this.endDate.compareTo(o.endDate);
     }
-
 }

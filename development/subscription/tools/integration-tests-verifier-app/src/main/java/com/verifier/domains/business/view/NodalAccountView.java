@@ -16,9 +16,7 @@ public class NodalAccountView {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public NodalAccountView() {
-    }
-
+    public NodalAccountView(){}
     public NodalAccountView(String businessAccountId, double startAmount, double currentAmount, LocalDateTime startDate, LocalDateTime endDate) {
         this.businessAccountId = businessAccountId;
         this.startAmount = startAmount;

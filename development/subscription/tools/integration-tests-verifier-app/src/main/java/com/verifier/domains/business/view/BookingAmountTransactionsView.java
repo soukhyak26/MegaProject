@@ -10,13 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class BookingAmountTransactionsView extends AccountTransactionsView {
-    private String contributorId;
-    public BookingAmountTransactionsView(String contributorId, LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
-        super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
-        this.contributorId=contributorId;
+    public BookingAmountTransactionsView(){
+        super();
+    }
+    public BookingAmountTransactionsView(LocalDate dateOfTransaction, String contributorId, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
+        super(dateOfTransaction,contributorId,transactedAmount,transactionType, transactionReasonCode);
     }
 
-    public String getContributorId() {
-        return contributorId;
-    }
 }

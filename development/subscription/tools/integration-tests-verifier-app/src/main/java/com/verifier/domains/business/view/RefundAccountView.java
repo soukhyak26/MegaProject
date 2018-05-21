@@ -19,9 +19,7 @@ public class RefundAccountView {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public RefundAccountView() {
-    }
-
+    public RefundAccountView(){}
     public RefundAccountView(String businessAccountId, double provisionAmount, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.provisionAmount = provisionAmount;
@@ -78,26 +76,25 @@ public class RefundAccountView {
         debit(amount,currentDate);
     }
 
+/*
     public void credit(double amount) {
         this.provisionAmount += amount;
         final LocalDate currentDate = SysDate.now();
         this.provisionCalendar.addProvisionForAPeriod(amount,currentDate);
         //transactionList.add(new Transaction(amount, TransactionType.CREDIT, currentAmount));
     }
+*/
 
-    public void debit(double amount, LocalDate startDate, LocalDate endDate) throws NotEnoughProvisionException{
+    public void debit(double amount, LocalDate startDate, LocalDate endDate) {
         this.provisionAmount -= amount;
-        this.provisionCalendar.deductProvisionForAPeriod(amount,startDate,endDate);
     }
 
-    public void debit(double amount, LocalDate transactionDate) throws NotEnoughProvisionException {
+    public void debit(double amount, LocalDate transactionDate) {
         this.provisionAmount -= amount;
-        this.provisionCalendar.deductProvisionForAPeriod(amount,transactionDate);
     }
 
     public void credit(double amount,LocalDate startDate, LocalDate endDate) {
         this.provisionAmount += amount;
-        this.provisionCalendar.addProvisionForAPeriod(amount,startDate,endDate);
     }
 
 

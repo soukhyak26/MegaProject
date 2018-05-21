@@ -10,8 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class LossesAccountTransactionsView extends AccountTransactionsView {
-    public LossesAccountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
-        super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
+    public LossesAccountTransactionsView(){
+        super();
+    }
+    public LossesAccountTransactionsView(LocalDate dateOfTransaction, String contributorId, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
+        super(dateOfTransaction,contributorId,transactedAmount,transactionType, transactionReasonCode);
     }
 
 }

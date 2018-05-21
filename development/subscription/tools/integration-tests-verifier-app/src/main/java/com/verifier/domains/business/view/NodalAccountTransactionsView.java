@@ -10,8 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class NodalAccountTransactionsView extends AccountTransactionsView {
-    public NodalAccountTransactionsView(LocalDate dateOfTransaction, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
-        super(dateOfTransaction,transactedAmount,transactionType, transactionReasonCode);
+    public NodalAccountTransactionsView(){
+        super();
+    }
+    public NodalAccountTransactionsView(LocalDate dateOfTransaction, String contributorId, double transactedAmount, TransactionType transactionType, TransactionReasonCode transactionReasonCode) {
+        super(dateOfTransaction,contributorId,transactedAmount,transactionType, transactionReasonCode);
     }
 
 }

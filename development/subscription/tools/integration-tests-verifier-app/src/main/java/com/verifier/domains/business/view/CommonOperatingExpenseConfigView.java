@@ -1,11 +1,10 @@
 package com.verifier.domains.business.view;
 
+import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.SensitivityCharacteristic;
 import com.verifier.domains.business.vo.CommonOperatingExpenseHeader;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.Period;
 
 /**
  * Created by mandar on 19-02-2017.
@@ -18,9 +17,7 @@ public class CommonOperatingExpenseConfigView {
     private Period period;
     private SensitivityCharacteristic sensitivityCharacteristic;
 
-    public CommonOperatingExpenseConfigView() {
-    }
-
+    public CommonOperatingExpenseConfigView(){}
     public CommonOperatingExpenseConfigView(CommonOperatingExpenseHeader expenseHeader, double amount, Period period, SensitivityCharacteristic sensitivityCharacteristic) {
         this.expenseHeader = expenseHeader;
         this.amount = amount;
