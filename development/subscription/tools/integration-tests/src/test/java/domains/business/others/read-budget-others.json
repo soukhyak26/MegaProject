@@ -1,7 +1,6 @@
 {
   "businessAccountId":"#notnull",
   "provisionAmount":1200000000.00,
-  "provisionCalendar":{"installmentCalendar":[]},
   "startDate":[2018,1,1],
   "endDate":[2018,12,31]
 }

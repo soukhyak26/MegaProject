@@ -57,6 +57,14 @@ When method get
 Then status 200
 And match response == read('classpath:domains/subscriber/deliveryforecast/read-variableexpense-business.json')
 
+#Modification to Variable Expense provision calendar on Business domain read side
+Scenario:
+Given url businessReadUrl
+And path 'business/variableexpense/provision'
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/subscriber/deliveryforecast/read-variableexpense-provisioncalendar-business.json')
 
 #Updated Product Activation status
 #Scenario:

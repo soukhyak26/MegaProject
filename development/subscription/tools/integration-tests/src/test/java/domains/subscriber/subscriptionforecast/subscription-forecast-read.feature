@@ -58,6 +58,14 @@ When method get
 Then status 200
 And match response == read('classpath:domains/subscriber/subscriptionforecast/read-taxes-business.json')
 
+#Modification to Taxes provision calendar on Business domain read side
+Scenario:
+Given url businessReadUrl
+And path 'business/taxesaccount/provision' + response.id
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/subscriber/subscriptionforecast/read-taxes-provisioncalendar-business.json')
 
 #Updated Product Activation status
 #Scenario:

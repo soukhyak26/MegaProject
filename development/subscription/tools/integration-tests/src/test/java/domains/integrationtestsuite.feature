@@ -19,11 +19,11 @@ Scenario:verify business account creation and configuration on read side for the
 Scenario:verify product category creation and product creation and configuration on read side
 * call read('classpath:domains/product/product-verifier.feature')
 
-#Scenario:subscriber manual forecast and verification
-#* call read('classpath:domains/subscriber/subscriberforecast/subscriber-forecast-verifier.feature')
+Scenario:subscriber manual forecast and verification
+* call read('classpath:domains/subscriber/subscriberforecast/subscriber-forecast-verifier.feature')
 
-#Scenario:subscription manual forecast and verification
-#* call read('classpath:domains/subscriber/subscriptionforecast/subscription-forecast-verifier.feature')
+Scenario:subscription manual forecast and verification
+* call read('classpath:domains/subscriber/subscriptionforecast/subscription-forecast-verifier.feature')
 
-#Scenario:delivery manual forecast and verification
-#* call read('classpath:domains/subscriber/deliveryforecast/delivery-forecast-verifier.feature')
+Scenario:delivery manual forecast and verification
+* call read('classpath:domains/subscriber/deliveryforecast/delivery-forecast-verifier.feature')
