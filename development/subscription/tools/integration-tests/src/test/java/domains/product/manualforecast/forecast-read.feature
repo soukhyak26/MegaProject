@@ -57,7 +57,7 @@ Then status 200
 #Purchase cost account on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/purchaseaccount/' + response.id
+And path 'business/purchaseaccount/' + response.businessAccountId
 And header Accept = 'application/json'
 When method get
 Then status 200

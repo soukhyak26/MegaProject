@@ -1,5 +1,5 @@
 @ignore
-Feature: read provision for purchase budget
+Feature: read provision for others budget
 
 Background:
 * def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
@@ -7,10 +7,10 @@ Background:
 Scenario:
 #Introduce delay
 * call afterScenario
-* def expectedProvisionResponse = read('classpath:domains/business/purchasecost/read-budget-purchasecost.json')
+* def expectedProvisionResponse = read('classpath:domains/business/others/read-budget-others.json')
 
 Given url businessReadUrl
-And path 'business/purchaseaccount/' +__arg.businessAccountId
+And path 'business/others/' +__arg.id
 When method get
 Then status 200
 And match response == expectedProvisionResponse
