@@ -11,7 +11,7 @@ public abstract class ProvisionAccountView {
     @Id
     private String businessAccountId;
     private double provisionAmount;
-    private ProvisionCalendar provisionCalendar;
+    //private ProvisionCalendar provisionCalendar;
     private LocalDate startDate;
     private LocalDate endDate;
     public ProvisionAccountView(String businessAccountId, double provisionAmount, LocalDate startDate, LocalDate endDate) {
@@ -19,7 +19,7 @@ public abstract class ProvisionAccountView {
         this.provisionAmount = provisionAmount;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.provisionCalendar=new ProvisionCalendar(startDate,endDate);
+        //this.provisionCalendar=new ProvisionCalendar(startDate,endDate);
     }
     public ProvisionAccountView(){}
     public ProvisionAccountView(String businessAccountId, double provisionAmount, Set<ProvisionSegment> distributionCalendar, LocalDate startDate, LocalDate endDate) {
@@ -27,8 +27,10 @@ public abstract class ProvisionAccountView {
         this.provisionAmount = provisionAmount;
         this.startDate = startDate;
         this.endDate = endDate;
+/*
         this.provisionCalendar=new ProvisionCalendar(startDate,endDate);
         this.provisionCalendar.setInstallmentCalendar(distributionCalendar);
+*/
     }
     public String getBusinessAccountId() {
         return businessAccountId;
@@ -44,14 +46,6 @@ public abstract class ProvisionAccountView {
 
     public void setProvisionAmount(double provisionAmount) {
         this.provisionAmount = provisionAmount;
-    }
-
-    public ProvisionCalendar getProvisionCalendar() {
-        return provisionCalendar;
-    }
-
-    public void setProvisionCalendar(ProvisionCalendar provisionCalendar) {
-        this.provisionCalendar = provisionCalendar;
     }
 
     public LocalDate getStartDate() {
@@ -89,15 +83,6 @@ public abstract class ProvisionAccountView {
         //Manual provision should be directly registered in provisionAmount
         this.provisionAmount = provision;
         //this.provisionCalendar.setInstallmentCalendar(provisionDistributionCalendar);
-        distributeProvision(id,startDate,endDate,provision);
+        //distributeProvision(id,startDate,endDate,provision);
     }
-    public void distributeProvision(String id, LocalDate startDate, LocalDate endDate, double provision) {
-        provisionCalendar.distributeProvisionAcrossYear(provision, startDate, endDate);
-    }
-
-
-    public void addProvisionSegment(ProvisionSegment matchingProvisionSegment, LocalDate startDate, LocalDate endDate){
-        this.provisionCalendar.addProvisionSegment(matchingProvisionSegment,startDate,endDate);
-    }
-
 }
