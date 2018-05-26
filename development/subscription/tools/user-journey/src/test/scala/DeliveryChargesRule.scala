@@ -10,7 +10,7 @@ class DeliveryChargesRule extends BaseSimulator {
 }
 
 object SetDeliveryChargesRules {
-  val setDeliveryChargesRulesUrl = "http://localhost:8081/deliverychargerules"
+  val setDeliveryChargesRulesUrl = "http://159.89.170.246:8081/deliverychargerules"
 
   val setDeliveryChargesRules = exec(
     http("Create Basket Rules")

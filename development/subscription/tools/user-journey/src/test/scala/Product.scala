@@ -34,12 +34,12 @@ class Product extends BaseSimulator {
 
 object RegisterProduct {
 
-  val createProductUrl = "http://localhost:8082/product/register"
-  val createProductConfigUrl = "http://localhost:8082/product/config"
-  val createProjectionUrl = "http://localhost:8082/forecast"
-  val registerOpeningPriceUrl = "http://localhost:8082/pricing/openprice"
-  val businessProvisionUrl = "http://localhost:8085/businessacount/setProvision"
-  val benefitEquationUrl = "http://localhost:8084/benefits"
+  val createProductUrl = "http://159.89.170.246:8082/product/register"
+  val createProductConfigUrl = "http://159.89.170.246:8082/product/config"
+  val createProjectionUrl = "http://159.89.170.246:8082/forecast"
+  val registerOpeningPriceUrl = "http://159.89.170.246:8082/pricing/openprice"
+  val businessProvisionUrl = "http://159.89.170.246:8085/businessacount/setProvision"
+  val benefitEquationUrl = "http://159.89.170.246:8084/benefits"
 
 
   val productDetailsJsonFeeder = jsonFile("productdetails.json")

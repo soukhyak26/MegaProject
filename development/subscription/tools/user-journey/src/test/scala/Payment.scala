@@ -17,7 +17,7 @@ class Payment extends BaseSimulator {
 
 object PaymentScheme {
 
-  val createPaymentSchemeUrl = "http://localhost:8086/payments/scheme"
+  val createPaymentSchemeUrl = "http://159.89.170.246:8086/payments/scheme"
 
   val createPaymentScheme = exec(
       http("Create Payment Scheme")

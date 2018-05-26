@@ -40,9 +40,11 @@ class Subscriber extends BaseSimulator {
     }
 
   val scenario2 = scenario("Add Delivery Charges").exec(SetDeliveryChargesRules.setDeliveryChargesRules)
+  val scenario3 = scenario("Create Subscription rules").exec(CreateBasketRules.createBasketRules)
   //setUp(scn.inject(rampUsers(productTestDataGenerator) over(productTestDataGenerator/15)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
 
-  setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(productTestDataGenerator)).protocols(http), scenario2.inject(atOnceUsers(1)).protocols(http),
+    scenario3.inject(atOnceUsers(1)).protocols(http))
 
 
   //setUp(scn.inject(constantUsersPerSec(users.toDouble) during (duration.seconds))).protocols(http)
@@ -50,12 +52,12 @@ class Subscriber extends BaseSimulator {
 
 object CreateSubscriber {
 
-  val createSubscriberUrl="http://localhost:8081/subscriber"
-  val createSubscriptionUrl = "http://localhost:8081/subscription"
-  val sysDateChangeUrl= "http://localhost:8086/sysdate"
+  val createSubscriberUrl="http://159.89.170.246:8081/subscriber"
+  val createSubscriptionUrl = "http://159.89.170.246:8081/subscription"
+  val sysDateChangeUrl= "http://159.89.170.246:8086/sysdate"
   val subscriberJsonFeeder = jsonFile ("Subscribers.json")
-  val getDeliveryIdsUrl = "http://localhost:8081/delivery/getDeliveryIds"
-  val selectPaymentUrl = "http://localhost:8081/subscription/selectpayment"
+  val getDeliveryIdsUrl = "http://159.89.170.246:8081/delivery/getDeliveryIds"
+  val selectPaymentUrl = "http://159.89.170.246:8081/subscription/selectpayment"
  // val sysdateFeeder = csv("sysdate.csv").queue;
 
   val createSubscriber = feed(subscriberJsonFeeder)

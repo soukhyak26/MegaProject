@@ -52,7 +52,7 @@ public class SubscriptionTestDataGenerator {
     public void createPaymentScheme () {
         try {
             PaymentScheme paymentScheme = new PaymentScheme();
-            paymentScheme.setPaymentSchemeId(fetchDataByGetRequest("http://localhost:8086/payments/scheme/random"));
+            paymentScheme.setPaymentSchemeId(fetchDataByGetRequest("http://159.89.170.246:8086/payments/scheme/random"));
             File file = new File(classLoader.getResource(".").getPath() + "/paymentscheme.json");
             ObjectMapper objectMapper = new ObjectMapper();
             try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
@@ -67,7 +67,7 @@ public class SubscriptionTestDataGenerator {
 
     private void findAllActiveProducts() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String[] activeProductIds = objectMapper.readValue(fetchDataByGetRequest("http://localhost:8082/product/active/productsIds"),
+        String[] activeProductIds = objectMapper.readValue(fetchDataByGetRequest("http://159.89.170.246:8082/product/active/productsIds"),
                 String[].class);
         productIds = Arrays.stream(activeProductIds).collect(Collectors.toList());
     }
@@ -168,7 +168,7 @@ public class SubscriptionTestDataGenerator {
         try {
             LocalDate date = SysDate.now().plusDays(7);
             totalForecstedSubscription = Long.parseLong(fetchDataByGetRequest(
-                    "http://localhost:8082/forecast/totalsubscription/" + productId
+                    "http://159.89.170.246:8082/forecast/totalsubscription/" + productId
                     + "/" + date
             ));
 
@@ -181,7 +181,7 @@ public class SubscriptionTestDataGenerator {
     private Double getMrpByProductId (String productId) {
         Double totalForecstedSubscription = 0.0;
         try {
-            Double.parseDouble(fetchDataByGetRequest("http://localhost:8082/product/mrp/" + productId));
+            Double.parseDouble(fetchDataByGetRequest("http://159.89.170.246:8082/product/mrp/" + productId));
         } catch (IOException e) {
             e.printStackTrace();
         }
