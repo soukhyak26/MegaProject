@@ -19,6 +19,8 @@ And match response == read('classpath:domains/subscriber/deliveryforecast/read-d
 
 * def weightRangeMin = response[0].deliveryForecastVersionId.weightRangeMin
 * def weightRangeMax = response[0].deliveryForecastVersionId.weightRangeMax
+* print "WEIGHT RANGE MIN " + weightRangeMin
+* print "WEIGHT RANGE MAX " + weightRangeMax
 
 #PseudoActuals on Delivery Read side
 Scenario:
@@ -46,12 +48,12 @@ And header Accept = 'application/json'
 When method get
 Then status 200
 
-* def activeBusinessAccountId = response.id
+* def activeBusinessAccountId = response.businessAccountId
 
 #Modification to Variable Expense on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/variableexpense/' + response.id
+And path 'business/variableexpense/' + activeBusinessAccountId
 And header Accept = 'application/json'
 When method get
 Then status 200
