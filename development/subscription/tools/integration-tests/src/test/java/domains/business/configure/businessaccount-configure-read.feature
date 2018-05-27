@@ -13,4 +13,4 @@ And path 'business/businessaccount/configure'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == {"businessAccountId":"#ignore","budgetAdjustmentOptions":"ACCEPT_AUTOMATED_BUDGET_ADJUSTEMENT","fiscalYearConfig":{"startDateOfFinanicalYear":"01-01-2018","endDateOfFinancialYear":"31-12-2018","jodaStartMonthOfFinancialYear":"#ignore","jodEndMonthOfFinancialYear":"#ignore"},"taxAsPercentageOfAnnualRevenue":0.2}
+And match response == {"businessAccountId":"#ignore","budgetAdjustmentOptions":"ACCEPT_AUTOMATED_BUDGET_ADJUSTEMENT","fiscalYearConfig":{"startDateOfFinanicalYear":"2018-01-01","endDateOfFinancialYear":"2018-12-31","jodaStartMonthOfFinancialYear":"#ignore","jodEndMonthOfFinancialYear":"#ignore"},"taxAsPercentageOfAnnualRevenue":0.2}
