@@ -1,5 +1,6 @@
 package com.verifier.domains.business.view;
 
+import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.verifier.domains.business.vo.ProvisionCalendar;
 import com.verifier.domains.business.vo.ProvisionSegment;
 import org.joda.time.LocalDate;
@@ -11,15 +12,18 @@ public class ProvisionCalendarView {
     private ProvisionCalendar provisionCalendar;
     private LocalDate startDate;
     private LocalDate endDate;
+    private ForecastContentStatus forecastContentStatus;
 
     public ProvisionCalendarView(){
         this.provisionCalendar=new ProvisionCalendar();
+        this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
     public ProvisionCalendarView(String businessAccountId, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.provisionCalendar=new ProvisionCalendar(startDate,endDate);
+        this.forecastContentStatus=ForecastContentStatus.ACTIVE;
     }
 
     public ProvisionCalendar getProvisionCalendar() {
@@ -55,5 +59,11 @@ public class ProvisionCalendarView {
         this.provisionCalendar.addProvisionSegment(matchingProvisionSegment,startDate,endDate);
     }
 
+    public ForecastContentStatus getForecastContentStatus() {
+        return forecastContentStatus;
+    }
 
+    public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
+        this.forecastContentStatus = forecastContentStatus;
+    }
 }

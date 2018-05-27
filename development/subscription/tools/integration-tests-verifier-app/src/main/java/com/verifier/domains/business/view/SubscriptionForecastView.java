@@ -23,6 +23,7 @@ public class SubscriptionForecastView {
     public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, double valueRangeMin, double valueRangeMax){
         this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
         this.endDate=endDate;
+        this.forecastContentStatus= ForecastContentStatus.ACTIVE;
     }
     public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions, LocalDate forecastDate, double valueRangeMin, double valueRangeMax) {
         this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
