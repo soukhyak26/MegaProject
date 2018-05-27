@@ -12,7 +12,9 @@ public class ProvisionCalendarView {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public ProvisionCalendarView(){}
+    public ProvisionCalendarView(){
+        this.provisionCalendar=new ProvisionCalendar();
+    }
     public ProvisionCalendarView(String businessAccountId, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;
         this.startDate = startDate;

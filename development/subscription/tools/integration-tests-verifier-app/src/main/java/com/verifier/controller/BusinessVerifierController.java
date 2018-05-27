@@ -209,13 +209,13 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "delivery/forecast/{minWeight}/{maxWeight}")
     ResponseEntity<List<DeliveryForecastView>> getDeliveryForecastViews(@PathVariable("minWeight") double minWeight,@PathVariable("minWeight") double maxWeight ){
-        List<DeliveryForecastView> forecasts = businessDeliveryForecastViewRepository.findByForecastContentStatusAndDeliveryForecastVersionId_WeightRangeMinAndDeliveryForecastVersionId_WeightRangeMaxOrderByDeliveryForecastVersionId_DeliveryDateAsc(ForecastContentStatus.ACTIVE,minWeight,maxWeight);
+        List<DeliveryForecastView> forecasts = businessDeliveryForecastViewRepository.findByDeliveryForecastVersionId_WeightRangeMinAndDeliveryForecastVersionId_WeightRangeMaxAndForecastContentStatusOrderByDeliveryForecastVersionId_DeliveryDateAsc(minWeight,maxWeight,ForecastContentStatus.ACTIVE);
         return new ResponseEntity<List<DeliveryForecastView>>(forecasts,HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "subscription/forecast/{valueRangeMin}/{valueRangeMax}")
     ResponseEntity<List<SubscriptionForecastView>> getSubscriptionForecastViews(@PathVariable("valueRangeMin") double valueRangeMin, @PathVariable("valueRangeMax") double valueRangeMax){
-        List<SubscriptionForecastView> forecasts = businessSubscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMax(ForecastContentStatus.ACTIVE,valueRangeMin,valueRangeMax);
+        List<SubscriptionForecastView> forecasts = businessSubscriptionForecastViewRepository.findBySubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMaxAndForecastContentStatus(valueRangeMin,valueRangeMax,ForecastContentStatus.ACTIVE);
         return new ResponseEntity<List<SubscriptionForecastView>>(forecasts,HttpStatus.OK);
     }
 
