@@ -17,6 +17,6 @@ public interface BusinessSubscriptionForecastViewRepository extends CrudReposito
     public List<SubscriptionForecastView> findByEndDateBetween(LocalDate endDate1, LocalDate endDate2);
     public List<SubscriptionForecastView> findByEndDateLessThan(LocalDate endDate1, Sort sort);
     public List<SubscriptionForecastView> findByForecastContentStatus(ForecastContentStatus forecastContentStatus);
-    public List<SubscriptionForecastView> findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMax(ForecastContentStatus forecastContentStatus,double valueRangeMin, double valueRangeMax);
+    public List<SubscriptionForecastView> findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMaxOrderBySubscriptionVersionId_StartDate(ForecastContentStatus forecastContentStatus,double valueRangeMin, double valueRangeMax);
     public List<SubscriptionForecastView> findBySubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMax(double valueRangeMin, double valueRangeMax);
 }

@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface BusinessPurchaseCostProvisionCalendarViewRepository extends CrudRepository<PurchaseCostProvisionCalendarView,ProvisionCalendarVersionId> {
-    public List<PurchaseCostProvisionCalendarView> findAll();
+    public List<PurchaseCostProvisionCalendarView> findAllByOrderByProvisionCalendarVersionId_StartDateAsc();
 }

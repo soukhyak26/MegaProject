@@ -144,27 +144,27 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "benefitaccount/provision")
     ResponseEntity<List<BenefitsProvisionCalendarView>> getBenefitProvisionCalendar(){
-        return new ResponseEntity<List<BenefitsProvisionCalendarView>>(businessBenefitsProvisionCalendarViewRepository.findAll(),HttpStatus.OK);
+        return new ResponseEntity<List<BenefitsProvisionCalendarView>>(businessBenefitsProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "commonexpense/provision")
     ResponseEntity<List<CommonExpenseProvisionCalendarView>> getCommonExpenseProvisionCalendar(){
-        return new ResponseEntity<List<CommonExpenseProvisionCalendarView>>(businessCommonExpensesProvisionCalendarViewRepository.findAll(),HttpStatus.OK);
+        return new ResponseEntity<List<CommonExpenseProvisionCalendarView>>(businessCommonExpensesProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "purchaseaccount/provision")
     ResponseEntity<List<PurchaseCostProvisionCalendarView>> getPurchaseAccountProvisionCalendar(){
-        return new ResponseEntity<List<PurchaseCostProvisionCalendarView>>(businessPurchaseCostProvisionCalendarViewRepository.findAll(),HttpStatus.OK);
+        return new ResponseEntity<List<PurchaseCostProvisionCalendarView>>(businessPurchaseCostProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "taxesaccount/provision")
     ResponseEntity<List<TaxesProvisionCalendarView>> getTaxesProvisionCalendar(){
-        return new ResponseEntity<List<TaxesProvisionCalendarView>>(businessTaxesProvisionCalendarViewRepository.findAll(),HttpStatus.OK);
+        return new ResponseEntity<List<TaxesProvisionCalendarView>>(businessTaxesProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "variableexpense/provision")
     ResponseEntity<List<VariableExpensesProvisionCalendarView>> getVariableExpenseProvisionCalendar(){
-        return new ResponseEntity<List<VariableExpensesProvisionCalendarView>>(businessVariableExpensesProvisionCalendarViewRepository.findAll(),HttpStatus.OK);
+        return new ResponseEntity<List<VariableExpensesProvisionCalendarView>>(businessVariableExpensesProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "commonexpense/{id}")
@@ -215,7 +215,7 @@ public class BusinessVerifierController {
 
     @RequestMapping(method = RequestMethod.GET, value = "subscription/forecast/{valueRangeMin}/{valueRangeMax}")
     ResponseEntity<List<SubscriptionForecastView>> getSubscriptionForecastViews(@PathVariable("valueRangeMin") double valueRangeMin, @PathVariable("valueRangeMax") double valueRangeMax){
-        List<SubscriptionForecastView> forecasts = businessSubscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMax(ForecastContentStatus.ACTIVE,valueRangeMin,valueRangeMax);
+        List<SubscriptionForecastView> forecasts = businessSubscriptionForecastViewRepository.findByForecastContentStatusAndSubscriptionVersionId_ValueRangeMinAndSubscriptionVersionId_ValueRangeMaxOrderBySubscriptionVersionId_StartDate(ForecastContentStatus.ACTIVE,valueRangeMin,valueRangeMax);
         return new ResponseEntity<List<SubscriptionForecastView>>(forecasts,HttpStatus.OK);
     }
 

@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface BusinessBenefitsProvisionCalendarViewRepository extends CrudRepository<BenefitsProvisionCalendarView,ProvisionCalendarVersionId> {
-    public List<BenefitsProvisionCalendarView> findAll();
+    public List<BenefitsProvisionCalendarView> findAllByOrderByProvisionCalendarVersionId_StartDateAsc();
 }
