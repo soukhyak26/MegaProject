@@ -14,7 +14,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -31,7 +32,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -48,7 +50,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -65,7 +68,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -82,7 +86,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -99,7 +104,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -116,7 +122,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -133,7 +140,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -150,7 +158,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -167,7 +176,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -184,7 +194,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   },
   {
     "provisionCalendarVersionId": {
@@ -201,7 +212,8 @@
       ]
     },
     "expectedAmount": "#notnull",
-    "provisionedAmount": "#notnull"
+    "provisionAmount": "#notnull",
+    "forecastContentStatus": 1
   }
 ]
 

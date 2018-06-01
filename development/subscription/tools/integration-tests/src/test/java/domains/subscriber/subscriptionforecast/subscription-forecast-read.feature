@@ -52,7 +52,7 @@ Then status 200
 #Modification to Taxes Account on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/taxesaccount/' + response.id
+And path 'business/taxesaccount/' + response.businessAccountId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -61,7 +61,7 @@ And match response == read('classpath:domains/subscriber/subscriptionforecast/re
 #Modification to Taxes provision calendar on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/taxesaccount/provision' + response.id
+And path 'business/taxesaccount/provision'
 And header Accept = 'application/json'
 When method get
 Then status 200
