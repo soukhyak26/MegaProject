@@ -13,6 +13,9 @@ function() {
   var platform_payments_port = karate.properties['domains.payments.server.command.port'];
   var read_payments_port = karate.properties['domains.payments.server.query.port'];
 
+  var platform_benefits_port = karate.properties['domains.benefits.server.command.port'];
+  var read_benefits_port = karate.properties['domains.benefits.server.query.port'];
+
   var env = karate.env;
     if (!env) { env = 'web'; }
   if (!platform_business_port) {
@@ -43,6 +46,13 @@ function() {
     read_payments_port = karate.env == 'web'? 5060 : 5070;
   }
 
+  if (!platform_benefits_port) {
+    platform_benefits_port = karate.env == 'web' ? 8084 : 8080;
+  }
+  if(!read_benefits_port){
+    read_benefits_port = karate.env == 'web'? 5060 : 5070;
+  }
+
   var protocol = 'http';
   var config = { platformBusinessUrl: protocol + '://127.0.0.1:' + platform_business_port,
                  businessReadUrl: protocol + '://127.0.0.1:' + read_business_port,
@@ -51,7 +61,9 @@ function() {
                  platformSubscriberUrl: protocol + '://127.0.0.1:' + platform_subscriber_port,
                  subscriberReadUrl: protocol + '://127.0.0.1:' + read_subscriber_port,
                  platformPaymentsUrl: protocol + '://127.0.0.1:' + platform_payments_port,
-                 paymentsReadUrl: protocol + '://127.0.0.1:' + read_payments_port
+                 paymentsReadUrl: protocol + '://127.0.0.1:' + read_payments_port,
+                 platformBenefitsUrl: protocol + '://127.0.0.1:' + platform_benefits_port,
+                 benefitsReadUrl: protocol + '://127.0.0.1:' + read_benefits_port,
                  };
 
   karate.log('karate.env =', karate.env);
@@ -63,5 +75,8 @@ function() {
   karate.log('#####config.subscriberReadUrl =', config.subscriberReadUrl);
   karate.log('#####config.platformPaymentsUrl =', config.platformPaymentsUrl);
   karate.log('#####config.paymentsReadUrl =', config.paymentsReadUrl);
+    karate.log('#####config.platformBenefitsUrl =', config.platformBenefitsUrl);
+    karate.log('#####config.benefitsReadUrl =', config.benefitsReadUrl);
+
   return config;
   }
