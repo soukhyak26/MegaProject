@@ -15,12 +15,11 @@ public class PaymentSchemesView {
     private String schemeDescription;
     private String schemeRuleInJsonFormat;
     private String schemeRule;
+    private LocalDate schemeStartDate;
+    private LocalDate schemeEndDate;
 
     public PaymentSchemesView() {
     }
-
-    private LocalDate schemeStartDate;
-    private LocalDate schemeEndDate;
 
     public PaymentSchemesView(String schemeId, String schemeName, String schemeDescription, String schemeRuleInJsonFormat, String schemeRule, LocalDate schemeStartDate, LocalDate schemeEndDate) {
         this.schemeId = schemeId;

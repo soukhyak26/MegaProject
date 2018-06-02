@@ -75,19 +75,19 @@ public class PaymentsController {
         return new ResponseEntity<>(paymentInstallmentView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "paymentschemes/{schemeId}")
+    @RequestMapping(method = RequestMethod.GET, value = "scheme/{schemeId}")
     public ResponseEntity<PaymentSchemesView> getPaymentSchemes(@PathVariable String schemeId) {
         PaymentSchemesView paymentSchemesView = paymentsPaymentSchemesViewRepository.findOne(schemeId);
         return new ResponseEntity<>(paymentSchemesView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "paymentschemes")
+    @RequestMapping(method = RequestMethod.GET, value = "schemes")
     public ResponseEntity<List<PaymentSchemesView>> getAllPaymentSchemes() {
         List<PaymentSchemesView> paymentSchemesViews = paymentsPaymentSchemesViewRepository.findAll();
         return new ResponseEntity<>(paymentSchemesViews, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "paymentschemes/active")
+    @RequestMapping(method = RequestMethod.GET, value = "schemes/active")
     public ResponseEntity<List<PaymentSchemesView>> getAllActivePaymentSchemes() {
         List<PaymentSchemesView> paymentSchemesViews = paymentsPaymentSchemesViewRepository.findBySchemeEndDateBefore(SysDate.now());
         return new ResponseEntity<>(paymentSchemesViews, HttpStatus.OK);

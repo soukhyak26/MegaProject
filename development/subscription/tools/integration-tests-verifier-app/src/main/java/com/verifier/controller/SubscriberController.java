@@ -122,7 +122,13 @@ public class SubscriberController {
         return new ResponseEntity<>(price, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "paymentschemes")
+    @RequestMapping(method = RequestMethod.GET, value = "payments/scheme/{schemeId}")
+    public ResponseEntity<PaymentSchemesView> getPaymentScheme(@PathVariable String schemeId) {
+        PaymentSchemesView scheme = paymentSchemesViewRepository.findOne(schemeId);
+        return new ResponseEntity<>(scheme, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "payments/schemes")
     public ResponseEntity<List<PaymentSchemesView>> getPaymentScheme() {
         List<PaymentSchemesView> schemes = paymentSchemesViewRepository.findAll();
         return new ResponseEntity<>(schemes, HttpStatus.OK);
