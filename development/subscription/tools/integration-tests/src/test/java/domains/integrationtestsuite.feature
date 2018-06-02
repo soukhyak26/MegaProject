@@ -28,5 +28,8 @@ Scenario:subscription manual forecast and verification
 Scenario:delivery manual forecast and verification
 * call read('classpath:domains/subscriber/deliveryforecast/delivery-forecast-verifier.feature')
 
-Scenario:Benefits creaton and verification
+Scenario:Benefits creation and verification
 * call read('classpath:domains/benefits/benefits-verifier.feature')
+
+Scenario:Payment Scheme creation and verification
+* call read('classpath:domains/payments/payment-scheme-verifier.feature')

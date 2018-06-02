@@ -19,8 +19,6 @@ And match response == read('classpath:domains/subscriber/deliveryforecast/read-d
 
 * def weightRangeMin = response[0].deliveryForecastVersionId.weightRangeMin
 * def weightRangeMax = response[0].deliveryForecastVersionId.weightRangeMax
-* print "WEIGHT RANGE MIN " + weightRangeMin
-* print "WEIGHT RANGE MAX " + weightRangeMax
 
 #PseudoActuals on Delivery Read side
 Scenario:
