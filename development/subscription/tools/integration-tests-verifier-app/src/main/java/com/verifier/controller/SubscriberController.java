@@ -68,7 +68,7 @@ public class SubscriberController {
         this.subscriptionViewRepository = subscriptionViewRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "schemes")
+    @RequestMapping(method = RequestMethod.GET, value = "benefits/schemes")
     public ResponseEntity<List<BenefitView>> getBenefitSchemes() {
         List<BenefitView> schemes = benefitViewRepository.findAll();
         return new ResponseEntity<>(schemes, HttpStatus.OK);
