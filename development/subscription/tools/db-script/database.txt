@@ -13,6 +13,7 @@ nohup mvn spring-boot:run -f product/ > ~/logs/product.log &1
 nohup mvn spring-boot:run -f payments/ > ~/logs/payments.log &1
 nohup mvn spring-boot:run -f benefits/ > ~/logs/benefits.log &1
 nohup mvn spring-boot:run -f subscriber/ > ~/logs/subscriber.log &1
+nohup mvn spring-boot:run -f business/ > ~/logs/business.log &1
 
 var now=new Date();
 for (var i = 0; i < 6; i++) {
