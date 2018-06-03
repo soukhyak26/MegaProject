@@ -15,6 +15,7 @@ nohup mvn spring-boot:run -f benefits/ > ~/logs/benefits.log &1
 nohup mvn spring-boot:run -f subscriber/ > ~/logs/subscriber.log &1
 nohup mvn spring-boot:run -f business/ > ~/logs/business.log &1
 
+use sysdate
 var now=new Date();
 for (var i = 0; i < 6; i++) {
   var yesterdayMs = new Date (now.getTime() + 1000*60*60*24*i);
