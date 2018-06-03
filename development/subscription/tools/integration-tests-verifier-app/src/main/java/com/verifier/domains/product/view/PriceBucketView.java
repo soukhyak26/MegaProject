@@ -62,10 +62,6 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
         return latestPriceBucketView;
     }
 
-    public String getProductId() {
-        return productwisePriceBucketId.getProductId();
-    }
-
     public ProductwisePriceBucketId getProductwisePriceBucketId() {
         return productwisePriceBucketId;
     }

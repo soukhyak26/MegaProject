@@ -1,5 +1,6 @@
 package com.verifier.controller;
 
+import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.product.repository.*;
 import com.verifier.domains.product.view.*;
@@ -85,6 +86,12 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "pricebuckets/{productId}")
     public ResponseEntity<List<PriceBucketView>> getPriceBuckets(@PathVariable String productId) {
         List<PriceBucketView> priceBucketViews = priceBucketViewRepository.findByProductwisePriceBucketId_ProductId(productId);
+        return new ResponseEntity<>(priceBucketViews, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "pricebuckets/active/{productId}")
+    public ResponseEntity<List<PriceBucketView>> getActivePriceBuckets(@PathVariable String productId) {
+        List<PriceBucketView> priceBucketViews = priceBucketViewRepository.findByProductwisePriceBucketId_ProductIdAndEntityStatus(productId, EntityStatus.ACTIVE);
         return new ResponseEntity<>(priceBucketViews, HttpStatus.OK);
     }
 

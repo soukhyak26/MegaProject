@@ -27,7 +27,9 @@ public interface PriceBucketViewRepository extends PagingAndSortingRepository<Pr
     @Query("{ entityStatus:'ACTIVE' }")
     List<PriceBucketView> findByProductwisePriceBucketId_ProductId(String productId);
 
-    List<PriceBucketView> findByProductwisePriceBucketId_ProductIdAndEntityStatus(String productId, EntityStatus entityStatus);
+
+    List<PriceBucketView> findByProductwisePriceBucketId_ProductIdAndEntityStatus(String productId,EntityStatus entityStatus);
+
 
     List<PriceBucketView> findByProductwisePriceBucketId_ProductIdAndToDateGreaterThan(String productId, LocalDate firstDayOfMonth);
     @Query("{ entityStatus:'ACTIVE' }")
