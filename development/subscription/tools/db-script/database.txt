@@ -25,7 +25,7 @@ for (var i = 0; i < 6; i++) {
   var date = year + "-" + month + "-" + day;
   var dateTime = date + "-03:42:55";
   db.sysDateView.save({ "_id" : 1, "currentDate" : date });
-  db.sysDateTimeView.save({ "_id" : 1, "currentDate" : dateTime });
+  db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : dateTime });
   sleep(200);
 }
 
