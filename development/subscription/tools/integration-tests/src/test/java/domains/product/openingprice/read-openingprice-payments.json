@@ -1,0 +1,20 @@
+[
+  {
+    "productWisePriceBucketId": {
+      "productId": "#notnull",
+      "priceBucketId": "#notnull"
+    },
+    "productPricingCategory": 1,
+    "offerPriceOrPercent": 230.0,
+    "fromDate": [
+      2018,
+      6,
+      3
+    ],
+    "toDate": [
+      2099,
+      12,
+      31
+    ]
+  }
+]

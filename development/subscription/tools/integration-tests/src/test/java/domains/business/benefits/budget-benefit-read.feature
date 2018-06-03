@@ -1,14 +1,10 @@
 @ignore
 Feature: read provision for benefits budget
 
-Background:
-#* url businessReadUrl
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
+Scenario: introduce wait time
+* call read(classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario:
-#Introduce delay
-* call afterScenario
-
+Scenario: read benefit budget
 Given url businessReadUrl
 And path 'business/benefitaccount/' + __arg.id
 And header Accept = 'application/json'
