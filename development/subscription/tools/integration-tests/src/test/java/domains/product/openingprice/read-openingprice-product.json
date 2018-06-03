@@ -1,24 +1,24 @@
 [
   {
-    "productWisePriceBucketId":
+    "productwisePriceBucketId":
     {
       "productId" : "#notnull",
       "priceBucketId" : "#notnull"
     },
     "productPricingCategory": 1,
-    "priceTaggedWithProduct" :
+    "taggedPriceVersion" :
     {
       "taggedPriceVersionId": "#notnull",
       "purchasePricePerUnit" : 200.0,
       "breakEvenPrice" : 0.0,
-      "MRP": 240.0,
-      "taggedStartDate" : [2018,6,3],
-      "taggedEndDate" : [2099,12,31]
+      "mrp": 240.0,
+      "taggedStartDate" : "#notnull",
+      "taggedEndDate" : [9999,12,31]
 
     },
-    "fromDate" : [2018,6,3],
-    "toDate" : [2099,12,31],
-    "offeredPriceOrPercentDiscoutPerUnit" : 230.0,
+    "fromDate" : "#notnull",
+    "toDate" : [9999,12,31,0,0,0,0],
+    "offeredPriceOrPercentDiscountPerUnit" : 230.0,
     "numberOfNewSubscriptionsAssociatedWithAPrice" : 0,
     "numberOfChurnedSubscriptionsAssociatedWithAPrice" : 0,
     "numberOfExistingSubscriptionsAssociatedWithAPrice": 0,
@@ -26,10 +26,10 @@
     "expectedPurchaseCost" : 0.0,
     "expectedRevenue" : 0.0,
     "expectedProfit" : 0.0,
-    "deliveredSubscriptionsAgainstTaggedPrices": [],
-    "registeredProfit":[],
-    "registeredPurchaseCostOfDeliveredUnits":[],
-    "registeredRevenue":[],
+    "deliveredSubscriptionsAgainstTaggedPrices": null,
+    "registeredProfit":null,
+    "registeredPurchaseCostOfDeliveredUnits":null,
+    "registeredRevenue":null,
     "slope": 0.0
   }
 ]
