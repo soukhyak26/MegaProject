@@ -3,8 +3,6 @@ import io.gatling.core.Predef._
 import io.gatling.core.session.el._
 import io.gatling.http.Predef._
 
-import scala.util.Random
-
 /**
   * Created by rbsavaliya on 05-03-2016.
   */
@@ -71,9 +69,7 @@ object RegisterProduct {
 }
 
 object AddProjectionParameter {
-  //val stepforecastJsonFileFeeder = jsonFile("stepforecast.json");
   val addProjectionParameter =
-    //feed(stepforecastJsonFileFeeder)
       exec(
       http("Add Projection Parameter to Product")
         .post((RegisterProduct.createProjectionUrl + "/manual/${productId}").el[String])

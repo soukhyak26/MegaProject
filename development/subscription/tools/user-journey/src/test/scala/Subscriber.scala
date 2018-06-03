@@ -1,15 +1,7 @@
-import java.util.concurrent.TimeUnit
-
-import com.affaince.subscription.date
-import com.affaince.subscription.date.SysDate
-import com.affaince.subscription.testdata.generator.{SubscriptionTestDataGenerator}
+import com.affaince.subscription.testdata.generator.SubscriptionTestDataGenerator
 import io.gatling.core.Predef._
 import io.gatling.core.session.el._
-import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
-import org.joda.time.LocalDate
-
-import scala.util.Random
 
 /**
   * Created by rbsavaliya on 04-03-2016.
@@ -28,9 +20,6 @@ class Subscriber extends BaseSimulator {
     }
     .repeat(1) {
       CreateSubscriber.addItemToSubscription
-   // }.pause(1)
-    //.repeat(1) {
-     // CreateSubscriber.sysDateChange
     }.pause(15)
       .repeat(1){
         CreateSubscriber.selectPaymentScheme
