@@ -27,7 +27,7 @@ object CreateBasketRules {
             |    "maximumPermissibleDiscountUnit":"2",
             |    "minimumAmountEligibleForFreeShipping":"",
             |    "diffBetweenDeliveryPreparationAndDispatchDate":1,
-            |    "subscriptionValueRanges":[{"minimumValue":"10000","maximumValue":"19999"},{"minimumValue":"20000","maximumValue":"39999"},{"minimumValue":"40000","maximumValue":"59999"}]
+            |    "subscriptionValueRanges":[{"minimumValue":"0","maximumValue":"9999"},{"minimumValue":"10000","maximumValue":"19999"},{"minimumValue":"20000","maximumValue":"39999"},{"minimumValue":"40000","maximumValue":"59999"}]
             |}
           """.stripMargin
         )
