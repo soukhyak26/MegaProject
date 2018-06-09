@@ -1,14 +1,12 @@
 @ignore
 Feature: read provision for others budget
 
-Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
+Scenario: introduce wait time
+* call read(classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario:
-#Introduce delay
-* call afterScenario
 * def expectedProvisionResponse = read('classpath:domains/business/others/read-budget-others.json')
 
+Scenario: validate budget for others from read side
 Given url businessReadUrl
 And path 'business/others/' +__arg.id
 When method get

@@ -1,12 +1,8 @@
 @ignore
 Feature: create business account for the financial year
 
-Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
-
-Scenario:
-#Introduce delay
-* call afterScenario
+Scenario: introduce wait time
+* call read(classpath:domains/common/introduce-wait-cycles.feature')
 
 Given url businessReadUrl
 And path 'business/businessaccount'

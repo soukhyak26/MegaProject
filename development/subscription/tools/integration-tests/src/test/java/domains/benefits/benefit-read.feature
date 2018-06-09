@@ -1,15 +1,11 @@
 @ignore
 Feature: read benefit equations
 
-Background:
-#* url businessReadUrl
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
-
-Scenario:
-#Introduce delay
-* call afterScenario
+Scenario: introduce wait time
+* call read(classpath:domains/common/introduce-wait-cycles.feature')
 
 
+Scenario: validate benefit scheme from read side
 Given url benefitsReadUrl
 And path 'benefits/' + __arg.benefitId
 And header Accept = 'application/json'

@@ -1,13 +1,10 @@
 @ignore
 Feature: read business account configured for the financial year
 
-Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
+Scenario: introduce wait time
+* call read(classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario:
-#Introduce delay
-* call afterScenario
-
+Scenario: validate business configuration from read side
 Given url businessReadUrl
 And path 'business/businessaccount/configure'
 And header Accept = 'application/json'

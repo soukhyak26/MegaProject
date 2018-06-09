@@ -1,12 +1,9 @@
 @ignore
 Feature: read product forecast
 
-Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario:
-#Introduce delay
-* call afterScenario
 * def purchaseAccountValue = read('classpath:domains/product/manualforecast/read-purchaseaccount-business.json')
 
 #Forecast on Product Read side

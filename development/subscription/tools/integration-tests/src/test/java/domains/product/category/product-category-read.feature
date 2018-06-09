@@ -1,12 +1,8 @@
 @ignore
 Feature: read product categories configured
 
-Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
-
-Scenario:
-#Introduce delay
-* call afterScenario
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 * def expectedResponse = read('classpath:domains/product/category/product_categories_response.json')
 

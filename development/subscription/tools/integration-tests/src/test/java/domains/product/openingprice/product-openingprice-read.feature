@@ -4,8 +4,6 @@ Feature: read opening price of registered products
 Scenario: introduce wait time
 * call read('classpath:domains/common/introduce-wait-cycles.feature')
 
-* print productId
-
 Scenario: read opening price
 Given url productReadUrl
 And path 'product/pricebuckets/active/' + productId

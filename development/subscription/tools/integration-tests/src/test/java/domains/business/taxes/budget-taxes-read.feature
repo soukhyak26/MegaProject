@@ -1,13 +1,10 @@
 @ignore
 Feature: read provision for taxes budget
 
-Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
+Scenario: introduce wait time
+* call read(classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario:
-#Introduce delay
-* call afterScenario
-
+Scenario: validate taxes budget from read side
 Given url businessReadUrl
 And path 'business/taxesaccount/' + __arg.id
 And header Accept = 'application/json'
