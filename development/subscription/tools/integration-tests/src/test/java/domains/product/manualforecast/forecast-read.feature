@@ -9,7 +9,7 @@ Scenario: introduce wait time
 #Forecast on Product Read side
 Scenario:
 Given url productReadUrl
-And path 'product/forecast/' + __arg.productId
+And path 'product/forecast/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -18,7 +18,7 @@ And match response == read('classpath:domains/product/manualforecast/read-foreca
 #PseudoActuals on Product Read side
 Scenario:
 Given url productReadUrl
-And path 'product/pseudoactuals/' + __arg.productId
+And path 'product/pseudoactuals/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -28,7 +28,7 @@ And match response == read('classpath:domains/product/manualforecast/read-pseudo
 #Updated Product Activation status
 Scenario:
 Given url productReadUrl
-And path 'product/activationstatus/' + __arg.productId
+And path 'product/activationstatus/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -37,7 +37,7 @@ And match response == read('classpath:domains/product/manualforecast/createprodu
 #Product Forecast on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/product/forecast/' + __arg.productId
+And path 'business/product/forecast/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200

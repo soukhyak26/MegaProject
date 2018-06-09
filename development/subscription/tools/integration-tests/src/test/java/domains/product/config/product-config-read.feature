@@ -6,7 +6,7 @@ Scenario: introduce wait time
 
 Scenario:
 Given url productReadUrl
-And path 'product/configuration/' + __arg.productId
+And path 'product/configuration/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200

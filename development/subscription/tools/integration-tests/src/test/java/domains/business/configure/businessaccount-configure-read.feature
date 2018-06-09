@@ -2,7 +2,7 @@
 Feature: read business account configured for the financial year
 
 Scenario: introduce wait time
-* call read(classpath:domains/common/introduce-wait-cycles.feature')
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Scenario: validate business configuration from read side
 Given url businessReadUrl

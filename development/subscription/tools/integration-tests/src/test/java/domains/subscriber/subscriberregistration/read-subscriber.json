@@ -1,0 +1,28 @@
+{
+  "subscriberId" : "#notnull",
+  "subscriberName": {
+    "title": "Mr",
+    "firstName": "Mandar",
+    "middleName": "Suresh",
+    "lastName": "Kulkarni"
+  },
+  "address": {
+    "addressLine1": "1,ICHCHAI,SNEHDEEP HSG SOC",
+    "addressLine2": "GULWANI MAHARAJ ROAD,KOTHRUD",
+    "city": "PUNE",
+    "state": "MAHARASHTRA",
+    "country": "INDIA",
+    "pinCode": "411038"
+  },
+  "contactDetails": {
+    "email": "kulkarnm@gmail.com",
+    "mobileNumber": "9881403529",
+    "alternativeNumber": "02025423977"
+  },
+  "creationDate": "#notnull",
+  "status" : 0,
+  "couponCodes": null,
+  "rewardPoints" : 0,
+  "password" : "#notnull",
+  "subscriberStatus": true
+}

@@ -2,7 +2,7 @@
 Feature: create business account for the financial year
 
 Scenario: introduce wait time
-* call read(classpath:domains/common/introduce-wait-cycles.feature')
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Given url businessReadUrl
 And path 'business/businessaccount'

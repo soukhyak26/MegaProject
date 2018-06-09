@@ -6,7 +6,7 @@ Scenario: introduce wait time
 
 Scenario:
 Given url productReadUrl
-And path 'product/' + __arg.productId
+And path 'product/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -14,7 +14,7 @@ And match response == read('classpath:domains/product/create/createproductrespon
 
 Scenario:
 Given url productReadUrl
-And path 'product/taggedprice/' + __arg.productId
+And path 'product/taggedprice/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -22,7 +22,7 @@ And match response == read('classpath:domains/product/create/createtaggedpricere
 
 Scenario:
 Given url productReadUrl
-And path 'product/activationstatus/' + __arg.productId
+And path 'product/activationstatus/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -30,7 +30,7 @@ And match response == read('classpath:domains/product/create/createproductactiva
 
 Scenario:
 Given url businessReadUrl
-And path 'business/product/' + __arg.productId
+And path 'business/product/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -38,7 +38,7 @@ And match response == read('classpath:domains/product/create/createproductrespon
 
 Scenario:
 Given url paymentsReadUrl
-And path 'payments/taggedprice/' + __arg.productId
+And path 'payments/taggedprice/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -46,7 +46,7 @@ And match response == read('classpath:domains/product/create/createtaggedpricere
 
 Scenario:
 Given url paymentsReadUrl
-And path 'payments/product/' + __arg.productId
+And path 'payments/product/' + productId
 And header Accept = 'application/json'
 When method get
 Then status 200

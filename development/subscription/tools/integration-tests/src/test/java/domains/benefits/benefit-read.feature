@@ -2,12 +2,12 @@
 Feature: read benefit equations
 
 Scenario: introduce wait time
-* call read(classpath:domains/common/introduce-wait-cycles.feature')
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 
 Scenario: validate benefit scheme from read side
 Given url benefitsReadUrl
-And path 'benefits/' + __arg.benefitId
+And path 'benefits/' + benefitId
 And header Accept = 'application/json'
 When method get
 Then status 200

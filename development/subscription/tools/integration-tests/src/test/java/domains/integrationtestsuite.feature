@@ -36,3 +36,6 @@ Scenario:Payment Scheme creation and verification
 
 Scenario:Product opening price setting and verification
 * call read('classpath:domains/product/openingprice/product-openingprice-verifier.feature')
+
+Scenario:Subscriber registration and verification
+* call read('classpath:domains/subscriber/subscriberregistration/registration-verifier.feature')

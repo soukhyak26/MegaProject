@@ -65,7 +65,7 @@ And match response == read('classpath:domains/subscriber/deliveryforecast/read-v
 #Updated Product Activation status
 #Scenario:
 #Given url productReadUrl
-#And path 'product/activationstatus/' + __arg.productId
+#And path 'product/activationstatus/' + productId
 #And header Accept = 'application/json'
 #When method get
 #Then status 200

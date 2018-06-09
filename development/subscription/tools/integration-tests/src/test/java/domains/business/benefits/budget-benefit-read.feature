@@ -2,11 +2,11 @@
 Feature: read provision for benefits budget
 
 Scenario: introduce wait time
-* call read(classpath:domains/common/introduce-wait-cycles.feature')
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Scenario: read benefit budget
 Given url businessReadUrl
-And path 'business/benefitaccount/' + __arg.id
+And path 'business/benefitaccount/' + id
 And header Accept = 'application/json'
 When method get
 Then status 200
