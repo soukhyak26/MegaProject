@@ -8,7 +8,7 @@ import io.gatling.http.Predef._
   */
 class Product extends BaseSimulator {
 
-  new ProductTestDataGenerator().generate(1);
+  new ProductTestDataGenerator().generate(5);
 
   var scn = scenario("Create Product").exec(RegisterProduct.registerProduct).pause(10)
     .repeat(1) {
@@ -27,7 +27,7 @@ class Product extends BaseSimulator {
   //var scn2 = scenario("Business Provision").exec(BusinessProvision.SetProvosion)
 
   Thread.sleep(1000)
-  setUp(scn.inject(atOnceUsers(1)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
+  setUp(scn.inject(atOnceUsers(5)).protocols(http), benefitscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object RegisterProduct {
@@ -107,7 +107,7 @@ object RegisterOpeningPrice {
   val registerPrice = feed(openingPriceJsonFeeder)
       .exec(
     http("Register opening price to Product")
-      .put((RegisterProduct.registerOpeningPriceUrl + "/${productId}").el[String])
+      .post((RegisterProduct.registerOpeningPriceUrl + "/${productId}").el[String])
       .body(
         StringBody(
           """
