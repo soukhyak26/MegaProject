@@ -20,7 +20,7 @@
     "alternativeNumber": "02025423977"
   },
   "creationDate": "#notnull",
-  "status" : 0,
+  "status" : "NORMAL",
   "couponCodes": null,
   "rewardPoints" : 0,
   "password" : "#notnull",

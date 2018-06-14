@@ -1,0 +1,5 @@
+{
+  "subscriptionId": "#notnull",
+  "subscriberId": "#notnull",
+  "paymentSchemeId": "#notnull"
+}

@@ -1,0 +1,12 @@
+{
+  "productId" : "#(productId)" ,
+  "countPerPeriod" : 1,
+  "period" : {
+    "value": 1,
+    "unit": "MONTH"
+  },
+  "discountedOfferedPrice" : 230.0,
+  "offeredPriceWithBasketLevelDiscount" : 230.0,
+  "noOfCycles" : 12
+}
+

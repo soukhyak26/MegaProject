@@ -1,0 +1,8 @@
+[
+  {
+    "registrationDate" : "#notnull",
+    "newSubscriptions" : 1,
+    "churnedSubscriptions" : 0,
+    "totalSubscriptions" : 1
+  }
+]

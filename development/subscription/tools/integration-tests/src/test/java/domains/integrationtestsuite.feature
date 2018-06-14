@@ -39,3 +39,6 @@ Scenario:Product opening price setting and verification
 
 Scenario:Subscriber registration and verification
 * call read('classpath:domains/subscriber/subscriberregistration/registration-verifier.feature')
+
+Scenario:Subscription registration and verification
+* call read('classpath:domains/subscriber/subscriptionregistration/subscription-verifier.feature')
