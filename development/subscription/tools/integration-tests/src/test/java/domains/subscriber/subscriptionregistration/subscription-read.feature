@@ -6,7 +6,7 @@ Scenario: introduce wait time
 
 Scenario:read subscription
 Given url subscriberReadUrl
-And path 'subscription/' + id
+And path 'subscriber/subscription/' + id
 And header Accept = 'application/json'
 When method get
 Then status 200
@@ -15,7 +15,7 @@ And match response == read('classpath:domains/subscriber/subscriptionregistratio
 
 Scenario:read subscription creation impact from payments
 Given url paymentsReadUrl
-And path 'paymentaccount' + id
+And path '/' + id
 And header Accept = 'application/json'
 When method get
 Then status 200

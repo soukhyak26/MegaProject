@@ -1,7 +1,7 @@
 {
   "subscriptionId": "#notnull",
   "subscriberId": "#notnull",
-  "consumerBasketActivationStatus": 0,
+  "consumerBasketActivationStatus": "CREATED",
   "subscriptionItems": [
     {
       "productId": "#notnull",
@@ -14,7 +14,7 @@
       "offeredPriceWithBasketLevelDiscount": "#notnull",
       "noOfCycles": 12,
       "weightInGrms": "#notnull",
-      "productPricingCategory": "PRICE_COMMITMENT"
+      "productPricingCategory": 1
     }
   ],
   "shippingAddress": {

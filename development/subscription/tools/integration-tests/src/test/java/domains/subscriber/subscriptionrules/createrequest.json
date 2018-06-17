@@ -8,6 +8,9 @@
   "actualsAggregationPeriodForTargetForecast" : 30,
   "contingencyStockPercentage" : 0.1,
   "subscriptionValueRanges" :[
+    {"minimumValue":0,
+      "maximumValue":4999
+    },
     {"minimumValue":5000,
     "maximumValue":8000
     },

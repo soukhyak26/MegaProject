@@ -3,14 +3,15 @@ Feature: confirm subscription
 
 Scenario: Retrieve subscriber
 Given url subscriberReadUrl
-And path 'name/' + 'Mandar' + '/' + 'Suresh' + '/' + 'Kulkarni' + '/' + 'Mr'
+And path 'subscriber/name/' + 'Mandar' + '/' + 'Suresh' + '/' + 'Kulkarni' + '/' + 'Mr'
 When method get
 Then status 200
 
 * def subscriberId = response.subscriberId
 
-Scenario: select payment scheme
+Scenario: confirm subscription
 Given url platformSubscriberUrl
-And path 'confirmsubscription/' + subscriberId
+And path 'subscription/confirmsubscription/' + subscriberId
+And request {}
 When method put
 Then status 200
