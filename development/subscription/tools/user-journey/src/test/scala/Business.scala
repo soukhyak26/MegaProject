@@ -6,13 +6,13 @@ import io.gatling.http.Predef._
   */
 class Business extends BaseSimulator {
 
-  var scn = scenario("Create configure Business Domain").exec(BusinessAccount.createBusinessAccount)
+  var businessscn = scenario("Create configure Business Domain").exec(BusinessAccount.createBusinessAccount)
     .pace(10)
     .repeat(1) {
         BusinessAccount.configureBusinessAccount
       }
 
-  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  setUp(businessscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object BusinessAccount {

@@ -6,9 +6,9 @@ import io.gatling.http.Predef._
   */
 class Payment extends BaseSimulator {
 
-  var scn = scenario("Create Payment Scheme").exec(PaymentScheme.createPaymentScheme)
+  var paymentscn = scenario("Create Payment Scheme").exec(PaymentScheme.createPaymentScheme)
 
-  setUp(scn.inject(atOnceUsers(1)).protocols(http))
+  setUp(paymentscn.inject(atOnceUsers(1)).protocols(http))
 }
 
 object PaymentScheme {

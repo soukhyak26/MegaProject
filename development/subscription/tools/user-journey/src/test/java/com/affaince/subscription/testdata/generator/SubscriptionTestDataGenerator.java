@@ -166,7 +166,7 @@ public class SubscriptionTestDataGenerator {
     private long getTotalSubscriptionCountFromActiveForecast (String productId) {
         Long totalForecstedSubscription = 0L;
         try {
-            LocalDate date = SysDate.now().plusDays(7);
+            LocalDate date = SysDate.now().plusDays(180);
             totalForecstedSubscription = Long.parseLong(fetchDataByGetRequest(
                     "http://159.89.170.246:8082/forecast/totalsubscription/" + productId
                     + "/" + date
