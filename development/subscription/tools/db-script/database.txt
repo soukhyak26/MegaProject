@@ -9,15 +9,15 @@ db.dropDatabase()
 use business
 db.dropDatabase()
 
-nohup mvn spring-boot:run -f product/ > ~/logs/product.log &1
-nohup mvn spring-boot:run -f payments/ > ~/logs/payments.log &1
-nohup mvn spring-boot:run -f benefits/ > ~/logs/benefits.log &1
-nohup mvn spring-boot:run -f subscriber/ > ~/logs/subscriber.log &1
-nohup mvn spring-boot:run -f business/ > ~/logs/business.log &1
+nohup mvn spring-boot:run -f domain-services/product/ > ~/logs/product.log &1
+nohup mvn spring-boot:run -f domain-services/payments/ > ~/logs/payments.log &1
+nohup mvn spring-boot:run -f domain-services/benefits/ > ~/logs/benefits.log &1
+nohup mvn spring-boot:run -f domain-services/subscriber/ > ~/logs/subscriber.log &1
+nohup mvn spring-boot:run -f domain-services/business/ > ~/logs/business.log &1
 
 use sysdate
 var now=new Date();
-for (var i = 0; i < 6; i++) {
+for (var i = 0; i < 180; i++) {
   var yesterdayMs = new Date (now.getTime() + 1000*60*60*24*i);
   var month = (yesterdayMs.getMonth() + 1);
   var day = (yesterdayMs.getDate());
@@ -26,7 +26,10 @@ for (var i = 0; i < 6; i++) {
   var dateTime = date + "-03:42:55";
   db.sysDateView.save({ "_id" : 1, "currentDate" : date });
   db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : dateTime });
-  sleep(200);
+  sleep(300);
 }
+
+db.sysDateView.save({ "_id" : 1, "currentDate" : "2019-01-16" });
+db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : "2019-01-16-03:42:55" });
 
 
