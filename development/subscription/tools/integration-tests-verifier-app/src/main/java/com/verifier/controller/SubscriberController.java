@@ -1,6 +1,7 @@
 package com.verifier.controller;
 
 import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.common.vo.SubscriberName;
 import com.verifier.domains.subscriber.repository.*;
 import com.verifier.domains.subscriber.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,6 +171,13 @@ public class SubscriberController {
         return new ResponseEntity<>(subscriber, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "name/{firstName}/{middleName}/{lastName}/{title}")
+    public ResponseEntity<SubscriberView> getSubscriberByName(@PathVariable(name = "firstName" ) String firstName,@PathVariable(name = "middleName" ) String middleName,@PathVariable(name = "lastName" ) String lastName,@PathVariable(name = "title" ) String title ) {
+        SubscriberName subscriberName= new SubscriberName(title,firstName,middleName,lastName);
+        SubscriberView subscriber = subscriberViewRepository.findBySubscriberName(subscriberName).get(0);
+        return new ResponseEntity<>(subscriber, HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "subscriptions/actuals")
     public ResponseEntity<List<SubscriptionActualsView>> getSubscriptions() {
         List<SubscriptionActualsView> subscriptions = subscriptionActualsViewRepoitory.findAllByOrderBySubscriptionActualsVersionId_StartDateDesc();
@@ -218,7 +226,7 @@ public class SubscriberController {
         return new ResponseEntity<>(summary, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "subscription/{subscriptonId}")
+    @RequestMapping(method = RequestMethod.GET, value = "subscription/{subscriptionId}")
     public ResponseEntity<SubscriptionView> getSubscription(@PathVariable String subscriptionId) {
         SubscriptionView subscriptionView = subscriptionViewRepository.findOne(subscriptionId);
         return new ResponseEntity<>(subscriptionView, HttpStatus.OK);

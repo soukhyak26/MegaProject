@@ -35,9 +35,10 @@ public class ProductController {
     private final TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository;
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final VariableExpensePerProductViewRepository variableExpensePerProductViewRepository;
+    private final ProductAnalyserViewRepository productAnalyserViewRepository;
 
     @Autowired
-    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository) {
+    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository,ProductAnalyserViewRepository productAnalyserViewRepository) {
         this.productBusinessAccountViewRepository = productBusinessAccountViewRepository;
         this.categoryDetailsViewRepository = categoryDetailsViewRepository;
         this.fixedExpensePerProductViewRepository = fixedExpensePerProductViewRepository;
@@ -56,6 +57,7 @@ public class ProductController {
         this.taggedPriceVersionsViewRepository = taggedPriceVersionsViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.variableExpensePerProductViewRepository = variableExpensePerProductViewRepository;
+        this.productAnalyserViewRepository =productAnalyserViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "businessaccount")
@@ -99,6 +101,12 @@ public class ProductController {
     public ResponseEntity<ProductActivationStatusView> getProductActivationStatus(@PathVariable String productId) {
         ProductActivationStatusView activation = productActivationStatusViewRepository.findOne(productId);
         return new ResponseEntity<>(activation, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "count/{productAnalyserId}")
+    public ResponseEntity<ProductAnalyserView> getRegisteredProductCount(@PathVariable String productAnalyserId) {
+        ProductAnalyserView productAnalyserView = productAnalyserViewRepository.findOne(productAnalyserId);
+        return new ResponseEntity<>(productAnalyserView, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "actuals/{productId}")

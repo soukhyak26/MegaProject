@@ -34,7 +34,8 @@ com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.cla
         com.verifier.domains.product.repository.RecommendedPriceBucketViewRepository.class,
         com.verifier.domains.product.repository.TaggedPriceVersionsViewRepository.class,
         com.verifier.domains.product.repository.TargetSettingViewRepository.class,
-        com.verifier.domains.product.repository.VariableExpensePerProductViewRepository.class})
+        com.verifier.domains.product.repository.VariableExpensePerProductViewRepository.class,
+        com.verifier.domains.product.repository.ProductAnalyserViewRepository.class})
 public class ProductMongoConfiguration {
     @Bean
     @Qualifier("productMongoTemplate")

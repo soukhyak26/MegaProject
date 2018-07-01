@@ -63,7 +63,7 @@ public class PaymentsController {
         return new ResponseEntity<>(deliveryDetailsView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "paymentaccount/{subscriptionId}")
+    @RequestMapping(method = RequestMethod.GET, value = "{subscriptionId}")
     public ResponseEntity<PaymentAccountView> getPaymentAccount(@PathVariable String subscriptionId) {
         PaymentAccountView paymentAccountView = paymentAccountViewRepository.findOne(subscriptionId);
         return new ResponseEntity<>(paymentAccountView, HttpStatus.OK);

@@ -59,7 +59,8 @@ import java.net.UnknownHostException;
         BusinessPurchaseCostProvisionCalendarViewRepository.class,
         BusinessTaxesProvisionCalendarViewRepository.class,
         BusinessVariableExpensesProvisionCalendarViewRepository.class,
-        BusinessOthersProvisionCalendarViewRepository.class
+        BusinessOthersProvisionCalendarViewRepository.class,
+        BusinessDeliveryChargesRuleViewRepository.class
 })
 public class BusinessMongoConfiguration {
     @Bean

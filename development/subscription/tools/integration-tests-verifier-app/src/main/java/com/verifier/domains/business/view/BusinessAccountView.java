@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "BusinessAccountView")
 public class BusinessAccountView {
 
-    //TODO: Check if business account would be singleton - and hence only one businessAccountId (as of now it will use year of provision date as businessAccountId)
     @Id
     private String businessAccountId;
     private String merchantId;
@@ -17,6 +16,7 @@ public class BusinessAccountView {
 
     private double defaultPercentFixedExpensePerUnitPrice =1.0;
     private double defaultPercentVariableExpensePerUnitPrice=1.0;
+    private long registeredProductCount;
 
     public BusinessAccountView(){}
     public BusinessAccountView(String businessAccountId, String merchantId, LocalDate startDate, LocalDate endDate, LocalDate dateForProvision) {
@@ -81,5 +81,13 @@ public class BusinessAccountView {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public long getRegisteredProductCount() {
+        return registeredProductCount;
+    }
+
+    public void setRegisteredProductCount(long registeredProductCount) {
+        this.registeredProductCount = registeredProductCount;
     }
 }
