@@ -1,9 +1,9 @@
 [
   {
-    "productInventoryId" :"#nonull",
-    "productId" : "#nonull",
-    "totalDemand" : "#nonull",
-    "totalProvision" : "#nonull",
-    "contingencyStock" : "#nonull"
+    "productInventoryId" :"#notnull",
+    "productId" : "#notnull",
+    "totalDemand" : "#notnull",
+    "totalProvision" : "#notnull",
+    "contingencyStock" : "#notnull"
   }
 ]
