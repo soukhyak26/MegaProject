@@ -29,6 +29,22 @@ Then status 200
 And match response == read('classpath:domains/product/create/createproductactivationstatusresponse.json')
 
 Scenario:
+Given url productReadUrl
+And path 'product/count/' + '1'
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/product/create/productanalyserview.json')
+
+Scenario:
+Given url businessReadUrl
+And path 'business/businessaccount'
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/product/create/businessaccount.json')
+
+Scenario:
 Given url businessReadUrl
 And path 'business/product/' + productId
 And header Accept = 'application/json'

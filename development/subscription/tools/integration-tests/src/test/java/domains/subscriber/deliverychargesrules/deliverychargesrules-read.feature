@@ -11,3 +11,12 @@ And header Accept = 'application/json'
 When method get
 Then status 200
 And match response == read('classpath:domains/subscriber/deliverychargesrules/readresponse.json')
+
+
+Scenario:
+Given url businessReadUrl
+And path 'business/deliverycharges/rules'
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/subscriber/deliverychargesrules/readresponse.json')

@@ -11,3 +11,4 @@ And header Accept = 'application/json'
 When method get
 Then status 200
 And match response == read('classpath:domains/subscriber/subscriptionrules/readresponse.json')
+
