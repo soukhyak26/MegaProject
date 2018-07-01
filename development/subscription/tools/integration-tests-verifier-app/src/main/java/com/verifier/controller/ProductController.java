@@ -36,9 +36,10 @@ public class ProductController {
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final VariableExpensePerProductViewRepository variableExpensePerProductViewRepository;
     private final ProductAnalyserViewRepository productAnalyserViewRepository;
+    private final ProductInventoryViewRepository productInventoryViewRepository;
 
     @Autowired
-    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository,ProductAnalyserViewRepository productAnalyserViewRepository) {
+    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository,ProductAnalyserViewRepository productAnalyserViewRepository,ProductInventoryViewRepository productInventoryViewRepository) {
         this.productBusinessAccountViewRepository = productBusinessAccountViewRepository;
         this.categoryDetailsViewRepository = categoryDetailsViewRepository;
         this.fixedExpensePerProductViewRepository = fixedExpensePerProductViewRepository;
@@ -58,6 +59,7 @@ public class ProductController {
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.variableExpensePerProductViewRepository = variableExpensePerProductViewRepository;
         this.productAnalyserViewRepository =productAnalyserViewRepository;
+        this.productInventoryViewRepository = productInventoryViewRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "businessaccount")
@@ -171,4 +173,11 @@ public class ProductController {
         List<VariableExpensePerProductView> varExps = variableExpensePerProductViewRepository.findFirstByProductwiseVariableExpenseId_ProductIdOrderByEndDateDesc(productId);
         return  new ResponseEntity<>(varExps,HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "inventory/{productId}")
+    public ResponseEntity<List<ProductInventoryView>> getProductInventory(@PathVariable String productId){
+        List<ProductInventoryView> inventories = productInventoryViewRepository.findByProductId(productId);
+        return  new ResponseEntity<>(inventories,HttpStatus.OK);
+    }
+
 }
