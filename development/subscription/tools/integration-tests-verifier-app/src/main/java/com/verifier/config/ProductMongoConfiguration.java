@@ -16,9 +16,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.net.UnknownHostException;
 
 @Configuration
-@EnableMongoRepositories(mongoTemplateRef="productMongoTemplate",basePackageClasses = {ProductBusinessAccountViewRepository.class,
-com.verifier.domains.product.repository.CategoryDetailsViewRepository.class,
-com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef = "productMongoTemplate", basePackageClasses = {ProductBusinessAccountViewRepository.class,
+        com.verifier.domains.product.repository.CategoryDetailsViewRepository.class,
+        com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.class,
         com.verifier.domains.product.repository.PriceBucketTransactionViewRepository.class,
         com.verifier.domains.product.repository.PriceBucketViewRepository.class,
         com.verifier.domains.product.repository.ProductActivationStatusViewPagingRepository.class,
@@ -35,7 +35,8 @@ com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.cla
         com.verifier.domains.product.repository.TaggedPriceVersionsViewRepository.class,
         com.verifier.domains.product.repository.TargetSettingViewRepository.class,
         com.verifier.domains.product.repository.VariableExpensePerProductViewRepository.class,
-        com.verifier.domains.product.repository.ProductAnalyserViewRepository.class})
+        com.verifier.domains.product.repository.ProductAnalyserViewRepository.class,
+        com.verifier.domains.product.repository.ProductInventoryViewRepository.class})
 public class ProductMongoConfiguration {
     @Bean
     @Qualifier("productMongoTemplate")
@@ -69,7 +70,7 @@ public class ProductMongoConfiguration {
     @Bean
     @Qualifier("productMongoDbFactory")
     public MongoDbFactory productMongoDbFactory(@Value("${view.db.product.host}") String host, @Value("${view.db.product.port}") int port,
-                                         @Value("${view.db.product.name}") String dbName) throws UnknownHostException {
+                                                @Value("${view.db.product.name}") String dbName) throws UnknownHostException {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
