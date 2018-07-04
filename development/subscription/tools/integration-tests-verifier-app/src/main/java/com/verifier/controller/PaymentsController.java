@@ -51,6 +51,12 @@ public class PaymentsController {
         this.totalSubscriptionCostAccountViewRepository = totalSubscriptionCostAccountViewRepository;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccounts/{subscriptionId}")
+    public ResponseEntity<List<DeliveryCostAccountView>> getDeliveryCostAccountsForASubscription(@PathVariable String subscriptionId) {
+        List<DeliveryCostAccountView> deliveryCostAccountViewsForASubscription = deliveryCostAccountViewRepository.findByDeliveryId_SubscriptionId(subscriptionId);
+        return new ResponseEntity<>(deliveryCostAccountViewsForASubscription, HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccount/{deliveryId}/{subscriberId}/{subscriptionId}")
     public ResponseEntity<DeliveryCostAccountView> getDeliveryCostAccount(@PathVariable String deliveryId, @PathVariable String subscriberId, @PathVariable String subscriptionId) {
         DeliveryCostAccountView deliveryCostAccountView = deliveryCostAccountViewRepository.findOne(new DeliveryId(deliveryId, subscriberId, subscriptionId));
@@ -69,7 +75,7 @@ public class PaymentsController {
         return new ResponseEntity<>(paymentAccountView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "paymentinstallments/{subscriptionId}")
+    @RequestMapping(method = RequestMethod.GET, value = "installments/{subscriptionId}")
     public ResponseEntity<PaymentInstallmentView> getPaymentInstallments(@PathVariable String subscriptionId) {
         PaymentInstallmentView paymentInstallmentView = paymentInstallmentViewRepository.findOne(subscriptionId);
         return new ResponseEntity<>(paymentInstallmentView, HttpStatus.OK);

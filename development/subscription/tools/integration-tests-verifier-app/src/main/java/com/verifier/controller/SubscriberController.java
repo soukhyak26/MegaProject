@@ -1,5 +1,6 @@
 package com.verifier.controller;
 
+import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.verifier.domains.subscriber.repository.*;
@@ -169,6 +170,12 @@ public class SubscriberController {
     public ResponseEntity<SubscriberView> getSubscriber(@PathVariable String subscriberId) {
         SubscriberView subscriber = subscriberViewRepository.findOne(subscriberId);
         return new ResponseEntity<>(subscriber, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "subscription/active/subscriber/{subscriberId}")
+    public ResponseEntity<SubscriptionView> getActiveSubscriptionForASubscriber(@PathVariable String subscriberId) {
+        SubscriptionView subscription = subscriptionViewRepository.findBySubscriberIdAndConsumerBasketActivationStatus(subscriberId, ConsumerBasketActivationStatus.ACTIVATED);
+        return new ResponseEntity<>(subscription, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "name/{firstName}/{middleName}/{lastName}/{title}")
