@@ -32,7 +32,7 @@ Scenario:Benefits creation and verification
 * call read('classpath:domains/benefits/benefits-verifier.feature')
 
 Scenario:Payment Scheme creation and verification
-* call read('classpath:domains/payments/payment-scheme-verifier.feature')
+* call read('classpath:domains/payments/scheme/payment-scheme-verifier.feature')
 
 Scenario:Product opening price setting and verification
 * call read('classpath:domains/product/openingprice/product-openingprice-verifier.feature')

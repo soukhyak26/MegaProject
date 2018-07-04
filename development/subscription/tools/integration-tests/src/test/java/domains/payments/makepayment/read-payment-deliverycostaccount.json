@@ -1,0 +1,26 @@
+[
+  {
+    "deliveryId": "#notnull",
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 1,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": "#notnull",
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 2,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": "#notnull",
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 3,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  }
+]

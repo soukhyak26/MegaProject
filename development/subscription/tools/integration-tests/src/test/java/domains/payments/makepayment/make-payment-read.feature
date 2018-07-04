@@ -1,0 +1,54 @@
+@ignore
+Feature: read payment made for a subscription
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: Retrieve subscriber
+Given url subscriberReadUrl
+And path 'subscriber/name/' + 'Mandar' + '/' + 'Suresh' + '/' + 'Kulkarni' + '/' + 'Mr'
+When method get
+Then status 200
+
+* def subscriberId = response.subscriberId
+
+Scenario: Retrieve subscription
+Given url subscriberReadUrl
+And path 'subscription/active/subscriber/' + subscriberId
+When method get
+Then status 200
+
+* def subscriptionId = response.subscriptionId
+
+
+Scenario: validate payment from delivery cost account view
+Given url paymentsReadUrl
+And path 'payments/deliverycostaccounts/' + subscriptionId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/payments/read-payment-deliverycostaccount.json')
+
+Scenario: validate payment from total received cost account view
+Given url paymentsReadUrl
+And path 'payments/totalreceived/' + subscriptionId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/payments/read-totalreceivedcost.json')
+
+Scenario: validate payment from total receivable cost account view
+Given url paymentsReadUrl
+And path 'payments/totalreceivables/' + subscriptionId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/payments/read-totalreceivablecost.json')
+
+Scenario:validate payment installments
+Given url subscriberReadUrl
+And path 'payments/paymentinstallments/' + subscriptionId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/payments/read-paymentinstallments.json')
