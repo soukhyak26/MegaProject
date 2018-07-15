@@ -42,3 +42,6 @@ Scenario:Subscriber registration and verification
 
 Scenario:Subscription registration and verification
 * call read('classpath:domains/subscriber/subscriptionregistration/subscription-verifier.feature')
+
+Scenario:Make payment for the first installment
+* call read('classpath:domains/payments/makepayment/make-payment-verifier.feature')

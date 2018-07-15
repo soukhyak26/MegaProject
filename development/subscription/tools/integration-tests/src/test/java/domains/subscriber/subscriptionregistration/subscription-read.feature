@@ -15,7 +15,7 @@ And match response == read('classpath:domains/subscriber/subscriptionregistratio
 
 Scenario:read subscription creation impact from payments
 Given url paymentsReadUrl
-And path '/' + id
+And path '/payments/' + id
 And header Accept = 'application/json'
 When method get
 Then status 200

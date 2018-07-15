@@ -1,7 +1,7 @@
 {
   "subscriptionId": "#notnull",
   "subscriberId": "#notnull",
-  "consumerBasketActivationStatus": "CREATED",
+  "consumerBasketActivationStatus": "ACTIVATED",
   "subscriptionItems": [
     {
       "productId": "#notnull",
@@ -40,6 +40,6 @@
   },
   "totalAmountAfterDiscount": "#notnull",
   "creationDate": "#notnull",
-  "expirationDate": "#notnull",
+  "expirationDate": null,
   "paymentSchemeId": "#notnull"
 }

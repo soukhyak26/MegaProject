@@ -14,7 +14,7 @@ Then status 200
 
 Scenario: Retrieve subscription
 Given url subscriberReadUrl
-And path 'subscription/active/subscriber/' + subscriberId
+And path 'subscriber/subscription/active/subscriber/' + subscriberId
 When method get
 Then status 200
 
@@ -27,7 +27,7 @@ And path 'payments/deliverycostaccounts/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/payments/read-payment-deliverycostaccount.json')
+And match response == read('classpath:domains/payments/makepayment/read-payment-deliverycostaccount.json')
 
 Scenario: validate payment from total received cost account view
 Given url paymentsReadUrl
@@ -35,7 +35,7 @@ And path 'payments/totalreceived/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/payments/read-totalreceivedcost.json')
+And match response == read('classpath:domains/payments/makepayment/read-totalreceivedcost.json')
 
 Scenario: validate payment from total receivable cost account view
 Given url paymentsReadUrl
@@ -43,7 +43,7 @@ And path 'payments/totalreceivables/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/payments/read-totalreceivablecost.json')
+And match response == read('classpath:domains/payments/makepayment/read-totalreceivablecost.json')
 
 Scenario:validate payment installments
 Given url subscriberReadUrl
@@ -51,4 +51,4 @@ And path 'payments/paymentinstallments/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/payments/read-paymentinstallments.json')
+And match response == read('classpath:domains/payments/makepayment/read-paymentinstallments.json')

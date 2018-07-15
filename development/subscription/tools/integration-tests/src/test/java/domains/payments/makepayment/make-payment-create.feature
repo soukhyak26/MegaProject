@@ -11,7 +11,7 @@ Then status 200
 
 Scenario: Retrieve subscription
 Given url subscriberReadUrl
-And path 'subscription/active/subscriber/' + subscriberId
+And path 'subscriber/subscription/active/subscriber/' + subscriberId
 When method get
 Then status 200
 
@@ -21,5 +21,5 @@ Scenario:
 Given url platformPaymentsUrl
 And path 'payments'
 And request read('classpath:domains/payments/makepayment/make-payment.json')
-When method post
-Then status 201
+When method put
+Then status 200
