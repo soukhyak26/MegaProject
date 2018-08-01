@@ -27,3 +27,6 @@ Scenario: confirm subscription
 
 Scenario: Subscription validation
 * call read('classpath:domains/subscriber/subscriptionregistration/subscription-read.feature') subscriptionRegistrationResult.response
+
+Scenario: Payment installment validation
+* call read('classpath:domains/subscriber/subscriptionregistration/payment-installment-read.feature') subscriptionRegistrationResult.response

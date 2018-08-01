@@ -1,6 +1,6 @@
 {
-  "subscriberId": "#(subscriberId)",
-  "subscriptionId": "#(subscriptionId)",
+  "subscriberId": "#notnull",
+  "subscriptionId": "#notnull",
   "instalmentPaymentTrackers": [
     {
       "deliveryId": "#notnull",
@@ -10,11 +10,11 @@
           "deliveryId": "#notnull",
           "deliverySequence": 1,
           "paymentExpected": 230.0,
-          "paymentReceived": 230.0
+          "paymentReceived": 0.0
         }
       ],
       "paymentExpected": 552.0,
-      "paymentReceived": 552.0,
+      "paymentReceived": 0.0,
       "deliveryStatus" :"CREATED",
       "valid": true
     },
@@ -26,7 +26,7 @@
           "deliveryId": "#notnull",
           "deliverySequence": 2,
           "paymentExpected": 230.0,
-          "paymentReceived": 92.0
+          "paymentReceived": 0.0
         },
         {
           "deliveryId": "#notnull",
