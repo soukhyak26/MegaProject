@@ -40,6 +40,6 @@
   },
   "totalAmountAfterDiscount": "#notnull",
   "creationDate": "#notnull",
-  "expirationDate": null,
+  "expirationDate": "#notnull",
   "paymentSchemeId": "#notnull"
 }
