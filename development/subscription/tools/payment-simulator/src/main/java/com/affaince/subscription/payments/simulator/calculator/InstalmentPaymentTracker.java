@@ -1,8 +1,12 @@
 package com.affaince.subscription.payments.simulator.calculator;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.vo.DeliveryDispatchApprovalResult;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * Created by mandar on 7/6/2017.
@@ -10,16 +14,23 @@ import java.util.List;
 //deliveries "before" which payment is expected.
 //amount of payment expected
 //amount of payment fulfilled
-public class InstalmentPaymentTracker {
+public class InstalmentPaymentTracker implements Comparable<InstalmentPaymentTracker>{
     private String deliveryId;
     private int deliverySequence;
-    private List<Integer> deliverySequencesManagedByATracker;
+    private Set<DeliveryPaymentTracker> deliverySequencesManagedByATracker;
     private double paymentExpected;
     private double paymentReceived;
     private DeliveryStatus deliveryStatus;
+    private boolean isValid;
 
     public InstalmentPaymentTracker(int deliverySequence) {
         this.deliverySequence = deliverySequence;
+        this. isValid=true;
+        this.deliverySequencesManagedByATracker= new TreeSet<>();
+        this.deliveryStatus= DeliveryStatus.CREATED;
+    }
+
+    public InstalmentPaymentTracker() {
     }
 
     public void setDeliveryId(String deliveryId) {
@@ -55,25 +66,35 @@ public class InstalmentPaymentTracker {
         this.paymentExpected -= amount;
     }
 
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
     public void setDeliverySequence(int deliverySequence) {
         this.deliverySequence = deliverySequence;
     }
 
-    public List<Integer> getDeliverySequencesManagedByATracker() {
+    public Set<DeliveryPaymentTracker> getDeliverySequencesManagedByATracker() {
         return deliverySequencesManagedByATracker;
     }
 
-    public void setDeliverySequencesManagedByATracker(List<Integer> deliverySequencesManagedByATracker) {
+    public void setDeliverySequencesManagedByATracker(Set<DeliveryPaymentTracker> deliverySequencesManagedByATracker) {
         this.deliverySequencesManagedByATracker = deliverySequencesManagedByATracker;
     }
     public void addToDeliverySequencesManagedByTracker(int deliverySequence){
-        if(!deliverySequencesManagedByATracker.contains(deliverySequence)){
-            deliverySequencesManagedByATracker.add(deliverySequence);
+        DeliveryPaymentTracker deliveryPaymentTracker= new DeliveryPaymentTracker(deliverySequence);
+        if(!deliverySequencesManagedByATracker.contains(deliveryPaymentTracker)){
+            deliverySequencesManagedByATracker.add(deliveryPaymentTracker);
         }
     }
     public void removeFromDeliverySequencesManagedByTracker(int deliverySequence){
-        if(!deliverySequencesManagedByATracker.contains(deliverySequence)){
-            deliverySequencesManagedByATracker.remove(deliverySequence);
+        DeliveryPaymentTracker deliveryPaymentTracker= new DeliveryPaymentTracker(deliverySequence);
+        if(!deliverySequencesManagedByATracker.contains(deliveryPaymentTracker)){
+            deliverySequencesManagedByATracker.remove(deliveryPaymentTracker);
         }
     }
     public void setPaymentExpected(double paymentExpected) {
@@ -96,17 +117,31 @@ public class InstalmentPaymentTracker {
         this.paymentReceived -= amount;
     }
 
+    @JsonIgnore
     public boolean isDeliveryDueAmountFulfilled() {
         return (paymentExpected == paymentReceived);
     }
 
+    @JsonIgnore
     public boolean isGivenDeliverySequenceManagedByTracker(int deliverySequence) {
-        if (deliverySequencesManagedByATracker.contains(deliverySequence)) {
-            return true;
-        }
-        return false;
+        return deliverySequencesManagedByATracker.stream().anyMatch(dsmt-> dsmt.getDeliverySequence() == deliverySequence);
     }
 
+    public DeliveryPaymentTracker findDeliveryTrackerByDeliverySequence(int deliverySequence){
+            return deliverySequencesManagedByATracker.stream().filter(dsmt->dsmt.getDeliverySequence()==deliverySequence).collect(Collectors.toList()).get(0);
+    }
+
+    public DeliveryDispatchApprovalResult isDeliveryApproved(int deliverySequence){
+        //the delivery sequence where payment is expected
+        if (deliverySequence == this.getDeliverySequence()) {
+            return new DeliveryDispatchApprovalResult(deliverySequence, this.getPaymentExpected() == this.getPaymentReceived(),this.getPaymentExpected()-this.getPaymentReceived());
+        }else if(deliverySequence != this.getDeliverySequence() && isGivenDeliverySequenceManagedByTracker(deliverySequence)){
+            //here no payment is expected as the delivery sequence is before the sequence where payment is expected
+            return new DeliveryDispatchApprovalResult(deliverySequence,true,this.getPaymentExpected()-this.getPaymentReceived());
+        }else{
+            return new DeliveryDispatchApprovalResult(deliverySequence,false,this.getPaymentExpected()-this.getPaymentReceived());
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,7 +155,20 @@ public class InstalmentPaymentTracker {
 
     @Override
     public int hashCode() {
-        return (int) deliverySequence;
+        return deliverySequence;
     }
 
+    public void correctDeliveryPaymentTracking(ModifiedDeliveryContent modifiedDeliveryContent) {
+        int sequecne = modifiedDeliveryContent.getSequence();
+        DeliveryPaymentTracker deliveryPaymentTracker = this.findDeliveryTrackerByDeliverySequence(sequecne);
+        double remainingDueAsPerTracker=(deliveryPaymentTracker.getPaymentExpected()-deliveryPaymentTracker.getPaymentReceived());
+        if(modifiedDeliveryContent.getCorrectedRemainingDuePayment() != remainingDueAsPerTracker){
+            deliveryPaymentTracker.setPaymentExpected(deliveryPaymentTracker.getPaymentExpected()+(modifiedDeliveryContent.getCorrectedRemainingDuePayment()-remainingDueAsPerTracker));
+        }
+    }
+
+    @Override
+    public int compareTo(InstalmentPaymentTracker o) {
+        return this.getDeliverySequence() - o.getDeliverySequence();
+    }
 }

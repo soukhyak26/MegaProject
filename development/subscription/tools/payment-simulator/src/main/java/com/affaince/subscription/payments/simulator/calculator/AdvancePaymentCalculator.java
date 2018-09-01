@@ -8,7 +8,6 @@ import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,16 +26,17 @@ public class AdvancePaymentCalculator implements PaymentCalculator {
     public void calculate(PaymentInstallmentCalculationRequest request) {
         AdvancePaymentParameters advancePaymentParameters = request.getPaymentExpression().getAdvancePaymentParameters();
         InstalmentPaymentTracker tracker = null;
-        final List<InstalmentPaymentTracker> paymentTrackers = new ArrayList<>();
         final Map<LocalDate, Double> deliveryPrices = request.getDeliveryPrices();
-        if (advancePaymentParameters.getPaymentEvent().equals(PaymentEvent.SUBSCRIPTION_CONFIRMATION)) {
+        if (advancePaymentParameters.getPaymentEvent() == PaymentEvent.SUBSCRIPTION_CONFIRMATION) {
             tracker = new InstalmentPaymentTracker(1);
+            tracker.addToDeliverySequencesManagedByTracker(1);
         }
 
-        if (advancePaymentParameters.getPaymentSource().equals(PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT)) {
+        if (advancePaymentParameters.getPaymentSource()== PaymentSource.CURRENT_SUBSCRIPTION_AMOUNT) {
             tracker.setPaymentExpected(
                     deliveryPrices.values().stream().mapToDouble(Double::doubleValue).sum()
                             * (advancePaymentParameters.getPercentValue() / 100)
+
             );
         }
 
