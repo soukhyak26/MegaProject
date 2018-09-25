@@ -1,194 +1,146 @@
 [
   {
     "deliveryId": {
-      "deliveryId": "2019-01-20",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 1,
     "deliveryAmount": 230.0,
     "paymentReceived": 230.0,
-    "deliveryDate": [
-      2019,
-      1,
-      20
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2019-04-14",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 2,
     "deliveryAmount": 230.0,
     "paymentReceived": 230.0,
-    "deliveryDate": [
-      2019,
-      4,
-      14
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2018-09-02",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 3,
     "deliveryAmount": 230.0,
     "paymentReceived": 92.0,
-    "deliveryDate": [
-      2018,
-      9,
-      2
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2019-07-07",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 4,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2019,
-      7,
-      7
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2018-11-25",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 5,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2018,
-      11,
-      25
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2019-02-17",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 6,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2019,
-      2,
-      17
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2018-09-30",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 7,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2018,
-      9,
-      30
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2019-05-12",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 8,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2019,
-      5,
-      12
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2018-12-23",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 9,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2018,
-      12,
-      23
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2019-03-17",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 10,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2019,
-      3,
-      17
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2019-06-09",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 11,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2019,
-      6,
-      9
-    ]
+    "deliveryDate": "#notnull"
   },
   {
     "deliveryId": {
-      "deliveryId": "2018-10-28",
-      "subscriberId": "00da4108-5568-36e9-be0e-d60a9d0d51d5",
-      "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883"
+      "deliveryId": "#notnull",
+      "subscriberId": "#notnull",
+      "subscriptionId": "#notnull"
     },
-    "subscriptionId": "991b4439-0b92-46c6-b849-cc211af75883",
+    "subscriptionId": "#notnull",
     "deliverySequence": 12,
     "deliveryAmount": 230.0,
     "paymentReceived": 0.0,
-    "deliveryDate": [
-      2018,
-      10,
-      28
-    ]
+    "deliveryDate": "#notnull"
   }
 ]

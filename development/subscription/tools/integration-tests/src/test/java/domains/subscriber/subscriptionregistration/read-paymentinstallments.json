@@ -1,40 +1,108 @@
 {
-  "deliveryId": "2019-02-17",
-  "deliverySequence": 6,
-  "deliverySequencesManagedByATracker": [
+  "subscriberId": "#notnull",
+  "subscriptionId": "#notnull",
+  "instalmentPaymentTrackers": [
     {
-      "deliveryId": "2019-04-14",
-      "deliverySequence": 2,
-      "paymentExpected": 230.0,
-      "paymentReceived": 0.0
+      "deliveryId": "#notnull",
+      "deliverySequence": 1,
+      "deliverySequencesManagedByATracker": [
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 1,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 2,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 3,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 4,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 5,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        }
+      ],
+      "paymentExpected": 552.0,
+      "paymentReceived": 0.0,
+      "deliveryStatus" :"CREATED",
+      "valid": true
     },
     {
-      "deliveryId": "2018-09-02",
-      "deliverySequence": 3,
-      "paymentExpected": 230.0,
-      "paymentReceived": 0.0
-    },
-    {
-      "deliveryId": "2019-07-07",
-      "deliverySequence": 4,
-      "paymentExpected": 230.0,
-      "paymentReceived": 0.0
-    },
-    {
-      "deliveryId": "2018-11-25",
-      "deliverySequence": 5,
-      "paymentExpected": 230.0,
-      "paymentReceived": 0.0
-    },
-    {
-      "deliveryId": "2019-02-17",
+      "deliveryId": "#notnull",
       "deliverySequence": 6,
-      "paymentExpected": 230.0,
-      "paymentReceived": 0.0
+      "deliverySequencesManagedByATracker": [
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 6,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 7,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 8,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        }
+      ],
+      "paymentExpected": 1104.0,
+      "paymentReceived": 0,
+      "deliveryStatus":"CREATED",
+      "valid": true
+    },
+    {
+      "deliveryId": "#notnull",
+      "deliverySequence": 9,
+      "deliverySequencesManagedByATracker": [
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 9,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 10,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 11,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 12,
+          "paymentExpected": 230.0,
+          "paymentReceived": 0.0
+        }
+      ],
+      "paymentExpected": 1104.0,
+      "paymentReceived": 0,
+      "deliveryStatus":"CREATED",
+      "valid": true
     }
-  ],
-  "paymentExpected": 1104.0,
-  "paymentReceived": 0.0,
-  "deliveryStatus": "CREATED",
-  "valid": true
+  ]
 }

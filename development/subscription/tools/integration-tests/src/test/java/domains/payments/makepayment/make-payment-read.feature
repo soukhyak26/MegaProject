@@ -58,7 +58,7 @@ Scenario: introduce wait time
 
 Scenario:validate payment installments
 Given url subscriberReadUrl
-And path 'payments/paymentinstallments/' + subscriptionId
+And path 'payments/installments/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200

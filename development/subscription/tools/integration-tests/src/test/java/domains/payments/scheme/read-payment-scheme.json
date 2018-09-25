@@ -1,7 +1,7 @@
 {
   "schemeId": "#notnull",
   "schemeName":"20%AdvancePayment",
-  "schemeDescription":"20% advance payment and default destribution of other payment",
+  "schemeDescription":"20% advance payment and default distribution of other payment",
   "schemeRuleInJsonFormat" : "#notnull",
   "schemeRule":"pay 20% of current subscription amount on subscription confirmation and pay residual due amount after 1/2remaining-N, 3/4remaining-N delivery in default proportion",
   "schemeStartDate":[2018,1,1],
