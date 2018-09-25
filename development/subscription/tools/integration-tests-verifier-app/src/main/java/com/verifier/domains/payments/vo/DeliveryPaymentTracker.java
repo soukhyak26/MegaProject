@@ -1,15 +1,19 @@
 package com.verifier.domains.payments.vo;
 
-public class DeliveryPaymentTracker {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Objects;
+
+public class DeliveryPaymentTracker implements  Comparable<DeliveryPaymentTracker>{
     private String deliveryId;
     private int deliverySequence;
     private double paymentExpected;
-    private Double paymentReceived;
+    private double paymentReceived;
 
     public DeliveryPaymentTracker(int deliverySequence) {
         this.deliverySequence = deliverySequence;
     }
-
+    public DeliveryPaymentTracker(){}
     public String getDeliveryId() {
         return deliveryId;
     }
@@ -30,40 +34,36 @@ public class DeliveryPaymentTracker {
         this.paymentExpected = paymentExpected;
     }
 
-    public Double getPaymentReceived() {
+    public double getPaymentReceived() {
         return paymentReceived;
     }
 
-    public void setPaymentReceived(Double paymentReceived) {
-        this.paymentReceived = paymentReceived;
+    @JsonIgnore
+    public void addToPaymentReceived(Double paymentReceived) {
+        this.paymentReceived += paymentReceived;
+        this.paymentExpected -=paymentReceived;
+    }
+    @JsonIgnore
+    public boolean ifDeliveryPaymentFulfilled(){
+        return this.getPaymentExpected() == this.getPaymentReceived();
     }
 
-    public boolean isDeliveryPaymentFulfilled(){
-        return this.getPaymentExpected()==this.getPaymentReceived();
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         DeliveryPaymentTracker that = (DeliveryPaymentTracker) o;
-
-        if (deliverySequence != that.deliverySequence) return false;
-        if (Double.compare(that.paymentExpected, paymentExpected) != 0) return false;
-        if (deliveryId != null ? !deliveryId.equals(that.deliveryId) : that.deliveryId != null) return false;
-        return paymentReceived != null ? paymentReceived.equals(that.paymentReceived) : that.paymentReceived == null;
-
+        return deliverySequence == that.deliverySequence &&
+                Objects.equals(deliveryId, that.deliveryId);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = deliveryId != null ? deliveryId.hashCode() : 0;
-        result = 31 * result + deliverySequence;
-        temp = Double.doubleToLongBits(paymentExpected);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (paymentReceived != null ? paymentReceived.hashCode() : 0);
-        return result;
+        return Objects.hash(deliveryId, deliverySequence);
+    }
+
+    @Override
+    public int compareTo(DeliveryPaymentTracker o) {
+        return Integer.compare(this.getDeliverySequence(),o.getDeliverySequence());
     }
 }

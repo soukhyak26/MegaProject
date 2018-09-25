@@ -13,10 +13,6 @@ public class PaymentAccountView {
     private String subscriptionId;
     private String subscriberId;
     private String paymentSchemeId;
-
-    public PaymentAccountView() {
-    }
-
     private LocalDate creationDate;
 
     public PaymentAccountView(String subscriptionId, String subscriberId,LocalDate creationDate) {
@@ -24,7 +20,7 @@ public class PaymentAccountView {
         this.subscriberId = subscriberId;
         this.creationDate = creationDate;
     }
-
+    public PaymentAccountView(){}
     public String getSubscriptionId() {
         return subscriptionId;
     }
