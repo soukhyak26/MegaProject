@@ -16,6 +16,12 @@ function() {
   var platform_benefits_port = karate.properties['domains.benefits.server.command.port'];
   var read_benefits_port = karate.properties['domains.benefits.server.query.port'];
 
+  var platform_sysdate_port = karate.properties['domains.sysdate.server.command.port'];
+  var read_sysdate_port = karate.properties['domains.sysdate.server.query.port'];
+
+  var platform_deliverydispatch_port = karate.properties['domains.deliverydispatch.server.command.port'];
+  var read_deliverydispatch_port = karate.properties['domains.deliverydispatch.server.query.port'];
+
   var env = karate.env;
     if (!env) { env = 'web'; }
   if (!platform_business_port) {
@@ -53,6 +59,19 @@ function() {
     read_benefits_port = karate.env == 'web'? 5060 : 5070;
   }
 
+  if (!platform_sysdate_port) {
+    platform_sysdate_port = karate.env == 'web' ? 8087 : 8080;
+  }
+  if(!read_sysdate_port){
+    read_sysdate_port = karate.env == 'web'? 5060 : 5070;
+  }
+  if(!platform_deliverydispatch_port ){
+    platform_deliverydispatch_port= karate.env == 'web' ? 9100 : 8080;
+  }
+  if(!read_deliverydispatch_port ){
+    read_deliverydispatch_port = karate.env == 'web'? 5060 : 5070;
+  }
+
   var protocol = 'http';
   var config = { platformBusinessUrl: protocol + '://127.0.0.1:' + platform_business_port,
                  businessReadUrl: protocol + '://127.0.0.1:' + read_business_port,
@@ -64,6 +83,10 @@ function() {
                  paymentsReadUrl: protocol + '://127.0.0.1:' + read_payments_port,
                  platformBenefitsUrl: protocol + '://127.0.0.1:' + platform_benefits_port,
                  benefitsReadUrl: protocol + '://127.0.0.1:' + read_benefits_port,
+                 platformSysDateUrl: protocol + '://127.0.0.1:' + platform_sysdate_port,
+                 sysDateReadUrl: protocol + '://127.0.0.1:' + read_sysdate_port,
+                 platformDeliveryDispatchUrl : protocol + '://127.0.0.1:' + platform_deliverydispatch_port,
+                 deliveryDispatchReadUrl :  protocol + '://127.0.0.1:' + read_deliverydispatch_port
                  };
 
   karate.log('karate.env =', karate.env);
@@ -75,8 +98,12 @@ function() {
   karate.log('#####config.subscriberReadUrl =', config.subscriberReadUrl);
   karate.log('#####config.platformPaymentsUrl =', config.platformPaymentsUrl);
   karate.log('#####config.paymentsReadUrl =', config.paymentsReadUrl);
-    karate.log('#####config.platformBenefitsUrl =', config.platformBenefitsUrl);
-    karate.log('#####config.benefitsReadUrl =', config.benefitsReadUrl);
+  karate.log('#####config.platformBenefitsUrl =', config.platformBenefitsUrl);
+  karate.log('#####config.benefitsReadUrl =', config.benefitsReadUrl);
+  karate.log('#####config.platformSysDateUrl =', config.platformSysDateUrl);
+  karate.log('#####config.sysDateReadUrl =', config.sysDateReadUrl);
+  karate.log('#####config.platformDeliveryDispatchUrl =', config.platformDeliveryDispatchUrl);
+  karate.log('#####config.deliveryDispatchReadUrl =', config.deliveryDispatchReadUrl);
 
   return config;
   }
