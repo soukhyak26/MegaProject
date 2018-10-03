@@ -1,10 +1,13 @@
 package com.verifier.controller;
 
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
+import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.common.vo.SubscriberName;
+import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.subscriber.repository.*;
 import com.verifier.domains.subscriber.view.*;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "subscriber")
@@ -110,6 +115,33 @@ public class SubscriberController {
     public ResponseEntity<List<DeliveryView>> getDeliveries() {
         List<DeliveryView> deliveries = deliveryViewRepository.findAll();
         return new ResponseEntity<>(deliveries, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "deliveries/approved/{subscriberId}/{subscriptionId}")
+    public ResponseEntity<List<DeliveryView>> getApprovedDeliveriesForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId) {
+        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, DeliveryStatus.APPROVED);
+        if( deliveries != null && !deliveries.isEmpty()){
+            return new ResponseEntity<>(deliveries, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "deliveries/approved/next/subscriberid/{subscriberId}/subscriptionid/{subscriptionId}",
+            "deliveries/approved/next/subscriberid/{subscriberId}/subscriptionid/{subscriptionId}/deliverydate/{deliveryDate}"
+    })
+    public ResponseEntity<DeliveryView> getNextApprovedDeliveryForASubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable Optional<LocalDate> deliveryDate) {
+        List<DeliveryView> deliveries=null;
+        if(deliveryDate.isPresent()) {
+            deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryDateAndDeliveryStatus(subscriberId, subscriptionId, deliveryDate.get(), DeliveryStatus.APPROVED);
+        }else{
+            deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId, subscriptionId, DeliveryStatus.APPROVED);
+        }
+        if( deliveries != null && !deliveries.isEmpty()){
+            DeliveryView nextDelivery = deliveries.stream().min(Comparator.comparing(DeliveryView::getDeliveryDate)).get();
+            return new ResponseEntity<>(nextDelivery, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/{deliveryId}/{subscriberId}/{subscriptionId}")

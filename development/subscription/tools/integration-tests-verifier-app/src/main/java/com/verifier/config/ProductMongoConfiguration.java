@@ -1,5 +1,7 @@
 package com.verifier.config;
 
+import com.affaince.subscription.common.idconverter.*;
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
@@ -8,12 +10,24 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.support.DefaultConversionService;
+import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.CustomConversions;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import javax.annotation.PostConstruct;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableMongoRepositories(mongoTemplateRef = "productMongoTemplate", basePackageClasses = {ProductBusinessAccountViewRepository.class,
@@ -74,4 +88,29 @@ public class ProductMongoConfiguration {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
-} 
+
+    @Bean
+    @Qualifier("ProductCustomConversions")
+    @Primary
+    public CustomConversions productCustomConversions(){
+        List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new LocalDateToStringConverter());
+        converters.add(new LocalDateTimeToStringConverter());
+        converters.add(new StringToLocalDateConverter());
+        converters.add(new StringToLocalDateTimeConverter());
+        return new CustomConversions(converters);
+    }
+
+    @Bean
+    @Qualifier("ProductMappingMongoConverter")
+    public MappingMongoConverter mappingMongoConverter(@Qualifier("ProductMongo")Mongo mongo,
+                                                       @Qualifier("productMongoDbFactory") MongoDbFactory mongoDbFactory,
+                                                       @Qualifier("ProductCustomConversions") CustomConversions customConversions) {
+        MongoMappingContext mappingContext = new MongoMappingContext();
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
+        MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
+        converter.setCustomConversions(customConversions);
+        return converter;
+    }
+
+}

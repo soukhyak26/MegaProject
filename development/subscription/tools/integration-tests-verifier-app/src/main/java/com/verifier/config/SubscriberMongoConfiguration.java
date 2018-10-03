@@ -91,16 +91,20 @@ public class SubscriberMongoConfiguration {
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
     @Bean
-    public MappingMongoConverter mappingMongoConverter(Mongo mongo, MongoDbFactory mongoDbFactory) throws Exception {
+    @Qualifier("SubscriberMappingMongoConverter")
+    public MappingMongoConverter mappingMongoConverter(@Qualifier("SubscriberMongo")Mongo mongo,
+                                                       @Qualifier("SubscriberMongoDbFactory")MongoDbFactory mongoDbFactory,
+                                                       @Qualifier("SubscriberCustomConversions") CustomConversions customConversions) throws Exception {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
-        converter.setCustomConversions(customConversions());
+        converter.setCustomConversions(customConversions);
         return converter;
     }
 
     @Bean
-    public CustomConversions customConversions(){
+    @Qualifier("SubscriberCustomConversions")
+    public CustomConversions subscriberCustomConversions(){
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
         converters.add(new DeliveryIdReaderConverter());
         converters.add(new DeliveryIdWriterConverter());
