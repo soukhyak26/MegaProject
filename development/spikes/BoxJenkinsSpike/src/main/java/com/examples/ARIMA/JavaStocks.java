@@ -26,7 +26,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 public class JavaStocks {
-private static DataFrame loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext, String path) {
+/*private static DataFrame loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext, String path) {
     JavaRDD<Row> rowRdd = sparkContext.textFile(path).map((String line) ->
     {
     String[] tokens = line.split("\t");
@@ -89,5 +89,6 @@ public static void main(String[] args) {
     System.out.println("*****"+ dwStats.min(new StatsComparator()));
     System.out.println("*****"+dwStats.max(new StatsComparator()));
 }
+*/
 }
 

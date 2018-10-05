@@ -32,6 +32,7 @@ import java.util.List;
  * Created by mandar on 18-06-2016.
  */
 public class ARIMADemandForecaster {
+/*
     private static DataFrame loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext, String path) {
         JavaRDD<Row> rowRdd = sparkContext.textFile(path).map((String line) ->
         {
@@ -96,4 +97,5 @@ public class ARIMADemandForecaster {
     }
 
 
+*/
 }
