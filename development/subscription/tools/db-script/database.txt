@@ -9,7 +9,11 @@ db.dropDatabase()
 use business
 db.dropDatabase()
 
-nohup mvn spring-boot:run -f domain-services/product/ > ~/logs/product.log &1
+nohup java -jar -Dserver.port=8080 product/target/product-0.1-SNAPSHOT.jar > ~/logs/product8080.log &1
+nohup java -jar -Dserver.port=8081 product/target/product-0.1-SNAPSHOT.jar > ~/logs/product8081.log &1
+nohup java -jar -Dserver.port=8082 product/target/product-0.1-SNAPSHOT.jar > ~/logs/product8082.log &1
+
+
 nohup mvn spring-boot:run -f domain-services/payments/ > ~/logs/payments.log &1
 nohup mvn spring-boot:run -f domain-services/benefits/ > ~/logs/benefits.log &1
 nohup mvn spring-boot:run -f domain-services/subscriber/ > ~/logs/subscriber.log &1
@@ -26,10 +30,10 @@ for (var i = 0; i < 180; i++) {
   var dateTime = date + "-03:42:55";
   db.sysDateView.save({ "_id" : 1, "currentDate" : date });
   db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : dateTime });
-  sleep(300);
+  sleep(400);
 }
 
-db.sysDateView.save({ "_id" : 1, "currentDate" : "2019-01-16" });
-db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : "2019-01-16-03:42:55" });
+db.sysDateView.save({ "_id" : 1, "currentDate" : "2019-01-26" });
+db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : "2019-01-26-03:42:55" });
 
 
