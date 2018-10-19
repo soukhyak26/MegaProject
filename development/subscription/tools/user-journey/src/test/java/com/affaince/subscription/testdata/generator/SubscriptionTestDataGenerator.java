@@ -67,7 +67,7 @@ public class SubscriptionTestDataGenerator {
 
     private void findAllActiveProducts() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String[] activeProductIds = objectMapper.readValue(fetchDataByGetRequest("http://159.89.170.246:8082/product/active/productsIds"),
+        String[] activeProductIds = objectMapper.readValue(fetchDataByGetRequest("http://139.59.7.0:8082/product/active/productsIds"),
                 String[].class);
         productIds = Arrays.stream(activeProductIds).collect(Collectors.toList());
     }
@@ -81,10 +81,12 @@ public class SubscriptionTestDataGenerator {
         }
     }
 
-    private void generateSubscriberData() {
+    private void generateSubscriberData() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+        final long totalSubscriptionCount = Long.parseLong(fetchDataByGetRequest(
+                "http://159.89.170.246:8081/subscriber/totalcount/"));
         List<Subscriber> subscribers = new ArrayList<>();
-        for (int i = 0; i < this.subscriptionCount; i++) {
+        for (long i = totalSubscriptionCount; i < this.subscriptionCount; i++) {
             Subscriber subscriber = new Subscriber("Mr", "TestSubscriber" + i, "", "lastName" + i,
                     "A1-504", "Casa 7", "Pune", "MH", "India", "411033",
                     "testemail" + i + "@affaince.com", new Random().nextLong() * 100000000L + "", ""
@@ -110,7 +112,14 @@ public class SubscriptionTestDataGenerator {
             long totalBasketsToBeCreated = totalForecastCounts
                     + (totalForecastCounts * 10 / 100);
             ObjectMapper objectMapper = new ObjectMapper();
-            int i = 0;
+            long totalSubscriptionCount=0;
+            try {
+                totalSubscriptionCount = Long.parseLong(fetchDataByGetRequest(
+                        "http://139.59.7.0:8081/subscriber/totalcount/"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            long i = totalSubscriptionCount;
             while (totalBasketsToBeCreated >= 0) {
                 int noOfCycle = new Random().nextInt(9) + 3;
                 BasketItemRequest basketItemRequest = new BasketItemRequest(
@@ -166,9 +175,9 @@ public class SubscriptionTestDataGenerator {
     private long getTotalSubscriptionCountFromActiveForecast (String productId) {
         Long totalForecstedSubscription = 0L;
         try {
-            LocalDate date = SysDate.now().plusDays(180);
+            LocalDate date = SysDate.now().plusDays(30);
             totalForecstedSubscription = Long.parseLong(fetchDataByGetRequest(
-                    "http://159.89.170.246:8082/forecast/totalsubscription/" + productId
+                    "http://139.59.7.0:8082/forecast/totalsubscription/" + productId
                     + "/" + date
             ));
 
@@ -181,7 +190,7 @@ public class SubscriptionTestDataGenerator {
     private Double getMrpByProductId (String productId) {
         Double totalForecstedSubscription = 0.0;
         try {
-            Double.parseDouble(fetchDataByGetRequest("http://159.89.170.246:8082/product/mrp/" + productId));
+            Double.parseDouble(fetchDataByGetRequest("http://139.59.7.0:8082/product/mrp/" + productId));
         } catch (IOException e) {
             e.printStackTrace();
         }
