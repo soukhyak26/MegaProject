@@ -36,4 +36,6 @@ for (var i = 0; i < 180; i++) {
 db.sysDateView.save({ "_id" : 1, "currentDate" : "2019-01-26" });
 db.sysDateTimeView.save({ "_id" : 1, "currentDateTime" : "2019-01-26-03:42:55" });
 
+ssh root@159.89.170.246 -Nf -L 27018:localhost:27017
+
 
