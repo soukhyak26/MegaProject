@@ -27,24 +27,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableMongoRepositories(mongoTemplateRef="benefitsMongoTemplate",  basePackageClasses = {BenefitsBenefitViewRepository.class})
+@EnableMongoRepositories(mongoTemplateRef="benefitsMongoTemplate",basePackageClasses = {BenefitsBenefitViewRepository.class})
 public class BenefitMongoConfiguration {
-    @Bean
+    @Bean //(name="benefitsMongoTemplate")
     @Qualifier("benefitsMongoTemplate")
-    public MongoTemplate benefitsMongoTemplate(@Qualifier("benefitsMongoDbFactory") MongoDbFactory factory) {
+    @Primary
+    public MongoTemplate benefitsMongoTemplate(@Qualifier("benefitsMongoDbFactory") MongoDbFactory factory,@Qualifier("BenefitMappingMongoConverter")MappingMongoConverter mappingMongoConverter) {
         System.out.println("###INside benefitsMongoTemplate creation " + factory.getDb().getName());
-        MongoTemplate benefitsMongoTemplate = new MongoTemplate(factory);
+        MongoTemplate benefitsMongoTemplate = new MongoTemplate(factory,mappingMongoConverter);
         return benefitsMongoTemplate;
     }
 
-    @Bean
+    @Bean //(name="BenefitsMongo")
     @Qualifier("BenefitsMongo")
     public MongoClient benefitsMongo(@Qualifier("BenefitsMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
         System.out.println("###INside MOngoClient creation");
         return new MongoClient(mongoClientURI);
     }
 
-    @Bean
+    @Bean //(name="BenefitsMongoClientURI")
     @Qualifier("BenefitsMongoClientURI")
     public MongoClientURI benefitsMongoClientURI(@Value("${view.db.benefits.host}") String host, @Value("${view.db.benefits.port}") int port,
                                                  @Value("${view.db.benefits.name}") String dbName) {
@@ -56,33 +57,31 @@ public class BenefitMongoConfiguration {
                 dbName);
     }
 
-    @Bean
+    @Bean //(name="benefitsMongoDbFactory")
     @Qualifier("benefitsMongoDbFactory")
     public MongoDbFactory benefitsMongoDbFactry(@Value("${view.db.benefits.host}") String host, @Value("${view.db.benefits.port}") int port,
-                                                 @Value("${view.db.benefits.name}") String dbName) throws UnknownHostException {
+                                                 @Value("${view.db.benefits.name}") String dbName) {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
 
-    @Bean
+    @Bean //(name="BenefitsCustomConversions")
     @Qualifier("BenefitsCustomConversions")
+    @Primary
     public CustomConversions benefitsCustomConversions(){
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
-        converters.add(new LocalDateToStringConverter());
-        converters.add(new LocalDateTimeToStringConverter());
-        converters.add(new StringToLocalDateConverter());
-        converters.add(new StringToLocalDateTimeConverter());
         return new CustomConversions(converters);
     }
 
-    @Bean
-    public MappingMongoConverter mappingMongoConverter(@Qualifier("BenefitsMongo")Mongo mongo,
-                                                       @Qualifier("benefitsMongoDbFactory") MongoDbFactory mongoDbFactory,
+    @Bean //(name="BenefitMappingMongoConverter")
+    @Qualifier("BenefitMappingMongoConverter")
+    public MappingMongoConverter benefitsMappingMongoConverter(@Qualifier("benefitsMongoDbFactory") MongoDbFactory mongoDbFactory,
                                                        @Qualifier("BenefitsCustomConversions") CustomConversions customConversions) {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversions);
+        converter.afterPropertiesSet();
         return converter;
     }
 

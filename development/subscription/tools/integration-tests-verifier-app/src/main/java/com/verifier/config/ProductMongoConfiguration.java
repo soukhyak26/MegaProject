@@ -5,12 +5,11 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
-import com.verifier.domains.product.repository.ProductBusinessAccountViewRepository;
+import com.verifier.domains.product.repository.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -31,43 +30,43 @@ import java.util.List;
 
 @Configuration
 @EnableMongoRepositories(mongoTemplateRef = "productMongoTemplate", basePackageClasses = {ProductBusinessAccountViewRepository.class,
-        com.verifier.domains.product.repository.CategoryDetailsViewRepository.class,
-        com.verifier.domains.product.repository.FixedExpensePerProductViewRepository.class,
-        com.verifier.domains.product.repository.PriceBucketTransactionViewRepository.class,
-        com.verifier.domains.product.repository.PriceBucketViewRepository.class,
-        com.verifier.domains.product.repository.ProductActivationStatusViewPagingRepository.class,
-        com.verifier.domains.product.repository.ProductActivationStatusViewRepository.class,
-        com.verifier.domains.product.repository.ProductActualMetricsViewRepository.class,
-        com.verifier.domains.product.repository.ProductActualsViewRepository.class,
-        com.verifier.domains.product.repository.ProductConfigurationViewRepository.class,
-        com.verifier.domains.product.repository.ProductForecastTrendViewRepository.class,
-        com.verifier.domains.product.repository.ProductForecastViewRepository.class,
-        com.verifier.domains.product.repository.ProductPseudoActualsViewRepository.class,
-        com.verifier.domains.product.repository.ProductViewPagingRepository.class,
-        com.verifier.domains.product.repository.ProductViewRepository.class,
-        com.verifier.domains.product.repository.RecommendedPriceBucketViewRepository.class,
-        com.verifier.domains.product.repository.TaggedPriceVersionsViewRepository.class,
-        com.verifier.domains.product.repository.TargetSettingViewRepository.class,
-        com.verifier.domains.product.repository.VariableExpensePerProductViewRepository.class,
-        com.verifier.domains.product.repository.ProductAnalyserViewRepository.class,
-        com.verifier.domains.product.repository.ProductInventoryViewRepository.class})
+        CategoryDetailsViewRepository.class,
+        FixedExpensePerProductViewRepository.class,
+        PriceBucketTransactionViewRepository.class,
+        PriceBucketViewRepository.class,
+        ProductActivationStatusViewPagingRepository.class,
+        ProductActivationStatusViewRepository.class,
+        ProductActualMetricsViewRepository.class,
+        ProductActualsViewRepository.class,
+        ProductConfigurationViewRepository.class,
+        ProductForecastTrendViewRepository.class,
+        ProductForecastViewRepository.class,
+        ProductPseudoActualsViewRepository.class,
+        ProductViewPagingRepository.class,
+        ProductViewRepository.class,
+        RecommendedPriceBucketViewRepository.class,
+        TaggedPriceVersionsViewRepository.class,
+        TargetSettingViewRepository.class,
+        VariableExpensePerProductViewRepository.class,
+        ProductAnalyserViewRepository.class,
+        ProductInventoryViewRepository.class})
 public class ProductMongoConfiguration {
-    @Bean
+    @Bean //(name="productMongoTemplate")
     @Qualifier("productMongoTemplate")
-    public MongoTemplate productMongoTemplate(@Qualifier("productMongoDbFactory") MongoDbFactory factory) {
+    public MongoTemplate productMongoTemplate(@Qualifier("productMongoDbFactory") MongoDbFactory factory,@Qualifier("ProductMappingMongoConverter") MappingMongoConverter mappingMongoConverter) {
         System.out.println("###INside ProductMongoTemplate creation " + factory.getDb().getName());
-        MongoTemplate mongoTemplate = new MongoTemplate(factory);
+        MongoTemplate mongoTemplate = new MongoTemplate(factory,mappingMongoConverter);
         return mongoTemplate;
     }
 
-    @Bean
+    @Bean //(name="ProductMongo")
     @Qualifier("ProductMongo")
     public MongoClient mongo(@Qualifier("ProductMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
         System.out.println("###INside MOngoClient creation");
         return new MongoClient(mongoClientURI);
     }
 
-    @Bean
+    @Bean //(name="ProductMongoClientURI")
     @Qualifier("ProductMongoClientURI")
     public MongoClientURI mongoClientURI(@Value("${view.db.product.host}") String host, @Value("${view.db.product.port}") int port,
                                          @Value("${view.db.product.name}") String dbName,
@@ -81,7 +80,7 @@ public class ProductMongoConfiguration {
                 dbName);
     }
 
-    @Bean
+    @Bean //(name="productMongoDbFactory")
     @Qualifier("productMongoDbFactory")
     public MongoDbFactory productMongoDbFactory(@Value("${view.db.product.host}") String host, @Value("${view.db.product.port}") int port,
                                                 @Value("${view.db.product.name}") String dbName) throws UnknownHostException {
@@ -89,9 +88,8 @@ public class ProductMongoConfiguration {
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
 
-    @Bean
+    @Bean //(name = "ProductCustomConversions")
     @Qualifier("ProductCustomConversions")
-    @Primary
     public CustomConversions productCustomConversions(){
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
         converters.add(new LocalDateToStringConverter());
@@ -101,15 +99,15 @@ public class ProductMongoConfiguration {
         return new CustomConversions(converters);
     }
 
-    @Bean
+    @Bean //(name="ProductMappingMongoConverter")
     @Qualifier("ProductMappingMongoConverter")
-    public MappingMongoConverter mappingMongoConverter(@Qualifier("ProductMongo")Mongo mongo,
-                                                       @Qualifier("productMongoDbFactory") MongoDbFactory mongoDbFactory,
+    public MappingMongoConverter productMappingMongoConverter(@Qualifier("productMongoDbFactory") MongoDbFactory mongoDbFactory,
                                                        @Qualifier("ProductCustomConversions") CustomConversions customConversions) {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversions);
+        converter.afterPropertiesSet();
         return converter;
     }
 

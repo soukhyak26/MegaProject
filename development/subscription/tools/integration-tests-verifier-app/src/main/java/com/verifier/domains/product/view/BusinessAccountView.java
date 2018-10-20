@@ -4,9 +4,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Created by anayonkar on 29/4/16.
- */
+
 @Document(collection = "BusinessAccountView")
 public class BusinessAccountView {
 

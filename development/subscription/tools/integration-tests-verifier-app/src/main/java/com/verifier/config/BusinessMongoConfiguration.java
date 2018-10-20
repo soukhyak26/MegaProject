@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -30,7 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableMongoRepositories(mongoTemplateRef="businessMongoTemplate",  basePackageClasses = {BusinessBusinessAccountViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef = "businessMongoTemplate", basePackageClasses = {
+        BusinessBusinessAccountViewRepository.class,
         BusinessBenefitAccountTransactionsViewRepository.class,
         BusinessBenefitAccountViewRepository.class,
         BusinessBookingAmountAccountViewRepository.class,
@@ -77,26 +77,25 @@ import java.util.List;
         BusinessDeliveryChargesRuleViewRepository.class
 })
 public class BusinessMongoConfiguration {
-    @Bean
+    @Bean //(name = "businessMongoTemplate")
     @Qualifier("businessMongoTemplate")
-    @Primary
-    public MongoTemplate businessMongoTemplate(@Qualifier("businessMongoDbFactory") MongoDbFactory factory) {
+    public MongoTemplate businessMongoTemplate(@Qualifier("businessMongoDbFactory") MongoDbFactory factory, @Qualifier("BusinessMappingMongoConverter") MappingMongoConverter mappingMongoConverter) {
         System.out.println("###INside BusinessMongoTemplate creation " + factory.getDb().getName());
-        MongoTemplate businessMongoTemplate = new MongoTemplate(factory);
+        MongoTemplate businessMongoTemplate = new MongoTemplate(factory, mappingMongoConverter);
         return businessMongoTemplate;
     }
 
-    @Bean
+    @Bean //(name = "BusinessMongo")
     @Qualifier("BusinessMongo")
     public MongoClient businessMongo(@Qualifier("BusinessMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
         System.out.println("###INside MOngoClient creation");
         return new MongoClient(mongoClientURI);
     }
 
-    @Bean
+    @Bean //(name = "BusinessMongoClientURI")
     @Qualifier("BusinessMongoClientURI")
     public MongoClientURI businessMongoClientURI(@Value("${view.db.business.host}") String host, @Value("${view.db.business.port}") int port,
-                                         @Value("${view.db.business.name}") String dbName) {
+                                                 @Value("${view.db.business.name}") String dbName) {
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
@@ -105,35 +104,30 @@ public class BusinessMongoConfiguration {
                 dbName);
     }
 
-    @Bean
-    @Primary
+    @Bean //(name = "businessMongoDbFactory")
     @Qualifier("businessMongoDbFactory")
     public MongoDbFactory businessMongoDbFactory(@Value("${view.db.business.host}") String host, @Value("${view.db.business.port}") int port,
-                                         @Value("${view.db.business.name}") String dbName) throws UnknownHostException {
+                                                 @Value("${view.db.business.name}") String dbName) {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
 
-    @Bean
+    @Bean //(name = "BusinessCustomConversions")
     @Qualifier("BusinessCustomConversions")
-    public CustomConversions businessCustomConversions(){
+    public CustomConversions businessCustomConversions() {
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
-        converters.add(new LocalDateToStringConverter());
-        converters.add(new LocalDateTimeToStringConverter());
-        converters.add(new StringToLocalDateConverter());
-        converters.add(new StringToLocalDateTimeConverter());
         return new CustomConversions(converters);
     }
 
-    @Bean
+    @Bean //(name = "BusinessMappingMongoConverter")
     @Qualifier("BusinessMappingMongoConverter")
-    public MappingMongoConverter mappingMongoConverter(@Qualifier("BusinessMongo")Mongo mongo,
-                                                       @Qualifier("businessMongoDbFactory") MongoDbFactory mongoDbFactory,
+    public MappingMongoConverter businessMappingMongoConverter(@Qualifier("businessMongoDbFactory") MongoDbFactory mongoDbFactory,
                                                        @Qualifier("BusinessCustomConversions") CustomConversions customConversions) {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversions);
+        converter.afterPropertiesSet();
         return converter;
     }
 } 

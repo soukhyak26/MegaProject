@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface BusinessBusinessAccountViewRepository extends CrudRepository<BusinessAccountView, String> {
     List<BusinessAccountView> findByEndDateAfter(LocalDate date);
+    List<BusinessAccountView> findByEndDateGreaterThanEqual(LocalDate date);
 }

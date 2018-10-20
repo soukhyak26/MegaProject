@@ -8,8 +8,7 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
-import com.verifier.domains.payments.repository.PaymentsPaymentSchemesViewRepository;
-import com.verifier.domains.payments.repository.PaymentsProductViewRepository;
+import com.verifier.domains.payments.repository.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,38 +29,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableMongoRepositories(mongoTemplateRef="paymentsMongoTemplate",basePackageClasses = {com.verifier.domains.payments.repository.DeliveryCostAccountViewRepository.class,
-com.verifier.domains.payments.repository.DeliveryDetailsViewRepository.class,
-com.verifier.domains.payments.repository.PaymentAccountViewRepository.class,
-        com.verifier.domains.payments.repository.PaymentInstallmentViewRepository.class,
+@EnableMongoRepositories(mongoTemplateRef = "paymentsMongoTemplate", basePackageClasses = {DeliveryCostAccountViewRepository.class,
+        DeliveryDetailsViewRepository.class,
+        PaymentAccountViewRepository.class,
+        PaymentInstallmentViewRepository.class,
         PaymentsPaymentSchemesViewRepository.class,
-        com.verifier.domains.payments.repository.PaymentTransactionViewRepository.class,
-        com.verifier.domains.payments.repository.ProductOfferPricesViewRepository.class,
-        com.verifier.domains.payments.repository.ProductTaggedPricesViewRepository.class,
+        PaymentTransactionViewRepository.class,
+        ProductOfferPricesViewRepository.class,
+        ProductTaggedPricesViewRepository.class,
         PaymentsProductViewRepository.class,
-        com.verifier.domains.payments.repository.RefundTransactionsViewRepository.class,
-        com.verifier.domains.payments.repository.RefundViewRepository.class,
-        com.verifier.domains.payments.repository.TotalReceivableCostAccountViewRepository.class,
-        com.verifier.domains.payments.repository.TotalReceivedCostAccountViewRepository.class,
-        com.verifier.domains.payments.repository.TotalSubscriptionCostAccountViewRepository.class
-        })
+        RefundTransactionsViewRepository.class,
+        RefundViewRepository.class,
+        TotalReceivableCostAccountViewRepository.class,
+        TotalReceivedCostAccountViewRepository.class,
+        TotalSubscriptionCostAccountViewRepository.class
+})
 public class PaymentsMongoConfiguration {
-    @Bean
+    @Bean //(name = "paymentsMongoTemplate")
     @Qualifier("paymentsMongoTemplate")
-    public MongoTemplate paymentsMongoTemplate(@Qualifier("paymentsMongoDbFactory") MongoDbFactory factory) {
+    public MongoTemplate paymentsMongoTemplate(@Qualifier("paymentsMongoDbFactory") MongoDbFactory factory, @Qualifier("PaymentsMappingMongoConverter") MappingMongoConverter mappingMongoConverter) {
         System.out.println("###INside Payments MongoTemplate creation " + factory.getDb().getName());
-        MongoTemplate mongoTemplate = new MongoTemplate(factory);
+        MongoTemplate mongoTemplate = new MongoTemplate(factory, mappingMongoConverter);
         return mongoTemplate;
     }
 
-    @Bean
+    @Bean //(name = "PaymentsMongo")
     @Qualifier("PaymentsMongo")
     public MongoClient mongo(@Qualifier("PaymentsMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
         System.out.println("###INside MOngoClient creation");
         return new MongoClient(mongoClientURI);
     }
 
-    @Bean
+    @Bean //(name = "PaymentsMongoClientURI")
     @Qualifier("PaymentsMongoClientURI")
     public MongoClientURI mongoClientURI(@Value("${view.db.payments.host}") String host, @Value("${view.db.payments.port}") int port,
                                          @Value("${view.db.payments.name}") String dbName,
@@ -75,34 +74,30 @@ public class PaymentsMongoConfiguration {
                 dbName);
     }
 
-    @Bean
+    @Bean //(name = "paymentsMongoDbFactory")
     @Qualifier("paymentsMongoDbFactory")
     public MongoDbFactory paymentsMongoDbFactory(@Value("${view.db.payments.host}") String host, @Value("${view.db.payments.port}") int port,
-                                         @Value("${view.db.payments.name}") String dbName) throws UnknownHostException {
+                                                 @Value("${view.db.payments.name}") String dbName) throws UnknownHostException {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
 
-    @Bean
+    @Bean //(name = "PaymentsCustomConversions")
     @Qualifier("PaymentsCustomConversions")
-    public CustomConversions paymentsCustomConversions(){
+    public CustomConversions paymentsCustomConversions() {
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
-        converters.add(new LocalDateToStringConverter());
-        converters.add(new LocalDateTimeToStringConverter());
-        converters.add(new StringToLocalDateConverter());
-        converters.add(new StringToLocalDateTimeConverter());
         return new CustomConversions(converters);
     }
 
-    @Bean
+    @Bean //(name = "PaymentsMappingMongoConverter")
     @Qualifier("PaymentsMappingMongoConverter")
-    public MappingMongoConverter mappingMongoConverter(@Qualifier("PaymentsMongo")Mongo mongo,
-                                                       @Qualifier("paymentsMongoDbFactory") MongoDbFactory mongoDbFactory,
+    public MappingMongoConverter paymentsMappingMongoConverter(@Qualifier("paymentsMongoDbFactory") MongoDbFactory mongoDbFactory,
                                                        @Qualifier("PaymentsCustomConversions") CustomConversions customConversions) {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
         converter.setCustomConversions(customConversions);
+        converter.afterPropertiesSet();
         return converter;
     }
 

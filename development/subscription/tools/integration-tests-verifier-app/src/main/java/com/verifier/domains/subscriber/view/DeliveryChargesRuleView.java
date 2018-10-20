@@ -3,7 +3,6 @@ package com.verifier.domains.subscriber.view;
 import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.verifier.domains.subscriber.vo.RangeRule;
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
