@@ -4,7 +4,7 @@ import io.gatling.core.session.el._
 import io.gatling.http.Predef._
 
 /**
-  * Created by rbsavaliya on 05-03-2016.
+  * Created by rbsavaliya on 05-03-2016.  
   */
 class Product extends BaseSimulator {
 
@@ -32,11 +32,10 @@ class Product extends BaseSimulator {
 
 object RegisterProduct {
 
-  val createProductUrl = "http://159.89.170.246:8082/product/register"
-  val createProductConfigUrl = "http://159.89.170.246:8082/product/config"
-  val createProjectionUrl = "http://159.89.170.246:8082/forecast"
-  val registerOpeningPriceUrl = "http://159.89.170.246:8082/pricing/openprice"
-  val businessProvisionUrl = "http://159.89.170.246:8085/businessacount/setProvision"
+  val createProductUrl = "http://139.59.7.0:8082/product/register"
+  val createProductConfigUrl = "http://139.59.7.0:8082/product/config"
+  val createProjectionUrl = "http://139.59.7.0:8082/forecast"
+  val registerOpeningPriceUrl = "http://139.59.7.0:8082/pricing/openprice"
   val benefitEquationUrl = "http://159.89.170.246:8084/benefits"
 
 
@@ -118,29 +117,6 @@ object RegisterOpeningPrice {
         )
       ).asJSON
   )
-}
-
-object BusinessProvision {
-  val SetProvosion = exec(
-      http("Set Business Provisioning")
-        .post((RegisterProduct.businessProvisionUrl).el[String])
-        .body(
-          StringBody(
-            """
-              |{
-              |    "provisionForPurchaseCost":"100000.0",
-              |    "provisionForLosses":"50000.0",
-              |    "provisionForBenefits":"25000.0",
-              |    "provisionForTaxes":"20000.0",
-              |    "provisionForOthers":"10000.0",
-              |    "provisionForCommonExpenses":"10000.0",
-              |    "provisionForSubscriptionSpecificExpenses":"50000.0",
-              |    "provisionDate":"2016-04-29"
-              |}
-            """.stripMargin
-          )
-        ).asJSON
-    )
 }
 
 object BenefitEquation {

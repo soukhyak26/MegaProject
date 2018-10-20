@@ -113,7 +113,7 @@ public class ProductTestDataGenerator {
             products.forEach(product -> {
                 try {
                     double purchasePrice = new Random().doubles(product.getMinPrice(), product.getMaxPrice()).findAny().getAsDouble();
-                    double mrp = purchasePrice*(1+product.getMaxProfitMargin()/100);
+                    double mrp = purchasePrice*(1.01+product.getMaxProfitMargin()/100);
                     ProductDetails productDetails = new ProductDetails(
                             product.getProductId(), product.getProductName(), product.getCategoryId(),
                             product.getSubCategoryId(), product.getQuantity(), product.getQuantityUnit(),
@@ -139,8 +139,9 @@ public class ProductTestDataGenerator {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(("[").getBytes());
             products.forEach(product -> {
+                System.out.println(product.getProductDetails().getPurchasePrice() + "   " + product.getProductDetails().getMRP());
                 double openingPrice = new Random().doubles(product.getProductDetails().getPurchasePrice(), product.getProductDetails().getMRP())
-                        .findAny().getAsDouble();
+                        .findFirst().getAsDouble();
 
                 try {
                     PriceDetails priceDetails = new PriceDetails(openingPrice);
