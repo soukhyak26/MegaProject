@@ -10,10 +10,10 @@
     {
       "taggedPriceVersionId": "#notnull",
       "purchasePricePerUnit" : 200.0,
-      "breakEvenPrice" : 0.0,
-      "mrp": 240.0,
+      "breakEvenPrice" : 203.0,
+      "MRP": 240.0,
       "taggedStartDate" : "#notnull",
-      "taggedEndDate" : [9999,12,31]
+      "taggedEndDate" : "9999-12-31"
 
     },
     "fromDate" : "#notnull",
@@ -26,10 +26,10 @@
     "expectedPurchaseCost" : 0.0,
     "expectedRevenue" : 0.0,
     "expectedProfit" : 0.0,
-    "deliveredSubscriptionsAgainstTaggedPrices": null,
-    "registeredProfit":null,
-    "registeredPurchaseCostOfDeliveredUnits":null,
-    "registeredRevenue":null,
+    "deliveredSubscriptionsAgainstTaggedPrices": [],
+    "registeredProfit":{},
+    "registeredPurchaseCostOfDeliveredUnits":{},
+    "registeredRevenue":{},
     "slope": 0.0
   }
 ]

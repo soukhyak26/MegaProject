@@ -1,15 +1,5 @@
 Feature: integration test suite covering operations in all the domains
 
-Background:
-* url   platformProductUrl
-* url   productReadUrl
-* url   platformBusinessUrl
-* url   businessReadUrl
-* url   platformSubscriberUrl
-* url   subscriberReadUrl
-* url   platformPaymentsUrl
-* url   paymentsReadUrl
-
 Scenario:Subscriber initial setup and verification
 * call read('classpath:domains/subscriber/subscriber-initial-setup-verifier.feature')
 
