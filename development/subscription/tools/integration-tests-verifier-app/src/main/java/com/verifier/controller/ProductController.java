@@ -5,6 +5,7 @@ import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.product.repository.*;
 import com.verifier.domains.product.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,6 +98,14 @@ public class ProductController {
     public ResponseEntity<List<PriceBucketView>> getActivePriceBuckets(@PathVariable String productId) {
         List<PriceBucketView> priceBucketViews = priceBucketViewRepository.findByProductwisePriceBucketId_ProductIdAndEntityStatus(productId, EntityStatus.ACTIVE);
         return new ResponseEntity<>(priceBucketViews, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "pricebuckets/latest/{productId}")
+    public ResponseEntity<PriceBucketView> getLatestPriceBuckets(@PathVariable String productId) {
+        Sort sort = new Sort(Sort.Direction.DESC, "productVersionId.fromDate");
+        List<PriceBucketView> activePriceBuckets = priceBucketViewRepository
+                .findByProductwisePriceBucketId_ProductIdAndEntityStatus(productId, EntityStatus.ACTIVE, sort);
+        return new ResponseEntity<>(activePriceBuckets.get(0), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "activationstatus/{productId}")

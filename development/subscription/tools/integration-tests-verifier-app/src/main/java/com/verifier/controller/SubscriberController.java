@@ -5,7 +5,6 @@ import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.vo.DeliveryId;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.verifier.domains.subscriber.repository.*;
-import com.verifier.domains.subscriber.repository.view.*;
 import com.verifier.domains.subscriber.view.*;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
