@@ -30,3 +30,6 @@ Scenario: Subscription validation
 
 Scenario: Payment installment validation
 * call read('classpath:domains/subscriber/subscriptionregistration/payment-installment-read.feature') subscriptionRegistrationResult.response
+
+Scenario: PriceBucket update validation
+* call read('classpath:domains/subscriber/subscriptionregistration/pricebuckets-read.feature') subscriptionRegistrationResult.response
