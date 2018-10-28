@@ -30,13 +30,14 @@ Then status 200
 Scenario: Change sys date to the date of next delivery, so as to trigger its dispatch
 Given url platformSysDateUrl
 And path 'sysdate'
-And request read('classpath:domains/deliverydispatch/updatesysdate/update-sysdate.json')
+And request read('classpath:domains/deliverydispatch/update-sysdate.json')
 When method put
 Then status 200
 
 Scenario: Trigger Delivery Dispatch batch
 Given url platformDeliveryDispatchUrl
 And path 'batch/deliver/trigger'
-When method get
+And request {}
+When method post
 Then status 200
 

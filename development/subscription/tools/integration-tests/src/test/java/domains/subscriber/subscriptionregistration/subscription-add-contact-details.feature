@@ -1,6 +1,9 @@
 @ignore
 Feature: add contact details
 
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
 Scenario: Retrieve subscriber
 Given url subscriberReadUrl
 And path 'subscriber/name/' + 'Mandar' + '/' + 'Suresh' + '/' + 'Kulkarni' + '/' + 'Mr'
