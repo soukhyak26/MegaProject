@@ -1,0 +1,12 @@
+{
+  "deliveryId" : {
+    "deliveryId" : "#notnull",
+    "subscriberId" : "#(subscriberId)",
+    "subscriptionId" : "#(subscriptionId)"
+  },
+  "subscriptionId" : "#(subscriptionId)",
+  "deliverySequence" : 1,
+  "deliveryAmount" : "#notnull",
+  "paymentReceived" : "#notnull",
+  "deliveryDate" : "#notnull"
+}

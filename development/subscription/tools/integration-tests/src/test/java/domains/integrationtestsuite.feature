@@ -37,4 +37,4 @@ Scenario:Make payment for the first installment
 * call read('classpath:domains/payments/makepayment/make-payment-verifier.feature')
 
 Scenario: Trigger Delivery dispatch batch
-* call read('classpath:domains/deliverydispatch/trigger-deliverydispatch-batch.feature')
+* call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')

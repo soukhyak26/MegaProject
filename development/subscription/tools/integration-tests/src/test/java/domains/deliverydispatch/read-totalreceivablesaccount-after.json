@@ -1,0 +1,5 @@
+{
+  "subscriptionId": "#(subscriptionId)",
+  "totalReceivableCost" : "#notnull",
+  "rewardPoints" : 0.0
+}
