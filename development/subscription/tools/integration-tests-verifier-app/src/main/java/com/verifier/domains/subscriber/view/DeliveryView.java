@@ -18,7 +18,7 @@ public class DeliveryView {
     private DeliveryId deliveryId;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
-    private LocalDate dispatchDate;
+    private LocalDate acknowledgementDate;
     private DeliveryStatus deliveryStatus;
     private ReasonCode reasonCode;
     private double rewardPoints;
@@ -58,12 +58,12 @@ public class DeliveryView {
         this.deliveryDate = deliveryDate;
     }
 
-    public LocalDate getDispatchDate() {
-        return dispatchDate;
+    public LocalDate getAcknowledgementDate() {
+        return acknowledgementDate;
     }
 
-    public void setDispatchDate(LocalDate dispatchDate) {
-        this.dispatchDate = dispatchDate;
+    public void setAcknowledgementDate(LocalDate acknowledgementDate) {
+        this.acknowledgementDate = acknowledgementDate;
     }
 
     public DeliveryStatus getDeliveryStatus() {

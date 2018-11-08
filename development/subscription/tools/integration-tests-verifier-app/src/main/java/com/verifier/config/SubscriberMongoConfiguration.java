@@ -1,5 +1,9 @@
 package com.verifier.config;
 
+import com.affaince.subscription.common.idconverter.LocalDateTimeToStringConverter;
+import com.affaince.subscription.common.idconverter.LocalDateToStringConverter;
+import com.affaince.subscription.common.idconverter.StringToLocalDateConverter;
+import com.affaince.subscription.common.idconverter.StringToLocalDateTimeConverter;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -103,6 +107,11 @@ public class SubscriberMongoConfiguration {
     @Qualifier("SubscriberCustomConversions")
     public CustomConversions subscriberCustomConversions(){
         List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+        converters.add(new LocalDateToStringConverter());
+        converters.add(new LocalDateTimeToStringConverter());
+        converters.add(new StringToLocalDateConverter());
+        converters.add(new StringToLocalDateTimeConverter());
+
         return new CustomConversions(converters);
     }
 

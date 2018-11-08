@@ -149,6 +149,15 @@ public class SubscriberController {
         return new ResponseEntity<>(delivery, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/{subscriberId}/{subscriptionId}")
+    public ResponseEntity<List<DeliveryView>> getDeliveredDeliveriesForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId) {
+        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, DeliveryStatus.DELIVERED);
+        if( deliveries != null && !deliveries.isEmpty()){
+            return new ResponseEntity<>(deliveries, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "pricebucket/{productId}")
     public ResponseEntity<LatestPriceBucketView> getPrices(@PathVariable String productId) {
         LatestPriceBucketView price = latestPriceBucketViewRepository.findOne(productId);
