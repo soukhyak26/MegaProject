@@ -1,0 +1,122 @@
+[
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  },
+  {
+    "provisionCalendarVersionId" : {
+      "businessAccountId" : "#(activeBusinessAccountId)",
+      "startDate": "#notnull",
+      "endDate" : "#notnull"
+    },
+    "provisionAmount": "#notnull",
+    "expectedAmount" : "#notnull",
+    "forecastContentStatus" : 1
+  }
+]

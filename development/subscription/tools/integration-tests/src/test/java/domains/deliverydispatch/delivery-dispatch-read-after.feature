@@ -23,11 +23,11 @@ Then status 200
 #Read on Delivery Read side
 Scenario:
 Given url subscriberReadUrl
-And path 'subscriber/deliveries/delivered/' + subscriberId + '/' + subscriptionId
+And path 'subscriber/deliveries/delivered/' + subscriberId + '/' + subscriptionId + '/' + '3'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/deliverydispatch/read-delivered-deliveries.json')
+And match response == read('classpath:domains/deliverydispatch/read-delivered-deliveries-after.json')
 
 #Obtain business account Id to be fed to the next scenario
 Scenario:
@@ -37,7 +37,7 @@ And header Accept = 'application/json'
 When method get
 Then status 200
 
-* def activeBusinessAccountId = response.id
+* def activeBusinessAccountId = response.businessAccountId
 
 #Read on Business- PurchaseCostAccountView
 Scenario:
@@ -47,6 +47,15 @@ And header Accept = 'application/json'
 When method get
 Then status 200
 And match response == read('classpath:domains/deliverydispatch/read-business-purchasecostaccount-after.json')
+
+#Read on Business- PurchaseCostProvisionCalendarView
+Scenario:
+Given url businessReadUrl
+And path 'business/purchaseaccount/provision/' + activeBusinessAccountId
+And header Accept = 'application/json'
+When method get
+Then status 200
+And match response == read('classpath:domains/deliverydispatch/read-purchasecost-provisioncalendar-after.json')
 
 #Read on Payment- TotalReceivableCostAccountView
 Scenario:
@@ -69,7 +78,7 @@ And match response == read('classpath:domains/deliverydispatch/read-totalsubscri
 #Read on Payment- DeliveryCostAccountView
 Scenario:
 Given url paymentsReadUrl
-And path 'payments/deliverycostaccount/' deliveryId + '/' + subscriberId + '/' + subscriptionId
+And path 'payments/deliverycostaccount/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200

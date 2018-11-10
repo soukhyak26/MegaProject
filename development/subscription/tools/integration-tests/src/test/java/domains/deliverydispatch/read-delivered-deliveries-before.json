@@ -1,0 +1,116 @@
+[{
+  "deliveryId" : {
+    "deliveryId" : "#notnull",
+    "subscriberId" : "#(subscriberId)",
+    "subscriptionId" : "#(subscriptionId)"
+  },
+  "deliveryItems" : [
+    {
+      "deliveryItemId" : "#notnull",
+      "deliveryStatus" : "APPROVED",
+      "weightInGrms" : 300.0,
+      "deliveryCharges" : 40.0,
+      "priceBucketId" : "#notnull",
+      "offeredPricePerUnit" : 230.0,
+      "productPricingCategory" : 1
+    }
+  ],
+  "deliveryDate" : "#notnull",
+  "acknowledgementDate" : null,
+  "deliveryStatus" : "APPROVED",
+  "reasonCode": null,
+  "rewardPoints" : 0.0
+},
+  {
+    "deliveryId" : {
+      "deliveryId" : "#notnull",
+      "subscriberId" : "#(subscriberId)",
+      "subscriptionId" : "#(subscriptionId)"
+    },
+    "deliveryItems" : [
+      {
+        "deliveryItemId" : "#notnull",
+        "deliveryStatus" : "APPROVED",
+        "weightInGrms" : 300.0,
+        "deliveryCharges" : 40.0,
+        "priceBucketId" : "#notnull",
+        "offeredPricePerUnit" : 230.0,
+        "productPricingCategory" : 1
+      }
+    ],
+    "deliveryDate" : "#notnull",
+    "acknowledgementDate" : null,
+    "deliveryStatus" : "APPROVED",
+    "reasonCode": null,
+    "rewardPoints" : 0.0
+  },
+  {
+    "deliveryId" : {
+      "deliveryId" : "#notnull",
+      "subscriberId" : "#(subscriberId)",
+      "subscriptionId" : "#(subscriptionId)"
+    },
+    "deliveryItems" : [
+      {
+        "deliveryItemId" : "#notnull",
+        "deliveryStatus" : "APPROVED",
+        "weightInGrms" : 300.0,
+        "deliveryCharges" : 40.0,
+        "priceBucketId" : "#notnull",
+        "offeredPricePerUnit" : 230.0,
+        "productPricingCategory" : 1
+      }
+    ],
+    "deliveryDate" : "#notnull",
+    "acknowledgementDate" : null,
+    "deliveryStatus" : "APPROVED",
+    "reasonCode": null,
+    "rewardPoints" : 0.0
+  },
+  {
+    "deliveryId" : {
+      "deliveryId" : "#notnull",
+      "subscriberId" : "#(subscriberId)",
+      "subscriptionId" : "#(subscriptionId)"
+    },
+    "deliveryItems" : [
+      {
+        "deliveryItemId" : "#notnull",
+        "deliveryStatus" : "APPROVED",
+        "weightInGrms" : 300.0,
+        "deliveryCharges" : 40.0,
+        "priceBucketId" : "#notnull",
+        "offeredPricePerUnit" : 230.0,
+        "productPricingCategory" : 1
+      }
+    ],
+    "deliveryDate" : "#notnull",
+    "acknowledgementDate" : null,
+    "deliveryStatus" : "APPROVED",
+    "reasonCode": null,
+    "rewardPoints" : 0.0
+  },
+  {
+    "deliveryId" : {
+      "deliveryId" : "#notnull",
+      "subscriberId" : "#(subscriberId)",
+      "subscriptionId" : "#(subscriptionId)"
+    },
+    "deliveryItems" : [
+      {
+        "deliveryItemId" : "#notnull",
+        "deliveryStatus" : "APPROVED",
+        "weightInGrms" : 300.0,
+        "deliveryCharges" : 40.0,
+        "priceBucketId" : "#notnull",
+        "offeredPricePerUnit" : 230.0,
+        "productPricingCategory" : 1
+      }
+    ],
+    "deliveryDate" : "#notnull",
+    "acknowledgementDate" : null,
+    "deliveryStatus" : "APPROVED",
+    "reasonCode": null,
+    "rewardPoints" : 0.0
+  }
+]

@@ -25,7 +25,7 @@ Scenario: introduce wait time
 
 Scenario: validate payment from delivery cost account view
 Given url paymentsReadUrl
-And path 'payments/deliverycostaccounts/' + subscriptionId
+And path 'payments/deliverycostaccount/' + subscriptionId
 And header Accept = 'application/json'
 When method get
 Then status 200

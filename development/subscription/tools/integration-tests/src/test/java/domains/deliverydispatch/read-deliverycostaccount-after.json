@@ -1,12 +1,147 @@
-{
-  "deliveryId" : {
-    "deliveryId" : "#notnull",
-    "subscriberId" : "#(subscriberId)",
-    "subscriptionId" : "#(subscriptionId)"
+[
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 1,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
   },
-  "subscriptionId" : "#(subscriptionId)",
-  "deliverySequence" : 1,
-  "deliveryAmount" : "#notnull",
-  "paymentReceived" : "#notnull",
-  "deliveryDate" : "#notnull"
-}
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 2,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 3,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 4,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 5,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 6,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 7,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 8,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 9,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 10,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 11,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  },
+  {
+    "deliveryId": {
+      "deliveryId": "#notnull",
+      "subscriberId": "#(subscriberId)",
+      "subscriptionId": "#(subscriptionId)"
+    },
+    "subscriptionId": "#(subscriptionId)",
+    "deliverySequence": 12,
+    "deliveryAmount": "#notnull",
+    "paymentReceived": "#notnull",
+    "deliveryDate": "#notnull"
+  }
+]

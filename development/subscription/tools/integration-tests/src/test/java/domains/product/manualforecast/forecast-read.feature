@@ -63,7 +63,7 @@ And match response == read('classpath:domains/product/manualforecast/read-purcha
 #Purchase cost provision calendar on Business domain read side
 Scenario:
 Given url businessReadUrl
-And path 'business/purchaseaccount/provision'
+And path 'business/purchaseaccount/provision/' + response.businessAccountId
 And header Accept = 'application/json'
 When method get
 Then status 200

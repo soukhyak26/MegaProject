@@ -1,5 +1,5 @@
 @ignore
-Feature: verify purchase cost budget setting
+Feature: verify others budget setting
 
 Scenario: post the business account
 * def setOthersResult = call read('classpath:domains/business/others/budget-others-create.feature')
