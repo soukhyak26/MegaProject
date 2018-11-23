@@ -1,12 +1,12 @@
 {
   "productName": "Colgate 300 gms",
-  "categoryId" :"#(categoryId)",
-  "subCategoryId":"#(subCategoryId)",
+  "categoryId" :"#(categoryId1)",
+  "subCategoryId":"#(subCategoryId1)",
   "quantity": "300",
   "quantityUnit": "GM",
   "substitutes":["0"],
   "complements":["0"],
-  "sensitiveTo":"NONE",
+  "sensitiveTo":0,
   "productPricingCategory":"1",
   "purchasePrice":"200",
   "mrp": "240"

@@ -1,0 +1,113 @@
+{
+  "productForecastParameters" :
+  [
+    {
+      "startDate": "2018-01-01",
+      "endDate" : "2018-01-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 2200 ,
+      "numberOfChurnedSubscriptions" : 0 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-02-01",
+      "endDate" : "2018-02-28",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 3400 ,
+      "numberOfChurnedSubscriptions" : 230 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-03-01",
+      "endDate" : "2018-03-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 4320 ,
+      "numberOfChurnedSubscriptions" : 450 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-04-01",
+      "endDate" : "2018-04-30",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 4860 ,
+      "numberOfChurnedSubscriptions" : 480 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-05-01",
+      "endDate" : "2018-05-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 5235 ,
+      "numberOfChurnedSubscriptions" : 640 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-06-01",
+      "endDate" : "2018-06-30",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 5670 ,
+      "numberOfChurnedSubscriptions" : 890 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-07-01",
+      "endDate" : "2018-07-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 5300 ,
+      "numberOfChurnedSubscriptions" : 1020 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-08-01",
+      "endDate" : "2018-08-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 5660 ,
+      "numberOfChurnedSubscriptions" : 970 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-09-01",
+      "endDate" : "2018-09-30",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 6230 ,
+      "numberOfChurnedSubscriptions" : 780 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-10-01",
+      "endDate" : "2018-10-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 5870 ,
+      "numberOfChurnedSubscriptions" : 910 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-11-01",
+      "endDate" : "2018-11-30",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 6870 ,
+      "numberOfChurnedSubscriptions" : 1190 ,
+      "forecastContentStatus" : 1
+    },
+    {
+      "startDate": "2018-12-01",
+      "endDate" : "2018-12-31",
+      "purchasePricePerUnit" : 60.0,
+      "MRP" : 80.0,
+      "numberOfNewSubscriptions" : 7460 ,
+      "numberOfChurnedSubscriptions" : 1380 ,
+      "forecastContentStatus" : 1
+    }
+  ]
+}

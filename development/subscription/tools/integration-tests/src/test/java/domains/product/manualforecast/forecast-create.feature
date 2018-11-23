@@ -14,3 +14,17 @@ And path 'forecast/manual/' + response[0].productId
 And request read('classpath:domains/product/manualforecast/create-forecast.json')
 When method post
 Then status 201
+
+Scenario:
+Given url platformProductUrl
+And path 'product/name/Lux 200 gms'
+When method get
+Then status 200
+And match response == read('classpath:domains/product/manualforecast/createproductresponse2.json')
+
+Scenario:
+Given url platformProductUrl
+And path 'forecast/manual/' + response[0].productId
+And request read('classpath:domains/product/manualforecast/create-forecast2.json')
+When method post
+Then status 201

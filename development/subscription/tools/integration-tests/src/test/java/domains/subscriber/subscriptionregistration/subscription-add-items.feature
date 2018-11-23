@@ -14,7 +14,7 @@ Given url productReadUrl
 And path 'product/name/' + 'Colgate 300 gms'
 When method get
 Then status 200
-* def productId = response[0].productId
+* def productId1 = response[0].productId
 
 Scenario: add items to registered subscription
 Given url platformSubscriberUrl

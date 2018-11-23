@@ -1,13 +1,13 @@
-[{
-  "productId": "#notnull",
-  "productName": "Colgate 300 gms",
-  "categoryId" : "#notnull",
-  "subCategoryId": "#notnull",
-  "quantity": 300,
+{
+  "productId": "#ignore",
+  "productName": "Lux 200 gms",
+  "categoryId" : "#ignore",
+  "subCategoryId": "#ignore",
+  "quantity": 200,
   "quantityUnit": "GM",
   "substitutes": ["0"],
   "complements": ["0"],
-  "sensitiveTo": 0,
+  "sensitiveTo":0,
   "currentOperatingExpensePerUnit":0.0,
   "currentStockInUnits":0,
   "productPricingCategory":1,
@@ -15,4 +15,4 @@
   "pricingStrategyType": "DEFAULT_PRICING_STRATEGY",
   "isCrossPriceElasticityConsidered":false,
   "isAdvertisingExpensesConsidered":false
-}]
+}

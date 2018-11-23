@@ -1,5 +1,5 @@
 {
-  "productId" : "#(productId)" ,
+  "productId" : "#(productId1)" ,
   "countPerPeriod" : 1,
   "period" : {
     "value": 1,

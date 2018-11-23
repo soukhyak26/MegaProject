@@ -1,0 +1,13 @@
+{
+  "productName": "Lux 200 gms",
+  "categoryId" :"#(categoryId2)",
+  "subCategoryId":"#(subCategoryId2)",
+  "quantity": "200",
+  "quantityUnit": "GM",
+  "substitutes":["0"],
+  "complements":["0"],
+  "sensitiveTo":0,
+  "productPricingCategory":"1",
+  "purchasePrice":"60",
+  "mrp": "80"
+}

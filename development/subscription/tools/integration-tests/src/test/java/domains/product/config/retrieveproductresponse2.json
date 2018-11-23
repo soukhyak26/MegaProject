@@ -1,9 +1,9 @@
 [{
   "productId": "#notnull",
-  "productName": "Colgate 300 gms",
+  "productName": "Lux 200 gms",
   "categoryId" : "#notnull",
   "subCategoryId": "#notnull",
-  "quantity": 300,
+  "quantity": 200,
   "quantityUnit": "GM",
   "substitutes": ["0"],
   "complements": ["0"],

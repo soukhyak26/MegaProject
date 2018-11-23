@@ -1,10 +1,10 @@
 {
   "productId": "#ignore",
-  "productName": "Colgate 300 gms",
+  "productName": "Lux 200 gms",
   "categoryId" : "#ignore",
   "subCategoryId": "#ignore",
-  "purchasePrice":200.0,
-  "mrp":240.0,
+  "purchasePrice":60.0,
+  "mrp":80.0,
   "sensitiveTo":0,
   "productStatus":"PRODUCT_REGISTERED",
   "totalAnticipatedSubscriptions": 0,

@@ -1,0 +1,35 @@
+[
+  {
+    "productwisePriceBucketId":
+    {
+      "productId" : "#notnull",
+      "priceBucketId" : "#notnull"
+    },
+    "productPricingCategory": 1,
+    "taggedPriceVersion" :
+    {
+      "taggedPriceVersionId": "#notnull",
+      "purchasePricePerUnit" : 60.0,
+      "breakEvenPrice" : 63.0,
+      "MRP": 80.0,
+      "taggedStartDate" : "#notnull",
+      "taggedEndDate" : "9999-12-31"
+
+    },
+    "fromDate" : "#notnull",
+    "toDate" : [9999,12,31,0,0,0,0],
+    "offeredPriceOrPercentDiscountPerUnit" : 70.0,
+    "numberOfNewSubscriptionsAssociatedWithAPrice" : 0,
+    "numberOfChurnedSubscriptionsAssociatedWithAPrice" : 0,
+    "numberOfExistingSubscriptionsAssociatedWithAPrice": 0,
+    "entityStatus" : 1,
+    "expectedPurchaseCost" : 0.0,
+    "expectedRevenue" : 0.0,
+    "expectedProfit" : 0.0,
+    "deliveredSubscriptionsAgainstTaggedPrices": [],
+    "registeredProfit":{},
+    "registeredPurchaseCostOfDeliveredUnits":{},
+    "registeredRevenue":{},
+    "slope": 0.0
+  }
+]
