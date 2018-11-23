@@ -153,9 +153,9 @@ public class BusinessVerifierController {
         return new ResponseEntity<List<CommonExpenseProvisionCalendarView>>(businessCommonExpensesProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "purchaseaccount/provision")
-    ResponseEntity<List<PurchaseCostProvisionCalendarView>> getPurchaseAccountProvisionCalendar(){
-        return new ResponseEntity<List<PurchaseCostProvisionCalendarView>>(businessPurchaseCostProvisionCalendarViewRepository.findAllByOrderByProvisionCalendarVersionId_StartDateAsc(),HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value = "purchaseaccount/provision/{businessAccountId}")
+    ResponseEntity<List<PurchaseCostProvisionCalendarView>> getPurchaseAccountProvisionCalendar(@PathVariable String businessAccountId){
+        return new ResponseEntity<List<PurchaseCostProvisionCalendarView>>(businessPurchaseCostProvisionCalendarViewRepository.findByProvisionCalendarVersionId_BusinessAccountIdOrderByProvisionCalendarVersionId_StartDateAsc(businessAccountId),HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "taxesaccount/provision")

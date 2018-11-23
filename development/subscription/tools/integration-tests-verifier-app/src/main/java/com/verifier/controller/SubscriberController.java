@@ -149,9 +149,10 @@ public class SubscriberController {
         return new ResponseEntity<>(delivery, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/{subscriberId}/{subscriptionId}")
-    public ResponseEntity<List<DeliveryView>> getDeliveredDeliveriesForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId) {
-        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, DeliveryStatus.DELIVERED);
+    @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/{subscriberId}/{subscriptionId}/{deliveryStatus}")
+    public ResponseEntity<List<DeliveryView>> getDeliveredDeliveriesForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
+        DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
+        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, deliveryStatusEnum);
         if( deliveries != null && !deliveries.isEmpty()){
             return new ResponseEntity<>(deliveries, HttpStatus.OK);
         }

@@ -51,7 +51,7 @@ public class PaymentsController {
         this.totalSubscriptionCostAccountViewRepository = totalSubscriptionCostAccountViewRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccounts/{subscriptionId}")
+    @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccount/{subscriptionId}")
     public ResponseEntity<List<DeliveryCostAccountView>> getDeliveryCostAccountsForASubscription(@PathVariable String subscriptionId) {
         List<DeliveryCostAccountView> deliveryCostAccountViewsForASubscription = deliveryCostAccountViewRepository.findByDeliveryId_SubscriptionId(subscriptionId);
         return new ResponseEntity<>(deliveryCostAccountViewsForASubscription, HttpStatus.OK);
