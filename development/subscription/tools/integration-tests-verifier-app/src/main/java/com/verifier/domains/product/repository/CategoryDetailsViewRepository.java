@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface CategoryDetailsViewRepository extends CrudRepository<CategoryDetailsView, String> {
     public List<CategoryDetailsView> findAll();
+    public List<CategoryDetailsView> findByCategoryName(String categoryName);
 }
