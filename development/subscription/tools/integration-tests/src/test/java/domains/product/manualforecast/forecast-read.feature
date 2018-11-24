@@ -12,7 +12,7 @@ And path 'product/name/Colgate 300 gms'
 When method get
 Then status 200
 
-* def productId1 = response.productId
+* def productId1 = response[0].productId
 
 Scenario:
 Given url productReadUrl
@@ -20,7 +20,7 @@ And path 'product/name/Lux 200 gms'
 When method get
 Then status 200
 
-* def productId2 = response.productId
+* def productId2 = response[0].productId
 
 
 #Forecast on Product Read side - Product1

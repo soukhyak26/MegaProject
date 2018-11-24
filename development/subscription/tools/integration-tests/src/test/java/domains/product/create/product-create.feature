@@ -2,7 +2,7 @@
 Feature: create product for the financial year
 
 Scenario:
-Given url platformProductUrl
+Given url productReadUrl
 And path 'product/category/name/Large ToothPaste'
 And header Accept = 'application/json'
 When method get
@@ -13,7 +13,7 @@ And match response == {categoryId:'#notnull', categoryName:'Large ToothPaste', d
 * def subCategoryId1 = response.categoryId
 
 Scenario:
-Given url platformProductUrl
+Given url productReadUrl
 And path 'product/category/name/Large Soap'
 And header Accept = 'application/json'
 When method get
