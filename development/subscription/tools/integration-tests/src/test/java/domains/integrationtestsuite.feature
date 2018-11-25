@@ -38,3 +38,6 @@ Scenario:Make payment for the first installment
 
 Scenario: Trigger Delivery dispatch batch
 * call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')
+
+Scenario: Modify subscription and verify
+* call read('classpath:domains/subscriber/modifysubscription/modifysubscription-verifier.feature')

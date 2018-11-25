@@ -1,0 +1,50 @@
+@ignore
+Feature: add items to a subscription after first delivery
+
+Scenario: Retrieve subscriber
+Given url subscriberReadUrl
+And path 'subscriber/name/' + 'Mandar' + '/' + 'Suresh' + '/' + 'Kulkarni' + '/' + 'Mr'
+When method get
+Then status 200
+
+* def subscriberId = response.subscriberId
+
+Scenario: Retrieve Product
+Given url productReadUrl
+And path 'product/name/' + 'Lux 200 gms'
+When method get
+Then status 200
+* def productId2 = response[0].productId
+
+Scenario: Retrieve subscription Id given subscriber Id
+Given url subscriberReadUrl
+And path 'subscriber/subscription/active/subscriber/' + subscriberId
+When method get
+Then status 200
+
+* def subscriptionId = response.subscriptionId
+
+Scenario: Retrieve delivery date of latest delivered delivery
+Given url subscriberReadUrl
+And path 'subscriber/deliveries/delivered/latest/' + subscriberId +'/' + subscriptionId  + '/3'
+When method get
+Then status 200
+
+* def deliveryId = response.deliveryId
+* def deliveryDate = response.deliveryDate
+* print deliveryDate
+
+
+Scenario: Change sys date to the date after first delivery,to simulate subscription modification post first delivery
+Given url platformSysDateUrl
+And path 'sysdate/increment/days'
+And request read('classpath:domains/subscriber/modifysubscription/update-sysdate2.json')
+When method put
+Then status 200
+
+Scenario: add items to registered subscription
+Given url platformSubscriberUrl
+And path 'subscription/additem/' + subscriberId
+And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
+When method put
+Then status 200
