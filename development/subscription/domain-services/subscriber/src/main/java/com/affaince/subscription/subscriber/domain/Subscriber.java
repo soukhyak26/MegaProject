@@ -425,6 +425,7 @@ public class Subscriber extends AbstractAnnotatedAggregateRoot<String> {
                                DeliveryChargesRule deliveryChargesRule,
                                BenefitExecutionContext benefitExecutionContext) {
         Map <String, Map<String, Integer>> itemSubscribed = findDeferenceOfDeliveryItems(deliveryId, deliveryItems);
+        deleteDelivery(deliveryId, this.subscription.getSubscriptionId(), benefitExecutionContext);
         addDelivery(deliveryId, deliveryDate,
                 deliveryItems, deliveryChargesRule, benefitExecutionContext);
         itemSubscribed.keySet().forEach(productId -> {

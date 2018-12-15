@@ -27,7 +27,6 @@ public class UpdateDeliveryCommandHandler {
     @CommandHandler
     public void handle(UpdateDeliveryCommand command) {
         final Subscriber subscriber = subscriberRepository.load(command.getSubscriberId());
-        subscriber.deleteDelivery(command.getDeliveryId(), command.getSubscriptionId(), benefitExecutionContext);
         subscriber.updateDelivery(command.getDeliveryId(), command.getDeliveryDate(),
                 command.getDeliveryItems(), command.getDeliveryChargesRule(), benefitExecutionContext);
     }
