@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -150,11 +151,28 @@ public class SubscriberController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/{subscriberId}/{subscriptionId}/{deliveryStatus}")
-    public ResponseEntity<List<DeliveryView>> getDeliveredDeliveriesForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
+    public ResponseEntity<List<DeliveryView>> getDeliveredDeliveriesForASubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
         DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
         List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, deliveryStatusEnum);
         if( deliveries != null && !deliveries.isEmpty()){
             return new ResponseEntity<>(deliveries, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "deliveries/undelivered/{subscriberId}/{subscriptionId}/{deliveryStatus}")
+    public ResponseEntity<List<DeliveryView>> getUndeliveredDeliveriesForASubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
+        DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
+        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatusNot(subscriberId,subscriptionId, deliveryStatusEnum);
+        return new ResponseEntity<>(deliveries, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/latest/{subscriberId}/{subscriptionId}/{deliveryStatus}")
+    public ResponseEntity<DeliveryView> getLatestDeliveredDeliveryForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
+        DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
+        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatusOrderByDeliveryDateDesc(subscriberId,subscriptionId, deliveryStatusEnum);
+        if( deliveries != null && !deliveries.isEmpty()){
+            return new ResponseEntity<>(deliveries.get(0), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

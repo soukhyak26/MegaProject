@@ -14,6 +14,8 @@ import java.util.List;
 public interface DeliveryViewRepository extends CrudRepository<DeliveryView, DeliveryId> {
     public List<DeliveryView> findAll();
     public List<DeliveryView> findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(String subscriberId,String subscriptionId,DeliveryStatus deliveryStatus);
+    public List<DeliveryView> findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatusNot(String subscriberId,String subscriptionId,DeliveryStatus deliveryStatus);
+    public List<DeliveryView> findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatusOrderByDeliveryDateDesc(String subscriberId,String subscriptionId,DeliveryStatus deliveryStatus);
     public List<DeliveryView> findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryDateAndDeliveryStatus(String subscriberId, String subscriptionId, LocalDate deliveryDate, DeliveryStatus deliveryStatus);
     public List<DeliveryView> findByDeliveryStatus(DeliveryStatus deliveryStatus);
 }
