@@ -10,6 +10,9 @@ And match response == read('classpath:domains/product/manualforecast/createprodu
 
 * def productId1 = response[0].productId
 
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
 Scenario:
 Given url platformProductUrl
 And path 'pricing/openprice/' + productId1
@@ -25,6 +28,9 @@ Then status 200
 And match response == read('classpath:domains/product/manualforecast/createproductresponse2.json')
 
 * def productId2 = response[0].productId
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Scenario:
 Given url platformProductUrl

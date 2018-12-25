@@ -17,9 +17,15 @@ Then status 200
 
 * def subscriptionId = response.subscriptionId
 
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
 Scenario:
 Given url platformPaymentsUrl
 And path 'payments'
 And request read('classpath:domains/payments/makepayment/make-payment.json')
 When method put
 Then status 200
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
