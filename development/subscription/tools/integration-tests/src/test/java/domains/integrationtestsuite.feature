@@ -1,4 +1,6 @@
 Feature: integration test suite covering operations in all the domains
+* configure readTimeout = 60000
+* configure connectTimeout = 60000
 Scenario: Decrement sys date
 * call read('classpath:domains/common/decrement-sysdate.feature')
 
@@ -70,6 +72,9 @@ Scenario: introduce wait time
 
 Scenario:Make payment for the first installment
 * call read('classpath:domains/payments/makepayment/make-payment-verifier.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Scenario: introduce wait time
 * call read('classpath:domains/common/introduce-wait-cycles.feature')

@@ -2,7 +2,7 @@
 Feature: introduce sleep time
 
 Background:
-* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(1500); }
+* def afterScenario = function(){ karate.log('sleeping ..'); java.lang.Thread.sleep(3000); }
 
 Scenario:
 #Introduce delay
