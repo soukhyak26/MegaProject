@@ -6,7 +6,7 @@
   "purchasePrice":60.0,
   "mrp":80.0,
   "sensitiveTo":0,
-  "productStatus":"PRODUCT_REGISTERED",
+  "productStatus":1,
   "totalAnticipatedSubscriptions": 0,
   "currentOperatingExpensePerUnit":0.0,
   "productPurchaseBudgetedAmount":0.0

@@ -3,8 +3,8 @@
   "targetChangeThresholdForPriceChange" : 0.1,
   "isCrossPriceElasticityConsidered" : "false",
   "isAdvertisingExpensesConsidered" : "false",
-  "pricingOptions" : "MANUAL_PRICE_INPUT",
-  "pricingStrategyType" : "DEFAULT_PRICING_STRATEGY",
+  "pricingOptions" : 2,
+  "pricingStrategyType" : 0,
   "demandCurvePeriod" : {
     "value": 2 ,
     "unit" : "YEAR"

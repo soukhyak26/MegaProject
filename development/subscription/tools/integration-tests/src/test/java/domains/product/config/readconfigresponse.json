@@ -4,8 +4,8 @@
   "targetChangeThresholdForPriceChange" : 0.1,
   "isCrossPriceElasticityConsidered" : false,
   "isAdvertisingExpensesConsidered" : false,
-  "pricingStrategyType" : "DEFAULT_PRICING_STRATEGY",
-  "pricingOptions" : "MANUAL_PRICE_INPUT",
+  "pricingStrategyType" : 0,
+  "pricingOptions" : 2,
   "nextForecastDate" : "#ignore",
   "demandCurvePeriod" : {
     "value": 2 ,

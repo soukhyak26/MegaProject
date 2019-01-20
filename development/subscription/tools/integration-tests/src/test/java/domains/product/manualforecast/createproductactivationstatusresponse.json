@@ -1,7 +1,7 @@
 {
   "productId":"#notnull",
-  "productStatuses":["PRODUCT_REGISTERED",
-                    "PRODUCT_CONFIGURED",
-                    "PRODUCT_FORECASTED"
+  "productStatuses":[1,
+                    2,
+                    3
                     ]
 }

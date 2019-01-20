@@ -12,7 +12,7 @@
   "currentStockInUnits":0,
   "productPricingCategory":1,
   "creditPoints":0,
-  "pricingStrategyType": "DEFAULT_PRICING_STRATEGY",
+  "pricingStrategyType": 0,
   "isCrossPriceElasticityConsidered":false,
   "isAdvertisingExpensesConsidered":false
 }
