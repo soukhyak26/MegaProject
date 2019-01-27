@@ -1,7 +1,7 @@
 package com.verifier.domains.payments.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.common.vo.CompositeDeliveryId;
 import com.verifier.domains.payments.vo.DeliverableProductDetail;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -15,7 +15,7 @@ import java.util.List;
 @Document(collection="DeliveryDetailsView")
 public class DeliveryDetailsView {
     @Id
-    private DeliveryId subscriptionwiseDeliveryId;
+    private CompositeDeliveryId compositeDeliveryId;
     private List<DeliverableProductDetail> deliverableProductDetails;
     private LocalDate deliveryDate;
     private DeliveryStatus deliveryStatus;
@@ -23,15 +23,15 @@ public class DeliveryDetailsView {
     public DeliveryDetailsView() {
     }
 
-    public DeliveryDetailsView(DeliveryId subscriptionwiseDeliveryId, List<DeliverableProductDetail> deliverableProductDetails, LocalDate deliveryDate) {
-        this.subscriptionwiseDeliveryId = subscriptionwiseDeliveryId;
+    public DeliveryDetailsView(CompositeDeliveryId compositeDeliveryId, List<DeliverableProductDetail> deliverableProductDetails, LocalDate deliveryDate) {
+        this.compositeDeliveryId = compositeDeliveryId;
         this.deliverableProductDetails = deliverableProductDetails;
         this.deliveryDate = deliveryDate;
         deliveryStatus= DeliveryStatus.CREATED;
     }
 
-    public DeliveryId getSubscriptionwiseDeliveryId() {
-        return subscriptionwiseDeliveryId;
+    public CompositeDeliveryId getCompositeDeliveryId() {
+        return compositeDeliveryId;
     }
 
     public List<DeliverableProductDetail> getDeliverableProductDetails() {

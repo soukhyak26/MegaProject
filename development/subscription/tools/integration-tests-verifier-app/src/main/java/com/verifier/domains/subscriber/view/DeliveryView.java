@@ -2,20 +2,17 @@ package com.verifier.domains.subscriber.view;
 
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ReasonCode;
-import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.common.vo.CompositeDeliveryId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-/**
- * Created by rbsavaliya on 02-10-2015.
- */
 @Document(collection = "DeliveryView")
 public class DeliveryView {
     @Id
-    private DeliveryId deliveryId;
+    private CompositeDeliveryId compositeDeliveryId;
     private List<DeliveryItem> deliveryItems;
     private LocalDate deliveryDate;
     private LocalDate acknowledgementDate;
@@ -23,8 +20,8 @@ public class DeliveryView {
     private ReasonCode reasonCode;
     private double rewardPoints;
 
-    public DeliveryView(DeliveryId deliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus deliveryStatus, double rewardPoints) {
-        this.deliveryId = deliveryId;
+    public DeliveryView(CompositeDeliveryId compositeDeliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus deliveryStatus, double rewardPoints) {
+        this.compositeDeliveryId = compositeDeliveryId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.deliveryStatus = deliveryStatus;
@@ -34,12 +31,12 @@ public class DeliveryView {
     public DeliveryView() {
     }
 
-    public DeliveryId getDeliveryId() {
-        return deliveryId;
+    public CompositeDeliveryId getCompositeDeliveryId() {
+        return compositeDeliveryId;
     }
 
-    public void setDeliveryId(DeliveryId deliveryId) {
-        this.deliveryId = deliveryId;
+    public void setCompositeDeliveryId(CompositeDeliveryId compositeDeliveryId) {
+        this.compositeDeliveryId = compositeDeliveryId;
     }
 
     public List<DeliveryItem> getDeliveryItems() {

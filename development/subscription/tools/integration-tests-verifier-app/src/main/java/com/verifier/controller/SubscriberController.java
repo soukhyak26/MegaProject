@@ -2,7 +2,7 @@ package com.verifier.controller;
 
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.common.vo.CompositeDeliveryId;
 import com.affaince.subscription.common.vo.SubscriberName;
 import com.verifier.domains.subscriber.repository.*;
 import com.verifier.domains.subscriber.view.*;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -119,7 +118,7 @@ public class SubscriberController {
 
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/approved/{subscriberId}/{subscriptionId}")
     public ResponseEntity<List<DeliveryView>> getApprovedDeliveriesForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId) {
-        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, DeliveryStatus.APPROVED);
+        List<DeliveryView> deliveries = deliveryViewRepository.findByCompositeDeliveryId_SubscriberIdAndCompositeDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, DeliveryStatus.APPROVED);
         if( deliveries != null && !deliveries.isEmpty()){
             return new ResponseEntity<>(deliveries, HttpStatus.OK);
         }
@@ -133,9 +132,9 @@ public class SubscriberController {
     public ResponseEntity<DeliveryView> getNextApprovedDeliveryForASubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable Optional<LocalDate> deliveryDate) {
         List<DeliveryView> deliveries=null;
         if(deliveryDate.isPresent()) {
-            deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryDateAndDeliveryStatus(subscriberId, subscriptionId, deliveryDate.get(), DeliveryStatus.APPROVED);
+            deliveries = deliveryViewRepository.findByCompositeDeliveryId_SubscriberIdAndCompositeDeliveryId_SubscriptionIdAndDeliveryDateAndDeliveryStatus(subscriberId, subscriptionId, deliveryDate.get(), DeliveryStatus.APPROVED);
         }else{
-            deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId, subscriptionId, DeliveryStatus.APPROVED);
+            deliveries = deliveryViewRepository.findByCompositeDeliveryId_SubscriberIdAndCompositeDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId, subscriptionId, DeliveryStatus.APPROVED);
         }
         if( deliveries != null && !deliveries.isEmpty()){
             DeliveryView nextDelivery = deliveries.stream().min(Comparator.comparing(DeliveryView::getDeliveryDate)).get();
@@ -146,14 +145,14 @@ public class SubscriberController {
 
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/{deliveryId}/{subscriberId}/{subscriptionId}")
     public ResponseEntity<DeliveryView> getDelivery(@PathVariable String deliveryId,@PathVariable String subscriberId, @PathVariable String subscriptionId) {
-        DeliveryView delivery = deliveryViewRepository.findOne(new DeliveryId(deliveryId,subscriberId,subscriptionId));
+        DeliveryView delivery = deliveryViewRepository.findOne(new CompositeDeliveryId(deliveryId,subscriberId,subscriptionId));
         return new ResponseEntity<>(delivery, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/{subscriberId}/{subscriptionId}/{deliveryStatus}")
     public ResponseEntity<List<DeliveryView>> getDeliveredDeliveriesForASubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
         DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
-        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, deliveryStatusEnum);
+        List<DeliveryView> deliveries = deliveryViewRepository.findByCompositeDeliveryId_SubscriberIdAndCompositeDeliveryId_SubscriptionIdAndDeliveryStatus(subscriberId,subscriptionId, deliveryStatusEnum);
         if( deliveries != null && !deliveries.isEmpty()){
             return new ResponseEntity<>(deliveries, HttpStatus.OK);
         }
@@ -163,14 +162,14 @@ public class SubscriberController {
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/undelivered/{subscriberId}/{subscriptionId}/{deliveryStatus}")
     public ResponseEntity<List<DeliveryView>> getUndeliveredDeliveriesForASubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
         DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
-        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatusNot(subscriberId,subscriptionId, deliveryStatusEnum);
+        List<DeliveryView> deliveries = deliveryViewRepository.findByCompositeDeliveryId_SubscriberIdAndCompositeDeliveryId_SubscriptionIdAndDeliveryStatusNot(subscriberId,subscriptionId, deliveryStatusEnum);
         return new ResponseEntity<>(deliveries, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "deliveries/delivered/latest/{subscriberId}/{subscriptionId}/{deliveryStatus}")
     public ResponseEntity<DeliveryView> getLatestDeliveredDeliveryForAsubscriber(@PathVariable String subscriberId, @PathVariable String subscriptionId, @PathVariable String deliveryStatus) {
         DeliveryStatus deliveryStatusEnum= DeliveryStatus.valueOf(Integer.parseInt(deliveryStatus));
-        List<DeliveryView> deliveries = deliveryViewRepository.findByDeliveryId_SubscriberIdAndDeliveryId_SubscriptionIdAndDeliveryStatusOrderByDeliveryDateDesc(subscriberId,subscriptionId, deliveryStatusEnum);
+        List<DeliveryView> deliveries = deliveryViewRepository.findByCompositeDeliveryId_SubscriberIdAndCompositeDeliveryId_SubscriptionIdAndDeliveryStatusOrderByDeliveryDateDesc(subscriberId,subscriptionId, deliveryStatusEnum);
         if( deliveries != null && !deliveries.isEmpty()){
             return new ResponseEntity<>(deliveries.get(0), HttpStatus.OK);
         }

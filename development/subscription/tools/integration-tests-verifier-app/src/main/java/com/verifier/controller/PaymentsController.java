@@ -1,6 +1,6 @@
 package com.verifier.controller;
 
-import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.common.vo.CompositeDeliveryId;
 import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.payments.repository.*;
@@ -53,19 +53,19 @@ public class PaymentsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccount/{subscriptionId}")
     public ResponseEntity<List<DeliveryCostAccountView>> getDeliveryCostAccountsForASubscription(@PathVariable String subscriptionId) {
-        List<DeliveryCostAccountView> deliveryCostAccountViewsForASubscription = deliveryCostAccountViewRepository.findByDeliveryId_SubscriptionId(subscriptionId);
+        List<DeliveryCostAccountView> deliveryCostAccountViewsForASubscription = deliveryCostAccountViewRepository.findByCompositeDeliveryId_SubscriptionId(subscriptionId);
         return new ResponseEntity<>(deliveryCostAccountViewsForASubscription, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccount/{deliveryId}/{subscriberId}/{subscriptionId}")
     public ResponseEntity<DeliveryCostAccountView> getDeliveryCostAccount(@PathVariable String deliveryId, @PathVariable String subscriberId, @PathVariable String subscriptionId) {
-        DeliveryCostAccountView deliveryCostAccountView = deliveryCostAccountViewRepository.findOne(new DeliveryId(deliveryId, subscriberId, subscriptionId));
+        DeliveryCostAccountView deliveryCostAccountView = deliveryCostAccountViewRepository.findOne(new CompositeDeliveryId(deliveryId, subscriberId, subscriptionId));
         return new ResponseEntity<>(deliveryCostAccountView, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "deliverydetails/{deliveryId}/{subscriberId}/{subscriptionId}")
     public ResponseEntity<DeliveryDetailsView> getDeliveryDetails(@PathVariable String deliveryId, @PathVariable String subscriberId, @PathVariable String subscriptionId) {
-        DeliveryDetailsView deliveryDetailsView = deliveryDetailsViewRepository.findOne(new DeliveryId(deliveryId, subscriberId, subscriptionId));
+        DeliveryDetailsView deliveryDetailsView = deliveryDetailsViewRepository.findOne(new CompositeDeliveryId(deliveryId, subscriberId, subscriptionId));
         return new ResponseEntity<>(deliveryDetailsView, HttpStatus.OK);
     }
 

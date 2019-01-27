@@ -1,6 +1,6 @@
 package com.verifier.domains.payments.view;
 
-import com.affaince.subscription.common.vo.DeliveryId;
+import com.affaince.subscription.common.vo.CompositeDeliveryId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="DeliveryCostAccountView")
 public class DeliveryCostAccountView {
     @Id
-    private DeliveryId deliveryId;
+    private CompositeDeliveryId compositeDeliveryId;
     private String subscriptionId;
     private int deliverySequence;
     private double deliveryAmount;
@@ -21,8 +21,8 @@ public class DeliveryCostAccountView {
     public DeliveryCostAccountView() {
     }
 
-    public DeliveryCostAccountView(String deliveryId, String subscriberId, String subscriptionId, int deliverySequence, double deliveryAmount, LocalDate deliveryDate) {
-        this.deliveryId = new DeliveryId(deliveryId,subscriberId,subscriptionId);
+    public DeliveryCostAccountView(String compositeDeliveryId, String subscriberId, String subscriptionId, int deliverySequence, double deliveryAmount, LocalDate deliveryDate) {
+        this.compositeDeliveryId = new CompositeDeliveryId(compositeDeliveryId,subscriberId,subscriptionId);
         this.subscriptionId = subscriptionId;
         this.deliverySequence = deliverySequence;
         this.deliveryAmount = deliveryAmount;
@@ -39,8 +39,8 @@ public class DeliveryCostAccountView {
         this.deliveryAmount  -= amount;
     }
 
-    public DeliveryId getDeliveryId() {
-        return deliveryId;
+    public CompositeDeliveryId getCompositeDeliveryId() {
+        return compositeDeliveryId;
     }
 
     public double getPaymentReceived() {

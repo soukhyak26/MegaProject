@@ -1,11 +1,5 @@
 package com.verifier.controller;
 
-import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
-import com.affaince.subscription.common.type.DeliveryStatus;
-import com.affaince.subscription.common.vo.DeliveryId;
-import com.affaince.subscription.common.vo.SubscriberName;
-import com.verifier.domains.subscriber.repository.*;
-import com.verifier.domains.subscriber.view.*;
 import com.verifier.domains.sysdate.repository.SysDateViewRepository;
 import com.verifier.domains.sysdate.view.SysDateView;
 import org.joda.time.LocalDate;
