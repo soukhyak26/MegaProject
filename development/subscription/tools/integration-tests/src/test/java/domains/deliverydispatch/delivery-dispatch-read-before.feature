@@ -29,7 +29,7 @@ When method get
 Then status 200
 And match response == read('classpath:domains/deliverydispatch/read-delivered-deliveries-before.json')
 
-* def deliveryId = response[0].deliveryId
+* def deliveryId = response[0].compositeDeliveryId
 
 #Obtain business account Id to be fed to the next scenario
 Scenario:

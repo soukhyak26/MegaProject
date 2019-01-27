@@ -1,0 +1,99 @@
+@ignore
+Feature: add items to a subscription after first delivery
+
+Scenario: Retrieve subscriber
+Given url subscriberReadUrl
+And path 'subscriber/name/' + 'Mandar' + '/' + 'Suresh' + '/' + 'Kulkarni' + '/' + 'Mr'
+When method get
+Then status 200
+
+* def subscriberId = response.subscriberId
+
+Scenario: Retrieve Product
+Given url productReadUrl
+And path 'product/name/' + 'Lux 200 gms'
+When method get
+Then status 200
+* def productId2 = response[0].productId
+
+Scenario: Retrieve latest offer price of the Product
+Given url productReadUrl
+And path 'product/pricebuckets/latest/' + productId2
+When method get
+Then status 200
+* def priceBucketId = response.productwisePriceBucketId.priceBucketId
+* def offeredPrice = response.offeredPriceOrPercentDiscountPerUnit
+
+Scenario: Retrieve subscription Id given subscriber Id
+Given url subscriberReadUrl
+And path 'subscriber/subscription/active/subscriber/' + subscriberId
+When method get
+Then status 200
+
+* def subscriptionId = response.subscriptionId
+
+Scenario: Retrieve delivery date of latest delivered delivery
+Given url subscriberReadUrl
+And path 'subscriber/deliveries/delivered/latest/' + subscriberId +'/' + subscriptionId  + '/3'
+When method get
+Then status 200
+
+* def deliveryId = response.deliveryId
+* def deliveryDate = response.deliveryDate
+* print deliveryDate
+
+
+Scenario: Change sys date to the date after first delivery,to simulate subscription modification post first delivery
+Given url platformSysDateUrl
+And path 'sysdate/reset/next/days'
+And request read('classpath:domains/subscriber/modifysubscription/update-sysdate2.json')
+When method put
+Then status 200
+
+Scenario: read the latest current date
+Given url sysDateReadUrl
+And path 'sysdate/date'
+When method get
+Then status 200
+* def currentDate = response.currentDate
+
+Scenario: Retrieve undelivered  deliveries of a subscription
+Given url subscriberReadUrl
+And path 'subscriber/deliveries/undelivered/' + subscriberId +'/' + subscriptionId  + '/3'
+When method get
+Then status 200
+
+* def deliveryId0 = response[0].compositeDeliveryId.deliveryId
+* print deliveryId0
+* def deliveryId1 = response[1].compositeDeliveryId.deliveryId
+* print deliveryId1
+* def deliveryId2 = response[2].compositeDeliveryId.deliveryId
+* print deliveryId2
+* def deliveryId3 = response[3].compositeDeliveryId.deliveryId
+* print deliveryId3
+* def deliveryId4 = response[4].compositeDeliveryId.deliveryId
+* print deliveryId4
+* def deliveryId5 = response[5].compositeDeliveryId.deliveryId
+* print deliveryId5
+* def deliveryId6 = response[6].compositeDeliveryId.deliveryId
+* print deliveryId6
+* def deliveryId7 = response[7].compositeDeliveryId.deliveryId
+* print deliveryId7
+* def deliveryId8 = response[8].compositeDeliveryId.deliveryId
+* print deliveryId8
+* def deliveryId9 = response[9].compositeDeliveryId.deliveryId
+* print deliveryId9
+* def deliveryId10 = response[10].compositeDeliveryId.deliveryId
+* print deliveryId10
+
+Scenario: send collection of updated deliveries
+
+* def req = read('classpath:domains/subscriber/modifysubscriptions/add-item-subscription2.json')
+* print req
+
+Given url platformSubscriberUrl
+And path 'delivery/update/all/' + subscriberId + '/' + subscriptionId
+And header Accept = 'application/json'
+And request read('classpath:domains/subscriber/modifysubscriptions/add-item-subscription2.json')
+When method put
+Then status 200

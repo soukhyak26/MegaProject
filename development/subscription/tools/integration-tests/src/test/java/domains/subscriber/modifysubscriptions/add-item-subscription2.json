@@ -1,0 +1,169 @@
+{
+  "updatedDeliveries": [
+    {
+      "deliveryId": "#(deliveryId0)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId1)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId2)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId3)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId4)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId5)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId6)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId7)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId8)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId9)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    },
+    {
+      "deliveryId": "#(deliveryId10)",
+      "deliveryItems": [
+        {
+          "deliveryItemId": "#(productId2)",
+          "quantity": 1,
+          "quantityInGrms": 100,
+          "deliveryItemOfferedPrice": "#(offeredPrice)",
+          "productPricingCategory": 1,
+          "priceBucketId": "#(priceBucketId)",
+          "offeredPricePerUnit": "#(offeredPrice)"
+        }
+      ],
+      "deliveryDate": "#(currentDate)"
+    }
+  ]
+}

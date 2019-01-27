@@ -1,5 +1,5 @@
 [{
-  "deliveryId" : {
+  "compositeDeliveryId" : {
     "deliveryId" : "#notnull",
     "subscriberId" : "#(subscriberId)",
     "subscriptionId" : "#(subscriptionId)"

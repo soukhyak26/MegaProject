@@ -86,4 +86,4 @@ Scenario: introduce wait time
 * call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Scenario: Modify subscription and verify
-* call read('classpath:domains/subscriber/modifysubscription/modifysubscription-verifier.feature')
+* call read('classpath:domains/subscriber/modifysubscriptions/modifysubscription-verifier.feature')

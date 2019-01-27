@@ -1,5 +1,5 @@
 [{
-  "deliveryId" : {
+  "compositeDeliveryId" : {
     "deliveryId" : "#notnull",
     "subscriberId" : "#(subscriberId)",
     "subscriptionId" : "#(subscriptionId)"
@@ -22,7 +22,7 @@
   "rewardPoints" : 0.0
 },
   {
-    "deliveryId" : {
+    "compositeDeliveryId" : {
       "deliveryId" : "#notnull",
       "subscriberId" : "#(subscriberId)",
       "subscriptionId" : "#(subscriptionId)"
@@ -45,7 +45,7 @@
     "rewardPoints" : 0.0
   },
   {
-    "deliveryId" : {
+    "compositeDeliveryId" : {
       "deliveryId" : "#notnull",
       "subscriberId" : "#(subscriberId)",
       "subscriptionId" : "#(subscriptionId)"
@@ -68,7 +68,7 @@
     "rewardPoints" : 0.0
   },
   {
-    "deliveryId" : {
+    "compositeDeliveryId" : {
       "deliveryId" : "#notnull",
       "subscriberId" : "#(subscriberId)",
       "subscriptionId" : "#(subscriptionId)"
@@ -91,7 +91,7 @@
     "rewardPoints" : 0.0
   },
   {
-    "deliveryId" : {
+    "compositeDeliveryId" : {
       "deliveryId" : "#notnull",
       "subscriberId" : "#(subscriberId)",
       "subscriptionId" : "#(subscriptionId)"

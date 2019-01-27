@@ -1,6 +1,6 @@
 [
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -12,7 +12,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -24,7 +24,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -36,7 +36,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -48,7 +48,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -60,7 +60,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -72,7 +72,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -84,7 +84,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -96,7 +96,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -108,7 +108,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -120,7 +120,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"
@@ -132,7 +132,7 @@
     "deliveryDate": "#notnull"
   },
   {
-    "deliveryId": {
+    "compositeDeliveryId": {
       "deliveryId": "#notnull",
       "subscriberId": "#notnull",
       "subscriptionId": "#notnull"

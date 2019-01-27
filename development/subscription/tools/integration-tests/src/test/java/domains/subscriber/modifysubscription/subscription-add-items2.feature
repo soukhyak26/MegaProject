@@ -70,7 +70,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[0].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[0].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -79,7 +79,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[1].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[1].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -88,7 +88,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[2].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[2].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -97,7 +97,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[3].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[3].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -106,7 +106,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[4].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[4].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -115,7 +115,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[5].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[5].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -124,7 +124,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[6].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[6].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -133,7 +133,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[7].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[7].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -142,7 +142,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[8].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[8].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -151,7 +151,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[9].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[9].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
@@ -160,7 +160,7 @@ Then status 200
 Scenario: Loop through each undelivered delivery and add a new product to each
 
 Given url platformSubscriberUrl
-And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[10].deliveryId.deliveryId
+And path 'delivery/update/' + subscriberId + '/' + subscriptionId + '/' + response[10].compositeDeliveryId.deliveryId
 And header Accept = 'application/json'
 And request read('classpath:domains/subscriber/modifysubscription/add-item-subscription2.json')
 When method put
