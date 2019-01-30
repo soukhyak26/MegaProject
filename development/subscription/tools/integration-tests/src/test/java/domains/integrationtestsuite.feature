@@ -87,3 +87,12 @@ Scenario: introduce wait time
 
 Scenario: Modify subscription and verify
 * call read('classpath:domains/subscriber/modifysubscriptions/modifysubscription-verifier.feature')
+
+Scenario:Revise the payment after addition of a new item
+* call read('classpath:domains/payments/makepayment2/make-payment-verifier.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: Trigger Delivery dispatch batch
+* call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')

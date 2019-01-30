@@ -64,32 +64,20 @@ When method get
 Then status 200
 
 * def deliveryId0 = response[0].compositeDeliveryId.deliveryId
-* print deliveryId0
 * def deliveryId1 = response[1].compositeDeliveryId.deliveryId
-* print deliveryId1
 * def deliveryId2 = response[2].compositeDeliveryId.deliveryId
-* print deliveryId2
 * def deliveryId3 = response[3].compositeDeliveryId.deliveryId
-* print deliveryId3
 * def deliveryId4 = response[4].compositeDeliveryId.deliveryId
-* print deliveryId4
 * def deliveryId5 = response[5].compositeDeliveryId.deliveryId
-* print deliveryId5
 * def deliveryId6 = response[6].compositeDeliveryId.deliveryId
-* print deliveryId6
 * def deliveryId7 = response[7].compositeDeliveryId.deliveryId
-* print deliveryId7
 * def deliveryId8 = response[8].compositeDeliveryId.deliveryId
-* print deliveryId8
 * def deliveryId9 = response[9].compositeDeliveryId.deliveryId
-* print deliveryId9
 * def deliveryId10 = response[10].compositeDeliveryId.deliveryId
-* print deliveryId10
 
 Scenario: send collection of updated deliveries
 
 * def req = read('classpath:domains/subscriber/modifysubscriptions/add-item-subscription2.json')
-* print req
 
 Given url platformSubscriberUrl
 And path 'delivery/update/all/' + subscriberId + '/' + subscriptionId

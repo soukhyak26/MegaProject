@@ -1,0 +1,6 @@
+{
+  "subscriptionId":"#(subscriptionId)",
+  "subscriberId":"#(subscriberId)",
+  "paidAmount": 132.0,
+  "paymentDate":"2018-03-01"
+}
