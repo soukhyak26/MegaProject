@@ -1,0 +1,14 @@
+[
+  {
+    "productwisePriceBucketId": {
+      "productId": "#notnull",
+      "priceBucketId": "#notnull"
+    },
+    "productPricingCategory": 0,
+    "offerPriceOrPercent": 150.0,
+    "fromDate": "#notnull",
+    "toDate": [
+      9999,12,31,23,59,0,0
+    ]
+  }
+]

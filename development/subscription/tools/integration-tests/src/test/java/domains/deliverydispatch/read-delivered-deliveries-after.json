@@ -19,5 +19,6 @@
   "acknowledgementDate" : null,
   "deliveryStatus" : "DELIVERED",
   "reasonCode": null,
-  "rewardPoints" : 0.0
+  "rewardPoints" : 0.0,
+  "lastModifiedDate" : "#notnull"
 }]

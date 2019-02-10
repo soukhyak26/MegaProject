@@ -61,3 +61,10 @@ And path 'product/category'
 And request read('classpath:domains/product/category/childcategoryrequest23.json')
 When method post
 Then status 201
+
+Scenario:
+Given url platformProductUrl
+And path 'product/category'
+And request read('classpath:domains/product/category/categoryrequest2.json')
+When method post
+Then status 201

@@ -46,5 +46,12 @@
     "categoryName": "Large Soap",
     "description": "Soaps of large sizes and various brands",
     "parentCategoryId": "#ignore"
+  },
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Edible Oil",
+    "description": "Edible Oils of various brands",
+    "parentCategoryId": null
   }
+
 ]

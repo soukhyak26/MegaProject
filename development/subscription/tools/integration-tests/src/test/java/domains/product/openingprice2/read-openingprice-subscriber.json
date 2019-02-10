@@ -1,0 +1,6 @@
+{
+  "productId" : "#notnull",
+  "priceBucketId" : "#notnull",
+  "offeredPricePerUnit":140.0,
+  "currentPriceDate": "#notnull"
+}

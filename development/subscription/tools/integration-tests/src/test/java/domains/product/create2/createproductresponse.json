@@ -1,0 +1,18 @@
+{
+  "productId": "#ignore",
+  "productName": "Jemini Refined Oil",
+  "categoryId" : "#ignore",
+  "subCategoryId": "#ignore",
+  "quantity": 500,
+  "quantityUnit": "ML",
+  "substitutes": ["0"],
+  "complements": ["0"],
+  "sensitiveTo":0,
+  "currentOperatingExpensePerUnit":0.0,
+  "currentStockInUnits":0,
+  "productPricingCategory":0,
+  "creditPoints":0,
+  "pricingStrategyType": 0,
+  "isCrossPriceElasticityConsidered":false,
+  "isAdvertisingExpensesConsidered":false
+}

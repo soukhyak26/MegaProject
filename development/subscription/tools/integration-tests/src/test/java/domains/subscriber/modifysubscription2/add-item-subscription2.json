@@ -1,0 +1,15 @@
+{
+  "deliveryItems": [
+    {
+      "deliveryItemId": "#(productId2)",
+      "quantity": 1,
+      "quantityInGrms": 500,
+      "deliveryItemOfferedPrice": "#(offeredPrice)",
+      "productPricingCategory": 0,
+      "priceBucketId": "#(priceBucketId)",
+      "offeredPricePerUnit": "#(offeredPrice)"
+    }
+  ],
+  "deliveryDate" : "#(currentDate)"
+}
+

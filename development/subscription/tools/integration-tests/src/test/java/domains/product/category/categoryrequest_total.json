@@ -8,5 +8,10 @@
     "categoryName": "Soap",
     "description": "Soaps of various sizes and brands",
     "parentCategoryId": "null"
+  },
+  {
+    "categoryName": "Edible Oil",
+    "description": "Edible Oils of various brands",
+    "parentCategoryId": "null"
   }
 ]

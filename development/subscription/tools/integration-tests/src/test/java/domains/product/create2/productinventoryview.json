@@ -1,0 +1,9 @@
+[
+  {
+    "productInventoryId" :"#notnull",
+    "productId" : "#notnull",
+    "totalDemand" : "#notnull",
+    "totalProvision" : "#notnull",
+    "contingencyStock" : "#notnull"
+  }
+]

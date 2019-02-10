@@ -15,6 +15,32 @@
       "noOfCycles": 12,
       "weightInGrms": "#notnull",
       "productPricingCategory": 1
+    },
+    {
+      "productId": "#notnull",
+      "countPerPeriod": 1,
+      "period": {
+        "value": 1,
+        "unit": "MONTH"
+      },
+      "discountedOfferedPrice": 70.0,
+      "offeredPriceWithBasketLevelDiscount": "#notnull",
+      "noOfCycles": 11,
+      "weightInGrms": "#notnull",
+      "productPricingCategory": 1
+    },
+    {
+      "productId": "#notnull",
+      "countPerPeriod": 1,
+      "period": {
+        "value": 1,
+        "unit": "MONTH"
+      },
+      "discountedOfferedPrice": 140.0,
+      "offeredPriceWithBasketLevelDiscount": "#notnull",
+      "noOfCycles": 10,
+      "weightInGrms": "#notnull",
+      "productPricingCategory": 1
     }
   ],
   "shippingAddress": {

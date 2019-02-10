@@ -1,0 +1,8 @@
+[{
+  "productwiseTaggedPriceVersionId":{"productId":"#notnull","taggedPriceVersionId":"#notnull"},
+  "purchasePricePerUnit":120,
+  "mrp":160,
+  "breakEvenPrice":"#notnull",
+  "taggedStartDate":"#notnull",
+  "taggedEndDate":"#notnull"
+}]

@@ -7,9 +7,6 @@ Scenario: Decrement sys date
 Scenario:Subscriber initial setup and verification
 * call read('classpath:domains/subscriber/subscriber-initial-setup-verifier.feature')
 
-Scenario: introduce wait time
-* call read('classpath:domains/common/introduce-wait-cycles.feature')
-
 Scenario:verify business account creation and configuration on read side for the financial year
 * call read('classpath:domains/business/business-verifier.feature')
 
@@ -36,9 +33,6 @@ Scenario: introduce wait time
 
 Scenario:delivery manual forecast and verification
 * call read('classpath:domains/subscriber/deliveryforecast/delivery-forecast-verifier.feature')
-
-Scenario: introduce wait time
-* call read('classpath:domains/common/introduce-wait-cycles.feature')
 
 Scenario:Benefits creation and verification
 * call read('classpath:domains/benefits/benefits-verifier.feature')
@@ -76,9 +70,6 @@ Scenario:Make payment for the first installment
 Scenario: introduce wait time
 * call read('classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario: introduce wait time
-* call read('classpath:domains/common/introduce-wait-cycles.feature')
-
 Scenario: Trigger Delivery dispatch batch
 * call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')
 
@@ -96,3 +87,41 @@ Scenario: introduce wait time
 
 Scenario: Trigger Delivery dispatch batch
 * call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')
+
+Scenario:Introduce a non committed product as well as set its opening price
+* call read('classpath:domains/product/product-verifier2.feature')
+
+Scenario: Modify subscription second time by adding a non committed product and verify
+* call read('classpath:domains/subscriber/modifysubscriptions2/modifysubscription-verifier.feature')
+
+Scenario:Revise the payment after addition of a new item
+* call read('classpath:domains/payments/makepayment3/make-payment-verifier.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: Trigger Delivery dispatch batch
+* call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')
+
+Scenario: Change the price of a non committed product and verify
+* call read('classpath:domains/changeprice_noncommitted/product-changeprice-verifier.feature')
+
+Scenario : Make payment for the random amount(higher than expected) and verify
+* call read('classpath:domains/payments/makepayment4/make-payment-verifier.feature')
+
+Scenario: Trigger Delivery dispatch batch
+* call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')
+
+Scenario: Cancel one of the committed products and verify
+
+Scenario : Make payment for the random amount(higher than all remaining value) and verify
+
+Scenario: Trigger Delivery dispatch batch
+* call read('classpath:domains/deliverydispatch/delivery-dispatch-verifier.feature')
+
+Scenario: Cancel Subscription
+
+
+
+
+

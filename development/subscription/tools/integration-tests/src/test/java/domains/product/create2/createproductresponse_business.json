@@ -1,0 +1,13 @@
+{
+  "productId": "#ignore",
+  "productName": "Jemini Refined Oil",
+  "categoryId" : "#ignore",
+  "subCategoryId": "#ignore",
+  "purchasePrice":120.0,
+  "mrp":160.0,
+  "sensitiveTo":0,
+  "productStatus":1,
+  "totalAnticipatedSubscriptions": 0,
+  "currentOperatingExpensePerUnit":0.0,
+  "productPurchaseBudgetedAmount":0.0
+}

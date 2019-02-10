@@ -54,5 +54,6 @@
   "totalAmountAfterDiscount": "#notnull",
   "creationDate": "#notnull",
   "expirationDate": "#notnull",
-  "paymentSchemeId": "#notnull"
+  "paymentSchemeId": "#notnull",
+  "lastModifiedDate" : "#notnull"
 }

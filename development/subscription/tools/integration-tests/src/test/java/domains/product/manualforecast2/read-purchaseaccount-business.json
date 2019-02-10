@@ -1,0 +1,6 @@
+{
+  "businessAccountId":"#notnull",
+  "provisionAmount":"#notnull",
+  "startDate":[2018,1,1],
+  "endDate":[2018,12,31]
+}

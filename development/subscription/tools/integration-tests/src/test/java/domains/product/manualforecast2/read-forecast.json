@@ -1,0 +1,146 @@
+[
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,1,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,1,31],
+    "newSubscriptions": 2200,
+    "churnedSubscriptions": 0,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,2,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,2,28],
+    "newSubscriptions": 3400,
+    "churnedSubscriptions": 230,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,3,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,3,31],
+    "newSubscriptions": 4320,
+    "churnedSubscriptions": 450,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,4,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,4,30],
+    "newSubscriptions": 4860,
+    "churnedSubscriptions": 480,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,5,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,5,31],
+    "newSubscriptions": 5235,
+    "churnedSubscriptions": 640,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,6,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,6,30],
+    "newSubscriptions": 5670,
+    "churnedSubscriptions": 890,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,7,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,7,31],
+    "newSubscriptions": 5300,
+    "churnedSubscriptions": 1020,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,8,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,8,31],
+    "newSubscriptions": 5660,
+    "churnedSubscriptions": 970,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,9,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,9,30],
+    "newSubscriptions": 6230,
+    "churnedSubscriptions": 780,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,10,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,10,31],
+    "newSubscriptions": 5870,
+    "churnedSubscriptions": 910,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,11,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,11,30],
+    "newSubscriptions": 6870,
+    "churnedSubscriptions": 1190,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  },
+  {
+    "forecastVersionId": {
+      "productId": "#notnull",
+      "startDate": [2018,12,1],
+      "forecastDate": "#notnull"
+    },
+    "endDate" : [2018,12,31],
+    "newSubscriptions": 7460,
+    "churnedSubscriptions": 1380,
+    "totalNumberOfExistingSubscriptions" : "#notnull",
+    "forecastContentStatus": 1
+  }
+]

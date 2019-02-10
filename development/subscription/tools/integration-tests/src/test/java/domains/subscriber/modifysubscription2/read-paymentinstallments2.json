@@ -1,0 +1,108 @@
+{
+  "subscriberId": "#notnull",
+  "subscriptionId": "#notnull",
+  "instalmentPaymentTrackers": [
+    {
+      "deliveryId": "#notnull",
+      "deliverySequence": 1,
+      "deliverySequencesManagedByATracker": [
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 1,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 2,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 3,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 4,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 5,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        }
+      ],
+      "paymentExpected": "#notnull",
+      "paymentReceived": 0.0,
+      "deliveryStatus" :"CREATED",
+      "valid": true
+    },
+    {
+      "deliveryId": "#notnull",
+      "deliverySequence": 6,
+      "deliverySequencesManagedByATracker": [
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 6,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 7,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 8,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        }
+      ],
+      "paymentExpected": "#notnull",
+      "paymentReceived": 0,
+      "deliveryStatus":"CREATED",
+      "valid": true
+    },
+    {
+      "deliveryId": "#notnull",
+      "deliverySequence": 9,
+      "deliverySequencesManagedByATracker": [
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 9,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 10,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 11,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        },
+        {
+          "deliveryId": "#notnull",
+          "deliverySequence": 12,
+          "paymentExpected": "#notnull",
+          "paymentReceived": 0.0
+        }
+      ],
+      "paymentExpected": "#notnull",
+      "paymentReceived": 0,
+      "deliveryStatus":"CREATED",
+      "valid": true
+    }
+  ]
+}
