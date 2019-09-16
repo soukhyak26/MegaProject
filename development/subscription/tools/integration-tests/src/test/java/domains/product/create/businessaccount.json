@@ -1,9 +1,9 @@
 {
   "id":"#ignore",
   "merchantId":"merchant1",
-  "startDate":[2018,1,1],
-  "endDate":[2018,12,31],
-  "dateForProvision":[2018,1,1],
+  "startDate":"#(businessAccountStartDate)",
+  "endDate":"#(businessAccountEndDate)",
+  "dateForProvision":"#(businessAccountProvisionDate)",
   "defaultPercentFixedExpensePerUnitPrice":"#ignore",
   "defaultPercentVariableExpensePerUnitPrice":"#ignore",
   "registeredProductCount" : 2
