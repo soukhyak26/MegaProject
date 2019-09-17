@@ -1,6 +1,11 @@
 @ignore
 Feature: create business account for the financial year
 
+Scenario: VOID SCENARIO
+
+* print "businessAccountStartDateFormatted:" + businessAccountStartDateFormatted
+* print "businessAccountEndDateFormatted" + businessAccountEndDateFormatted
+
 Scenario:
 Given url platformBusinessUrl
 And path 'business/account'

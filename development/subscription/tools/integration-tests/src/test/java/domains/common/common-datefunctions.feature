@@ -11,6 +11,18 @@ Background:
     return "["+yyyy+","+ mm + "," + dd +"]" ;
     }
     """
+
+  * def formattedStartOfYearString =
+    """
+    function(){
+    var targetDate = new Date();
+    var dd = 1;
+    var mm = 1;
+    var yyyy = targetDate.getFullYear();
+    return yyyy + "-" + mm + "-" + dd ;
+    }
+    """
+
   * def businessYear =
     """
     function(){
@@ -46,6 +58,7 @@ Background:
         return startOfYearDate;
     }
     """
+
   * def unformattedEndOfYearString =
     """
     function(){
@@ -56,6 +69,18 @@ Background:
         return "["+yyyy+","+ mm + "," + dd +"]" ;
     }
     """
+
+  * def formattedEndOfYearString =
+    """
+    function(){
+        var targetDate = new Date();
+        var dd = 31;
+        var mm = 12; // 0 is January, so we must add 1
+        var yyyy = targetDate.getFullYear();
+        return yyyy + "-" + mm + "-" + dd ;
+    }
+    """
+
     * def unformattedEndOfYearDate =
     """
     function(){
