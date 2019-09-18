@@ -6,7 +6,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,1,31],
+    "endDate": "#(firstMonthForecastEndDateFormatted)",
     "deliveryCount": 2200,
     "forecastContentStatus": 1
   },
@@ -17,7 +17,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,2,28],
+    "endDate": "#(secondMonthForecastEndDateFormatted)",
     "deliveryCount": 3400,
     "forecastContentStatus": 1
   },
@@ -28,7 +28,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,3,31],
+    "endDate": "#(thirdMonthForecastEndDateFormatted)",
     "deliveryCount": 4320,
     "forecastContentStatus": 1
   },
@@ -39,7 +39,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate":  [2018,4,30],
+    "endDate":  "#(fourthMonthForecastEndDateFormatted)",
     "deliveryCount": 4860,
     "forecastContentStatus": 1
   },
@@ -50,7 +50,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,5,31],
+    "endDate": "#(fifthMonthForecastEndDateFormatted)",
     "deliveryCount": 5235,
     "forecastContentStatus": 1
   },
@@ -61,7 +61,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,6,30],
+    "endDate": "#(sixthMonthForecastEndDateFormatted)",
     "deliveryCount": 5670,
     "forecastContentStatus": 1
   },
@@ -72,7 +72,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,7,31],
+    "endDate": "#(seventhMonthForecastEndDateFormatted)",
     "deliveryCount": 5300,
     "forecastContentStatus": 1
   },
@@ -83,7 +83,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,8,31],
+    "endDate": "#(eighthMonthForecastEndDateFormatted)",
     "deliveryCount": 5660,
     "forecastContentStatus": 1
   },
@@ -94,7 +94,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,9,30],
+    "endDate": "#(ninethMonthForecastEndDateFormatted)",
     "deliveryCount": 6230,
     "forecastContentStatus": 1
   },
@@ -105,7 +105,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,10,31],
+    "endDate": "#(tenthMonthForecastEndDateFormatted)",
     "deliveryCount": 5870,
     "forecastContentStatus": 1
   },
@@ -116,7 +116,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,11,30],
+    "endDate": "#(eleventhMonthForecastEndDateFormatted)",
     "deliveryCount": 6870,
     "forecastContentStatus": 1
   },
@@ -127,7 +127,7 @@
       "weightRangeMin": 10.1,
       "weightRangeMax": 15.0
     },
-    "endDate": [2018,12,31],
+    "endDate": "#(twelvethMonthForecastEndDateFormatted)",
     "deliveryCount": 7460,
     "forecastContentStatus": 1
   }

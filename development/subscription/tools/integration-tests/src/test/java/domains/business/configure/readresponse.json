@@ -1,0 +1,11 @@
+{
+  "businessAccountId":"#ignore",
+  "budgetAdjustmentOptions":"ACCEPT_AUTOMATED_BUDGET_ADJUSTMENT",
+  "fiscalYearConfig":{
+    "startDateOfFinanicalYear":"#(businessAccountStartDateFormatted)",
+    "endDateOfFinancialYear":"#(businessAccountEndDateFormatted)",
+    "jodaStartMonthOfFinancialYear":"#ignore",
+    "jodEndMonthOfFinancialYear":"#ignore"
+  },
+  "taxAsPercentageOfAnnualRevenue":0.2
+}

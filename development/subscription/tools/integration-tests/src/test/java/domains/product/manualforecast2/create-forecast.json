@@ -2,8 +2,8 @@
   "productForecastParameters" :
   [
     {
-      "startDate": "2018-01-01",
-      "endDate" : "2018-01-31",
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
+      "endDate" : "#(firstMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 2200 ,
@@ -11,8 +11,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-02-01",
-      "endDate" : "2018-02-28",
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
+      "endDate" : "#(secondMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 3400 ,
@@ -20,8 +20,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-03-01",
-      "endDate" : "2018-03-31",
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
+      "endDate" : "#(thirdMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 4320 ,
@@ -29,8 +29,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-04-01",
-      "endDate" : "2018-04-30",
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fourthMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 4860 ,
@@ -38,8 +38,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-05-01",
-      "endDate" : "2018-05-31",
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fifthMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 5235 ,
@@ -47,8 +47,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-06-01",
-      "endDate" : "2018-06-30",
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
+      "endDate" : "#(sixthMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 5670 ,
@@ -56,8 +56,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-07-01",
-      "endDate" : "2018-07-31",
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(seventhMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 5300 ,
@@ -65,8 +65,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-08-01",
-      "endDate" : "2018-08-31",
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
+      "endDate" : "#(eighthMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 5660 ,
@@ -74,8 +74,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-09-01",
-      "endDate" : "2018-09-30",
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
+      "endDate" : "#(ninethMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 6230 ,
@@ -83,8 +83,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-10-01",
-      "endDate" : "2018-10-31",
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
+      "endDate" : "#(tenthMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 5870 ,
@@ -92,8 +92,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-11-01",
-      "endDate" : "2018-11-30",
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 6870 ,
@@ -101,8 +101,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-12-01",
-      "endDate" : "2018-12-31",
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
+      "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
       "purchasePricePerUnit" : 120.0,
       "MRP" : 160.0,
       "numberOfNewSubscriptions" : 7460 ,

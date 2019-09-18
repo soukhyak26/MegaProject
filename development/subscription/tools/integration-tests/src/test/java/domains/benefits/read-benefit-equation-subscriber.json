@@ -2,7 +2,7 @@
   "benefitId": "#notnull",
   "benefitEquation":"given 100 currency and 1 month = 1 point configure as (currentSubscriptionAmount/subscriptionValue/subscriptionPeriod)*currentSubscriptionPeriod eligible when currentSubscriptionAmount >= 1000 and (currentSubscriptionPeriod > 5 or totalLoyaltyPeriod > 5) apply as 1/2N, 3/4N delivery in 40, 60 proportion;",
   "benefitEquationInJsonFormat" : "#notnull",
-  "activationStartTime":[2018,1,1],
-  "activationEndTime":[2020,12,30],
+  "activationStartTime":"#(businessAccountStartDateFormatted)",
+  "activationEndTime":"#(businessAccountEndDateFormatted)",
   "canApplicableWith": []
 }]

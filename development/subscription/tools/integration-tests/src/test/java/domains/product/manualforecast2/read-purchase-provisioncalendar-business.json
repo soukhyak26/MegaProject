@@ -2,16 +2,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        1,
-        1
-      ],
-      "endDate": [
-        2018,
-        1,
-        31
-      ]
+      "startDate": "#(firstMonthForecastStartDate)",
+      "endDate": "#(firstMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -20,16 +12,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        2,
-        1
-      ],
-      "endDate": [
-        2018,
-        2,
-        28
-      ]
+      "startDate": "#(secondMonthForecastStartDate)",
+      "endDate": "#(secondMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -38,16 +22,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        3,
-        1
-      ],
-      "endDate": [
-        2018,
-        3,
-        31
-      ]
+      "startDate": "#(thirdMonthForecastStartDate)",
+      "endDate": "#(thirdMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -56,16 +32,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        4,
-        1
-      ],
-      "endDate": [
-        2018,
-        4,
-        30
-      ]
+      "startDate": "#(fourthMonthForecastStartDate)",
+      "endDate": "#(fourthMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -74,16 +42,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        5,
-        1
-      ],
-      "endDate": [
-        2018,
-        5,
-        31
-      ]
+      "startDate": "#(fifthMonthForecastStartDate)",
+      "endDate": "#(fifthMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -92,16 +52,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        6,
-        1
-      ],
-      "endDate": [
-        2018,
-        6,
-        30
-      ]
+      "startDate": "#(sixthMonthForecastStartDate)",
+      "endDate": "#(sixthMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -110,16 +62,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        7,
-        1
-      ],
-      "endDate": [
-        2018,
-        7,
-        31
-      ]
+      "startDate": "#(seventhMonthForecastStartDate)",
+      "endDate": "#(seventhMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -128,16 +72,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        8,
-        1
-      ],
-      "endDate": [
-        2018,
-        8,
-        31
-      ]
+      "startDate": "#(eighthMonthForecastStartDate)",
+      "endDate": "#(eighthMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -146,16 +82,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        9,
-        1
-      ],
-      "endDate": [
-        2018,
-        9,
-        30
-      ]
+      "startDate": "#(ninethMonthForecastStartDate)",
+      "endDate": "#(ninethMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -164,16 +92,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        10,
-        1
-      ],
-      "endDate": [
-        2018,
-        10,
-        31
-      ]
+      "startDate": "#(tenthMonthForecastStartDate)",
+      "endDate": "#(tenthMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -182,16 +102,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        11,
-        1
-      ],
-      "endDate": [
-        2018,
-        11,
-        30
-      ]
+      "startDate": "#(eleventhMonthForecastStartDate)",
+      "endDate": "#(eleventhMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",
@@ -200,16 +112,8 @@
   {
     "provisionCalendarVersionId": {
       "businessAccountId": "#notnull",
-      "startDate": [
-        2018,
-        12,
-        1
-      ],
-      "endDate": [
-        2018,
-        12,
-        31
-      ]
+      "startDate": "#(twelvethMonthForecastStartDate)",
+      "endDate": "#(twelvethMonthForecastEndDate)"
     },
     "provisionAmount": "#notnull",
     "expectedAmount": "#notnull",

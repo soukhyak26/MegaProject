@@ -2,96 +2,96 @@
   "deliveryForecastParameters" :
   [
     {
-      "startDate": "2018-01-01",
-      "endDate" : "2018-01-31",
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
+      "endDate" : "#(firstMonthForecastEndDateFormatted)",
       "deliveryCount" : 2200 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-02-01",
-      "endDate" : "2018-02-28",
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
+      "endDate" : "#(secondMonthForecastEndDateFormatted)",
       "deliveryCount" : 3400 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-03-01",
-      "endDate" : "2018-03-31",
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
+      "endDate" :  "#(thirdMonthForecastEndDateFormatted)",
       "deliveryCount" : 4320 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-04-01",
-      "endDate" : "2018-04-30",
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fourthMonthForecastEndDateFormatted)",
       "deliveryCount" : 4860 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-05-01",
-      "endDate" : "2018-05-31",
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fifthMonthForecastEndDateFormatted)",
       "deliveryCount" : 5235 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-06-01",
-      "endDate" : "2018-06-30",
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
+      "endDate" : "#(sixthMonthForecastEndDateFormatted)",
       "deliveryCount" : 5670 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-07-01",
-      "endDate" : "2018-07-31",
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(seventhMonthForecastEndDateFormatted)",
       "deliveryCount" : 5300 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-08-01",
-      "endDate" : "2018-08-31",
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
+      "endDate" : "#(eighthMonthForecastEndDateFormatted)",
       "deliveryCount" : 5660 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-09-01",
-      "endDate" : "2018-09-30",
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
+      "endDate" : "#(ninethMonthForecastEndDateFormatted)",
       "deliveryCount" : 6230 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-10-01",
-      "endDate" : "2018-10-31",
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
+      "endDate" : "#(tenthMonthForecastEndDateFormatted)",
       "deliveryCount" : 5870 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-11-01",
-      "endDate" : "2018-11-30",
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
       "deliveryCount" : 6870 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-12-01",
-      "endDate" : "2018-12-31",
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
+      "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
       "deliveryCount" : 7460 ,
       "valueRangeMin" : 10.1,
       "valueRangeMax" : 15.0,
