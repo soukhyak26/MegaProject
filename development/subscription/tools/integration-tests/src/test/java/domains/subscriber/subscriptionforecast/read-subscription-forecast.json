@@ -1,12 +1,12 @@
 [
   {
     "subscriptionVersionId": {
-      "startDate": [2018,1,1],
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,1,31],
+    "endDate" : "#(firstMonthForecastEndDateFormatted)",
     "newSubscriptions": 2200,
     "churnedSubscriptions": 0,
     "totalSubscriptions": "#notnull",
@@ -14,12 +14,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,2,1],
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,2,28],
+    "endDate" : "#(secondMonthForecastEndDateFormatted)",
     "newSubscriptions": 3400,
     "churnedSubscriptions": 230,
     "totalSubscriptions": "#notnull",
@@ -27,12 +27,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,3,1],
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,3,31],
+    "endDate" : "#(thirdMonthForecastEndDateFormatted)",
     "newSubscriptions": 4320,
     "churnedSubscriptions": 450,
     "totalSubscriptions": "#notnull",
@@ -40,12 +40,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,4,1],
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,4,30],
+    "endDate" : "#(fourthMonthForecastEndDateFormatted)",
     "newSubscriptions": 4860,
     "churnedSubscriptions": 480,
     "totalSubscriptions": "#notnull",
@@ -53,12 +53,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,5,1],
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,5,31],
+    "endDate" : "#(fifthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5235,
     "churnedSubscriptions": 640,
     "totalSubscriptions": "#notnull",
@@ -66,12 +66,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,6,1],
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,6,30],
+    "endDate" : "#(sixthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5670,
     "churnedSubscriptions": 890,
     "totalSubscriptions": "#notnull",
@@ -79,12 +79,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,7,1],
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,7,31],
+    "endDate" : "#(seventhMonthForecastEndDateFormatted)",
     "newSubscriptions": 5300,
     "churnedSubscriptions": 1020,
     "totalSubscriptions": "#notnull",
@@ -92,12 +92,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,8,1],
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,8,31],
+    "endDate" : "#(eighthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5660,
     "churnedSubscriptions": 970,
     "totalSubscriptions": "#notnull",
@@ -105,12 +105,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,9,1],
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,9,30],
+    "endDate" : "#(ninethMonthForecastEndDateFormatted)",
     "newSubscriptions": 6230,
     "churnedSubscriptions": 780,
     "totalSubscriptions": "#notnull",
@@ -118,12 +118,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,10,1],
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,10,31],
+    "endDate" : "#(tenthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5870,
     "churnedSubscriptions": 910,
     "totalSubscriptions": "#notnull",
@@ -131,12 +131,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,11,1],
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,11,30],
+    "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
     "newSubscriptions": 6870,
     "churnedSubscriptions": 1190,
     "totalSubscriptions": "#notnull",
@@ -144,12 +144,12 @@
   },
   {
     "subscriptionVersionId": {
-      "startDate": [2018,12,1],
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull",
       "valueRangeMin": 10001.0,
       "valueRangeMax": 13000.0
     },
-    "endDate": [2018,12,31],
+    "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
     "newSubscriptions": 7460,
     "churnedSubscriptions": 1380,
     "totalSubscriptions": "#notnull",

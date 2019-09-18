@@ -1,10 +1,10 @@
 [
   {
     "subscriberVersionId" : {
-      "startDate": [2018,1,1],
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,1,31],
+    "endDate" : "#(firstMonthForecastEndDateFormatted)",
     "newSubscribers": 2200,
     "churnedSubscribers": 0,
     "totalSubscribers": "#notnull",
@@ -12,10 +12,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": [2018,2,1],
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
      "forecastDate" : "#notnull"
     },
-    "endDate": [2018,2,28],
+    "endDate" : "#(secondMonthForecastEndDateFormatted)",
     "newSubscribers": 3400,
     "churnedSubscribers": 230,
     "totalSubscribers": "#notnull",
@@ -23,10 +23,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": [2018,3,1],
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
     "forecastDate" : "#notnull"
     },
-    "endDate": [2018,3,31],
+    "endDate" :  "#(thirdMonthForecastEndDateFormatted)",
     "newSubscribers": 4320,
     "churnedSubscribers": 450,
     "totalSubscribers": "#notnull",
@@ -34,10 +34,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": [2018,4,1],
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,4,30],
+    "endDate" : "#(fourthMonthForecastEndDateFormatted)",
     "newSubscribers": 4860,
     "churnedSubscribers": 480,
     "totalSubscribers": "#notnull",
@@ -45,10 +45,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": [2018,5,1],
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,5,31],
+    "endDate" : "#(fifthMonthForecastEndDateFormatted)",
     "newSubscribers": 5235,
     "churnedSubscribers": 640,
     "totalSubscribers": "#notnull",
@@ -56,10 +56,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": [2018,6,1],
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,6,30],
+    "endDate" : "#(sixthMonthForecastEndDateFormatted)",
     "newSubscribers": 5670,
     "churnedSubscribers": 890,
     "totalSubscribers": "#notnull",
@@ -67,10 +67,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": [2018,7,1],
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,7,31],
+    "endDate" : "#(seventhMonthForecastEndDateFormatted)",
     "newSubscribers": 5300,
     "churnedSubscribers": 1020,
     "totalSubscribers": "#notnull",
@@ -78,10 +78,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": [2018,8,1],
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,8,31],
+    "endDate" : "#(eighthMonthForecastEndDateFormatted)",
     "newSubscribers": 5660,
     "churnedSubscribers": 970,
     "totalSubscribers": "#notnull",
@@ -89,10 +89,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": [2018,9,1],
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,9,30],
+    "endDate" : "#(ninethMonthForecastEndDateFormatted)",
     "newSubscribers": 6230,
     "churnedSubscribers": 780,
     "totalSubscribers": "#notnull",
@@ -100,10 +100,10 @@
   },
   {
     "subscriberVersionId" : {
-    "startDate": [2018,10,1],
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
     "forecastDate" : "#notnull"
     },
-    "endDate":  [2018,10,31],
+    "endDate" : "#(tenthMonthForecastEndDateFormatted)",
     "newSubscribers": 5870,
     "churnedSubscribers": 910,
     "totalSubscribers": "#notnull",
@@ -111,10 +111,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": [2018,11,1],
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,11,30],
+    "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
     "newSubscribers": 6870,
     "churnedSubscribers": 1190,
     "totalSubscribers": "#notnull",
@@ -122,10 +122,10 @@
   },
   {
     "subscriberVersionId" : {
-      "startDate": [2018,12,1],
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
       "forecastDate" : "#notnull"
     },
-    "endDate": [2018,12,31],
+    "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
     "newSubscribers": 7460,
     "churnedSubscribers": 1380,
     "totalSubscribers": "#notnull",

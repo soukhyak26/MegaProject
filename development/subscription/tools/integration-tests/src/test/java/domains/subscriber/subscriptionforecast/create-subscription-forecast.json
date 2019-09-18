@@ -2,8 +2,8 @@
   "subscriptionForecastParameters" :
   [
     {
-      "startDate": "2018-01-01",
-      "endDate" : "2018-01-31",
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
+      "endDate" : "#(firstMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 2200 ,
       "numberOfChurnedSubscriptions" : 0 ,
       "valueRangeMin" : 10001.0,
@@ -11,8 +11,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-02-01",
-      "endDate" : "2018-02-28",
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
+      "endDate" : "#(secondMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 3400 ,
       "numberOfChurnedSubscriptions" : 230 ,
       "valueRangeMin" : 10001.0,
@@ -20,8 +20,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-03-01",
-      "endDate" : "2018-03-31",
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
+      "endDate" : "#(thirdMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 4320 ,
       "numberOfChurnedSubscriptions" : 450 ,
       "valueRangeMin" : 10001.0,
@@ -29,8 +29,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-04-01",
-      "endDate" : "2018-04-30",
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fourthMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 4860 ,
       "numberOfChurnedSubscriptions" : 480 ,
       "valueRangeMin" : 10001.0,
@@ -38,8 +38,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-05-01",
-      "endDate" : "2018-05-31",
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fifthMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 5235 ,
       "numberOfChurnedSubscriptions" : 640 ,
       "valueRangeMin" : 10001.0,
@@ -47,8 +47,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-06-01",
-      "endDate" : "2018-06-30",
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
+      "endDate" : "#(sixthMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 5670 ,
       "numberOfChurnedSubscriptions" : 890 ,
       "valueRangeMin" : 10001.0,
@@ -56,8 +56,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-07-01",
-      "endDate" : "2018-07-31",
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(seventhMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 5300 ,
       "numberOfChurnedSubscriptions" : 1020 ,
       "valueRangeMin" : 10001.0,
@@ -65,8 +65,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-08-01",
-      "endDate" : "2018-08-31",
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
+      "endDate" : "#(eighthMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 5660 ,
       "numberOfChurnedSubscriptions" : 970 ,
       "valueRangeMin" : 10001.0,
@@ -74,8 +74,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-09-01",
-      "endDate" : "2018-09-30",
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
+      "endDate" : "#(ninethMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 6230 ,
       "numberOfChurnedSubscriptions" : 780 ,
       "valueRangeMin" : 10001.0,
@@ -83,8 +83,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-10-01",
-      "endDate" : "2018-10-31",
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
+      "endDate" : "#(tenthMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 5870 ,
       "numberOfChurnedSubscriptions" : 910 ,
       "valueRangeMin" : 10001.0,
@@ -92,8 +92,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-11-01",
-      "endDate" : "2018-11-30",
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 6870 ,
       "numberOfChurnedSubscriptions" : 1190 ,
       "valueRangeMin" : 10001.0,
@@ -101,8 +101,8 @@
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-12-01",
-      "endDate" : "2018-12-31",
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
+      "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
       "numberOfNewSubscriptions" : 7460 ,
       "numberOfChurnedSubscriptions" : 1380 ,
       "valueRangeMin" : 10001.0,

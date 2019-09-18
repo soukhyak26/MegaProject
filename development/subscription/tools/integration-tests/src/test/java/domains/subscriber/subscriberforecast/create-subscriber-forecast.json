@@ -2,85 +2,86 @@
   "subscriberForecastParameters" :
   [
     {
-      "startDate": "2018-01-01",
-      "endDate" : "2018-01-31",
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
+      "endDate" : "#(firstMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 2200 ,
       "numberOfChurnedSubscribers" : 0 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-02-01",
-      "endDate" : "2018-02-28",
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
+      "endDate" : "#(secondMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 3400 ,
       "numberOfChurnedSubscribers" : 230 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-03-01",
-      "endDate" : "2018-03-31",
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
+      "endDate" : "#(thirdMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 4320 ,
       "numberOfChurnedSubscribers" : 450 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-04-01",
-      "endDate" : "2018-04-30",
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fourthMonthForecastEndDateFormatted)",
+      "numberOfNewSubscribers" : 4320 ,
       "numberOfNewSubscribers" : 4860 ,
       "numberOfChurnedSubscribers" : 480 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-05-01",
-      "endDate" : "2018-05-31",
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
+      "endDate" : "#(fifthMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 5235 ,
       "numberOfChurnedSubscribers" : 640 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-06-01",
-      "endDate" : "2018-06-30",
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
+      "endDate" : "#(sixthMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 5670 ,
       "numberOfChurnedSubscribers" : 890 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-07-01",
-      "endDate" : "2018-07-31",
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(seventhMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 5300 ,
       "numberOfChurnedSubscribers" : 1020 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-08-01",
-      "endDate" : "2018-08-31",
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
+      "endDate" : "#(eighthMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 5660 ,
       "numberOfChurnedSubscribers" : 970 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-09-01",
-      "endDate" : "2018-09-30",
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
+      "endDate" : "#(ninethMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 6230 ,
       "numberOfChurnedSubscribers" : 780 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-10-01",
-      "endDate" : "2018-10-31",
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
+      "endDate" : "#(tenthMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 5870 ,
       "numberOfChurnedSubscribers" : 910 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-11-01",
-      "endDate" : "2018-11-30",
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
+      "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 6870 ,
       "numberOfChurnedSubscribers" : 1190 ,
       "forecastContentStatus" : 1
     },
     {
-      "startDate": "2018-12-01",
-      "endDate" : "2018-12-31",
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
+      "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
       "numberOfNewSubscribers" : 7460 ,
       "numberOfChurnedSubscribers" : 1380 ,
       "forecastContentStatus" : 1
