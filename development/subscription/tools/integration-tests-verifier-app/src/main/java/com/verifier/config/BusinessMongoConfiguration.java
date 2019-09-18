@@ -4,6 +4,10 @@ import com.affaince.subscription.common.idconverter.LocalDateTimeToStringConvert
 import com.affaince.subscription.common.idconverter.LocalDateToStringConverter;
 import com.affaince.subscription.common.idconverter.StringToLocalDateConverter;
 import com.affaince.subscription.common.idconverter.StringToLocalDateTimeConverter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -129,5 +133,12 @@ public class BusinessMongoConfiguration {
         converter.setCustomConversions(customConversions);
         converter.afterPropertiesSet();
         return converter;
+    }
+
+    public ObjectMapper objectMapper(){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JodaModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return mapper;
     }
 } 

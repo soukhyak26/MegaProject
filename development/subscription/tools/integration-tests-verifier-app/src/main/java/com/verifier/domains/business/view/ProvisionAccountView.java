@@ -1,5 +1,9 @@
 package com.verifier.domains.business.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.business.vo.ProvisionCalendar;
 import com.verifier.domains.business.vo.ProvisionSegment;
 import org.joda.time.LocalDate;
@@ -12,7 +16,12 @@ public abstract class ProvisionAccountView {
     private String businessAccountId;
     private double provisionAmount;
     //private ProvisionCalendar provisionCalendar;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     public ProvisionAccountView(String businessAccountId, double provisionAmount, LocalDate startDate, LocalDate endDate) {
         this.businessAccountId = businessAccountId;

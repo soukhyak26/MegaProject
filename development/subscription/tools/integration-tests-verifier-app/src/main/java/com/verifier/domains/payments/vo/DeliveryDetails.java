@@ -1,6 +1,10 @@
 package com.verifier.domains.payments.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -13,6 +17,8 @@ public class DeliveryDetails {
     private String subscriptionId;
     private List<DeliverableProductDetail> deliverableProductDetails;
     private int deliverySequence;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate deliveryDate;
     private DeliveryStatus deliveryStatus;
     private double totalDeliveryCost;

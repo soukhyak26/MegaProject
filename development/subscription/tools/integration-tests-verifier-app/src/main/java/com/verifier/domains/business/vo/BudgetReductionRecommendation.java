@@ -1,5 +1,9 @@
 package com.verifier.domains.business.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
 /**
@@ -7,10 +11,16 @@ import org.joda.time.LocalDate;
  */
 public class BudgetReductionRecommendation implements BudgetChangeRecommendation{
     private String recommenderId;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate recommendationDate;
     private RecommenderType recommenderType;
     private double recommendationAmount;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate periodStartDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate periodEndDate;
     private RecommendationReason recommendationReason;
     private RecommendationReceiver recommendationReceiver;

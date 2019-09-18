@@ -1,5 +1,9 @@
 package com.verifier.domains.business.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
 import java.util.Objects;
@@ -8,7 +12,13 @@ import java.util.Objects;
  * Created by mandar on 10/4/2017.
  */
 public class ProvisionSegment implements Comparable<ProvisionSegment> {
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private double expectedAmount;
     private double provisionedAmount;

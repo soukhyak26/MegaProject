@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication //(exclude = {MongoAutoConfiguration.class,MongoRepositoriesAutoConfiguration.class, MongoDataAutoConfiguration.class,EmbeddedMongoAutoConfiguration.class})
 @ComponentScan("com.verifier")
-@AnnotationDriven
 @PropertySource({"classpath:application.properties"})
 public class Application {
 

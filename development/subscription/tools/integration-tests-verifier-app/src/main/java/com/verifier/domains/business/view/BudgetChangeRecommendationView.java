@@ -1,5 +1,9 @@
 package com.verifier.domains.business.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.business.vo.RecommendationReason;
 import com.verifier.domains.business.vo.RecommendationReceiver;
 import com.verifier.domains.business.vo.RecommenderType;
@@ -16,6 +20,8 @@ public class BudgetChangeRecommendationView {
     private String recommendationId;
     private String businessAccountId;
     private String recommenderId;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate recommendationDate;
     private double additionalBudgetedAmount;
     private RecommenderType recommenderType;

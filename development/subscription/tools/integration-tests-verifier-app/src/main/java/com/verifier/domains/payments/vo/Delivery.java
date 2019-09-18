@@ -1,7 +1,11 @@
 package com.verifier.domains.payments.vo;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.type.ReasonCode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -14,7 +18,11 @@ public class Delivery {
     private String deliveryId;
     private int sequence;
     private List<DeliveryItem> deliveryItems;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate deliveryDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dispatchDate;
     private DeliveryStatus status;
     private double deliveryCharges;

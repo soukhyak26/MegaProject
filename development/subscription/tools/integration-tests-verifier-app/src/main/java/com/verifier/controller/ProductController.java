@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
@@ -76,15 +75,13 @@ public class ProductController {
         return new ResponseEntity<>(views, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "category/id/{categoryId}")
-    @Produces("application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "category/id/{categoryId}", produces = "application/json")
     public ResponseEntity<CategoryDetailsView> getProductCategoryByCategoryId (@PathVariable String categoryId) {
         CategoryDetailsView categoryDetailsView = categoryDetailsViewRepository.findOne(categoryId);
         return new ResponseEntity<CategoryDetailsView>(categoryDetailsView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "category/name/{categoryName}")
-    @Produces("application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "category/name/{categoryName}", produces="application/json")
     public ResponseEntity<CategoryDetailsView> getProductCategoryByCategoryName (@PathVariable String categoryName) {
         List<CategoryDetailsView> categoryDetailsViews = categoryDetailsViewRepository.findByCategoryName(categoryName);
         //because category name should be unique the list is expected to return single element,if found record matching to the categoryName

@@ -1,5 +1,9 @@
 package com.verifier.domains.payments.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.payments.vo.RefundProcessingStatus;
 import com.verifier.domains.payments.vo.RefundReason;
 import org.joda.time.LocalDate;
@@ -19,6 +23,8 @@ public class RefundTransactionsView {
     private Map<String,Double> itemWiseRefundAmountDetails;
     private RefundReason reasonForRefund;
     private double totalRefundAmount;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate refundDate;
     private RefundProcessingStatus refundProcessingStatus;
 

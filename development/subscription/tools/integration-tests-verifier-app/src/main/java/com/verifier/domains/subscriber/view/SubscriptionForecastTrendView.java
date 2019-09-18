@@ -1,5 +1,9 @@
 package com.verifier.domains.subscriber.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.subscriber.vo.SubscriptionVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -12,6 +16,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SubscriptionForecastTrendView {
     @Id
     private SubscriptionVersionId subscriptionVersionId;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private double referenceNewSubscriptionCount;
     private double changeInNewSubscriptionCount;

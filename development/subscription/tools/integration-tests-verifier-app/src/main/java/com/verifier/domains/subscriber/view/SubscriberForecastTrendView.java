@@ -1,5 +1,9 @@
 package com.verifier.domains.subscriber.view;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer;
 import com.verifier.domains.subscriber.vo.SubscriberVersionId;
 import org.joda.time.LocalDate;
 
@@ -8,6 +12,8 @@ import org.joda.time.LocalDate;
  */
 public class SubscriberForecastTrendView {
     private SubscriberVersionId subscriberVersionId;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private double referenceNewSubscriberCount;
     private double changeInNewSubscriberCount;
