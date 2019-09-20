@@ -2,10 +2,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(firstMonthForecastStartDate)",
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(firstMonthForecastEndDate)",
+    "endDate" : "#(firstMonthForecastEndDateFormatted)",
     "newSubscriptions": 2200,
     "churnedSubscriptions": 0,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -14,10 +14,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(secondMonthForecastStartDate)",
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(secondMonthForecastEndDate)",
+    "endDate" : "#(secondMonthForecastEndDateFormatted)",
     "newSubscriptions": 3400,
     "churnedSubscriptions": 230,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -26,10 +26,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(thirdMonthForecastStartDate)",
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(thirdMonthForecastEndDate)",
+    "endDate" : "#(thirdMonthForecastEndDateFormatted)",
     "newSubscriptions": 4320,
     "churnedSubscriptions": 450,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -38,10 +38,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(fourthMonthForecastStartDate)",
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(fourthMonthForecastEndDate)",
+    "endDate" : "#(fourthMonthForecastEndDateFormatted)",
     "newSubscriptions": 4860,
     "churnedSubscriptions": 480,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -50,10 +50,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(fifthMonthForecastStartDate)",
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(fifthMonthForecastEndDate)",
+    "endDate" : "#(fifthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5235,
     "churnedSubscriptions": 640,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -62,10 +62,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(sixthMonthForecastStartDate)",
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(sixthMonthForecastEndDate)",
+    "endDate" : "#(sixthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5670,
     "churnedSubscriptions": 890,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -74,10 +74,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(seventhMonthForecastStartDate)",
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(seventhMonthForecastEndDate)",
+    "endDate" : "#(seventhMonthForecastEndDateFormatted)",
     "newSubscriptions": 5300,
     "churnedSubscriptions": 1020,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -86,10 +86,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(eighthMonthForecastStartDate)",
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(eighthMonthForecastEndDate)",
+    "endDate" : "#(eighthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5660,
     "churnedSubscriptions": 970,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -98,10 +98,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(ninethMonthForecastStartDate)",
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(ninethMonthForecastEndDate)",
+    "endDate" : "#(ninethMonthForecastEndDateFormatted)",
     "newSubscriptions": 6230,
     "churnedSubscriptions": 780,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -110,10 +110,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(tenthMonthForecastStartDate)",
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(tenthMonthForecastEndDate)",
+    "endDate" : "#(tenthMonthForecastEndDateFormatted)",
     "newSubscriptions": 5870,
     "churnedSubscriptions": 910,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -122,10 +122,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(eleventhMonthForecastStartDate)",
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(eleventhMonthForecastEndDate)",
+    "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
     "newSubscriptions": 6870,
     "churnedSubscriptions": 1190,
     "totalNumberOfExistingSubscriptions" : "#notnull",
@@ -134,10 +134,10 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(twelvethMonthForecastStartDate)",
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(twelvethMonthForecastEndDate)",
+    "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
     "newSubscriptions": 7460,
     "churnedSubscriptions": 1380,
     "totalNumberOfExistingSubscriptions" : "#notnull",

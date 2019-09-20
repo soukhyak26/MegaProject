@@ -83,7 +83,15 @@ function() {
           var dd = date.getDate();
           var mm = date.getMonth();
           var yyyy = date.getFullYear();
-          return yyyy + "-" + (mm +1) + "-" + dd ;
+          var mmString = "" + (mm +1);
+          if(mm <= 8){
+            mmString = "0" + (mm +1) ;
+          }
+          var ddString = "" + dd;
+          if(dd <= 9){
+            ddString = "0" + dd;
+          }
+          return yyyy + "-" + mmString + "-" + ddString ;
     }
  }
 }

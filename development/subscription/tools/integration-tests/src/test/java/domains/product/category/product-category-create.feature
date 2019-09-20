@@ -65,6 +65,22 @@ Then status 201
 Scenario:
 Given url platformProductUrl
 And path 'product/category'
-And request read('classpath:domains/product/category/categoryrequest2.json')
+And request read('classpath:domains/product/category/categoryrequest3.json')
+When method post
+Then status 201
+
+* def parentId3 = response.id
+
+Scenario:
+Given url platformProductUrl
+And path 'product/category'
+And request read('classpath:domains/product/category/childcategoryrequest31.json')
+When method post
+Then status 201
+
+Scenario:
+Given url platformProductUrl
+And path 'product/category'
+And request read('classpath:domains/product/category/childcategoryrequest32.json')
 When method post
 Then status 201

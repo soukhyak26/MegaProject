@@ -25,7 +25,6 @@
     {
       "startDate": "#(fourthMonthForecastStartDateFormatted)",
       "endDate" : "#(fourthMonthForecastEndDateFormatted)",
-      "numberOfNewSubscribers" : 4320 ,
       "numberOfNewSubscribers" : 4860 ,
       "numberOfChurnedSubscribers" : 480 ,
       "forecastContentStatus" : 1

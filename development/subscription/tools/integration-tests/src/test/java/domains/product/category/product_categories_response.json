@@ -52,6 +52,20 @@
     "categoryName": "Edible Oil",
     "description": "Edible Oils of various brands",
     "parentCategoryId": null
+  },
+
+  {
+    "categoryId":"#ignore",
+    "categoryName": "Half Litre Edible Oil",
+    "description": "Half Litre Edible Oil",
+    "parentCategoryId": "#ignore"
+  },
+
+  {
+    "categoryId":"#ignore",
+    "categoryName": "1 Litre Edible Oil",
+    "description": "1 Litre Edible Oil",
+    "parentCategoryId": "#ignore"
   }
 
 ]

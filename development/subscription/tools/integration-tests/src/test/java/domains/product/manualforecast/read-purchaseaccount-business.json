@@ -1,6 +1,6 @@
 {
   "businessAccountId":"#notnull",
   "provisionAmount":"#notnull",
-  "startDate":"#(businessAccountStartDate)",
-  "endDate":"#(businessAccountEndDate)"
+  "startDate":"#(businessAccountStartDateFormatted)",
+  "endDate":"#(businessAccountEndDateFormatted)"
 }

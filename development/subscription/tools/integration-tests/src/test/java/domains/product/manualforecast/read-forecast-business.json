@@ -2,120 +2,120 @@
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(firstMonthForecastStartDate)",
+      "startDate": "#(firstMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(firstMonthForecastEndDate)",
+    "endDate" : "#(firstMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 2200,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(secondMonthForecastStartDate)",
+      "startDate": "#(secondMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(secondMonthForecastEndDate)",
+    "endDate" : "#(secondMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 5370,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(thirdMonthForecastStartDate)",
+      "startDate": "#(thirdMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(thirdMonthForecastEndDate)",
+    "endDate" : "#(thirdMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 9240,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(fourthMonthForecastStartDate)",
+      "startDate": "#(fourthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(fourthMonthForecastEndDate)",
+    "endDate" : "#(fourthMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 13620,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(fifthMonthForecastStartDate)",
+      "startDate": "#(fifthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(fifthMonthForecastEndDate)",
+    "endDate" : "#(fifthMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 18215,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(sixthMonthForecastStartDate)",
+      "startDate": "#(sixthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(sixthMonthForecastEndDate)",
+    "endDate" : "#(sixthMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 22995,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(seventhMonthForecastStartDate)",
+      "startDate": "#(seventhMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(seventhMonthForecastEndDate)",
+    "endDate" : "#(seventhMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 27275,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(eighthMonthForecastStartDate)",
+      "startDate": "#(eighthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(eighthMonthForecastEndDate)",
+    "endDate" : "#(eighthMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 31965,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(ninethMonthForecastStartDate)",
+      "startDate": "#(ninethMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(ninethMonthForecastEndDate)",
+    "endDate" : "#(ninethMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 37415,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(tenthMonthForecastStartDate)",
+      "startDate": "#(tenthMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(tenthMonthForecastEndDate)",
+    "endDate" : "#(tenthMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 42375,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(eleventhMonthForecastStartDate)",
+      "startDate": "#(eleventhMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(eleventhMonthForecastEndDate)",
+    "endDate" : "#(eleventhMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 48055,
     "forecastContentStatus": 1
   },
   {
     "forecastVersionId": {
       "productId": "#notnull",
-      "startDate": "#(twelvethMonthForecastStartDate)",
+      "startDate": "#(twelvethMonthForecastStartDateFormatted)",
       "forecastDate": "#notnull"
     },
-    "endDate" : "#(twelvethMonthForecastEndDate)",
+    "endDate" : "#(twelvethMonthForecastEndDateFormatted)",
     "totalNumberOfExistingSubscriptions" : 54135,
     "forecastContentStatus": 1
   }
