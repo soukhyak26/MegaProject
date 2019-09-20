@@ -2,9 +2,9 @@ package com.verifier.domains.product.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.verifier.domains.product.vo.ForecastVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

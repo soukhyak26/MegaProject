@@ -1,9 +1,13 @@
 package com.verifier.domains.product.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.common.vo.ForecastVersionId;
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.verifier.domains.product.vo.ForecastVersionId;
+import com.verifier.domains.product.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,6 +19,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ProductForecastView implements ProductSubscriptionMetricsView {
     @Id
     private ForecastVersionId forecastVersionId;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private long newSubscriptions;
     private long churnedSubscriptions;

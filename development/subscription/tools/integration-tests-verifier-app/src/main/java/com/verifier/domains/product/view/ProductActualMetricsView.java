@@ -1,7 +1,7 @@
 package com.verifier.domains.product.view;
 
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
-import com.affaince.subscription.common.vo.ProductVersionId;
+import com.verifier.domains.product.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

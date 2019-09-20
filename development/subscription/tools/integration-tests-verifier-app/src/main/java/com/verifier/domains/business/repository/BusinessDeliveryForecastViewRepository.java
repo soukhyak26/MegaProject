@@ -2,8 +2,7 @@ package com.verifier.domains.business.repository;
 
 import com.verifier.domains.business.view.DeliveryForecastView;
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.common.vo.DeliveryForecastVersionId;
-import org.joda.time.LocalDate;
+import com.verifier.domains.subscriber.vo.DeliveryForecastVersionId;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

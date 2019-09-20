@@ -1,7 +1,7 @@
 package com.verifier.domains.subscriber.repository;
 
-import com.affaince.subscription.common.vo.DeliveryForecastVersionId;
 import com.verifier.domains.subscriber.view.DeliveryForecastTrendView;
+import com.verifier.domains.subscriber.vo.DeliveryForecastVersionId;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

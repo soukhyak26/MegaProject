@@ -1,7 +1,7 @@
 package com.verifier.domains.product.repository;
 
-import com.affaince.subscription.common.vo.ProductVersionId;
 import com.verifier.domains.product.view.ProductActualsView;
+import com.verifier.domains.product.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;

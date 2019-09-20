@@ -1,6 +1,10 @@
 package com.verifier.domains.product.view;
 
-import com.affaince.subscription.common.vo.ProductVersionId;
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.verifier.domains.product.vo.ProductVersionId;
 import org.joda.time.LocalDate;
 
 /**
@@ -9,7 +13,8 @@ import org.joda.time.LocalDate;
 public interface ProductSubscriptionMetricsView {
 
     ProductVersionId getProductVersionId();
-
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     LocalDate getEndDate();
 
     void setEndDate(LocalDate endDate);

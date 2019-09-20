@@ -1,8 +1,12 @@
 package com.verifier.domains.subscriber.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,7 +28,11 @@ public class SubscriptionView {
     private Address billingAddress;
     private ContactDetails contactDetails;
     private double totalAmountAfterDiscount;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate creationDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate expirationDate;
     private String paymentSchemeId;
 

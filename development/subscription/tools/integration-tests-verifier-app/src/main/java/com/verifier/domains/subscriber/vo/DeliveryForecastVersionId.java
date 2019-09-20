@@ -11,28 +11,26 @@ import java.io.Serializable;
 /**
  * Created by mandar on 9/30/2017.
  */
-public class DeliveryVersionId implements Serializable{
+public class DeliveryForecastVersionId implements Serializable {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate forecastDate;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate startDate;
+    private LocalDate deliveryDate;
     private double weightRangeMin;
     private double weightRangeMax;
 
-    public DeliveryVersionId() {
-    }
-
-    public DeliveryVersionId(LocalDate startDate,LocalDate forecastDate, double weightRangeMin, double weightRangeMax) {
+    public DeliveryForecastVersionId(){}
+    public DeliveryForecastVersionId(LocalDate deliveryDate, LocalDate forecastDate, double weightRangeMin, double weightRangeMax) {
         this.forecastDate = forecastDate;
-        this.startDate=startDate;
+        this.deliveryDate = deliveryDate;
         this.weightRangeMin = weightRangeMin;
         this.weightRangeMax = weightRangeMax;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
     public LocalDate getForecastDate() {
@@ -51,8 +49,8 @@ public class DeliveryVersionId implements Serializable{
         this.forecastDate = forecastDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public void setWeightRangeMin(double weightRangeMin) {

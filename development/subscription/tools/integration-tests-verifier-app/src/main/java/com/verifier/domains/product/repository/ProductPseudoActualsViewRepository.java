@@ -1,8 +1,8 @@
 package com.verifier.domains.product.repository;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
-import com.affaince.subscription.common.vo.ForecastVersionId;
 import com.verifier.domains.product.view.ProductPseudoActualsView;
+import com.verifier.domains.product.vo.ForecastVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
