@@ -162,8 +162,11 @@ function() {
   config.twelvethMonthForecastEndDateFormatted = result.formattedDateString(result.lastDayOfAMonth(config.businessYear,11));
 
   config.firstPaymentDate = result.unformattedDateString(result.firstDayOfAMonth(config.businessYear,0));
+  config.firstPaymentDateFormatted = result.formattedDateString(result.firstDayOfAMonth(config.businessYear,0));
   config.secondPaymentDate = result.unformattedDateString(result.firstDayOfAMonth(config.businessYear,2));
+  config.secondPaymentDateFormatted = result.formattedDateString(result.firstDayOfAMonth(config.businessYear,2));
   config.thirdPaymentDate = result.unformattedDateString(result.firstDayOfAMonth(config.businessYear,4));
+  config.thirdPaymentDateFormatted = result.formattedDateString(result.firstDayOfAMonth(config.businessYear,4));
 
   karate.log('karate.env =', karate.env);
   karate.log('#####config.platformBusinessUrl =', config.platformBusinessUrl);

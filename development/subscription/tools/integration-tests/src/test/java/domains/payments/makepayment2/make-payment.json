@@ -2,5 +2,5 @@
   "subscriptionId":"#(subscriptionId)",
   "subscriberId":"#(subscriberId)",
   "paidAmount": 154.0,
-  "paymentDate":"#(secondPaymentDate)"
+  "paymentDate":"#(secondPaymentDateFormatted)"
 }

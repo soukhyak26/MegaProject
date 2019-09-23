@@ -20,6 +20,12 @@ Then status 200
 
 * def subscriptionId = response.subscriptionId
 
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
 #Read on Delivery Read side
 Scenario:
 Given url subscriberReadUrl

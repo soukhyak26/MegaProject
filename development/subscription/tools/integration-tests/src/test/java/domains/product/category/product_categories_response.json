@@ -3,7 +3,7 @@
   "categoryId":"#ignore",
   "categoryName": "ToothPaste",
   "description": "Toothpastes of various sizes and brands",
-  "parentCategoryId": "null"
+  "parentCategoryId": null
   },
   {
     "categoryId":"#ignore",
@@ -27,7 +27,7 @@
     "categoryId":"#ignore",
     "categoryName": "Soap",
     "description": "Soaps of various sizes and brands",
-    "parentCategoryId": "null"
+    "parentCategoryId": null
   },
   {
     "categoryId":"#ignore",
