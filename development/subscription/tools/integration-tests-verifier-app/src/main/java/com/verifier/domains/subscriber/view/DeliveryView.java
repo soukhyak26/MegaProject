@@ -27,13 +27,15 @@ public class DeliveryView {
     private DeliveryStatus deliveryStatus;
     private ReasonCode reasonCode;
     private double rewardPoints;
+    private LocalDate lastModifiedDate;
 
-    public DeliveryView(CompositeDeliveryId compositeDeliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus deliveryStatus, double rewardPoints) {
+    public DeliveryView(CompositeDeliveryId compositeDeliveryId, List<DeliveryItem> deliveryItems, LocalDate deliveryDate, DeliveryStatus deliveryStatus, double rewardPoints, LocalDate lastModifiedDate) {
         this.compositeDeliveryId = compositeDeliveryId;
         this.deliveryItems = deliveryItems;
         this.deliveryDate = deliveryDate;
         this.deliveryStatus = deliveryStatus;
         this.rewardPoints = rewardPoints;
+        this.lastModifiedDate=lastModifiedDate;
     }
 
     public DeliveryView() {
@@ -93,5 +95,9 @@ public class DeliveryView {
 
     public void setRewardPoints(double rewardPoints) {
         this.rewardPoints = rewardPoints;
+    }
+
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
     }
 }

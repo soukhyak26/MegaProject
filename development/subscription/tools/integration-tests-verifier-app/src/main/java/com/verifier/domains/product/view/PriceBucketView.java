@@ -1,9 +1,15 @@
 package com.verifier.domains.product.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import com.verifier.domains.product.vo.DeliveredSubscriptionsAgainstTaggedPrice;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -24,7 +30,11 @@ public class PriceBucketView  implements Comparable<PriceBucketView>{
     private ProductwisePriceBucketId productwisePriceBucketId;
     private ProductPricingCategory productPricingCategory;
     private PriceTaggedWithProduct taggedPriceVersion;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime fromDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime toDate;
     private double offeredPriceOrPercentDiscountPerUnit;
     //private double percentDiscountPerUnit;

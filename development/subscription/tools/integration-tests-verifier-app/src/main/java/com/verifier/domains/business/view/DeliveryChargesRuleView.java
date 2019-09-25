@@ -1,7 +1,11 @@
 package com.verifier.domains.business.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.affaince.subscription.common.vo.RangeRule;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +18,8 @@ public class DeliveryChargesRuleView {
     @Id
     private DeliveryChargesRuleType ruleId;
     private List<RangeRule> rangeRules;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate effectiveDate;
 
 

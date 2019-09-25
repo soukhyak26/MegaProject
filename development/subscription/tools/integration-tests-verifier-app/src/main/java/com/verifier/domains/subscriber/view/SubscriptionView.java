@@ -35,11 +35,12 @@ public class SubscriptionView {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate expirationDate;
     private String paymentSchemeId;
+    private LocalDate lastModifiedDate;
 
     public SubscriptionView() {
     }
 
-    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItem> subscriptionItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate creationDate, LocalDate expirationDate) {
+    public SubscriptionView(String subscriptionId, String subscriberId, ConsumerBasketActivationStatus consumerBasketActivationStatus, List<SubscriptionItem> subscriptionItems, Address shippingAddress, Address billingAddress, ContactDetails contactDetails, double totalAmountAfterDiscount, LocalDate creationDate, LocalDate expirationDate,LocalDate lastModifiedDate) {
         this.subscriptionId = subscriptionId;
         this.subscriberId = subscriberId;
         this.consumerBasketActivationStatus = consumerBasketActivationStatus;
@@ -50,6 +51,7 @@ public class SubscriptionView {
         this.totalAmountAfterDiscount = totalAmountAfterDiscount;
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getSubscriptionId() {
@@ -139,4 +141,13 @@ public class SubscriptionView {
     public void setPaymentSchemeId(String paymentSchemeId) {
         this.paymentSchemeId = paymentSchemeId;
     }
+
+    public LocalDate getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
 }

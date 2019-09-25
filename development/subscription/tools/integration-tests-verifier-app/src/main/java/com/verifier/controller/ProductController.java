@@ -1,5 +1,6 @@
 package com.verifier.controller;
 
+import com.affaince.subscription.appconfig.validator.ProductConfigurationValidator;
 import com.affaince.subscription.common.type.EntityStatus;
 import com.affaince.subscription.date.SysDate;
 import com.verifier.domains.product.repository.*;
@@ -23,7 +24,7 @@ public class ProductController {
     private final FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository;
     private final PriceBucketTransactionViewRepository priceBucketTransactionViewRepository;
     private final PriceBucketViewRepository priceBucketViewRepository;
-    private final ProductActivationStatusViewRepository productActivationStatusViewRepository;
+    private final ProductConfigurationValidator productConfigurationValidator;
     private final ProductActualMetricsViewRepository productActualMetricsViewRepository;
     private final ProductActualsViewRepository productActualsViewRepository;
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
@@ -40,13 +41,13 @@ public class ProductController {
     private final ProductInventoryViewRepository productInventoryViewRepository;
 
     @Autowired
-    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductActivationStatusViewRepository productActivationStatusViewRepository, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository,ProductAnalyserViewRepository productAnalyserViewRepository,ProductInventoryViewRepository productInventoryViewRepository) {
+    public ProductController(ProductBusinessAccountViewRepository productBusinessAccountViewRepository, CategoryDetailsViewRepository categoryDetailsViewRepository, FixedExpensePerProductViewRepository fixedExpensePerProductViewRepository, PriceBucketTransactionViewRepository priceBucketTransactionViewRepository, PriceBucketViewRepository priceBucketViewRepository, ProductConfigurationValidator productConfigurationValidator, ProductActualMetricsViewRepository productActualMetricsViewRepository, ProductActualsViewRepository productActualsViewRepository, ProductConfigurationViewRepository productConfigurationViewRepository, ProductForecastTrendViewRepository productForecastTrendViewRepository, ProductForecastViewRepository productForecastViewRepository, ProductPseudoActualsViewRepository productPseudoActualsViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductViewRepository productViewRepository, RecommendedPriceBucketViewRepository recommendedPriceBucketViewRepository, TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository, TargetSettingViewRepository targetSettingViewRepository, VariableExpensePerProductViewRepository variableExpensePerProductViewRepository, ProductAnalyserViewRepository productAnalyserViewRepository, ProductInventoryViewRepository productInventoryViewRepository) {
         this.productBusinessAccountViewRepository = productBusinessAccountViewRepository;
         this.categoryDetailsViewRepository = categoryDetailsViewRepository;
         this.fixedExpensePerProductViewRepository = fixedExpensePerProductViewRepository;
         this.priceBucketTransactionViewRepository = priceBucketTransactionViewRepository;
         this.priceBucketViewRepository = priceBucketViewRepository;
-        this.productActivationStatusViewRepository = productActivationStatusViewRepository;
+        this.productConfigurationValidator = productConfigurationValidator;
         this.productActualMetricsViewRepository = productActualMetricsViewRepository;
         this.productActualsViewRepository = productActualsViewRepository;
         this.productConfigurationViewRepository = productConfigurationViewRepository;
@@ -59,7 +60,7 @@ public class ProductController {
         this.taggedPriceVersionsViewRepository = taggedPriceVersionsViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.variableExpensePerProductViewRepository = variableExpensePerProductViewRepository;
-        this.productAnalyserViewRepository =productAnalyserViewRepository;
+        this.productAnalyserViewRepository = productAnalyserViewRepository;
         this.productInventoryViewRepository = productInventoryViewRepository;
     }
 
@@ -76,18 +77,18 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "category/id/{categoryId}", produces = "application/json")
-    public ResponseEntity<CategoryDetailsView> getProductCategoryByCategoryId (@PathVariable String categoryId) {
+    public ResponseEntity<CategoryDetailsView> getProductCategoryByCategoryId(@PathVariable String categoryId) {
         CategoryDetailsView categoryDetailsView = categoryDetailsViewRepository.findOne(categoryId);
         return new ResponseEntity<CategoryDetailsView>(categoryDetailsView, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "category/name/{categoryName}", produces="application/json")
-    public ResponseEntity<CategoryDetailsView> getProductCategoryByCategoryName (@PathVariable String categoryName) {
+    @RequestMapping(method = RequestMethod.GET, value = "category/name/{categoryName}", produces = "application/json")
+    public ResponseEntity<CategoryDetailsView> getProductCategoryByCategoryName(@PathVariable String categoryName) {
         List<CategoryDetailsView> categoryDetailsViews = categoryDetailsViewRepository.findByCategoryName(categoryName);
         //because category name should be unique the list is expected to return single element,if found record matching to the categoryName
-        if(categoryDetailsViews!=null && !categoryDetailsViews.isEmpty()) {
+        if (categoryDetailsViews != null && !categoryDetailsViews.isEmpty()) {
             return new ResponseEntity<CategoryDetailsView>(categoryDetailsViews.get(0), HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<CategoryDetailsView>(HttpStatus.NOT_FOUND);
         }
     }
@@ -125,8 +126,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "activationstatus/{productId}")
-    public ResponseEntity<ProductActivationStatusView> getProductActivationStatus(@PathVariable String productId) {
-        ProductActivationStatusView activation = productActivationStatusViewRepository.findOne(productId);
+    public ResponseEntity<com.affaince.subscription.view.ProductActivationStatusView> getProductActivationStatus(@PathVariable String productId) {
+        com.affaince.subscription.view.ProductActivationStatusView activation = productConfigurationValidator.getProductStatuses(productId);
         return new ResponseEntity<>(activation, HttpStatus.OK);
     }
 
@@ -153,56 +154,59 @@ public class ProductController {
         List<ProductForecastTrendView> trends = productForecastTrendViewRepository.findByForecastVersionId_ProductId(productId);
         return new ResponseEntity<>(trends, HttpStatus.OK);
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "forecast/{productId}")
-    public ResponseEntity<List<ProductForecastView>> getForecast(@PathVariable String productId){
-        List<ProductForecastView> forecasts=productForecastViewRepository.findByForecastVersionId_ProductId(productId);
-        return new ResponseEntity<>(forecasts,HttpStatus.OK);
+    public ResponseEntity<List<ProductForecastView>> getForecast(@PathVariable String productId) {
+        List<ProductForecastView> forecasts = productForecastViewRepository.findByForecastVersionId_ProductId(productId);
+        return new ResponseEntity<>(forecasts, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "pseudoactuals/{productId}")
-    public ResponseEntity<List<ProductPseudoActualsView>> getPseudoActuals(@PathVariable String productId){
-        List<ProductPseudoActualsView> forecasts=productPseudoActualsViewRepository.findByForecastVersionId_ProductId(productId);
-        return new ResponseEntity<>(forecasts,HttpStatus.OK);
+    public ResponseEntity<List<ProductPseudoActualsView>> getPseudoActuals(@PathVariable String productId) {
+        List<ProductPseudoActualsView> forecasts = productPseudoActualsViewRepository.findByForecastVersionId_ProductId(productId);
+        return new ResponseEntity<>(forecasts, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{productId}")
-    public ResponseEntity<ProductView> getProduct(@PathVariable String productId){
-        ProductView productView=productViewRepository.findOne(productId);
-        return new ResponseEntity<>(productView,HttpStatus.OK);
+    public ResponseEntity<ProductView> getProduct(@PathVariable String productId) {
+        ProductView productView = productViewRepository.findOne(productId);
+        return new ResponseEntity<>(productView, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "name/{productName}")
-    public ResponseEntity<List<ProductView>> getProductByName(@PathVariable String productName){
-        List<ProductView> productViews=productViewRepository.findByProductName(productName);
-        return new ResponseEntity<>(productViews,HttpStatus.OK);
+    public ResponseEntity<List<ProductView>> getProductByName(@PathVariable String productName) {
+        List<ProductView> productViews = productViewRepository.findByProductName(productName);
+        return new ResponseEntity<>(productViews, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
-    public ResponseEntity<List<ProductView>> getProducts(){
-        List<ProductView> productViews=productViewRepository.findAll();
-        return new ResponseEntity<List<ProductView>>(productViews,HttpStatus.OK);
+    public ResponseEntity<List<ProductView>> getProducts() {
+        List<ProductView> productViews = productViewRepository.findAll();
+        return new ResponseEntity<List<ProductView>>(productViews, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "recommendations/{productId}")
-    public ResponseEntity<List<RecommendedPriceBucketView>> getPriceRecommendations(@PathVariable String productId){
-        List<RecommendedPriceBucketView> recommendations=recommendedPriceBucketViewRepository.findByProductwisePriceBucketId_ProductId(productId);
-        return new ResponseEntity<>(recommendations,HttpStatus.OK);
+    public ResponseEntity<List<RecommendedPriceBucketView>> getPriceRecommendations(@PathVariable String productId) {
+        List<RecommendedPriceBucketView> recommendations = recommendedPriceBucketViewRepository.findByProductwisePriceBucketId_ProductId(productId);
+        return new ResponseEntity<>(recommendations, HttpStatus.OK);
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "taggedprice/{productId}")
-    public ResponseEntity<List<TaggedPriceVersionsView>> getTaggedPriceVersion(@PathVariable String productId){
+    public ResponseEntity<List<TaggedPriceVersionsView>> getTaggedPriceVersion(@PathVariable String productId) {
         List<TaggedPriceVersionsView> taggedPrices = taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(productId);
-        return new ResponseEntity<>(taggedPrices,HttpStatus.OK);
+        return new ResponseEntity<>(taggedPrices, HttpStatus.OK);
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "varexp/{productId}")
-    public ResponseEntity<List<VariableExpensePerProductView>> getVariableExpenses(@PathVariable String productId){
+    public ResponseEntity<List<VariableExpensePerProductView>> getVariableExpenses(@PathVariable String productId) {
         List<VariableExpensePerProductView> varExps = variableExpensePerProductViewRepository.findFirstByProductwiseVariableExpenseId_ProductIdOrderByEndDateDesc(productId);
-        return  new ResponseEntity<>(varExps,HttpStatus.OK);
+        return new ResponseEntity<>(varExps, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "inventory/{productId}")
-    public ResponseEntity<List<ProductInventoryView>> getProductInventory(@PathVariable String productId){
+    public ResponseEntity<List<ProductInventoryView>> getProductInventory(@PathVariable String productId) {
         List<ProductInventoryView> inventories = productInventoryViewRepository.findByProductId(productId);
-        return  new ResponseEntity<>(inventories,HttpStatus.OK);
+        return new ResponseEntity<>(inventories, HttpStatus.OK);
     }
 
 }

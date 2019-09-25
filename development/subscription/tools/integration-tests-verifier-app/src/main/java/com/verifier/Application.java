@@ -14,8 +14,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication //(exclude = {MongoAutoConfiguration.class,MongoRepositoriesAutoConfiguration.class, MongoDataAutoConfiguration.class,EmbeddedMongoAutoConfiguration.class})
-@ComponentScan("com.verifier")
-@PropertySource({"classpath:application.properties"})
+@ComponentScan({"com.verifier","com.affaince.subscription.appconfig.validator"})
+@PropertySource({"classpath:application.properties","classpath:sysdatesetting.properties"})
 public class Application {
 
     public static void main(String[] args) {

@@ -1,5 +1,9 @@
 package com.verifier.domains.product.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +15,11 @@ public class BusinessAccountView {
     //TODO: Check if business account would be singleton - and hence only one id (as of now it will use year of provision date as id)
     @Id
     private Integer id;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime dateForProvision;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime endDate;
     private double defaultPercentFixedExpensePerUnitPrice =1.0;
     private double defaultPercentVariableExpensePerUnitPrice=1.0;

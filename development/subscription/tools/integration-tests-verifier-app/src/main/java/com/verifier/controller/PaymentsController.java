@@ -53,7 +53,7 @@ public class PaymentsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "deliverycostaccount/{subscriptionId}")
     public ResponseEntity<List<DeliveryCostAccountView>> getDeliveryCostAccountsForASubscription(@PathVariable String subscriptionId) {
-        List<DeliveryCostAccountView> deliveryCostAccountViewsForASubscription = deliveryCostAccountViewRepository.findByCompositeDeliveryId_SubscriptionId(subscriptionId);
+        List<DeliveryCostAccountView> deliveryCostAccountViewsForASubscription = deliveryCostAccountViewRepository.findByCompositeDeliveryId_SubscriptionIdOrderByDeliverySequenceAsc(subscriptionId);
         return new ResponseEntity<>(deliveryCostAccountViewsForASubscription, HttpStatus.OK);
     }
 

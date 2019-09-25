@@ -45,17 +45,17 @@
         </dependency>
         <dependency>
             <groupId>com.affaince</groupId>
+            <artifactId>sysdate</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.affaince</groupId>
             <artifactId>affaince-valuepojos</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.affaince</groupId>
             <artifactId>affaince-config</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.affaince</groupId>
-            <artifactId>sysdate</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -34,8 +34,6 @@ import java.util.List;
         FixedExpensePerProductViewRepository.class,
         PriceBucketTransactionViewRepository.class,
         PriceBucketViewRepository.class,
-        ProductActivationStatusViewPagingRepository.class,
-        ProductActivationStatusViewRepository.class,
         ProductActualMetricsViewRepository.class,
         ProductActualsViewRepository.class,
         ProductConfigurationViewRepository.class,

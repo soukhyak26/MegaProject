@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface DeliveryCostAccountViewRepository extends CrudRepository<DeliveryCostAccountView, CompositeDeliveryId> {
-    List<DeliveryCostAccountView> findByCompositeDeliveryId_SubscriptionId(String subscriptionId);
+    List<DeliveryCostAccountView> findByCompositeDeliveryId_SubscriptionIdOrderByDeliverySequenceAsc(String subscriptionId);
     List<DeliveryCostAccountView> findByCompositeDeliveryId_DeliveryId(String deliveryId);
     //TODO: introduce method to look for DeliveryCostAccountView by subscription id AND delivery id
 }

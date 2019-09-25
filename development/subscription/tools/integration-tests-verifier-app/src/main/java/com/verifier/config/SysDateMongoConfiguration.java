@@ -4,13 +4,11 @@ import com.affaince.subscription.common.idconverter.LocalDateTimeToStringConvert
 import com.affaince.subscription.common.idconverter.LocalDateToStringConverter;
 import com.affaince.subscription.common.idconverter.StringToLocalDateConverter;
 import com.affaince.subscription.common.idconverter.StringToLocalDateTimeConverter;
+import com.affaince.subscription.repository.ProductActivationStatusViewPagingRepository;
+import com.affaince.subscription.repository.ProductActivationStatusViewRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
-import com.verifier.converters.IntegerToLocalDateConverter;
-import com.verifier.converters.LocalDateReadingConverter;
-import com.verifier.converters.LocalDateToIntegerConverter;
-import com.verifier.converters.LocalDateWritingConverter;
 import com.verifier.domains.sysdate.repository.SysDateTimeViewRepository;
 import com.verifier.domains.sysdate.repository.SysDateViewRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,11 +32,11 @@ import java.util.List;
 
 @Configuration
 @EnableMongoRepositories(mongoTemplateRef ="sysDateMongoTemplate", basePackageClasses = {SysDateViewRepository.class,
-SysDateTimeViewRepository.class})
+SysDateTimeViewRepository.class, ProductActivationStatusViewRepository.class, ProductActivationStatusViewPagingRepository.class})
 public class SysDateMongoConfiguration {
     @Bean //(name="subscriberMongoTemplate")
     @Qualifier("sysDateMongoTemplate")
-    public MongoTemplate sysDateMongoTemplate(@Qualifier("SysDateMongoDbFactory") MongoDbFactory factory,@Qualifier("SysDateMappingMongoConverter") MappingMongoConverter mappingMongoConverter) {
+    public MongoTemplate sysDateMongoTemplate(@Qualifier("sysDateMongoDbFactory") MongoDbFactory factory,@Qualifier("SysDateMappingMongoConverter") MappingMongoConverter mappingMongoConverter) {
         System.out.println("###INside SysDateMongoDbFactory creation " + factory.getDb().getName());
         MongoTemplate mongoTemplate = new MongoTemplate(factory,mappingMongoConverter);
         MappingMongoConverter mmc = (MappingMongoConverter)mongoTemplate.getConverter();
@@ -48,15 +46,15 @@ public class SysDateMongoConfiguration {
     }
 
     @Bean //(name="SubscriberMongo")
-    @Qualifier("SysDateMongo")
-    public MongoClient mongo(@Qualifier("SysDateMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
+    @Qualifier("sysDateMongo")
+    public MongoClient sysDateMongo(@Qualifier("sysDateMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
         System.out.println("###INside MOngoClient creation");
         return new MongoClient(mongoClientURI);
     }
 
     @Bean //(name="SubscriberMongoClientURI")
-    @Qualifier("SysDateMongoClientURI")
-    public MongoClientURI mongoClientURI(@Value("${view.db.sysdate.host}") String host, @Value("${view.db.sysdate.port}") int port,
+    @Qualifier("sysDateMongoClientURI")
+    public MongoClientURI SysDateMongoClientURI(@Value("${view.db.sysdate.host}") String host, @Value("${view.db.sysdate.port}") int port,
                                          @Value("${view.db.sysdate.name}") String dbName,
                                          @Value("${affaince.db.username}") String username,
                                          @Value("${affaince.db.password}") String password) {
@@ -69,16 +67,17 @@ public class SysDateMongoConfiguration {
     }
 
     @Bean //(name="SubscriberMongoDbFactory")
-    @Qualifier("SysDateMongoDbFactory")
+    @Qualifier("sysDateMongoDbFactory")
     public MongoDbFactory SysDateMongoDbFactory(@Value("${view.db.sysdate.host}") String host, @Value("${view.db.sysdate.port}") int port,
                                          @Value("${view.db.sysdate.name}") String dbName) throws UnknownHostException {
         System.out.println("###INside mongoDbFactory creation");
         return new SimpleMongoDbFactory(new MongoClient(new ServerAddress(host, port)), dbName);
     }
+
     @Bean //(name="SubscriberMappingMongoConverter")
     @Qualifier("SysDateMappingMongoConverter")
     public MappingMongoConverter SysDateMappingMongoConverter(@Qualifier("SysDateMongoDbFactory")MongoDbFactory mongoDbFactory,
-                                                       @Qualifier("SysDateCustomConversions") CustomConversions customConversions) throws Exception {
+                                                              @Qualifier("SysDateCustomConversions") CustomConversions customConversions) throws Exception {
         MongoMappingContext mappingContext = new MongoMappingContext();
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoDbFactory);
         MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
@@ -98,4 +97,4 @@ public class SysDateMongoConfiguration {
         return new CustomConversions(converters);
     }
 
-} 
+}

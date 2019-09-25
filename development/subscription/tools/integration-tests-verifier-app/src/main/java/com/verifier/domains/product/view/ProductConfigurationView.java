@@ -1,8 +1,12 @@
 package com.verifier.domains.product.view;
 
+import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;
 import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.product.vo.CostHeaderType;
 import org.joda.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -23,6 +27,8 @@ public class ProductConfigurationView {
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
     private PricingOptions pricingOptions;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate nextForecastDate;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)
     private Period demandCurvePeriod;
