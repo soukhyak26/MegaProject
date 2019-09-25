@@ -22,12 +22,12 @@ Scenario:
 Given url platformProductUrl
 And path 'product/config/' + derivedProductId1
 And request read('classpath:domains/product/config/configrequest.json')
-When method PUT
-Then status 200
+When method POST
+Then status 201
 
 Scenario:
 Given url platformProductUrl
 And path 'product/config/' + derivedProductId2
 And request read('classpath:domains/product/config/configrequest.json')
-When method PUT
-Then status 200
+When method POST
+Then status 201
