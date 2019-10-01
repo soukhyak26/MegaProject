@@ -1,8 +1,7 @@
 package com.verifier.domains.payments.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.payments.vo.PaymentTransactionType;
 import org.joda.time.LocalDate;
@@ -18,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PaymentTransactionView {
     @Id
     private long transactionId;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate transactionDate;
     private String subscriptionId;

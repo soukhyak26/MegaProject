@@ -1,10 +1,7 @@
 package com.verifier.config;
 
 import com.affaince.subscription.common.idconverter.*;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.verifier.domains.benefits.repository.BenefitsBenefitViewRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,19 +39,29 @@ public class BenefitMongoConfiguration {
     @Qualifier("BenefitsMongo")
     public MongoClient benefitsMongo(@Qualifier("BenefitsMongoClientURI") MongoClientURI mongoClientURI) throws UnknownHostException {
         System.out.println("###INside MOngoClient creation");
-        return new MongoClient(mongoClientURI);
+
+        return new MongoClient(mongoClientURI.getURI());
     }
 
     @Bean //(name="BenefitsMongoClientURI")
     @Qualifier("BenefitsMongoClientURI")
     public MongoClientURI benefitsMongoClientURI(@Value("${view.db.benefits.host}") String host, @Value("${view.db.benefits.port}") int port,
                                                  @Value("${view.db.benefits.name}") String dbName) {
+        final MongoClientOptions options = MongoClientOptions.builder()
+                .threadsAllowedToBlockForConnectionMultiplier(2)
+                .connectionsPerHost(10)
+                .connectTimeout(15000)
+                .maxWaitTime(15000)
+                .socketTimeout(15000)
+                .heartbeatConnectTimeout(5000)
+                .minHeartbeatFrequency(1000)
+                .build();
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
                 + port
                 + "/" +
-                dbName);
+                dbName,new MongoClientOptions.Builder(options));
     }
 
     @Bean //(name="benefitsMongoDbFactory")

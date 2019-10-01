@@ -4,7 +4,7 @@ package com.verifier.domains.product.vo;
  * Created by mandar on 08-10-2016.
  */
 /*
-@JsonSerialize(using = PricingChoiceTypeSerializer.class)
+//@JsonSerialize(using = PricingChoiceTypeSerializer.class)
 @JsonDeserialize(using = PricingChoiceTypeDeserializer.class)
 */
 public enum PricingChoiceType {

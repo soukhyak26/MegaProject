@@ -1,8 +1,7 @@
 package com.verifier.domains.product.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.product.vo.ProductwiseFixedExpenseId;
 import org.joda.time.LocalDate;
@@ -15,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FixedExpensePerProductView {
     private ProductwiseFixedExpenseId productwiseFixedExpenseId;
     private double fixedExpensePerProductPerUnit;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 

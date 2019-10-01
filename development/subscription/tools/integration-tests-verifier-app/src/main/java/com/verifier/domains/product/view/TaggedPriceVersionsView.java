@@ -19,11 +19,11 @@ public class TaggedPriceVersionsView {
     private double purchasePricePerUnit;
     private double MRP;
     private double breakEvenPrice;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate taggedStartDate;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate taggedEndDate;
 

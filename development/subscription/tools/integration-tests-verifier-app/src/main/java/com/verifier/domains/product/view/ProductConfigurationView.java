@@ -1,8 +1,7 @@
 package com.verifier.domains.product.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.Period;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.Period;
 import com.affaince.subscription.common.type.PricingOptions;
 import com.affaince.subscription.common.type.PricingStrategyType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -27,7 +26,7 @@ public class ProductConfigurationView {
     private boolean isAdvertisingExpensesConsidered;
     private PricingStrategyType pricingStrategyType;
     private PricingOptions pricingOptions;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate nextForecastDate;
     //How much maximum historical data should be used for foresting ( 6 months,1 year,2 year etc)

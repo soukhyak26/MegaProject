@@ -1,7 +1,7 @@
 package com.verifier.domains.payments.repository;
 
-import com.affaince.subscription.common.vo.ProductwiseTaggedPriceVersionId;
 import com.verifier.domains.payments.view.ProductTaggedPricesView;
+import com.verifier.domains.product.vo.ProductwiseTaggedPriceVersionId;
 import org.joda.time.LocalDate;
 import org.springframework.data.repository.CrudRepository;
 

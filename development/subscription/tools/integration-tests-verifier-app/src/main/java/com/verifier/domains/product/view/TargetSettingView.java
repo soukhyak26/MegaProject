@@ -21,7 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class TargetSettingView {
     @Id
     private ProductVersionId productVersionId;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+   @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDate endDate;
     private long newSubscriptions;

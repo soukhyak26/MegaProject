@@ -1,8 +1,7 @@
 package com.verifier.domains.product.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.vo.PriceTaggedWithProduct;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.product.vo.ProductVersionId;
@@ -21,7 +20,7 @@ import java.util.TreeSet;
 public class ProductActualMetricsView {
     @Id
     private ProductVersionId productVersionId;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private SortedSet<PriceTaggedWithProduct> taggedPriceVersions;

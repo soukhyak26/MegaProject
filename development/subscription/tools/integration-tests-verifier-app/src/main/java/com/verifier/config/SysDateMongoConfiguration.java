@@ -7,6 +7,7 @@ import com.affaince.subscription.common.idconverter.StringToLocalDateTimeConvert
 import com.affaince.subscription.repository.ProductActivationStatusViewPagingRepository;
 import com.affaince.subscription.repository.ProductActivationStatusViewRepository;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
 import com.verifier.domains.sysdate.repository.SysDateTimeViewRepository;
@@ -58,12 +59,22 @@ public class SysDateMongoConfiguration {
                                          @Value("${view.db.sysdate.name}") String dbName,
                                          @Value("${affaince.db.username}") String username,
                                          @Value("${affaince.db.password}") String password) {
+        final MongoClientOptions options = MongoClientOptions.builder()
+                .threadsAllowedToBlockForConnectionMultiplier(2)
+                .connectionsPerHost(10)
+                .connectTimeout(15000)
+                .maxWaitTime(15000)
+                .socketTimeout(15000)
+                .heartbeatConnectTimeout(5000)
+                .minHeartbeatFrequency(1000)
+                .build();
+
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
                 + port
                 + "/" +
-                dbName);
+                dbName,MongoClientOptions.builder(options));
     }
 
     @Bean //(name="SubscriberMongoDbFactory")

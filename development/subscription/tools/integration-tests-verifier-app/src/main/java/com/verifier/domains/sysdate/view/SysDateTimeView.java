@@ -12,7 +12,7 @@ public class SysDateTimeView {
     @Field("_id")
     private int id;
 
-    /*@JsonSerialize(using = LocalDateSerializer.class)
+    /*//@JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)*/
     private LocalDateTime currentDateTime;
 

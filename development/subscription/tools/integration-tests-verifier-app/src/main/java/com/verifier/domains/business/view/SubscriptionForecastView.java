@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 8/30/2017.
  */
-@Document(collection="SubscriptionForecastView")
+@Document(collection = "SubscriptionForecastView")
 public class SubscriptionForecastView {
     @Id
     private SubscriptionVersionId subscriptionVersionId;
@@ -25,29 +25,34 @@ public class SubscriptionForecastView {
     private long totalSubscriptions;
     private ForecastContentStatus forecastContentStatus;
 
-    public SubscriptionForecastView(){}
-    public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, double valueRangeMin, double valueRangeMax){
-        this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
-        this.endDate=endDate;
-        this.forecastContentStatus= ForecastContentStatus.ACTIVE;
+    public SubscriptionForecastView() {
     }
+
+    public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, double valueRangeMin, double valueRangeMax) {
+        this.subscriptionVersionId = new SubscriptionVersionId(startDate, forecastDate, valueRangeMin, valueRangeMax);
+        this.endDate = endDate;
+        this.forecastContentStatus = ForecastContentStatus.ACTIVE;
+    }
+
     public SubscriptionForecastView(LocalDate startDate, LocalDate endDate, long newSubscriptions, long churnedSubscriptions, long totalSubscriptions, LocalDate forecastDate, double valueRangeMin, double valueRangeMax) {
-        this.subscriptionVersionId = new SubscriptionVersionId(startDate,forecastDate,valueRangeMin,valueRangeMax);
-        this.endDate=endDate;
+        this.subscriptionVersionId = new SubscriptionVersionId(startDate, forecastDate, valueRangeMin, valueRangeMax);
+        this.endDate = endDate;
         this.newSubscriptions = newSubscriptions;
         this.churnedSubscriptions = churnedSubscriptions;
         this.totalSubscriptions = totalSubscriptions;
-        this.forecastContentStatus= ForecastContentStatus.ACTIVE;
+        this.forecastContentStatus = ForecastContentStatus.ACTIVE;
     }
 
-    public void addToNewSubscriptionCount(long subscriptionCount){
-        this.newSubscriptions+=subscriptionCount;
+    public void addToNewSubscriptionCount(long subscriptionCount) {
+        this.newSubscriptions += subscriptionCount;
     }
-    public void addToChurnedSubscriptionCount(long subscriptionCount){
-        this.churnedSubscriptions +=subscriptionCount;
+
+    public void addToChurnedSubscriptionCount(long subscriptionCount) {
+        this.churnedSubscriptions += subscriptionCount;
     }
-    public void addToTotalSubscriptionCount(long subscriptionCount){
-        this.totalSubscriptions+=subscriptionCount;
+
+    public void addToTotalSubscriptionCount(long subscriptionCount) {
+        this.totalSubscriptions += subscriptionCount;
     }
 
 
@@ -82,6 +87,7 @@ public class SubscriptionForecastView {
     public void setForecastContentStatus(ForecastContentStatus forecastContentStatus) {
         this.forecastContentStatus = forecastContentStatus;
     }
+
     public LocalDate getEndDate() {
         return endDate;
     }

@@ -1,8 +1,7 @@
 package com.verifier.domains.payments.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.DeliveryStatus;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.DeliveryStatus;
 import com.affaince.subscription.common.vo.CompositeDeliveryId;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -21,7 +20,7 @@ public class DeliveryDetailsView {
     @Id
     private CompositeDeliveryId compositeDeliveryId;
     private List<DeliverableProductDetail> deliverableProductDetails;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate deliveryDate;
     private DeliveryStatus deliveryStatus;

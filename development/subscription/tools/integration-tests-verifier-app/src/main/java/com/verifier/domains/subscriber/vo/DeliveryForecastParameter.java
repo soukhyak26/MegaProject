@@ -1,8 +1,7 @@
 package com.verifier.domains.subscriber.vo;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -11,10 +10,10 @@ import org.joda.time.LocalDate;
  * Created by mandar on 10/28/2017.
  */
 public class DeliveryForecastParameter {
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private long deliveryCount;

@@ -18,10 +18,10 @@ public class ProductTaggedPricesView {
     private ProductwiseTaggedPriceVersionId productwiseTaggedPriceVersionId;
     private double purchasePricePerUnit;
     private double MRP;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate taggedPriceStartDate;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate taggedPriceEndaDate;
 

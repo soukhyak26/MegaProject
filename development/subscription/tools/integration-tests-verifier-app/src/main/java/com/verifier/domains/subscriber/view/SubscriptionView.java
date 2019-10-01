@@ -1,8 +1,7 @@
 package com.verifier.domains.subscriber.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.ConsumerBasketActivationStatus;
 import com.affaince.subscription.common.vo.Address;
 import com.affaince.subscription.common.vo.ContactDetails;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -28,10 +27,10 @@ public class SubscriptionView {
     private Address billingAddress;
     private ContactDetails contactDetails;
     private double totalAmountAfterDiscount;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate creationDate;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate expirationDate;
     private String paymentSchemeId;

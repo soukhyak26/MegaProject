@@ -1,8 +1,7 @@
 package com.verifier.domains.product.vo;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -14,7 +13,7 @@ import java.io.Serializable;
  */
 public class ProductVersionId implements Serializable, Comparable<ProductVersionId> {
     private String productId;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
     public ProductVersionId(String productId, LocalDate startDate) {

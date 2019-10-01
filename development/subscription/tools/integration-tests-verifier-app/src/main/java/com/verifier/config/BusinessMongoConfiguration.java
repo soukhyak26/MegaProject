@@ -1,17 +1,6 @@
 package com.verifier.config;
 
-import com.affaince.subscription.common.idconverter.LocalDateTimeToStringConverter;
-import com.affaince.subscription.common.idconverter.LocalDateToStringConverter;
-import com.affaince.subscription.common.idconverter.StringToLocalDateConverter;
-import com.affaince.subscription.common.idconverter.StringToLocalDateTimeConverter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.verifier.domains.business.repository.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -100,12 +89,22 @@ public class BusinessMongoConfiguration {
     @Qualifier("BusinessMongoClientURI")
     public MongoClientURI businessMongoClientURI(@Value("${view.db.business.host}") String host, @Value("${view.db.business.port}") int port,
                                                  @Value("${view.db.business.name}") String dbName) {
+        final MongoClientOptions options = MongoClientOptions.builder()
+                .threadsAllowedToBlockForConnectionMultiplier(2)
+                .connectionsPerHost(10)
+                .connectTimeout(15000)
+                .maxWaitTime(15000)
+                .socketTimeout(15000)
+                .heartbeatConnectTimeout(5000)
+                .minHeartbeatFrequency(1000)
+                .build();
+
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
                 + port
                 + "/" +
-                dbName);
+                dbName,MongoClientOptions.builder(options));
     }
 
     @Bean //(name = "businessMongoDbFactory")
@@ -135,10 +134,4 @@ public class BusinessMongoConfiguration {
         return converter;
     }
 
-    public ObjectMapper objectMapper(){
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JodaModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        return mapper;
-    }
-} 
+}

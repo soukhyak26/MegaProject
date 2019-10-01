@@ -1,8 +1,7 @@
 package com.verifier.domains.subscriber.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.subscriber.vo.SubscriptionVersionId;
@@ -18,7 +17,7 @@ public class SubscriptionForecastView {
     @Id
     private SubscriptionVersionId subscriptionVersionId;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private long newSubscriptions;

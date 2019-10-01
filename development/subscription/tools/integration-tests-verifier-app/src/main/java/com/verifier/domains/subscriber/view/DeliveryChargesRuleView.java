@@ -1,8 +1,7 @@
 package com.verifier.domains.subscriber.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.DeliveryChargesRuleType;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.DeliveryChargesRuleType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.subscriber.vo.RangeRule;
@@ -20,7 +19,7 @@ public class DeliveryChargesRuleView {
     @Id
     private DeliveryChargesRuleType ruleId;
     private List <RangeRule> rangeRules;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate effectiveDate;
 

@@ -4,10 +4,7 @@ import com.affaince.subscription.common.idconverter.LocalDateTimeToStringConvert
 import com.affaince.subscription.common.idconverter.LocalDateToStringConverter;
 import com.affaince.subscription.common.idconverter.StringToLocalDateConverter;
 import com.affaince.subscription.common.idconverter.StringToLocalDateTimeConverter;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.verifier.domains.subscriber.repository.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,12 +73,22 @@ public class SubscriberMongoConfiguration {
                                          @Value("${view.db.subscriber.name}") String dbName,
                                          @Value("${affaince.db.username}") String username,
                                          @Value("${affaince.db.password}") String password) {
+        final MongoClientOptions options = MongoClientOptions.builder()
+                .threadsAllowedToBlockForConnectionMultiplier(2)
+                .connectionsPerHost(10)
+                .connectTimeout(15000)
+                .maxWaitTime(15000)
+                .socketTimeout(15000)
+                .heartbeatConnectTimeout(5000)
+                .minHeartbeatFrequency(1000)
+                .build();
+
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
                 + port
                 + "/" +
-                dbName);
+                dbName,MongoClientOptions.builder(options));
     }
 
     @Bean //(name="SubscriberMongoDbFactory")

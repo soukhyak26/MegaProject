@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by mandar on 5/18/2017.
  */
-@Document(collection="DeliveryCostAccountView")
+@Document(collection = "DeliveryCostAccountView")
 public class DeliveryCostAccountView {
     @Id
     private CompositeDeliveryId compositeDeliveryId;
@@ -28,21 +28,23 @@ public class DeliveryCostAccountView {
     }
 
     public DeliveryCostAccountView(String compositeDeliveryId, String subscriberId, String subscriptionId, int deliverySequence, double deliveryAmount, LocalDate deliveryDate) {
-        this.compositeDeliveryId = new CompositeDeliveryId(compositeDeliveryId,subscriberId,subscriptionId);
+        this.compositeDeliveryId = new CompositeDeliveryId(compositeDeliveryId, subscriberId, subscriptionId);
         this.subscriptionId = subscriptionId;
         this.deliverySequence = deliverySequence;
         this.deliveryAmount = deliveryAmount;
-        this.deliveryDate=deliveryDate;
+        this.deliveryDate = deliveryDate;
     }
 
     public void credit(double amount) {
         this.deliveryAmount += amount;
     }
-    public void creditToPaymentReceived( double payment){
+
+    public void creditToPaymentReceived(double payment) {
         paymentReceived += payment;
     }
+
     public void debit(double amount) {
-        this.deliveryAmount  -= amount;
+        this.deliveryAmount -= amount;
     }
 
     public CompositeDeliveryId getCompositeDeliveryId() {
@@ -68,8 +70,9 @@ public class DeliveryCostAccountView {
     public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
-    public void setOrOverride(double amount){
-        this.deliveryAmount= amount;
+
+    public void setOrOverride(double amount) {
+        this.deliveryAmount = amount;
     }
 
 }

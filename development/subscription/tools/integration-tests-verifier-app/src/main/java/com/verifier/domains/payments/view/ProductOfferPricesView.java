@@ -1,8 +1,7 @@
 package com.verifier.domains.payments.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ProductPricingCategory;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.ProductPricingCategory;
 import com.affaince.subscription.common.vo.ProductwisePriceBucketId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -22,10 +21,10 @@ public class ProductOfferPricesView {
     private ProductwisePriceBucketId productwisePriceBucketId;
     private ProductPricingCategory productPricingCategory;
     private double offerPriceOrPercent;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+   @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime fromDate;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+   @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime toDate;
 

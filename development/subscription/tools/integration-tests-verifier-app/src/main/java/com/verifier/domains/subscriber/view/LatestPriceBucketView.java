@@ -1,8 +1,7 @@
 package com.verifier.domains.subscriber.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
@@ -19,7 +18,7 @@ public class LatestPriceBucketView {
     private String productId;
     private String priceBucketId;
     private double offeredPricePerUnit;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+   @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime currentPriceDate;
 

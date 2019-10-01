@@ -2,7 +2,6 @@ package com.verifier.domains.business.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
 import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.LocalDate;
@@ -15,6 +14,7 @@ public class BusinessAccountView {
     @Id
     private String businessAccountId;
     private String merchantId;
+
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
@@ -27,15 +27,17 @@ public class BusinessAccountView {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateForProvision;
 
-    private double defaultPercentFixedExpensePerUnitPrice =1.0;
-    private double defaultPercentVariableExpensePerUnitPrice=1.0;
+    private double defaultPercentFixedExpensePerUnitPrice = 1.0;
+    private double defaultPercentVariableExpensePerUnitPrice = 1.0;
     private long registeredProductCount;
 
-    public BusinessAccountView(){}
+    public BusinessAccountView() {
+    }
+
     public BusinessAccountView(String businessAccountId, String merchantId, LocalDate startDate, LocalDate endDate, LocalDate dateForProvision) {
         this.businessAccountId = businessAccountId;
-        this.merchantId=merchantId;
-        this.startDate=startDate;
+        this.merchantId = merchantId;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.dateForProvision = dateForProvision;
     }

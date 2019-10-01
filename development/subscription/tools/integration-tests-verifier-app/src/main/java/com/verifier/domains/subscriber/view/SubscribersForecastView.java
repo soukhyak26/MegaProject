@@ -1,8 +1,7 @@
 package com.verifier.domains.subscriber.view;
 
 import com.affaince.subscription.common.deserializer.LocalDateDeserializer;
-import com.affaince.subscription.common.serializer.LocalDateSerializer;
-import com.affaince.subscription.common.type.ForecastContentStatus;
+import com.affaince.subscription.common.serializer.LocalDateSerializer;import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.verifier.domains.subscriber.vo.SubscriberVersionId;
@@ -17,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SubscribersForecastView {
     @Id
     private SubscriberVersionId subscriberVersionId;
-    @JsonSerialize(using = LocalDateSerializer.class)
+   @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private long newSubscribers;

@@ -1,7 +1,7 @@
 package com.verifier.domains.business.view;
 
-import com.affaince.subscription.common.vo.FiscalYearConfig;
 import com.verifier.domains.business.vo.BudgetAdjustmentOptions;
+import com.verifier.domains.business.vo.FiscalYearConfig;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

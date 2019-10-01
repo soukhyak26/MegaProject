@@ -1,10 +1,7 @@
 package com.verifier.config;
 
 import com.affaince.subscription.common.idconverter.*;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.verifier.domains.product.repository.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,12 +67,22 @@ public class ProductMongoConfiguration {
                                          @Value("${view.db.product.name}") String dbName,
                                          @Value("${affaince.db.username}") String username,
                                          @Value("${affaince.db.password}") String password) {
+        final MongoClientOptions options = MongoClientOptions.builder()
+                .threadsAllowedToBlockForConnectionMultiplier(2)
+                .connectionsPerHost(10)
+                .connectTimeout(15000)
+                .maxWaitTime(15000)
+                .socketTimeout(15000)
+                .heartbeatConnectTimeout(5000)
+                .minHeartbeatFrequency(1000)
+                .build();
+
         return new MongoClientURI("mongodb://" /*+ username + ":" + password + "@" */
                 + host
                 + ":"
                 + port
                 + "/" +
-                dbName);
+                dbName,MongoClientOptions.builder(options));
     }
 
     @Bean //(name="productMongoDbFactory")
