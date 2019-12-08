@@ -22,6 +22,9 @@ function() {
   var platform_deliverydispatch_port = karate.properties['domains.deliverydispatch.server.command.port'];
   var read_deliverydispatch_port = karate.properties['domains.deliverydispatch.server.query.port'];
 
+  var platform_fulfillment_port= karate.properties['domains.fulfillment.server.command.port'];
+  var read_fulfillment_port = karate.properties['domains.fulfillment.server.query.port'];
+
   var env = karate.env;
     if (!env) { env = 'web'; }
   if (!platform_business_port) {
@@ -71,6 +74,12 @@ function() {
   if(!read_deliverydispatch_port ){
     read_deliverydispatch_port = karate.env == 'web'? 5060 : 5070;
   }
+  if(!platform_fulfillment_port ){
+    platform_fulfillment_port= karate.env == 'web' ? 9200 : 8080;
+  }
+  if(!read_fulfillment_port ){
+    read_fulfillment_port = karate.env == 'web'? 5060 : 5070;
+  }
 
 /* start - The code for setting global date variables to be used across features/jsons */
 /* end - The code for setting global date variables to be used across features/jsons */
@@ -89,6 +98,8 @@ function() {
                  sysDateReadUrl: protocol + '://127.0.0.1:' + read_sysdate_port,
                  platformDeliveryDispatchUrl : protocol + '://127.0.0.1:' + platform_deliverydispatch_port,
                  deliveryDispatchReadUrl :  protocol + '://127.0.0.1:' + read_deliverydispatch_port,
+                 platformFulfillmentUrl : protocol + '://127.0.0.1:' + platform_fulfillment_port,
+                 fulfillmentReadUrl :  protocol + '://127.0.0.1:' + read_fulfillment_port,
 
                  };
   var result = karate.callSingle('classpath:domains/common/date.js', config);

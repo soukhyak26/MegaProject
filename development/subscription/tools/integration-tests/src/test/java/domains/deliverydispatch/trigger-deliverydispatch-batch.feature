@@ -35,8 +35,8 @@ When method put
 Then status 200
 
 Scenario: Trigger Delivery Dispatch batch
-Given url platformDeliveryDispatchUrl
-And path 'batch/deliver/trigger'
+Given url platformFulfillmentUrl
+And path 'batch/deliver/triggertest'
 And request {}
 When method post
 Then status 200

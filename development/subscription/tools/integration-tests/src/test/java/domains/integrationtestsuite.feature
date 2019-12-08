@@ -50,6 +50,9 @@ Scenario: introduce wait time
 Scenario:Product opening price setting and verification
 * call read('classpath:domains/product/openingprice/product-openingprice-verifier.feature')
 
+Scenario: Order Creation and verification
+* call read('classpath:domains/inventory/inventory-verifier.feature')
+
 Scenario: introduce wait time
 * call read('classpath:domains/common/introduce-wait-cycles.feature')
 

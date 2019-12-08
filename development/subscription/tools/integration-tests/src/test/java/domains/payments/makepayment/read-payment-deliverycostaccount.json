@@ -7,7 +7,7 @@
     },
     "subscriptionId": "#notnull",
     "deliverySequence": 1,
-    "deliveryAmount": 230.0,
+    "deliveryAmount": 0.0,
     "paymentReceived": 230.0,
     "deliveryDate": "#notnull"
   },
@@ -19,7 +19,7 @@
     },
     "subscriptionId": "#notnull",
     "deliverySequence": 2,
-    "deliveryAmount": 230.0,
+    "deliveryAmount": 0.0,
     "paymentReceived": 230.0,
     "deliveryDate": "#notnull"
   },
@@ -31,7 +31,7 @@
     },
     "subscriptionId": "#notnull",
     "deliverySequence": 3,
-    "deliveryAmount": 230.0,
+    "deliveryAmount": 138.0,
     "paymentReceived": 92.0,
     "deliveryDate": "#notnull"
   },

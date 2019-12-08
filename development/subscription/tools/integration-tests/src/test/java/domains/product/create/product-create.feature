@@ -33,6 +33,23 @@ Then status 201
 
 * def productId1 = response.productId
 
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario:
+Given url platformProductUrl
+And path 'product/config/' + productId1
+And request read('classpath:domains/product/create/configrequest.json')
+When method POST
+Then status 201
+
+
 Scenario:
 Given url platformProductUrl
 And path 'product/register'
@@ -42,3 +59,19 @@ When method post
 Then status 201
 
 * def productId2 = response.productId
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
+Scenario:
+Given url platformProductUrl
+And path 'product/config/' + productId2
+And request read('classpath:domains/product/create/configrequest.json')
+When method POST
+Then status 201
