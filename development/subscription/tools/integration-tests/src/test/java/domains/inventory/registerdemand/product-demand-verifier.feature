@@ -1,3 +1,4 @@
+@ignore
 Feature: Create demand file
 Scenario:
 * call read('classpath:domains/inventory/registerdemand/product-demand-create.feature')

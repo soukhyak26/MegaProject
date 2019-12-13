@@ -40,6 +40,9 @@ Scenario: introduce wait time
 Scenario: confirm subscription
 * call read('classpath:domains/subscriber/subscriptionregistration/confirm-subscription.feature')
 
+Scenario: introduce wait time
+* call read('classpath:domains/common/introduce-wait-cycles.feature')
+
 Scenario: Subscription validation
 * call read('classpath:domains/subscriber/subscriptionregistration/subscription-read.feature') subscriptionRegistrationResult.response
 
