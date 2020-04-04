@@ -5,6 +5,11 @@ import com.verifier.domains.fulfillment.repository.DispatchableDeliveryViewRepos
 import com.verifier.domains.fulfillment.repository.ProductOrderViewRepository;
 import com.verifier.domains.fulfillment.repository.ProductStockProvisionRequestProxyRepository;
 import com.verifier.domains.fulfillment.view.ProductOrderView;
+import com.verifier.domains.fulfillment.view.ProductStockProvisionRequestProxy;
+import com.verifier.domains.fulfillment.vo.OrderDetail;
+import com.verifier.domains.fulfillment.vo.ProductInventoryUpdateId;
+import com.verifier.domains.product.repository.TaggedPriceVersionsViewRepository;
+import com.verifier.domains.product.view.TaggedPriceVersionsView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +32,14 @@ public class FulfillmentController {
     private ProductOrderViewRepository productOrderViewRepository;
     private DispatchableDeliveryViewRepository dispatchableDeliveryViewRepository;
     private ProductStockProvisionRequestProxyRepository productStockProvisionRequestProxyRepository;
+    private TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository;
 
     @Autowired
-    public FulfillmentController(ProductOrderViewRepository productOrderViewRepository, DispatchableDeliveryViewRepository dispatchableDeliveryViewRepository, ProductStockProvisionRequestProxyRepository productStockProvisionRequestProxyRepository) {
+    public FulfillmentController(ProductOrderViewRepository productOrderViewRepository, DispatchableDeliveryViewRepository dispatchableDeliveryViewRepository, ProductStockProvisionRequestProxyRepository productStockProvisionRequestProxyRepository,TaggedPriceVersionsViewRepository taggedPriceVersionsViewRepository) {
         this.productOrderViewRepository = productOrderViewRepository;
         this.dispatchableDeliveryViewRepository = dispatchableDeliveryViewRepository;
         this.productStockProvisionRequestProxyRepository = productStockProvisionRequestProxyRepository;
+        this.taggedPriceVersionsViewRepository = taggedPriceVersionsViewRepository;
     }
 
 
@@ -41,4 +48,27 @@ public class FulfillmentController {
         List<ProductOrderView> views = productOrderViewRepository.findByProductOrderId_OrderDate(SysDate.now());
         return new ResponseEntity<>(views, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "feedorders")
+    public ResponseEntity<Object> feedOrders() {
+        List<ProductOrderView> views = productOrderViewRepository.findByProductOrderId_OrderDate(SysDate.now());
+        for(ProductOrderView order:views ){
+            List<OrderDetail> orders = order.getOrderDetails();
+            for(OrderDetail orderDetail: orders) {
+                ProductStockProvisionRequestProxy temp = new ProductStockProvisionRequestProxy();
+                ProductInventoryUpdateId id = new ProductInventoryUpdateId(order.getProductOrderId().getProductId(), order.getProductOrderId().getOrderDate());
+                temp.setProductInventoryUpdateId(id);
+                temp.setReceivedProductCount(orderDetail.getCount());
+                temp.setPeriodStartDate(orderDetail.getStartDate());
+                temp.setPeriodEndDate(orderDetail.getEndDate());
+
+                List<TaggedPriceVersionsView> taggedPrices = taggedPriceVersionsViewRepository.findByProductwiseTaggedPriceVersionId_ProductId(order.getProductOrderId().getProductId());
+                temp.setPurchasePricePerUnit(taggedPrices.get(0).getPurchasePricePerUnit());
+                temp.setMRP(taggedPrices.get(0).getMRP());
+                productStockProvisionRequestProxyRepository.save(temp);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
