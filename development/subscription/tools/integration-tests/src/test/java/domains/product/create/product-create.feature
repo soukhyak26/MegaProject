@@ -69,7 +69,7 @@ Scenario: introduce wait time
 Scenario: introduce wait time
 * call read('classpath:domains/common/introduce-wait-cycles.feature')
 
-Scenario:
+Scenario: configure product
 Given url platformProductUrl
 And path 'product/config/' + productId2
 And request read('classpath:domains/product/create/configrequest.json')

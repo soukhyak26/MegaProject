@@ -3,7 +3,8 @@ Feature: integration test suite covering operations in all the domains
 * configure connectTimeout = 60000
 
 Scenario: Decrement sys date
-* call read('classpath:domains/common/decrement-sysdate.feature')
+#* call read('classpath:domains/common/decrement-sysdate.feature')
+* call read('classpath:domains/common/reset-sysdate.feature')
 
 Scenario:Subscriber initial setup and verification
 * call read('classpath:domains/subscriber/subscriber-initial-setup-verifier.feature')

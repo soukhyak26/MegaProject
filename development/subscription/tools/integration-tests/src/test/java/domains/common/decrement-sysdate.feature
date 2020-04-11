@@ -12,3 +12,4 @@ And path 'sysdate/reset/previous/days'
 And request read('classpath:domains/common/update-sysdate.json')
 When method put
 Then status 200
+

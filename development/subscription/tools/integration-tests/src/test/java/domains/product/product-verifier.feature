@@ -16,4 +16,3 @@ Scenario: introduce wait time
 
 Scenario: Product forecast creation and verification
 * call read('classpath:domains/product/manualforecast/forecast-verifier.feature')
-

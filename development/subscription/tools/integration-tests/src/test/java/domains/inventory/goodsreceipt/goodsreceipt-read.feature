@@ -7,4 +7,4 @@ And path '/fulfillment/orders'
 And header Accept = 'application/json'
 When method get
 Then status 200
-And match response == read('classpath:domains/inventory/registerdemand/readresponse.json')
+And match response == read('classpath:domains/inventory/goodsreceipt/InventoryInOutRecords.json')

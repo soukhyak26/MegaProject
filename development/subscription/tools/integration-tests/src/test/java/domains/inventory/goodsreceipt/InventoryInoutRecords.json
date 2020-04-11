@@ -1,0 +1,159 @@
+[
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  },
+  {
+    "batchId" : "#notnull",
+    "purchaseDate" : "#notnull",
+    "inItemCount" : "#notnull",
+    "taggedPriceVersion" :{
+      "taggedPriceVersionId" : "#notnull",
+      "purchasePricePerUnit" : "#notnull",
+      "breakEvenPrice" : "#notnull",
+      "MRP" : "#notnull"
+    },
+    "balanceItemCount" : "#notnull",
+    "expiryDate" : "#notnull"
+  }
+
+]
