@@ -42,13 +42,10 @@ public class InventoryController {
     private final ProductConfigurationViewRepository productConfigurationViewRepository;
     private final TargetSettingViewRepository targetSettingViewRepository;
     private final ProductInventoryViewRepository productInventoryViewRepository;
-    private final PaginatedResultsRetrivalDiscoverer paginatedResultsRetrivalDiscoverer;
     private final InventoryProvisionCalendarViewRepository inventoryProvisionCalendarViewRepository;
-    private final ApplicationEventPublisher eventPublisher;
-    private final IdGenerator idGenerator;
 
     @Autowired
-    public InventoryController(ProductViewRepository productViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductForecastViewRepository productForecastViewRepository, ProductConfigurationValidator productConfigurationValidator, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductInventoryViewRepository productInventoryViewRepository, InventoryProvisionCalendarViewRepository inventoryProvisionCalendarViewRepository, PaginatedResultsRetrivalDiscoverer paginatedResultsRetrivalDiscoverer, ApplicationEventPublisher eventPublisher, IdGenerator idGenerator) {
+    public InventoryController(ProductViewRepository productViewRepository, ProductViewPagingRepository productViewPagingRepository, ProductForecastViewRepository productForecastViewRepository, ProductConfigurationValidator productConfigurationValidator, ProductConfigurationViewRepository productConfigurationViewRepository, TargetSettingViewRepository targetSettingViewRepository, ProductInventoryViewRepository productInventoryViewRepository, InventoryProvisionCalendarViewRepository inventoryProvisionCalendarViewRepository) {
         this.productViewRepository = productViewRepository;
         this.productViewPagingRepository = productViewPagingRepository;
         this.productForecastViewRepository = productForecastViewRepository;
@@ -56,9 +53,6 @@ public class InventoryController {
         this.productConfigurationViewRepository = productConfigurationViewRepository;
         this.targetSettingViewRepository = targetSettingViewRepository;
         this.productInventoryViewRepository = productInventoryViewRepository;
-        this.paginatedResultsRetrivalDiscoverer = paginatedResultsRetrivalDiscoverer;
-        this.eventPublisher = eventPublisher;
-        this.idGenerator = idGenerator;
         this.inventoryProvisionCalendarViewRepository = inventoryProvisionCalendarViewRepository;
     }
 
