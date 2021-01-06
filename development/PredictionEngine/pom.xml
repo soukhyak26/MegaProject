@@ -361,17 +361,21 @@
         </dependencies>
     </dependencyManagement>
     <repositories>
+<!--
         <repository>
             <id>spring-milestone</id>
             <name>spring milestones</name>
             <url>http://repo.spring.io/milestone/</url>
             <layout>default</layout>
         </repository>
+-->
+<!--
         <repository>
             <id>maven-hadoop</id>
             <name>Hadoop Releases</name>
             <url>https://repository.cloudera.com/content/repositories/releases/</url>
         </repository>
+-->
         <repository>
             <id>cloudera-repos</id>
             <name>Cloudera Repos</name>
