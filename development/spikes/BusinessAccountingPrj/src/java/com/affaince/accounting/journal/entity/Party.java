@@ -8,4 +8,11 @@ public class Party {
     private PartyTypes partyType;
     private ExchangeableItems itemExchanged;
     private double amountExchanged ;
+
+    public Party(String partyId, PartyTypes partyType, ExchangeableItems itemExchanged, double amountExchanged) {
+        this.partyId = partyId;
+        this.partyType = partyType;
+        this.itemExchanged = itemExchanged;
+        this.amountExchanged = amountExchanged;
+    }
 }
