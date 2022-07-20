@@ -3,8 +3,8 @@ package com.affaince.accounting.accounts;
 import com.affaince.accounting.accounts.types.AbstractLedgerAccountStereoType;
 import com.affaince.accounting.accounts.types.NominalAccount;
 
-public class ProfitAccount extends AbstractLedgerAccountStereoType implements NominalAccount {
-    public ProfitAccount(String accountId) {
+public class LossAccount extends AbstractLedgerAccountStereoType implements NominalAccount {
+    public LossAccount(String accountId) {
         super(accountId);
     }
 }

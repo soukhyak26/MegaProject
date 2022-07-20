@@ -1,9 +1,9 @@
 package com.affaince.accounting.accounts;
 
-import com.affaince.accounting.accounts.types.AbstractLedgerAccount;
-import com.affaince.accounting.accounts.types.NominalAccount;
+import com.affaince.accounting.accounts.types.AbstractLedgerAccountStereoType;
+import com.affaince.accounting.accounts.types.PersonalAccount;
 
-public class SubscriberLedgerAccount extends AbstractLedgerAccount implements NominalAccount {
+public class SubscriberLedgerAccount extends AbstractLedgerAccountStereoType implements PersonalAccount {
     public SubscriberLedgerAccount(String accountId) {
         super(accountId);
     }

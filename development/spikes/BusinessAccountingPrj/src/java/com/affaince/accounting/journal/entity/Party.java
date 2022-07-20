@@ -15,4 +15,20 @@ public class Party {
         this.itemExchanged = itemExchanged;
         this.amountExchanged = amountExchanged;
     }
+
+    public String getPartyId() {
+        return partyId;
+    }
+
+    public PartyTypes getPartyType() {
+        return partyType;
+    }
+
+    public ExchangeableItems getItemExchanged() {
+        return itemExchanged;
+    }
+
+    public double getAmountExchanged() {
+        return amountExchanged;
+    }
 }

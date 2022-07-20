@@ -1,15 +1,17 @@
 package com.affaince.accounting.accounts.types;
 
+import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
+
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class AbstractLedgerAccount {
+public abstract class AbstractLedgerAccountStereoType {
     private String accountId;
     Set<DebitEntry> debits;
     Set<CreditEntry> credits;
 
-    public AbstractLedgerAccount(String accountId) {
-        this.accountId = accountId;
+    public AbstractLedgerAccountStereoType(String accountId) {
+        this.accountId= accountId;
         AccountEntryComparator comparator = new AccountEntryComparator();
         this.debits = new TreeSet<>(comparator);
         this.credits = new TreeSet<>(comparator);
@@ -18,6 +20,7 @@ public abstract class AbstractLedgerAccount {
     public String getAccountId() {
         return accountId;
     }
+
 
     public Set<DebitEntry> getDebits() {
         return debits;

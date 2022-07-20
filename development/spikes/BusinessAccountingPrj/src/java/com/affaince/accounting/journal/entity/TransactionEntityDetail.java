@@ -1,15 +1,20 @@
 package com.affaince.accounting.journal.entity;
 
+import com.affaince.accounting.journal.qualifiers.PartyTypes;
+
+//TODO: NEED TO BE RETHOUGHT..
+// does not capture all aspects of transaction..
+// only useful in product details
 public class TransactionEntityDetail {
-    private String itemId;
+    private String entityId;
     private double ratePerUnit;
     private double quantity ;
     private String supplierId;
     private double discountInPercent;
     private String description ;
 
-    public TransactionEntityDetail(String itemId, double ratePerUnit, double quantity, String supplierId, double discountInPercent, String description) {
-        this.itemId = itemId;
+    public TransactionEntityDetail(String entityId, double ratePerUnit, double quantity, String supplierId, double discountInPercent, String description) {
+        this.entityId = entityId;
         this.ratePerUnit = ratePerUnit;
         this.quantity = quantity;
         this.supplierId = supplierId;
@@ -20,8 +25,8 @@ public class TransactionEntityDetail {
     public TransactionEntityDetail() {
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getEntityId() {
+        return entityId;
     }
 
     public double getRatePerUnit() {
