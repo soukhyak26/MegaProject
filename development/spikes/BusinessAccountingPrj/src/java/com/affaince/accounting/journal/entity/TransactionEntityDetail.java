@@ -2,9 +2,7 @@ package com.affaince.accounting.journal.entity;
 
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
-//TODO: NEED TO BE RETHOUGHT..
-// does not capture all aspects of transaction..
-// only useful in product details
+
 public class TransactionEntityDetail {
     private String entityId;
     private double ratePerUnit;

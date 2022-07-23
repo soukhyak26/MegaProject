@@ -8,18 +8,22 @@ import org.joda.time.LocalDateTime;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 
 import static java.util.Objects.requireNonNull;
-//Shall we add two parties..giver and receiver.
-//Currently source document assumes that all the transaction happen between external stakeholders and business
-//So one of the party is business
+//SourceDocument assumes that any transaction either brings money to the business or sends money by the business to some external stakeholder.
+//So it should either have a giver or the receiver as the business. It is system's responsibility to identify the representative business account.
+// representative business account can be cash, bank account, discount, profit/loss account, reward etc.
+// For each type of event the possible BUSINESS REPRESENTATIVES should be provided by the respective Event Processor.
+//When one of the party is BUSINESS, the opposite Party will be an external stakeholder.
+//Stakeholders are identified as supplier,subscriber,service provider etc.
+//The party except business should have the identifier of the stakeholder.
 
 public class SourceDocument {
     private String transactionReferenceNumber;
     private LocalDateTime dateOfTransaction;
     private double transactionAmount ;
-    private TransactionEvents transactionEvents;
+    private TransactionEvents transactionEvent;
     private TransactionEntityDetail transactionEntityDetail;
-    private Party giverParty;
-    private Party receiverParty;
+    private Participant giverParticipant;
+    private Participant receiverParticipant;
     private ModeOfTransaction modeOfTransaction;
     private String description;
 
@@ -28,10 +32,10 @@ public class SourceDocument {
         String transactionReferenceNumber;
         LocalDateTime dateOfTransaction;
         double transactionAmount ;
-        TransactionEvents transactionEvents;
+        TransactionEvents transactionEvent;
         TransactionEntityDetail transactionEntityDetail;
-        private Party giverParty;
-        private Party receiverParty;
+        private Participant giverParticipant;
+        private Participant receiverParticipant;
         ModeOfTransaction modeOfTransaction;
         private String description;
 
@@ -56,9 +60,9 @@ public class SourceDocument {
         }
 
 
-        public SourceDocumentBuilder natureOfTransaction(TransactionEvents transactionEvents) {
-            requireNonNull(transactionEvents);
-            this.transactionEvents = transactionEvents;
+        public SourceDocumentBuilder transactionEvent(TransactionEvents transactionEvent) {
+            requireNonNull(transactionEvent);
+            this.transactionEvent = transactionEvent;
             return this;
 
         }
@@ -69,22 +73,22 @@ public class SourceDocument {
 
         }
 
-        public SourceDocumentBuilder giverParty(String partyId, PartyTypes partyType, ExchangeableItems itemExchanged, double amountExchanged) {
+        public SourceDocumentBuilder giverParticipant(String partyId, PartyTypes partyType,ExchangeableItems itemExchanged, double amountExchanged) {
             requireNonNull(partyId);
             requireNonNull(partyType);
             requireNonNull(itemExchanged);
             requireNonNull(amountExchanged);
-            this.giverParty = new Party(partyId, partyType, itemExchanged, amountExchanged);
+            this.giverParticipant = new Participant(partyId, partyType,itemExchanged, amountExchanged);
             return this;
 
         }
 
-        public SourceDocumentBuilder receiverParty(String partyId, PartyTypes partyType, ExchangeableItems itemExchanged, double amountExchanged) {
+        public SourceDocumentBuilder receiverParticipant(String partyId, PartyTypes partyType,ExchangeableItems itemExchanged, double amountExchanged) {
             requireNonNull(partyId);
             requireNonNull(partyType);
             requireNonNull(itemExchanged);
             requireNonNull(amountExchanged);
-            this.receiverParty = new Party(partyId, partyType, itemExchanged, amountExchanged);
+            this.receiverParticipant = new Participant(partyId, partyType,itemExchanged, amountExchanged);
             return this;
 
         }
@@ -112,9 +116,9 @@ public class SourceDocument {
         this.transactionReferenceNumber=sourceDocumentBuilder.transactionReferenceNumber;
         this.dateOfTransaction=sourceDocumentBuilder.dateOfTransaction;
         this.modeOfTransaction=sourceDocumentBuilder.modeOfTransaction;
-        this.transactionEvents = sourceDocumentBuilder.transactionEvents;
-        this.giverParty=sourceDocumentBuilder.giverParty;
-        this.receiverParty=sourceDocumentBuilder.receiverParty;
+        this.transactionEvent = sourceDocumentBuilder.transactionEvent;
+        this.giverParticipant =sourceDocumentBuilder.giverParticipant;
+        this.receiverParticipant =sourceDocumentBuilder.receiverParticipant;
         this.transactionAmount=sourceDocumentBuilder.transactionAmount;
         this.transactionEntityDetail=sourceDocumentBuilder.transactionEntityDetail;
     }
@@ -134,20 +138,20 @@ public class SourceDocument {
         return transactionAmount;
     }
 
-    public TransactionEvents getNatureOfTransaction() {
-        return transactionEvents;
+    public TransactionEvents getTransactionEvent() {
+        return transactionEvent;
     }
 
     public TransactionEntityDetail getTransactionEntityDetail() {
         return transactionEntityDetail;
     }
 
-    public Party getGiverParty() {
-        return giverParty;
+    public Participant getGiverParticipant() {
+        return giverParticipant;
     }
 
-    public Party getReceiverParty() {
-        return receiverParty;
+    public Participant getReceiverParticipant() {
+        return receiverParticipant;
     }
 
     public ModeOfTransaction getModeOfTransaction() {

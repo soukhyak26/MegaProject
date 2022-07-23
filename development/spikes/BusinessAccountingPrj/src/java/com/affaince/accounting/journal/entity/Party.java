@@ -5,15 +5,15 @@ import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
 public class Party {
     private String partyId;
+    private String accountId;
     private PartyTypes partyType;
-    private ExchangeableItems itemExchanged;
-    private double amountExchanged ;
 
-    public Party(String partyId, PartyTypes partyType, ExchangeableItems itemExchanged, double amountExchanged) {
+
+
+    public Party(String partyId, String accountId,PartyTypes partyType) {
         this.partyId = partyId;
         this.partyType = partyType;
-        this.itemExchanged = itemExchanged;
-        this.amountExchanged = amountExchanged;
+        this.accountId=accountId;
     }
 
     public String getPartyId() {
@@ -24,11 +24,7 @@ public class Party {
         return partyType;
     }
 
-    public ExchangeableItems getItemExchanged() {
-        return itemExchanged;
-    }
-
-    public double getAmountExchanged() {
-        return amountExchanged;
+    public String getAccountId() {
+        return accountId;
     }
 }

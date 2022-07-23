@@ -1,27 +1,29 @@
 package com.affaince.accounting.journal.qualifiers;
 
 public enum PartyTypes {
-    SUPPLIER_OF_GOODS(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    SERVICE_PROVIDER(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    SUBSCRIBER(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    SUBSCRIBER_REWARDS(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT),
-    MERCHANT(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    BUSINESS_CAPITAL(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    BUSINESS_GOODS(AccountQualifiers.REAL_LEDGER_ACCOUNT),
-    BUSINESS_BANK_ACCOUNT(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    DISTRIBUTION_SUPPLIER(AccountQualifiers.PERSONAL_LEDGER_ACCOUNT),
-    EMPLOYEE_SALARY(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT),
-    OWNER_OF_PREMISE_RENTED(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT),
-    TAX_AUTHORITY(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT),
-    FIXED_ASSETS(AccountQualifiers.REAL_LEDGER_ACCOUNT),
+    SUPPLIER_OF_GOODS(AccountIdentifier.SUPPLIER_OF_GOODS_ACCOUNT),
+    SERVICE_PROVIDER(AccountIdentifier.SERVICE_PROVIDER_ACCOUNT),
+    SUBSCRIBER(AccountIdentifier.SUBSCRIBER_ACCOUNT),
+    DISTRIBUTION_SUPPLIER(AccountIdentifier.DISTRIBUTION_SUPPLIER_ACCOUNT),
+    MERCHANT(AccountIdentifier.MERCHANT_ACCOUNT),
+    TAX_AUTHORITY(AccountIdentifier.TAX_ACCOUNT),
+    OWNER_OF_PREMISE_RENTED(AccountIdentifier.OWNER_OF_PREMISE_RENTED_ACCOUNT),
+
+    SUBSCRIBER_REWARDS(AccountIdentifier.SUBSCRIBER_REWARDS_ACCOUNT),
+    BUSINESS_CAPITAL(AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT),
+    BUSINESS_GOODS(AccountIdentifier.BUSINESS_PURCHASE_ACCOUNT),
+    BUSINESS_BANK_ACCOUNT(AccountIdentifier.BUSINESS_BANK_ACCOUNT),
+    EMPLOYEE(AccountIdentifier.EMPLOYEE_SALARY_ACCOUNT),
+    FIXED_ASSETS(AccountIdentifier.FIXED_ASSETS_ACCOUNT),
     BUSINESS(null);
 
-    private AccountQualifiers accountQualifiers;
-    PartyTypes(AccountQualifiers accountQualifiers){
-        this.accountQualifiers = accountQualifiers;
+    private AccountIdentifier accountIdentifier;
+
+    PartyTypes(AccountIdentifier accountIdentifier) {
+        this.accountIdentifier = accountIdentifier;
     }
 
-    public AccountQualifiers getAccountQualifiers() {
-        return accountQualifiers;
+    public AccountIdentifier getAccountIdentifier() {
+        return accountIdentifier;
     }
 }

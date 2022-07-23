@@ -4,21 +4,23 @@ import com.affaince.accounting.accounts.types.LedgerAccount;
 import com.affaince.accounting.accounts.types.NominalAccount;
 import com.affaince.accounting.accounts.types.PersonalAccount;
 import com.affaince.accounting.accounts.types.RealAccount;
-import com.affaince.accounting.db.DatabaseSimulator;
+import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.journal.entity.*;
+import com.affaince.accounting.journal.processor.contract.JournalizingProcessor;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
 public class DefaultJournalizingProcessor implements JournalizingProcessor {
+
     @Override
     public void processJournalEntry(SourceDocument sourceDocument) {
 
     }
 
 
-   public JournalEntry.JournalEntryBuilder processJournalEntryBuildingRules (Party giverParty, LedgerAccount giverAccount, Party receiverParty, LedgerAccount receiverAccount,JournalEntry.JournalEntryBuilder journalEntryBuilder) throws Exception{
+   public JournalEntry.JournalEntryBuilder processJournalEntryBuildingRules (Participant giverParty, LedgerAccount giverAccount, Participant receiverParty, LedgerAccount receiverAccount, JournalEntry.JournalEntryBuilder journalEntryBuilder) throws Exception{
         if(null != giverAccount) {
             if (giverAccount instanceof PersonalAccount) {
                 //debit the receiver, credit the giver
@@ -63,8 +65,8 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
         AccountQualifiers expectedReceiverAccountQualifier = expectedReceiver.getAccountQualifiers();
 
         // now find actual giver and receiver, one of them may be BUSINESS
-        Party actualGiverParty = sourceDocument.getGiverParty();
-        Party actualReceiverParty = sourceDocument.getReceiverParty();
+        Participant actualGiverParty = sourceDocument.getGiverParticipant();
+        Participant actualReceiverParty = sourceDocument.getReceiverParticipant();
 
         PartyTypes actualGiverPartyType = actualGiverParty.getPartyType();
         AccountQualifiers actualGiverAccountQualifier = actualGiverPartyType.getAccountQualifiers();
@@ -77,11 +79,11 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
 
         //for now lets assume that one of the account qualifier is null
         if (actualGiverAccountQualifier != null && actualGiverAccountQualifier == expectedGiverAccountQualifier) {
-            giverAccount = DatabaseSimulator.searchLedgerAccount(actualGiverParty.getPartyId(), actualGiverAccountQualifier);
+            giverAccount = AccountDatabaseSimulator.searchLedgerAccount(actualGiverParty.getPartyId(), actualGiverAccountQualifier);
 
         }
         if (actualReceiverAccountQualifier != null && actualReceiverAccountQualifier == expectedReceiverAccountQualifier) {
-            receiverAccount = DatabaseSimulator.searchLedgerAccount(actualReceiverParty.getPartyId(), actualReceiverAccountQualifier);
+            receiverAccount = AccountDatabaseSimulator.searchLedgerAccount(actualReceiverParty.getPartyId(), actualReceiverAccountQualifier);
         }
         try {
             journalEntryBuilder = processJournalEntryBuildingRules(actualGiverParty, giverAccount, actualReceiverParty, receiverAccount, journalEntryBuilder);

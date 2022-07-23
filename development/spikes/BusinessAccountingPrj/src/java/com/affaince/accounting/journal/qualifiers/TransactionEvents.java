@@ -2,36 +2,22 @@ package com.affaince.accounting.journal.qualifiers;
 
 public enum TransactionEvents {
     // capital investment - no exception
-    CAPITAL_INVESTMENT(PartyTypes.MERCHANT, PartyTypes.BUSINESS_BANK_ACCOUNT),
+    CAPITAL_INVESTMENT,
     //purchase is on credit so should not have exception situation
-    GOODS_PURCHASE_BY_BUSINESS(PartyTypes.SUPPLIER_OF_GOODS, PartyTypes.BUSINESS_GOODS),
-    PAYMENT_MADE_TO_SUPPLIER(PartyTypes.BUSINESS_BANK_ACCOUNT,PartyTypes.SUPPLIER_OF_GOODS),
+    GOODS_PURCHASE_BY_BUSINESS,
+    PAYMENT_MADE_TO_SUPPLIER,
     //delivery should enable debiting bank account by eq. amount. so should not have exceptional situation
-    GOODS_DELIVERY_TO_SUBSCRIBER(PartyTypes.SUPPLIER_OF_GOODS, PartyTypes.BUSINESS_GOODS),
+    GOODS_DELIVERY_TO_SUBSCRIBER,
     //The invoice may have discount component by the service provider
-    SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER(PartyTypes.SERVICE_PROVIDER,PartyTypes.BUSINESS_BANK_ACCOUNT),
-    PAYMENT_RECEIVED_FROM_SUBSCRIBER(PartyTypes.SUBSCRIBER,PartyTypes.BUSINESS_BANK_ACCOUNT),
+    SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER,
+    PAYMENT_RECEIVED_FROM_SUBSCRIBER,
 
-    PAYMENT_MADE_TO_SERVICE_PROVIDER(PartyTypes.BUSINESS_BANK_ACCOUNT,PartyTypes.SERVICE_PROVIDER),
-    TAX_PAYMENT(PartyTypes.BUSINESS_BANK_ACCOUNT,PartyTypes.TAX_AUTHORITY),
-    REWARDS_OFFERED_TO_SUBSCRIBER(PartyTypes.BUSINESS_BANK_ACCOUNT,PartyTypes.SUBSCRIBER_REWARDS),
-    REWARDS_REDEEMED_BY_SUBSCRIBER(PartyTypes.SUBSCRIBER_REWARDS,PartyTypes.BUSINESS_BANK_ACCOUNT),
-    PAYMENT_OF_RENT(PartyTypes.BUSINESS_BANK_ACCOUNT,PartyTypes.OWNER_OF_PREMISE_RENTED),
-    STATIONARY_OR_FURNITURE_PURCHASE(PartyTypes.BUSINESS_BANK_ACCOUNT,PartyTypes.FIXED_ASSETS);
+    PAYMENT_MADE_TO_SERVICE_PROVIDER,
+    TAX_PAYMENT,
+    REWARDS_OFFERED_TO_SUBSCRIBER,
+    REWARDS_REDEEMED_BY_SUBSCRIBER,
+    PAYMENT_OF_RENT,
+    STATIONARY_OR_FURNITURE_PURCHASE;
 
-    private PartyTypes giver;
-    private PartyTypes receiver;
 
-    TransactionEvents(PartyTypes giver, PartyTypes receiver) {
-        this.giver = giver;
-        this.receiver = receiver;
-    }
-
-    public PartyTypes getGiver() {
-        return giver;
-    }
-
-    public PartyTypes getReceiver() {
-        return receiver;
-    }
 }
