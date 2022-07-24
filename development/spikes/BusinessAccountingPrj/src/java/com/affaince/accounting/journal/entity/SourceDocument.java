@@ -17,8 +17,8 @@ import static java.util.Objects.requireNonNull;
 //The party except business should have the identifier of the stakeholder.
 
 public class SourceDocument {
-    private String transactionReferenceNumber;
     private String merchantId;
+    private String transactionReferenceNumber;
     private LocalDateTime dateOfTransaction;
     private double transactionAmount ;
     private TransactionEvents transactionEvent;
@@ -30,8 +30,8 @@ public class SourceDocument {
 
 
     public static class SourceDocumentBuilder {
-        String transactionReferenceNumber;
         private String merchantId;
+        String transactionReferenceNumber;
         LocalDateTime dateOfTransaction;
         double transactionAmount ;
         TransactionEvents transactionEvent;
@@ -41,15 +41,15 @@ public class SourceDocument {
         ModeOfTransaction modeOfTransaction;
         private String description;
 
-        public SourceDocumentBuilder transactionReferenceNumber(String transactionReferenceNumber) {
-            requireNonNull(transactionReferenceNumber);
-            this.transactionReferenceNumber = transactionReferenceNumber;
-            return this;
-        }
-
         public SourceDocumentBuilder merchantId(String merchantId){
             requireNonNull(merchantId);
             this.merchantId = merchantId;
+            return this;
+        }
+
+        public SourceDocumentBuilder transactionReferenceNumber(String transactionReferenceNumber) {
+            requireNonNull(transactionReferenceNumber);
+            this.transactionReferenceNumber = transactionReferenceNumber;
             return this;
         }
 
@@ -81,21 +81,23 @@ public class SourceDocument {
         }
 
         public SourceDocumentBuilder giverParticipant(String partyId, PartyTypes partyType,ExchangeableItems itemExchanged, double amountExchanged) {
+            requireNonNull(merchantId);
             requireNonNull(partyId);
             requireNonNull(partyType);
             requireNonNull(itemExchanged);
             requireNonNull(amountExchanged);
-            this.giverParticipant = new Participant(partyId, partyType,itemExchanged, amountExchanged);
+            this.giverParticipant = new Participant(merchantId,partyId, partyType,itemExchanged, amountExchanged);
             return this;
 
         }
 
         public SourceDocumentBuilder receiverParticipant(String partyId, PartyTypes partyType,ExchangeableItems itemExchanged, double amountExchanged) {
+            requireNonNull(merchantId);
             requireNonNull(partyId);
             requireNonNull(partyType);
             requireNonNull(itemExchanged);
             requireNonNull(amountExchanged);
-            this.receiverParticipant = new Participant(partyId, partyType,itemExchanged, amountExchanged);
+            this.receiverParticipant = new Participant(merchantId,partyId, partyType,itemExchanged, amountExchanged);
             return this;
 
         }
@@ -120,6 +122,7 @@ public class SourceDocument {
     }
 
     private SourceDocument(SourceDocumentBuilder sourceDocumentBuilder){
+        this.merchantId=sourceDocumentBuilder.merchantId;
         this.transactionReferenceNumber=sourceDocumentBuilder.transactionReferenceNumber;
         this.dateOfTransaction=sourceDocumentBuilder.dateOfTransaction;
         this.modeOfTransaction=sourceDocumentBuilder.modeOfTransaction;
@@ -134,6 +137,9 @@ public class SourceDocument {
         return new SourceDocument(sourceDocumentBuilder);
     }
 
+    public String getMerchantId() {
+        return merchantId;
+    }
     public String getTransactionReferenceNumber() {
         return transactionReferenceNumber;
     }
@@ -170,7 +176,5 @@ public class SourceDocument {
         return description;
     }
 
-    public String getMerchantId() {
-        return merchantId;
-    }
+
 }

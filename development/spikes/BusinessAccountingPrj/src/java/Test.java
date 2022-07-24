@@ -16,14 +16,29 @@ public class Test {
         PartyDatabaseSimulator.buildDatabase();
         AccountDatabaseSimulator.buildDatabase();
         Test test = new Test();
+        System.out.println("Invest Capital");
         test.investCapital();
+        System.out.println(" receive stock of goods");
+        test.receiveStockOfGoods();
+        System.out.println(" payment in liu of goods");
+        test.paymentInLiuOfGoods();
+        System.out.println(" receive invoice of distribution services");
+        test.receiveInvoiceOfDistributionServiceAvailed();
+        System.out.println(" payment in liu of distribution services");
+        test.paymentInLiuOfDistributionService();
+        System.out.println(" goods delivered to subscriber");
+        test.goodsDeliveredToSubscriber();
+        System.out.println(" payment received from subscriber");
+        test.paymentReceivedFromSubscriber();
+        System.out.println(" goods returned by subscriber");
+        test.goodsReturnedFromSubscriber();
     }
 
     //capital investment
     public void investCapital(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("1")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("1")
                 .transactionAmount(100000000)
                 .dateOfTransaction(new LocalDateTime(2022,1,1,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
@@ -44,8 +59,8 @@ public class Test {
     //stock purchase.. by default on credit
     public void receiveStockOfGoods(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("2")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("2")
                 .transactionAmount(1000000)
                 .dateOfTransaction(new LocalDateTime(2022,1,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
@@ -67,8 +82,8 @@ public class Test {
     // supplier payment
     public void paymentInLiuOfGoods(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("3")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("3")
                 .transactionAmount(1000000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
@@ -90,8 +105,8 @@ public class Test {
     // distribution services availed.. on credit by default
     public void receiveInvoiceOfDistributionServiceAvailed(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("4")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("4")
                 .transactionAmount(100000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
@@ -114,8 +129,8 @@ public class Test {
     //payment to distribution supplier
     public void paymentInLiuOfDistributionService(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("5")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("5")
                 .transactionAmount(1000000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
@@ -137,8 +152,8 @@ public class Test {
     //as of now lets assume that it makes the business debtor
     public void paymentReceivedFromSubscriber(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("6")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("6")
                 .transactionAmount(1000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
@@ -160,8 +175,8 @@ public class Test {
     //for now lets assume that payment of the delivered goods is already received.
     public void goodsDeliveredToSubscriber(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("7")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("7")
                 .transactionAmount(1000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
@@ -184,8 +199,8 @@ public class Test {
     //for now lets assume that payment of the delivered goods is already received.
     public void goodsReturnedFromSubscriber(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .transactionReferenceNumber("8")
                 .merchantId("merchant1")
+                .transactionReferenceNumber("8")
                 .transactionAmount(1000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)

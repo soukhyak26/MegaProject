@@ -19,6 +19,7 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
         List<ParticipantAccount> receiverAccounts = accountIdentificationRulesProcessor.identifyParticipatingReceiverAccounts(sourceDocument);
 
         JournalEntry.JournalEntryBuilder journalEntryBuilder = JournalEntry.newBuilder()
+                .merchantId(sourceDocument.getMerchantId())
                 .journalFolioNumber("1")
                 .dateOfTransaction(sourceDocument.getDateOfTransaction())
                 .narration(sourceDocument.getDescription());

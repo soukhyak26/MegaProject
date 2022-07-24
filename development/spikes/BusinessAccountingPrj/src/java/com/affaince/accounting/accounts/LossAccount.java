@@ -5,7 +5,7 @@ import com.affaince.accounting.accounts.types.NominalAccount;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 
 public class LossAccount extends AbstractLedgerAccountStereoType implements NominalAccount {
-    public LossAccount(String accountId, AccountIdentifier accountIdentifier) {
-        super(accountId,accountIdentifier);
+    public LossAccount(String merchantId,String accountId, AccountIdentifier accountIdentifier) {
+        super(merchantId,accountId,accountIdentifier);
     }
 }

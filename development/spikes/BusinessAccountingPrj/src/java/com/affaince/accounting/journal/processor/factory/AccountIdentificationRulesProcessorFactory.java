@@ -28,6 +28,8 @@ public class AccountIdentificationRulesProcessorFactory {
                 return new TaxPaymentEventProcessor();
             case PAYMENT_OF_RENT:
                 return new PremiseRentPaymentEventProcessor();
+            case GOODS_RETURN_FROM_SUBSCRIBER:
+                return new SalesReturnEventProcessor();
 
         }
         return null;

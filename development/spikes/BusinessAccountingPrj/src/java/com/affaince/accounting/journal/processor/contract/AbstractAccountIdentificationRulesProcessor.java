@@ -35,7 +35,7 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
             System.out.println("Not a valid scenario");
         }
         if(null != giverParticipant.getPartyId() || giverParticipant.getPartyType() != PartyTypes.BUSINESS) {
-            Party giverParty = PartyDatabaseSimulator.searchByPartyId(giverParticipant.getPartyId());
+            Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),giverParticipant.getPartyId());
             String giverAccountId = giverParty.getAccountId();
             ParticipantAccount participantGiverAccount= new ParticipantAccount(giverAccountId,giverParty.getPartyType().getAccountIdentifier(),giverParticipant.getAmountExchanged());
             giverAccounts.add(participantGiverAccount);
@@ -68,7 +68,7 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         }
 
         if(null != receiverParticipant.getPartyId() || receiverParticipant.getPartyType() != PartyTypes.BUSINESS) {
-            Party receiverParty = PartyDatabaseSimulator.searchByPartyId(receiverParticipant.getPartyId());
+            Party receiverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),receiverParticipant.getPartyId());
             AccountIdentifier receiverAccountIdentifier = receiverParty.getPartyType().getAccountIdentifier();
             ParticipantAccount receiverAccount = new ParticipantAccount(receiverParty.getAccountId(), receiverAccountIdentifier,receiverParticipant.getAmountExchanged());
             receiverAccounts.add(receiverAccount);

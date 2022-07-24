@@ -5,7 +5,7 @@ import com.affaince.accounting.accounts.types.NominalAccount;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 
 public class SalaryLedgerAccount extends AbstractLedgerAccountStereoType implements NominalAccount {
-    public SalaryLedgerAccount(String accountId, AccountIdentifier accountIdentifier) {
-        super(accountId,accountIdentifier);
+    public SalaryLedgerAccount(String merchantId,String accountId, AccountIdentifier accountIdentifier) {
+        super(merchantId,accountId,accountIdentifier);
     }
 }

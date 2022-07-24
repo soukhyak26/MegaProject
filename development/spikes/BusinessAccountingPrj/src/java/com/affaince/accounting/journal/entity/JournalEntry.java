@@ -7,6 +7,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 public class JournalEntry {
+    private String merchantId;
     private String journalFolioNumber;
     private LocalDateTime dateOfTransaction ;
     private List<DebitJournalEntry> debits;
@@ -16,6 +17,7 @@ public class JournalEntry {
 
 
     public static class JournalEntryBuilder {
+        private String merchantId;
         String journalFolioNumber;
         LocalDateTime dateOfTransaction ;
         List<DebitJournalEntry> debits;
@@ -26,6 +28,11 @@ public class JournalEntry {
         public JournalEntryBuilder(){
             this.debits=new ArrayList<>();
             this.credits= new ArrayList<>();
+        }
+        public JournalEntryBuilder merchantId(String merchantId){
+            requireNonNull(merchantId);
+            this.merchantId=merchantId;
+            return this;
         }
         public JournalEntryBuilder journalFolioNumber(String journalFolioNumber){
             requireNonNull(journalFolioNumber);
@@ -58,11 +65,14 @@ public class JournalEntry {
             return JournalEntry.create(this);
         }
     }
+
+
     public static JournalEntry.JournalEntryBuilder newBuilder(){
         return new JournalEntryBuilder();
     }
 
     private JournalEntry(JournalEntryBuilder journalEntryBuilder){
+       this.merchantId= journalEntryBuilder.merchantId;
        this.journalFolioNumber=journalEntryBuilder.journalFolioNumber;
        this.dateOfTransaction=journalEntryBuilder.dateOfTransaction;
        this.debits = journalEntryBuilder.debits;
@@ -77,10 +87,35 @@ public class JournalEntry {
         return ledgerFolioNumber;
     }
 
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public String getJournalFolioNumber() {
+        return journalFolioNumber;
+    }
+
+    public LocalDateTime getDateOfTransaction() {
+        return dateOfTransaction;
+    }
+
+    public List<DebitJournalEntry> getDebits() {
+        return debits;
+    }
+
+    public List<CreditJournalEntry> getCredits() {
+        return credits;
+    }
+
+    public String getNarration() {
+        return narration;
+    }
+
     @Override
     public String toString() {
         return "JournalEntry{" +
-                "journalFolioNumber='" + journalFolioNumber + '\'' +
+                "merchantId='" + merchantId + '\'' +
+                ", journalFolioNumber='" + journalFolioNumber + '\'' +
                 ", dateOfTransaction=" + dateOfTransaction +
                 ", debits=" + debits +
                 ", credits=" + credits +

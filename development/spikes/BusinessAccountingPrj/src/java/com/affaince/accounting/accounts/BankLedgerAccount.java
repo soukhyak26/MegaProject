@@ -6,7 +6,7 @@ import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 
 public class BankLedgerAccount extends AbstractLedgerAccountStereoType implements PersonalAccount {
-    public BankLedgerAccount(String accountId, AccountIdentifier accountIdentifier) {
-        super(accountId,accountIdentifier);
+    public BankLedgerAccount(String merchantId,String accountId, AccountIdentifier accountIdentifier) {
+        super(merchantId,accountId,accountIdentifier);
     }
 }

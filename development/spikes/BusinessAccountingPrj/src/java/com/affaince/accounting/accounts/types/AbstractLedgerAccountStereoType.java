@@ -7,17 +7,23 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public abstract class AbstractLedgerAccountStereoType {
+    private String merchantId;
     private String accountId;
     private AccountIdentifier accountIdentifier;
     Set<DebitEntry> debits;
     Set<CreditEntry> credits;
 
-    public AbstractLedgerAccountStereoType(String accountId,AccountIdentifier accountIdentifier) {
+    public AbstractLedgerAccountStereoType(String merchantId,String accountId,AccountIdentifier accountIdentifier) {
+        this.merchantId=merchantId;
         this.accountId= accountId;
         this.accountIdentifier = accountIdentifier;
         AccountEntryComparator comparator = new AccountEntryComparator();
         this.debits = new TreeSet<>(comparator);
         this.credits = new TreeSet<>(comparator);
+    }
+
+    public String getMerchantId() {
+        return merchantId;
     }
 
     public String getAccountId() {
