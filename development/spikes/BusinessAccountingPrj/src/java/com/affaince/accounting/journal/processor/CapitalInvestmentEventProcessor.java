@@ -1,7 +1,6 @@
 package com.affaince.accounting.journal.processor;
 
-import com.affaince.accounting.accounts.types.LedgerAccount;
-import com.affaince.accounting.db.AccountDatabaseSimulator;
+import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.processor.contract.AbstractAccountIdentificationRulesProcessor;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 
@@ -17,19 +16,20 @@ import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 // The giver should be merchant account and receiver should be Business Capital account
 public class CapitalInvestmentEventProcessor extends AbstractAccountIdentificationRulesProcessor {
 
-    public LedgerAccount getDefaultGiverAccount() {
+    public ParticipantAccount getDefaultGiverAccount(String merchantId,double amountExchanged) {
         return null;
     }
 
-    public LedgerAccount getDefaultReceiverAccount() {
-        return AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT).get(0);
+    public ParticipantAccount getDefaultReceiverAccount(String merchantId,double amountExchanged) {
+        //return AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT).get(0);
+        return new ParticipantAccount(merchantId,AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT,amountExchanged);
     }
 
-    public LedgerAccount findHiddenGiverAccount() {
+    public ParticipantAccount findHiddenGiverAccount(String merchantId,double amountExchanged) {
         return null;
     }
 
-    public LedgerAccount findHiddenReceiverAccount() {
+    public ParticipantAccount findHiddenReceiverAccount(String merchantId,double amountExchanged) {
         return null;
     }
 

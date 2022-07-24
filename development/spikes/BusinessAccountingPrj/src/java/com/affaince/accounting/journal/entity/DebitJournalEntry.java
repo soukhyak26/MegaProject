@@ -16,4 +16,12 @@ public class DebitJournalEntry {
     public double getAmount() {
         return amount;
     }
+
+    @Override
+    public String toString() {
+        return "DebitJournalEntry{" +
+                "accountId='" + accountId + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

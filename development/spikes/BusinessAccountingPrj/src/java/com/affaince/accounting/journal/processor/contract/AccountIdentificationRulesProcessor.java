@@ -1,15 +1,15 @@
 package com.affaince.accounting.journal.processor.contract;
 
-import com.affaince.accounting.accounts.types.LedgerAccount;
+import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.entity.SourceDocument;
 
 import java.util.List;
 
 public interface AccountIdentificationRulesProcessor {
-    LedgerAccount getDefaultGiverAccount();
-    LedgerAccount getDefaultReceiverAccount();
-    List<LedgerAccount> identifyParticipatingGiverAccounts(SourceDocument sourceDocument);
-    List<LedgerAccount> identifyParticipatingReceiverAccounts(SourceDocument sourceDocument);
-    public LedgerAccount findHiddenGiverAccount();
-    public LedgerAccount findHiddenReceiverAccount();
+    ParticipantAccount getDefaultGiverAccount(String merchantId,double amountExchanged);
+    ParticipantAccount getDefaultReceiverAccount(String merchantId,double amountExchanged);
+    List<ParticipantAccount> identifyParticipatingGiverAccounts(SourceDocument sourceDocument);
+    List<ParticipantAccount> identifyParticipatingReceiverAccounts(SourceDocument sourceDocument);
+    ParticipantAccount findHiddenGiverAccount(String merchantId,double amountExchanged);
+    ParticipantAccount findHiddenReceiverAccount(String merchantId,double amountExchanged);
 }

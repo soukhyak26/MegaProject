@@ -5,12 +5,12 @@ import com.affaince.accounting.journal.entity.Party;
 import com.affaince.accounting.journal.qualifiers.ExchangeableItems;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class PartyDatabaseSimulator {
 
-    private static List<Party> parties;
+    private static List<Party> parties=new ArrayList<>();
 
     public static void buildDatabase(){
         Party merchant1 = new Party("merchant1", "merchant1",PartyTypes.MERCHANT);

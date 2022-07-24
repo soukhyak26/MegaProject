@@ -76,4 +76,16 @@ public class JournalEntry {
     public String getLedgerFolioNumber() {
         return ledgerFolioNumber;
     }
+
+    @Override
+    public String toString() {
+        return "JournalEntry{" +
+                "journalFolioNumber='" + journalFolioNumber + '\'' +
+                ", dateOfTransaction=" + dateOfTransaction +
+                ", debits=" + debits +
+                ", credits=" + credits +
+                ", narration='" + narration + '\'' +
+                ", ledgerFolioNumber='" + ledgerFolioNumber + '\'' +
+                '}';
+    }
 }

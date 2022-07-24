@@ -16,4 +16,12 @@ public class CreditJournalEntry {
     public double getAmount() {
         return amount;
     }
+
+    @Override
+    public String toString() {
+        return "CreditJournalEntry{" +
+                "accountId='" + accountId + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

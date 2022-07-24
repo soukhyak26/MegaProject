@@ -18,15 +18,18 @@ public class AccountDatabaseSimulator {
     private static List<NominalAccount> nominalAccounts = new ArrayList<>();
 
     public static void buildDatabase(){
+
+        //external
         PersonalAccount merchantLedgerAccount = new MerchantLedgerAccount("merchant1",AccountIdentifier.MERCHANT_ACCOUNT);
         personalAccounts.add(merchantLedgerAccount);
 
+        //external
         PersonalAccount distributionSupplier1LedgerAccount = new ServiceProviderLedgerAccount("distributionServiceProvider1",AccountIdentifier.DISTRIBUTION_SUPPLIER_ACCOUNT);
         personalAccounts.add(distributionSupplier1LedgerAccount);
         PersonalAccount distributionSupplier2LedgerAccount = new ServiceProviderLedgerAccount("distributionServiceProvider2",AccountIdentifier.DISTRIBUTION_SUPPLIER_ACCOUNT);
         personalAccounts.add(distributionSupplier2LedgerAccount);
 
-
+        //external
         PersonalAccount subscriber1LedgerAccount = new SubscriberLedgerAccount("subscriber1",AccountIdentifier.SUBSCRIBER_ACCOUNT);
         personalAccounts.add(subscriber1LedgerAccount);
         PersonalAccount subscriber2LedgerAccount = new SubscriberLedgerAccount("subscriber2",AccountIdentifier.SUBSCRIBER_ACCOUNT);
@@ -34,7 +37,7 @@ public class AccountDatabaseSimulator {
         PersonalAccount subscriber3LedgerAccount = new SubscriberLedgerAccount("subscriber3",AccountIdentifier.SUBSCRIBER_ACCOUNT);
         personalAccounts.add(subscriber3LedgerAccount);
 
-
+        //external
         PersonalAccount supplierOfProduct1LedgerAccount = new SupplierLedgerAccount("supplierOfProduct1",AccountIdentifier.SUPPLIER_OF_GOODS_ACCOUNT);
         personalAccounts.add(supplierOfProduct1LedgerAccount);
         PersonalAccount supplierOfProduct2LedgerAccount = new SupplierLedgerAccount("supplierOfProduct2",AccountIdentifier.SUPPLIER_OF_GOODS_ACCOUNT);
@@ -42,31 +45,31 @@ public class AccountDatabaseSimulator {
         PersonalAccount supplierOfProduct3LedgerAccount = new SupplierLedgerAccount("supplierOfProduct3",AccountIdentifier.SUPPLIER_OF_GOODS_ACCOUNT);
         personalAccounts.add(supplierOfProduct3LedgerAccount);
 
-
-        PersonalAccount capitalLedgerAccount = new CapitalLedgerAccount("CAPITAL_LEDGER_ACCOUNT", AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT);
+        //business
+        PersonalAccount capitalLedgerAccount = new CapitalLedgerAccount("merchant1", AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT);
         personalAccounts.add(capitalLedgerAccount);
-        PersonalAccount bankLedgerAccount = new BankLedgerAccount("BANK_LEDGER_ACCOUNT",AccountIdentifier.BUSINESS_BANK_ACCOUNT);
+        PersonalAccount bankLedgerAccount = new BankLedgerAccount("merchant1",AccountIdentifier.BUSINESS_BANK_ACCOUNT);
         personalAccounts.add(bankLedgerAccount);
-        RealAccount cashLedgerAccount = new CashLedgerAccount("CASH_LEDGER_ACCOUNT",AccountIdentifier.BUSINESS_CASH_ACCOUNT);
+        RealAccount cashLedgerAccount = new CashLedgerAccount("merchant1",AccountIdentifier.BUSINESS_CASH_ACCOUNT);
         realAccounts.add(cashLedgerAccount);
-        RealAccount purchaseLedgerAccount = new PurchaseLedgerAccount("PURCHASE_LEDGER_ACCOUNT",AccountIdentifier.BUSINESS_PURCHASE_ACCOUNT);
+        RealAccount purchaseLedgerAccount = new PurchaseLedgerAccount("merchant1",AccountIdentifier.BUSINESS_PURCHASE_ACCOUNT);
         realAccounts.add(purchaseLedgerAccount);
-        RealAccount furnitureLedgerAccount = new FurnitureLedgerAccount("FURNITURE_LEDGER_ACCOUNT",AccountIdentifier.FIXED_ASSETS_ACCOUNT);
+        RealAccount furnitureLedgerAccount = new FurnitureLedgerAccount("merchant1",AccountIdentifier.FIXED_ASSETS_ACCOUNT);
         realAccounts.add(furnitureLedgerAccount);
 
-        NominalAccount discountLedgerAccount = new DiscountLedgerAccount("DISCOUNT_LEDGER_ACCOUNT",AccountIdentifier.ALL_PROFIT_AND_LOSS_ACCOUNTS);
+        NominalAccount discountLedgerAccount = new DiscountLedgerAccount("merchant1",AccountIdentifier.ALL_PROFIT_AND_LOSS_ACCOUNTS);
         nominalAccounts.add(discountLedgerAccount);
-        NominalAccount lossAccount = new LossAccount("LOSS_ACCOUNT",AccountIdentifier.ALL_PROFIT_AND_LOSS_ACCOUNTS);
+        NominalAccount lossAccount = new LossAccount("merchant1",AccountIdentifier.BUSINESS_LOSS_ACCOUNT);
         nominalAccounts.add(lossAccount);
-        NominalAccount profitAccount = new ProfitAccount("PROFIT_ACCOUNT",AccountIdentifier.ALL_PROFIT_AND_LOSS_ACCOUNTS);
+        NominalAccount profitAccount = new ProfitAccount("merchant1",AccountIdentifier.BUSINESS_PROFIT_ACCOUNT);
         nominalAccounts.add(profitAccount);
-        NominalAccount rentLedgerAccount = new RentLedgerAccount("RENT_LEDGER_ACCOUNT",AccountIdentifier.OWNER_OF_PREMISE_RENTED_ACCOUNT);
+        NominalAccount rentLedgerAccount = new RentLedgerAccount("merchant1",AccountIdentifier.OWNER_OF_PREMISE_RENTED_ACCOUNT);
         nominalAccounts.add(rentLedgerAccount);
-        NominalAccount rewardLedgerAccount = new RewardsLedgerAccount("REWARD_LEDGER_ACCOUNT",AccountIdentifier.SUBSCRIBER_REWARDS_ACCOUNT);
+        NominalAccount rewardLedgerAccount = new RewardsLedgerAccount("merchant1",AccountIdentifier.SUBSCRIBER_REWARDS_ACCOUNT);
         nominalAccounts.add(rentLedgerAccount);
-        NominalAccount salaryLedgerAccount = new SalaryLedgerAccount("SALARY_LEDGER_ACCOUNT",AccountIdentifier.EMPLOYEE_SALARY_ACCOUNT);
+        NominalAccount salaryLedgerAccount = new SalaryLedgerAccount("merchant1",AccountIdentifier.EMPLOYEE_SALARY_ACCOUNT);
         nominalAccounts.add(salaryLedgerAccount);
-        NominalAccount salesAccount = new SalesAccount("SALES_LEDGER_ACCOUNT",AccountIdentifier.BUSINESS_SALE_ACCOUNT);
+        NominalAccount salesAccount = new SalesAccount("merchant1",AccountIdentifier.BUSINESS_SALES_ACCOUNT);
         nominalAccounts.add(salesAccount);
     }
 

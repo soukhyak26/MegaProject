@@ -1,24 +1,23 @@
 package com.affaince.accounting.journal.processor;
 
-import com.affaince.accounting.accounts.types.LedgerAccount;
-import com.affaince.accounting.db.AccountDatabaseSimulator;
+import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.processor.contract.AbstractAccountIdentificationRulesProcessor;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 //Giver is sale account and receiver(beneficiary) is subscriber account
 public class GoodsDeliveryToSubscriberEventProcessor extends AbstractAccountIdentificationRulesProcessor {
-    public LedgerAccount getDefaultGiverAccount() {
-        return AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(AccountIdentifier.BUSINESS_SALES_ACCOUNT).get(0);
+    public ParticipantAccount getDefaultGiverAccount(String merchantId,double amountExchanged) {
+        return new ParticipantAccount(merchantId,AccountIdentifier.BUSINESS_SALES_ACCOUNT,amountExchanged);
     }
 
-    public LedgerAccount getDefaultReceiverAccount() {
+    public ParticipantAccount getDefaultReceiverAccount(String merchantId,double amountExchanged) {
         return null;
     }
 
-    public LedgerAccount findHiddenGiverAccount() {
+    public ParticipantAccount findHiddenGiverAccount(String merchantId,double amountExchanged) {
         return null;
     }
 
-    public LedgerAccount findHiddenReceiverAccount() {
+    public ParticipantAccount findHiddenReceiverAccount(String merchantId,double amountExchanged) {
         return null;
     }
 }

@@ -1,9 +1,8 @@
 package com.affaince.accounting.journal.processor.contract;
 
-import com.affaince.accounting.accounts.types.LedgerAccount;
-import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.Participant;
+import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.entity.Party;
 import com.affaince.accounting.journal.entity.SourceDocument;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
@@ -14,19 +13,9 @@ import java.util.List;
 
 public abstract class AbstractAccountIdentificationRulesProcessor implements AccountIdentificationRulesProcessor {
     @Override
-    public List<LedgerAccount> identifyParticipatingGiverAccounts(SourceDocument sourceDocument) {
+    public List<ParticipantAccount> identifyParticipatingGiverAccounts(SourceDocument sourceDocument) {
         Participant giverParticipant = sourceDocument.getGiverParticipant();
-        List<LedgerAccount> giverAccounts;
-        if(null != giverParticipant.getPartyId() || giverParticipant.getPartyType() != PartyTypes.BUSINESS) {
-            Party giverParty = PartyDatabaseSimulator.searchByPartyId(giverParticipant.getPartyId());
-            String giverAccountId = giverParty.getAccountId();
-            giverAccounts= AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(giverAccountId,giverParty.getPartyType().getAccountIdentifier());
-        }else{
-            LedgerAccount giverAccount = getDefaultGiverAccount();
-            giverAccounts = new ArrayList<>() ;
-            giverAccounts.add(giverAccount);
-        }
-
+        List<ParticipantAccount> giverAccounts=new ArrayList<>() ;;
         double transactionAmount = sourceDocument.getTransactionAmount();
         double giverTransactionAmount = giverParticipant.getAmountExchanged();
 
@@ -34,7 +23,7 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         //if the known giver has given 3000 but transaction amount is 5000
         //it means there are more than one givers
         if(transactionAmount > giverTransactionAmount){
-            LedgerAccount hiddenGiverAccount = findHiddenGiverAccount();
+            ParticipantAccount hiddenGiverAccount = findHiddenGiverAccount(sourceDocument.getMerchantId(),(transactionAmount-giverTransactionAmount));
             if( null != hiddenGiverAccount){
                 giverAccounts.add(hiddenGiverAccount);
             }
@@ -43,37 +32,30 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         // this should be invalid scenario.. adn should cause exception
         // transaction amount has to be same or grater than giver as well as receiver.
         else if(transactionAmount < giverTransactionAmount){
-        /* LedgerAccount hiddenReceiverAccount = findHiddenReceiverAccount();
-            if( null != hiddenReceiverAccount){
-                giverAccounts.add(hiddenGiverAccount);
-            }*/
+            System.out.println("Not a valid scenario");
+        }
+        if(null != giverParticipant.getPartyId() || giverParticipant.getPartyType() != PartyTypes.BUSINESS) {
+            Party giverParty = PartyDatabaseSimulator.searchByPartyId(giverParticipant.getPartyId());
+            String giverAccountId = giverParty.getAccountId();
+            ParticipantAccount participantGiverAccount= new ParticipantAccount(giverAccountId,giverParty.getPartyType().getAccountIdentifier(),giverParticipant.getAmountExchanged());
+            giverAccounts.add(participantGiverAccount);
+        }else{
+            ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument.getMerchantId(),giverParticipant.getAmountExchanged());
+            giverAccounts.add(giverAccount);
         }
         return giverAccounts;
     }
 
     @Override
-    public List<LedgerAccount> identifyParticipatingReceiverAccounts(SourceDocument sourceDocument) {
-
+    public List<ParticipantAccount> identifyParticipatingReceiverAccounts(SourceDocument sourceDocument) {
         Participant receiverParticipant = sourceDocument.getReceiverParticipant();
-        List<LedgerAccount> receiverAccounts;
-        if(null != receiverParticipant.getPartyId() || receiverParticipant.getPartyType() != PartyTypes.BUSINESS) {
-            Party receiverParty = PartyDatabaseSimulator.searchByPartyId(receiverParticipant.getPartyId());
-            AccountIdentifier receiverAccountIdentifier = receiverParty.getPartyType().getAccountIdentifier();
-            receiverAccounts = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(receiverParty.getAccountId(), receiverAccountIdentifier);
-        }else{
-            LedgerAccount receiverAccount = getDefaultReceiverAccount();
-            receiverAccounts = new ArrayList<>() ;
-            receiverAccounts.add(receiverAccount);
-        }
-
         double receiverAmount = receiverParticipant.getAmountExchanged();
-
-
+        List<ParticipantAccount> receiverAccounts = new ArrayList<>() ;;
         double transactionAmount = sourceDocument.getTransactionAmount();
         //If transaction amount is more than receiver amount it means
         // additional amount is received by some hidden receiver.
         if(transactionAmount > receiverAmount){
-            LedgerAccount hiddenReceiverAccount = findHiddenReceiverAccount();
+            ParticipantAccount hiddenReceiverAccount = findHiddenReceiverAccount(sourceDocument.getMerchantId(),(transactionAmount-receiverAmount));
             if( null != hiddenReceiverAccount){
                 receiverAccounts.add(hiddenReceiverAccount);
             }
@@ -82,10 +64,17 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         //this should be invalid scenario and should cause exception
         // transaction amount has to be same or greater than giver as well as receiver.
         else if(transactionAmount < receiverAmount){
-            LedgerAccount hiddenGiverAccount = findHiddenGiverAccount();
-            if( null != hiddenGiverAccount){
-                receiverAccounts.add(hiddenGiverAccount);
-            }
+            System.out.println("Not a valid scenario");
+        }
+
+        if(null != receiverParticipant.getPartyId() || receiverParticipant.getPartyType() != PartyTypes.BUSINESS) {
+            Party receiverParty = PartyDatabaseSimulator.searchByPartyId(receiverParticipant.getPartyId());
+            AccountIdentifier receiverAccountIdentifier = receiverParty.getPartyType().getAccountIdentifier();
+            ParticipantAccount receiverAccount = new ParticipantAccount(receiverParty.getAccountId(), receiverAccountIdentifier,receiverParticipant.getAmountExchanged());
+            receiverAccounts.add(receiverAccount);
+        }else{
+            ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument.getMerchantId(),receiverParticipant.getAmountExchanged());
+            receiverAccounts.add(receiverAccount);
         }
         return receiverAccounts;
     }

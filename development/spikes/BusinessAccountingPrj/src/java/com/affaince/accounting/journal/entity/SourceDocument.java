@@ -18,6 +18,7 @@ import static java.util.Objects.requireNonNull;
 
 public class SourceDocument {
     private String transactionReferenceNumber;
+    private String merchantId;
     private LocalDateTime dateOfTransaction;
     private double transactionAmount ;
     private TransactionEvents transactionEvent;
@@ -30,6 +31,7 @@ public class SourceDocument {
 
     public static class SourceDocumentBuilder {
         String transactionReferenceNumber;
+        private String merchantId;
         LocalDateTime dateOfTransaction;
         double transactionAmount ;
         TransactionEvents transactionEvent;
@@ -45,6 +47,11 @@ public class SourceDocument {
             return this;
         }
 
+        public SourceDocumentBuilder merchantId(String merchantId){
+            requireNonNull(merchantId);
+            this.merchantId = merchantId;
+            return this;
+        }
 
         public SourceDocumentBuilder dateOfTransaction(LocalDateTime dateOfTransaction) {
             requireNonNull(dateOfTransaction);
@@ -121,6 +128,7 @@ public class SourceDocument {
         this.receiverParticipant =sourceDocumentBuilder.receiverParticipant;
         this.transactionAmount=sourceDocumentBuilder.transactionAmount;
         this.transactionEntityDetail=sourceDocumentBuilder.transactionEntityDetail;
+        this.description=sourceDocumentBuilder.description;
     }
     public static SourceDocument create(SourceDocumentBuilder sourceDocumentBuilder){
         return new SourceDocument(sourceDocumentBuilder);
@@ -160,5 +168,9 @@ public class SourceDocument {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
     }
 }
