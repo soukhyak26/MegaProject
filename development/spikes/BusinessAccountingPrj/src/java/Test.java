@@ -1,14 +1,19 @@
 import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.JournalEntry;
-import com.affaince.accounting.journal.entity.SourceDocument;
+import com.affaince.accounting.ledger.accounts.types.LedgerAccount;
+import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
+import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
+import com.affaince.accounting.transactions.SourceDocument;
 import com.affaince.accounting.journal.processor.DefaultJournalizingProcessor;
-import com.affaince.accounting.journal.processor.contract.JournalizingProcessor;
+import com.affaince.accounting.journal.processor.JournalizingProcessor;
 import com.affaince.accounting.journal.qualifiers.ExchangeableItems;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 import org.joda.time.LocalDateTime;
+
+import java.util.List;
 
 public class Test {
     public static void main(String [] args){
@@ -32,6 +37,9 @@ public class Test {
         test.paymentReceivedFromSubscriber();
         System.out.println(" goods returned by subscriber");
         test.goodsReturnedFromSubscriber();
+
+        test.printAccounts();
+
     }
 
     //capital investment
@@ -52,6 +60,9 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -74,6 +85,9 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -97,6 +111,9 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -120,6 +137,9 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -144,6 +164,9 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -167,6 +190,9 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -190,6 +216,9 @@ public class Test {
         try {
             JournalEntry journalEntry =journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -214,8 +243,18 @@ public class Test {
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
             System.out.println(journalEntry);
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+
         }catch(Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    public void printAccounts(){
+        List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts();
+        for(LedgerAccount account : allAccounts){
+            System.out.println(account);
         }
     }
 }

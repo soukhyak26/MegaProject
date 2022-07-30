@@ -1,6 +1,6 @@
 package com.affaince.accounting.db;
 
-import com.affaince.accounting.journal.entity.Party;
+import com.affaince.accounting.transactions.Party;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
 import java.util.ArrayList;

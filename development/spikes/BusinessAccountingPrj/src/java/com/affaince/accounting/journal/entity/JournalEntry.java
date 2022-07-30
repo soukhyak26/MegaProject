@@ -7,22 +7,24 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 public class JournalEntry {
-    private String merchantId;
-    private String journalFolioNumber;
-    private LocalDateTime dateOfTransaction ;
-    private List<DebitJournalEntry> debits;
-    private List<CreditJournalEntry> credits;
-    private String narration;
+    private final String merchantId;
+    private final String journalFolioNumber;
+    private final String transactionReferenceNumber;
+    private final LocalDateTime dateOfTransaction ;
+    private final List<DebitJournalEntry> debits;
+    private final List<CreditJournalEntry> credits;
+    private final String narration;
     private String ledgerFolioNumber;
 
 
     public static class JournalEntryBuilder {
         private String merchantId;
-        String journalFolioNumber;
-        LocalDateTime dateOfTransaction ;
-        List<DebitJournalEntry> debits;
-        List<CreditJournalEntry> credits;
-        String narration;
+        private String journalFolioNumber;
+        private String transactionReferenceNumber;
+        private LocalDateTime dateOfTransaction ;
+        private final List<DebitJournalEntry> debits;
+        private final List<CreditJournalEntry> credits;
+        private String narration;
 
 
         public JournalEntryBuilder(){
@@ -39,6 +41,12 @@ public class JournalEntry {
             this.journalFolioNumber=journalFolioNumber;
             return this;
         }
+        public JournalEntryBuilder transactionReferenceNumber(String transactionReferenceNumber){
+            requireNonNull(transactionReferenceNumber);
+            this.transactionReferenceNumber=transactionReferenceNumber;
+            return this;
+        }
+
         public JournalEntryBuilder dateOfTransaction(LocalDateTime dateOfTransaction){
             requireNonNull(dateOfTransaction);
             this.dateOfTransaction=dateOfTransaction;
@@ -74,6 +82,7 @@ public class JournalEntry {
     private JournalEntry(JournalEntryBuilder journalEntryBuilder){
        this.merchantId= journalEntryBuilder.merchantId;
        this.journalFolioNumber=journalEntryBuilder.journalFolioNumber;
+       this.transactionReferenceNumber=journalEntryBuilder.transactionReferenceNumber;
        this.dateOfTransaction=journalEntryBuilder.dateOfTransaction;
        this.debits = journalEntryBuilder.debits;
        this.credits=journalEntryBuilder.credits;
@@ -111,11 +120,17 @@ public class JournalEntry {
         return narration;
     }
 
+    public String getTransactionReferenceNumber() {
+        return transactionReferenceNumber;
+    }
+
+
     @Override
     public String toString() {
         return "JournalEntry{" +
                 "merchantId='" + merchantId + '\'' +
                 ", journalFolioNumber='" + journalFolioNumber + '\'' +
+                ", transactionReferenceNumber='" + transactionReferenceNumber + '\'' +
                 ", dateOfTransaction=" + dateOfTransaction +
                 ", debits=" + debits +
                 ", credits=" + credits +
