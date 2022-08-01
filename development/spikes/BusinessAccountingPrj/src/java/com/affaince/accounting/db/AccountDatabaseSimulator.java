@@ -6,16 +6,12 @@ import com.affaince.accounting.ledger.accounts.types.NominalAccount;
 import com.affaince.accounting.ledger.accounts.types.PersonalAccount;
 import com.affaince.accounting.ledger.accounts.types.RealAccount;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AccountDatabaseSimulator {
     private static List<LedgerAccount> allAccounts = new ArrayList<>();
-    //private static List<RealAccount> realAccounts = new ArrayList<>();
-    //private static List<NominalAccount> nominalAccounts = new ArrayList<>();
 
     public static void buildDatabase(){
 
@@ -57,7 +53,7 @@ public class AccountDatabaseSimulator {
         RealAccount furnitureLedgerAccount = new FurnitureLedgerAccount("merchant1","merchant1",AccountIdentifier.FIXED_ASSETS_ACCOUNT);
         allAccounts.add(furnitureLedgerAccount);
 
-        NominalAccount discountLedgerAccount = new DiscountLedgerAccount("merchant1","merchant1",AccountIdentifier.ALL_PROFIT_AND_LOSS_ACCOUNTS);
+        NominalAccount discountLedgerAccount = new DiscountLedgerAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_DISCOUNT_ACCOUNT);
         allAccounts.add(discountLedgerAccount);
         NominalAccount lossAccount = new LossAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_LOSS_ACCOUNT);
         allAccounts.add(lossAccount);
@@ -66,41 +62,17 @@ public class AccountDatabaseSimulator {
         NominalAccount rentLedgerAccount = new RentLedgerAccount("merchant1","merchant1",AccountIdentifier.OWNER_OF_PREMISE_RENTED_ACCOUNT);
         allAccounts.add(rentLedgerAccount);
         NominalAccount rewardLedgerAccount = new RewardsLedgerAccount("merchant1","merchant1",AccountIdentifier.SUBSCRIBER_REWARDS_ACCOUNT);
-        allAccounts.add(rentLedgerAccount);
+        allAccounts.add(rewardLedgerAccount);
         NominalAccount salaryLedgerAccount = new SalaryLedgerAccount("merchant1","merchant1",AccountIdentifier.EMPLOYEE_SALARY_ACCOUNT);
         allAccounts.add(salaryLedgerAccount);
         NominalAccount salesAccount = new SalesAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_SALES_ACCOUNT);
         allAccounts.add(salesAccount);
+        NominalAccount businessServicesAvailedAccount = new ServicesAvailedLedgerAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT);
+        allAccounts.add(businessServicesAvailedAccount);
+        NominalAccount goodReturnedAccount = new SalesReturnAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_SALES_RETURN_ACCOUNT);
+        allAccounts.add(goodReturnedAccount);
     }
 
-/*
-    public static LedgerAccount searchLedgerAccount(String merchantId,String accountId, AccountQualifiers accountQualifier) {
-        if(accountQualifier== AccountQualifiers.PERSONAL_LEDGER_ACCOUNT){
-            return personalAccounts.stream().filter(personalAccount->personalAccount.getMerchantId().equals(merchantId) && personalAccount.getAccountId().equals(accountId)).findFirst().get();
-        }else if(accountQualifier==AccountQualifiers.REAL_LEDGER_ACCOUNT){
-            return realAccounts.stream().filter(realAccount->realAccount.getMerchantId().equals(merchantId) && realAccount.getAccountId().equals(accountId)).findFirst().get();
-        }else if(accountQualifier==AccountQualifiers.NOMINAL_LEDGER_ACCOUNT){
-            return nominalAccounts.stream().filter(nominalAccount->nominalAccount.getMerchantId().equals(merchantId) && nominalAccount.getAccountId().equals(accountId)).findFirst().get();
-        }else{
-            return null;
-        }
-    }
-*/
-
-/*
-    public static List<LedgerAccount> searchLedgerAccountsByAccountIdentifier(String merchantId,AccountIdentifier accountIdentifier) {
-            AccountQualifiers accountQualifier = accountIdentifier.getAccountQualifiers();
-        if(accountQualifier== AccountQualifiers.PERSONAL_LEDGER_ACCOUNT){
-            return personalAccounts.stream().filter(personalAccount->personalAccount.getMerchantId().equals(merchantId) && personalAccount.getAccountIdentifier()==accountIdentifier).collect(Collectors.toList());
-        }else if(accountQualifier==AccountQualifiers.REAL_LEDGER_ACCOUNT){
-            return realAccounts.stream().filter(realAccount->realAccount.getMerchantId().equals(merchantId) && realAccount.getAccountIdentifier()==accountIdentifier).collect(Collectors.toList());
-        }else if(accountQualifier==AccountQualifiers.NOMINAL_LEDGER_ACCOUNT){
-            return nominalAccounts.stream().filter(nominalAccount->nominalAccount.getMerchantId().equals(merchantId) && nominalAccount.getAccountIdentifier()==accountIdentifier).collect(Collectors.toList());
-        }else{
-            return null;
-        }
-    }
-*/
 
     public static LedgerAccount searchLedgerAccountsByAccountIdAndAccountIdentifier(String merchantId,String accountId,AccountIdentifier accountIdentifier) {
             return allAccounts.stream().filter(account->account.getMerchantId().equals(merchantId) && account.getAccountIdentifier()==accountIdentifier && account.getAccountId().equals(accountId)).findFirst().get();

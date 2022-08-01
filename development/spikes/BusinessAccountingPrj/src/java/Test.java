@@ -205,7 +205,7 @@ public class Test {
                 .transactionReferenceNumber("7")
                 .transactionAmount(1000)
                 .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
+                .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000)
                 .receiverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)

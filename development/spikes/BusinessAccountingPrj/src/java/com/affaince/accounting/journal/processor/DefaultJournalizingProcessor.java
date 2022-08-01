@@ -3,6 +3,7 @@ package com.affaince.accounting.journal.processor;
 import com.affaince.accounting.journal.entity.*;
 import com.affaince.accounting.journal.processor.events.AccountIdentificationRulesProcessor;
 import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
+import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 import com.affaince.accounting.transactions.SourceDocument;
 
@@ -33,7 +34,11 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
                 journalEntryBuilder=journalEntryBuilder.credit(new CreditJournalEntry(giverAccount.getAccountId(), giverAccount.getAccountIdentifier(),giverAccount.getAmountExchanged()));
             } else if (giverAccount.getAccountIdentifier().getAccountQualifiers()==AccountQualifiers.NOMINAL_LEDGER_ACCOUNT) {
                 //debit all expenses and losses, credit all incomes and gains
-                journalEntryBuilder=journalEntryBuilder.debit(new DebitJournalEntry(giverAccount.getAccountId(), giverAccount.getAccountIdentifier(),giverAccount.getAmountExchanged()));
+                if(!giverAccount.getAccountIdentifier().isGain()) {
+                    journalEntryBuilder = journalEntryBuilder.debit(new DebitJournalEntry(giverAccount.getAccountId(), giverAccount.getAccountIdentifier(), giverAccount.getAmountExchanged()));
+                }else{
+                    journalEntryBuilder=journalEntryBuilder.credit(new CreditJournalEntry(giverAccount.getAccountId(), giverAccount.getAccountIdentifier(),giverAccount.getAmountExchanged()));
+                }
             } else {
                 throw new Exception("Wrong account type");
             }
@@ -47,7 +52,12 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
                 journalEntryBuilder=journalEntryBuilder.debit(new DebitJournalEntry(receiverAccount.getAccountId(), receiverAccount.getAccountIdentifier(),receiverAccount.getAmountExchanged()));
             } else if (receiverAccount.getAccountIdentifier().getAccountQualifiers() == AccountQualifiers.NOMINAL_LEDGER_ACCOUNT) {
                 //debit all expenses and losses, credit all incomes and gains
-                journalEntryBuilder=journalEntryBuilder.credit(new CreditJournalEntry(receiverAccount.getAccountId(), receiverAccount.getAccountIdentifier(),receiverAccount.getAmountExchanged()));
+                if(!receiverAccount.getAccountIdentifier().isGain()){
+                    journalEntryBuilder=journalEntryBuilder.debit(new DebitJournalEntry(receiverAccount.getAccountId(), receiverAccount.getAccountIdentifier(),receiverAccount.getAmountExchanged()));
+                }else{
+                    journalEntryBuilder=journalEntryBuilder.credit(new CreditJournalEntry(receiverAccount.getAccountId(), receiverAccount.getAccountIdentifier(),receiverAccount.getAmountExchanged()));
+                }
+
             } else {
                 throw new Exception("Wrong account type");
             }
