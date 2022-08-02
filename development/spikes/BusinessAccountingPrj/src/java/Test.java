@@ -1,7 +1,7 @@
 import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.JournalEntry;
-import com.affaince.accounting.ledger.accounts.types.LedgerAccount;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
 import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
 import com.affaince.accounting.transactions.SourceDocument;

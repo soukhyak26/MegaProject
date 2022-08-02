@@ -1,4 +1,4 @@
-package com.affaince.accounting.ledger.accounts.types;
+package com.affaince.accounting.ledger.accounts;
 
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import org.joda.time.LocalDateTime;

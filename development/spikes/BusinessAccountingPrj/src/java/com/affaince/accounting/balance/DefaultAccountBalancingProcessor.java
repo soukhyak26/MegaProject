@@ -1,10 +1,9 @@
 package com.affaince.accounting.balance;
 
-import com.affaince.accounting.journal.entity.CreditJournalEntry;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.accounts.types.CreditLedgerEntry;
-import com.affaince.accounting.ledger.accounts.types.DebitLedgerEntry;
-import com.affaince.accounting.ledger.accounts.types.LedgerAccount;
+import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
+import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import org.joda.time.LocalDateTime;
 
 import java.util.Set;
