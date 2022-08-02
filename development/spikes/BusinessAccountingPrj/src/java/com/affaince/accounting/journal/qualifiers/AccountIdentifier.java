@@ -21,7 +21,11 @@ public enum AccountIdentifier {
     BUSINESS_SALES_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,true),
     BUSINESS_PROFIT_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,true),
     BUSINESS_LOSS_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false),
-    BUSINESS_DISCOUNT_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false);
+    BUSINESS_DISCOUNT_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false),
+    TO_BALANCE_CARRIED_DOWN(null,false),
+    TO_BALANCE_BROUGHT_DOWN(null,false),
+    BY_BALANCE_CARRIED_DOWN(null,false),
+    BY_BALANCE_BROUGHT_DOWN(null,false);
 
     private AccountQualifiers accountQualifiers;
     private boolean isGain;

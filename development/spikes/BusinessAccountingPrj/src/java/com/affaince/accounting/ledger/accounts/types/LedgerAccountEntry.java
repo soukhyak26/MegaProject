@@ -4,7 +4,7 @@ import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import org.joda.time.LocalDateTime;
 
 
-public abstract class LedgerAccountEntry {
+public abstract class LedgerAccountEntry implements Cloneable{
     private LocalDateTime date;
     private String peerAccountNumber;
     private AccountIdentifier accountIdentifier;
@@ -19,6 +19,14 @@ public abstract class LedgerAccountEntry {
         this.amount = amount;
     }
 
+    public Object clone() {
+        try {
+            return super.clone();
+        }catch (CloneNotSupportedException ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
     public LocalDateTime getDate() {
         return date;
     }
@@ -30,7 +38,9 @@ public abstract class LedgerAccountEntry {
     public AccountIdentifier getAccountIdentifier() {
         return accountIdentifier;
     }
-
+    public void setAccountIdentifier(AccountIdentifier accountIdentifier){
+        this.accountIdentifier=accountIdentifier;
+    }
     public String getJournalFolio() {
         return journalFolio;
     }

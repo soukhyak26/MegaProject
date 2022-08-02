@@ -15,4 +15,5 @@ public class DebitLedgerEntry extends LedgerAccountEntry {
     public String toString() {
         return "DebitLedgerEntry{} " + super.toString();
     }
+
 }

@@ -17,7 +17,6 @@ import java.util.List;
 
 public class Test {
     public static void main(String [] args){
-        System.out.println("Hello World");
         PartyDatabaseSimulator.buildDatabase();
         AccountDatabaseSimulator.buildDatabase();
         Test test = new Test();
@@ -59,8 +58,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
-
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
         }catch(Exception ex){
@@ -84,7 +81,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
@@ -99,7 +95,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
                 .transactionAmount(1000000)
-                .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2022,1,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_MADE_TO_SUPPLIER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000000)
@@ -110,7 +106,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
@@ -136,7 +131,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
@@ -152,7 +146,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("5")
                 .transactionAmount(1000000)
-                .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2022,2,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_MADE_TO_SERVICE_PROVIDER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000000)
@@ -163,7 +157,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
@@ -178,7 +171,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("6")
                 .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2022,1,15,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_RECEIVED_FROM_SUBSCRIBER)
                 .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER,ExchangeableItems.MONEY,1000)
@@ -189,7 +182,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
@@ -204,7 +196,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("7")
                 .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2022,1,18,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000)
@@ -215,7 +207,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry =journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
@@ -231,7 +222,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
                 .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2022,2,10,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2022,1,22,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER)
                 .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
@@ -242,7 +233,6 @@ public class Test {
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
             JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            System.out.println(journalEntry);
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalEntry);
 
