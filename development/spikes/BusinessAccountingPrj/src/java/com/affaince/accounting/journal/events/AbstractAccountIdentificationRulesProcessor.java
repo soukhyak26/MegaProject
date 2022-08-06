@@ -1,12 +1,8 @@
-package com.affaince.accounting.journal.processor.events;
+package com.affaince.accounting.journal.events;
 
-import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.Participant;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
-import com.affaince.accounting.transactions.Party;
 import com.affaince.accounting.transactions.SourceDocument;
-import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +19,7 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         //if the known giver has given 3000 but transaction amount is 5000
         //it means there are more than one givers
         if(transactionAmount > giverTransactionAmount){
-            ParticipantAccount hiddenGiverAccount = findHiddenGiverAccount(sourceDocument.getMerchantId(),(transactionAmount-giverTransactionAmount));
+            ParticipantAccount hiddenGiverAccount = findHiddenGiverAccount(sourceDocument,(transactionAmount-giverTransactionAmount));
             if( null != hiddenGiverAccount){
                 giverAccounts.add(hiddenGiverAccount);
             }
@@ -34,15 +30,8 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         else if(transactionAmount < giverTransactionAmount){
             System.out.println("Not a valid scenario");
         }
-        if(giverParticipant.getPartyType() != PartyTypes.BUSINESS) {
-            Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),giverParticipant.getPartyId());
-            String giverAccountId = giverParty.getAccountId();
-            ParticipantAccount participantGiverAccount= new ParticipantAccount(giverAccountId,giverParty.getPartyType().getAccountIdentifier(),giverParticipant.getAmountExchanged());
-            giverAccounts.add(participantGiverAccount);
-        }else{
-            ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument.getMerchantId(),giverParticipant.getAmountExchanged());
-            giverAccounts.add(giverAccount);
-        }
+        ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument,giverParticipant.getAmountExchanged());
+        giverAccounts.add(giverAccount);
         return giverAccounts;
     }
 
@@ -55,7 +44,7 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         //If transaction amount is more than receiver amount it means
         // additional amount is received by some hidden receiver.
         if(transactionAmount > receiverAmount){
-            ParticipantAccount hiddenReceiverAccount = findHiddenReceiverAccount(sourceDocument.getMerchantId(),(transactionAmount-receiverAmount));
+            ParticipantAccount hiddenReceiverAccount = findHiddenReceiverAccount(sourceDocument,(transactionAmount-receiverAmount));
             if( null != hiddenReceiverAccount){
                 receiverAccounts.add(hiddenReceiverAccount);
             }
@@ -66,16 +55,8 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         else if(transactionAmount < receiverAmount){
             System.out.println("Not a valid scenario");
         }
-
-        if(receiverParticipant.getPartyType() != PartyTypes.BUSINESS) {
-            Party receiverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),receiverParticipant.getPartyId());
-            AccountIdentifier receiverAccountIdentifier = receiverParty.getPartyType().getAccountIdentifier();
-            ParticipantAccount receiverAccount = new ParticipantAccount(receiverParty.getAccountId(), receiverAccountIdentifier,receiverParticipant.getAmountExchanged());
-            receiverAccounts.add(receiverAccount);
-        }else{
-            ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument.getMerchantId(),receiverParticipant.getAmountExchanged());
-            receiverAccounts.add(receiverAccount);
-        }
+        ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument,receiverParticipant.getAmountExchanged());
+        receiverAccounts.add(receiverAccount);
         return receiverAccounts;
     }
 

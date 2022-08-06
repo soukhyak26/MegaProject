@@ -8,6 +8,9 @@ import org.joda.time.LocalDateTime;
 
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.util.Objects.requireNonNull;
 //SourceDocument assumes that any transaction either brings money to the business or sends money by the business to some external stakeholder.
 //So it should either have a giver or the receiver as the business. It is system's responsibility to identify the representative business account.
@@ -18,16 +21,16 @@ import static java.util.Objects.requireNonNull;
 //The party except business should have the identifier of the stakeholder.
 
 public class SourceDocument {
-    private String merchantId;
-    private String transactionReferenceNumber;
-    private LocalDateTime dateOfTransaction;
-    private double transactionAmount ;
-    private TransactionEvents transactionEvent;
-    private TransactionEntityDetail transactionEntityDetail;
-    private Participant giverParticipant;
-    private Participant receiverParticipant;
-    private ModeOfTransaction modeOfTransaction;
-    private String description;
+    private final String merchantId;
+    private final String transactionReferenceNumber;
+    private final LocalDateTime dateOfTransaction;
+    private final double transactionAmount ;
+    private final TransactionEvents transactionEvent;
+    private final List<TransactionEntityDetail> transactionEntityDetails;
+    private final Participant giverParticipant;
+    private final Participant receiverParticipant;
+    private final ModeOfTransaction modeOfTransaction;
+    private final String description;
 
 
     public static class SourceDocumentBuilder {
@@ -36,12 +39,15 @@ public class SourceDocument {
         LocalDateTime dateOfTransaction;
         double transactionAmount ;
         TransactionEvents transactionEvent;
-        TransactionEntityDetail transactionEntityDetail;
+        List<TransactionEntityDetail> transactionEntityDetails;
         private Participant giverParticipant;
         private Participant receiverParticipant;
         ModeOfTransaction modeOfTransaction;
         private String description;
 
+        public SourceDocumentBuilder(){
+            this.transactionEntityDetails= new ArrayList<>();
+        }
         public SourceDocumentBuilder merchantId(String merchantId){
             requireNonNull(merchantId);
             this.merchantId = merchantId;
@@ -62,7 +68,6 @@ public class SourceDocument {
 
 
         public SourceDocumentBuilder transactionAmount(double transactionAmount) {
-            requireNonNull(transactionAmount);
             this.transactionAmount=transactionAmount;
             return this;
         }
@@ -76,7 +81,8 @@ public class SourceDocument {
         }
 
         public SourceDocumentBuilder transactionEntityDetail(String entityId,double ratePerUnit, double quantity, String supplierId, double discountInPercent, String description) {
-            this.transactionEntityDetail = new TransactionEntityDetail(entityId, ratePerUnit, quantity, supplierId, discountInPercent, description);
+            TransactionEntityDetail transactionEntityDetail = new TransactionEntityDetail(entityId, ratePerUnit, quantity, supplierId, discountInPercent, description);
+            this.transactionEntityDetails.add(transactionEntityDetail);
             return this;
 
         }
@@ -86,7 +92,6 @@ public class SourceDocument {
             requireNonNull(partyId);
             requireNonNull(partyType);
             requireNonNull(itemExchanged);
-            requireNonNull(amountExchanged);
             this.giverParticipant = new Participant(merchantId,partyId, partyType,itemExchanged, amountExchanged);
             return this;
 
@@ -97,7 +102,6 @@ public class SourceDocument {
             requireNonNull(partyId);
             requireNonNull(partyType);
             requireNonNull(itemExchanged);
-            requireNonNull(amountExchanged);
             this.receiverParticipant = new Participant(merchantId,partyId, partyType,itemExchanged, amountExchanged);
             return this;
 
@@ -131,7 +135,7 @@ public class SourceDocument {
         this.giverParticipant =sourceDocumentBuilder.giverParticipant;
         this.receiverParticipant =sourceDocumentBuilder.receiverParticipant;
         this.transactionAmount=sourceDocumentBuilder.transactionAmount;
-        this.transactionEntityDetail=sourceDocumentBuilder.transactionEntityDetail;
+        this.transactionEntityDetails=sourceDocumentBuilder.transactionEntityDetails;
         this.description=sourceDocumentBuilder.description;
     }
     public static SourceDocument create(SourceDocumentBuilder sourceDocumentBuilder){
@@ -157,8 +161,8 @@ public class SourceDocument {
         return transactionEvent;
     }
 
-    public TransactionEntityDetail getTransactionEntityDetail() {
-        return transactionEntityDetail;
+    public List<TransactionEntityDetail> getTransactionEntityDetails() {
+        return transactionEntityDetails;
     }
 
     public Participant getGiverParticipant() {

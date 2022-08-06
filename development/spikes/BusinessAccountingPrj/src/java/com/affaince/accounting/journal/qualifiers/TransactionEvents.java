@@ -5,6 +5,7 @@ public enum TransactionEvents {
     CAPITAL_INVESTMENT,
     //purchase is on credit so should not have exception situation
     GOODS_PURCHASE_BY_BUSINESS,
+    PURCHASE_RETURN_BY_BUSINESS,
     PAYMENT_MADE_TO_SUPPLIER,
     //delivery should enable debiting bank account by eq. amount. so should not have exceptional situation
     GOODS_DELIVERY_TO_SUBSCRIBER,

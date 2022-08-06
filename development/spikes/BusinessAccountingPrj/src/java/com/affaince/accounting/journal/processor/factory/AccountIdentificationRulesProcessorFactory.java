@@ -1,8 +1,8 @@
 package com.affaince.accounting.journal.processor.factory;
 
 import com.affaince.accounting.transactions.SourceDocument;
-import com.affaince.accounting.journal.processor.events.AccountIdentificationRulesProcessor;
-import com.affaince.accounting.journal.processor.events.*;
+import com.affaince.accounting.journal.events.AccountIdentificationRulesProcessor;
+import com.affaince.accounting.journal.events.*;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 
 public class AccountIdentificationRulesProcessorFactory {

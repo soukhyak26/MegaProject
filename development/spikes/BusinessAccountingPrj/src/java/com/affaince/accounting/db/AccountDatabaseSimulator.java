@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDatabaseSimulator {
-    private static List<LedgerAccount> allAccounts = new ArrayList<>();
+    private static final List<LedgerAccount> allAccounts = new ArrayList<>();
 
     public static void buildDatabase(){
 

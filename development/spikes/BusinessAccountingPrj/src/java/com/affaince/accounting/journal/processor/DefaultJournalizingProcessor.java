@@ -1,9 +1,8 @@
 package com.affaince.accounting.journal.processor;
 
 import com.affaince.accounting.journal.entity.*;
-import com.affaince.accounting.journal.processor.events.AccountIdentificationRulesProcessor;
+import com.affaince.accounting.journal.events.AccountIdentificationRulesProcessor;
 import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
-import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 import com.affaince.accounting.transactions.SourceDocument;
 
@@ -28,7 +27,7 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
         for (ParticipantAccount giverAccount : giverAccounts) {
             if (giverAccount.getAccountIdentifier().getAccountQualifiers()== AccountQualifiers.PERSONAL_LEDGER_ACCOUNT) {
                 //debit the receiver, credit the giver
-                journalEntryBuilder=journalEntryBuilder.credit(new CreditJournalEntry(giverAccount.getAccountId(),giverAccount.getAccountIdentifier(), giverAccount.getAmountExchanged()));
+                journalEntryBuilder = journalEntryBuilder.credit(new CreditJournalEntry(giverAccount.getAccountId(), giverAccount.getAccountIdentifier(), giverAccount.getAmountExchanged()));
             } else if (giverAccount.getAccountIdentifier().getAccountQualifiers()== AccountQualifiers.REAL_LEDGER_ACCOUNT) {
                 //debit what comes IN, Credit what goes OUT
                 journalEntryBuilder=journalEntryBuilder.credit(new CreditJournalEntry(giverAccount.getAccountId(), giverAccount.getAccountIdentifier(),giverAccount.getAmountExchanged()));
