@@ -1,10 +1,11 @@
 package com.affaince.accounting.journal.subsidiaries;
 
+import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 import com.affaince.accounting.journal.qualifiers.PriceQualifiers;
 import com.affaince.accounting.transactions.TransactionEntityDetail;
+import org.joda.time.LocalDateTime;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,9 @@ public class SalesReturnBookEntry {
     private LocalDateTime dateOfCreditSaleReturn;
     private final String partyId;
     private final PartyTypes partyType;
+    private final String accountId;
+    private final AccountIdentifier accountIdentifier;
+
     private List<TransactionEntityDetail> transactionEntityDetailList;
     private String creditNoteNumber;
     private String ledgerFolioNumber;
@@ -22,11 +26,14 @@ public class SalesReturnBookEntry {
     private double totalPrice;
     private String remarks;
 
-    public static class SalesReturnBookBuilder {
+    public static class SalesReturnBookEntryBuilder {
         private String merchantId;
         private LocalDateTime dateOfCreditSaleReturn;
         private String partyId;
         private PartyTypes partyType;
+        private String accountId;
+        private AccountIdentifier accountIdentifier;
+
         private List<TransactionEntityDetail> transactionEntityDetailList;
         private String creditNoteNumber;
         private String ledgerFolioNumber;
@@ -34,48 +41,58 @@ public class SalesReturnBookEntry {
         private double totalPrice;
         private String remarks;
 
-        public SalesReturnBookBuilder(){
+        public SalesReturnBookEntryBuilder(){
             this.transactionEntityDetailList= new ArrayList<>();
             this.itemisedPrices= new HashMap<>();
         }
-        public SalesReturnBookEntry.SalesReturnBookBuilder merchantId(String merchantId){
+        public SalesReturnBookEntryBuilder merchantId(String merchantId){
             this.merchantId =merchantId;
             return this;
         }
-        public SalesReturnBookEntry.SalesReturnBookBuilder dateOfCreditSaleReturn(LocalDateTime dateOfCreditSaleReturn){
+        public SalesReturnBookEntryBuilder dateOfCreditSaleReturn(LocalDateTime dateOfCreditSaleReturn){
             this.dateOfCreditSaleReturn =dateOfCreditSaleReturn;
             return this;
         }
-        public SalesReturnBookEntry.SalesReturnBookBuilder partyId(String partyId){
+        public SalesReturnBookEntryBuilder partyId(String partyId){
             this.partyId=partyId;
             return this;
         }
-        public SalesReturnBookEntry.SalesReturnBookBuilder partyType(PartyTypes partyType){
+        public SalesReturnBookEntryBuilder partyType(PartyTypes partyType){
             this.partyType=partyType;
             return this;
         }
 
-        public SalesReturnBookEntry.SalesReturnBookBuilder transactionEntityDetailList(List<TransactionEntityDetail> transactionEntityDetailList){
+        public SalesReturnBookEntryBuilder accountId(String accountId){
+            this.accountId=accountId;
+            return this;
+        }
+
+        public SalesReturnBookEntryBuilder accountIdentifier(AccountIdentifier accountIdentifier){
+            this.accountIdentifier=accountIdentifier;
+            return this;
+        }
+
+        public SalesReturnBookEntryBuilder transactionEntityDetailList(List<TransactionEntityDetail> transactionEntityDetailList){
             this.transactionEntityDetailList=transactionEntityDetailList;
             return this;
         }
 
-        public SalesReturnBookEntry.SalesReturnBookBuilder creditNoteNumber(String creditNoteNumber){
+        public SalesReturnBookEntryBuilder creditNoteNumber(String creditNoteNumber){
             this.creditNoteNumber =creditNoteNumber;
             return this;
         }
 
-        public SalesReturnBookEntry.SalesReturnBookBuilder itemisedPrices(Map<PriceQualifiers,Double> itemisedPrices){
+        public SalesReturnBookEntryBuilder itemisedPrices(Map<PriceQualifiers,Double> itemisedPrices){
             this.itemisedPrices=itemisedPrices;
             return this;
         }
 
-        public SalesReturnBookEntry.SalesReturnBookBuilder totalPrice(double totalPrice){
+        public SalesReturnBookEntryBuilder totalPrice(double totalPrice){
             this.totalPrice=totalPrice;
             return this;
         }
 
-        public SalesReturnBookEntry.SalesReturnBookBuilder remarks(String remarks){
+        public SalesReturnBookEntryBuilder remarks(String remarks){
             this.remarks=remarks;
             return this;
         }
@@ -86,22 +103,44 @@ public class SalesReturnBookEntry {
     }
 
 
-    public static SalesReturnBookEntry.SalesReturnBookBuilder newBuilder(){
-        return new SalesReturnBookEntry.SalesReturnBookBuilder();
+    public static SalesReturnBookEntryBuilder newBuilder(){
+        return new SalesReturnBookEntryBuilder();
     }
-    public static SalesReturnBookEntry create(SalesReturnBookEntry.SalesReturnBookBuilder salesReturnBookBuilder){
-        return new SalesReturnBookEntry(salesReturnBookBuilder);
+    public static SalesReturnBookEntry create(SalesReturnBookEntryBuilder salesReturnBookEntryBuilder){
+        return new SalesReturnBookEntry(salesReturnBookEntryBuilder);
     }
-    public SalesReturnBookEntry(SalesReturnBookEntry.SalesReturnBookBuilder salesReturnBookBuilder){
-        merchantId=salesReturnBookBuilder.merchantId;
-        dateOfCreditSaleReturn =salesReturnBookBuilder.dateOfCreditSaleReturn;
-        partyId=salesReturnBookBuilder.partyId;
-        partyType=salesReturnBookBuilder.partyType;
-        transactionEntityDetailList=salesReturnBookBuilder.transactionEntityDetailList;
-        creditNoteNumber =salesReturnBookBuilder.creditNoteNumber;
-        itemisedPrices=salesReturnBookBuilder.itemisedPrices;
-        totalPrice=salesReturnBookBuilder.totalPrice;
-        remarks=salesReturnBookBuilder.remarks;
+    public SalesReturnBookEntry(SalesReturnBookEntryBuilder salesReturnBookEntryBuilder){
+        merchantId= salesReturnBookEntryBuilder.merchantId;
+        dateOfCreditSaleReturn = salesReturnBookEntryBuilder.dateOfCreditSaleReturn;
+        partyId= salesReturnBookEntryBuilder.partyId;
+        partyType= salesReturnBookEntryBuilder.partyType;
+        accountId= salesReturnBookEntryBuilder.accountId;
+        accountIdentifier= salesReturnBookEntryBuilder.accountIdentifier;
+        transactionEntityDetailList= salesReturnBookEntryBuilder.transactionEntityDetailList;
+        creditNoteNumber = salesReturnBookEntryBuilder.creditNoteNumber;
+        itemisedPrices= salesReturnBookEntryBuilder.itemisedPrices;
+        totalPrice= salesReturnBookEntryBuilder.totalPrice;
+        remarks= salesReturnBookEntryBuilder.remarks;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public String getPartyId() {
+        return partyId;
+    }
+
+    public PartyTypes getPartyType() {
+        return partyType;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public AccountIdentifier getAccountIdentifier() {
+        return accountIdentifier;
     }
 
     public LocalDateTime getDateOfCreditSaleReturn() {
@@ -135,5 +174,6 @@ public class SalesReturnBookEntry {
     public String getRemarks() {
         return remarks;
     }
+
 
 }

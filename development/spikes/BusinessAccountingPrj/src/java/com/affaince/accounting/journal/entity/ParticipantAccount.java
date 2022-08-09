@@ -1,16 +1,29 @@
 package com.affaince.accounting.journal.entity;
 
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
+import com.affaince.accounting.journal.qualifiers.PartyTypes;
 
 public class ParticipantAccount {
+    private String partyId;
+    private PartyTypes partyType;
     private String accountId;
     private AccountIdentifier accountIdentifier;
     private double amountExchanged;
 
-    public ParticipantAccount(String accountId, AccountIdentifier accountIdentifier, double amountExchanged) {
+    public ParticipantAccount(String partyId,PartyTypes partyType,String accountId, AccountIdentifier accountIdentifier, double amountExchanged) {
+        this.partyId=partyId;
+        this.partyType=partyType;
         this.accountId = accountId;
         this.accountIdentifier = accountIdentifier;
         this.amountExchanged = amountExchanged;
+    }
+
+    public String getPartyId() {
+        return partyId;
+    }
+
+    public PartyTypes getPartyType() {
+        return partyType;
     }
 
     public String getAccountId() {

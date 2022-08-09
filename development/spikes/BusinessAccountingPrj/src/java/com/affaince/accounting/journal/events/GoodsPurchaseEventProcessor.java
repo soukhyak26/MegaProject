@@ -15,14 +15,14 @@ public class GoodsPurchaseEventProcessor extends AbstractAccountIdentificationRu
         if(sourceDocument.getModeOfTransaction()== ModeOfTransaction.ON_CREDIT){
             Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
             String giverAccountId = giverParty.getAccountId();
-            return new ParticipantAccount(giverAccountId,giverParty.getPartyType().getAccountIdentifier(),sourceDocument.getGiverParticipant().getAmountExchanged());
+            return new ParticipantAccount(giverParty.getPartyId(),giverParty.getPartyType(),giverAccountId,giverParty.getPartyType().getAccountIdentifier(),sourceDocument.getGiverParticipant().getAmountExchanged());
         }else {
-            return new ParticipantAccount(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,amountExchanged);
+            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,amountExchanged);
         }
     }
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
-        return new ParticipantAccount(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_PURCHASE_ACCOUNT,amountExchanged);
+        return new ParticipantAccount(null,null,sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_PURCHASE_ACCOUNT,amountExchanged);
     }
 
     public ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged) {

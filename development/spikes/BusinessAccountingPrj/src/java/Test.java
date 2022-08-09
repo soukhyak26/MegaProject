@@ -114,7 +114,8 @@ public class Test {
         }
     }
 
-    // distribution services availed.. on credit by default
+    //distribution services availed.. on credit by default
+    //beneficiary is business,giver is service provider
     public void receiveInvoiceOfDistributionServiceAvailed(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")

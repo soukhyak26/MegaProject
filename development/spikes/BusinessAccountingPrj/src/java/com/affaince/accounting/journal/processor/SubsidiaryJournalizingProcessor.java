@@ -4,11 +4,17 @@ import com.affaince.accounting.journal.entity.JournalEntry;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.events.AccountIdentificationRulesProcessor;
 import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
+import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
+import com.affaince.accounting.journal.subsidiaries.PurchaseReturnBookEntry;
+import com.affaince.accounting.journal.subsidiaries.SaleBookEntry;
+import com.affaince.accounting.journal.subsidiaries.SalesReturnBookEntry;
 import com.affaince.accounting.transactions.SourceDocument;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -32,25 +38,90 @@ public class SubsidiaryJournalizingProcessor implements JournalizingProcessor{
             }else if(sourceDocument.getTransactionEvent() == TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER){
                 processEntryInSalesReturnBook(sourceDocument,giverAccounts,receiverAccounts);
             }
-
-
         }
-
         return null;
     }
 
-    public void processEntryInPurchaseBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+    public List<SaleBookEntry> processEntryInPurchaseBook(SourceDocument sourceDocument, List<ParticipantAccount> giverAccounts, List<ParticipantAccount> receiverAccounts){
         //in case of credit purchase from supplier.. default giver is supplier
+        List<SaleBookEntry> purchaseBookEntries = new ArrayList<>();
+        for(ParticipantAccount participantAccount: giverAccounts) {
+            SaleBookEntry.SaleBookEntryBuilder purchaseBookEntryBuilder = SaleBookEntry.newBuilder();
+            purchaseBookEntries.add(purchaseBookEntryBuilder
+                    .merchantId(sourceDocument.getMerchantId())
+                    .dateOfCreditPurchase(sourceDocument.getDateOfTransaction())
+                    .partyId(participantAccount.getPartyId())
+                    .partyType(participantAccount.getPartyType())
+                    .accountId(participantAccount.getAccountId())
+                    .accountIdentifier(participantAccount.getAccountIdentifier())
+                    .transactionEntityDetailList(sourceDocument.getTransactionEntityDetails())
+                    .inwardInvoiceNumber("XX")
+                    .totalPrice(sourceDocument.getTransactionAmount())
+                    .remarks(sourceDocument.getDescription())
+                    .build());
+        }
+        return purchaseBookEntries;
     }
 
-    public void processEntryInSalesBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+    public List<SaleBookEntry> processEntryInSalesBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+        List<SaleBookEntry> saleBookEntries = new ArrayList<>();
+        for(ParticipantAccount participantAccount: receiverAccounts) {
+            SaleBookEntry.SaleBookEntryBuilder saleBookEntryBuilder = SaleBookEntry.newBuilder();
+            saleBookEntries.add(saleBookEntryBuilder
+                    .merchantId(sourceDocument.getMerchantId())
+                    .dateOfCreditPurchase(sourceDocument.getDateOfTransaction())
+                    .partyId(participantAccount.getPartyId())
+                    .partyType(participantAccount.getPartyType())
+                    .accountId(participantAccount.getAccountId())
+                    .accountIdentifier(participantAccount.getAccountIdentifier())
+                    .transactionEntityDetailList(sourceDocument.getTransactionEntityDetails())
+                    .inwardInvoiceNumber("XX")
+                    .totalPrice(sourceDocument.getTransactionAmount())
+                    .remarks(sourceDocument.getDescription())
+                    .build());
+        }
+        return saleBookEntries;
 
     }
 
-    public void processEntryInPurchaseReturnBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+    public List<PurchaseReturnBookEntry> processEntryInPurchaseReturnBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+        List<PurchaseReturnBookEntry> purchaseReturnBookEntries = new ArrayList<>();
+        for(ParticipantAccount participantAccount: giverAccounts) {
+            PurchaseReturnBookEntry.PurchaseReturnBookEntryBuilder purchaseReturnBookEntryBuilder = PurchaseReturnBookEntry.newBuilder();
+            purchaseReturnBookEntries.add(purchaseReturnBookEntryBuilder
+                    .merchantId(sourceDocument.getMerchantId())
+                    .dateOfCreditPurchaseReturn(sourceDocument.getDateOfTransaction())
+                    .partyId(participantAccount.getPartyId())
+                    .partyType(participantAccount.getPartyType())
+                    .accountId(participantAccount.getAccountId())
+                    .accountIdentifier(participantAccount.getAccountIdentifier())
+                    .transactionEntityDetailList(sourceDocument.getTransactionEntityDetails())
+                    .debitNoteNumber("XX")
+                    .totalPrice(sourceDocument.getTransactionAmount())
+                    .remarks(sourceDocument.getDescription())
+                    .build());
+        }
+        return purchaseReturnBookEntries;
 
     }
-    public void processEntryInSalesReturnBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+    public List<SalesReturnBookEntry> processEntryInSalesReturnBook(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts){
+        List<SalesReturnBookEntry> salesReturnBookEntries = new ArrayList<>();
+        for(ParticipantAccount participantAccount: receiverAccounts) {
+            SalesReturnBookEntry.SalesReturnBookEntryBuilder salesReturnBookEntryBuilder = SalesReturnBookEntry.newBuilder();
+            salesReturnBookEntries.add(salesReturnBookEntryBuilder
+                    .merchantId(sourceDocument.getMerchantId())
+                    .dateOfCreditSaleReturn(sourceDocument.getDateOfTransaction())
+                    .partyId(participantAccount.getPartyId())
+                    .partyType(participantAccount.getPartyType())
+                    .accountId(participantAccount.getAccountId())
+                    .accountIdentifier(participantAccount.getAccountIdentifier())
+                    .transactionEntityDetailList(sourceDocument.getTransactionEntityDetails())
+                    .creditNoteNumber("XX")
+                    .totalPrice(sourceDocument.getTransactionAmount())
+                    .remarks(sourceDocument.getDescription())
+                    .build());
+        }
+        return salesReturnBookEntries;
 
     }
 }

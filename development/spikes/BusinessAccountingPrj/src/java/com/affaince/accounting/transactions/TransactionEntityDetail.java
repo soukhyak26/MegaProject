@@ -1,7 +1,6 @@
 package com.affaince.accounting.transactions;
 
 
-//misfit member currently unused.
 public class TransactionEntityDetail {
     private String entityId;
     private double ratePerUnit;

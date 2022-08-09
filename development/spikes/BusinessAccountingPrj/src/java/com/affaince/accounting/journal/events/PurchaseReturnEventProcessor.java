@@ -16,14 +16,14 @@ public class PurchaseReturnEventProcessor extends AbstractAccountIdentificationR
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument, double amountExchanged) {
         Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(), sourceDocument.getGiverParticipant().getPartyId());
         String giverAccountId = giverParty.getAccountId();
-        return new ParticipantAccount(giverAccountId, giverParty.getPartyType().getAccountIdentifier(), sourceDocument.getGiverParticipant().getAmountExchanged());
+        return new ParticipantAccount(giverParty.getPartyId(),giverParty.getPartyType(),giverAccountId, giverParty.getPartyType().getAccountIdentifier(), sourceDocument.getGiverParticipant().getAmountExchanged());
     }
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument, double amountExchanged) {
         if (sourceDocument.getModeOfTransaction() == ModeOfTransaction.ON_CREDIT) {
-            return new ParticipantAccount(sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT, amountExchanged);
         } else {
-            return new ParticipantAccount(sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
         }
     }
 

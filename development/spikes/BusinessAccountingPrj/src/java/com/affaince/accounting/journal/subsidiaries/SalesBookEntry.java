@@ -1,5 +1,6 @@
 package com.affaince.accounting.journal.subsidiaries;
 
+import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 import com.affaince.accounting.journal.qualifiers.PriceQualifiers;
 import com.affaince.accounting.transactions.TransactionEntityDetail;
@@ -15,6 +16,8 @@ public class SalesBookEntry {
     private LocalDateTime dateOfCreditSale;
     private final String partyId;
     private final PartyTypes partyType;
+    private final String accountId;
+    private final AccountIdentifier accountIdentifier;
     private List<TransactionEntityDetail> transactionEntityDetailList;
     private String outwardInvoiceNumber;
     private String ledgerFolioNumber;
@@ -22,11 +25,14 @@ public class SalesBookEntry {
     private double totalPrice;
     private String remarks;
 
-    public static class SalesBookBuilder {
+    public static class SalesBookEntryBuilder {
         private String merchantId;
         private LocalDateTime dateOfCreditSale;
         private String partyId;
         private PartyTypes partyType;
+        private String accountId;
+        private AccountIdentifier accountIdentifier;
+
         private List<TransactionEntityDetail> transactionEntityDetailList;
         private String outwardInvoiceNumber;
         private String ledgerFolioNumber;
@@ -34,49 +40,59 @@ public class SalesBookEntry {
         private double totalPrice;
         private String remarks;
 
-        public SalesBookBuilder(){
+        public SalesBookEntryBuilder(){
             this.transactionEntityDetailList= new ArrayList<>();
             this.itemisedPrices= new HashMap<>();
         }
-        public SalesBookEntry.SalesBookBuilder merchantId(String merchantId){
+        public SalesBookEntryBuilder merchantId(String merchantId){
             this.merchantId =merchantId;
             return this;
         }
 
-        public SalesBookEntry.SalesBookBuilder dateOfCreditSale(LocalDateTime dateOfCreditSale){
+        public SalesBookEntryBuilder dateOfCreditSale(LocalDateTime dateOfCreditSale){
             this.dateOfCreditSale =dateOfCreditSale;
             return this;
         }
-        public SalesBookEntry.SalesBookBuilder partyId(String partyId){
+        public SalesBookEntryBuilder partyId(String partyId){
             this.partyId=partyId;
             return this;
         }
-        public SalesBookEntry.SalesBookBuilder partyType(PartyTypes partyType){
+        public SalesBookEntryBuilder partyType(PartyTypes partyType){
             this.partyType=partyType;
             return this;
         }
 
-        public SalesBookEntry.SalesBookBuilder transactionEntityDetailList(List<TransactionEntityDetail> transactionEntityDetailList){
+        public SalesBookEntryBuilder accountId(String accountId){
+            this.accountId=accountId;
+            return this;
+        }
+
+        public SalesBookEntryBuilder accountIdentifier(AccountIdentifier accountIdentifier){
+            this.accountIdentifier=accountIdentifier;
+            return this;
+        }
+
+        public SalesBookEntryBuilder transactionEntityDetailList(List<TransactionEntityDetail> transactionEntityDetailList){
             this.transactionEntityDetailList=transactionEntityDetailList;
             return this;
         }
 
-        public SalesBookEntry.SalesBookBuilder outwardInvoiceNumber(String outwardInvoiceNumber){
+        public SalesBookEntryBuilder outwardInvoiceNumber(String outwardInvoiceNumber){
             this.outwardInvoiceNumber =outwardInvoiceNumber;
             return this;
         }
 
-        public SalesBookEntry.SalesBookBuilder itemisedPrices(Map<PriceQualifiers,Double> itemisedPrices){
+        public SalesBookEntryBuilder itemisedPrices(Map<PriceQualifiers,Double> itemisedPrices){
             this.itemisedPrices=itemisedPrices;
             return this;
         }
 
-        public SalesBookEntry.SalesBookBuilder totalPrice(double totalPrice){
+        public SalesBookEntryBuilder totalPrice(double totalPrice){
             this.totalPrice=totalPrice;
             return this;
         }
 
-        public SalesBookEntry.SalesBookBuilder remarks(String remarks){
+        public SalesBookEntryBuilder remarks(String remarks){
             this.remarks=remarks;
             return this;
         }
@@ -87,22 +103,44 @@ public class SalesBookEntry {
     }
 
 
-    public static SalesBookEntry.SalesBookBuilder newBuilder(){
-        return new SalesBookEntry.SalesBookBuilder();
+    public static SalesBookEntryBuilder newBuilder(){
+        return new SalesBookEntryBuilder();
     }
-    public static SalesBookEntry create(SalesBookEntry.SalesBookBuilder salesBookBuilder){
-        return new SalesBookEntry(salesBookBuilder);
+    public static SalesBookEntry create(SalesBookEntryBuilder salesBookEntryBuilder){
+        return new SalesBookEntry(salesBookEntryBuilder);
     }
-    public SalesBookEntry(SalesBookEntry.SalesBookBuilder salesBookBuilder){
-        merchantId=salesBookBuilder.merchantId;
-        dateOfCreditSale =salesBookBuilder.dateOfCreditSale;
-        partyId= salesBookBuilder.partyId;
-        partyType=salesBookBuilder.partyType;
-        transactionEntityDetailList=salesBookBuilder.transactionEntityDetailList;
-        outwardInvoiceNumber =salesBookBuilder.outwardInvoiceNumber;
-        itemisedPrices=salesBookBuilder.itemisedPrices;
-        totalPrice=salesBookBuilder.totalPrice;
-        remarks=salesBookBuilder.remarks;
+    public SalesBookEntry(SalesBookEntryBuilder salesBookEntryBuilder){
+        merchantId= salesBookEntryBuilder.merchantId;
+        dateOfCreditSale = salesBookEntryBuilder.dateOfCreditSale;
+        partyId= salesBookEntryBuilder.partyId;
+        partyType= salesBookEntryBuilder.partyType;
+        accountId= salesBookEntryBuilder.accountId;
+        accountIdentifier= salesBookEntryBuilder.accountIdentifier;
+        transactionEntityDetailList= salesBookEntryBuilder.transactionEntityDetailList;
+        outwardInvoiceNumber = salesBookEntryBuilder.outwardInvoiceNumber;
+        itemisedPrices= salesBookEntryBuilder.itemisedPrices;
+        totalPrice= salesBookEntryBuilder.totalPrice;
+        remarks= salesBookEntryBuilder.remarks;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public String getPartyId() {
+        return partyId;
+    }
+
+    public PartyTypes getPartyType() {
+        return partyType;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public AccountIdentifier getAccountIdentifier() {
+        return accountIdentifier;
     }
 
     public LocalDateTime getDateOfCreditSale() {

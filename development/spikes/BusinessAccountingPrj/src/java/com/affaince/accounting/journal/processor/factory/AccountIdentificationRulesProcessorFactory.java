@@ -30,6 +30,8 @@ public class AccountIdentificationRulesProcessorFactory {
                 return new PremiseRentPaymentEventProcessor();
             case GOODS_RETURN_FROM_SUBSCRIBER:
                 return new SalesReturnEventProcessor();
+            case PURCHASE_RETURN_BY_BUSINESS:
+                return  new PurchaseReturnEventProcessor();
 
         }
         return null;

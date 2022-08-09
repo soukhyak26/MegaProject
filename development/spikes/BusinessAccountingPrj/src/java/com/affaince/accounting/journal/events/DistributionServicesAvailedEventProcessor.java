@@ -1,8 +1,10 @@
 package com.affaince.accounting.journal.events;
 
+import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
+import com.affaince.accounting.transactions.Party;
 import com.affaince.accounting.transactions.SourceDocument;
 
 //The giver should be distribution services provider (on credit) and receiver(beneficiary) should be business services availed account
@@ -18,18 +20,20 @@ public class DistributionServicesAvailedEventProcessor extends AbstractAccountId
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument, double amountExchanged) {
             //return null;
         if(sourceDocument.getModeOfTransaction()== ModeOfTransaction.ON_CREDIT){
-            return new ParticipantAccount(sourceDocument.getGiverParticipant().getPartyId(),sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , amountExchanged);
+            Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
+            return new ParticipantAccount(sourceDocument.getGiverParticipant().getPartyId(),sourceDocument.getGiverParticipant().getPartyType(), giverParty.getAccountId(), sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , amountExchanged);
         }else{
-            return new ParticipantAccount(sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
         }
 
     }
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
         if(sourceDocument.getModeOfTransaction()==ModeOfTransaction.ON_CREDIT) {
-            return new ParticipantAccount(sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT, amountExchanged);
         }else{
-            return new ParticipantAccount(sourceDocument.getGiverParticipant().getPartyId(),sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , amountExchanged);
+            Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
+            return new ParticipantAccount(giverParty.getPartyId(), giverParty.getPartyType(),giverParty.getAccountId(),sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , amountExchanged);
         }
     }
 
