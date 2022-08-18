@@ -60,4 +60,10 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         return receiverAccounts;
     }
 
+    public abstract ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument,double amountExchanged);
+    public abstract ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged);
+    public abstract ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged);
+    public abstract ParticipantAccount findHiddenReceiverAccount(SourceDocument sourceDocument,double amountExchanged);
+
+
 }

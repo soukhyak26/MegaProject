@@ -32,6 +32,8 @@ public class AccountIdentificationRulesProcessorFactory {
                 return new SalesReturnEventProcessor();
             case PURCHASE_RETURN_BY_BUSINESS:
                 return  new PurchaseReturnEventProcessor();
+            case SUPPLIER_PAYMENT_TOWARDS_PURCHASE_RETURN:
+                return  new SupplierPaymentTowardsPurchaseReturnEventProcessor();
 
         }
         return null;

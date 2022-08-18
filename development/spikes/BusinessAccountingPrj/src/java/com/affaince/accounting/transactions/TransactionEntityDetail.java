@@ -44,4 +44,16 @@ public class TransactionEntityDetail {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionEntityDetail{" +
+                "entityId='" + entityId + '\'' +
+                ", ratePerUnit=" + ratePerUnit +
+                ", quantity=" + quantity +
+                ", supplierId='" + supplierId + '\'' +
+                ", discountInPercent=" + discountInPercent +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

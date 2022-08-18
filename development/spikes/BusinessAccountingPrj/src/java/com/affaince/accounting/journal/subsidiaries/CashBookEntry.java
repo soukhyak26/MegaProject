@@ -3,7 +3,7 @@ package com.affaince.accounting.journal.subsidiaries;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import org.joda.time.LocalDateTime;
 
-public abstract class AbstractCashBookEntry {
+public abstract class CashBookEntry {
     private String merchantId;
     private LocalDateTime date;
     private String peerAccountNumber;
@@ -13,7 +13,7 @@ public abstract class AbstractCashBookEntry {
     private String CashBookEntryAccountNumber;
     private CashBookEntryAccountType accountType;
 
-    public AbstractCashBookEntry(String merchantId,LocalDateTime date, String peerAccountNumber, AccountIdentifier accountIdentifier, String journalFolio, double amount, String cashBookEntryAccountNumber, CashBookEntryAccountType accountType) {
+    public CashBookEntry(String merchantId, LocalDateTime date, String peerAccountNumber, AccountIdentifier accountIdentifier, String journalFolio, double amount, String cashBookEntryAccountNumber, CashBookEntryAccountType accountType) {
         this.merchantId=merchantId;
         this.date = date;
         this.peerAccountNumber = peerAccountNumber;
@@ -54,5 +54,19 @@ public abstract class AbstractCashBookEntry {
 
     public CashBookEntryAccountType getAccountType() {
         return accountType;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "merchantId='" + merchantId + '\'' +
+                ", date=" + date +
+                ", peerAccountNumber='" + peerAccountNumber + '\'' +
+                ", accountIdentifier=" + accountIdentifier +
+                ", journalFolio='" + journalFolio + '\'' +
+                ", amount=" + amount +
+                ", CashBookEntryAccountNumber='" + CashBookEntryAccountNumber + '\'' +
+                ", accountType=" + accountType +
+                '}';
     }
 }
