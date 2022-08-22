@@ -47,6 +47,9 @@ public class AccountDatabaseSimulator {
         allAccounts.add(cashLedgerAccount);
         LedgerAccount purchaseLedgerAccount = new RealAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_PURCHASE_ACCOUNT);
         allAccounts.add(purchaseLedgerAccount);
+        LedgerAccount purchaseReturnLedgerAccount = new RealAccount("merchant1","merchant1",AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT);
+        allAccounts.add(purchaseReturnLedgerAccount);
+
         LedgerAccount furnitureLedgerAccount = new RealAccount("merchant1","merchant1",AccountIdentifier.FIXED_ASSETS_ACCOUNT);
         allAccounts.add(furnitureLedgerAccount);
 

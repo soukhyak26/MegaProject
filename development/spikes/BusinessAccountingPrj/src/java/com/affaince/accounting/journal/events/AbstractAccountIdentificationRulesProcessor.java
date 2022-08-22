@@ -28,7 +28,10 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         // this should be invalid scenario.. adn should cause exception
         // transaction amount has to be same or grater than giver as well as receiver.
         else if(transactionAmount < giverTransactionAmount){
-            System.out.println("Not a valid scenario");
+            System.out.println("Not a valid scenario. " + sourceDocument.getTransactionEvent());
+            System.out.println("giver: " + giverParticipant.getPartyId() + ": " + giverParticipant.getPartyType());
+
+
         }
         ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument,giverParticipant.getAmountExchanged());
         giverAccounts.add(giverAccount);
@@ -53,7 +56,8 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
         //this should be invalid scenario and should cause exception
         // transaction amount has to be same or greater than giver as well as receiver.
         else if(transactionAmount < receiverAmount){
-            System.out.println("Not a valid scenario");
+            System.out.println("Not a valid scenario. " + sourceDocument.getTransactionEvent());
+            System.out.println("receiver: " + receiverParticipant.getPartyId() + ": " + receiverParticipant.getPartyType());
         }
         ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument,receiverParticipant.getAmountExchanged());
         receiverAccounts.add(receiverAccount);

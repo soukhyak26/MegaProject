@@ -127,7 +127,7 @@ public class JournalEntry {
 
     @Override
     public String toString() {
-        return "JournalEntry{" +
+        return "{" +
                 "merchantId='" + merchantId + '\'' +
                 ", journalFolioNumber='" + journalFolioNumber + '\'' +
                 ", transactionReferenceNumber='" + transactionReferenceNumber + '\'' +

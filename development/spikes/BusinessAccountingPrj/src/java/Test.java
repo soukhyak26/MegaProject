@@ -148,8 +148,8 @@ public class Test {
                 .dateOfTransaction(new LocalDateTime(2023,1,22,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.PURCHASE_RETURN_BY_BUSINESS)
-                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,100000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
+                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,20000)
+                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,20000)
                 .description("product X purchased from supplierOfProduct1 is returned")
                 .build();
 
@@ -182,9 +182,9 @@ public class Test {
                 .dateOfTransaction(new LocalDateTime(2023,2,2,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PURCHASE_RETURN_BY_BUSINESS)
-                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,100000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
-                .description("product X purchased from supplierOfProduct1 is returned")
+                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,20000)
+                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,20000)
+                .description("product X purchased from supplierOfProduct1 is returned.Supplier has returned amount of returned goods")
                 .build();
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
