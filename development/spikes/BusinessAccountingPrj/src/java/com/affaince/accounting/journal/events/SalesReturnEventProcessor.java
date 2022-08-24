@@ -1,5 +1,6 @@
 package com.affaince.accounting.journal.events;
 
+import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
@@ -18,12 +19,12 @@ public class SalesReturnEventProcessor extends AbstractAccountIdentificationRule
             String giverAccountId = giverParty.getAccountId();
             return new ParticipantAccount(giverParty.getPartyId(),giverParty.getPartyType(),giverAccountId,giverParty.getPartyType().getAccountIdentifier(),sourceDocument.getGiverParticipant().getAmountExchanged());
         }else{
-            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,amountExchanged);
+            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,amountExchanged);
         }
     }
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
-        return new ParticipantAccount(null,null,sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SALES_RETURN_ACCOUNT,amountExchanged);
+        return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SALES_RETURN_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_SALES_RETURN_ACCOUNT,amountExchanged);
     }
 
     public ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged) {

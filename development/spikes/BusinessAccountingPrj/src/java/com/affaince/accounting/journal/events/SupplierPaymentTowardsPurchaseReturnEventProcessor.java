@@ -1,5 +1,6 @@
 package com.affaince.accounting.journal.events;
 
+import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.db.PartyDatabaseSimulator;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
@@ -16,9 +17,9 @@ public class SupplierPaymentTowardsPurchaseReturnEventProcessor extends Abstract
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument, double amountExchanged) {
         if (sourceDocument.getModeOfTransaction() == ModeOfTransaction.ON_CREDIT) {
-            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT, amountExchanged);
         } else {
-            return new ParticipantAccount(null,null,sourceDocument.getMerchantId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
         }
     }
 

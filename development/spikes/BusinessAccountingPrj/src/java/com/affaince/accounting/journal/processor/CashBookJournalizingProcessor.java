@@ -54,11 +54,11 @@ public class CashBookJournalizingProcessor {
 
         DebitCashBookEntry debitCashBookEntry = new DebitCashBookEntry(sourceDocument.getMerchantId(),
                 sourceDocument.getDateOfTransaction(),
-                receiverAccounts.get(0).getAccountId(),
-                receiverAccounts.get(0).getAccountIdentifier(),
+                giverAccounts.get(0).getAccountId(),
+                giverAccounts.get(0).getAccountIdentifier(),
                 journalFolioNumber,
                 sourceDocument.getTransactionAmount(),
-                giverAccounts.get(0).getAccountId(),
+                receiverAccounts.get(0).getAccountId(),
                 CashBookEntryAccountType.BANK
         );
         List<CashBookEntry> debitCashBookEntries = new ArrayList<>();
@@ -73,11 +73,11 @@ public class CashBookJournalizingProcessor {
 
         CreditCashBookEntry creditCashBookEntry = new CreditCashBookEntry(sourceDocument.getMerchantId(),
                 sourceDocument.getDateOfTransaction(),
-                giverAccounts.get(0).getAccountId(),
-                giverAccounts.get(0).getAccountIdentifier(),
+                receiverAccounts.get(0).getAccountId(),
+                receiverAccounts.get(0).getAccountIdentifier(),
                 journalFolioNumber,
                 sourceDocument.getTransactionAmount(),
-                receiverAccounts.get(0).getAccountId(),
+                giverAccounts.get(0).getAccountId(),
                 CashBookEntryAccountType.BANK);
 
         List<CashBookEntry> creditCashBookEntries = new ArrayList<>();

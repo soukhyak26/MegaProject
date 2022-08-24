@@ -36,7 +36,6 @@ public class Test {
         test.receiveInvoiceOfDistributionServiceAvailed();
         test.paymentInLiuOfDistributionService();
 
-
         System.out.println("###########JOURNAL################");
         test.printJournal();
         System.out.println("###########END - JOURNAL################");
@@ -55,6 +54,7 @@ public class Test {
         System.out.println("###########SALES RETURN BOOK################");
         test.printSalesReturnBook();
         System.out.println("###########END - SALES RETURN BOOK################");
+
         System.out.println("###########CASH BOOK################");
         test.printCashBook();
         System.out.println("###########END - CASH BOOK################");
@@ -264,12 +264,12 @@ public class Test {
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
-                .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2022,1,22,00,00,00))
+                .transactionAmount(200)
+                .dateOfTransaction(new LocalDateTime(2022,1,25,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER)
-                .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
-                .receiverParticipant("merchant1", PartyTypes.BUSINESS, ExchangeableItems.GOODS,1000)
+                .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,200)
+                .receiverParticipant("merchant1", PartyTypes.BUSINESS, ExchangeableItems.GOODS,200)
                 .description("goods returned by subscriber (purchased on credit) ")
                 .build();
 
@@ -281,12 +281,12 @@ public class Test {
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("6")
-                .transactionAmount(1000)
+                .transactionAmount(800)
                 .dateOfTransaction(new LocalDateTime(2022,1,27,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_RECEIVED_FROM_SUBSCRIBER)
-                .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER,ExchangeableItems.MONEY,1000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000)
+                .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER,ExchangeableItems.MONEY,800)
+                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,800)
                 .description("payment made by subscriber1")
                 .build();
 
