@@ -1,33 +1,22 @@
 package com.affaince.accounting.balance;
 
-import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
-import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
+import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import org.joda.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LedgerBalancingScheduler {
 
-    public void processLedgerBalancing(List<LedgerAccount> ledgerAccounts){
+    public static List<LedgerAccount> processLedgerBalancing(String merchantId){
+            List<LedgerAccount> allActiveAccounts = AccountDatabaseSimulator.getAllActiveAccounts(merchantId);
             AccountBalancingProcessor accountBalancingProcessor = new DefaultAccountBalancingProcessor();
-            for(LedgerAccount ledgerAccount: ledgerAccounts) {
-                LedgerAccount ledgerAccountCurrentVersion = accountBalancingProcessor.balanceAccount(ledgerAccount);
-                LedgerAccount ledgerAccountCurrentVersionClone = (LedgerAccount) ledgerAccountCurrentVersion.clone();
-                ledgerAccount.addPreviousVersion(ledgerAccountCurrentVersionClone);
-                ledgerAccount.flushLedgerAccountEntries();
-
-                DebitLedgerEntry closingDebitLedgerEntry = ledgerAccountCurrentVersion.getDebits().stream().filter(debitEntry->debitEntry.getAccountIdentifier()== AccountIdentifier.TO_BALANCE_CARRIED_DOWN).findFirst().get();
-                DebitLedgerEntry closingDebitLedgerEntryClone = (DebitLedgerEntry)closingDebitLedgerEntry.clone();
-                closingDebitLedgerEntryClone.setAccountIdentifier(AccountIdentifier.BY_BALANCE_BROUGHT_DOWN);
-
-                CreditLedgerEntry closingCreditLedgerEntry = ledgerAccountCurrentVersion.getCredits().stream().filter(creditEntry->creditEntry.getAccountIdentifier()== AccountIdentifier.BY_BALANCE_CARRIED_DOWN).findFirst().get();
-                CreditLedgerEntry closingCreditLedgerEntryClone= (CreditLedgerEntry) closingCreditLedgerEntry.clone();
-                closingCreditLedgerEntryClone.setAccountIdentifier(AccountIdentifier.TO_BALANCE_BROUGHT_DOWN);
-
-                ledgerAccount.debit(closingDebitLedgerEntryClone);
-                ledgerAccount.credit(closingCreditLedgerEntryClone);
-                //save ledgerAccount.
+            List<LedgerAccount> ledgerAccountsActiveVersions = new ArrayList<>();
+            LocalDateTime closureDate = LocalDateTime.now();
+            for(LedgerAccount ledgerAccount: allActiveAccounts) {
+                ledgerAccountsActiveVersions.add(accountBalancingProcessor.balanceAccount(ledgerAccount,closureDate));
             }
+            return ledgerAccountsActiveVersions;
     }
 }

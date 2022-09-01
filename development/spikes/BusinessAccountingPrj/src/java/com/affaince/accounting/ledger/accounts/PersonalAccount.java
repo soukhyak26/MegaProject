@@ -7,4 +7,8 @@ public class PersonalAccount extends AbstractLedgerAccountStereoType {
         super(merchantId,accountId,accountIdentifier);
     }
 
+    @Override
+    public String toString() {
+        return "\nPersonalAccount{} " + super.toString();
+    }
 }

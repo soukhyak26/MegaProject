@@ -7,4 +7,8 @@ public class RealAccount extends AbstractLedgerAccountStereoType{
         super(merchantId,accountId,accountIdentifier);
     }
 
+    @Override
+    public String toString() {
+        return "\nRealAccount{} " + super.toString();
+    }
 }

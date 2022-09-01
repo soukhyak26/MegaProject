@@ -1,3 +1,4 @@
+import com.affaince.accounting.balance.LedgerBalancingScheduler;
 import com.affaince.accounting.db.*;
 import com.affaince.accounting.journal.entity.JournalEntry;
 import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
@@ -14,8 +15,13 @@ import com.affaince.accounting.journal.qualifiers.ExchangeableItems;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
+import com.affaince.accounting.trials.DefaultTrialBalanceProcessor;
+import com.affaince.accounting.trials.TrialBalance;
+import com.affaince.accounting.trials.TrialBalanceProcessor;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class Test {
@@ -28,7 +34,6 @@ public class Test {
         test.receiveStockOfGoodsOnPayment();
         test.returnOfGoodsPurchaseOnCredit();
         test.paymentToSupplierInLiuOfGoods();
-        test.paymentReturnBySupplierInLiuOfReturnOfGoodsPurchaseO();
         test.goodsDeliveredToSubscriberOnCredit();
         test.goodsDeliveredToSubscriberOnPayment();
         test.goodsReturnedFromSubscriber();
@@ -36,28 +41,27 @@ public class Test {
         test.receiveInvoiceOfDistributionServiceAvailed();
         test.paymentInLiuOfDistributionService();
 
+
+/*
         System.out.println("###########JOURNAL################");
         test.printJournal();
         System.out.println("###########END - JOURNAL################");
-        System.out.println("###########LEDGER################");
-        test.printAccounts();
-        System.out.println("###########END - LEDGER################");
-        System.out.println("###########PURCHASE BOOK################");
-        test.printPurchaseBook();
-        System.out.println("###########END - PURCHASE BOOK################");
-        System.out.println("###########PURCHASE RETURN BOOK################");
-        test.printPurchaseReturnBook();
-        System.out.println("###########END - PURCHASE RETURN BOOK################");
-        System.out.println("###########SALES BOOK################");
-        test.printSalesBook();
-        System.out.println("###########END - SALES BOOK################");
-        System.out.println("###########SALES RETURN BOOK################");
-        test.printSalesReturnBook();
-        System.out.println("###########END - SALES RETURN BOOK################");
+*/
 
-        System.out.println("###########CASH BOOK################");
-        test.printCashBook();
-        System.out.println("###########END - CASH BOOK################");
+
+        test.processEndOfPeriodOperations();
+        System.out.println("############CLosure Of Accounts");
+        test.printAccounts("merchant1");
+        System.out.println("############End - Closure Of Accounts");
+
+        TrialBalance trialBalance = test.processTrialBalance();
+
+        System.out.println("###########LEDGER################");
+        test.printAccounts("merchant1");
+        System.out.println("###########END - LEDGER################");
+        System.out.println("trial Balance :::############");
+        System.out.println(trialBalance);
+        System.out.println("trial balance :: ############");
 
     }
 
@@ -87,9 +91,19 @@ public class Test {
             if(null != cashBookEntries && !cashBookEntries.isEmpty()){
                 CashBookDatabaseSimulator.addJournalEntries(cashBookEntries);
             }
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+    public void processEndOfPeriodOperations(){
+        LedgerBalancingScheduler.processLedgerBalancing("merchant1");
+    }
+    public TrialBalance processTrialBalance(){
+        TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor();
+        TrialBalance trialBalance= trialBalanceProcessor.processTrialBalance("merchant1",LocalDate.now());
+        System.out.println(" is trial balance tallied? :: " + trialBalance.isTrialBalanceTallied());
+        return trialBalance;
     }
     //capital investment
     public void investCapital(){
@@ -173,6 +187,7 @@ public class Test {
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
+/*
     //return of goods purchase on credit
     public void paymentReturnBySupplierInLiuOfReturnOfGoodsPurchaseO(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
@@ -188,6 +203,7 @@ public class Test {
                 .build();
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
+*/
 
     //distribution services availed.. on credit by default
     //beneficiary is business,giver is service provider
@@ -212,12 +228,12 @@ public class Test {
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("5")
-                .transactionAmount(1000000)
+                .transactionAmount(100000)
                 .dateOfTransaction(new LocalDateTime(2022,2,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_MADE_TO_SERVICE_PROVIDER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000000)
-                .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,1000000)
+                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
+                .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,100000)
                 .description("capital invested")
                 .build();
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
@@ -328,8 +344,8 @@ public class Test {
             System.out.println(journalEntry);
         }
     }
-    public void printAccounts(){
-        List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts();
+    public void printAccounts(String merchantId){
+        List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts(merchantId);
         for(LedgerAccount account : allAccounts){
             System.out.println(account);
         }

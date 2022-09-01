@@ -13,7 +13,7 @@ public class DebitLedgerEntry extends LedgerAccountEntry {
 
     @Override
     public String toString() {
-        return "DebitLedgerEntry{} " + super.toString();
+        return "\nDebitLedgerEntry{} " + super.toString();
     }
 
 }

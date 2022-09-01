@@ -27,7 +27,7 @@ public class CreditJournalEntry {
 
     @Override
     public String toString() {
-        return "CreditJournalEntry{" +
+        return "\nCreditJournalEntry{" +
                 "accountId='" + accountId + '\'' +
                 ", accountIdentifier=" + accountIdentifier +
                 ", amount=" + amount +

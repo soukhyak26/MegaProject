@@ -11,6 +11,6 @@ public class CreditLedgerEntry extends LedgerAccountEntry {
 
     @Override
     public String toString() {
-        return "CreditLedgerEntry{} " + super.toString();
+        return "\nCreditLedgerEntry{} " + super.toString();
     }
 }

@@ -27,7 +27,7 @@ public class DebitJournalEntry {
 
     @Override
     public String toString() {
-        return "DebitJournalEntry{" +
+        return "\nDebitJournalEntry{" +
                 "accountId='" + accountId + '\'' +
                 ", accountIdentifier=" + accountIdentifier +
                 ", amount=" + amount +

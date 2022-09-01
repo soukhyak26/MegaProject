@@ -51,7 +51,7 @@ public abstract class LedgerAccountEntry implements Cloneable{
 
     @Override
     public String toString() {
-        return "LedgerAccountEntry{" +
+        return "{" +
                 "date=" + date +
                 ", peerAccountNumber='" + peerAccountNumber + '\'' +
                 ", accountIdentifier=" + accountIdentifier +

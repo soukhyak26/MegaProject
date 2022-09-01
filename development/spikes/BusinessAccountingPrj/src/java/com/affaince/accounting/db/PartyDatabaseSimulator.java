@@ -11,7 +11,7 @@ public class PartyDatabaseSimulator {
     private static List<Party> parties=new ArrayList<>();
 
     public static void buildDatabase(){
-        Party merchant1 = new Party("merchant1", "merchant1","merchant1",PartyTypes.MERCHANT);
+        Party merchant1 = new Party("merchant1", "merchant1","capital",PartyTypes.MERCHANT);
         parties.add(merchant1);
 
         Party supplierOfProduct1 = new Party("merchant1","supplierOfProduct1", "supplierOfProduct1",PartyTypes.SUPPLIER_OF_GOODS);

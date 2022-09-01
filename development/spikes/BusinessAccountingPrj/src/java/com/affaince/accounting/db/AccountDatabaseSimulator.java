@@ -2,6 +2,8 @@ package com.affaince.accounting.db;
 
 import com.affaince.accounting.ledger.accounts.*;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
+import com.affaince.accounting.ledger.util.VersionNumberGenerator;
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +13,8 @@ public class AccountDatabaseSimulator {
     private static final List<LedgerAccount> allAccounts = new ArrayList<>();
 
     public static void buildDatabase(){
-
         //external
-        LedgerAccount merchantLedgerAccount = new PersonalAccount("merchant1","merchant1",AccountIdentifier.MERCHANT_ACCOUNT);
+        LedgerAccount merchantLedgerAccount = new RealAccount("merchant1","capital",AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT);
         allAccounts.add(merchantLedgerAccount);
 
         //external
@@ -39,8 +40,6 @@ public class AccountDatabaseSimulator {
         allAccounts.add(supplierOfProduct3LedgerAccount);
 
         //business
-        LedgerAccount capitalLedgerAccount = new PersonalAccount("merchant1","capital", AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT);
-        allAccounts.add(capitalLedgerAccount);
         LedgerAccount bankLedgerAccount = new PersonalAccount("merchant1","bank",AccountIdentifier.BUSINESS_BANK_ACCOUNT);
         allAccounts.add(bankLedgerAccount);
 
@@ -75,6 +74,9 @@ public class AccountDatabaseSimulator {
     }
 
 
+    public static void addAccount(LedgerAccount ledgerAccount){
+        allAccounts.add(ledgerAccount);
+    }
     public static LedgerAccount searchLedgerAccountsByAccountIdAndAccountIdentifier(String merchantId,String accountId,AccountIdentifier accountIdentifier) {
             return allAccounts.stream().filter(account->account.getMerchantId().equals(merchantId) && account.getAccountIdentifier()==accountIdentifier && account.getAccountId().equals(accountId)).findFirst().get();
     }
@@ -83,7 +85,23 @@ public class AccountDatabaseSimulator {
         return allAccounts.stream().filter(account->account.getMerchantId().equals(merchantId) && account.getAccountIdentifier()==accountIdentifier).collect(Collectors.toList());
     }
 
-    public static List<LedgerAccount> getAllAccounts(){
-        return allAccounts;
+    public static List<LedgerAccount> getAllAccounts(String merchantId){
+        return allAccounts.stream().filter(ac->ac.getMerchantId().equals(merchantId)).collect(Collectors.toList());
+    }
+
+    public static List<LedgerAccount> getAllActiveAccounts(String merchantId){
+        return allAccounts.stream().filter(ac->ac.getMerchantId().equals(merchantId) && ac.getClosureDate().equals(new LocalDateTime(9999, 12, 31,00,00,0000))).collect(Collectors.toList());
+    }
+
+    public static LedgerAccount getLatestClosedAccount(String merchantId,String accountId){
+        return allAccounts.stream().filter(ac->ac.getMerchantId().equals(merchantId) &&
+                ac.getAccountId().equals(accountId) &&
+                ac.getLatestVersion()== true &&
+                !ac.getClosureDate().equals(new LocalDateTime(9999, 12, 31,00,00,0000))).findAny().orElse(null);
+    }
+    public static List<LedgerAccount> getAllLatestClosedAccounts(String merchantId){
+        return allAccounts.stream().filter(ac->ac.getMerchantId().equals(merchantId) &&
+                ac.getLatestVersion()== true &&
+                !ac.getClosureDate().equals(new LocalDateTime(9999, 12, 31,00,00,0000))).collect(Collectors.toList());
     }
 }
