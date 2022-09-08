@@ -11,23 +11,23 @@ import java.util.stream.Collectors;
 public abstract class AbstractLedgerAccountStereoType implements LedgerAccount {
     private final String merchantId;
     private final String accountId;
-    private LocalDateTime startDate;
-    private LocalDateTime closureDate;
+    protected LocalDateTime startDate;
+    protected LocalDateTime closureDate;
     private final AccountIdentifier accountIdentifier;
-    private Set<DebitLedgerEntry> debits;
-    private Set<CreditLedgerEntry> credits;
+    private Set<LedgerAccountEntry> debits;
+    private Set<LedgerAccountEntry> credits;
     private boolean isLatestVersion;
 
 
 
-    public AbstractLedgerAccountStereoType(String merchantId, String accountId,AccountIdentifier accountIdentifier) {
+    public AbstractLedgerAccountStereoType(String merchantId, String accountId,AccountIdentifier accountIdentifier,LocalDateTime startDate, LocalDateTime closureDate) {
         this.merchantId = merchantId;
         this.accountId = accountId;
-        this.startDate=LocalDateTime.now();
+        this.startDate=startDate;
         this.accountIdentifier = accountIdentifier;
         this.debits = new TreeSet<>(Comparator.comparing(LedgerAccountEntry::getDate));
         this.credits = new TreeSet<>(Comparator.comparing(LedgerAccountEntry::getDate));
-        this.closureDate = new LocalDateTime(9999, 12, 31,00,00,0000);
+        this.closureDate = closureDate;
         this.isLatestVersion=true;
     }
 
@@ -37,8 +37,10 @@ public abstract class AbstractLedgerAccountStereoType implements LedgerAccount {
             LedgerAccount cloned = (LedgerAccount) super.clone();
             //Set<DebitLedgerEntry> debitsClone = debits.stream().map(debitEntry -> (DebitLedgerEntry) debitEntry.clone()).collect(Collectors.toSet());
             //Set<CreditLedgerEntry> creditsClone = credits.stream().map(creditEntry -> (CreditLedgerEntry) creditEntry.clone()).collect(Collectors.toSet());
+/*
             this.startDate=LocalDateTime.now();
             this.closureDate = new LocalDateTime(9999, 12, 31,00,00,0000);
+*/
             ((AbstractLedgerAccountStereoType) cloned).setClone(new HashSet<>(), new HashSet<>());
             return cloned;
         } catch (CloneNotSupportedException ex) {
@@ -68,11 +70,11 @@ public abstract class AbstractLedgerAccountStereoType implements LedgerAccount {
         return accountId;
     }
 
-    public Set<DebitLedgerEntry> getDebits() {
+    public Set<LedgerAccountEntry> getDebits() {
         return debits;
     }
 
-    public Set<CreditLedgerEntry> getCredits() {
+    public Set<LedgerAccountEntry> getCredits() {
         return credits;
     }
 
@@ -84,19 +86,19 @@ public abstract class AbstractLedgerAccountStereoType implements LedgerAccount {
         this.debits.removeAll(this.debits);
         this.credits.removeAll(this.credits);
     }
-    public void debit(DebitLedgerEntry debitEntry) {
+    public void debit(LedgerAccountEntry debitEntry) {
         if (null != debitEntry) {
             this.debits.add(debitEntry);
         }
     }
 
-    public void credit(CreditLedgerEntry creditEntry) {
+    public void credit(LedgerAccountEntry creditEntry) {
         if (null != creditEntry) {
             this.credits.add(creditEntry);
         }
     }
 
-    public void setClone(Set<DebitLedgerEntry> debitsCloned, Set<CreditLedgerEntry> creditsCloned) {
+    public void setClone(Set<LedgerAccountEntry> debitsCloned, Set<LedgerAccountEntry> creditsCloned) {
         this.debits = debitsCloned;
         this.credits = creditsCloned;
     }

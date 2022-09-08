@@ -33,7 +33,7 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
 
 
         }
-        ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument,giverParticipant.getAmountExchanged());
+        ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument);
         giverAccounts.add(giverAccount);
         return giverAccounts;
     }
@@ -59,13 +59,13 @@ public abstract class AbstractAccountIdentificationRulesProcessor implements Acc
             System.out.println("Not a valid scenario. " + sourceDocument.getTransactionEvent());
             System.out.println("receiver: " + receiverParticipant.getPartyId() + ": " + receiverParticipant.getPartyType());
         }
-        ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument,receiverParticipant.getAmountExchanged());
+        ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument);
         receiverAccounts.add(receiverAccount);
         return receiverAccounts;
     }
 
-    public abstract ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument,double amountExchanged);
-    public abstract ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged);
+    public abstract ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument);
+    public abstract ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument);
     public abstract ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged);
     public abstract ParticipantAccount findHiddenReceiverAccount(SourceDocument sourceDocument,double amountExchanged);
 

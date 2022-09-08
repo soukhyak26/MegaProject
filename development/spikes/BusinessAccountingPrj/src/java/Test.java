@@ -3,58 +3,54 @@ import com.affaince.accounting.db.*;
 import com.affaince.accounting.journal.entity.JournalEntry;
 import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
 import com.affaince.accounting.journal.processor.SubsidiaryJournalizingProcessor;
+import com.affaince.accounting.journal.qualifiers.*;
 import com.affaince.accounting.journal.subsidiaries.CashBookEntry;
 import com.affaince.accounting.journal.subsidiaries.SubsidiaryBookEntry;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
 import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
+import com.affaince.accounting.trading.DefaultTradingAccountPostingProcessor;
+import com.affaince.accounting.trading.TradingAccountPostingProcessor;
+import com.affaince.accounting.trading.TradingFrequency;
 import com.affaince.accounting.transactions.SourceDocument;
 import com.affaince.accounting.journal.processor.DefaultJournalizingProcessor;
 import com.affaince.accounting.journal.processor.JournalizingProcessor;
-import com.affaince.accounting.journal.qualifiers.ExchangeableItems;
-import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
-import com.affaince.accounting.journal.qualifiers.TransactionEvents;
-import com.affaince.accounting.journal.qualifiers.PartyTypes;
 import com.affaince.accounting.trials.DefaultTrialBalanceProcessor;
 import com.affaince.accounting.trials.TrialBalance;
 import com.affaince.accounting.trials.TrialBalanceProcessor;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class Test {
     public static void main(String [] args){
         PartyDatabaseSimulator.buildDatabase();
-        AccountDatabaseSimulator.buildDatabase();
+        AccountDatabaseSimulator.buildDatabase(new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(9999,12,31,23,59,59));
         Test test = new Test();
-        test.investCapital();
-        test.receiveStockOfGoodsOnCredit();
-        test.receiveStockOfGoodsOnPayment();
-        test.returnOfGoodsPurchaseOnCredit();
-        test.paymentToSupplierInLiuOfGoods();
-        test.goodsDeliveredToSubscriberOnCredit();
-        test.goodsDeliveredToSubscriberOnPayment();
-        test.goodsReturnedFromSubscriber();
-        test.paymentReceivedFromSubscriber();
-        test.receiveInvoiceOfDistributionServiceAvailed();
-        test.paymentInLiuOfDistributionService();
+
+        test.investCapital();   //does not impact trading acct --1 Jan 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,23,59,59));
+        test.receiveStockOfGoodsOnCredit(); // debit trading account 10 Jan 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,10,23,59,59));
+        test.receiveStockOfGoodsOnPayment();    // debit trading account 20 Jan 2023
+        test.paymentToSupplierInLiuOfGoods();   // no impact ton trading acct 20 Jan 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,20,23,59,59));
+        test.returnOfGoodsPurchaseOnCredit();   // credit trading account 22 Jan 2023
+        test.goodsDeliveredToSubscriberOnCredit();  //impact on trading account 22 Jan 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,22,23,59,59));
+
+        test.goodsDeliveredToSubscriberOnPayment(); //impact on trading account 25 Jan 2023
+        test.goodsReturnedFromSubscriber(); //impact on trading account 25 Jan 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,25,23,59,59));
+        test.paymentReceivedFromSubscriber();// no impact on trading account 27 Jan 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,27,23,59,59));
+        test.receiveInvoiceOfDistributionServiceAvailed(); // impact on trading account 4 Feb 2023
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,4,23,59,59));
+        test.paymentInLiuOfDistributionService();// no impact on trading account.20 Feb 2023
+
+        test.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,23,59,59));
 
 
-/*
-        System.out.println("###########JOURNAL################");
-        test.printJournal();
-        System.out.println("###########END - JOURNAL################");
-*/
-
-
-        test.processEndOfPeriodOperations();
-        System.out.println("############CLosure Of Accounts");
-        test.printAccounts("merchant1");
-        System.out.println("############End - Closure Of Accounts");
-
-        TrialBalance trialBalance = test.processTrialBalance();
+        TrialBalance trialBalance = test.processTrialBalance("merchant1",new LocalDateTime(2023,2,20,23,59,59));
 
         System.out.println("###########LEDGER################");
         test.printAccounts("merchant1");
@@ -62,6 +58,8 @@ public class Test {
         System.out.println("trial Balance :::############");
         System.out.println(trialBalance);
         System.out.println("trial balance :: ############");
+
+        test.processTradingAccount("merchant1",new LocalDateTime(2023,2,20,23,59,59));
 
     }
 
@@ -96,26 +94,35 @@ public class Test {
             ex.printStackTrace();
         }
     }
-    public void processEndOfPeriodOperations(){
-        LedgerBalancingScheduler.processLedgerBalancing("merchant1");
+
+    public void processEndOfPeriodOperations(String merchant,LocalDateTime closureDate){
+        LedgerBalancingScheduler.processLedgerBalancing(merchant,closureDate);
     }
-    public TrialBalance processTrialBalance(){
+    public TrialBalance processTrialBalance(String merchantId, LocalDateTime trialBalanceDate){
         TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor();
-        TrialBalance trialBalance= trialBalanceProcessor.processTrialBalance("merchant1",LocalDate.now());
+        TrialBalance trialBalance= trialBalanceProcessor.processTrialBalance(merchantId,trialBalanceDate.toLocalDate());
         System.out.println(" is trial balance tallied? :: " + trialBalance.isTrialBalanceTallied());
+        TrialBalanceDatabaseSimulator.addTrialBalance(trialBalance);
         return trialBalance;
+    }
+
+    public LedgerAccount processTradingAccount(String merchantId, LocalDateTime tradingDate){
+        TradingAccountPostingProcessor tradingAccountPostingProcessor = new DefaultTradingAccountPostingProcessor();
+        LedgerAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchantId,tradingDate, TradingFrequency.DAILY);
+        System.out.println("Trading Account{}} " + tradingAccount);
+        return tradingAccount;
     }
     //capital investment
     public void investCapital(){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("1")
-                .transactionAmount(10000000)
+                .transactionAmount(5000000)
                 .dateOfTransaction(new LocalDateTime(2023,1,1,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.CAPITAL_INVESTMENT)
-                .giverParticipant("merchant1", PartyTypes.MERCHANT, ExchangeableItems.MONEY,10000000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,10000000)
+                .giverParticipant("merchant1", PartyTypes.MERCHANT, ExchangeableItems.MONEY,5000000)
+                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,5000000)
                 .description("capital invested")
                 .build();
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
@@ -249,7 +256,7 @@ public class Test {
                 .dateOfTransaction(new LocalDateTime(2022,1,22,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000)
+                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.GOODS,800)
                 .receiverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
                 .description("goods delivery to subscriber on credit")
                 .build();
@@ -267,7 +274,7 @@ public class Test {
                 .dateOfTransaction(new LocalDateTime(2022,1,25,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,1000)
+                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.GOODS,800)
                 .receiverParticipant("subscriber2", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
                 .description("goods delivery to subscriber on payment")
                 .build();
@@ -347,7 +354,9 @@ public class Test {
     public void printAccounts(String merchantId){
         List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts(merchantId);
         for(LedgerAccount account : allAccounts){
-            System.out.println(account);
+            if( (null != account.getDebits() && account.getDebits().size()>0)  || (null !=account.getCredits() && account.getCredits().size()>0) ) {
+                System.out.println(account);
+            }
         }
     }
 

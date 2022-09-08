@@ -18,23 +18,24 @@ import com.affaince.accounting.transactions.SourceDocument;
 //in case of on payment mode ->service provider should be debited and bank should be credited
 //in such case no service provider payment should be triggered.
 public class DistributionServicesAvailedEventProcessor extends AbstractAccountIdentificationRulesProcessor {
-    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument, double amountExchanged) {
-            //return null;
+    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
+        double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if(sourceDocument.getModeOfTransaction()== ModeOfTransaction.ON_CREDIT){
             Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
-            return new ParticipantAccount(sourceDocument.getGiverParticipant().getPartyId(),sourceDocument.getGiverParticipant().getPartyType(), giverParty.getAccountId(), sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , amountExchanged);
+            return new ParticipantAccount(sourceDocument.getGiverParticipant().getPartyId(),sourceDocument.getGiverParticipant().getPartyType(), giverParty.getAccountId(), sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , receivedAmount);
         }else{
-            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receivedAmount);
         }
 
     }
 
-    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
+    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
+        double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if(sourceDocument.getModeOfTransaction()==ModeOfTransaction.ON_CREDIT) {
-            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT, receivedAmount);
         }else{
             Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
-            return new ParticipantAccount(giverParty.getPartyId(), giverParty.getPartyType(),giverParty.getAccountId(),sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , amountExchanged);
+            return new ParticipantAccount(giverParty.getPartyId(), giverParty.getPartyType(),giverParty.getAccountId(),sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , receivedAmount);
         }
     }
 

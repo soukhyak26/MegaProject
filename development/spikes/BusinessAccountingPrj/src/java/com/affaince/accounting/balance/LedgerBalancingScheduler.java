@@ -9,11 +9,10 @@ import java.util.List;
 
 public class LedgerBalancingScheduler {
 
-    public static List<LedgerAccount> processLedgerBalancing(String merchantId){
+    public static List<LedgerAccount> processLedgerBalancing(String merchantId, LocalDateTime closureDate){
             List<LedgerAccount> allActiveAccounts = AccountDatabaseSimulator.getAllActiveAccounts(merchantId);
             AccountBalancingProcessor accountBalancingProcessor = new DefaultAccountBalancingProcessor();
             List<LedgerAccount> ledgerAccountsActiveVersions = new ArrayList<>();
-            LocalDateTime closureDate = LocalDateTime.now();
             for(LedgerAccount ledgerAccount: allActiveAccounts) {
                 ledgerAccountsActiveVersions.add(accountBalancingProcessor.balanceAccount(ledgerAccount,closureDate));
             }

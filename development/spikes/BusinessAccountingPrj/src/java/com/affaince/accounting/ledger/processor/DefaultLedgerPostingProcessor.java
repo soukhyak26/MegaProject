@@ -39,14 +39,14 @@ public class DefaultLedgerPostingProcessor implements LedgerPostingProcessor{
             CreditJournalEntry creditJournalEntry = creditJournalEntries.get(0);
             String creditAccountId = creditJournalEntry.getAccountId();
             AccountIdentifier creditAccountIdentifier=creditJournalEntry.getAccountIdentifier();
-            LedgerAccount creditAccount = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), creditAccountId, creditAccountIdentifier);
+            LedgerAccount creditAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), creditAccountId, creditAccountIdentifier);
             for (DebitJournalEntry debitJournalEntry : debitJournalEntries) {
                 String debitAccountId = debitJournalEntry.getAccountId();
                 AccountIdentifier debitAccountIdentifier = debitJournalEntry.getAccountIdentifier();
                 double debitAmount = debitJournalEntry.getAmount();
                 creditAccount.credit(new CreditLedgerEntry(dateOfTransaction,debitAccountId,debitAccountIdentifier,journalFolioNumber,debitAmount));
 
-                LedgerAccount debitAccount = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
+                LedgerAccount debitAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
                 debitAccount.debit(new DebitLedgerEntry(dateOfTransaction,creditAccountId,creditAccountIdentifier,journalFolioNumber,debitAmount));
 
             }
@@ -54,7 +54,7 @@ public class DefaultLedgerPostingProcessor implements LedgerPostingProcessor{
             DebitJournalEntry debitJournalEntry= debitJournalEntries.get(0);
             String debitAccountId=debitJournalEntry.getAccountId();
             AccountIdentifier debitAccountIdentifier = debitJournalEntry.getAccountIdentifier();
-            LedgerAccount debitAccount = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
+            LedgerAccount debitAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
 
             for (CreditJournalEntry creditJournalEntry : creditJournalEntries) {
                 String creditAccountId = creditJournalEntry.getAccountId();
@@ -62,20 +62,20 @@ public class DefaultLedgerPostingProcessor implements LedgerPostingProcessor{
                 double creditAmount = creditJournalEntry.getAmount();
                 debitAccount.debit(new DebitLedgerEntry(dateOfTransaction,creditAccountId,creditAccountIdentifier,journalFolioNumber,creditAmount));
 
-                LedgerAccount creditAccount = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), creditAccountId, creditAccountIdentifier);
+                LedgerAccount creditAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), creditAccountId, creditAccountIdentifier);
                 creditAccount.credit(new CreditLedgerEntry(dateOfTransaction,debitAccountId,debitAccountIdentifier,journalFolioNumber,creditAmount));
             }
         }else {
             CreditJournalEntry creditJournalEntry = creditJournalEntries.get(0);
             String creditAccountId = creditJournalEntry.getAccountId();
             AccountIdentifier creditAccountIdentifier=creditJournalEntry.getAccountIdentifier();
-            LedgerAccount creditAccount = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), creditAccountId, creditAccountIdentifier);
+            LedgerAccount creditAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), creditAccountId, creditAccountIdentifier);
             double creditAmount = creditJournalEntry.getAmount();
 
             DebitJournalEntry debitJournalEntry= debitJournalEntries.get(0);
             String debitAccountId=debitJournalEntry.getAccountId();
             AccountIdentifier debitAccountIdentifier = debitJournalEntry.getAccountIdentifier();
-            LedgerAccount debitAccount = AccountDatabaseSimulator.searchLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
+            LedgerAccount debitAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
             double debitAmount = debitJournalEntry.getAmount();
 
             creditAccount.credit(new CreditLedgerEntry(dateOfTransaction,debitAccountId,debitAccountIdentifier,journalFolioNumber,creditAmount));

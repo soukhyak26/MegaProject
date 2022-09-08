@@ -25,7 +25,10 @@ public enum AccountIdentifier {
     TO_BALANCE_CARRIED_DOWN(null,false),
     TO_BALANCE_BROUGHT_DOWN(null,false),
     BY_BALANCE_CARRIED_DOWN(null,false),
-    BY_BALANCE_BROUGHT_DOWN(null,false);
+    BY_BALANCE_BROUGHT_DOWN(null,false),
+    TRADING_ACCOUNT(null,false),
+    OPENING_STOCK_ACCOUNT(null,false),
+    CLOSING_STOCK_ACCOUNT(null,false);
 
     private AccountQualifiers accountQualifiers;
     private boolean isGain;

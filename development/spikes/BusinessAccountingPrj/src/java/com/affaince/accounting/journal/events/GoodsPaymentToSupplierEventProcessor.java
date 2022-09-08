@@ -10,14 +10,16 @@ import com.affaince.accounting.transactions.SourceDocument;
 //giver is business bank account and receiver (beneficiary) is supplier account
 //this event is only possible if goods purchased on credit.. else it is already taken care in GoodsPurchaseEventProcessor
 public class GoodsPaymentToSupplierEventProcessor extends AbstractAccountIdentificationRulesProcessor {
-    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument, double amountExchanged) {
-        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,amountExchanged);
+    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
+        double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
+        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,receivedAmount);
     }
 
-    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
+    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
         Party receiverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getReceiverParticipant().getPartyId());
         String giverAccountId = receiverParty.getAccountId();
-        return new ParticipantAccount(receiverParty.getPartyId(), receiverParty.getPartyType(),giverAccountId,receiverParty.getPartyType().getAccountIdentifier(),sourceDocument.getReceiverParticipant().getAmountExchanged());
+        double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
+        return new ParticipantAccount(receiverParty.getPartyId(), receiverParty.getPartyType(),giverAccountId,receiverParty.getPartyType().getAccountIdentifier(),receivedAmount);
     }
 
     public ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged) {

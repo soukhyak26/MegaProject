@@ -5,6 +5,7 @@ import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
 import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import org.joda.time.LocalDateTime;
 
 import java.util.Set;
@@ -19,10 +20,10 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
         CreditLedgerEntry  closingCreditLedgerEntry=null;
         DebitLedgerEntry  closingDebitLedgerEntry=null;
         if(sumOfDebits > sumOfCredits){
-            closingCreditLedgerEntry = new CreditLedgerEntry(LocalDateTime.now(),"byBalanceCarriedDown", AccountIdentifier.BY_BALANCE_CARRIED_DOWN,null,sumOfDebits-sumOfCredits);
+            closingCreditLedgerEntry = new CreditLedgerEntry(closureDate,"byBalanceCarriedDown", AccountIdentifier.BY_BALANCE_CARRIED_DOWN,null,sumOfDebits-sumOfCredits);
             ledgerAccount.credit(closingCreditLedgerEntry);
         }else if(sumOfCredits > sumOfDebits){
-            closingDebitLedgerEntry = new DebitLedgerEntry(LocalDateTime.now(),"ToBalanceCarriedDown", AccountIdentifier.TO_BALANCE_CARRIED_DOWN,null,sumOfCredits-sumOfDebits);
+            closingDebitLedgerEntry = new DebitLedgerEntry(closureDate,"toBalanceCarriedDown", AccountIdentifier.TO_BALANCE_CARRIED_DOWN,null,sumOfCredits-sumOfDebits);
             ledgerAccount.debit(closingDebitLedgerEntry);
         }else {
             //what to do?
@@ -56,18 +57,18 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
     }
 
     private double sumOnDebitSide(LedgerAccount ledgerAccount){
-        Set<DebitLedgerEntry> debitEntries = ledgerAccount.getDebits();
+        Set<LedgerAccountEntry> debitEntries = ledgerAccount.getDebits();
         double sumOfDebits=0;
-        for(DebitLedgerEntry debitLedgerEntry: debitEntries){
+        for(LedgerAccountEntry debitLedgerEntry: debitEntries){
             sumOfDebits +=debitLedgerEntry.getAmount();
         }
         return sumOfDebits;
     }
 
     private double sumOnCreditSide(LedgerAccount ledgerAccount){
-        Set<CreditLedgerEntry> creditEntries = ledgerAccount.getCredits();
+        Set<LedgerAccountEntry> creditEntries = ledgerAccount.getCredits();
         double sumOfCredits=0;
-        for(CreditLedgerEntry creditLedgerEntry: creditEntries){
+        for(LedgerAccountEntry creditLedgerEntry: creditEntries){
             sumOfCredits +=creditLedgerEntry.getAmount();
         }
         return sumOfCredits;

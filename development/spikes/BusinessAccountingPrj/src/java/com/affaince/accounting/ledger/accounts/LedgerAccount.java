@@ -10,10 +10,11 @@ public interface LedgerAccount extends Cloneable {
      String getMerchantId();
      String getAccountId();
      AccountIdentifier getAccountIdentifier();
-     void debit(DebitLedgerEntry debitEntry);
-     void credit(CreditLedgerEntry creditEntry);
-     Set<DebitLedgerEntry> getDebits();
-     Set<CreditLedgerEntry> getCredits();
+     void debit(LedgerAccountEntry debitEntry);
+     void credit(LedgerAccountEntry creditEntry);
+     Set<LedgerAccountEntry> getDebits();
+     Set<LedgerAccountEntry> getCredits();
+     LocalDateTime getStartDate();
      LocalDateTime getClosureDate();
      void closeActiveVersion(LocalDateTime closureDate);
      void flushAllEntries();

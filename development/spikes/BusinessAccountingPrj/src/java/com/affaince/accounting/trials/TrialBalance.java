@@ -1,26 +1,31 @@
 package com.affaince.accounting.trials;
 
-import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrialBalance {
-    private String Id;
+    private String merchantId;
+    private String id;
     private LocalDate date;
     private List<TrialBalanceEntry> creditEntries;
     private List<TrialBalanceEntry> debitEntries;
 
-    public TrialBalance(String id, LocalDate date) {
-        Id = id;
+    public TrialBalance(String merchantId,String id, LocalDate date) {
+        this.merchantId=merchantId;
+        this.id = id;
         this.date = date;
         this.creditEntries= new ArrayList<>();
         this.debitEntries = new ArrayList<>();
     }
 
     public String getId() {
-        return Id;
+        return id;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
     }
 
     public LocalDate getDate() {
@@ -53,7 +58,7 @@ public class TrialBalance {
     @Override
     public String toString() {
         return "TrialBalance{" +
-                "Id='" + Id + '\'' +
+                "Id='" + id + '\'' +
                 ", date=" + date +
                 ", creditEntries=" + creditEntries +
                 ", debitEntries=" + debitEntries +

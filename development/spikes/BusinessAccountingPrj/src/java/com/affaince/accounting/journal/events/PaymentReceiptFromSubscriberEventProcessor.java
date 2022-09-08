@@ -9,15 +9,16 @@ import com.affaince.accounting.transactions.SourceDocument;
 
 //giver is subscriber and receiver(beneficiary) is business bank account
 public class PaymentReceiptFromSubscriberEventProcessor extends AbstractAccountIdentificationRulesProcessor {
-    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument, double amountExchanged) {
+    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
+        double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
         String giverAccountId = giverParty.getAccountId();
-        return new ParticipantAccount(giverParty.getPartyId(),giverParty.getPartyType(),giverAccountId,giverParty.getPartyType().getAccountIdentifier(),sourceDocument.getGiverParticipant().getAmountExchanged());
-
+        return new ParticipantAccount(giverParty.getPartyId(),giverParty.getPartyType(),giverAccountId,giverParty.getPartyType().getAccountIdentifier(),receivedAmount);
     }
 
-    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
-        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,amountExchanged);
+    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
+        double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
+        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,receivedAmount);
     }
 
     public ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged) {

@@ -6,3 +6,4 @@ import com.affaince.accounting.transactions.SourceDocument;
 public interface JournalizingProcessor {
      public JournalEntry processJournalEntry(SourceDocument sourceDocument) throws Exception;
 }
+

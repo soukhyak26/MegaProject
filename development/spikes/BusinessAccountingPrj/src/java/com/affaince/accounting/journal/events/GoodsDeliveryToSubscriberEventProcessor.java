@@ -12,17 +12,19 @@ import com.affaince.accounting.transactions.SourceDocument;
 //in case of on credit mode ->sales is credited and subscriber is debited
 //in case of on payment mode ->bank is debited and sales is credited
 public class GoodsDeliveryToSubscriberEventProcessor extends AbstractAccountIdentificationRulesProcessor {
-    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument, double amountExchanged) {
-        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SALES_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_SALES_ACCOUNT, amountExchanged);
+    public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
+        double receiverAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
+        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SALES_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_SALES_ACCOUNT, receiverAmount);
     }
 
-    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
+    public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
+        double receiverAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if(sourceDocument.getModeOfTransaction() == ModeOfTransaction.BY_PAYMENT){
-            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, amountExchanged);
+            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receiverAmount);
         }else{
             Party receiverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getReceiverParticipant().getPartyId());
             String giverAccountId = receiverParty.getAccountId();
-            return new ParticipantAccount(receiverParty.getPartyId(), receiverParty.getPartyType(),giverAccountId,receiverParty.getPartyType().getAccountIdentifier(),sourceDocument.getReceiverParticipant().getAmountExchanged());
+            return new ParticipantAccount(receiverParty.getPartyId(), receiverParty.getPartyType(),giverAccountId,receiverParty.getPartyType().getAccountIdentifier(),receiverAmount);
         }
     }
 
