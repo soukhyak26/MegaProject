@@ -10,6 +10,7 @@ import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
 import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
 import com.affaince.accounting.trading.DefaultTradingAccountPostingProcessor;
+import com.affaince.accounting.trading.TradingAccount;
 import com.affaince.accounting.trading.TradingAccountPostingProcessor;
 import com.affaince.accounting.trading.TradingFrequency;
 import com.affaince.accounting.transactions.SourceDocument;
@@ -106,9 +107,9 @@ public class Test {
         return trialBalance;
     }
 
-    public LedgerAccount processTradingAccount(String merchantId, LocalDateTime tradingDate){
+    public TradingAccount processTradingAccount(String merchantId, LocalDateTime tradingDate){
         TradingAccountPostingProcessor tradingAccountPostingProcessor = new DefaultTradingAccountPostingProcessor();
-        LedgerAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchantId,tradingDate, TradingFrequency.DAILY);
+        TradingAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchantId,tradingDate, TradingFrequency.DAILY);
         System.out.println("Trading Account{}} " + tradingAccount);
         return tradingAccount;
     }

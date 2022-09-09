@@ -7,7 +7,7 @@ import org.joda.time.LocalDateTime;
 
 public interface TradingAccountPostingProcessor {
 
-    LedgerAccount postToTradingAccount(String merchantId,
+    TradingAccount postToTradingAccount(String merchantId,
                                        LocalDateTime postingDate,
                                        TradingFrequency tradingFrequency);
 }
