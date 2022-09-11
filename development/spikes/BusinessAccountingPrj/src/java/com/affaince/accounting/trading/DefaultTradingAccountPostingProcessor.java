@@ -1,10 +1,7 @@
 package com.affaince.accounting.trading;
 
-import com.affaince.accounting.db.AccountDatabaseSimulator;
-import com.affaince.accounting.db.TradingAccountDatabaseSimulator;
-import com.affaince.accounting.db.TrialBalanceDatabaseSimulator;
+import com.affaince.accounting.db.*;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.accounts.*;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
 import com.affaince.accounting.trials.TrialBalance;
@@ -63,21 +60,17 @@ public class DefaultTradingAccountPostingProcessor implements TradingAccountPost
             }
         }
         if (!isOpeningStockPresent) {
-            LedgerAccount activeInstanceOfOpeningStockAccount = obtainOpeningStockAccount(merchantId, postingDate, tradingFrequency);
+            OpeningStockAccount activeInstanceOfOpeningStockAccount = OpeningStockDatabaseSimulator.getLatestOpeningStockAccountsByAccountIdAndAccountIdentifier(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT);
             if (null != activeInstanceOfOpeningStockAccount) {
-                LedgerAccountEntry openingStockEntry = activeInstanceOfOpeningStockAccount.getDebits().stream().findAny().orElse(null);
-                if (null != openingStockEntry) {
-                    latestTradingAccount.debit(new DebitTradingAccountEntry(postingDate, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, openingStockEntry.getAmount()));
-                }
+                double openingStockEntry = activeInstanceOfOpeningStockAccount.getBalanceAmount();
+                latestTradingAccount.debit(new DebitTradingAccountEntry(postingDate, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, openingStockEntry));
             }
         }
         if (!isClosingStockPresent) {
-            LedgerAccount activeInstanceOfClosingStockAccount = obtainClosingStockAccount(merchantId, postingDate, tradingFrequency);
+            ClosingStockAccount activeInstanceOfClosingStockAccount = ClosingStockDatabaseSimulator.getLatestClosingStockAccountByAccountIdAndAccountIdentifier(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
             if(null != activeInstanceOfClosingStockAccount) {
-                LedgerAccountEntry closingStockEntry = activeInstanceOfClosingStockAccount.getCredits().stream().findAny().orElse(null);
-                if (null != closingStockEntry) {
-                    latestTradingAccount.credit(new CreditTradingAccountEntry(postingDate, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT,closingStockEntry.getAmount()));
-                }
+                double closingStockEntry = activeInstanceOfClosingStockAccount.getBalanceAmount();
+                latestTradingAccount.credit(new CreditTradingAccountEntry(postingDate, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT,closingStockEntry));
             }
         }
         return latestTradingAccount;
@@ -108,105 +101,4 @@ public class DefaultTradingAccountPostingProcessor implements TradingAccountPost
         return null;
     }
 
-    private LedgerAccount obtainOpeningStockAccount(String merchantId, LocalDateTime postingDate, TradingFrequency tradingFrequency) {
-        LedgerAccount latestOpeningStockAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT);
-        LedgerAccount latestClosingStockAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
-        if (null == latestOpeningStockAccount){
-            LedgerAccount newInstance = null;
-            switch (tradingFrequency) {
-                case DAILY:
-                    LocalDateTime startDate = new LocalDateTime(postingDate.getYear(), postingDate.monthOfYear().get(), postingDate.dayOfMonth().get(), 0, 0, 0);
-                    LocalDateTime endDate = new LocalDateTime(postingDate.getYear(), postingDate.monthOfYear().get(), postingDate.dayOfMonth().get(), 23, 59, 59);
-                    newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                    if(null != latestClosingStockAccount) {
-                        newInstance.debit(new DebitLedgerEntry(startDate, latestClosingStockAccount.getAccountId(), latestClosingStockAccount.getAccountIdentifier(), null, latestClosingStockAccount.getCredits().iterator().next().getAmount()));
-                    }
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-                case MONTHLY:
-                    startDate = postingDate.monthOfYear().withMinimumValue();
-                    endDate = postingDate.monthOfYear().withMaximumValue();
-                    newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                    if(null != latestClosingStockAccount) {
-                        newInstance.debit(new DebitLedgerEntry(startDate, latestClosingStockAccount.getAccountId(), latestClosingStockAccount.getAccountIdentifier(), null, latestClosingStockAccount.getCredits().iterator().next().getAmount()));
-                    }
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-                case YEARLY:
-                    startDate = postingDate.year().withMinimumValue();
-                    endDate = postingDate.year().withMaximumValue();
-                    newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                    if(null != latestClosingStockAccount) {
-                        newInstance.debit(new DebitLedgerEntry(startDate, latestClosingStockAccount.getAccountId(), latestClosingStockAccount.getAccountIdentifier(), null, latestClosingStockAccount.getCredits().iterator().next().getAmount()));
-                    }
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-            }
-            return newInstance;
-        } else if(postingDate.isBefore(latestOpeningStockAccount.getStartDate()) || postingDate.isAfter(latestOpeningStockAccount.getClosureDate())) {
-            LedgerAccount newInstance = null;
-            switch (tradingFrequency) {
-                case DAILY:
-                    LocalDateTime startDate = new LocalDateTime(postingDate.getYear(), postingDate.monthOfYear().get(), postingDate.dayOfMonth().get(), 0, 0, 0);
-                    LocalDateTime endDate = new LocalDateTime(postingDate.getYear(), postingDate.monthOfYear().get(), postingDate.dayOfMonth().get(), 23, 59, 59);
-                    newInstance = new OpeningStockAccount(merchantId, latestOpeningStockAccount.getAccountId(), AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                    if(null != latestClosingStockAccount) {
-                        newInstance.debit(new DebitLedgerEntry(startDate, latestClosingStockAccount.getAccountId(), latestClosingStockAccount.getAccountIdentifier(), null, latestClosingStockAccount.getCredits().iterator().next().getAmount()));
-                    }
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-                case MONTHLY:
-                    startDate = postingDate.monthOfYear().withMinimumValue();
-                    endDate = postingDate.monthOfYear().withMaximumValue();
-                    newInstance = new OpeningStockAccount(merchantId, latestOpeningStockAccount.getAccountId(), AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                    if(null != latestClosingStockAccount) {
-                        newInstance.debit(new DebitLedgerEntry(startDate, latestClosingStockAccount.getAccountId(), latestClosingStockAccount.getAccountIdentifier(), null, latestClosingStockAccount.getCredits().iterator().next().getAmount()));
-                    }
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-                case YEARLY:
-                    startDate = postingDate.year().withMinimumValue();
-                    endDate = postingDate.year().withMaximumValue();
-                    newInstance = new OpeningStockAccount(merchantId, latestOpeningStockAccount.getAccountId(), AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                    if(null != latestClosingStockAccount) {
-                        newInstance.debit(new DebitLedgerEntry(startDate, latestClosingStockAccount.getAccountId(), latestClosingStockAccount.getAccountIdentifier(), null, latestClosingStockAccount.getCredits().iterator().next().getAmount()));
-                    }
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-            }
-            return newInstance;
-        } else {
-            return latestOpeningStockAccount;
-        }
-    }
-
-    private LedgerAccount obtainClosingStockAccount(String merchantId, LocalDateTime postingDate, TradingFrequency tradingFrequency) {
-        LedgerAccount latestClosingStockAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
-        if (null == latestClosingStockAccount || postingDate.isBefore(latestClosingStockAccount.getStartDate()) || postingDate.isAfter(latestClosingStockAccount.getClosureDate())) {
-            LedgerAccount newInstance = null;
-            switch (tradingFrequency) {
-                case DAILY:
-                    LocalDateTime startDate = new LocalDateTime(postingDate.getYear(), postingDate.monthOfYear().get(), postingDate.dayOfMonth().get(), 0, 0, 0);
-                    LocalDateTime endDate = new LocalDateTime(postingDate.getYear(), postingDate.monthOfYear().get(), postingDate.dayOfMonth().get(), 23, 59, 59);
-                    newInstance = new ClosingStockAccount(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT, startDate, endDate);
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-                case MONTHLY:
-                    startDate = postingDate.monthOfYear().withMinimumValue();
-                    endDate = postingDate.monthOfYear().withMaximumValue();
-                    newInstance = new ClosingStockAccount(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT, startDate, endDate);
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-                case YEARLY:
-                    startDate = postingDate.year().withMinimumValue();
-                    endDate = postingDate.year().withMaximumValue();
-                    newInstance = new OpeningStockAccount(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT, startDate, endDate);
-                    AccountDatabaseSimulator.addAccount(newInstance);
-                    break;
-            }
-            return newInstance;
-        } else {
-            return latestClosingStockAccount;
-        }
-    }
 }

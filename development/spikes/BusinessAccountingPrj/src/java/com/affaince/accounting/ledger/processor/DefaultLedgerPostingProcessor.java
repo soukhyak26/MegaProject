@@ -48,7 +48,6 @@ public class DefaultLedgerPostingProcessor implements LedgerPostingProcessor{
 
                 LedgerAccount debitAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(journalEntry.getMerchantId(), debitAccountId, debitAccountIdentifier);
                 debitAccount.debit(new DebitLedgerEntry(dateOfTransaction,creditAccountId,creditAccountIdentifier,journalFolioNumber,debitAmount));
-
             }
         }else if(putMultipleCreditEntriesInDebitAccount){
             DebitJournalEntry debitJournalEntry= debitJournalEntries.get(0);
@@ -81,6 +80,5 @@ public class DefaultLedgerPostingProcessor implements LedgerPostingProcessor{
             creditAccount.credit(new CreditLedgerEntry(dateOfTransaction,debitAccountId,debitAccountIdentifier,journalFolioNumber,creditAmount));
             debitAccount.debit(new DebitLedgerEntry(dateOfTransaction,creditAccountId,creditAccountIdentifier,journalFolioNumber,debitAmount));
         }
-
     }
 }
