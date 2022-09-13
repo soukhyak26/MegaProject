@@ -1,7 +1,7 @@
 package com.affaince.accounting.journal.processor;
 
 import com.affaince.accounting.journal.entity.*;
-import com.affaince.accounting.journal.events.AccountIdentificationRulesProcessor;
+import com.affaince.accounting.journal.events.AccountingEventListener;
 import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 import com.affaince.accounting.transactions.SourceDocument;
@@ -13,10 +13,11 @@ import java.util.List;
 public class DefaultJournalizingProcessor implements JournalizingProcessor {
     @Override
     public JournalEntry processJournalEntry(SourceDocument sourceDocument) throws Exception{
-        AccountIdentificationRulesProcessor accountIdentificationRulesProcessor = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountIdentificationRulesProcessor);
-        List<ParticipantAccount> giverAccounts = accountIdentificationRulesProcessor.identifyParticipatingGiverAccounts(sourceDocument);
-        List<ParticipantAccount> receiverAccounts = accountIdentificationRulesProcessor.identifyParticipatingReceiverAccounts(sourceDocument);
+        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
+        requireNonNull(accountingEventListener);
+        accountingEventListener.onEvent(sourceDocument);
+        List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
+        List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
 
         JournalEntry.JournalEntryBuilder journalEntryBuilder = JournalEntry.newBuilder()
                 .merchantId(sourceDocument.getMerchantId())

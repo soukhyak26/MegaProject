@@ -1,7 +1,7 @@
 package com.affaince.accounting.journal.processor;
 
 import com.affaince.accounting.journal.entity.ParticipantAccount;
-import com.affaince.accounting.journal.events.AccountIdentificationRulesProcessor;
+import com.affaince.accounting.journal.events.AccountingEventListener;
 import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
@@ -19,10 +19,10 @@ public class SubsidiaryJournalizingProcessor {
         // what about purchase return .. ?
         //what about sales return . .?
         if(sourceDocument.getModeOfTransaction()== ModeOfTransaction.ON_CREDIT){
-            AccountIdentificationRulesProcessor accountIdentificationRulesProcessor = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-            requireNonNull(accountIdentificationRulesProcessor);
-            List<ParticipantAccount> giverAccounts = accountIdentificationRulesProcessor.identifyParticipatingGiverAccounts(sourceDocument);
-            List<ParticipantAccount> receiverAccounts = accountIdentificationRulesProcessor.identifyParticipatingReceiverAccounts(sourceDocument);
+            AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
+            requireNonNull(accountingEventListener);
+            List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
+            List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
             if( sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_PURCHASE_BY_BUSINESS ){
                 return processEntryInPurchaseBook(sourceDocument,giverAccounts,receiverAccounts);
             }else if(sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER){

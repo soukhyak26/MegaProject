@@ -17,7 +17,7 @@ import com.affaince.accounting.transactions.SourceDocument;
 
 //in case of on payment mode ->service provider should be debited and bank should be credited
 //in such case no service provider payment should be triggered.
-public class DistributionServicesAvailedEventProcessor extends AbstractAccountIdentificationRulesProcessor {
+public class DistributionServicesAvailedEventProcessor extends AbstractAccountingEventListener {
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
         double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if(sourceDocument.getModeOfTransaction()== ModeOfTransaction.ON_CREDIT){
@@ -46,4 +46,9 @@ public class DistributionServicesAvailedEventProcessor extends AbstractAccountId
     public ParticipantAccount findHiddenReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
         return null;
     }
+
+    public void onEvent(SourceDocument sourceDocument){
+        //do nothing.
+    }
+
 }

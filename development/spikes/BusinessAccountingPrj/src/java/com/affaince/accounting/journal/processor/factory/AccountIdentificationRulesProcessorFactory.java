@@ -1,13 +1,13 @@
 package com.affaince.accounting.journal.processor.factory;
 
 import com.affaince.accounting.transactions.SourceDocument;
-import com.affaince.accounting.journal.events.AccountIdentificationRulesProcessor;
+import com.affaince.accounting.journal.events.AccountingEventListener;
 import com.affaince.accounting.journal.events.*;
 import com.affaince.accounting.journal.qualifiers.TransactionEvents;
 
 public class AccountIdentificationRulesProcessorFactory {
 
-    public static AccountIdentificationRulesProcessor getAccountIdentificationRulesProcessor(SourceDocument sourceDocument){
+    public static AccountingEventListener getAccountIdentificationRulesProcessor(SourceDocument sourceDocument){
         TransactionEvents transactionEvent = sourceDocument.getTransactionEvent();
         switch (transactionEvent) {
             case CAPITAL_INVESTMENT:

@@ -7,7 +7,7 @@ import com.affaince.accounting.transactions.SourceDocument;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractAccountIdentificationRulesProcessor implements AccountIdentificationRulesProcessor {
+public abstract class AbstractAccountingEventListener implements AccountingEventListener {
     @Override
     public List<ParticipantAccount> identifyParticipatingGiverAccounts(SourceDocument sourceDocument) {
         final Participant giverParticipant = sourceDocument.getGiverParticipant();

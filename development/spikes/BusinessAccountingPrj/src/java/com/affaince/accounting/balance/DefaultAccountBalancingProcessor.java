@@ -13,30 +13,15 @@ import java.util.Set;
 public class DefaultAccountBalancingProcessor implements AccountBalancingProcessor{
     @Override
     public LedgerAccount balanceAccount(LedgerAccount ledgerAccount,LocalDateTime closureDate) {
-        double sumOfDebits = sumOnDebitSide(ledgerAccount);
-        double sumOfCredits = sumOnCreditSide(ledgerAccount);
-        ledgerAccount.flushAllEntries();
         LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
-        CreditLedgerEntry  closingCreditLedgerEntry=null;
-        DebitLedgerEntry  closingDebitLedgerEntry=null;
-        if(sumOfDebits > sumOfCredits){
-            closingCreditLedgerEntry = new CreditLedgerEntry(closureDate,"byBalanceCarriedDown", AccountIdentifier.BY_BALANCE_CARRIED_DOWN,null,sumOfDebits-sumOfCredits);
-            ledgerAccount.credit(closingCreditLedgerEntry);
-        }else if(sumOfCredits > sumOfDebits){
-            closingDebitLedgerEntry = new DebitLedgerEntry(closureDate,"toBalanceCarriedDown", AccountIdentifier.TO_BALANCE_CARRIED_DOWN,null,sumOfCredits-sumOfDebits);
-            ledgerAccount.debit(closingDebitLedgerEntry);
-        }else {
-            //what to do?
-        }
 
-        LedgerAccount latestClosedLedgerAccount = AccountDatabaseSimulator.getLatestClosedAccount(ledgerAccount.getMerchantId(), ledgerAccount.getAccountId());
-        if(null != latestClosedLedgerAccount) {
-            latestClosedLedgerAccount.setLatestVersion(false);
-        }
-        ledgerAccount.closeActiveVersion(closureDate);
-
+        LedgerAccount closedLedgerAccount = closeCurrentAccount(ledgerAccount,closureDate);
         DebitLedgerEntry openingDebitLedgerEntry=null;
         CreditLedgerEntry openingCreditLedgerEntry=null;
+        ledgerAccountCurrentVersion.flushAllEntries();
+        LedgerAccountEntry closingDebitLedgerEntry = closedLedgerAccount.getDebits().stream().filter(cla->cla.getPeerAccountNumber().equals("toBalanceCarriedDown")).findAny().orElse(null);
+        LedgerAccountEntry closingCreditLedgerEntry = closedLedgerAccount.getCredits().stream().filter(cla->cla.getPeerAccountNumber().equals("byBalanceCarriedDown")).findAny().orElse(null);
+
         if(null != closingDebitLedgerEntry) {
             openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"byBalanceBroughtDown",AccountIdentifier.BY_BALANCE_BROUGHT_DOWN,null, closingDebitLedgerEntry.getAmount());
         }
@@ -56,6 +41,30 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
         return ledgerAccountCurrentVersion;
     }
 
+    private LedgerAccount closeCurrentAccount(LedgerAccount ledgerAccount,LocalDateTime closureDate){
+        double sumOfDebits = sumOnDebitSide(ledgerAccount);
+        double sumOfCredits = sumOnCreditSide(ledgerAccount);
+
+        CreditLedgerEntry  closingCreditLedgerEntry;
+        DebitLedgerEntry  closingDebitLedgerEntry;
+
+        if(sumOfDebits > sumOfCredits){
+            closingCreditLedgerEntry = new CreditLedgerEntry(closureDate,"byBalanceCarriedDown", AccountIdentifier.BY_BALANCE_CARRIED_DOWN,null,sumOfDebits-sumOfCredits);
+            ledgerAccount.credit(closingCreditLedgerEntry);
+        }else if(sumOfCredits > sumOfDebits){
+            closingDebitLedgerEntry = new DebitLedgerEntry(closureDate,"toBalanceCarriedDown", AccountIdentifier.TO_BALANCE_CARRIED_DOWN,null,sumOfCredits-sumOfDebits);
+            ledgerAccount.debit(closingDebitLedgerEntry);
+        }else {
+            //what to do?
+        }
+
+        LedgerAccount latestClosedLedgerAccount = AccountDatabaseSimulator.getLatestClosedAccount(ledgerAccount.getMerchantId(), ledgerAccount.getAccountId());
+        if(null != latestClosedLedgerAccount) {
+            latestClosedLedgerAccount.setLatestVersion(false);
+        }
+        ledgerAccount.closeActiveVersion(closureDate);
+        return ledgerAccount;
+    }
     private double sumOnDebitSide(LedgerAccount ledgerAccount){
         Set<LedgerAccountEntry> debitEntries = ledgerAccount.getDebits();
         double sumOfDebits=0;

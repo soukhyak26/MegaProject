@@ -17,7 +17,7 @@ import com.affaince.accounting.transactions.SourceDocument;
 
 
 // The giver should be merchant account and receiver should be Business Capital account
-public class CapitalInvestmentEventProcessor extends AbstractAccountIdentificationRulesProcessor {
+public class CapitalInvestmentEventProcessor extends AbstractAccountingEventListener {
 
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
         double receiverAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
@@ -39,4 +39,7 @@ public class CapitalInvestmentEventProcessor extends AbstractAccountIdentificati
         return null;
     }
 
+    public void onEvent(SourceDocument sourceDocument){
+        //do nothing.
+    }
 }

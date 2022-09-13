@@ -5,8 +5,9 @@ import com.affaince.accounting.transactions.SourceDocument;
 
 import java.util.List;
 
-public interface AccountIdentificationRulesProcessor {
+public interface AccountingEventListener {
     List<ParticipantAccount> identifyParticipatingGiverAccounts(SourceDocument sourceDocument);
     List<ParticipantAccount> identifyParticipatingReceiverAccounts(SourceDocument sourceDocument);
+    public void onEvent(SourceDocument sourceDocument);
 
 }

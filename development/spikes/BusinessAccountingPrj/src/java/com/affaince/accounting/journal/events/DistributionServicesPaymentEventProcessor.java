@@ -9,7 +9,7 @@ import com.affaince.accounting.transactions.SourceDocument;
 
 //The giver should be business bank acct and receiver(beneficiary) should be business services provider account
 //this event is possible only when distribution services are availed on credit.. else it is taken care in dist. services availed event
-public class DistributionServicesPaymentEventProcessor extends AbstractAccountIdentificationRulesProcessor {
+public class DistributionServicesPaymentEventProcessor extends AbstractAccountingEventListener {
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
         double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,receivedAmount);
@@ -29,4 +29,8 @@ public class DistributionServicesPaymentEventProcessor extends AbstractAccountId
     public ParticipantAccount findHiddenReceiverAccount(SourceDocument sourceDocument,double amountExchanged) {
         return null;
     }
+    public void onEvent(SourceDocument sourceDocument){
+        //do nothing.
+    }
+
 }

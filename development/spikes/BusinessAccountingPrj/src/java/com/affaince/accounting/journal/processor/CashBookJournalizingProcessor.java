@@ -47,10 +47,10 @@ public class CashBookJournalizingProcessor {
     }
 
     public List<CashBookEntry> processReceipts(String journalFolioNumber, SourceDocument sourceDocument){
-        AccountIdentificationRulesProcessor accountIdentificationRulesProcessor = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountIdentificationRulesProcessor);
-        List<ParticipantAccount> giverAccounts = accountIdentificationRulesProcessor.identifyParticipatingGiverAccounts(sourceDocument);
-        List<ParticipantAccount> receiverAccounts = accountIdentificationRulesProcessor.identifyParticipatingReceiverAccounts(sourceDocument);
+        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
+        requireNonNull(accountingEventListener);
+        List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
+        List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
 
         DebitCashBookEntry debitCashBookEntry = new DebitCashBookEntry(sourceDocument.getMerchantId(),
                 sourceDocument.getDateOfTransaction(),
@@ -66,10 +66,10 @@ public class CashBookJournalizingProcessor {
         return debitCashBookEntries;
     }
     public List<CashBookEntry> processPayments(String journalFolioNumber, SourceDocument sourceDocument){
-        AccountIdentificationRulesProcessor accountIdentificationRulesProcessor = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountIdentificationRulesProcessor);
-        List<ParticipantAccount> giverAccounts = accountIdentificationRulesProcessor.identifyParticipatingGiverAccounts(sourceDocument);
-        List<ParticipantAccount> receiverAccounts = accountIdentificationRulesProcessor.identifyParticipatingReceiverAccounts(sourceDocument);
+        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
+        requireNonNull(accountingEventListener);
+        List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
+        List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
 
         CreditCashBookEntry creditCashBookEntry = new CreditCashBookEntry(sourceDocument.getMerchantId(),
                 sourceDocument.getDateOfTransaction(),

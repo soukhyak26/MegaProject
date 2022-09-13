@@ -1,6 +1,5 @@
-import com.affaince.accounting.balance.LedgerBalancingScheduler;
 import com.affaince.accounting.db.*;
-import com.affaince.accounting.endofperiod.EndOfPeriodProcessor;
+import com.affaince.accounting.endofperiod.StartOfPeriodProcessor;
 import com.affaince.accounting.journal.entity.JournalEntry;
 import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
 import com.affaince.accounting.journal.processor.SubsidiaryJournalizingProcessor;
@@ -27,35 +26,47 @@ public class Test {
     public static void main(String [] args){
         PartyDatabaseSimulator.buildDatabase();
         AccountDatabaseSimulator.buildDatabase(new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(9999,12,31,23,59,59));
+
         Test test = new Test();
-        EndOfPeriodProcessor endOfPeriodProcessor = new EndOfPeriodProcessor();
+        StartOfPeriodProcessor startOfPeriodProcessor = new StartOfPeriodProcessor();
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,23,59,59),TradingFrequency.DAILY);
         test.investCapital();   //does not impact trading acct --1 Jan 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,23,59,59),TradingFrequency.DAILY);
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,10,23,59,59),TradingFrequency.DAILY);
+
         test.receiveStockOfGoodsOnCredit(); // debit trading account 10 Jan 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,10,23,59,59),TradingFrequency.DAILY);
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,20,23,59,59),TradingFrequency.DAILY);
         test.receiveStockOfGoodsOnPayment();    // debit trading account 20 Jan 2023
         test.paymentToSupplierInLiuOfGoods();   // no impact ton trading acct 20 Jan 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,20,23,59,59),TradingFrequency.DAILY);
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,22,23,59,59),TradingFrequency.DAILY);
         test.returnOfGoodsPurchaseOnCredit();   // credit trading account 22 Jan 2023
         test.goodsDeliveredToSubscriberOnCredit();  //impact on trading account 22 Jan 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,22,23,59,59),TradingFrequency.DAILY);
 
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,25,23,59,59),TradingFrequency.DAILY);
         test.goodsDeliveredToSubscriberOnPayment(); //impact on trading account 25 Jan 2023
         test.goodsReturnedFromSubscriber(); //impact on trading account 25 Jan 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,25,23,59,59),TradingFrequency.DAILY);
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,27,23,59,59),TradingFrequency.DAILY);
         test.paymentReceivedFromSubscriber();// no impact on trading account 27 Jan 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,27,23,59,59),TradingFrequency.DAILY);
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,2,4,23,59,59),TradingFrequency.DAILY);
         test.receiveInvoiceOfDistributionServiceAvailed(); // impact on trading account 4 Feb 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,4,23,59,59),TradingFrequency.DAILY);
+
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
         test.paymentInLiuOfDistributionService();// no impact on trading account.20 Feb 2023
-        endOfPeriodProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
-
-
-        TrialBalance trialBalance = test.processTrialBalance("merchant1",new LocalDateTime(2023,2,20,23,59,59));
+        startOfPeriodProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,2,21,23,59,59),TradingFrequency.DAILY);
 
         System.out.println("###########LEDGER################");
         test.printAccounts("merchant1");
         System.out.println("###########END - LEDGER################");
+
+
+        TrialBalance trialBalance = test.processTrialBalance("merchant1",new LocalDateTime(2023,2,21,23,59,59));
+
+
         System.out.println("trial Balance :::############");
         System.out.println(trialBalance);
         System.out.println("trial balance :: ############");
