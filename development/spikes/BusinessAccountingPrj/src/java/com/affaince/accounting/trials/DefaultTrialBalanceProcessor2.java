@@ -16,7 +16,6 @@ public class DefaultTrialBalanceProcessor2 implements TrialBalanceProcessor{
         for (LedgerAccount ledgerAccount : closedLedgerAccountsOfAMerchant){
             double creditBalanceBroughtDown=ledgerAccount.getDebits().stream().mapToDouble(db->db.getAmount()).sum();
             double debitBalanceBroughtDown=ledgerAccount.getCredits().stream().mapToDouble(cr->cr.getAmount()).sum();
-            //LedgerAccountEntry creditLedgerEntry = ledgerAccount.getCredits().stream().filter(acc->acc.getAccountIdentifier() == AccountIdentifier.BY_BALANCE_CARRIED_DOWN).findAny().orElse(null);
 
             switch (ledgerAccount.getAccountIdentifier().getAccountQualifiers()){
                 case PERSONAL_LEDGER_ACCOUNT:
