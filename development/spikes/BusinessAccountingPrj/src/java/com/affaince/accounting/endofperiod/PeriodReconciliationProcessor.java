@@ -11,43 +11,23 @@ import org.joda.time.LocalDateTime;
 
 public class PeriodReconciliationProcessor {
 
-    public void processStartOfPeriodOperations(String merchant, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    public void processStartOfPeriodOperations(String merchant, LocalDateTime startDate,LocalDateTime closureDate, TradingFrequency tradingFrequency) {
         LedgerBalancingScheduler.processLedgerBalancing(merchant, closureDate);
-        createOpeningStockAccount(merchant, closureDate, tradingFrequency);
-        createClosingStockAccount(merchant, closureDate, tradingFrequency);
+        createOpeningStockAccount(merchant, startDate,closureDate, tradingFrequency);
+        createClosingStockAccount(merchant, startDate,closureDate, tradingFrequency);
     }
 
     //opening stock implementation is correct.. it just copies value from closing stock.. thats it.
-    private OpeningStockAccount createOpeningStockAccount(String merchantId, LocalDateTime  closureDate, TradingFrequency tradingFrequency) {
+    private OpeningStockAccount createOpeningStockAccount(String merchantId,LocalDateTime startDate, LocalDateTime  closureDate, TradingFrequency tradingFrequency) {
         ClosingStockAccount latestClosingStockAccount = ClosingStockDatabaseSimulator.getLatestClosingStockAccountByAccountIdAndAccountIdentifier(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
         OpeningStockAccount newInstance = null;
         switch (tradingFrequency) {
             case DAILY:
-                LocalDateTime startDate = closureDate.plusMinutes(1);
-                startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
-                LocalDateTime endDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 23, 59, 59);
-                newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                if( null != latestClosingStockAccount) {
-                    newInstance.setBalanceAmount(latestClosingStockAccount.getBalanceAmount());
-                }
-                OpeningStockDatabaseSimulator.addAccount(newInstance);
-                break;
             case MONTHLY:
-                startDate = closureDate.plusMinutes(1);
-                startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
-                endDate = startDate.plusMonths(1);
-                endDate = new LocalDateTime(endDate.getYear(), endDate.monthOfYear().get(), endDate.dayOfMonth().get(), 23, 59, 59);
-                newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
-                if( null != latestClosingStockAccount) {
-                    newInstance.setBalanceAmount(latestClosingStockAccount.getBalanceAmount());
-                }
-                OpeningStockDatabaseSimulator.addAccount(newInstance);
-                break;
             case YEARLY:
-                startDate = closureDate.plusMinutes(1);
+                //LocalDateTime startDate = closureDate.plusMinutes(1);
                 startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
-                endDate = startDate.plusYears(1);
-                endDate = new LocalDateTime(endDate.getYear(), endDate.monthOfYear().get(), endDate.dayOfMonth().get(), 23, 59, 59);
+                LocalDateTime endDate = new LocalDateTime(closureDate.getYear(), closureDate.monthOfYear().get(), closureDate.dayOfMonth().get(), 23, 59, 59);
                 newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
                 if( null != latestClosingStockAccount) {
                     newInstance.setBalanceAmount(latestClosingStockAccount.getBalanceAmount());
@@ -58,37 +38,19 @@ public class PeriodReconciliationProcessor {
         return newInstance;
     }
 
-    private ClosingStockAccount createClosingStockAccount(String merchantId, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    private ClosingStockAccount createClosingStockAccount(String merchantId,LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
         ClosingStockAccount latestClosingStockAccount = ClosingStockDatabaseSimulator.getLatestClosingStockAccountByAccountIdAndAccountIdentifier(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
         double closingBalanceAmount=0;
         if (null != latestClosingStockAccount) {
-            //latestClosingStockAccount.setClosureDate(closureDate);
             closingBalanceAmount=latestClosingStockAccount.getBalanceAmount();
         }
         ClosingStockAccount newInstance = null;
         switch (tradingFrequency) {
             case DAILY:
-                LocalDateTime startDate = closureDate.plusMinutes(1);
-                startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
-                LocalDateTime endDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 23, 59, 59);
-                newInstance = new ClosingStockAccount(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT, startDate, endDate);
-                newInstance.setBalanceAmount(closingBalanceAmount);
-                ClosingStockDatabaseSimulator.addAccount(newInstance);
-                break;
             case MONTHLY:
-                startDate = closureDate.plusMinutes(1);
-                startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
-                endDate = startDate.plusMonths(1);
-                endDate = new LocalDateTime(endDate.getYear(), endDate.monthOfYear().get(), endDate.dayOfMonth().get(), 23, 59, 59);
-                newInstance = new ClosingStockAccount(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT, startDate, endDate);
-                newInstance.setBalanceAmount(closingBalanceAmount);
-                ClosingStockDatabaseSimulator.addAccount(newInstance);
-                break;
             case YEARLY:
-                startDate = closureDate.plusMinutes(1);
                 startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
-                endDate = startDate.plusYears(1);
-                endDate = new LocalDateTime(endDate.getYear(), endDate.monthOfYear().get(), endDate.dayOfMonth().get(), 23, 59, 59);
+                LocalDateTime endDate = new LocalDateTime(closureDate.getYear(), closureDate.monthOfYear().get(), closureDate.dayOfMonth().get(), 23, 59, 59);
                 newInstance = new ClosingStockAccount(merchantId, "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT, startDate, endDate);
                 newInstance.setBalanceAmount(closingBalanceAmount);
                 ClosingStockDatabaseSimulator.addAccount(newInstance);
