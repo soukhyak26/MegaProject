@@ -14,8 +14,8 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
     @Override
     public LedgerAccount balanceAccount(LedgerAccount ledgerAccount,LocalDateTime closureDate) {
         LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
-
         LedgerAccount closedLedgerAccount = closeCurrentAccount(ledgerAccount,closureDate);
+        ledgerAccountCurrentVersion.setStartDate(closureDate.plusMinutes(1));
         DebitLedgerEntry openingDebitLedgerEntry=null;
         CreditLedgerEntry openingCreditLedgerEntry=null;
         ledgerAccountCurrentVersion.flushAllEntries();

@@ -10,4 +10,5 @@ public interface TradingAccountPostingProcessor {
     TradingAccount postToTradingAccount(String merchantId,
                                        LocalDateTime postingDate,
                                        TradingFrequency tradingFrequency);
+
 }

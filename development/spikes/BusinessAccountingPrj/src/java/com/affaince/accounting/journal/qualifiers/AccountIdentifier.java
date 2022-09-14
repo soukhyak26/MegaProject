@@ -22,13 +22,22 @@ public enum AccountIdentifier {
     BUSINESS_PROFIT_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,true),
     BUSINESS_LOSS_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false),
     BUSINESS_DISCOUNT_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false),
+
     TO_BALANCE_CARRIED_DOWN(null,false),
     TO_BALANCE_BROUGHT_DOWN(null,false),
     BY_BALANCE_CARRIED_DOWN(null,false),
     BY_BALANCE_BROUGHT_DOWN(null,false),
+
     TRADING_ACCOUNT(null,false),
+
     OPENING_STOCK_ACCOUNT(null,false),
-    CLOSING_STOCK_ACCOUNT(null,false);
+    CLOSING_STOCK_ACCOUNT(null,false),
+
+    GROSS_PROFIT(null, false),
+    GROSS_LOSS (null, false ),
+
+    NET_PROFIT(null, false),
+    NET_LOSS(null, false);
 
     private AccountQualifiers accountQualifiers;
     private boolean isGain;

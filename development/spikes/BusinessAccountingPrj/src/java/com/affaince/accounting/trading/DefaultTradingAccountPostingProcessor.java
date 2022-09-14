@@ -2,44 +2,72 @@ package com.affaince.accounting.trading;
 
 import com.affaince.accounting.db.*;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
-import com.affaince.accounting.trials.TrialBalance;
-import com.affaince.accounting.trials.TrialBalanceEntry;
 import org.joda.time.LocalDateTime;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class DefaultTradingAccountPostingProcessor implements TradingAccountPostingProcessor {
     @Override
     public TradingAccount postToTradingAccount(String merchantId, LocalDateTime postingDate, TradingFrequency tradingFrequency){
-        TrialBalance trialBalance= TrialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
-        assert trialBalance != null;
-        List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
-        List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
+        List<LedgerAccount> closedLedgerAccountsOfAMerchant = AccountDatabaseSimulator.getAllLatestClosedAccounts(merchantId);
         TradingAccount tradingAccount = null;
-        for(TrialBalanceEntry trialBalanceEntry: creditEntries){
-         tradingAccount = postTrialBalanceEntry(merchantId,trialBalanceEntry,postingDate,tradingFrequency);
+        for(LedgerAccount ledgerAccount : closedLedgerAccountsOfAMerchant){
+            List<LedgerAccountEntry> creditEntries = ledgerAccount.getCredits().stream().filter(la->la.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_BROUGHT_DOWN ||la.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
+            for(LedgerAccountEntry ledgerAccountEntry: creditEntries){
+                tradingAccount = postLedgerAccountEntry(merchantId,ledgerAccountEntry,postingDate,tradingFrequency);
+            }
+            List<LedgerAccountEntry> debitEntries = ledgerAccount.getDebits().stream().filter(la->la.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_BROUGHT_DOWN ||la.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
+            for(LedgerAccountEntry ledgerAccountEntry: debitEntries){
+                tradingAccount = postLedgerAccountEntry(merchantId,ledgerAccountEntry,postingDate,tradingFrequency);
+            }
         }
-        for(TrialBalanceEntry trialBalanceEntry: debitEntries){
-            tradingAccount = postTrialBalanceEntry(merchantId,trialBalanceEntry,postingDate,tradingFrequency);
+        return balanceTradingAccount(tradingAccount,postingDate);
+    }
+
+    public TradingAccount balanceTradingAccount(TradingAccount tradingAccount,LocalDateTime postingDate){
+        List<TradingAccountEntry> debitEntries = tradingAccount.getDebits();
+        List<TradingAccountEntry> creditEntries = tradingAccount.getCredits();
+
+        double sumOfDebits = debitEntries.stream().mapToDouble(de->de.getAmount()).sum();
+        double sumOfCredits = creditEntries.stream().mapToDouble(ce->ce.getAmount()).sum();
+        if(sumOfDebits > sumOfCredits){
+            double grossLossAmount =sumOfDebits - sumOfCredits;
+            return postGrossValuesToTradingAccount(tradingAccount,grossLossAmount,postingDate,false);
+        }else if( sumOfCredits > sumOfDebits){
+            double grossProfitAmount = sumOfCredits-sumOfDebits;
+            return postGrossValuesToTradingAccount(tradingAccount,grossProfitAmount,postingDate,true);
+        }else{
+            return tradingAccount;
         }
-        //posting complete ,now set closure date to current date
+    }
+
+    private TradingAccount postGrossValuesToTradingAccount(TradingAccount tradingAccount,double grossValue,LocalDateTime postingDate,boolean isProfit){
+        if(isProfit){
+            tradingAccount.debit(new DebitTradingAccountEntry(postingDate, "grossProfit", AccountIdentifier.GROSS_PROFIT, grossValue));
+        }else{
+            tradingAccount.credit(new CreditTradingAccountEntry(postingDate, "grossLoss", AccountIdentifier.GROSS_LOSS, grossValue));
+        }
         return tradingAccount;
     }
-    private TradingAccount postTrialBalanceEntry(String merchantId, TrialBalanceEntry trialBalanceEntry, LocalDateTime postingDate, TradingFrequency tradingFrequency) {
+
+    private TradingAccount postLedgerAccountEntry(String merchantId, LedgerAccountEntry ledgerAccountEntry, LocalDateTime postingDate, TradingFrequency tradingFrequency) {
         TradingAccount activeInstance = getActiveInstanceOfTradingAccount(merchantId, postingDate, tradingFrequency);
-        AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
+        AccountIdentifier accountIdentifier = ledgerAccountEntry.getAccountIdentifier();
         switch (accountIdentifier) {
             case BUSINESS_PURCHASE_ACCOUNT:
             case BUSINESS_SALES_RETURN_ACCOUNT:
             case DISTRIBUTION_SUPPLIER_ACCOUNT:
-                activeInstance.debit(new DebitTradingAccountEntry(postingDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(), trialBalanceEntry.getBalanceAmount()));
+                activeInstance.debit(new DebitTradingAccountEntry(postingDate, ledgerAccountEntry.getPeerAccountNumber(), ledgerAccountEntry.getAccountIdentifier(), ledgerAccountEntry.getAmount()));
                 break;
             case BUSINESS_PURCHASE_RETURN_ACCOUNT:
             case BUSINESS_SALES_ACCOUNT:
-                activeInstance.credit(new CreditTradingAccountEntry(postingDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(), trialBalanceEntry.getBalanceAmount()));
+                activeInstance.credit(new CreditTradingAccountEntry(postingDate, ledgerAccountEntry.getPeerAccountNumber(), ledgerAccountEntry.getAccountIdentifier(), ledgerAccountEntry.getAmount()));
                 break;
         }
         return activeInstance;

@@ -1,12 +1,9 @@
 package com.affaince.accounting.ledger.accounts;
 
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.util.VersionNumberGenerator;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class AbstractLedgerAccountStereoType implements LedgerAccount {
     private final String merchantId;
@@ -56,6 +53,11 @@ public abstract class AbstractLedgerAccountStereoType implements LedgerAccount {
 
     public LocalDateTime getStartDate() {
         return startDate;
+    }
+
+    @Override
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     public LocalDateTime getClosureDate() {

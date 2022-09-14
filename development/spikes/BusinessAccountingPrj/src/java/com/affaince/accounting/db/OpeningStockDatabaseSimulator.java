@@ -1,9 +1,7 @@
 package com.affaince.accounting.db;
 
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
-import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Comparator;
