@@ -235,12 +235,12 @@ public class Test {
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("4")
-                .transactionAmount(100000)
+                .transactionAmount(600)
                 .dateOfTransaction(new LocalDateTime(2022,2,4,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(TransactionEvents.SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER)
-                .giverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.SERVICE,100000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
+                .giverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.SERVICE,600)
+                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
                 .description("capital invested")
                 .build();
 
@@ -252,12 +252,12 @@ public class Test {
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("5")
-                .transactionAmount(100000)
+                .transactionAmount(600)
                 .dateOfTransaction(new LocalDateTime(2022,2,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_MADE_TO_SERVICE_PROVIDER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
-                .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,100000)
+                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
+                .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,600)
                 .description("capital invested")
                 .build();
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);

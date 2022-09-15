@@ -6,6 +6,8 @@ import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
+import com.affaince.accounting.trials.TrialBalance;
+import com.affaince.accounting.trials.TrialBalanceEntry;
 import org.joda.time.LocalDateTime;
 
 import java.util.List;
@@ -14,20 +16,36 @@ import java.util.stream.Collectors;
 
 public class DefaultTradingAccountPostingProcessor implements TradingAccountPostingProcessor {
     @Override
-    public TradingAccount postToTradingAccount(String merchantId, LocalDateTime startDateOfPeriod,LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency){
-        List<LedgerAccount> closedLedgerAccountsOfAMerchant = AccountDatabaseSimulator.getAllLatestClosedAccounts(merchantId);
-        TradingAccount tradingAccount = null;
-        for(LedgerAccount ledgerAccount : closedLedgerAccountsOfAMerchant){
-            List<LedgerAccountEntry> creditEntries = ledgerAccount.getCredits().stream().filter(la->la.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_BROUGHT_DOWN && la.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
-            for(LedgerAccountEntry ledgerAccountEntry: creditEntries){
-                tradingAccount = postLedgerAccountEntry(merchantId,ledgerAccountEntry,startDateOfPeriod,closureDateOfPeriod,tradingFrequency);
-            }
-            List<LedgerAccountEntry> debitEntries = ledgerAccount.getDebits().stream().filter(la->la.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_BROUGHT_DOWN && la.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
-            for(LedgerAccountEntry ledgerAccountEntry: debitEntries){
-                tradingAccount = postLedgerAccountEntry(merchantId,ledgerAccountEntry,startDateOfPeriod,closureDateOfPeriod,tradingFrequency);
-            }
+    public TradingAccount postToTradingAccount(String merchantId,LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency){
+        TrialBalance trialBalance= TrialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
+        assert trialBalance != null;
+        List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
+        List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
+        TradingAccount tradingAccount = getActiveInstanceOfTradingAccount(merchantId,startDate, closureDate, tradingFrequency);
+        for(TrialBalanceEntry trialBalanceEntry: creditEntries){
+            tradingAccount = postTrialBalanceEntry(merchantId,tradingAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
         }
-        return balanceTradingAccount(tradingAccount,closureDateOfPeriod);
+        for(TrialBalanceEntry trialBalanceEntry: debitEntries){
+            tradingAccount = postTrialBalanceEntry(merchantId,tradingAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
+        }
+        //posting complete ,now set closure date to current date
+        return balanceTradingAccount(tradingAccount,closureDate);
+    }
+    private TradingAccount postTrialBalanceEntry(String merchantId, TradingAccount tradingAccount,TrialBalanceEntry trialBalanceEntry,LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+
+        AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
+        switch (accountIdentifier) {
+            case BUSINESS_PURCHASE_ACCOUNT:
+            case BUSINESS_SALES_RETURN_ACCOUNT:
+            case DISTRIBUTION_SUPPLIER_ACCOUNT:
+                tradingAccount.debit(new DebitTradingAccountEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(), trialBalanceEntry.getBalanceAmount()));
+                break;
+            case BUSINESS_PURCHASE_RETURN_ACCOUNT:
+            case BUSINESS_SALES_ACCOUNT:
+                tradingAccount.credit(new CreditTradingAccountEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(), trialBalanceEntry.getBalanceAmount()));
+                break;
+        }
+        return tradingAccount;
     }
 
     public TradingAccount balanceTradingAccount(TradingAccount tradingAccount,LocalDateTime postingDate){
@@ -56,25 +74,8 @@ public class DefaultTradingAccountPostingProcessor implements TradingAccountPost
         return tradingAccount;
     }
 
-    private TradingAccount postLedgerAccountEntry(String merchantId, LedgerAccountEntry ledgerAccountEntry, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency) {
-        TradingAccount activeInstance = getActiveInstanceOfTradingAccount(merchantId,startDateOfPeriod, closureDateOfPeriod, tradingFrequency);
-        AccountIdentifier accountIdentifier = ledgerAccountEntry.getAccountIdentifier();
-        switch (accountIdentifier) {
-            case BUSINESS_PURCHASE_ACCOUNT:
-            case BUSINESS_SALES_RETURN_ACCOUNT:
-            case DISTRIBUTION_SUPPLIER_ACCOUNT:
-                activeInstance.debit(new DebitTradingAccountEntry(closureDateOfPeriod, ledgerAccountEntry.getPeerAccountNumber(), ledgerAccountEntry.getAccountIdentifier(), ledgerAccountEntry.getAmount()));
-                break;
-            case BUSINESS_PURCHASE_RETURN_ACCOUNT:
-            case BUSINESS_SALES_ACCOUNT:
-                activeInstance.credit(new CreditTradingAccountEntry(closureDateOfPeriod, ledgerAccountEntry.getPeerAccountNumber(), ledgerAccountEntry.getAccountIdentifier(), ledgerAccountEntry.getAmount()));
-                break;
-        }
-        return activeInstance;
-    }
-
     private TradingAccount getActiveInstanceOfTradingAccount(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency) {
-        TradingAccount latestTradingAccount = TradingAccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "trading", AccountIdentifier.TRADING_ACCOUNT);
+        TradingAccount latestTradingAccount = TradingAccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "trading", AccountIdentifier.TRADING_ACCOUNT,startDateOfPeriod,closureDateOfPeriod);
         if (null == latestTradingAccount || (closureDateOfPeriod.isBefore(latestTradingAccount.getStartDate()) || startDateOfPeriod.isAfter(latestTradingAccount.getClosureDate()))) {
             latestTradingAccount = createTradingAccountAsPerFrequency(merchantId,startDateOfPeriod, closureDateOfPeriod, tradingFrequency);
         }
