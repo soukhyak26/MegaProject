@@ -30,7 +30,7 @@ public class DistributionServicesPaymentEventProcessor extends AbstractAccountin
         return null;
     }
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing.
+        super.onEvent(sourceDocument);
     }
 
 }

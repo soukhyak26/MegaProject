@@ -1,26 +1,10 @@
 import com.affaince.accounting.db.*;
 import com.affaince.accounting.endofperiod.PeriodReconciliationProcessor;
-import com.affaince.accounting.journal.entity.JournalRecord;
-import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
-import com.affaince.accounting.journal.processor.SubsidiaryJournalizingProcessor;
+import com.affaince.accounting.journal.gateway.CommandGateway;
 import com.affaince.accounting.journal.qualifiers.*;
-import com.affaince.accounting.journal.subsidiaries.CashBookEntry;
-import com.affaince.accounting.journal.subsidiaries.SubsidiaryBookEntry;
-import com.affaince.accounting.ledger.accounts.LedgerAccount;
-import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
-import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
-import com.affaince.accounting.trading.DefaultTradingAccountPostingProcessor;
-import com.affaince.accounting.trading.TradingAccount;
-import com.affaince.accounting.trading.TradingAccountPostingProcessor;
 import com.affaince.accounting.trading.TradingFrequency;
 import com.affaince.accounting.transactions.SourceDocument;
-import com.affaince.accounting.journal.processor.DefaultJournalizingProcessor;
-import com.affaince.accounting.journal.processor.JournalizingProcessor;
-import com.affaince.accounting.trials.DefaultTrialBalanceProcessor2;
-import com.affaince.accounting.trials.TrialBalance;
-import com.affaince.accounting.trials.TrialBalanceProcessor;
 import org.joda.time.LocalDateTime;
-import java.util.List;
 
 public class Test {
     public static void main(String [] args){
@@ -28,111 +12,49 @@ public class Test {
         AccountDatabaseSimulator.buildDatabase(new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(9999,12,31,23,59,59));
 
         Test test = new Test();
+        CommandGateway commandGateway = new CommandGateway();
         PeriodReconciliationProcessor periodReconciliationProcessor = new PeriodReconciliationProcessor();
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59),TradingFrequency.DAILY);
-        test.investCapital();   //does not impact trading acct --1 Jan 2023
+        test.investCapital(commandGateway);   //does not impact trading acct --1 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),TradingFrequency.DAILY);
-        test.receiveStockOfGoodsOnCredit(); // debit trading account 10 Jan 2023
+        test.receiveStockOfGoodsOnCredit(commandGateway); // debit trading account 10 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,20,0,0,0),new LocalDateTime(2023,1,20,23,59,59),TradingFrequency.DAILY);
-        test.receiveStockOfGoodsOnPayment();    // debit trading account 20 Jan 2023
-        test.paymentToSupplierInLiuOfGoods();   // no impact ton trading acct 20 Jan 2023
+        test.receiveStockOfGoodsOnPayment(commandGateway);    // debit trading account 20 Jan 2023
+        test.paymentToSupplierInLiuOfGoods(commandGateway);   // no impact ton trading acct 20 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,20,0,0,0),new LocalDateTime(2023,1,20,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,22,0,0,0),new LocalDateTime(2023,1,22,23,59,59),TradingFrequency.DAILY);
-        test.returnOfGoodsPurchaseOnCredit();   // credit trading account 22 Jan 2023
-        test.goodsDeliveredToSubscriberOnCredit();  //impact on trading account 22 Jan 2023
+        test.returnOfGoodsPurchaseOnCredit(commandGateway);   // credit trading account 22 Jan 2023
+        test.goodsDeliveredToSubscriberOnCredit(commandGateway);  //impact on trading account 22 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,22,0,0,0),new LocalDateTime(2023,1,22,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,25,0,0,0),new LocalDateTime(2023,1,25,23,59,59),TradingFrequency.DAILY);
-        test.goodsDeliveredToSubscriberOnPayment(); //impact on trading account 25 Jan 2023
-        test.goodsReturnedFromSubscriber(); //impact on trading account 25 Jan 2023
+        test.goodsDeliveredToSubscriberOnPayment(commandGateway); //impact on trading account 25 Jan 2023
+        test.goodsReturnedFromSubscriber(commandGateway); //impact on trading account 25 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,25,0,0,0),new LocalDateTime(2023,1,25,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,27,0,0,0),new LocalDateTime(2023,1,27,23,59,59),TradingFrequency.DAILY);
-        test.paymentReceivedFromSubscriber();// no impact on trading account 27 Jan 2023
+        test.paymentReceivedFromSubscriber(commandGateway);// no impact on trading account 27 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,27,0,0,0),new LocalDateTime(2023,1,27,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,2,4,0,0,0),new LocalDateTime(2023,2,4,23,59,59),TradingFrequency.DAILY);
-        test.receiveInvoiceOfDistributionServiceAvailed(); // impact on trading account 4 Feb 2023
+        test.receiveInvoiceOfDistributionServiceAvailed(commandGateway); // impact on trading account 4 Feb 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,4,0,0,0),new LocalDateTime(2023,2,4,23,59,59),TradingFrequency.DAILY);
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
-        test.paymentInLiuOfDistributionService();// no impact on trading account.20 Feb 2023
+        test.paymentInLiuOfDistributionService(commandGateway);// no impact on trading account.20 Feb 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
-
-
-
-  /*      TrialBalance trialBalance = test.processTrialBalance("merchant1",new LocalDateTime(2023,2,21,23,59,59));
-
-        System.out.println("trial Balance :::############");
-        System.out.println(trialBalance);
-        System.out.println("trial balance :: ############");
-
-        test.processTradingAccount("merchant1",new LocalDateTime(2023,2,21,0,0,0),new LocalDateTime(2023,2,21,23,59,59));
-*/
     }
 
-    private void processJournalLedgerAndSubsidiaryBooks(SourceDocument sourceDocument){
-        JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
-        try {
-            JournalRecord journalRecord = journalizingProcessor.processJournalEntry(sourceDocument);
 
-            System.out.println("###########Journal################");
-            printJournal();
-            System.out.println("###########Journal################");
 
-            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
-            ledgerPostingProcessor.postLedgerEntry(journalRecord);
-            JournalDatabaseSimulator.addJournalEntry(journalRecord);
-
-            System.out.println("###########LEDGER################");
-            printAccounts("merchant1");
-            System.out.println("###########END - LEDGER################");
-
-            SubsidiaryJournalizingProcessor subsidiaryJournalizingProcessor = new SubsidiaryJournalizingProcessor();
-            List<SubsidiaryBookEntry> subsidiaryBookEntries =  subsidiaryJournalizingProcessor.processJournalEntry(sourceDocument);
-            if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_PURCHASE_BY_BUSINESS ){
-                PurchaseBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            }else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER){
-                SalesBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            }else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent() == TransactionEvents.PURCHASE_RETURN_BY_BUSINESS){
-                PurchaseReturnBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            } else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent() == TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER){
-                SalesReturnBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            }
-
-            CashBookJournalizingProcessor cashBookJournalizingProcessor = new CashBookJournalizingProcessor();
-            List<CashBookEntry> cashBookEntries = cashBookJournalizingProcessor.processCashBookEntry(journalRecord.getJournalFolioNumber(),sourceDocument);
-            if(null != cashBookEntries && !cashBookEntries.isEmpty()){
-                CashBookDatabaseSimulator.addJournalEntries(cashBookEntries);
-            }
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    public TrialBalance processTrialBalance(String merchantId, LocalDateTime trialBalanceDate){
-        //TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor();
-        TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor2();
-        TrialBalance trialBalance= trialBalanceProcessor.processTrialBalance(merchantId,trialBalanceDate.toLocalDate());
-        System.out.println(" is trial balance tallied? :: " + trialBalance.isTrialBalanceTallied());
-        TrialBalanceDatabaseSimulator.addTrialBalance(trialBalance);
-        return trialBalance;
-    }
-
-    public TradingAccount processTradingAccount(String merchantId,LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod){
-        TradingAccountPostingProcessor tradingAccountPostingProcessor = new DefaultTradingAccountPostingProcessor();
-        TradingAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchantId, startDateOfPeriod, closureDateOfPeriod, TradingFrequency.DAILY);
-        System.out.println("Trading Account{}} " + tradingAccount);
-        return tradingAccount;
-    }
     //capital investment
-    public void investCapital(){
+    public void investCapital(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("1")
@@ -144,11 +66,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,5000000)
                 .description("capital invested")
                 .build();
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
 
     }
     //stock purchase.. by default on credit
-    public void receiveStockOfGoodsOnCredit(){
+    public void receiveStockOfGoodsOnCredit(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("2")
@@ -160,10 +83,11 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
                 .description("product X purchased on credit from supplierOfProduct1")
                 .build();
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     //stock purchase.. on payment
-    public void receiveStockOfGoodsOnPayment(){
+    public void receiveStockOfGoodsOnPayment(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
@@ -175,12 +99,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
                 .description("product X purchased on payment from supplierOfProduct1")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //return of goods purchase on credit
-    public void returnOfGoodsPurchaseOnCredit(){
+    public void returnOfGoodsPurchaseOnCredit(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("4")
@@ -192,12 +116,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,20000)
                 .description("product X purchased from supplierOfProduct1 is returned")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     // supplier payment
-    public void paymentToSupplierInLiuOfGoods(){
+    public void paymentToSupplierInLiuOfGoods(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
@@ -209,8 +133,8 @@ public class Test {
                 .receiverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.MONEY,80000)
                 .description("payment to the supplier")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
 /*
@@ -233,7 +157,7 @@ public class Test {
 
     //distribution services availed.. on credit by default
     //beneficiary is business,giver is service provider
-    public void receiveInvoiceOfDistributionServiceAvailed(){
+    public void receiveInvoiceOfDistributionServiceAvailed(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("4")
@@ -245,12 +169,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
                 .description("capital invested")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //payment to distribution supplier
-    public void paymentInLiuOfDistributionService(){
+    public void paymentInLiuOfDistributionService(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("5")
@@ -262,12 +186,13 @@ public class Test {
                 .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,600)
                 .description("capital invested")
                 .build();
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //corresponding payment may have been received or some part may be due
     //for now lets assume that payment of the delivered goods is already received.
-    public void goodsDeliveredToSubscriberOnCredit(){
+    public void goodsDeliveredToSubscriberOnCredit(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("7")
@@ -279,13 +204,13 @@ public class Test {
                 .receiverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
                 .description("goods delivery to subscriber on credit")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //corresponding payment may have been received or some part may be due
     //for now lets assume that payment of the delivered goods is already received.
-    public void goodsDeliveredToSubscriberOnPayment(){
+    public void goodsDeliveredToSubscriberOnPayment(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
@@ -297,12 +222,12 @@ public class Test {
                 .receiverParticipant("subscriber2", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
                 .description("goods delivery to subscriber on payment")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     //corresponding payment may have been received or some part may be due
     //for now lets assume that payment of the delivered goods is already received.
-    public void goodsReturnedFromSubscriber(){
+    public void goodsReturnedFromSubscriber(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
@@ -314,12 +239,12 @@ public class Test {
                 .receiverParticipant("merchant1", PartyTypes.BUSINESS, ExchangeableItems.GOODS,200)
                 .description("goods returned by subscriber (purchased on credit) ")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     //payment received from subscriber.. it may include advance as well as payment for the goods received.
     //as of now lets assume that it makes the business debtor
-    public void paymentReceivedFromSubscriber(){
+    public void paymentReceivedFromSubscriber(CommandGateway commandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("6")
@@ -331,52 +256,8 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,800)
                 .description("payment made by subscriber1")
                 .build();
-
-        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
-    }
-    public void printJournal(){
-        List<JournalRecord> journalEntries = JournalDatabaseSimulator.getJournalEntries();
-        for(JournalRecord journalRecord : journalEntries ){
-            System.out.println(journalRecord);
-        }
-    }
-    public void printPurchaseBook(){
-        List<SubsidiaryBookEntry> journalEntries = PurchaseBookDatabaseSimulator.getPurchaseBookJournalEntries();
-        for(SubsidiaryBookEntry journalEntry: journalEntries ){
-            System.out.println(journalEntry);
-        }
-    }
-    public void printPurchaseReturnBook(){
-        List<SubsidiaryBookEntry> journalEntries = PurchaseReturnBookDatabaseSimulator.getPurchaseReturnBookJournalEntries();
-        for(SubsidiaryBookEntry journalEntry: journalEntries ){
-            System.out.println(journalEntry);
-        }
-    }
-    public void printSalesBook(){
-        List<SubsidiaryBookEntry> journalEntries = SalesBookDatabaseSimulator.getSalesBookJournalEntries();
-        for(SubsidiaryBookEntry journalEntry: journalEntries ){
-            System.out.println(journalEntry);
-        }
-    }
-    public void printSalesReturnBook(){
-        List<SubsidiaryBookEntry> journalEntries = SalesReturnBookDatabaseSimulator.getSalesReturnBookJournalEntries();
-        for(SubsidiaryBookEntry journalEntry: journalEntries ){
-            System.out.println(journalEntry);
-        }
-    }
-    public void printCashBook(){
-        List<CashBookEntry> journalEntries = CashBookDatabaseSimulator.getCashBookEntries();
-        for(CashBookEntry journalEntry: journalEntries ){
-            System.out.println(journalEntry);
-        }
-    }
-    public void printAccounts(String merchantId){
-        List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts(merchantId);
-        for(LedgerAccount account : allAccounts){
-            if( (null != account.getDebits() && account.getDebits().size()>0)  || (null !=account.getCredits() && account.getCredits().size()>0) ) {
-                System.out.println(account);
-            }
-        }
+        commandGateway.send(sourceDocument);
+        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
 

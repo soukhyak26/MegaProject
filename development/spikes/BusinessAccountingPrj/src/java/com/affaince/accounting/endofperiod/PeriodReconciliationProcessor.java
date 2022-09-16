@@ -24,22 +24,15 @@ public class PeriodReconciliationProcessor {
     }
 
     public void processEndOfPeriodOperations(String merchant, LocalDateTime startDate,LocalDateTime closureDate, TradingFrequency tradingFrequency){
-        LedgerBalancingScheduler.processLedgerBalancing(merchant, closureDate);
-        TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor2();
-        TrialBalance trialBalance= trialBalanceProcessor.processTrialBalance(merchant,closureDate.toLocalDate());
-        System.out.println(" is trial balance tallied? :: " + trialBalance.isTrialBalanceTallied());
-        TrialBalanceDatabaseSimulator.addTrialBalance(trialBalance);
-
-
-/*
-        System.out.println("trial Balance :::############");
-        System.out.println(trialBalance);
-        System.out.println("trial balance :: ############");
-*/
-
+        TrialBalance trialBalance = processTrialBalance(merchant, closureDate);
+        if( trialBalance.isTrialBalanceTallied()) {
+            LedgerBalancingScheduler.processLedgerBalancing(merchant, closureDate);
+        }else{
+            throw new RuntimeException("Trial Balance is not tallied");
+        }
         TradingAccountPostingProcessor tradingAccountPostingProcessor = new DefaultTradingAccountPostingProcessor();
         TradingAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchant, startDate, closureDate, tradingFrequency);
-//        System.out.println("Trading Account{}} " + tradingAccount);
+        System.out.println("Trading Account{}} " + tradingAccount);
 
 
     }
@@ -51,7 +44,6 @@ public class PeriodReconciliationProcessor {
             case DAILY:
             case MONTHLY:
             case YEARLY:
-                //LocalDateTime startDate = closureDate.plusMinutes(1);
                 startDate = new LocalDateTime(startDate.getYear(), startDate.monthOfYear().get(), startDate.dayOfMonth().get(), 0, 0, 0);
                 LocalDateTime endDate = new LocalDateTime(closureDate.getYear(), closureDate.monthOfYear().get(), closureDate.dayOfMonth().get(), 23, 59, 59);
                 newInstance = new OpeningStockAccount(merchantId, "openingStock", AccountIdentifier.OPENING_STOCK_ACCOUNT, startDate, endDate);
@@ -83,6 +75,13 @@ public class PeriodReconciliationProcessor {
                 break;
         }
         return newInstance;
+    }
+    public TrialBalance processTrialBalance(String merchantId, LocalDateTime trialBalanceDate){
+        TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor2();
+        TrialBalance trialBalance= trialBalanceProcessor.processTrialBalance(merchantId,trialBalanceDate.toLocalDate());
+        //System.out.println(" is trial balance tallied? :: " + trialBalance.isTrialBalanceTallied());
+        TrialBalanceDatabaseSimulator.addTrialBalance(trialBalance);
+        return trialBalance;
     }
 }
 

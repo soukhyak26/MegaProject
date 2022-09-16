@@ -38,6 +38,7 @@ public class GoodsPurchaseEventProcessor extends AbstractAccountingEventListener
         return null;
     }
     public void onEvent(SourceDocument sourceDocument){
+        super.onEvent(sourceDocument);
         double giverAmount = sourceDocument.getGiverParticipant().getAmountExchanged();
         ClosingStockAccount latestClosingStockAccount = ClosingStockDatabaseSimulator.getLatestClosingStockAccountByAccountIdAndAccountIdentifier(sourceDocument.getMerchantId(), "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
         if(latestClosingStockAccount.getClosureDate().isBefore(sourceDocument.getDateOfTransaction())){

@@ -48,7 +48,7 @@ public class DistributionServicesAvailedEventProcessor extends AbstractAccountin
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing.
+        super.onEvent(sourceDocument);
     }
 
 }

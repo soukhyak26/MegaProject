@@ -28,7 +28,7 @@ public class PremiseRentPaymentEventProcessor extends AbstractAccountingEventLis
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing
+        super.onEvent(sourceDocument);
     }
 
 }

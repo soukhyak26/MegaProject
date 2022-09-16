@@ -40,6 +40,6 @@ public class CapitalInvestmentEventProcessor extends AbstractAccountingEventList
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing.
+       super.onEvent(sourceDocument);
     }
 }

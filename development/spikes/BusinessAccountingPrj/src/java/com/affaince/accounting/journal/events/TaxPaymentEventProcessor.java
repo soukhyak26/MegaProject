@@ -28,7 +28,7 @@ public class TaxPaymentEventProcessor extends AbstractAccountingEventListener {
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing
+        super.onEvent(sourceDocument);
     }
 
 }

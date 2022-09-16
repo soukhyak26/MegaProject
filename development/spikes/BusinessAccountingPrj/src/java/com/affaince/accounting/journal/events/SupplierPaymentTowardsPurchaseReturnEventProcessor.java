@@ -36,7 +36,7 @@ public class SupplierPaymentTowardsPurchaseReturnEventProcessor extends Abstract
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing
+        super.onEvent(sourceDocument);
     }
 
 }

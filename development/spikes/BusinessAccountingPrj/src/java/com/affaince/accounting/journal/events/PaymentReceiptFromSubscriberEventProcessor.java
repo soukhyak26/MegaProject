@@ -32,7 +32,7 @@ public class PaymentReceiptFromSubscriberEventProcessor extends AbstractAccounti
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        // do nothing
+        super.onEvent(sourceDocument);
     }
 
 }

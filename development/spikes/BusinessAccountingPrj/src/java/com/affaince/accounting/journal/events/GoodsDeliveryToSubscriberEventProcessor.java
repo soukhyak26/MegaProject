@@ -40,6 +40,7 @@ public class GoodsDeliveryToSubscriberEventProcessor extends AbstractAccountingE
     // Subscriber consumes the stock by equivalent amount.
     // So Deduct that amount from ClosingStockAccount
     public void onEvent(SourceDocument sourceDocument){
+        super.onEvent(sourceDocument);
         double giverAmount = sourceDocument.getGiverParticipant().getAmountExchanged();
         ClosingStockAccount latestClosingStockAccount = ClosingStockDatabaseSimulator.getLatestClosingStockAccountByAccountIdAndAccountIdentifier(sourceDocument.getMerchantId(), "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
         if(latestClosingStockAccount.getClosureDate().isBefore(sourceDocument.getDateOfTransaction())){

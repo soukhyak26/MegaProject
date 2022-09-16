@@ -8,18 +8,12 @@ import com.affaince.accounting.journal.processor.factory.AccountIdentificationRu
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 import com.affaince.accounting.transactions.SourceDocument;
 
-import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
 public class DefaultJournalizingProcessor implements JournalizingProcessor {
     @Override
-    public JournalRecord processJournalEntry(SourceDocument sourceDocument) throws Exception{
-        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountingEventListener);
-        accountingEventListener.onEvent(sourceDocument);
-        List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
-        List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
+    public JournalRecord processJournalEntry(SourceDocument sourceDocument,List<ParticipantAccount> giverAccounts,List<ParticipantAccount> receiverAccounts) throws Exception{
         IdGenerator idGenerator = new DefaultIdGenerator();
         String journalFolioNumber = idGenerator.generator(sourceDocument.getMerchantId() +
                 "$" +

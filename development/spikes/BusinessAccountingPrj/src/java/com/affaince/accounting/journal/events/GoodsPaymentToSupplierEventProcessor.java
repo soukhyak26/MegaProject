@@ -33,7 +33,7 @@ public class GoodsPaymentToSupplierEventProcessor extends AbstractAccountingEven
     }
 
     public void onEvent(SourceDocument sourceDocument){
-        //do nothing
+        super.onEvent(sourceDocument);
     }
 
 }

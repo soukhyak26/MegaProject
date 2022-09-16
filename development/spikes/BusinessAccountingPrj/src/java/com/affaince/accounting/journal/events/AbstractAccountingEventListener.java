@@ -1,8 +1,23 @@
 package com.affaince.accounting.journal.events;
 
+import com.affaince.accounting.db.*;
+import com.affaince.accounting.journal.entity.JournalRecord;
 import com.affaince.accounting.journal.entity.Participant;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
+import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
+import com.affaince.accounting.journal.processor.DefaultJournalizingProcessor;
+import com.affaince.accounting.journal.processor.JournalizingProcessor;
+import com.affaince.accounting.journal.processor.SubsidiaryJournalizingProcessor;
+import com.affaince.accounting.journal.qualifiers.TransactionEvents;
+import com.affaince.accounting.journal.subsidiaries.CashBookEntry;
+import com.affaince.accounting.journal.subsidiaries.SubsidiaryBookEntry;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
+import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
 import com.affaince.accounting.transactions.SourceDocument;
+import com.affaince.accounting.trials.DefaultTrialBalanceProcessor2;
+import com.affaince.accounting.trials.TrialBalance;
+import com.affaince.accounting.trials.TrialBalanceProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +45,6 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
         else if(transactionAmount < giverTransactionAmount){
             System.out.println("Not a valid scenario. " + sourceDocument.getTransactionEvent());
             System.out.println("giver: " + giverParticipant.getPartyId() + ": " + giverParticipant.getPartyType());
-
-
         }
         ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument);
         giverAccounts.add(giverAccount);
@@ -62,6 +75,94 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
         ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument);
         receiverAccounts.add(receiverAccount);
         return receiverAccounts;
+    }
+
+    public void onEvent(SourceDocument sourceDocument){
+        processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+    }
+    private void processJournalLedgerAndSubsidiaryBooks(SourceDocument sourceDocument){
+        JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
+        List<ParticipantAccount> giverAccounts = this.identifyParticipatingGiverAccounts(sourceDocument);
+        List<ParticipantAccount> receiverAccounts = this.identifyParticipatingReceiverAccounts(sourceDocument);
+        try {
+            JournalRecord journalRecord = journalizingProcessor.processJournalEntry(sourceDocument,giverAccounts,receiverAccounts);
+
+            System.out.println("###########Journal################");
+            printJournal();
+            System.out.println("###########Journal################");
+
+            LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
+            ledgerPostingProcessor.postLedgerEntry(journalRecord);
+            JournalDatabaseSimulator.addJournalEntry(journalRecord);
+
+            System.out.println("###########LEDGER################");
+            printAccounts("merchant1");
+            System.out.println("###########END - LEDGER################");
+
+            SubsidiaryJournalizingProcessor subsidiaryJournalizingProcessor = new SubsidiaryJournalizingProcessor();
+            List<SubsidiaryBookEntry> subsidiaryBookEntries =  subsidiaryJournalizingProcessor.processJournalEntry(sourceDocument);
+            if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_PURCHASE_BY_BUSINESS ){
+                PurchaseBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
+            }else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER){
+                SalesBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
+            }else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent() == TransactionEvents.PURCHASE_RETURN_BY_BUSINESS){
+                PurchaseReturnBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
+            } else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent() == TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER){
+                SalesReturnBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
+            }
+
+            CashBookJournalizingProcessor cashBookJournalizingProcessor = new CashBookJournalizingProcessor();
+            List<CashBookEntry> cashBookEntries = cashBookJournalizingProcessor.processCashBookEntry(journalRecord.getJournalFolioNumber(),sourceDocument);
+            if(null != cashBookEntries && !cashBookEntries.isEmpty()){
+                CashBookDatabaseSimulator.addJournalEntries(cashBookEntries);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    public void printAccounts(String merchantId){
+        List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts(merchantId);
+        for(LedgerAccount account : allAccounts){
+            if( (null != account.getDebits() && account.getDebits().size()>0)  || (null !=account.getCredits() && account.getCredits().size()>0) ) {
+                System.out.println(account);
+            }
+        }
+    }
+    public void printJournal(){
+        List<JournalRecord> journalEntries = JournalDatabaseSimulator.getJournalEntries();
+        for(JournalRecord journalRecord : journalEntries ){
+            System.out.println(journalRecord);
+        }
+    }
+    public void printPurchaseBook(){
+        List<SubsidiaryBookEntry> journalEntries = PurchaseBookDatabaseSimulator.getPurchaseBookJournalEntries();
+        for(SubsidiaryBookEntry journalEntry: journalEntries ){
+            System.out.println(journalEntry);
+        }
+    }
+    public void printPurchaseReturnBook(){
+        List<SubsidiaryBookEntry> journalEntries = PurchaseReturnBookDatabaseSimulator.getPurchaseReturnBookJournalEntries();
+        for(SubsidiaryBookEntry journalEntry: journalEntries ){
+            System.out.println(journalEntry);
+        }
+    }
+    public void printSalesBook(){
+        List<SubsidiaryBookEntry> journalEntries = SalesBookDatabaseSimulator.getSalesBookJournalEntries();
+        for(SubsidiaryBookEntry journalEntry: journalEntries ){
+            System.out.println(journalEntry);
+        }
+    }
+    public void printSalesReturnBook(){
+        List<SubsidiaryBookEntry> journalEntries = SalesReturnBookDatabaseSimulator.getSalesReturnBookJournalEntries();
+        for(SubsidiaryBookEntry journalEntry: journalEntries ){
+            System.out.println(journalEntry);
+        }
+    }
+    public void printCashBook(){
+        List<CashBookEntry> journalEntries = CashBookDatabaseSimulator.getCashBookEntries();
+        for(CashBookEntry journalEntry: journalEntries ){
+            System.out.println(journalEntry);
+        }
     }
 
     public abstract ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument);

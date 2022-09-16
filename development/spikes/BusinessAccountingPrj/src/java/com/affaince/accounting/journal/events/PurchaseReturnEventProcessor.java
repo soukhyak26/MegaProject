@@ -47,10 +47,11 @@ public class PurchaseReturnEventProcessor extends AbstractAccountingEventListene
     }
 
     public void onEvent(SourceDocument sourceDocument){
+        super.onEvent(sourceDocument);
         double giverAmount = sourceDocument.getGiverParticipant().getAmountExchanged();
         ClosingStockAccount latestClosingStockAccount = ClosingStockDatabaseSimulator.getLatestClosingStockAccountByAccountIdAndAccountIdentifier(sourceDocument.getMerchantId(), "closingStock", AccountIdentifier.CLOSING_STOCK_ACCOUNT);
         if(latestClosingStockAccount.getClosureDate().isBefore(sourceDocument.getDateOfTransaction())){
-            throw new RuntimeException("Wrong closing accoutn instance selected; closing stock account should be active at the time of accounting event");
+            throw new RuntimeException("Wrong closing account instance selected; closing stock account should be active at the time of accounting event");
         }
         latestClosingStockAccount.deductFromBalanceAccount(giverAmount);
     }
