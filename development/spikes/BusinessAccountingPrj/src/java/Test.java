@@ -1,6 +1,6 @@
 import com.affaince.accounting.db.*;
 import com.affaince.accounting.endofperiod.PeriodReconciliationProcessor;
-import com.affaince.accounting.journal.entity.JournalEntry;
+import com.affaince.accounting.journal.entity.JournalRecord;
 import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
 import com.affaince.accounting.journal.processor.SubsidiaryJournalizingProcessor;
 import com.affaince.accounting.journal.qualifiers.*;
@@ -65,11 +65,6 @@ public class Test {
         test.paymentInLiuOfDistributionService();// no impact on trading account.20 Feb 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
 
-/*
-        System.out.println("###########LEDGER################");
-        test.printAccounts("merchant1");
-        System.out.println("###########END - LEDGER################");
-*/
 
 
   /*      TrialBalance trialBalance = test.processTrialBalance("merchant1",new LocalDateTime(2023,2,21,23,59,59));
@@ -85,11 +80,19 @@ public class Test {
     private void processJournalLedgerAndSubsidiaryBooks(SourceDocument sourceDocument){
         JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         try {
-            JournalEntry journalEntry = journalizingProcessor.processJournalEntry(sourceDocument);
-            JournalDatabaseSimulator.addJournalEntry(journalEntry);
+            JournalRecord journalRecord = journalizingProcessor.processJournalEntry(sourceDocument);
+
+            System.out.println("###########Journal################");
+            printJournal();
+            System.out.println("###########Journal################");
 
             LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
-            ledgerPostingProcessor.postLedgerEntry(journalEntry);
+            ledgerPostingProcessor.postLedgerEntry(journalRecord);
+            JournalDatabaseSimulator.addJournalEntry(journalRecord);
+
+            System.out.println("###########LEDGER################");
+            printAccounts("merchant1");
+            System.out.println("###########END - LEDGER################");
 
             SubsidiaryJournalizingProcessor subsidiaryJournalizingProcessor = new SubsidiaryJournalizingProcessor();
             List<SubsidiaryBookEntry> subsidiaryBookEntries =  subsidiaryJournalizingProcessor.processJournalEntry(sourceDocument);
@@ -104,11 +107,10 @@ public class Test {
             }
 
             CashBookJournalizingProcessor cashBookJournalizingProcessor = new CashBookJournalizingProcessor();
-            List<CashBookEntry> cashBookEntries = cashBookJournalizingProcessor.processCashBookEntry(journalEntry.getJournalFolioNumber(),sourceDocument);
+            List<CashBookEntry> cashBookEntries = cashBookJournalizingProcessor.processCashBookEntry(journalRecord.getJournalFolioNumber(),sourceDocument);
             if(null != cashBookEntries && !cashBookEntries.isEmpty()){
                 CashBookDatabaseSimulator.addJournalEntries(cashBookEntries);
             }
-
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -200,7 +202,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
                 .transactionAmount(80000)
-                .dateOfTransaction(new LocalDateTime(2022,1,30,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2022,1,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(TransactionEvents.PAYMENT_MADE_TO_SUPPLIER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,80000)
@@ -333,9 +335,9 @@ public class Test {
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     public void printJournal(){
-        List<JournalEntry> journalEntries = JournalDatabaseSimulator.getJournalEntries();
-        for(JournalEntry journalEntry: journalEntries ){
-            System.out.println(journalEntry);
+        List<JournalRecord> journalEntries = JournalDatabaseSimulator.getJournalEntries();
+        for(JournalRecord journalRecord : journalEntries ){
+            System.out.println(journalRecord);
         }
     }
     public void printPurchaseBook(){

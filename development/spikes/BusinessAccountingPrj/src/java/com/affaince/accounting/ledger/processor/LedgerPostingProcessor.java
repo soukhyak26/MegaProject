@@ -1,7 +1,7 @@
 package com.affaince.accounting.ledger.processor;
 
-import com.affaince.accounting.journal.entity.JournalEntry;
+import com.affaince.accounting.journal.entity.JournalRecord;
 
 public interface LedgerPostingProcessor {
-    void postLedgerEntry(JournalEntry journalEntry) throws Exception;
+    void postLedgerEntry(JournalRecord journalRecord) throws Exception;
 }

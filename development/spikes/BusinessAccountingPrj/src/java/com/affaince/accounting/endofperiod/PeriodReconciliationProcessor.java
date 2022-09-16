@@ -31,13 +31,15 @@ public class PeriodReconciliationProcessor {
         TrialBalanceDatabaseSimulator.addTrialBalance(trialBalance);
 
 
+/*
         System.out.println("trial Balance :::############");
         System.out.println(trialBalance);
         System.out.println("trial balance :: ############");
+*/
 
         TradingAccountPostingProcessor tradingAccountPostingProcessor = new DefaultTradingAccountPostingProcessor();
         TradingAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchant, startDate, closureDate, tradingFrequency);
-        System.out.println("Trading Account{}} " + tradingAccount);
+//        System.out.println("Trading Account{}} " + tradingAccount);
 
 
     }

@@ -9,13 +9,15 @@ public abstract class LedgerAccountEntry implements Cloneable{
     private String peerAccountNumber;
     private AccountIdentifier accountIdentifier;
     private String journalFolio;
+    private String ledgerFolio;
     private double amount;
 
-    public LedgerAccountEntry(LocalDateTime date, String peerAccountNumber,AccountIdentifier accountIdentifier, String journalFolio, double amount) {
+    public LedgerAccountEntry(LocalDateTime date, String peerAccountNumber,AccountIdentifier accountIdentifier, String journalFolio,String ledgerFolio, double amount) {
         this.date = date;
         this.peerAccountNumber = peerAccountNumber;
         this.accountIdentifier=accountIdentifier;
         this.journalFolio = journalFolio;
+        this.ledgerFolio = ledgerFolio;
         this.amount = amount;
     }
 
@@ -49,13 +51,18 @@ public abstract class LedgerAccountEntry implements Cloneable{
         return amount;
     }
 
+    public String getLedgerFolio() {
+        return ledgerFolio;
+    }
+
     @Override
     public String toString() {
-        return "{" +
+        return "LedgerAccountEntry{" +
                 "date=" + date +
                 ", peerAccountNumber='" + peerAccountNumber + '\'' +
                 ", accountIdentifier=" + accountIdentifier +
                 ", journalFolio='" + journalFolio + '\'' +
+                ", ledgerFolio='" + ledgerFolio + '\'' +
                 ", amount=" + amount +
                 '}';
     }

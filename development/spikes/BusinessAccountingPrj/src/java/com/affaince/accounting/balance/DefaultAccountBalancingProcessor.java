@@ -1,6 +1,7 @@
 package com.affaince.accounting.balance;
 
 import com.affaince.accounting.db.AccountDatabaseSimulator;
+import com.affaince.accounting.ids.DefaultIdGenerator;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
 import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
@@ -16,17 +17,17 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
         LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
         LedgerAccount closedLedgerAccount = closeCurrentAccount(ledgerAccount,closureDate);
         ledgerAccountCurrentVersion.setStartDate(closureDate.plusMinutes(1));
-        DebitLedgerEntry openingDebitLedgerEntry=null;
-        CreditLedgerEntry openingCreditLedgerEntry=null;
         ledgerAccountCurrentVersion.flushAllEntries();
         LedgerAccountEntry closingDebitLedgerEntry = closedLedgerAccount.getDebits().stream().filter(cla->cla.getPeerAccountNumber().equals("toBalanceCarriedDown")).findAny().orElse(null);
         LedgerAccountEntry closingCreditLedgerEntry = closedLedgerAccount.getCredits().stream().filter(cla->cla.getPeerAccountNumber().equals("byBalanceCarriedDown")).findAny().orElse(null);
 
+        DebitLedgerEntry openingDebitLedgerEntry=null;
+        CreditLedgerEntry openingCreditLedgerEntry=null;
         if(null != closingDebitLedgerEntry) {
-            openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"byBalanceBroughtDown",AccountIdentifier.BY_BALANCE_BROUGHT_DOWN,null, closingDebitLedgerEntry.getAmount());
+            openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"byBalanceBroughtDown",AccountIdentifier.BY_BALANCE_BROUGHT_DOWN,null,closingDebitLedgerEntry.getLedgerFolio(), closingDebitLedgerEntry.getAmount());
         }
         if(null != closingCreditLedgerEntry) {
-            openingDebitLedgerEntry = new DebitLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"toBalanceBroughtDown",AccountIdentifier.TO_BALANCE_BROUGHT_DOWN,null, closingCreditLedgerEntry.getAmount());
+            openingDebitLedgerEntry = new DebitLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"toBalanceBroughtDown",AccountIdentifier.TO_BALANCE_BROUGHT_DOWN,null,closingCreditLedgerEntry.getLedgerFolio(), closingCreditLedgerEntry.getAmount());
         }
 
        // LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
@@ -47,12 +48,12 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
 
         CreditLedgerEntry  closingCreditLedgerEntry;
         DebitLedgerEntry  closingDebitLedgerEntry;
-
+        String ledgerFolio = new DefaultIdGenerator().generator(ledgerAccount.getMerchantId()+"$" +ledgerAccount.getAccountId() + "$" +  ledgerAccount.getAccountIdentifier() +"$" + closureDate);
         if(sumOfDebits > sumOfCredits){
-            closingCreditLedgerEntry = new CreditLedgerEntry(closureDate,"byBalanceCarriedDown", AccountIdentifier.BY_BALANCE_CARRIED_DOWN,null,sumOfDebits-sumOfCredits);
+            closingCreditLedgerEntry = new CreditLedgerEntry(closureDate,"byBalanceCarriedDown", AccountIdentifier.BY_BALANCE_CARRIED_DOWN,null,ledgerFolio,sumOfDebits-sumOfCredits);
             ledgerAccount.credit(closingCreditLedgerEntry);
         }else if(sumOfCredits > sumOfDebits){
-            closingDebitLedgerEntry = new DebitLedgerEntry(closureDate,"toBalanceCarriedDown", AccountIdentifier.TO_BALANCE_CARRIED_DOWN,null,sumOfCredits-sumOfDebits);
+            closingDebitLedgerEntry = new DebitLedgerEntry(closureDate,"toBalanceCarriedDown", AccountIdentifier.TO_BALANCE_CARRIED_DOWN,null,ledgerFolio,sumOfCredits-sumOfDebits);
             ledgerAccount.debit(closingDebitLedgerEntry);
         }else {
             //what to do?

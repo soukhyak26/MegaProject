@@ -37,4 +37,15 @@ public class Participant {
     public double getAmountExchanged() {
         return amountExchanged;
     }
+
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "merchantId='" + merchantId + '\'' +
+                ", partyId='" + partyId + '\'' +
+                ", partyType=" + partyType +
+                ", itemExchanged=" + itemExchanged +
+                ", amountExchanged=" + amountExchanged +
+                '}';
+    }
 }

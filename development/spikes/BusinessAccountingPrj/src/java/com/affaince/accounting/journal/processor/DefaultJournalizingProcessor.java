@@ -1,5 +1,7 @@
 package com.affaince.accounting.journal.processor;
 
+import com.affaince.accounting.ids.DefaultIdGenerator;
+import com.affaince.accounting.ids.IdGenerator;
 import com.affaince.accounting.journal.entity.*;
 import com.affaince.accounting.journal.events.AccountingEventListener;
 import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
@@ -12,16 +14,28 @@ import java.util.List;
 
 public class DefaultJournalizingProcessor implements JournalizingProcessor {
     @Override
-    public JournalEntry processJournalEntry(SourceDocument sourceDocument) throws Exception{
+    public JournalRecord processJournalEntry(SourceDocument sourceDocument) throws Exception{
         AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
         requireNonNull(accountingEventListener);
         accountingEventListener.onEvent(sourceDocument);
         List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
         List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
-
-        JournalEntry.JournalEntryBuilder journalEntryBuilder = JournalEntry.newBuilder()
+        IdGenerator idGenerator = new DefaultIdGenerator();
+        String journalFolioNumber = idGenerator.generator(sourceDocument.getMerchantId() +
+                "$" +
+                sourceDocument.getDateOfTransaction().toLocalDate() +
+/*
+                "$" +
+                sourceDocument.getGiverParticipant() +
+                "$" +
+                sourceDocument.getReceiverParticipant() +
+*/
+                "$" +
+                sourceDocument.getTransactionEvent()
+        );
+        JournalRecord.JournalEntryBuilder journalEntryBuilder = JournalRecord.newBuilder()
                 .merchantId(sourceDocument.getMerchantId())
-                .journalFolioNumber("1")
+                .journalFolioNumber(journalFolioNumber)
                 .transactionReferenceNumber(sourceDocument.getTransactionReferenceNumber())
                 .dateOfTransaction(sourceDocument.getDateOfTransaction())
                 .narration(sourceDocument.getDescription());

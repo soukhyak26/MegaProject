@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static java.util.Objects.requireNonNull;
 
-public class JournalEntry {
+public class JournalRecord {
     private final String merchantId;
     private final String journalFolioNumber;
     private final String transactionReferenceNumber;
@@ -69,17 +69,17 @@ public class JournalEntry {
             return this;
         }
 
-        public JournalEntry build() {
-            return JournalEntry.create(this);
+        public JournalRecord build() {
+            return JournalRecord.create(this);
         }
     }
 
 
-    public static JournalEntry.JournalEntryBuilder newBuilder(){
+    public static JournalRecord.JournalEntryBuilder newBuilder(){
         return new JournalEntryBuilder();
     }
 
-    private JournalEntry(JournalEntryBuilder journalEntryBuilder){
+    private JournalRecord(JournalEntryBuilder journalEntryBuilder){
        this.merchantId= journalEntryBuilder.merchantId;
        this.journalFolioNumber=journalEntryBuilder.journalFolioNumber;
        this.transactionReferenceNumber=journalEntryBuilder.transactionReferenceNumber;
@@ -88,12 +88,16 @@ public class JournalEntry {
        this.credits=journalEntryBuilder.credits;
        this.narration=journalEntryBuilder.narration;
     }
-    public static JournalEntry create(JournalEntryBuilder journalEntryBuilder){
-        return new JournalEntry(journalEntryBuilder);
+    public static JournalRecord create(JournalEntryBuilder journalEntryBuilder){
+        return new JournalRecord(journalEntryBuilder);
     }
 
     public String getLedgerFolioNumber() {
         return ledgerFolioNumber;
+    }
+
+    public void setLedgerFolioNumber(String ledgerFolioNumber) {
+        this.ledgerFolioNumber = ledgerFolioNumber;
     }
 
     public String getMerchantId() {
