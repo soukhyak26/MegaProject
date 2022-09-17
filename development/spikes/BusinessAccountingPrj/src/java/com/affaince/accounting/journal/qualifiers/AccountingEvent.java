@@ -1,6 +1,6 @@
 package com.affaince.accounting.journal.qualifiers;
 
-public enum TransactionEvents {
+public enum AccountingEvent {
     // capital investment - no exception
     CAPITAL_INVESTMENT,
     //purchase is on credit so should not have exception situation

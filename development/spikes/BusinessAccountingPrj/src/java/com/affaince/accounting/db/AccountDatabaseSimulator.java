@@ -52,8 +52,12 @@ public class AccountDatabaseSimulator {
         LedgerAccount furnitureLedgerAccount = new RealAccount("merchant1","furniture",AccountIdentifier.FIXED_ASSETS_ACCOUNT,startDate,closureDate);
         allAccounts.add(furnitureLedgerAccount);
 
-        LedgerAccount discountLedgerAccount = new NominalAccount("merchant1","discount",AccountIdentifier.BUSINESS_DISCOUNT_ACCOUNT,startDate,closureDate);
-        allAccounts.add(discountLedgerAccount);
+        LedgerAccount discountAllowedLedgerAccount = new NominalAccount("merchant1","discountAllowed",AccountIdentifier.BUSINESS_DISCOUNT_ALLOWED_ACCOUNT,startDate,closureDate);
+        allAccounts.add(discountAllowedLedgerAccount);
+
+        LedgerAccount discountReceivedLedgerAccount = new NominalAccount("merchant1","discountReceived",AccountIdentifier.BUSINESS_DISCOUNT_ALLOWED_ACCOUNT,startDate,closureDate);
+        allAccounts.add(discountReceivedLedgerAccount);
+
         LedgerAccount lossAccount = new NominalAccount("merchant1","loss",AccountIdentifier.BUSINESS_LOSS_ACCOUNT,startDate,closureDate);
         allAccounts.add(lossAccount);
         LedgerAccount profitAccount = new NominalAccount("merchant1","profit",AccountIdentifier.BUSINESS_PROFIT_ACCOUNT,startDate,closureDate);

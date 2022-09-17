@@ -8,16 +8,13 @@ import com.affaince.accounting.journal.processor.CashBookJournalizingProcessor;
 import com.affaince.accounting.journal.processor.DefaultJournalizingProcessor;
 import com.affaince.accounting.journal.processor.JournalizingProcessor;
 import com.affaince.accounting.journal.processor.SubsidiaryJournalizingProcessor;
-import com.affaince.accounting.journal.qualifiers.TransactionEvents;
+import com.affaince.accounting.journal.qualifiers.AccountingEvent;
 import com.affaince.accounting.journal.subsidiaries.CashBookEntry;
 import com.affaince.accounting.journal.subsidiaries.SubsidiaryBookEntry;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.processor.DefaultLedgerPostingProcessor;
 import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
 import com.affaince.accounting.transactions.SourceDocument;
-import com.affaince.accounting.trials.DefaultTrialBalanceProcessor2;
-import com.affaince.accounting.trials.TrialBalance;
-import com.affaince.accounting.trials.TrialBalanceProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +40,7 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
         // this should be invalid scenario.. adn should cause exception
         // transaction amount has to be same or grater than giver as well as receiver.
         else if(transactionAmount < giverTransactionAmount){
-            System.out.println("Not a valid scenario. " + sourceDocument.getTransactionEvent());
+            System.out.println("Not a valid scenario. " + sourceDocument.getAccountingEvent());
             System.out.println("giver: " + giverParticipant.getPartyId() + ": " + giverParticipant.getPartyType());
         }
         ParticipantAccount giverAccount = getDefaultGiverAccount(sourceDocument);
@@ -69,7 +66,7 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
         //this should be invalid scenario and should cause exception
         // transaction amount has to be same or greater than giver as well as receiver.
         else if(transactionAmount < receiverAmount){
-            System.out.println("Not a valid scenario. " + sourceDocument.getTransactionEvent());
+            System.out.println("Not a valid scenario. " + sourceDocument.getAccountingEvent());
             System.out.println("receiver: " + receiverParticipant.getPartyId() + ": " + receiverParticipant.getPartyType());
         }
         ParticipantAccount receiverAccount = getDefaultReceiverAccount(sourceDocument);
@@ -101,13 +98,13 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
 
             SubsidiaryJournalizingProcessor subsidiaryJournalizingProcessor = new SubsidiaryJournalizingProcessor();
             List<SubsidiaryBookEntry> subsidiaryBookEntries =  subsidiaryJournalizingProcessor.processJournalEntry(sourceDocument);
-            if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_PURCHASE_BY_BUSINESS ){
+            if(null != subsidiaryBookEntries && sourceDocument.getAccountingEvent()== AccountingEvent.GOODS_PURCHASE_BY_BUSINESS ){
                 PurchaseBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            }else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER){
+            }else if(null != subsidiaryBookEntries && sourceDocument.getAccountingEvent()== AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER){
                 SalesBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            }else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent() == TransactionEvents.PURCHASE_RETURN_BY_BUSINESS){
+            }else if(null != subsidiaryBookEntries && sourceDocument.getAccountingEvent() == AccountingEvent.PURCHASE_RETURN_BY_BUSINESS){
                 PurchaseReturnBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
-            } else if(null != subsidiaryBookEntries && sourceDocument.getTransactionEvent() == TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER){
+            } else if(null != subsidiaryBookEntries && sourceDocument.getAccountingEvent() == AccountingEvent.GOODS_RETURN_FROM_SUBSCRIBER){
                 SalesReturnBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
             }
 

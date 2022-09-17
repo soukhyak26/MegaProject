@@ -16,7 +16,7 @@ public class TradingAccountDatabaseSimulator {
         allTradingAccounts.add(ledgerAccount);
     }
 
-    public static TradingAccount searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(String merchantId, String accountId, AccountIdentifier accountIdentifier, LocalDateTime startDate, LocalDateTime closureDate) {
+    public static TradingAccount searchActiveAccountsByAccountIdAndAccountIdentifier(String merchantId, String accountId, AccountIdentifier accountIdentifier, LocalDateTime startDate, LocalDateTime closureDate) {
         return allTradingAccounts.stream().
                 filter(account ->
                         account.getMerchantId().equals(merchantId) &&
@@ -25,7 +25,7 @@ public class TradingAccountDatabaseSimulator {
                                 (account.getStartDate().isBefore(closureDate) && account.getClosureDate().isAfter(startDate))).findAny().orElse(null);
     }
 
-    public static List<TradingAccount> searchActiveLedgerAccountsByAccountIdentifier(String merchantId, AccountIdentifier accountIdentifier) {
+    public static List<TradingAccount> searchActiveAccountsByAccountIdentifier(String merchantId, AccountIdentifier accountIdentifier) {
         return allTradingAccounts.stream().filter(account -> account.getMerchantId().equals(merchantId) && account.getAccountIdentifier() == accountIdentifier && account.getClosureDate().equals(new LocalDateTime(9999, 12, 31, 23, 59, 59))).collect(Collectors.toList());
     }
 

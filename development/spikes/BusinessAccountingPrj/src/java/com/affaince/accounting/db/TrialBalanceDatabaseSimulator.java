@@ -1,6 +1,5 @@
 package com.affaince.accounting.db;
 
-import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.trials.TrialBalance;
 
 import java.util.ArrayList;

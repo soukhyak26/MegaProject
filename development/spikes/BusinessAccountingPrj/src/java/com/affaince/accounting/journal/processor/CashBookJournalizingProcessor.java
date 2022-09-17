@@ -2,9 +2,9 @@ package com.affaince.accounting.journal.processor;
 
 import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.events.*;
-import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
+import com.affaince.accounting.journal.processor.factory.AccountingEventsRegistry;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
-import com.affaince.accounting.journal.qualifiers.TransactionEvents;
+import com.affaince.accounting.journal.qualifiers.AccountingEvent;
 import com.affaince.accounting.journal.subsidiaries.CashBookEntry;
 import com.affaince.accounting.journal.subsidiaries.CashBookEntryAccountType;
 import com.affaince.accounting.journal.subsidiaries.CreditCashBookEntry;
@@ -14,7 +14,6 @@ import com.affaince.accounting.transactions.SourceDocument;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
 
 //At the time of transaction involving immediate payments/receipts
 // or transactions corresponding to payments/receipts towards credit transactions
@@ -26,7 +25,7 @@ public class CashBookJournalizingProcessor {
 
     public List<CashBookEntry> processCashBookEntry(String journalFolioNumber, SourceDocument sourceDocument) {
         if (sourceDocument.getModeOfTransaction() == ModeOfTransaction.BY_PAYMENT) {
-            TransactionEvents transactionEvent = sourceDocument.getTransactionEvent();
+            AccountingEvent transactionEvent = sourceDocument.getAccountingEvent();
             switch (transactionEvent) {
                 case CAPITAL_INVESTMENT:
                 case GOODS_DELIVERY_TO_SUBSCRIBER:
@@ -47,41 +46,40 @@ public class CashBookJournalizingProcessor {
     }
 
     public List<CashBookEntry> processReceipts(String journalFolioNumber, SourceDocument sourceDocument){
-        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountingEventListener);
-        List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
-        List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
-
-        DebitCashBookEntry debitCashBookEntry = new DebitCashBookEntry(sourceDocument.getMerchantId(),
-                sourceDocument.getDateOfTransaction(),
-                giverAccounts.get(0).getAccountId(),
-                giverAccounts.get(0).getAccountIdentifier(),
-                journalFolioNumber,
-                sourceDocument.getTransactionAmount(),
-                receiverAccounts.get(0).getAccountId(),
-                CashBookEntryAccountType.BANK
-        );
+        List<AccountingEventListener> accountingEventListeners = AccountingEventsRegistry.getInstance().getAccountingEventListener(sourceDocument.getAccountingEvent());
         List<CashBookEntry> debitCashBookEntries = new ArrayList<>();
-        debitCashBookEntries.add(debitCashBookEntry);
+        for(AccountingEventListener listener: accountingEventListeners ) {
+            List<ParticipantAccount> giverAccounts = listener.identifyParticipatingGiverAccounts(sourceDocument);
+            List<ParticipantAccount> receiverAccounts = listener.identifyParticipatingReceiverAccounts(sourceDocument);
+            DebitCashBookEntry debitCashBookEntry = new DebitCashBookEntry(sourceDocument.getMerchantId(),
+                    sourceDocument.getDateOfTransaction(),
+                    giverAccounts.get(0).getAccountId(),
+                    giverAccounts.get(0).getAccountIdentifier(),
+                    journalFolioNumber,
+                    sourceDocument.getTransactionAmount(),
+                    receiverAccounts.get(0).getAccountId(),
+                    CashBookEntryAccountType.BANK
+            );
+            debitCashBookEntries.add(debitCashBookEntry);
+        }
         return debitCashBookEntries;
     }
     public List<CashBookEntry> processPayments(String journalFolioNumber, SourceDocument sourceDocument){
-        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountingEventListener);
-        List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
-        List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
-
-        CreditCashBookEntry creditCashBookEntry = new CreditCashBookEntry(sourceDocument.getMerchantId(),
-                sourceDocument.getDateOfTransaction(),
-                receiverAccounts.get(0).getAccountId(),
-                receiverAccounts.get(0).getAccountIdentifier(),
-                journalFolioNumber,
-                sourceDocument.getTransactionAmount(),
-                giverAccounts.get(0).getAccountId(),
-                CashBookEntryAccountType.BANK);
-
+        List<AccountingEventListener> accountingEventListeners = AccountingEventsRegistry.getInstance().getAccountingEventListener(sourceDocument.getAccountingEvent());
         List<CashBookEntry> creditCashBookEntries = new ArrayList<>();
-        creditCashBookEntries.add(creditCashBookEntry);
+        for(AccountingEventListener listener: accountingEventListeners) {
+            List<ParticipantAccount> giverAccounts = listener.identifyParticipatingGiverAccounts(sourceDocument);
+            List<ParticipantAccount> receiverAccounts = listener.identifyParticipatingReceiverAccounts(sourceDocument);
+            CreditCashBookEntry creditCashBookEntry = new CreditCashBookEntry(sourceDocument.getMerchantId(),
+                    sourceDocument.getDateOfTransaction(),
+                    receiverAccounts.get(0).getAccountId(),
+                    receiverAccounts.get(0).getAccountIdentifier(),
+                    journalFolioNumber,
+                    sourceDocument.getTransactionAmount(),
+                    giverAccounts.get(0).getAccountId(),
+                    CashBookEntryAccountType.BANK);
+            creditCashBookEntries.add(creditCashBookEntry);
+        }
         return creditCashBookEntries;
     }
 }

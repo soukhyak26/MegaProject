@@ -1,16 +1,19 @@
 package com.affaince.accounting.journal.gateway;
 
 import com.affaince.accounting.journal.events.AccountingEventListener;
-import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
+import com.affaince.accounting.journal.processor.factory.AccountingEventsRegistry;
 import com.affaince.accounting.transactions.SourceDocument;
 
-import static java.util.Objects.requireNonNull;
+import java.util.List;
+
 
 public class CommandGateway {
 
     public void send(SourceDocument sourceDocument){
-        AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-        requireNonNull(accountingEventListener);
-        accountingEventListener.onEvent(sourceDocument);
+        List<AccountingEventListener> accountingEventListeners =
+                AccountingEventsRegistry.getInstance().getAccountingEventListener(sourceDocument.getAccountingEvent());
+        for(AccountingEventListener listener: accountingEventListeners) {
+            listener.onEvent(sourceDocument);
+        }
     }
 }

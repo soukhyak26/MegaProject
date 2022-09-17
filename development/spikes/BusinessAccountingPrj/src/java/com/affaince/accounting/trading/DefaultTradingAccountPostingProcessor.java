@@ -2,8 +2,6 @@ package com.affaince.accounting.trading;
 
 import com.affaince.accounting.db.*;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.accounts.LedgerAccount;
-import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
 import com.affaince.accounting.trials.TrialBalance;
@@ -12,7 +10,6 @@ import org.joda.time.LocalDateTime;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class DefaultTradingAccountPostingProcessor implements TradingAccountPostingProcessor {
     @Override
@@ -75,7 +72,7 @@ public class DefaultTradingAccountPostingProcessor implements TradingAccountPost
     }
 
     private TradingAccount getActiveInstanceOfTradingAccount(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency) {
-        TradingAccount latestTradingAccount = TradingAccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "trading", AccountIdentifier.TRADING_ACCOUNT,startDateOfPeriod,closureDateOfPeriod);
+        TradingAccount latestTradingAccount = TradingAccountDatabaseSimulator.searchActiveAccountsByAccountIdAndAccountIdentifier(merchantId, "trading", AccountIdentifier.TRADING_ACCOUNT,startDateOfPeriod,closureDateOfPeriod);
         if (null == latestTradingAccount || (closureDateOfPeriod.isBefore(latestTradingAccount.getStartDate()) || startDateOfPeriod.isAfter(latestTradingAccount.getClosureDate()))) {
             latestTradingAccount = createTradingAccountAsPerFrequency(merchantId,startDateOfPeriod, closureDateOfPeriod, tradingFrequency);
         }

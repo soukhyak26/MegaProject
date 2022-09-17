@@ -3,8 +3,6 @@ package com.affaince.accounting.journal.processor;
 import com.affaince.accounting.ids.DefaultIdGenerator;
 import com.affaince.accounting.ids.IdGenerator;
 import com.affaince.accounting.journal.entity.*;
-import com.affaince.accounting.journal.events.AccountingEventListener;
-import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;
 import com.affaince.accounting.transactions.SourceDocument;
 
@@ -25,7 +23,7 @@ public class DefaultJournalizingProcessor implements JournalizingProcessor {
                 sourceDocument.getReceiverParticipant() +
 */
                 "$" +
-                sourceDocument.getTransactionEvent()
+                sourceDocument.getAccountingEvent()
         );
         JournalRecord.JournalEntryBuilder journalEntryBuilder = JournalRecord.newBuilder()
                 .merchantId(sourceDocument.getMerchantId())

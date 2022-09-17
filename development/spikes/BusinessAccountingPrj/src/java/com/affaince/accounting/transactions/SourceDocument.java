@@ -6,7 +6,7 @@ import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.accounting.journal.qualifiers.PartyTypes;
 import org.joda.time.LocalDateTime;
 
-import com.affaince.accounting.journal.qualifiers.TransactionEvents;
+import com.affaince.accounting.journal.qualifiers.AccountingEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class SourceDocument {
     private final String transactionReferenceNumber;
     private final LocalDateTime dateOfTransaction;
     private final double transactionAmount ;
-    private final TransactionEvents transactionEvent;
+    private final AccountingEvent accountingEvent;
     private final List<TransactionEntityDetail> transactionEntityDetails;
     private final Participant giverParticipant;
     private final Participant receiverParticipant;
@@ -38,7 +38,7 @@ public class SourceDocument {
         String transactionReferenceNumber;
         LocalDateTime dateOfTransaction;
         double transactionAmount ;
-        TransactionEvents transactionEvent;
+        AccountingEvent transactionEvent;
         List<TransactionEntityDetail> transactionEntityDetails;
         private Participant giverParticipant;
         private Participant receiverParticipant;
@@ -73,7 +73,7 @@ public class SourceDocument {
         }
 
 
-        public SourceDocumentBuilder transactionEvent(TransactionEvents transactionEvent) {
+        public SourceDocumentBuilder transactionEvent(AccountingEvent transactionEvent) {
             requireNonNull(transactionEvent);
             this.transactionEvent = transactionEvent;
             return this;
@@ -131,7 +131,7 @@ public class SourceDocument {
         this.transactionReferenceNumber=sourceDocumentBuilder.transactionReferenceNumber;
         this.dateOfTransaction=sourceDocumentBuilder.dateOfTransaction;
         this.modeOfTransaction=sourceDocumentBuilder.modeOfTransaction;
-        this.transactionEvent = sourceDocumentBuilder.transactionEvent;
+        this.accountingEvent = sourceDocumentBuilder.transactionEvent;
         this.giverParticipant =sourceDocumentBuilder.giverParticipant;
         this.receiverParticipant =sourceDocumentBuilder.receiverParticipant;
         this.transactionAmount=sourceDocumentBuilder.transactionAmount;
@@ -157,8 +157,8 @@ public class SourceDocument {
         return transactionAmount;
     }
 
-    public TransactionEvents getTransactionEvent() {
-        return transactionEvent;
+    public AccountingEvent getAccountingEvent() {
+        return accountingEvent;
     }
 
     public List<TransactionEntityDetail> getTransactionEntityDetails() {

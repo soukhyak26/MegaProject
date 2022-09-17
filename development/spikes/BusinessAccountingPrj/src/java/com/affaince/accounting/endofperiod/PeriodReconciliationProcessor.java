@@ -5,6 +5,9 @@ import com.affaince.accounting.db.ClosingStockDatabaseSimulator;
 import com.affaince.accounting.db.OpeningStockDatabaseSimulator;
 import com.affaince.accounting.db.TrialBalanceDatabaseSimulator;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
+import com.affaince.accounting.pnl.DefaultProfitAndLossAccountPostingProcessor;
+import com.affaince.accounting.pnl.ProfitAndLossAccount;
+import com.affaince.accounting.pnl.ProfitAndLossAccountPostingProcessor;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
 import com.affaince.accounting.trading.DefaultTradingAccountPostingProcessor;
@@ -33,8 +36,9 @@ public class PeriodReconciliationProcessor {
         TradingAccountPostingProcessor tradingAccountPostingProcessor = new DefaultTradingAccountPostingProcessor();
         TradingAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchant, startDate, closureDate, tradingFrequency);
         System.out.println("Trading Account{}} " + tradingAccount);
-
-
+        ProfitAndLossAccountPostingProcessor profitAndLossAccountPostingProcessor = new DefaultProfitAndLossAccountPostingProcessor();
+        ProfitAndLossAccount profitAndLossAccount = profitAndLossAccountPostingProcessor.postToProfitAndLossAccount(merchant, startDate, closureDate, tradingFrequency);
+        System.out.println("Profit And Loss Account {}" + profitAndLossAccount);
     }
     //opening stock implementation is correct.. it just copies value from closing stock.. thats it.
     private OpeningStockAccount createOpeningStockAccount(String merchantId,LocalDateTime startDate, LocalDateTime  closureDate, TradingFrequency tradingFrequency) {

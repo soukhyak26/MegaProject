@@ -2,9 +2,9 @@ package com.affaince.accounting.journal.processor;
 
 import com.affaince.accounting.journal.entity.ParticipantAccount;
 import com.affaince.accounting.journal.events.AccountingEventListener;
-import com.affaince.accounting.journal.processor.factory.AccountIdentificationRulesProcessorFactory;
+import com.affaince.accounting.journal.processor.factory.AccountingEventsRegistry;
 import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
-import com.affaince.accounting.journal.qualifiers.TransactionEvents;
+import com.affaince.accounting.journal.qualifiers.AccountingEvent;
 import com.affaince.accounting.journal.subsidiaries.SubsidiaryBookEntry;
 import com.affaince.accounting.transactions.SourceDocument;
 
@@ -19,18 +19,19 @@ public class SubsidiaryJournalizingProcessor {
         // what about purchase return .. ?
         //what about sales return . .?
         if(sourceDocument.getModeOfTransaction()== ModeOfTransaction.ON_CREDIT){
-            AccountingEventListener accountingEventListener = AccountIdentificationRulesProcessorFactory.getAccountIdentificationRulesProcessor(sourceDocument);
-            requireNonNull(accountingEventListener);
-            List<ParticipantAccount> giverAccounts = accountingEventListener.identifyParticipatingGiverAccounts(sourceDocument);
-            List<ParticipantAccount> receiverAccounts = accountingEventListener.identifyParticipatingReceiverAccounts(sourceDocument);
-            if( sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_PURCHASE_BY_BUSINESS ){
-                return processEntryInPurchaseBook(sourceDocument,giverAccounts,receiverAccounts);
-            }else if(sourceDocument.getTransactionEvent()== TransactionEvents.GOODS_DELIVERY_TO_SUBSCRIBER){
-                return processEntryInSalesBook(sourceDocument,giverAccounts,receiverAccounts);
-            }else if(sourceDocument.getTransactionEvent() == TransactionEvents.PURCHASE_RETURN_BY_BUSINESS){
-                return processEntryInPurchaseReturnBook(sourceDocument,giverAccounts,receiverAccounts);
-            }else if(sourceDocument.getTransactionEvent() == TransactionEvents.GOODS_RETURN_FROM_SUBSCRIBER){
-                return processEntryInSalesReturnBook(sourceDocument,giverAccounts,receiverAccounts);
+            List<AccountingEventListener> accountingEventListeners = AccountingEventsRegistry.getInstance().getAccountingEventListener(sourceDocument.getAccountingEvent());
+            for(AccountingEventListener listener : accountingEventListeners) {
+                List<ParticipantAccount> giverAccounts = listener.identifyParticipatingGiverAccounts(sourceDocument);
+                List<ParticipantAccount> receiverAccounts = listener.identifyParticipatingReceiverAccounts(sourceDocument);
+                if (sourceDocument.getAccountingEvent() == AccountingEvent.GOODS_PURCHASE_BY_BUSINESS) {
+                    return processEntryInPurchaseBook(sourceDocument, giverAccounts, receiverAccounts);
+                } else if (sourceDocument.getAccountingEvent() == AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER) {
+                    return processEntryInSalesBook(sourceDocument, giverAccounts, receiverAccounts);
+                } else if (sourceDocument.getAccountingEvent() == AccountingEvent.PURCHASE_RETURN_BY_BUSINESS) {
+                    return processEntryInPurchaseReturnBook(sourceDocument, giverAccounts, receiverAccounts);
+                } else if (sourceDocument.getAccountingEvent() == AccountingEvent.GOODS_RETURN_FROM_SUBSCRIBER) {
+                    return processEntryInSalesReturnBook(sourceDocument, giverAccounts, receiverAccounts);
+                }
             }
         }
         return null;
