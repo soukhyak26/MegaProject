@@ -19,7 +19,7 @@ public class PurchaseReturnEventProcessor extends AbstractAccountingEventListene
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
         double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if (sourceDocument.getModeOfTransaction() == ModeOfTransaction.ON_CREDIT) {
-            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT, receivedAmount);
+            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(), AccountIdentifier.BUSINESS_PURCHASE_RETURN_ACCOUNT, receivedAmount);
         }else {
             Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(), sourceDocument.getGiverParticipant().getPartyId());
             String giverAccountId = giverParty.getAccountId();
@@ -34,7 +34,7 @@ public class PurchaseReturnEventProcessor extends AbstractAccountingEventListene
             String giverAccountId = giverParty.getAccountId();
             return new ParticipantAccount(giverParty.getPartyId(), giverParty.getPartyType(), giverAccountId, giverParty.getPartyType().getAccountIdentifier(), receivedAmount);
         } else {
-            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receivedAmount);
+            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receivedAmount);
         }
     }
 

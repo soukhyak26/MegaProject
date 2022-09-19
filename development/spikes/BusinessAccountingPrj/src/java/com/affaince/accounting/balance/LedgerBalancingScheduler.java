@@ -4,18 +4,25 @@ import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import org.joda.time.LocalDateTime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LedgerBalancingScheduler {
 
-    public static List<LedgerAccount> processLedgerBalancing(String merchantId, LocalDateTime closureDate){
-            List<LedgerAccount> allActiveAccounts = AccountDatabaseSimulator.getAllActiveAccounts(merchantId);
+    public static List<LedgerAccount> processOpening(String merchantId, LocalDateTime startDate, LocalDateTime closureDate){
+        List<LedgerAccount> allActiveAccounts = AccountDatabaseSimulator.getAllActiveAccounts(merchantId,startDate,closureDate);
+        AccountBalancingProcessor accountBalancingProcessor = new DefaultAccountBalancingProcessor();
+        for(LedgerAccount ledgerAccount: allActiveAccounts) {
+            accountBalancingProcessor.openAccount(ledgerAccount,startDate,closureDate);
+        }
+        return allActiveAccounts;
+    }
+
+    public static List<LedgerAccount> processClosure(String merchantId, LocalDateTime startDate, LocalDateTime closureDate){
+            List<LedgerAccount> allActiveAccounts = AccountDatabaseSimulator.getAllActiveAccounts(merchantId,startDate,closureDate);
             AccountBalancingProcessor accountBalancingProcessor = new DefaultAccountBalancingProcessor();
-            List<LedgerAccount> ledgerAccountsActiveVersions = new ArrayList<>();
             for(LedgerAccount ledgerAccount: allActiveAccounts) {
-                ledgerAccountsActiveVersions.add(accountBalancingProcessor.balanceAccount(ledgerAccount,closureDate));
+                accountBalancingProcessor.closeAccount(ledgerAccount,startDate,closureDate);
             }
-            return ledgerAccountsActiveVersions;
+            return allActiveAccounts;
     }
 }

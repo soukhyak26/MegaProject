@@ -4,5 +4,6 @@ import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import org.joda.time.LocalDateTime;
 
 public interface AccountBalancingProcessor {
-    LedgerAccount balanceAccount(LedgerAccount ledgerAccount, LocalDateTime closureDate);
+    LedgerAccount closeAccount(LedgerAccount ledgerAccount, LocalDateTime startDate, LocalDateTime closureDate);
+    LedgerAccount openAccount(LedgerAccount ledgerAccount, LocalDateTime startDate, LocalDateTime closureDate);
 }

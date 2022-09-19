@@ -5,14 +5,14 @@ import org.joda.time.LocalDateTime;
 
 import java.util.*;
 
-public abstract class LedgerAccount implements Cloneable {
+public abstract class LedgerAccount /*implements Cloneable*/ {
     private final String merchantId;
     private final String accountId;
     protected LocalDateTime startDate;
     protected LocalDateTime closureDate;
     private final AccountIdentifier accountIdentifier;
-    private Set<LedgerAccountEntry> debits;
-    private Set<LedgerAccountEntry> credits;
+    private List<LedgerAccountEntry> debits;
+    private List<LedgerAccountEntry> credits;
     private boolean isLatestVersion;
 
 
@@ -22,22 +22,25 @@ public abstract class LedgerAccount implements Cloneable {
         this.accountId = accountId;
         this.startDate=startDate;
         this.accountIdentifier = accountIdentifier;
-        this.debits = new TreeSet<>(Comparator.comparing(LedgerAccountEntry::getDate));
-        this.credits = new TreeSet<>(Comparator.comparing(LedgerAccountEntry::getDate));
+        this.debits = new ArrayList<>();
+        this.credits = new ArrayList<>();
         this.closureDate = closureDate;
         this.isLatestVersion=true;
     }
 
+/*
     @Override
     public Object clone() {
         try {
             LedgerAccount cloned = (LedgerAccount) super.clone();
             //Set<DebitLedgerEntry> debitsClone = debits.stream().map(debitEntry -> (DebitLedgerEntry) debitEntry.clone()).collect(Collectors.toSet());
             //Set<CreditLedgerEntry> creditsClone = credits.stream().map(creditEntry -> (CreditLedgerEntry) creditEntry.clone()).collect(Collectors.toSet());
+*/
 /*
             this.startDate=LocalDateTime.now();
             this.closureDate = new LocalDateTime(9999, 12, 31,00,00,0000);
-*/
+*//*
+
             cloned.setClone(new HashSet<>(), new HashSet<>());
             return cloned;
         } catch (CloneNotSupportedException ex) {
@@ -45,10 +48,13 @@ public abstract class LedgerAccount implements Cloneable {
         }
         return null;
     }
+*/
+/*
     public void closeActiveVersion(LocalDateTime closureDate) {
-        this.closureDate = closureDate;
+        //this.closureDate = closureDate;
         this.isLatestVersion=true;
     }
+*/
 
     public LocalDateTime getStartDate() {
         return startDate;
@@ -70,11 +76,11 @@ public abstract class LedgerAccount implements Cloneable {
         return accountId;
     }
 
-    public Set<LedgerAccountEntry> getDebits() {
+    public List<LedgerAccountEntry> getDebits() {
         return debits;
     }
 
-    public Set<LedgerAccountEntry> getCredits() {
+    public List<LedgerAccountEntry> getCredits() {
         return credits;
     }
 
@@ -97,7 +103,7 @@ public abstract class LedgerAccount implements Cloneable {
         }
     }
 
-    public void setClone(Set<LedgerAccountEntry> debitsCloned, Set<LedgerAccountEntry> creditsCloned) {
+    public void setClone(List<LedgerAccountEntry> debitsCloned, List<LedgerAccountEntry> creditsCloned) {
         this.debits = debitsCloned;
         this.credits = creditsCloned;
     }

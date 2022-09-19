@@ -20,7 +20,7 @@ public class PaymentReceiptFromSubscriberEventProcessor extends AbstractAccounti
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
         double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
-        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,receivedAmount);
+        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,receivedAmount);
     }
 
     public ParticipantAccount findHiddenGiverAccount(SourceDocument sourceDocument,double amountExchanged) {

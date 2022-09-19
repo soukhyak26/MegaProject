@@ -4,15 +4,15 @@ import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.util.List;
-
+@Deprecated
 public class DefaultTrialBalanceProcessor implements TrialBalanceProcessor{
     @Override
-    public TrialBalance processTrialBalance(String merchantId, LocalDate trialBalanceDate) {
-        List<LedgerAccount> closedLedgerAccountsOfAMerchant = AccountDatabaseSimulator.getAllLatestClosedAccounts(merchantId);
-        TrialBalance trialBalance = new TrialBalance(merchantId,"1", trialBalanceDate);
+    public TrialBalance processTrialBalance(String merchantId, LocalDateTime startDate, LocalDateTime closureDate) {
+        List<LedgerAccount> closedLedgerAccountsOfAMerchant = AccountDatabaseSimulator.getAllActiveAccounts(merchantId,startDate,closureDate);
+        TrialBalance trialBalance = new TrialBalance(merchantId,"1", closureDate.toLocalDate());
         for (LedgerAccount ledgerAccount : closedLedgerAccountsOfAMerchant){
             LedgerAccountEntry creditLedgerEntry = ledgerAccount.getCredits().stream().filter(acc->acc.getAccountIdentifier() == AccountIdentifier.BY_BALANCE_CARRIED_DOWN).findAny().orElse(null);
             double creditBalanceBroughtDown=0;

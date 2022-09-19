@@ -92,9 +92,6 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
             ledgerPostingProcessor.postLedgerEntry(journalRecord);
             JournalDatabaseSimulator.addJournalEntry(journalRecord);
 
-            System.out.println("###########LEDGER################");
-            printAccounts("merchant1");
-            System.out.println("###########END - LEDGER################");
 
             SubsidiaryJournalizingProcessor subsidiaryJournalizingProcessor = new SubsidiaryJournalizingProcessor();
             List<SubsidiaryBookEntry> subsidiaryBookEntries =  subsidiaryJournalizingProcessor.processJournalEntry(sourceDocument);
@@ -117,14 +114,7 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
             ex.printStackTrace();
         }
     }
-    public void printAccounts(String merchantId){
-        List<LedgerAccount> allAccounts= AccountDatabaseSimulator.getAllAccounts(merchantId);
-        for(LedgerAccount account : allAccounts){
-            if( (null != account.getDebits() && account.getDebits().size()>0)  || (null !=account.getCredits() && account.getCredits().size()>0) ) {
-                System.out.println(account);
-            }
-        }
-    }
+
     public void printJournal(){
         List<JournalRecord> journalEntries = JournalDatabaseSimulator.getJournalEntries();
         for(JournalRecord journalRecord : journalEntries ){

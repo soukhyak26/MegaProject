@@ -29,8 +29,8 @@ public enum AccountIdentifier {
     BY_BALANCE_CARRIED_DOWN(null,false),
     BY_BALANCE_BROUGHT_DOWN(null,false),
 
-    TRADING_ACCOUNT(null,false),
-    PROFITANDLOSS_ACCOUNT(null,false),
+    TRADING_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false),
+    PROFIT_AND_LOSS_ACCOUNT(AccountQualifiers.NOMINAL_LEDGER_ACCOUNT,false),
     OPENING_STOCK_ACCOUNT(null,false),
     CLOSING_STOCK_ACCOUNT(null,false),
 

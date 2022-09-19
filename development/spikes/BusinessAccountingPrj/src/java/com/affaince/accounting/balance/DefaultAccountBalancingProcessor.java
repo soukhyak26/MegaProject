@@ -9,40 +9,42 @@ import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import org.joda.time.LocalDateTime;
 
-import java.util.Set;
+import java.util.List;
 
 public class DefaultAccountBalancingProcessor implements AccountBalancingProcessor{
     @Override
-    public LedgerAccount balanceAccount(LedgerAccount ledgerAccount,LocalDateTime closureDate) {
-        LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
-        LedgerAccount closedLedgerAccount = closeCurrentAccount(ledgerAccount,closureDate);
-        ledgerAccountCurrentVersion.setStartDate(closureDate.plusMinutes(1));
-        ledgerAccountCurrentVersion.flushAllEntries();
-        LedgerAccountEntry closingDebitLedgerEntry = closedLedgerAccount.getDebits().stream().filter(cla->cla.getPeerAccountNumber().equals("toBalanceCarriedDown")).findAny().orElse(null);
-        LedgerAccountEntry closingCreditLedgerEntry = closedLedgerAccount.getCredits().stream().filter(cla->cla.getPeerAccountNumber().equals("byBalanceCarriedDown")).findAny().orElse(null);
-
-        DebitLedgerEntry openingDebitLedgerEntry=null;
-        CreditLedgerEntry openingCreditLedgerEntry=null;
-        if(null != closingDebitLedgerEntry) {
-            openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"byBalanceBroughtDown",AccountIdentifier.BY_BALANCE_BROUGHT_DOWN,null,closingDebitLedgerEntry.getLedgerFolio(), closingDebitLedgerEntry.getAmount());
-        }
-        if(null != closingCreditLedgerEntry) {
-            openingDebitLedgerEntry = new DebitLedgerEntry(ledgerAccount.getClosureDate().plusSeconds(10),"toBalanceBroughtDown",AccountIdentifier.TO_BALANCE_BROUGHT_DOWN,null,closingCreditLedgerEntry.getLedgerFolio(), closingCreditLedgerEntry.getAmount());
-        }
-
-       // LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
-        if( null != openingDebitLedgerEntry) {
-            ledgerAccountCurrentVersion.debit(openingDebitLedgerEntry);
-        }
-        if(null != openingCreditLedgerEntry) {
-            ledgerAccountCurrentVersion.credit(openingCreditLedgerEntry);
-        }
-        ledgerAccountCurrentVersion.setLatestVersion(true);
-        AccountDatabaseSimulator.addAccount(ledgerAccountCurrentVersion);
-        return ledgerAccountCurrentVersion;
+    public LedgerAccount closeAccount(LedgerAccount ledgerAccount, LocalDateTime startDate, LocalDateTime closureDate) {
+        return closeCurrentAccount(ledgerAccount,startDate,closureDate);
     }
 
-    private LedgerAccount closeCurrentAccount(LedgerAccount ledgerAccount,LocalDateTime closureDate){
+    public LedgerAccount openAccount(LedgerAccount ledgerAccount,LocalDateTime startDate,LocalDateTime closureDate){
+        LedgerAccount closedLedgerAccount = AccountDatabaseSimulator.getLatestClosedAccount(ledgerAccount.getMerchantId(),ledgerAccount.getAccountId(),ledgerAccount.getStartDate(),ledgerAccount.getClosureDate());
+        if(null != closedLedgerAccount) {
+            LedgerAccountEntry closingDebitLedgerEntry = closedLedgerAccount.getDebits().stream().filter(cla -> cla.getPeerAccountNumber().equals("toBalanceCarriedDown")).findAny().orElse(null);
+            LedgerAccountEntry closingCreditLedgerEntry = closedLedgerAccount.getCredits().stream().filter(cla -> cla.getPeerAccountNumber().equals("byBalanceCarriedDown")).findAny().orElse(null);
+
+            DebitLedgerEntry openingDebitLedgerEntry = null;
+            CreditLedgerEntry openingCreditLedgerEntry = null;
+            if (null != closingDebitLedgerEntry) {
+                openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate(), "byBalanceBroughtDown", AccountIdentifier.BY_BALANCE_BROUGHT_DOWN, null, closingDebitLedgerEntry.getLedgerFolio(), closingDebitLedgerEntry.getAmount());
+            }
+            if (null != closingCreditLedgerEntry) {
+                openingDebitLedgerEntry = new DebitLedgerEntry(ledgerAccount.getClosureDate(), "toBalanceBroughtDown", AccountIdentifier.TO_BALANCE_BROUGHT_DOWN, null, closingCreditLedgerEntry.getLedgerFolio(), closingCreditLedgerEntry.getAmount());
+            }
+
+            // LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();
+            if (null != openingDebitLedgerEntry) {
+                ledgerAccount.debit(openingDebitLedgerEntry);
+            }
+            if (null != openingCreditLedgerEntry) {
+                ledgerAccount.credit(openingCreditLedgerEntry);
+            }
+            ledgerAccount.setLatestVersion(true);
+        }
+        return ledgerAccount;
+    }
+
+    private LedgerAccount closeCurrentAccount(LedgerAccount ledgerAccount,LocalDateTime startDate,LocalDateTime closureDate){
         double sumOfDebits = sumOnDebitSide(ledgerAccount);
         double sumOfCredits = sumOnCreditSide(ledgerAccount);
 
@@ -59,15 +61,14 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
             //what to do?
         }
 
-        LedgerAccount latestClosedLedgerAccount = AccountDatabaseSimulator.getLatestClosedAccount(ledgerAccount.getMerchantId(), ledgerAccount.getAccountId());
+        LedgerAccount latestClosedLedgerAccount = AccountDatabaseSimulator.getLatestClosedAccount(ledgerAccount.getMerchantId(), ledgerAccount.getAccountId(),startDate,closureDate);
         if(null != latestClosedLedgerAccount) {
             latestClosedLedgerAccount.setLatestVersion(false);
         }
-        ledgerAccount.closeActiveVersion(closureDate);
         return ledgerAccount;
     }
     private double sumOnDebitSide(LedgerAccount ledgerAccount){
-        Set<LedgerAccountEntry> debitEntries = ledgerAccount.getDebits();
+        List<LedgerAccountEntry> debitEntries = ledgerAccount.getDebits();
         double sumOfDebits=0;
         for(LedgerAccountEntry debitLedgerEntry: debitEntries){
             sumOfDebits +=debitLedgerEntry.getAmount();
@@ -76,7 +77,7 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
     }
 
     private double sumOnCreditSide(LedgerAccount ledgerAccount){
-        Set<LedgerAccountEntry> creditEntries = ledgerAccount.getCredits();
+        List<LedgerAccountEntry> creditEntries = ledgerAccount.getCredits();
         double sumOfCredits=0;
         for(LedgerAccountEntry creditLedgerEntry: creditEntries){
             sumOfCredits +=creditLedgerEntry.getAmount();

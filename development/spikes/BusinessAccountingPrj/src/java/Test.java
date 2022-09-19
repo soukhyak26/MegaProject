@@ -9,7 +9,7 @@ import org.joda.time.LocalDateTime;
 public class Test {
     public static void main(String [] args){
         PartyDatabaseSimulator.buildDatabase();
-        AccountDatabaseSimulator.buildDatabase(new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(9999,12,31,23,59,59));
+        //AccountDatabaseSimulator.buildDatabase(new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(9999,12,31,23,59,59));
 
         Test test = new Test();
         CommandGateway commandGateway = new CommandGateway();
@@ -18,6 +18,7 @@ public class Test {
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59),TradingFrequency.DAILY);
         test.investCapital(commandGateway);   //does not impact trading acct --1 Jan 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59),TradingFrequency.DAILY);
+
 
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),TradingFrequency.DAILY);
         test.receiveStockOfGoodsOnCredit(commandGateway); // debit trading account 10 Jan 2023
@@ -49,6 +50,7 @@ public class Test {
         periodReconciliationProcessor.processStartOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
         test.paymentInLiuOfDistributionService(commandGateway);// no impact on trading account.20 Feb 2023
         periodReconciliationProcessor.processEndOfPeriodOperations("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),TradingFrequency.DAILY);
+
     }
 
 
@@ -126,7 +128,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
                 .transactionAmount(80000)
-                .dateOfTransaction(new LocalDateTime(2022,1,20,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,1,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(AccountingEvent.PAYMENT_MADE_TO_SUPPLIER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,80000)
@@ -162,7 +164,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("4")
                 .transactionAmount(600)
-                .dateOfTransaction(new LocalDateTime(2022,2,4,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,2,4,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(AccountingEvent.SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER)
                 .giverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.SERVICE,600)
@@ -179,7 +181,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("5")
                 .transactionAmount(600)
-                .dateOfTransaction(new LocalDateTime(2022,2,20,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,2,20,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(AccountingEvent.PAYMENT_MADE_TO_SERVICE_PROVIDER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
@@ -197,7 +199,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("7")
                 .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2022,1,22,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,1,22,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.GOODS,800)
@@ -215,7 +217,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
                 .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2022,1,25,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,1,25,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER)
                 .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.GOODS,800)
@@ -232,7 +234,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
                 .transactionAmount(200)
-                .dateOfTransaction(new LocalDateTime(2022,1,25,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,1,25,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
                 .transactionEvent(AccountingEvent.GOODS_RETURN_FROM_SUBSCRIBER)
                 .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,200)
@@ -249,7 +251,7 @@ public class Test {
                 .merchantId("merchant1")
                 .transactionReferenceNumber("6")
                 .transactionAmount(800)
-                .dateOfTransaction(new LocalDateTime(2022,1,27,00,00,00))
+                .dateOfTransaction(new LocalDateTime(2023,1,27,00,00,00))
                 .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
                 .transactionEvent(AccountingEvent.PAYMENT_RECEIVED_FROM_SUBSCRIBER)
                 .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER,ExchangeableItems.MONEY,800)

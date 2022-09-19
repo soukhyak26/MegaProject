@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProfitAndLossAccountDatabaseSimulator {
+/*
     private static final List<ProfitAndLossAccount> allPnLAccounts = new ArrayList<>();
 
     public static void addAccount(ProfitAndLossAccount ledgerAccount) {
@@ -40,5 +41,6 @@ public class ProfitAndLossAccountDatabaseSimulator {
                                 (account.getStartDate().isBefore(closureDate) && account.getClosureDate().isAfter(startDate)))
                 .collect(Collectors.toList());
     }
+*/
 
 }

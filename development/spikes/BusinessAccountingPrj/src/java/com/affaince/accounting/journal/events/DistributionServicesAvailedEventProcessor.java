@@ -24,7 +24,7 @@ public class DistributionServicesAvailedEventProcessor extends AbstractAccountin
             Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
             return new ParticipantAccount(sourceDocument.getGiverParticipant().getPartyId(),sourceDocument.getGiverParticipant().getPartyType(), giverParty.getAccountId(), sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , receivedAmount);
         }else{
-            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receivedAmount);
+            return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receivedAmount);
         }
 
     }
@@ -32,7 +32,7 @@ public class DistributionServicesAvailedEventProcessor extends AbstractAccountin
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
         double receivedAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if(sourceDocument.getModeOfTransaction()==ModeOfTransaction.ON_CREDIT) {
-            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT, receivedAmount);
+            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(), AccountIdentifier.BUSINESS_SERVICES_AVAILED_ACCOUNT, receivedAmount);
         }else{
             Party giverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getGiverParticipant().getPartyId());
             return new ParticipantAccount(giverParty.getPartyId(), giverParty.getPartyType(),giverParty.getAccountId(),sourceDocument.getGiverParticipant().getPartyType().getAccountIdentifier() , receivedAmount);

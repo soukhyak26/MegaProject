@@ -2,8 +2,10 @@ package com.affaince.accounting.pnl;
 
 import com.affaince.accounting.db.*;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.trading.TradingAccount;
-import com.affaince.accounting.trading.TradingAccountEntry;
+import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
+import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import com.affaince.accounting.trading.TradingFrequency;
 import com.affaince.accounting.trials.TrialBalance;
 import com.affaince.accounting.trials.TrialBalanceEntry;
@@ -13,13 +15,12 @@ import java.util.List;
 
 public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLossAccountPostingProcessor{
     @Override
-    public ProfitAndLossAccount postToProfitAndLossAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    public LedgerAccount postToProfitAndLossAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
         TrialBalance trialBalance= TrialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
         assert trialBalance != null;
         List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
         List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
-        ProfitAndLossAccount profitAndLossAccount = getActiveInstanceOfProfitAndLossAccount(merchantId,startDate, closureDate, tradingFrequency);
-        postLatestGrossValues(profitAndLossAccount,merchantId,startDate,closureDate);
+        LedgerAccount profitAndLossAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "profitAndLoss", AccountIdentifier.PROFIT_AND_LOSS_ACCOUNT,startDate,closureDate);
         for(TrialBalanceEntry trialBalanceEntry: creditEntries){
             profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
         }
@@ -27,25 +28,10 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
             profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
         }
         //posting complete ,now set closure date to current date
-        return balanceProfitAndLossAccount(profitAndLossAccount,closureDate);
+        return balanceProfitAndLossAccount(merchantId,profitAndLossAccount,startDate,closureDate);
     }
 
-    private void postLatestGrossValues(ProfitAndLossAccount profitAndLossAccount,String merchantId, LocalDateTime startDate, LocalDateTime closureDate){
-        TradingAccount latestTradingAccount = TradingAccountDatabaseSimulator.searchActiveAccountsByAccountIdAndAccountIdentifier(merchantId, "trading", AccountIdentifier.TRADING_ACCOUNT,startDate,closureDate);
-        TradingAccountEntry grossProfitEntry = latestTradingAccount.getDebits().stream().filter(de->de.getPeerAccountNumber().equals("grossProfit") && de.getAccountIdentifier()== AccountIdentifier.GROSS_PROFIT).findAny().orElse(null);
-        TradingAccountEntry grossLossEntry = latestTradingAccount.getCredits().stream().filter(ce->ce.getPeerAccountNumber().equals("grossLoss") && ce.getAccountIdentifier()== AccountIdentifier.GROSS_LOSS).findAny().orElse(null);
-        if( null != grossProfitEntry && null != grossLossEntry){
-            throw new RuntimeException("Cannot have gross profit and gross loss with non zero values at the same time");
-        }
-        if(null != grossProfitEntry){
-            profitAndLossAccount.credit(new CreditPnLAccountEntry(closureDate,grossProfitEntry.getPeerAccountNumber(),grossProfitEntry.getAccountIdentifier(),grossProfitEntry.getAmount()));
-        }else if(null != grossLossEntry){
-            profitAndLossAccount.debit(new DebitPnLAccountEntry(closureDate,grossLossEntry.getPeerAccountNumber(),grossLossEntry.getAccountIdentifier(),grossLossEntry.getAmount()));
-        }else{
-            //throw new RuntimeException("Cannot have both gross profit and gross loss NULL at the same time");
-        }
-    }
-    private ProfitAndLossAccount postTrialBalanceEntry(String merchantId, ProfitAndLossAccount profitAndLossAccount, TrialBalanceEntry trialBalanceEntry, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    private LedgerAccount postTrialBalanceEntry(String merchantId, LedgerAccount profitAndLossAccount, TrialBalanceEntry trialBalanceEntry, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
         AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
         switch (accountIdentifier) {
             case EMPLOYEE_SALARY_ACCOUNT:
@@ -53,64 +39,43 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
             case TAX_ACCOUNT:
             case GROSS_LOSS:
             case BUSINESS_DISCOUNT_ALLOWED_ACCOUNT:
-                profitAndLossAccount.debit(new DebitPnLAccountEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(), trialBalanceEntry.getBalanceAmount()));
+                profitAndLossAccount.debit(new DebitLedgerEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(),null,null, trialBalanceEntry.getBalanceAmount()));
                 break;
             case GROSS_PROFIT:
             case BUSINESS_DISCOUNT_RECEIVED_ACCOUNT:
-                profitAndLossAccount.credit(new CreditPnLAccountEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(), trialBalanceEntry.getBalanceAmount()));
+                profitAndLossAccount.credit(new CreditLedgerEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(),null,null, trialBalanceEntry.getBalanceAmount()));
                 break;
         }
         return profitAndLossAccount;
     }
 
-    public ProfitAndLossAccount balanceProfitAndLossAccount(ProfitAndLossAccount profitAndLossAccount, LocalDateTime postingDate){
-        List<ProfitAndLossAccountEntry> debitEntries = profitAndLossAccount.getDebits();
-        List<ProfitAndLossAccountEntry> creditEntries = profitAndLossAccount.getCredits();
+    public LedgerAccount balanceProfitAndLossAccount(String merchantId,LedgerAccount profitAndLossAccount,LocalDateTime startDate, LocalDateTime closureDate){
+        List<LedgerAccountEntry> debitEntries = profitAndLossAccount.getDebits();
+        List<LedgerAccountEntry> creditEntries = profitAndLossAccount.getCredits();
 
         double sumOfDebits = debitEntries.stream().mapToDouble(de->de.getAmount()).sum();
         double sumOfCredits = creditEntries.stream().mapToDouble(ce->ce.getAmount()).sum();
         if(sumOfDebits > sumOfCredits){
             double netLossAmount =sumOfDebits - sumOfCredits;
-            return postNetValuesToProfitAndLossAccount(profitAndLossAccount,netLossAmount,postingDate,false);
+            return postNetValuesToProfitAndLossAccount(merchantId,profitAndLossAccount,netLossAmount,startDate,closureDate,false);
         }else if( sumOfCredits > sumOfDebits){
             double netProfitAmount = sumOfCredits-sumOfDebits;
-            return postNetValuesToProfitAndLossAccount(profitAndLossAccount,netProfitAmount,postingDate,true);
+            return postNetValuesToProfitAndLossAccount(merchantId,profitAndLossAccount,netProfitAmount,startDate,closureDate,true);
         }else{
             return profitAndLossAccount;
         }
     }
 
-    private ProfitAndLossAccount postNetValuesToProfitAndLossAccount(ProfitAndLossAccount profitAndLossAccount, double netValue, LocalDateTime postingDate, boolean isProfit){
+    private LedgerAccount postNetValuesToProfitAndLossAccount(String merchantId,LedgerAccount profitAndLossAccount, double netValue,LocalDateTime startDate, LocalDateTime closureDate, boolean isProfit){
+        LedgerAccount capitalAccount = AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId,"capital", AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT,startDate,closureDate);
         if(isProfit){
-            profitAndLossAccount.debit(new DebitPnLAccountEntry(postingDate, "netProfit", AccountIdentifier.NET_PROFIT, netValue));
+            profitAndLossAccount.debit(new DebitLedgerEntry(closureDate, "netProfit", AccountIdentifier.NET_PROFIT, null,null,netValue));
+            capitalAccount.credit(new CreditLedgerEntry(closureDate,"netProfit",AccountIdentifier.NET_PROFIT,null,null,netValue));
         }else{
-            profitAndLossAccount.credit(new CreditPnLAccountEntry(postingDate, "netLoss", AccountIdentifier.NET_LOSS, netValue));
+            profitAndLossAccount.credit(new CreditLedgerEntry(closureDate, "netLoss", AccountIdentifier.NET_LOSS,null,null, netValue));
+            capitalAccount.debit(new DebitLedgerEntry(closureDate,"netLoss",AccountIdentifier.NET_LOSS,null,null,netValue));
         }
         return profitAndLossAccount;
-    }
-
-    private ProfitAndLossAccount getActiveInstanceOfProfitAndLossAccount(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency) {
-        ProfitAndLossAccount latestProfitAndLossAccount = ProfitAndLossAccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "profitAndLoss", AccountIdentifier.TRADING_ACCOUNT,startDateOfPeriod,closureDateOfPeriod);
-        if (null == latestProfitAndLossAccount || (closureDateOfPeriod.isBefore(latestProfitAndLossAccount.getStartDate()) || startDateOfPeriod.isAfter(latestProfitAndLossAccount.getClosureDate()))) {
-            latestProfitAndLossAccount = createProfitAndLossAccountAsPerFrequency(merchantId,startDateOfPeriod, closureDateOfPeriod, tradingFrequency);
-        }
-        return latestProfitAndLossAccount;
-    }
-
-    private ProfitAndLossAccount createProfitAndLossAccountAsPerFrequency(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency) {
-        ProfitAndLossAccount newProfitAndLossAccount;
-        switch (tradingFrequency) {
-            case DAILY:
-            case MONTHLY:
-            case YEARLY:
-                newProfitAndLossAccount = new ProfitAndLossAccount(merchantId, "profitAndLoss", AccountIdentifier.PROFITANDLOSS_ACCOUNT,
-                        new LocalDateTime(startDateOfPeriod.getYear(), startDateOfPeriod.monthOfYear().get(), startDateOfPeriod.dayOfMonth().get(), 0, 0, 0),
-                        new LocalDateTime(closureDateOfPeriod.getYear(), closureDateOfPeriod.monthOfYear().get(), closureDateOfPeriod.dayOfMonth().get(), 23, 59, 59)
-                );
-                ProfitAndLossAccountDatabaseSimulator.addAccount(newProfitAndLossAccount );
-                return newProfitAndLossAccount;
-        }
-        return null;
     }
 
 }

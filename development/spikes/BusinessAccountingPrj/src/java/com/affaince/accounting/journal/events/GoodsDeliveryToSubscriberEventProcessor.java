@@ -16,13 +16,13 @@ import com.affaince.accounting.transactions.SourceDocument;
 public class GoodsDeliveryToSubscriberEventProcessor extends AbstractAccountingEventListener {
     public ParticipantAccount getDefaultGiverAccount(SourceDocument sourceDocument) {
         double receiverAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
-        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SALES_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_SALES_ACCOUNT, receiverAmount);
+        return new ParticipantAccount(null,null, AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_SALES_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(), AccountIdentifier.BUSINESS_SALES_ACCOUNT, receiverAmount);
     }
 
     public ParticipantAccount getDefaultReceiverAccount(SourceDocument sourceDocument) {
         double receiverAmount = sourceDocument.getReceiverParticipant().getAmountExchanged();
         if(sourceDocument.getModeOfTransaction() == ModeOfTransaction.BY_PAYMENT){
-            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receiverAmount);
+            return new ParticipantAccount(null,null,AccountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdentifier(sourceDocument.getMerchantId(),AccountIdentifier.BUSINESS_BANK_ACCOUNT,sourceDocument.getDateOfTransaction()).get(0).getAccountId(), AccountIdentifier.BUSINESS_BANK_ACCOUNT, receiverAmount);
         }else{
             Party receiverParty = PartyDatabaseSimulator.searchByMerchantIdAndPartyId(sourceDocument.getMerchantId(),sourceDocument.getReceiverParticipant().getPartyId());
             String giverAccountId = receiverParty.getAccountId();

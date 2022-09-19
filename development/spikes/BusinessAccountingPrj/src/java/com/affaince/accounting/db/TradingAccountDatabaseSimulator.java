@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TradingAccountDatabaseSimulator {
+/*
     private static final List<TradingAccount> allTradingAccounts = new ArrayList<>();
 
     public static void addAccount(TradingAccount ledgerAccount) {
@@ -41,4 +42,5 @@ public class TradingAccountDatabaseSimulator {
                 .collect(Collectors.toList());
     }
 
+*/
 }
