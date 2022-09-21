@@ -1,6 +1,7 @@
 package com.affaince.accounting.journal.events;
 
 import com.affaince.accounting.db.*;
+import com.affaince.accounting.journal.entity.Journal;
 import com.affaince.accounting.journal.entity.JournalRecord;
 import com.affaince.accounting.journal.entity.Participant;
 import com.affaince.accounting.journal.entity.ParticipantAccount;
@@ -12,6 +13,7 @@ import com.affaince.accounting.journal.subsidiaries.CashBookEntry;
 import com.affaince.accounting.journal.subsidiaries.SubsidiaryBookEntry;
 import com.affaince.accounting.ledger.processor.LedgerPostingProcessor;
 import com.affaince.accounting.transactions.SourceDocument;
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,22 +111,14 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
         processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     private void processJournalLedgerAndSubsidiaryBooks(SourceDocument sourceDocument){
-        //JournalizingProcessor journalizingProcessor = new DefaultJournalizingProcessor();
         List<ParticipantAccount> giverAccounts = this.identifyParticipatingGiverAccounts(sourceDocument);
         List<ParticipantAccount> receiverAccounts = this.identifyParticipatingReceiverAccounts(sourceDocument);
         try {
             JournalRecord journalRecord = journalizingProcessor.processJournalEntry(sourceDocument,giverAccounts,receiverAccounts);
+            Journal journal = journalDatabaseSimulator.searchBYMerchantIdAndPostingDate(journalRecord.getMerchantId(), journalRecord.getDateOfTransaction());
+            journal.addJournalEntry(journalRecord);
 
-            System.out.println("###########Journal################");
-            printJournal();
-            System.out.println("###########Journal################");
-
-            //LedgerPostingProcessor ledgerPostingProcessor= new DefaultLedgerPostingProcessor();
             ledgerPostingProcessor.postLedgerEntry(journalRecord);
-            journalDatabaseSimulator.addJournalEntry(journalRecord);
-
-
-            //SubsidiaryJournalizingProcessor subsidiaryJournalizingProcessor = new SubsidiaryJournalizingProcessor();
             List<SubsidiaryBookEntry> subsidiaryBookEntries =  subsidiaryJournalizingProcessor.processJournalEntry(sourceDocument);
             if(null != subsidiaryBookEntries && sourceDocument.getAccountingEvent()== AccountingEvent.GOODS_PURCHASE_BY_BUSINESS ){
                 purchaseBookDatabaseSimulator.addJournalEntries(subsidiaryBookEntries);
@@ -146,12 +140,6 @@ public abstract class AbstractAccountingEventListener implements AccountingEvent
         }
     }
 
-    public void printJournal(){
-        List<JournalRecord> journalEntries = journalDatabaseSimulator.getJournalEntries();
-        for(JournalRecord journalRecord : journalEntries ){
-            System.out.println(journalRecord);
-        }
-    }
     public void printPurchaseBook(){
         List<SubsidiaryBookEntry> journalEntries = purchaseBookDatabaseSimulator.getPurchaseBookJournalEntries();
         for(SubsidiaryBookEntry journalEntry: journalEntries ){

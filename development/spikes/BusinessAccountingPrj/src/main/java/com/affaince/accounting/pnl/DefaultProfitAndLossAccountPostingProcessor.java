@@ -6,7 +6,7 @@ import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
 import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
-import com.affaince.accounting.trading.TradingFrequency;
+import com.affaince.accounting.reconcile.AccountingPeriod;
 import com.affaince.accounting.trials.TrialBalance;
 import com.affaince.accounting.trials.TrialBalanceEntry;
 import org.joda.time.LocalDateTime;
@@ -26,23 +26,23 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
     }
 
     @Override
-    public LedgerAccount postToProfitAndLossAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    public LedgerAccount postToProfitAndLossAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, AccountingPeriod accountingPeriod) {
         TrialBalance trialBalance= trialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
         assert trialBalance != null;
         List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
         List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
         LedgerAccount profitAndLossAccount = accountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "profitAndLoss", AccountIdentifier.PROFIT_AND_LOSS_ACCOUNT,startDate,closureDate);
         for(TrialBalanceEntry trialBalanceEntry: creditEntries){
-            profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
+            profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate, accountingPeriod);
         }
         for(TrialBalanceEntry trialBalanceEntry: debitEntries){
-            profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
+            profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate, accountingPeriod);
         }
         //posting complete ,now set closure date to current date
         return balanceProfitAndLossAccount(merchantId,profitAndLossAccount,startDate,closureDate);
     }
 
-    private LedgerAccount postTrialBalanceEntry(String merchantId, LedgerAccount profitAndLossAccount, TrialBalanceEntry trialBalanceEntry, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    private LedgerAccount postTrialBalanceEntry(String merchantId, LedgerAccount profitAndLossAccount, TrialBalanceEntry trialBalanceEntry, LocalDateTime startDate, LocalDateTime closureDate, AccountingPeriod accountingPeriod) {
         AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
         switch (accountIdentifier) {
             case EMPLOYEE_SALARY_ACCOUNT:

@@ -1,11 +1,9 @@
 package com.affaince.accounting.trials;
 
 import com.affaince.accounting.db.AccountDatabaseSimulator;
-import com.affaince.accounting.db.ClosingStockDatabaseSimulator;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
-import org.graalvm.compiler.lir.CompositeValue;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 

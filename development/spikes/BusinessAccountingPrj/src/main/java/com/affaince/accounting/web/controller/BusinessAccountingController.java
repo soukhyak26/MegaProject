@@ -1,233 +1,154 @@
 package com.affaince.accounting.web.controller;
 
+import com.affaince.accounting.db.AccountDatabaseSimulator;
+import com.affaince.accounting.db.JournalDatabaseSimulator;
 import com.affaince.accounting.db.PartyDatabaseSimulator;
-import com.affaince.accounting.journal.gateway.CommandGateway;
+import com.affaince.accounting.journal.entity.Journal;
+import com.affaince.accounting.journal.entity.JournalRecord;
+import com.affaince.accounting.journal.events.*;
+import com.affaince.accounting.journal.gateway.AccountingCommandGateway;
+import com.affaince.accounting.journal.processor.factory.AccountingEventsRegistry;
 import com.affaince.accounting.journal.qualifiers.AccountingEvent;
-import com.affaince.accounting.journal.qualifiers.ExchangeableItems;
-import com.affaince.accounting.journal.qualifiers.ModeOfTransaction;
-import com.affaince.accounting.journal.qualifiers.PartyTypes;
-import com.affaince.accounting.transactions.SourceDocument;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.reconcile.PeriodReconciliationProcessor;
+import com.affaince.accounting.web.request.AccountingTransactionRequest;
+import com.affaince.accounting.web.request.FinancialPeriodRequest;
+import com.affaince.accounting.web.request.PrintAccountsRequest;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @RestController
 @RequestMapping(value = "business/accounting")
 public class BusinessAccountingController {
     private final PartyDatabaseSimulator partyDatabaseSimulator;
-    private final CommandGateway commandGateway;
+    private final AccountingCommandGateway accountingCommandGateway;
+    private final AccountingEventsRegistry accountingEventsRegistry;
+    private final SourceDocumentTransformer sourceDocumentTransformer;
+    private final AccountDatabaseSimulator accountDatabaseSimulator;
+    private final PeriodReconciliationProcessor periodReconciliationProcessor;
+    private final JournalDatabaseSimulator journalDatabaseSimulator;
+    private final CapitalInvestmentEventProcessor capitalInvestmentEventProcessor;
+    private final DistributionServicesAvailedEventProcessor distributionServicesAvailedEventProcessor;
+    private final GoodsPurchaseEventProcessor goodsPurchaseEventProcessor;
+    private final GoodsDeliveryToSubscriberEventProcessor goodsDeliveryToSubscriberEventProcessor;
+    private final DistributionServicesPaymentEventProcessor distributionServicesPaymentEventProcessor;
+    private final GoodsPaymentToSupplierEventProcessor goodsPaymentToSupplierEventProcessor;
+    private final PaymentReceiptFromSubscriberEventProcessor paymentReceiptFromSubscriberEventProcessor;
+    private final TaxPaymentEventProcessor taxPaymentEventProcessor;
+    private final PremiseRentPaymentEventProcessor premiseRentPaymentEventProcessor;
+    private final SalesReturnEventProcessor salesReturnEventProcessor;
+    private final PurchaseReturnEventProcessor purchaseReturnEventProcessor;
+    private final SupplierPaymentTowardsPurchaseReturnEventProcessor supplierPaymentTowardsPurchaseReturnEventProcessor;
+
+
     @Autowired
-    public BusinessAccountingController(PartyDatabaseSimulator partyDatabaseSimulator,CommandGateway commandGateway) {
+    public BusinessAccountingController(PartyDatabaseSimulator partyDatabaseSimulator,
+                                        AccountingCommandGateway accountingCommandGateway,
+                                        AccountingEventsRegistry accountingEventsRegistry,
+                                        SourceDocumentTransformer sourceDocumentTransformer,
+                                        AccountDatabaseSimulator accountDatabaseSimulator,
+                                        PeriodReconciliationProcessor periodReconciliationProcessor,
+                                        JournalDatabaseSimulator journalDatabaseSimulator,
+                                        CapitalInvestmentEventProcessor capitalInvestmentEventProcessor,
+                                        DistributionServicesAvailedEventProcessor distributionServicesAvailedEventProcessor,
+                                        GoodsPurchaseEventProcessor goodsPurchaseEventProcessor,
+                                        GoodsDeliveryToSubscriberEventProcessor goodsDeliveryToSubscriberEventProcessor,
+                                        DistributionServicesPaymentEventProcessor distributionServicesPaymentEventProcessor,
+                                        GoodsPaymentToSupplierEventProcessor goodsPaymentToSupplierEventProcessor,
+                                        PaymentReceiptFromSubscriberEventProcessor paymentReceiptFromSubscriberEventProcessor,
+                                        TaxPaymentEventProcessor taxPaymentEventProcessor,
+                                        PremiseRentPaymentEventProcessor premiseRentPaymentEventProcessor,
+                                        SalesReturnEventProcessor salesReturnEventProcessor,
+                                        PurchaseReturnEventProcessor purchaseReturnEventProcessor,
+                                        SupplierPaymentTowardsPurchaseReturnEventProcessor supplierPaymentTowardsPurchaseReturnEventProcessor) {
         this.partyDatabaseSimulator = partyDatabaseSimulator;
-        this.commandGateway = commandGateway;
+        this.accountingCommandGateway = accountingCommandGateway;
+        this.accountingEventsRegistry = accountingEventsRegistry;
+        this.sourceDocumentTransformer = sourceDocumentTransformer;
+        this.accountDatabaseSimulator = accountDatabaseSimulator;
+        this.periodReconciliationProcessor = periodReconciliationProcessor;
+        this.journalDatabaseSimulator = journalDatabaseSimulator;
+        this.capitalInvestmentEventProcessor = capitalInvestmentEventProcessor;
+        this.distributionServicesAvailedEventProcessor= distributionServicesAvailedEventProcessor;
+        this.goodsPurchaseEventProcessor = goodsPurchaseEventProcessor;
+        this. goodsDeliveryToSubscriberEventProcessor= goodsDeliveryToSubscriberEventProcessor;
+        this.distributionServicesPaymentEventProcessor= distributionServicesPaymentEventProcessor;
+        this.goodsPaymentToSupplierEventProcessor = goodsPaymentToSupplierEventProcessor;
+        this.paymentReceiptFromSubscriberEventProcessor = paymentReceiptFromSubscriberEventProcessor;
+        this.taxPaymentEventProcessor = taxPaymentEventProcessor;
+        this.premiseRentPaymentEventProcessor = premiseRentPaymentEventProcessor;
+        this.salesReturnEventProcessor = salesReturnEventProcessor ;
+        this.purchaseReturnEventProcessor = purchaseReturnEventProcessor ;
+        this.supplierPaymentTowardsPurchaseReturnEventProcessor = supplierPaymentTowardsPurchaseReturnEventProcessor ;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/capital")
-    public ResponseEntity<Object> investCapital(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("1")
-                .transactionAmount(5000000)
-                .dateOfTransaction(new LocalDateTime(2023,1,1,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
-                .transactionEvent(AccountingEvent.CAPITAL_INVESTMENT)
-                .giverParticipant("merchant1", PartyTypes.MERCHANT, ExchangeableItems.MONEY,5000000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,5000000)
-                .description("capital invested")
-                .build();
-        commandGateway.send(sourceDocument);
+    @RequestMapping(method = RequestMethod.POST, value = "/register/listeners")
+    public ResponseEntity<Object> registerDefaultEventListeners(){
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.CAPITAL_INVESTMENT,capitalInvestmentEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER,distributionServicesAvailedEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.GOODS_PURCHASE_BY_BUSINESS,goodsPurchaseEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER,goodsDeliveryToSubscriberEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.PAYMENT_MADE_TO_SERVICE_PROVIDER,distributionServicesPaymentEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.PAYMENT_MADE_TO_SUPPLIER,goodsPaymentToSupplierEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.PAYMENT_RECEIVED_FROM_SUBSCRIBER,paymentReceiptFromSubscriberEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.TAX_PAYMENT,taxPaymentEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.PAYMENT_OF_RENT,premiseRentPaymentEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.GOODS_RETURN_FROM_SUBSCRIBER,salesReturnEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.PURCHASE_RETURN_BY_BUSINESS,purchaseReturnEventProcessor);
+        accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.SUPPLIER_PAYMENT_TOWARDS_PURCHASE_RETURN,supplierPaymentTowardsPurchaseReturnEventProcessor);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/period/start")
+    public ResponseEntity<Object> startFinancialPeriod(FinancialPeriodRequest request) {
+        periodReconciliationProcessor.processStartOfPeriodOperations(request.getMerchant(),request.getStartDate(),request.getClosureDate(),request.getAccountingPeriod());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/purchase/credit")
-    public ResponseEntity<Object> receiveStockOfGoodsOnCredit(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("2")
-                .transactionAmount(100000)
-                .dateOfTransaction(new LocalDateTime(2023,1,10,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
-                .transactionEvent(AccountingEvent.GOODS_PURCHASE_BY_BUSINESS)
-                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,100000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
-                .description("product X purchased on credit from supplierOfProduct1")
-                .build();
-        commandGateway.send(sourceDocument);
+    @RequestMapping(method = RequestMethod.POST, value = "/event")
+    public ResponseEntity<Object> accountingEvent(AccountingTransactionRequest request) {
+        accountingCommandGateway.send(sourceDocumentTransformer.transform(request));
         return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
-    }
-    @RequestMapping(method = RequestMethod.POST, value = "/purchase/payment")
-    public ResponseEntity<Object> receiveStockOfGoodsOnPayment(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("3")
-                .transactionAmount(100000)
-                .dateOfTransaction(new LocalDateTime(2023,1,20,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
-                .transactionEvent(AccountingEvent.GOODS_PURCHASE_BY_BUSINESS)
-                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,100000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
-                .description("product X purchased on payment from supplierOfProduct1")
-                .build();
-        commandGateway.send(sourceDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
-    //return of goods purchase on credit
-    @RequestMapping(method = RequestMethod.POST, value = "/purchase/return")
-    public ResponseEntity<Object> returnOfGoodsPurchaseOnCredit(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("4")
-                .transactionAmount(20000)
-                .dateOfTransaction(new LocalDateTime(2023,1,22,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
-                .transactionEvent(AccountingEvent.PURCHASE_RETURN_BY_BUSINESS)
-                .giverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.GOODS,20000)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,20000)
-                .description("product X purchased from supplierOfProduct1 is returned")
-                .build();
-        commandGateway.send(sourceDocument);
+    @RequestMapping(method = RequestMethod.POST, value = "/period/end")
+    public ResponseEntity<Object> endFinancialPeriod(FinancialPeriodRequest request) {
+        periodReconciliationProcessor.processEndOfPeriodOperations(request.getMerchant(),request.getStartDate(),request.getClosureDate(),request.getAccountingPeriod());
         return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
-    // supplier payment
-    @RequestMapping(method = RequestMethod.POST, value = "/payment/supplier")
-    public ResponseEntity<Object> paymentToSupplierInLiuOfGoods(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("3")
-                .transactionAmount(80000)
-                .dateOfTransaction(new LocalDateTime(2023,1,20,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
-                .transactionEvent(AccountingEvent.PAYMENT_MADE_TO_SUPPLIER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,80000)
-                .receiverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.MONEY,80000)
-                .description("payment to the supplier")
-                .build();
-        commandGateway.send(sourceDocument);
+    @RequestMapping(method = RequestMethod.GET, value = "/accounts/print")
+    public ResponseEntity<Object> printAccounts(PrintAccountsRequest request) {
+        System.out.println("###########LEDGER################");
+        printAccounts(request.getMerchantId(), request.getStartDate(), request.getEndDate());
+        System.out.println("###########END - LEDGER################");
+        System.out.println();
+        System.out.println();
         return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
-    }
-    @RequestMapping(method = RequestMethod.POST, value = "/distribution")
-    public ResponseEntity<Object> receiveInvoiceOfDistributionServiceAvailed(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("4")
-                .transactionAmount(600)
-                .dateOfTransaction(new LocalDateTime(2023,2,4,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
-                .transactionEvent(AccountingEvent.SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER)
-                .giverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.SERVICE,600)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
-                .description("capital invested")
-                .build();
-        commandGateway.send(sourceDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
-    //payment to distribution supplier
-    @RequestMapping(method = RequestMethod.POST, value = "/payment/distribution")
-    public ResponseEntity<Object> paymentInLiuOfDistributionService(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("5")
-                .transactionAmount(600)
-                .dateOfTransaction(new LocalDateTime(2023,2,20,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
-                .transactionEvent(AccountingEvent.PAYMENT_MADE_TO_SERVICE_PROVIDER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
-                .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,600)
-                .description("capital invested")
-                .build();
-        commandGateway.send(sourceDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
+    public void printAccounts(String merchantId, LocalDateTime startDate, LocalDateTime closureDate) {
+        List<LedgerAccount> allAccounts = accountDatabaseSimulator.getAllActiveAccounts(merchantId, startDate, closureDate);
+        for (LedgerAccount account : allAccounts) {
+            if ((null != account.getDebits() && account.getDebits().size() > 0) || (null != account.getCredits() && account.getCredits().size() > 0)) {
+                System.out.println(account);
+            }
+        }
     }
 
-    //corresponding payment may have been received or some part may be due
-    //for now lets assume that payment of the delivered goods is already received.
-    @RequestMapping(method = RequestMethod.POST, value = "/sales/credit")
-    public ResponseEntity<Object> goodsDeliveredToSubscriberOnCredit(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("7")
-                .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2023,1,22,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
-                .transactionEvent(AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.GOODS,800)
-                .receiverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
-                .description("goods delivery to subscriber on credit")
-                .build();
-        commandGateway.send(sourceDocument);
+    @RequestMapping(method = RequestMethod.GET, value = "/journal/print")
+    public ResponseEntity<Object> printJournal(PrintAccountsRequest request) {
+        Journal journal  = journalDatabaseSimulator.searchBYMerchantIdAndPeriod(request.getMerchantId(),request.getStartDate(),request.getEndDate());
+        for(JournalRecord journalRecord : journal.getJournalEntries() ){
+            System.out.println(journalRecord);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
-
-    //corresponding payment may have been received or some part may be due
-    //for now lets assume that payment of the delivered goods is already received.
-    @RequestMapping(method = RequestMethod.POST, value = "/sales/payment")
-    public ResponseEntity<Object> goodsDeliveredToSubscriberOnPayment(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("8")
-                .transactionAmount(1000)
-                .dateOfTransaction(new LocalDateTime(2023,1,25,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
-                .transactionEvent(AccountingEvent.GOODS_DELIVERY_TO_SUBSCRIBER)
-                .giverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.GOODS,800)
-                .receiverParticipant("subscriber2", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
-                .description("goods delivery to subscriber on payment")
-                .build();
-        commandGateway.send(sourceDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
-    }
-    //corresponding payment may have been received or some part may be due
-    //for now lets assume that payment of the delivered goods is already received.
-    @RequestMapping(method = RequestMethod.POST, value = "/sales/return")
-    public ResponseEntity<Object> goodsReturnedFromSubscriber(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("8")
-                .transactionAmount(200)
-                .dateOfTransaction(new LocalDateTime(2023,1,25,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.ON_CREDIT)
-                .transactionEvent(AccountingEvent.GOODS_RETURN_FROM_SUBSCRIBER)
-                .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,200)
-                .receiverParticipant("merchant1", PartyTypes.BUSINESS, ExchangeableItems.GOODS,200)
-                .description("goods returned by subscriber (purchased on credit) ")
-                .build();
-        commandGateway.send(sourceDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
-    }
-    //payment received from subscriber.. it may include advance as well as payment for the goods received.
-    //as of now lets assume that it makes the business debtor
-    @RequestMapping(method = RequestMethod.POST, value = "/payment/subscriber")
-    public ResponseEntity<Object> paymentReceivedFromSubscriber(){
-        SourceDocument sourceDocument = SourceDocument.newBuilder()
-                .merchantId("merchant1")
-                .transactionReferenceNumber("6")
-                .transactionAmount(800)
-                .dateOfTransaction(new LocalDateTime(2023,1,27,0,0,0))
-                .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
-                .transactionEvent(AccountingEvent.PAYMENT_RECEIVED_FROM_SUBSCRIBER)
-                .giverParticipant("subscriber1", PartyTypes.SUBSCRIBER,ExchangeableItems.MONEY,800)
-                .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,800)
-                .description("payment made by subscriber1")
-                .build();
-        commandGateway.send(sourceDocument);
-        return new ResponseEntity<>(HttpStatus.OK);
-        //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
-    }
-
-
 }

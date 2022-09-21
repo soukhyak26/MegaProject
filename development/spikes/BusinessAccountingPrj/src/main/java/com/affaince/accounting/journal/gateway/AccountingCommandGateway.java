@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CommandGateway {
+public class AccountingCommandGateway {
 
     private final AccountingEventsRegistry accountingEventsRegistry;
     @Autowired
-    public CommandGateway(AccountingEventsRegistry accountingEventsRegistry){
+    public AccountingCommandGateway(AccountingEventsRegistry accountingEventsRegistry){
         this.accountingEventsRegistry = accountingEventsRegistry;
     }
     public void send(SourceDocument sourceDocument){

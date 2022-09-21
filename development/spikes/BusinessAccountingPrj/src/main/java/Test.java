@@ -1,8 +1,5 @@
-import com.affaince.accounting.db.*;
-import com.affaince.accounting.endofperiod.PeriodReconciliationProcessor;
-import com.affaince.accounting.journal.gateway.CommandGateway;
+import com.affaince.accounting.journal.gateway.AccountingCommandGateway;
 import com.affaince.accounting.journal.qualifiers.*;
-import com.affaince.accounting.trading.TradingFrequency;
 import com.affaince.accounting.transactions.SourceDocument;
 import org.joda.time.LocalDateTime;
 
@@ -58,7 +55,7 @@ public class Test {
 */
 
     //capital investment
-    public void investCapital(CommandGateway commandGateway){
+    public void investCapital(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("1")
@@ -70,12 +67,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,5000000)
                 .description("capital invested")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
 
     }
     //stock purchase.. by default on credit
-    public void receiveStockOfGoodsOnCredit(CommandGateway commandGateway){
+    public void receiveStockOfGoodsOnCredit(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("2")
@@ -87,11 +84,11 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
                 .description("product X purchased on credit from supplierOfProduct1")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     //stock purchase.. on payment
-    public void receiveStockOfGoodsOnPayment(CommandGateway commandGateway){
+    public void receiveStockOfGoodsOnPayment(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
@@ -103,12 +100,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,100000)
                 .description("product X purchased on payment from supplierOfProduct1")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //return of goods purchase on credit
-    public void returnOfGoodsPurchaseOnCredit(CommandGateway commandGateway){
+    public void returnOfGoodsPurchaseOnCredit(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("4")
@@ -120,12 +117,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,20000)
                 .description("product X purchased from supplierOfProduct1 is returned")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     // supplier payment
-    public void paymentToSupplierInLiuOfGoods(CommandGateway commandGateway){
+    public void paymentToSupplierInLiuOfGoods(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("3")
@@ -137,7 +134,7 @@ public class Test {
                 .receiverParticipant("supplierOfProduct1", PartyTypes.SUPPLIER_OF_GOODS, ExchangeableItems.MONEY,80000)
                 .description("payment to the supplier")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
@@ -161,7 +158,7 @@ public class Test {
 
     //distribution services availed.. on credit by default
     //beneficiary is business,giver is service provider
-    public void receiveInvoiceOfDistributionServiceAvailed(CommandGateway commandGateway){
+    public void receiveInvoiceOfDistributionServiceAvailed(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("4")
@@ -173,12 +170,12 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,600)
                 .description("capital invested")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //payment to distribution supplier
-    public void paymentInLiuOfDistributionService(CommandGateway commandGateway){
+    public void paymentInLiuOfDistributionService(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("5")
@@ -190,13 +187,13 @@ public class Test {
                 .receiverParticipant("distributionServiceProvider1", PartyTypes.DISTRIBUTION_SUPPLIER, ExchangeableItems.MONEY,600)
                 .description("capital invested")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //corresponding payment may have been received or some part may be due
     //for now lets assume that payment of the delivered goods is already received.
-    public void goodsDeliveredToSubscriberOnCredit(CommandGateway commandGateway){
+    public void goodsDeliveredToSubscriberOnCredit(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("7")
@@ -208,13 +205,13 @@ public class Test {
                 .receiverParticipant("subscriber1", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
                 .description("goods delivery to subscriber on credit")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 
     //corresponding payment may have been received or some part may be due
     //for now lets assume that payment of the delivered goods is already received.
-    public void goodsDeliveredToSubscriberOnPayment(CommandGateway commandGateway){
+    public void goodsDeliveredToSubscriberOnPayment(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
@@ -226,12 +223,12 @@ public class Test {
                 .receiverParticipant("subscriber2", PartyTypes.SUBSCRIBER, ExchangeableItems.GOODS,1000)
                 .description("goods delivery to subscriber on payment")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     //corresponding payment may have been received or some part may be due
     //for now lets assume that payment of the delivered goods is already received.
-    public void goodsReturnedFromSubscriber(CommandGateway commandGateway){
+    public void goodsReturnedFromSubscriber(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("8")
@@ -243,12 +240,12 @@ public class Test {
                 .receiverParticipant("merchant1", PartyTypes.BUSINESS, ExchangeableItems.GOODS,200)
                 .description("goods returned by subscriber (purchased on credit) ")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
     //payment received from subscriber.. it may include advance as well as payment for the goods received.
     //as of now lets assume that it makes the business debtor
-    public void paymentReceivedFromSubscriber(CommandGateway commandGateway){
+    public void paymentReceivedFromSubscriber(AccountingCommandGateway accountingCommandGateway){
         SourceDocument sourceDocument = SourceDocument.newBuilder()
                 .merchantId("merchant1")
                 .transactionReferenceNumber("6")
@@ -260,7 +257,7 @@ public class Test {
                 .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,800)
                 .description("payment made by subscriber1")
                 .build();
-        commandGateway.send(sourceDocument);
+        accountingCommandGateway.send(sourceDocument);
         //processJournalLedgerAndSubsidiaryBooks(sourceDocument);
     }
 

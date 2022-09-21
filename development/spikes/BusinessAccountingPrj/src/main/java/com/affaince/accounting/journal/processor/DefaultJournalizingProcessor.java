@@ -1,6 +1,5 @@
 package com.affaince.accounting.journal.processor;
 
-import com.affaince.accounting.ids.DefaultIdGenerator;
 import com.affaince.accounting.ids.IdGenerator;
 import com.affaince.accounting.journal.entity.*;
 import com.affaince.accounting.journal.qualifiers.AccountQualifiers;

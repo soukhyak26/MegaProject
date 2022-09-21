@@ -6,6 +6,7 @@ import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
 import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
+import com.affaince.accounting.reconcile.AccountingPeriod;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
 import com.affaince.accounting.trials.TrialBalance;
@@ -32,22 +33,22 @@ public class DefaultTradingAccountPostingProcessor implements TradingAccountPost
     }
 
     @Override
-    public LedgerAccount postToTradingAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency){
+    public LedgerAccount postToTradingAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, AccountingPeriod accountingPeriod){
         TrialBalance trialBalance= trialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
         assert trialBalance != null;
         List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
         List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
-        LedgerAccount tradingAccount = getActiveInstanceOfTradingAccount(merchantId,startDate, closureDate, tradingFrequency);
+        LedgerAccount tradingAccount = getActiveInstanceOfTradingAccount(merchantId,startDate, closureDate, accountingPeriod);
         for(TrialBalanceEntry trialBalanceEntry: creditEntries){
-            tradingAccount = postTrialBalanceEntry(merchantId,tradingAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
+            tradingAccount = postTrialBalanceEntry(merchantId,tradingAccount,trialBalanceEntry,startDate,closureDate, accountingPeriod);
         }
         for(TrialBalanceEntry trialBalanceEntry: debitEntries){
-            tradingAccount = postTrialBalanceEntry(merchantId,tradingAccount,trialBalanceEntry,startDate,closureDate,tradingFrequency);
+            tradingAccount = postTrialBalanceEntry(merchantId,tradingAccount,trialBalanceEntry,startDate,closureDate, accountingPeriod);
         }
         //posting complete ,now set closure date to current date
         return balanceTradingAccount(merchantId,tradingAccount,startDate,closureDate);
     }
-    private LedgerAccount postTrialBalanceEntry(String merchantId, LedgerAccount tradingAccount,TrialBalanceEntry trialBalanceEntry,LocalDateTime startDate, LocalDateTime closureDate, TradingFrequency tradingFrequency) {
+    private LedgerAccount postTrialBalanceEntry(String merchantId, LedgerAccount tradingAccount,TrialBalanceEntry trialBalanceEntry,LocalDateTime startDate, LocalDateTime closureDate, AccountingPeriod accountingPeriod) {
 
         AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
         switch (accountIdentifier) {
@@ -93,7 +94,7 @@ public class DefaultTradingAccountPostingProcessor implements TradingAccountPost
         return tradingAccount;
     }
 
-    private LedgerAccount getActiveInstanceOfTradingAccount(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, TradingFrequency tradingFrequency) {
+    private LedgerAccount getActiveInstanceOfTradingAccount(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod, AccountingPeriod accountingPeriod) {
         LedgerAccount latestTradingAccount = accountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "trading", AccountIdentifier.TRADING_ACCOUNT,startDateOfPeriod,closureDateOfPeriod);
 
         //Now update trading account with opening and closing stock
