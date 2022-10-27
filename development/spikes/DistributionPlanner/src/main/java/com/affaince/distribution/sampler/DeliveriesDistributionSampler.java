@@ -15,11 +15,6 @@ public class DeliveriesDistributionSampler {
         List<PeriodWiseAndWeightWiseDeliveriesDistribution> periodWiseAndWeightWiseDeliveriesDistributions = buildPeriodWiseDeliveriesBuckets(activeDeliveryForecasts);
         //distributes deliveries randomly across different regions/zones
         return distributeDeliveriesAcrossZones(shippingProfile, periodWiseAndWeightWiseDeliveriesDistributions);
-        //For each region zone compute total distribution cost for the deliveries per period
-        //broadcast the period wise distribution charges to Product domain
-        //Product Analyser should be responsible for distributing per unit charges
-
-
     }
 
     private List<PeriodWiseAndWeightWiseDeliveriesDistribution> buildPeriodWiseDeliveriesBuckets(List<DeliveryForecastView> activeDeliveryForecasts) {

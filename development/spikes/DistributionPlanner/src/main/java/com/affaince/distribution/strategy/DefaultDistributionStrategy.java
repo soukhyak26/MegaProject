@@ -1,27 +1,31 @@
 package com.affaince.distribution.strategy;
 
+import com.affaince.distribution.db.DefaultShippingProfileRepositoryMock;
 import com.affaince.distribution.db.DeliveryForecastView;
 import com.affaince.distribution.db.DeliveryForecastViewRepository;
+import com.affaince.distribution.db.DeliveryForecastViewRepositoryMock;
 import com.affaince.distribution.profiles.DefaultShippingProfile;
 import com.affaince.distribution.sampler.DeliveriesDistributionProfile;
 import com.affaince.distribution.sampler.DeliveriesDistributionSampler;
 import com.affaince.distribution.sampler.Period;
-import com.affaince.subscription.common.type.ForecastContentStatus;
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
 
 public class DefaultDistributionStrategy implements DistributionStrategy {
 
-    private final DeliveryForecastViewRepository deliveryForecastViewRepository;
+    private DeliveryForecastViewRepository deliveryForecastViewRepository;
     private final DeliveriesDistributionSampler deliveriesDistributionSampler;
 
-    @Autowired
+    //@Autowired
     public DefaultDistributionStrategy(DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveriesDistributionSampler deliveriesDistributionSampler) {
         this.deliveryForecastViewRepository = deliveryForecastViewRepository;
-        this.deliveriesDistributionSampler = deliveriesDistributionSampler;
+        this.deliveriesDistributionSampler = new DeliveriesDistributionSampler();
+    }
+
+    public DefaultDistributionStrategy() {
+        this.deliveriesDistributionSampler = new DeliveriesDistributionSampler();
     }
 
     @Override
@@ -30,22 +34,24 @@ public class DefaultDistributionStrategy implements DistributionStrategy {
     }
 
     @Override
-    public void distributeDistributionExpenseAcrossProducts(String merchantId) {
+    public Map<Period, DeliveriesDistributionProfile> distributeDistributionExpenseAcrossProducts(String merchantId) {
         List<DeliveryForecastView> deliveryForecasts = retrieveActiveDeliveryForecasts();
         DefaultShippingProfile shippingProfile = retrieveDefaultShippingProfile(merchantId);
         Map<Period, DeliveriesDistributionProfile> periodWiseDeliveriesDistributionProfilesMap = deliveriesDistributionSampler.distributeDeliveriesOfAPeriod(deliveryForecasts, shippingProfile);
         for (Period period : periodWiseDeliveriesDistributionProfilesMap.keySet()) {
             periodWiseDeliveriesDistributionProfilesMap.get(period).computeTotalDistributionExpense(shippingProfile);
         }
+        return periodWiseDeliveriesDistributionProfilesMap;
     }
 
 
     private List<DeliveryForecastView> retrieveActiveDeliveryForecasts() {
-        return deliveryForecastViewRepository.findByForecastContentStatusOrderByDeliveryForecastVersionId_DeliveryDateAsc(ForecastContentStatus.ACTIVE);
+        //return deliveryForecastViewRepository.findByForecastContentStatusOrderByDeliveryForecastVersionId_DeliveryDateAsc(ForecastContentStatus.ACTIVE);
+        return DeliveryForecastViewRepositoryMock.getDeliveryForecastViews();
     }
 
     private DefaultShippingProfile retrieveDefaultShippingProfile(String merchantId) {
-        return null;
+        return DefaultShippingProfileRepositoryMock.getMerchantWiseShippingProfiles().get(0);
     }
 
 }

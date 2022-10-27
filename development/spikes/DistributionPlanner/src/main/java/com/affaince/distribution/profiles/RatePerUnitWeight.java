@@ -34,4 +34,15 @@ public class RatePerUnitWeight {
     public UnitForRate getUnitForRate() {
         return unitForRate;
     }
+
+    @Override
+    public String toString() {
+        return "RatePerUnitWeight{" +
+                "rateIdentifier='" + rateIdentifier + '\'' +
+                ", rateInCurrency=" + rateInCurrency +
+                ", minWeight=" + minWeight +
+                ", maxWeight=" + maxWeight +
+                ", unitForRate=" + unitForRate +
+                '}';
+    }
 }

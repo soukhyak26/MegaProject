@@ -46,4 +46,15 @@ public class ZoneGroupWiseDeliveriesDistribution {
         }
         return this.totalDistributionExpensePerZoneGroup;
     }
+
+    @Override
+    public String toString() {
+        return "ZoneGroupWiseDeliveriesDistribution{" +
+                "merchantId='" + merchantId + '\'' +
+                ", zoneGroupId='" + zoneGroupId + '\'' +
+                ", zoneWiseDeliveriesDistributionMap=" + zoneWiseDeliveriesDistributionMap +
+                ", zoneWiseDistributionExpense=" + zoneWiseDistributionExpense +
+                ", totalDistributionExpensePerZoneGroup=" + totalDistributionExpensePerZoneGroup +
+                '}';
+    }
 }

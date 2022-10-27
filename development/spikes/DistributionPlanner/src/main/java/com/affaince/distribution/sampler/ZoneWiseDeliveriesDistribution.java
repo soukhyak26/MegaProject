@@ -69,4 +69,15 @@ public class ZoneWiseDeliveriesDistribution {
         }
         return this.totalDistributionExpenseInAZone;
     }
+
+    @Override
+    public String toString() {
+        return "ZoneWiseDeliveriesDistribution{" +
+                "merchantId='" + merchantId + '\'' +
+                ", zoneId='" + zoneId + '\'' +
+                ", weightWiseDeliveriesDistributionMap=" + weightWiseDeliveriesDistributionMap +
+                ", totalDistributionExpensePerWeightRange=" + totalDistributionExpensePerWeightRange +
+                ", totalDistributionExpenseInAZone=" + totalDistributionExpenseInAZone +
+                '}';
+    }
 }

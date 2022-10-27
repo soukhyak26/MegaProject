@@ -34,4 +34,12 @@ public class WeightIndicator {
     public int hashCode() {
         return Objects.hash(netQuantity, quantityUnit);
     }
+
+    @Override
+    public String toString() {
+        return "WeightIndicator{" +
+                "netQuantity=" + netQuantity +
+                ", quantityUnit=" + quantityUnit +
+                '}';
+    }
 }

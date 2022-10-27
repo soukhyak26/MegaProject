@@ -40,4 +40,14 @@ public class DeliveriesDistributionProfile {
         }
         return this.totalDistributionExpensePerPeriod;
     }
+
+    @Override
+    public String toString() {
+        return "DeliveriesDistributionProfile{" +
+                "period=" + period +
+                ", zoneGroupWiseDistributionExpensesPerPeriod=" + zoneGroupWiseDistributionExpensesPerPeriod +
+                ", zoneGroupWiseDeliveriesDistributionsPerPeriod=" + zoneGroupWiseDeliveriesDistributionsPerPeriod +
+                ", totalDistributionExpensePerPeriod=" + totalDistributionExpensePerPeriod +
+                '}';
+    }
 }

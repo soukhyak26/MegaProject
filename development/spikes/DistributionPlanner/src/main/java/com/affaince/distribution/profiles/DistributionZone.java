@@ -44,4 +44,13 @@ public class DistributionZone {
     public int hashCode() {
         return Objects.hash(merchantId, distributionZoneIdentifier);
     }
+
+    @Override
+    public String toString() {
+        return "DistributionZone{" +
+                "merchantId='" + merchantId + '\'' +
+                ", distributionZoneIdentifier='" + distributionZoneIdentifier + '\'' +
+                ", ratesInTheZone=" + ratesInTheZone +
+                '}';
+    }
 }

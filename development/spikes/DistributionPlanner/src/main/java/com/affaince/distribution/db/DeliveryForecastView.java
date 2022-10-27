@@ -21,7 +21,7 @@ public class DeliveryForecastView {
         this.forecastContentStatus = ForecastContentStatus.ACTIVE;
     }
 
-    public DeliveryForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, long deliveryCount, double weightRangeMin, double weightRangeMax, ForecastContentStatus forecastContentStatus) {
+    public DeliveryForecastView(LocalDate startDate, LocalDate endDate, LocalDate forecastDate, double weightRangeMin, double weightRangeMax, long deliveryCount, ForecastContentStatus forecastContentStatus) {
         this.deliveryForecastVersionId = new DeliveryForecastVersionId(startDate, forecastDate, weightRangeMin, weightRangeMax);
         this.deliveryCount = deliveryCount;
         this.endDate = endDate;
@@ -57,4 +57,13 @@ public class DeliveryForecastView {
         this.forecastContentStatus = forecastContentStatus;
     }
 
+    @Override
+    public String toString() {
+        return "DeliveryForecastView{" +
+                "deliveryForecastVersionId=" + deliveryForecastVersionId +
+                ", deliveryCount=" + deliveryCount +
+                ", endDate=" + endDate +
+                ", forecastContentStatus=" + forecastContentStatus +
+                '}';
+    }
 }

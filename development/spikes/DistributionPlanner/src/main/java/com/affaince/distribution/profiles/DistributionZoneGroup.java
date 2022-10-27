@@ -29,4 +29,13 @@ public class DistributionZoneGroup {
     public void addToDistributionZone(DistributionZone distributionZone) {
         this.distributionZonesUnderTheGroup.add(distributionZone);
     }
+
+    @Override
+    public String toString() {
+        return "DistributionZoneGroup{" +
+                "merchantId='" + merchantId + '\'' +
+                ", distributionZoneGroupIdentifier='" + distributionZoneGroupIdentifier + '\'' +
+                ", distributionZonesUnderTheGroup=" + distributionZonesUnderTheGroup +
+                '}';
+    }
 }
