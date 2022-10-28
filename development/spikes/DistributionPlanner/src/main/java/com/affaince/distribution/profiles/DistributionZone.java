@@ -50,7 +50,7 @@ public class DistributionZone {
         return "DistributionZone{" +
                 "merchantId='" + merchantId + '\'' +
                 ", distributionZoneIdentifier='" + distributionZoneIdentifier + '\'' +
-                ", ratesInTheZone=" + ratesInTheZone +
+                //", ratesInTheZone=" + ratesInTheZone +
                 '}';
     }
 }

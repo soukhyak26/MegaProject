@@ -63,8 +63,8 @@ public class ZoneWiseDeliveriesDistribution {
         for (WeightIndicator weight : weightWiseDeliveriesDistributionMap.keySet()) {
             Long deliveryCount = weightWiseDeliveriesDistributionMap.get(weight);
             RatePerUnitWeight ratePerUnitWeight = zone.getRatesInTheZone().stream().filter(rIz -> rIz.getMaxWeight() == weight.getNetQuantity()).findFirst().get();
-            double totalWeightInAWeightCategoryTobeDistributed = deliveryCount * weight.getNetQuantity();
-            double totalDistributionExpenseForAWeighRange = totalWeightInAWeightCategoryTobeDistributed * ratePerUnitWeight.getRateInCurrency();
+            //double totalWeightInAWeightCategoryTobeDistributed = deliveryCount * weight.getNetQuantity();
+            double totalDistributionExpenseForAWeighRange = deliveryCount * ratePerUnitWeight.getRateInCurrency();
             this.totalDistributionExpenseInAZone += totalDistributionExpenseForAWeighRange;
             this.totalDistributionExpensePerWeightRange.put(weight, totalDistributionExpenseForAWeighRange);
         }
@@ -76,7 +76,7 @@ public class ZoneWiseDeliveriesDistribution {
         return "ZoneWiseDeliveriesDistribution{" +
                 "merchantId='" + merchantId + '\'' +
                 ", zoneId='" + zoneId + '\'' +
-                ", weightWiseDeliveriesDistributionMap=" + weightWiseDeliveriesDistributionMap +
+                //", weightWiseDeliveriesDistributionMap=" + weightWiseDeliveriesDistributionMap +
                 ", totalDistributionExpensePerWeightRange=" + totalDistributionExpensePerWeightRange +
                 ", totalDistributionExpenseInAZone=" + totalDistributionExpenseInAZone +
                 '}';
