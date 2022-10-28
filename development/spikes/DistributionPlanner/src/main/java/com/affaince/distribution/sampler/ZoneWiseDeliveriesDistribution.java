@@ -1,23 +1,24 @@
 package com.affaince.distribution.sampler;
 
 
-import com.affaince.distribution.db.DeliveryForecastView;
 import com.affaince.distribution.profiles.DefaultShippingProfile;
 import com.affaince.distribution.profiles.DistributionZone;
 import com.affaince.distribution.profiles.RatePerUnitWeight;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class ZoneWiseDeliveriesDistribution {
     private final String merchantId;
     private final String zoneId;
-    private final Map<WeightIndicator, List<DeliveryForecastView>> weightWiseDeliveriesDistributionMap;
+    private final Map<WeightIndicator, Long> weightWiseDeliveriesDistributionMap;
     private final Map<WeightIndicator, Double> totalDistributionExpensePerWeightRange;
     private double totalDistributionExpenseInAZone;
 
 
-    public ZoneWiseDeliveriesDistribution(String merchantId, String zoneId) {
-        this.merchantId = merchantId;
+    public ZoneWiseDeliveriesDistribution(DefaultShippingProfile shippingProfile, String zoneId) {
+        this.merchantId = shippingProfile.getMerchantId();
         this.zoneId = zoneId;
         this.weightWiseDeliveriesDistributionMap = new HashMap<>();
         this.totalDistributionExpensePerWeightRange = new HashMap<>();
@@ -31,16 +32,16 @@ public class ZoneWiseDeliveriesDistribution {
         return merchantId;
     }
 
-    public Map<WeightIndicator, List<DeliveryForecastView>> getWeightWiseDeliveriesDistributionMap() {
+    public Map<WeightIndicator, Long> getWeightWiseDeliveriesDistributionMap() {
         return weightWiseDeliveriesDistributionMap;
     }
 
-    public void addWeightWiseDelivery(WeightIndicator weightIndicator, DeliveryForecastView deliveryForecastView) {
+    public void addWeightWiseDelivery(WeightIndicator weightIndicator, Long deliveryCount) {
         if (!weightWiseDeliveriesDistributionMap.containsKey(weightIndicator)) {
-            List<DeliveryForecastView> deliveries = new ArrayList<>();
-            weightWiseDeliveriesDistributionMap.put(weightIndicator, deliveries);
+            weightWiseDeliveriesDistributionMap.put(weightIndicator, deliveryCount);
         }
-        weightWiseDeliveriesDistributionMap.get(weightIndicator).add(deliveryForecastView);
+        long currentDeliveryCount = weightWiseDeliveriesDistributionMap.get(weightIndicator);
+        weightWiseDeliveriesDistributionMap.put(weightIndicator, currentDeliveryCount + deliveryCount);
     }
 
     @Override
@@ -60,9 +61,9 @@ public class ZoneWiseDeliveriesDistribution {
     public double computeTotalDistributionExpensePerZone(DefaultShippingProfile defaultShippingProfile) {
         DistributionZone zone = defaultShippingProfile.searchForDistributionZone(this.zoneId);
         for (WeightIndicator weight : weightWiseDeliveriesDistributionMap.keySet()) {
-            List<DeliveryForecastView> deliveriesInAWeightRange = weightWiseDeliveriesDistributionMap.get(weight);
+            Long deliveryCount = weightWiseDeliveriesDistributionMap.get(weight);
             RatePerUnitWeight ratePerUnitWeight = zone.getRatesInTheZone().stream().filter(rIz -> rIz.getMaxWeight() == weight.getNetQuantity()).findFirst().get();
-            double totalWeightInAWeightCategoryTobeDistributed = deliveriesInAWeightRange.stream().mapToDouble(dfv -> dfv.getDeliveryForecastVersionId().getWeightRangeMax()).sum();
+            double totalWeightInAWeightCategoryTobeDistributed = deliveryCount * weight.getNetQuantity();
             double totalDistributionExpenseForAWeighRange = totalWeightInAWeightCategoryTobeDistributed * ratePerUnitWeight.getRateInCurrency();
             this.totalDistributionExpenseInAZone += totalDistributionExpenseForAWeighRange;
             this.totalDistributionExpensePerWeightRange.put(weight, totalDistributionExpenseForAWeighRange);

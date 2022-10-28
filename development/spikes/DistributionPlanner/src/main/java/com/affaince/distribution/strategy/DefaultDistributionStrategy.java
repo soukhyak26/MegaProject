@@ -37,7 +37,7 @@ public class DefaultDistributionStrategy implements DistributionStrategy {
     public Map<Period, DeliveriesDistributionProfile> distributeDistributionExpenseAcrossProducts(String merchantId) {
         List<DeliveryForecastView> deliveryForecasts = retrieveActiveDeliveryForecasts();
         DefaultShippingProfile shippingProfile = retrieveDefaultShippingProfile(merchantId);
-        Map<Period, DeliveriesDistributionProfile> periodWiseDeliveriesDistributionProfilesMap = deliveriesDistributionSampler.distributeDeliveriesOfAPeriod(deliveryForecasts, shippingProfile);
+        Map<Period, DeliveriesDistributionProfile> periodWiseDeliveriesDistributionProfilesMap = deliveriesDistributionSampler.distributeDeliveriesOfAPeriodAcrossZones(deliveryForecasts, shippingProfile);
         for (Period period : periodWiseDeliveriesDistributionProfilesMap.keySet()) {
             periodWiseDeliveriesDistributionProfilesMap.get(period).computeTotalDistributionExpense(shippingProfile);
         }
