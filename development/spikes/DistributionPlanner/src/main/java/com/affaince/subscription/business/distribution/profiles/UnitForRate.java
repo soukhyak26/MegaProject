@@ -6,5 +6,4 @@ public enum UnitForRate {
     VOLUME_IN_ML,
     VOLUME_IN_LITRE,
     VOLUME_OF_PACKAGE_DIMENSIONS
-
 }

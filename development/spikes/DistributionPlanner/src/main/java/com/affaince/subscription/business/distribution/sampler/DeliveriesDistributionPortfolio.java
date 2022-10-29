@@ -1,18 +1,19 @@
 package com.affaince.subscription.business.distribution.sampler;
 
+import com.affaince.subscription.business.distribution.categories.ZoneGroupWiseDeliveriesDistribution;
 import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
 import com.affaince.subscription.business.distribution.profiles.DistributionZoneGroup;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DeliveriesDistributionProfile {
+public class DeliveriesDistributionPortfolio {
     private final Period period;
     private final Map<DistributionZoneGroup, Double> zoneGroupWiseDistributionExpensesPerPeriod;
     private Map<DistributionZoneGroup, ZoneGroupWiseDeliveriesDistribution> zoneGroupWiseDeliveriesDistributionsPerPeriod;
     private double totalDistributionExpensePerPeriod;
 
-    public DeliveriesDistributionProfile(Period period) {
+    public DeliveriesDistributionPortfolio(Period period) {
         this.period = period;
         this.zoneGroupWiseDeliveriesDistributionsPerPeriod = new HashMap<>();
         this.zoneGroupWiseDistributionExpensesPerPeriod = new HashMap<>();

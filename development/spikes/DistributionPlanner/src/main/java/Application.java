@@ -1,6 +1,6 @@
 import com.affaince.subscription.business.distribution.db.DefaultShippingProfileRepositoryMock;
 import com.affaince.subscription.business.distribution.db.DeliveryForecastViewRepositoryMock;
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionProfile;
+import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionPortfolio;
 import com.affaince.subscription.business.distribution.sampler.Period;
 import com.affaince.subscription.business.distribution.strategy.DefaultDistributionStrategy;
 import com.affaince.subscription.business.distribution.strategy.DistributionStrategy;
@@ -23,7 +23,7 @@ public class Application {
         DeliveryForecastViewRepositoryMock.build();
         DefaultShippingProfileRepositoryMock.build();
         DistributionStrategy distributionStrategy = new DefaultDistributionStrategy();
-        Map<Period, DeliveriesDistributionProfile> periodWiseDeliveriesDistributionProfilesMap = distributionStrategy.distributeDistributionExpenseAcrossProducts("1");
+        Map<Period, DeliveriesDistributionPortfolio> periodWiseDeliveriesDistributionProfilesMap = distributionStrategy.distributeDistributionExpenseAcrossProducts("1");
         for (Period period : periodWiseDeliveriesDistributionProfilesMap.keySet()) {
             System.out.println("Start ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
             System.out.println(periodWiseDeliveriesDistributionProfilesMap.get(period));

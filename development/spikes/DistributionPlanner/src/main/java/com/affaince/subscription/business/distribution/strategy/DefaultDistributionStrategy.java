@@ -5,8 +5,8 @@ import com.affaince.subscription.business.distribution.db.DeliveryForecastView;
 import com.affaince.subscription.business.distribution.db.DeliveryForecastViewRepository;
 import com.affaince.subscription.business.distribution.db.DeliveryForecastViewRepositoryMock;
 import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionProfile;
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionSampler;
+import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionPortfolio;
+import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributor;
 import com.affaince.subscription.business.distribution.sampler.Period;
 import org.joda.time.LocalDate;
 
@@ -16,16 +16,16 @@ import java.util.Map;
 public class DefaultDistributionStrategy implements DistributionStrategy {
 
     private DeliveryForecastViewRepository deliveryForecastViewRepository;
-    private final DeliveriesDistributionSampler deliveriesDistributionSampler;
+    private final DeliveriesDistributor deliveriesDistributor;
 
     //@Autowired
-    public DefaultDistributionStrategy(DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveriesDistributionSampler deliveriesDistributionSampler) {
+    public DefaultDistributionStrategy(DeliveryForecastViewRepository deliveryForecastViewRepository, DeliveriesDistributor deliveriesDistributor) {
         this.deliveryForecastViewRepository = deliveryForecastViewRepository;
-        this.deliveriesDistributionSampler = new DeliveriesDistributionSampler();
+        this.deliveriesDistributor = new DeliveriesDistributor();
     }
 
     public DefaultDistributionStrategy() {
-        this.deliveriesDistributionSampler = new DeliveriesDistributionSampler();
+        this.deliveriesDistributor = new DeliveriesDistributor();
     }
 
     @Override
@@ -34,10 +34,10 @@ public class DefaultDistributionStrategy implements DistributionStrategy {
     }
 
     @Override
-    public Map<Period, DeliveriesDistributionProfile> distributeDistributionExpenseAcrossProducts(String merchantId) {
+    public Map<Period, DeliveriesDistributionPortfolio> distributeDistributionExpenseAcrossProducts(String merchantId) {
         List<DeliveryForecastView> deliveryForecasts = retrieveActiveDeliveryForecasts();
         DefaultShippingProfile shippingProfile = retrieveDefaultShippingProfile(merchantId);
-        Map<Period, DeliveriesDistributionProfile> periodWiseDeliveriesDistributionProfilesMap = deliveriesDistributionSampler.distributeDeliveriesOfAPeriodAcrossZones(deliveryForecasts, shippingProfile);
+        Map<Period, DeliveriesDistributionPortfolio> periodWiseDeliveriesDistributionProfilesMap = deliveriesDistributor.distributeDeliveriesOfAPeriodAcrossZones(deliveryForecasts, shippingProfile);
         for (Period period : periodWiseDeliveriesDistributionProfilesMap.keySet()) {
             periodWiseDeliveriesDistributionProfilesMap.get(period).computeTotalDistributionExpense(shippingProfile);
         }

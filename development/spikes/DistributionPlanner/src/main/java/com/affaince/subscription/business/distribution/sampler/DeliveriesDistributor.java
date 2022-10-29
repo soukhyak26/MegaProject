@@ -1,5 +1,7 @@
 package com.affaince.subscription.business.distribution.sampler;
 
+import com.affaince.subscription.business.distribution.categories.PeriodWiseAndWeightWiseDeliveriesDistribution;
+import com.affaince.subscription.business.distribution.categories.ZoneGroupWiseDeliveriesDistribution;
 import com.affaince.subscription.business.distribution.db.DeliveryForecastView;
 import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
 import com.affaince.subscription.business.distribution.profiles.DistributionZoneGroup;
@@ -11,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DeliveriesDistributionSampler {
+public class DeliveriesDistributor {
 
-    public Map<Period, DeliveriesDistributionProfile> distributeDeliveriesOfAPeriodAcrossZones(List<DeliveryForecastView> activeDeliveryForecasts, DefaultShippingProfile shippingProfile) {
+    public Map<Period, DeliveriesDistributionPortfolio> distributeDeliveriesOfAPeriodAcrossZones(List<DeliveryForecastView> activeDeliveryForecasts, DefaultShippingProfile shippingProfile) {
         List<PeriodWiseAndWeightWiseDeliveriesDistribution> periodWiseAndWeightWiseDeliveriesDistributions = buildPeriodWiseDeliveriesBuckets(activeDeliveryForecasts);
         //distributes deliveries randomly across different regions/zones
         return distributeDeliveries(shippingProfile, periodWiseAndWeightWiseDeliveriesDistributions);
@@ -34,14 +36,14 @@ public class DeliveriesDistributionSampler {
         return periodWiseAndWeightWiseDeliveriesDistributions;
     }
 
-    private Map<Period, DeliveriesDistributionProfile> distributeDeliveries(DefaultShippingProfile shippingProfile, List<PeriodWiseAndWeightWiseDeliveriesDistribution> periodWiseAndWeightWiseDeliveriesDistributions) {
-        Map<Period, DeliveriesDistributionProfile> deliveriesDistributionProfiles = new HashMap<>();
+    private Map<Period, DeliveriesDistributionPortfolio> distributeDeliveries(DefaultShippingProfile shippingProfile, List<PeriodWiseAndWeightWiseDeliveriesDistribution> periodWiseAndWeightWiseDeliveriesDistributions) {
+        Map<Period, DeliveriesDistributionPortfolio> deliveriesDistributionProfiles = new HashMap<>();
         for (PeriodWiseAndWeightWiseDeliveriesDistribution bucket : periodWiseAndWeightWiseDeliveriesDistributions) {
             //for the given period distribute the content of the bucket evenly across all distribution zone groups
-            DeliveriesDistributionProfile deliveriesDistributionProfile = new DeliveriesDistributionProfile(bucket.getPeriod());
+            DeliveriesDistributionPortfolio deliveriesDistributionPortfolio = new DeliveriesDistributionPortfolio(bucket.getPeriod());
             Map<DistributionZoneGroup, ZoneGroupWiseDeliveriesDistribution> zoneGroupWiseDeliveriesDistributionForAPeriod = distributeDeliveriesOfAPeriodAcrossZones(shippingProfile, bucket);
-            deliveriesDistributionProfile.setZoneGroupWiseDeliveriesDistributionsPerPeriod(zoneGroupWiseDeliveriesDistributionForAPeriod);
-            deliveriesDistributionProfiles.put(bucket.getPeriod(), deliveriesDistributionProfile);
+            deliveriesDistributionPortfolio.setZoneGroupWiseDeliveriesDistributionsPerPeriod(zoneGroupWiseDeliveriesDistributionForAPeriod);
+            deliveriesDistributionProfiles.put(bucket.getPeriod(), deliveriesDistributionPortfolio);
         }
         return deliveriesDistributionProfiles;
     }

@@ -2,6 +2,7 @@ package com.affaince.subscription.business.distribution.profiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DistributionZoneGroup {
     private final String merchantId;
@@ -28,6 +29,20 @@ public class DistributionZoneGroup {
 
     public void addToDistributionZone(DistributionZone distributionZone) {
         this.distributionZonesUnderTheGroup.add(distributionZone);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DistributionZoneGroup that = (DistributionZoneGroup) o;
+        return merchantId.equals(that.merchantId) &&
+                distributionZoneGroupIdentifier.equals(that.distributionZoneGroupIdentifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(merchantId, distributionZoneGroupIdentifier);
     }
 
     @Override
