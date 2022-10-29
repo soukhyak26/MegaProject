@@ -1,4 +1,4 @@
-package com.affaince.distribution.profiles;
+package com.affaince.subscription.business.distribution.profiles;
 
 public class RatePerUnitWeight {
     private final String rateIdentifier;

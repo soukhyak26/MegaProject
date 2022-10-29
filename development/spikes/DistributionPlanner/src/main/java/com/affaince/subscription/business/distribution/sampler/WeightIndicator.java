@@ -1,4 +1,4 @@
-package com.affaince.distribution.sampler;
+package com.affaince.subscription.business.distribution.sampler;
 
 import com.affaince.subscription.common.type.QuantityUnit;
 

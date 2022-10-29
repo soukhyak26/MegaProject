@@ -1,8 +1,8 @@
-package com.affaince.distribution.sampler;
+package com.affaince.subscription.business.distribution.sampler;
 
-import com.affaince.distribution.db.DeliveryForecastView;
-import com.affaince.distribution.profiles.DefaultShippingProfile;
-import com.affaince.distribution.profiles.DistributionZoneGroup;
+import com.affaince.subscription.business.distribution.db.DeliveryForecastView;
+import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
+import com.affaince.subscription.business.distribution.profiles.DistributionZoneGroup;
 import com.affaince.subscription.common.type.QuantityUnit;
 
 import java.util.ArrayList;

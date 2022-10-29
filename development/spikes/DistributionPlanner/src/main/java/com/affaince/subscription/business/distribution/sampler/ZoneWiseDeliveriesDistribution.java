@@ -1,9 +1,9 @@
-package com.affaince.distribution.sampler;
+package com.affaince.subscription.business.distribution.sampler;
 
 
-import com.affaince.distribution.profiles.DefaultShippingProfile;
-import com.affaince.distribution.profiles.DistributionZone;
-import com.affaince.distribution.profiles.RatePerUnitWeight;
+import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
+import com.affaince.subscription.business.distribution.profiles.DistributionZone;
+import com.affaince.subscription.business.distribution.profiles.RatePerUnitWeight;
 
 import java.util.HashMap;
 import java.util.Map;
