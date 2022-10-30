@@ -16,6 +16,9 @@ public class AccountingTransactionRequest {
     private String receiverPartyId;
     private double receiverAmount;
 
+    public AccountingTransactionRequest() {
+    }
+
     public String getMerchantId() {
         return merchantId;
     }

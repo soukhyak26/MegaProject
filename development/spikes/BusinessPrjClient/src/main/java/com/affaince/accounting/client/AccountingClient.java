@@ -1,49 +1,140 @@
 package com.affaince.accounting.client;
 
-import org.apache.http.impl.client.HttpClients;
 import org.joda.time.LocalDateTime;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 
 public class AccountingClient {
+    @Value("${dummyRequestUrl}")
+    private String dummyRequestUrl;
+    @Value("${affaince.acounting.register.listeners.url}")
+    private String registerListenersUrl;
+    @Value("${affaince.acounting.event.url}")
+    private String accountingEventUrl;
+    @Value("${affaince.acounting.period.start.url}")
+    private String periodStartUrl;
+    @Value("${affaince.acounting.period.end.url}")
+    private String periodEndUrl;
+    @Value("${affaince.acounting.journal.print.url}")
+    private String printJournalUrl;
+    @Value("${affaince.acounting.accounts.print.url}")
+    private String printAccountsUrl;
 
-    private String businessUrl;
-    private ClientHttpRequestFactory requestFactory;
+    //private ClientHttpRequestFactory requestFactory;
     private RestTemplate restTemplate;
+    @Autowired
+    public AccountingClient(RestTemplate restTemplate) {
+        this.restTemplate=restTemplate;
+    }
+    public void registerEventListeners(){
+        //RestTemplate restTemplate = new RestTemplate(requestFactory);
 
-    public AccountingClient() {
-        this.requestFactory = new
-                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
-        this.restTemplate = new RestTemplate(requestFactory);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(registerListenersUrl);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity <String> entity = new  HttpEntity<>(null,headers);
+        System.out.println("event listeners registered");
+        try {
+            restTemplate.postForEntity(builder.build().encode().toUri(),entity, Object.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
+    public void dummyCall(DummyRequest request){
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(dummyRequestUrl);
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity<DummyRequest> entity = new HttpEntity<>(request,headers);
+        try {
+            restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.POST, entity, Object.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+    public void startAccountingPeriod(AccountingPeriodRequest request){
+        //RestTemplate restTemplate = new RestTemplate(requestFactory);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(periodStartUrl);
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+
+        HttpEntity<AccountingPeriodRequest> entity = new HttpEntity<>(request,headers);
+        try {
+            restTemplate.postForEntity(builder.build().encode().toUri(), entity, Object.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void endAccountingPeriod(AccountingPeriodRequest request){
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(periodEndUrl);
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity<AccountingPeriodRequest> entity = new HttpEntity<>(request,headers);
+        try {
+            restTemplate.postForEntity(builder.build().encode().toUri(), entity, Object.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void printJournal(PrintAccountsRequest request){
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(printJournalUrl);
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity<PrintAccountsRequest> entity = new HttpEntity<>(request,headers);
+        try {
+            restTemplate.postForEntity(builder.build().encode().toUri(), entity,String.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void printAccounts(PrintAccountsRequest request){
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(printAccountsUrl);
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity<PrintAccountsRequest> entity = new HttpEntity<>(request,headers);
+        try {
+            restTemplate.postForEntity(builder.build().encode().toUri(), entity, String.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     private void submitAccountingEvent(AccountingTransactionRequest request) {
-        System.out.println("in Business Project Client###############" + businessUrl);
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-        //  ArrayList<String> result = restTemplate.getForObject(setNextForecastDateUrl, ArrayList.class);
-        Map<String, Object> requestParams = new HashMap<>();
-        requestParams.put("merchantId", request.getMerchantId());
-        requestParams.put("accountingEvent", request.getAccountingEvent());
-        requestParams.put("transactionAmount", request.getTransactionAmount());
-        requestParams.put("dateOfTransaction", request.getDateOfTransaction());
-        requestParams.put("isTransactionOnCredit", request.isTransactionOnCredit());
-        requestParams.put("giverParticipantType", request.getGiverParticipantType());
-        requestParams.put("giverPartyId", request.getGiverPartyId());
-        requestParams.put("giverAmount", request.getGiverAmount());
-        requestParams.put("exchangeableItem", request.getExchangeableItem());
-        requestParams.put("receiverParticipantType", request.getReceiverParticipantType());
-        requestParams.put("receiverPartyId", request.getReceiverPartyId());
-        requestParams.put("receiverAmount", request.getReceiverAmount());
+        System.out.println("in Business Project Client###############" + accountingEventUrl);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(businessUrl);
-        restTemplate.postForObject(builder.buildAndExpand(requestParams).toUri().toString(), requestParams,Object.class);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(accountingEventUrl);
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+
+        HttpEntity<AccountingTransactionRequest> entity = new HttpEntity<>(request,headers);
+        try {
+            restTemplate.postForEntity(builder.build().encode().toUri(), entity, String.class);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     public void investCapital(){
@@ -61,7 +152,24 @@ public class AccountingClient {
                 sourceDocument.setReceiverParticipantType(PartyTypes.BUSINESS);
                 sourceDocument.setReceiverAmount(5000000);
         submitAccountingEvent(sourceDocument);
-    }
+
+
+      /*  //capital investment
+        public void investCapital(AccountingCommandGateway accountingCommandGateway){
+            SourceDocument sourceDocument = SourceDocument.newBuilder()
+                    .merchantId("merchant1")
+                    .transactionReferenceNumber("1")
+                    .transactionAmount(5000000)
+                    .dateOfTransaction(new LocalDateTime(2023,1,1,00,00,00))
+                    .modeOfTransaction(ModeOfTransaction.BY_PAYMENT)
+                    .transactionEvent(AccountingEvent.CAPITAL_INVESTMENT)
+                    .giverParticipant("merchant1", PartyTypes.MERCHANT, ExchangeableItems.MONEY,5000000)
+                    .receiverParticipant("merchant1",PartyTypes.BUSINESS,ExchangeableItems.MONEY,5000000)
+                    .description("capital invested")
+                    .build();
+            accountingCommandGateway.send(sourceDocument);*/
+
+        }
     //stock purchase.. by default on credit
     public void receiveStockOfGoodsOnCredit(){
         AccountingTransactionRequest sourceDocument = new AccountingTransactionRequest();
