@@ -16,7 +16,7 @@ public class SourceDocumentTransformer {
                 .transactionReferenceNumber(transactionRefNumber)
                 .transactionAmount(request.getTransactionAmount())
                 .dateOfTransaction(request.getDateOfTransaction());
-        if (request.isIcTransactionOnCredit()) {
+        if (request.isTransactionOnCredit()) {
             builder.modeOfTransaction(ModeOfTransaction.ON_CREDIT);
         } else {
             builder.modeOfTransaction(ModeOfTransaction.ON_CREDIT);

@@ -12,7 +12,8 @@ public class PartyDatabaseSimulator {
     private List<Party> parties;
     @Autowired
     public PartyDatabaseSimulator() {
-        List<Party> parties = new ArrayList<>();
+        this.parties = new ArrayList<>();
+        buildDatabase();
     }
 
     public void buildDatabase(){

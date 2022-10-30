@@ -10,7 +10,7 @@ public class AccountingTransactionRequest {
     private AccountingEvent accountingEvent;
     private double transactionAmount;
     private LocalDateTime dateOfTransaction;
-    private boolean icTransactionOnCredit;
+    private boolean isTransactionOnCredit;
     private PartyTypes giverParticipantType;
     private String giverPartyId;
     private double giverAmount;
@@ -59,12 +59,12 @@ public class AccountingTransactionRequest {
         this.dateOfTransaction = dateOfTransaction;
     }
 
-    public boolean isIcTransactionOnCredit() {
-        return icTransactionOnCredit;
+    public boolean isTransactionOnCredit() {
+        return isTransactionOnCredit;
     }
 
-    public void setIcTransactionOnCredit(boolean icTransactionOnCredit) {
-        this.icTransactionOnCredit = icTransactionOnCredit;
+    public void setTransactionOnCredit(boolean transactionOnCredit) {
+        this.isTransactionOnCredit = transactionOnCredit;
     }
 
     public PartyTypes getGiverParticipantType() {

@@ -10,14 +10,17 @@ import com.affaince.accounting.journal.gateway.AccountingCommandGateway;
 import com.affaince.accounting.journal.processor.factory.AccountingEventsRegistry;
 import com.affaince.accounting.journal.qualifiers.AccountingEvent;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.reconcile.AccountingPeriod;
 import com.affaince.accounting.reconcile.PeriodReconciliationProcessor;
 import com.affaince.accounting.web.request.AccountingTransactionRequest;
-import com.affaince.accounting.web.request.FinancialPeriodRequest;
+import com.affaince.accounting.web.request.AccountingPeriodRequest;
+import com.affaince.accounting.web.request.DummyRequest;
 import com.affaince.accounting.web.request.PrintAccountsRequest;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -90,7 +93,7 @@ public class BusinessAccountingController {
         this.supplierPaymentTowardsPurchaseReturnEventProcessor = supplierPaymentTowardsPurchaseReturnEventProcessor ;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register/listeners")
+    @RequestMapping(method = RequestMethod.POST, value = "/register/listeners",consumes = "application/json")
     public ResponseEntity<Object> registerDefaultEventListeners(){
         accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.CAPITAL_INVESTMENT,capitalInvestmentEventProcessor);
         accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.SERVICE_INVOICE_RECEIVED_FROM_SERVICE_PROVIDER,distributionServicesAvailedEventProcessor);
@@ -106,26 +109,34 @@ public class BusinessAccountingController {
         accountingEventsRegistry.registerAccountingEventListener(AccountingEvent.SUPPLIER_PAYMENT_TOWARDS_PURCHASE_RETURN,supplierPaymentTowardsPurchaseReturnEventProcessor);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @RequestMapping(method = RequestMethod.POST, value = "/period/start")
-    public ResponseEntity<Object> startFinancialPeriod(FinancialPeriodRequest request) {
-        periodReconciliationProcessor.processStartOfPeriodOperations(request.getMerchant(),request.getStartDate(),request.getClosureDate(),request.getAccountingPeriod());
+    @RequestMapping(method = RequestMethod.POST, value = "/dummy",consumes = "application/json",produces = "application/json")
+    public ResponseEntity<Object> startFinancialPeriod(@RequestBody DummyRequest request) {
+        System.out.println("a: " + request.getA());
+        System.out.println("b: " + request.getB());
+        System.out.println("c: " + request.getC());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/event")
-    public ResponseEntity<Object> accountingEvent(AccountingTransactionRequest request) {
+    @RequestMapping(method = RequestMethod.POST, value = "/period/start",consumes = "application/json")
+    public ResponseEntity<Object> startFinancialPeriod(@RequestBody AccountingPeriodRequest request) {
+        periodReconciliationProcessor.processStartOfPeriodOperations(request.getMerchant(),request.getStartDate(),request.getClosureDate(), AccountingPeriod.DAILY);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/event",consumes = "application/json")
+    public ResponseEntity<Object> accountingEvent(@RequestBody AccountingTransactionRequest request) {
         accountingCommandGateway.send(sourceDocumentTransformer.transform(request));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/period/end")
-    public ResponseEntity<Object> endFinancialPeriod(FinancialPeriodRequest request) {
+    @RequestMapping(method = RequestMethod.POST, value = "/period/end",consumes = "application/json")
+    public ResponseEntity<Object> endFinancialPeriod(@RequestBody AccountingPeriodRequest request) {
         periodReconciliationProcessor.processEndOfPeriodOperations(request.getMerchant(),request.getStartDate(),request.getClosureDate(),request.getAccountingPeriod());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/accounts/print")
-    public ResponseEntity<Object> printAccounts(PrintAccountsRequest request) {
+    @RequestMapping(method = RequestMethod.GET, value = "/accounts/print",consumes = "application/json")
+    public ResponseEntity<Object> printAccounts(@RequestBody PrintAccountsRequest request) {
         System.out.println("###########LEDGER################");
         printAccounts(request.getMerchantId(), request.getStartDate(), request.getEndDate());
         System.out.println("###########END - LEDGER################");
@@ -143,8 +154,8 @@ public class BusinessAccountingController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/journal/print")
-    public ResponseEntity<Object> printJournal(PrintAccountsRequest request) {
+    @RequestMapping(method = RequestMethod.GET, value = "/journal/print", consumes = "application/json")
+    public ResponseEntity<Object> printJournal(@RequestBody PrintAccountsRequest request) {
         Journal journal  = journalDatabaseSimulator.searchBYMerchantIdAndPeriod(request.getMerchantId(),request.getStartDate(),request.getEndDate());
         for(JournalRecord journalRecord : journal.getJournalEntries() ){
             System.out.println(journalRecord);

@@ -3,10 +3,17 @@ package com.affaince.accounting.web.request;
 import com.affaince.accounting.reconcile.AccountingPeriod;
 import org.joda.time.LocalDateTime;
 
-public class FinancialPeriodRequest {
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+public class AccountingPeriodRequest implements Serializable {
+    @NotNull
     private String merchant;
+    @NotNull
     private LocalDateTime startDate;
+    @NotNull
     private LocalDateTime closureDate;
+    @NotNull
     private AccountingPeriod accountingPeriod;
 
     public String getMerchant() {

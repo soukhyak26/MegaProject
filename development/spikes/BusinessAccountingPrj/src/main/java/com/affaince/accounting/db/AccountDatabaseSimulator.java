@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Component
 public class AccountDatabaseSimulator {
     private final List<LedgerAccount> allAccounts;
-    @Autowired
     public AccountDatabaseSimulator(){
         allAccounts = new ArrayList<>();
     }
