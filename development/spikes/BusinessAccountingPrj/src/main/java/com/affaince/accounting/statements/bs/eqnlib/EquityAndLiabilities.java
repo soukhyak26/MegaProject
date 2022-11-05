@@ -1,6 +1,10 @@
 package com.affaince.accounting.statements.bs.eqnlib;
 
+import com.affaince.accounting.statements.BalanceSheetEntity;
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EquityAndLiabilities {
     private String merchantId;
@@ -21,32 +25,45 @@ public class EquityAndLiabilities {
         this.currentLiabilities = new CurrentLiabilities();
     }
 
-    public void addToShareCapital(double value,String narration){
-        this.shareHoldersFunds.addToShareCapital(value,narration);
+    public void addToShareCapital(BalanceSheetEntity balanceSheetEntity){
+        this.shareHoldersFunds.addToShareCapital(balanceSheetEntity);
     }
-    public void addToReservesAndSurplus(double value,String narration){
-        this. shareHoldersFunds.addToReservesAndSurplus(value,narration);
+    public void addToReservesAndSurplus(BalanceSheetEntity balanceSheetEntity){
+        this. shareHoldersFunds.addToReservesAndSurplus(balanceSheetEntity);
     }
-    public void addToMoneyReceivedAgainstShareWarrants(double value,String narration){
-        this.shareHoldersFunds.addToMoneyReceivedAgainstShareWarrants(value,narration);
-    }
-
-    public void addToValue(double value,String narration){
-        this.shareAppPendingAllotment.addToValue(value,narration);
+    public void addToMoneyReceivedAgainstShareWarrants(BalanceSheetEntity balanceSheetEntity){
+        this.shareHoldersFunds.addToMoneyReceivedAgainstShareWarrants(balanceSheetEntity);
     }
 
-    public void addToLongTermBorrowings(double value,String narration){
-        this.nonCurrentLiabilities.addToLongTermBorrowings(value,narration);
-    }
-    public void addToDeferredTaxLiabilities(double value,String narration){
-        this.nonCurrentLiabilities.addToDeferredTaxLiabilities(value,narration);
-    }
-    public void addToOtherLongTermLiabilities(double value,String narration){
-        this. nonCurrentLiabilities.addToOtherLongTermLiabilities(value,narration);
+    public void addToShareAppPendingAllotment(BalanceSheetEntity balanceSheetEntity){
+        this.shareAppPendingAllotment.addToValue(balanceSheetEntity);
     }
 
-    public void addToLongTermProvisions(double value,String narration){
-        this.nonCurrentLiabilities.addToLongTermProvisions(value,narration);
+    public void addToLongTermBorrowings(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentLiabilities.addToLongTermBorrowings(balanceSheetEntity);
+    }
+    public void addToDeferredTaxLiabilities(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentLiabilities.addToDeferredTaxLiabilities(balanceSheetEntity);
+    }
+    public void addToOtherLongTermLiabilities(BalanceSheetEntity balanceSheetEntity){
+        this. nonCurrentLiabilities.addToOtherLongTermLiabilities(balanceSheetEntity);
+    }
+
+    public void addToLongTermProvisions(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentLiabilities.addToLongTermProvisions(balanceSheetEntity);
+    }
+    public void addToShortTermBorrowings(BalanceSheetEntity balanceSheetEntity){
+        this.currentLiabilities.addToShortTermBorrowings(balanceSheetEntity);
+    }
+    public void addToTradePayables(BalanceSheetEntity balanceSheetEntity){
+        this.currentLiabilities.addToTradePayables(balanceSheetEntity);
+    }
+
+    public void addToOtherCurrentLiabilities(BalanceSheetEntity balanceSheetEntity){
+        this. currentLiabilities.addToOtherCurrentLiabilities(balanceSheetEntity);
+    }
+    public void addToShortTermProvisions(BalanceSheetEntity balanceSheetEntity){
+        this.currentLiabilities.addToShortTermProvisions(balanceSheetEntity);
     }
 
     public String getMerchantId() {
@@ -75,5 +92,14 @@ public class EquityAndLiabilities {
 
     public CurrentLiabilities getCurrentLiabilities() {
         return currentLiabilities;
+    }
+
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.addAll(this.shareHoldersFunds.fetchAllEntries());
+        allEntries.addAll(this.shareAppPendingAllotment.fetchAllEntries());
+        allEntries.addAll(this.nonCurrentLiabilities.fetchAllEntries());
+        allEntries.addAll(this.currentLiabilities.fetchAllEntries());
+        return allEntries;
     }
 }

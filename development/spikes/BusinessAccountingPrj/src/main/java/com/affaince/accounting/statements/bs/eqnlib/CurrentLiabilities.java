@@ -1,50 +1,57 @@
 package com.affaince.accounting.statements.bs.eqnlib;
 
-import com.affaince.accounting.statements.bs.BalanceSheetEntity;
+import com.affaince.accounting.statements.BalanceSheetEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurrentLiabilities {
-    private BalanceSheetEntity shortTermBorrowings;
-    private BalanceSheetEntity tradePayables;
-    private BalanceSheetEntity otherCurrentLiabilities;
-    private BalanceSheetEntity shortTermProvisions;
+    private List<BalanceSheetEntity> shortTermBorrowings;
+    private List<BalanceSheetEntity> tradePayables;
+    private List<BalanceSheetEntity> otherCurrentLiabilities;
+    private List<BalanceSheetEntity> shortTermProvisions;
 
     public CurrentLiabilities(){
-        this.shortTermBorrowings = new BalanceSheetEntity();
-        this.tradePayables=new BalanceSheetEntity();
-        this.otherCurrentLiabilities = new BalanceSheetEntity();
-        this.shortTermProvisions = new BalanceSheetEntity();
+        this.shortTermBorrowings = new ArrayList<>();
+        this.tradePayables=new ArrayList<>();
+        this.otherCurrentLiabilities = new ArrayList<>();
+        this.shortTermProvisions = new ArrayList<>();
     }
-    public void addToShortTermBorrowings(double value,String narration){
-        this.shortTermBorrowings.addToValue(value);
-        this.shortTermBorrowings.addToNarration(narration);
+    public void addToShortTermBorrowings(BalanceSheetEntity balanceSheetEntity){
+        this.shortTermBorrowings.add(balanceSheetEntity);
     }
-    public void addToTradePayables( double value,String narration){
-        this.tradePayables.addToValue(value);
-        this.tradePayables.addToNarration(narration);
+    public void addToTradePayables(BalanceSheetEntity balanceSheetEntity){
+        this.tradePayables.add(balanceSheetEntity);
     }
 
-    public void addToOtherCurrentLiabilities(double value,String narration){
-        this. otherCurrentLiabilities.addToValue(value);
-        this.otherCurrentLiabilities.addToNarration(narration);
+    public void addToOtherCurrentLiabilities(BalanceSheetEntity balanceSheetEntity){
+        this. otherCurrentLiabilities.add(balanceSheetEntity);
     }
-    public void addToShortTermProvisions(double value,String narration){
-        this.shortTermProvisions.addToValue(value);
-        this.shortTermProvisions.addToNarration(narration);
+    public void addToShortTermProvisions(BalanceSheetEntity balanceSheetEntity){
+        this.shortTermProvisions.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getShortTermBorrowings() {
+    public List<BalanceSheetEntity> getShortTermBorrowings() {
         return shortTermBorrowings;
     }
 
-    public BalanceSheetEntity getTradePayables() {
+    public List<BalanceSheetEntity> getTradePayables() {
         return tradePayables;
     }
 
-    public BalanceSheetEntity getOtherCurrentLiabilities() {
+    public List<BalanceSheetEntity> getOtherCurrentLiabilities() {
         return otherCurrentLiabilities;
     }
 
-    public BalanceSheetEntity getShortTermProvisions() {
+    public List<BalanceSheetEntity> getShortTermProvisions() {
         return shortTermProvisions;
+    }
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.addAll(this.shortTermBorrowings);
+        allEntries.addAll(this.tradePayables);
+        allEntries.addAll(this.otherCurrentLiabilities);
+        allEntries.addAll(this.shortTermProvisions);
+        return allEntries;
     }
 }

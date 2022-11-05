@@ -1,77 +1,84 @@
 package com.affaince.accounting.statements.bs.assets;
 
-import com.affaince.accounting.statements.bs.BalanceSheetEntity;
+import com.affaince.accounting.statements.BalanceSheetEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurrentAssets {
-    private BalanceSheetEntity currentInvestments;
-    private BalanceSheetEntity inventories;
-    private BalanceSheetEntity tradeReceivables;
-    private BalanceSheetEntity cashAndCashEquivalents;
-    private BalanceSheetEntity shortTermLoansAndAdvances;
-    private BalanceSheetEntity otherCurrentAssets;
+    private List<BalanceSheetEntity> currentInvestments;
+    private List<BalanceSheetEntity> inventories;
+    private List<BalanceSheetEntity> tradeReceivables;
+    private List<BalanceSheetEntity> cashAndCashEquivalents;
+    private List<BalanceSheetEntity> shortTermLoansAndAdvances;
+    private List<BalanceSheetEntity> otherCurrentAssets;
 
 
     public CurrentAssets(){
-        this.currentInvestments = new BalanceSheetEntity();
-        this.inventories = new BalanceSheetEntity();
-        this.tradeReceivables = new BalanceSheetEntity();
-        this.cashAndCashEquivalents = new BalanceSheetEntity();
-        this.shortTermLoansAndAdvances = new BalanceSheetEntity();
-        this.otherCurrentAssets = new BalanceSheetEntity();
+        this.currentInvestments = new ArrayList<>();
+        this.inventories = new ArrayList<>();
+        this.tradeReceivables = new ArrayList<>();
+        this.cashAndCashEquivalents = new ArrayList<>();
+        this.shortTermLoansAndAdvances = new ArrayList<>();
+        this.otherCurrentAssets = new ArrayList<>();
     }
-    public BalanceSheetEntity getCurrentInvestments() {
+    public List<BalanceSheetEntity> getCurrentInvestments() {
         return currentInvestments;
     }
 
-    public void addToCurrentInvestments(double value,String narration) {
-        this.currentInvestments.addToValue(value);
-        this.currentInvestments.addToNarration(narration);
+    public void addToCurrentInvestments(BalanceSheetEntity balanceSheetEntity) {
+        this.currentInvestments.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getInventories() {
+    public List<BalanceSheetEntity> getInventories() {
         return inventories;
     }
 
-    public void addToInventories(double value,String narration) {
-        this.inventories.addToValue(value);
-        this.inventories.addToNarration(narration);
+    public void addToInventories(BalanceSheetEntity balanceSheetEntity) {
+        this.inventories.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getTradeReceivables() {
+    public List<BalanceSheetEntity> getTradeReceivables() {
         return tradeReceivables;
     }
 
-    public void addToTradeReceivables(double value,String narration) {
-        this.tradeReceivables.addToValue(value);
-        this.tradeReceivables.addToNarration(narration);
+    public void addToTradeReceivables(BalanceSheetEntity balanceSheetEntity) {
+        this.tradeReceivables.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getCashAndCashEquivalents() {
+    public List<BalanceSheetEntity> getCashAndCashEquivalents() {
         return cashAndCashEquivalents;
     }
 
-    public void addToCashAndCashEquivalents(double value,String narration) {
-        this.cashAndCashEquivalents.addToValue(value);
-        this.cashAndCashEquivalents.addToNarration(narration);
+    public void addToCashAndCashEquivalents(BalanceSheetEntity balanceSheetEntity) {
+        this.cashAndCashEquivalents.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getShortTermLoansAndAdvances() {
+    public List<BalanceSheetEntity> getShortTermLoansAndAdvances() {
         return shortTermLoansAndAdvances;
     }
 
-    public void addToShortTermLoansAndAdvances(double value,String narration) {
-        this.shortTermLoansAndAdvances.addToValue(value);
-        this.shortTermLoansAndAdvances.addToNarration(narration);
+    public void addToShortTermLoansAndAdvances(BalanceSheetEntity balanceSheetEntity) {
+        this.shortTermLoansAndAdvances.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getOtherCurrentAssets() {
+    public List<BalanceSheetEntity> getOtherCurrentAssets() {
         return otherCurrentAssets;
     }
 
-    public void addToOtherCurrentAssets(double value,String narration) {
-        this.otherCurrentAssets.addToValue(value);
-        this.otherCurrentAssets.addToNarration(narration);
+    public void addToOtherCurrentAssets(BalanceSheetEntity balanceSheetEntity) {
+        this.otherCurrentAssets.add(balanceSheetEntity);
     }
 
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.addAll(this.currentInvestments);
+        allEntries.addAll(this.inventories);
+        allEntries.addAll(this.tradeReceivables);
+        allEntries.addAll(this.cashAndCashEquivalents);
+        allEntries.addAll(this.shortTermLoansAndAdvances);
+        allEntries.addAll(this.otherCurrentAssets);
+        return allEntries;
+    }
 
 }

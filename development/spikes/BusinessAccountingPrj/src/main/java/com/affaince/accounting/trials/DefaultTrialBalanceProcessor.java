@@ -6,9 +6,13 @@ import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.ledger.accounts.LedgerAccountEntry;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-@Deprecated
+import java.util.stream.Collectors;
+
+//@Deprecated
+@Component
 public class DefaultTrialBalanceProcessor implements TrialBalanceProcessor{
     private final AccountDatabaseSimulator accountDatabaseSimulator;
     //private final ClosingStockDatabaseSimulator closingStockDatabaseSimulator;
@@ -18,6 +22,7 @@ public class DefaultTrialBalanceProcessor implements TrialBalanceProcessor{
         this.accountDatabaseSimulator = accountDatabaseSimulator;
     }
 
+/*
     @Override
     public TrialBalance processTrialBalance(String merchantId, LocalDateTime startDate, LocalDateTime closureDate) {
         List<LedgerAccount> closedLedgerAccountsOfAMerchant = accountDatabaseSimulator.getAllActiveAccounts(merchantId,startDate,closureDate);
@@ -51,4 +56,41 @@ public class DefaultTrialBalanceProcessor implements TrialBalanceProcessor{
         }
         return trialBalance;
     }
+*/
+
+    @Override
+    public TrialBalance processTrialBalance(String merchantId, LocalDateTime startDate, LocalDateTime closureDate) {
+        List<LedgerAccount> closedLedgerAccountsOfAMerchant = accountDatabaseSimulator.getAllActiveAccounts(merchantId,startDate,closureDate);
+        TrialBalance trialBalance = new TrialBalance(merchantId,"1", closureDate.toLocalDate());
+        for (LedgerAccount ledgerAccount : closedLedgerAccountsOfAMerchant){
+            List<LedgerAccountEntry> creditLedgerEntries = ledgerAccount.getCredits().stream().filter(acc->acc.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_CARRIED_DOWN && acc.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_BROUGHT_DOWN ).collect(Collectors.toList());
+            List<LedgerAccountEntry> debitLedgerEntries = ledgerAccount.getDebits().stream().filter(acc->acc.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_CARRIED_DOWN && acc.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_BROUGHT_DOWN).collect(Collectors.toList());
+
+            for(LedgerAccountEntry creditLedgerEntry : creditLedgerEntries){
+                switch (ledgerAccount.getAccountIdentifier().getAccountQualifiers()){
+                    case PERSONAL_LEDGER_ACCOUNT:
+                    case REAL_LEDGER_ACCOUNT:
+                    case NOMINAL_LEDGER_ACCOUNT:
+                        if(creditLedgerEntry.getAmount() >0) {
+                            trialBalance.addToCreditEntries(new CreditTrialBalanceEntry(ledgerAccount.getAccountId(), ledgerAccount.getAccountIdentifier(), null, creditLedgerEntry.getAmount(), NatureOfBalance.CUSTOMERS));
+                        }
+                        break;
+                }
+            }
+
+            for(LedgerAccountEntry debitLedgerEntry : debitLedgerEntries){
+                switch (ledgerAccount.getAccountIdentifier().getAccountQualifiers()){
+                    case PERSONAL_LEDGER_ACCOUNT:
+                    case REAL_LEDGER_ACCOUNT:
+                    case NOMINAL_LEDGER_ACCOUNT:
+                        if(debitLedgerEntry.getAmount()>0){
+                            trialBalance.addToDebitEntries(new DebitTrialBalanceEntry(ledgerAccount.getAccountId(), ledgerAccount.getAccountIdentifier(), null, debitLedgerEntry.getAmount(), NatureOfBalance.CUSTOMERS));
+                        }
+                        break;
+                }
+            }
+        }
+        return trialBalance;
+    }
+
 }

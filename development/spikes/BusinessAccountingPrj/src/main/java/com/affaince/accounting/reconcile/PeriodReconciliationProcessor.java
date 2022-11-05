@@ -67,8 +67,15 @@ public class PeriodReconciliationProcessor {
             TrialBalance trialBalance = processTrialBalance(merchant, startDate, closureDate);
             if (trialBalance.isTrialBalanceTallied())
             {
-                tradingAccountPostingProcessor.postToTradingAccount(merchant, startDate, closureDate, accountingPeriod);
-                profitAndLossAccountPostingProcessor.postToProfitAndLossAccount(merchant, startDate, closureDate, accountingPeriod);
+                LedgerAccount tradingAccount = tradingAccountPostingProcessor.postToTradingAccount(merchant, startDate, closureDate, accountingPeriod);
+                System.out.println("###########Trading################");
+                System.out.println(tradingAccount);
+                System.out.println("###########END - Trading################");
+                LedgerAccount profitAndLossAccount = profitAndLossAccountPostingProcessor.postToProfitAndLossAccount(merchant, startDate, closureDate, accountingPeriod);
+                System.out.println("###########PnL################");
+                System.out.println(profitAndLossAccount);
+                System.out.println("###########END - PnL################");
+
             }else {
                 throw new RuntimeException("Trial Balance is not tallied");
             }
@@ -83,7 +90,9 @@ public class PeriodReconciliationProcessor {
     public TrialBalance processTrialBalance(String merchantId, LocalDateTime startDate, LocalDateTime closureDate) {
         //TrialBalanceProcessor trialBalanceProcessor = new DefaultTrialBalanceProcessor2();
         TrialBalance trialBalance = trialBalanceProcessor.processTrialBalance(merchantId, startDate,closureDate);
-        //System.out.println(" is trial balance tallied? :: " + trialBalance.isTrialBalanceTallied());
+        System.out.println(" %%%%%%%%%%%%%%%%%Start - Trial Balance%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println(trialBalance);
+        System.out.println(" %%%%%%%%%%%%%%%%%End - Trial Balance%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         trialBalanceDatabaseSimulator.addTrialBalance(trialBalance);
         return trialBalance;
     }

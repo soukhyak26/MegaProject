@@ -1,52 +1,59 @@
 package com.affaince.accounting.statements.bs.assets;
 
-import com.affaince.accounting.statements.bs.BalanceSheetEntity;
+import com.affaince.accounting.statements.BalanceSheetEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FixedAssets {
-    private BalanceSheetEntity tangibleAssets;
-    private BalanceSheetEntity intangibleAssets;
-    private BalanceSheetEntity capitalWIP;
-    private BalanceSheetEntity intangibleUnderDevelopment;
+    private List<BalanceSheetEntity> tangibleAssets;
+    private List<BalanceSheetEntity> intangibleAssets;
+    private List<BalanceSheetEntity> capitalWIP;
+    private List<BalanceSheetEntity> intangibleUnderDevelopment;
 
 
     public FixedAssets(){
-        this.tangibleAssets = new BalanceSheetEntity();
-        this.intangibleAssets = new BalanceSheetEntity();
-        this.capitalWIP = new BalanceSheetEntity();
-        this.intangibleUnderDevelopment = new BalanceSheetEntity();
+        this.tangibleAssets = new ArrayList<>();
+        this.intangibleAssets = new ArrayList<>();
+        this.capitalWIP = new ArrayList<>();
+        this.intangibleUnderDevelopment = new ArrayList<>();
     }
-    public void addToTangibleAssets(double value,String narration){
-        this.tangibleAssets.addToValue(value);
-        this.tangibleAssets.addToNarration(narration);
-    }
-
-    public void addToIntangibleAssets(double value,String narration){
-        this.intangibleAssets.addToValue(value);
-        this.intangibleAssets.addToNarration(narration);
-    }
-    public void addToCapitalWIP(double value,String narration){
-        this.capitalWIP.addToValue(value);
-        this.capitalWIP.addToNarration(narration);
+    public void addToTangibleAssets(BalanceSheetEntity balanceSheetEntity){
+        this.tangibleAssets.add(balanceSheetEntity);
     }
 
-    public void addToIntangibleUnderDevelopment(double value,String narration){
-        this.intangibleUnderDevelopment.addToValue(value);
-        this.intangibleUnderDevelopment.addToNarration(narration);
+    public void addToIntangibleAssets(BalanceSheetEntity balanceSheetEntity){
+        this.intangibleAssets.add(balanceSheetEntity);
+    }
+    public void addToCapitalWIP(BalanceSheetEntity balanceSheetEntity){
+        this.capitalWIP.add(balanceSheetEntity);
     }
 
-    public BalanceSheetEntity getTangibleAssets() {
+    public void addToIntangibleUnderDevelopment(BalanceSheetEntity balanceSheetEntity){
+        this.intangibleUnderDevelopment.add(balanceSheetEntity);
+    }
+
+    public List<BalanceSheetEntity> getTangibleAssets() {
         return tangibleAssets;
     }
 
-    public BalanceSheetEntity getIntangibleAssets() {
+    public List<BalanceSheetEntity> getIntangibleAssets() {
         return intangibleAssets;
     }
 
-    public BalanceSheetEntity getCapitalWIP() {
+    public List<BalanceSheetEntity> getCapitalWIP() {
         return capitalWIP;
     }
 
-    public BalanceSheetEntity getIntangibleUnderDevelopment() {
+    public List<BalanceSheetEntity> getIntangibleUnderDevelopment() {
         return intangibleUnderDevelopment;
+    }
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.addAll(this.tangibleAssets);
+        allEntries.addAll(this.intangibleAssets);
+        allEntries.addAll(this.capitalWIP);
+        allEntries.addAll(this.intangibleUnderDevelopment);
+        return allEntries;
     }
 }

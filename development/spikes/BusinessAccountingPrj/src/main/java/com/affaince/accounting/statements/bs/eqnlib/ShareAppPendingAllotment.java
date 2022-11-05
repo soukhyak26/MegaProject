@@ -1,19 +1,25 @@
 package com.affaince.accounting.statements.bs.eqnlib;
 
-import com.affaince.accounting.statements.bs.BalanceSheetEntity;
+import com.affaince.accounting.statements.BalanceSheetEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShareAppPendingAllotment {
     private BalanceSheetEntity value;
 
     public ShareAppPendingAllotment(){
-        this.value = new BalanceSheetEntity();
     }
-    public void addToValue(double value,String narration){
-        this.value.addToValue(value);
-        this.value.addToNarration(narration);
+    public void addToValue(BalanceSheetEntity balanceSheetEntity){
+        this.value = balanceSheetEntity;
     }
 
     public BalanceSheetEntity getValue() {
         return value;
+    }
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.add(this.value);
+        return allEntries;
     }
 }

@@ -1,7 +1,11 @@
 package com.affaince.accounting.statements.bs.assets;
 
 
+import com.affaince.accounting.statements.BalanceSheetEntity;
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Assets {
     private String merchantId;
@@ -18,37 +22,54 @@ public class Assets {
         this.currentAssets = new CurrentAssets();
     }
 
-    public void addToNonCurrentInvestments(double value,String narration){
-        this.nonCurrentAssets.addToNonCurrentInvestments(value,narration);
+    public void addToNonCurrentInvestments(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToNonCurrentInvestments(balanceSheetEntity);
     }
 
-    public void addToDeferredTaxAssets(double value,String narration){
-        this.nonCurrentAssets.addToDeferredTaxAssets(value,narration);
+    public void addToDeferredTaxAssets(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToDeferredTaxAssets(balanceSheetEntity);
     }
-    public void addToLongTermLoansAndAdvances(double value,String narration){
-        this.nonCurrentAssets.addToLongTermLoansAndAdvances(value,narration);
-    }
-
-    public void addToOtherNonCurrentAssets(double value,String narration){
-        this.nonCurrentAssets.addToOtherNonCurrentAssets(value,narration);
+    public void addToLongTermLoansAndAdvances(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToLongTermLoansAndAdvances(balanceSheetEntity);
     }
 
-    public void addToTangibleAssets(double value,String narration){
-        this.nonCurrentAssets.addToTangibleAssets(value,narration);
+    public void addToOtherNonCurrentAssets(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToOtherNonCurrentAssets(balanceSheetEntity);
     }
 
-    public void addToIntangibleAssets(double value,String narration){
-        this.nonCurrentAssets.addToIntangibleAssets(value,narration);
-    }
-    public void addToCapitalWIP(double value,String narration){
-        this.nonCurrentAssets.addToCapitalWIP(value,narration);
+    public void addToTangibleAssets(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToTangibleAssets(balanceSheetEntity);
     }
 
-    public void addToIntangibleUnderDevelopment(double value,String narration){
-        this.nonCurrentAssets.addToIntangibleUnderDevelopment(value,narration);
+    public void addToIntangibleAssets(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToIntangibleAssets(balanceSheetEntity);
+    }
+    public void addToCapitalWIP(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToCapitalWIP(balanceSheetEntity);
     }
 
+    public void addToIntangibleUnderDevelopment(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentAssets.addToIntangibleUnderDevelopment(balanceSheetEntity);
+    }
 
+    public void addToCurrentInvestments(BalanceSheetEntity balanceSheetEntity) {
+        this.currentAssets.addToCurrentInvestments(balanceSheetEntity);
+    }
+    public void addToInventories(BalanceSheetEntity balanceSheetEntity) {
+        this.currentAssets.addToInventories(balanceSheetEntity);
+    }
+    public void addToTradeReceivables(BalanceSheetEntity balanceSheetEntity) {
+        this.currentAssets.addToTradeReceivables(balanceSheetEntity);
+    }
+    public void addToCashAndCashEquivalents(BalanceSheetEntity balanceSheetEntity) {
+        this.currentAssets.addToCashAndCashEquivalents(balanceSheetEntity);
+    }
+    public void addToShortTermLoansAndAdvances(BalanceSheetEntity balanceSheetEntity) {
+        this.currentAssets.addToShortTermLoansAndAdvances(balanceSheetEntity);
+    }
+    public void addToOtherCurrentAssets(BalanceSheetEntity balanceSheetEntity) {
+        this.currentAssets.addToOtherCurrentAssets(balanceSheetEntity);
+    }
     public String getMerchantId() {
         return merchantId;
     }
@@ -67,5 +88,12 @@ public class Assets {
 
     public CurrentAssets getCurrentAssets() {
         return currentAssets;
+    }
+
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.addAll(this.nonCurrentAssets.fetchAllEntries());
+        allEntries.addAll(this.currentAssets.fetchAllEntries());
+        return allEntries;
     }
 }

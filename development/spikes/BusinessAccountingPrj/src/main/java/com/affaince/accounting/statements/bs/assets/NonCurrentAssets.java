@@ -1,72 +1,81 @@
 package com.affaince.accounting.statements.bs.assets;
 
-import com.affaince.accounting.statements.bs.BalanceSheetEntity;
+import com.affaince.accounting.statements.BalanceSheetEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NonCurrentAssets {
     private FixedAssets fixedAssets;
-    private BalanceSheetEntity nonCurrentInvestments;
-    private BalanceSheetEntity deferredTaxAssets;
-    private BalanceSheetEntity longTermLoansAndAdvances;
-    private BalanceSheetEntity otherNonCurrentAssets;
+    private List<BalanceSheetEntity> nonCurrentInvestments;
+    private List<BalanceSheetEntity> deferredTaxAssets;
+    private List<BalanceSheetEntity> longTermLoansAndAdvances;
+    private List<BalanceSheetEntity> otherNonCurrentAssets;
 
     public NonCurrentAssets(){
         this.fixedAssets = new FixedAssets();
-        this.nonCurrentInvestments = new BalanceSheetEntity();
-        this.deferredTaxAssets = new BalanceSheetEntity();
-        this.longTermLoansAndAdvances = new BalanceSheetEntity();
-        this.otherNonCurrentAssets = new BalanceSheetEntity();
+        this.nonCurrentInvestments = new ArrayList<>();
+        this.deferredTaxAssets = new ArrayList<>();
+        this.longTermLoansAndAdvances = new ArrayList<>();
+        this.otherNonCurrentAssets = new ArrayList<>();
     }
-    public void addToNonCurrentInvestments(double value,String narration){
-        this.nonCurrentInvestments.addToValue(value);
-        this.nonCurrentInvestments.addToNarration(narration);
-    }
-
-    public void addToDeferredTaxAssets(double value,String narration){
-        this.deferredTaxAssets.addToValue(value);
-        this.deferredTaxAssets.addToNarration(narration);
-    }
-    public void addToLongTermLoansAndAdvances(double value,String narration){
-        this.longTermLoansAndAdvances.addToValue(value);
-        this.longTermLoansAndAdvances.addToNarration(narration);
+    public void addToNonCurrentInvestments(BalanceSheetEntity balanceSheetEntity){
+        this.nonCurrentInvestments.add(balanceSheetEntity);
     }
 
-    public void addToOtherNonCurrentAssets(double value,String narration){
-        this.otherNonCurrentAssets.addToValue(value);
-        this.otherNonCurrentAssets.addToNarration(narration);
+    public void addToDeferredTaxAssets(BalanceSheetEntity balanceSheetEntity){
+        this.deferredTaxAssets.add(balanceSheetEntity);
+    }
+    public void addToLongTermLoansAndAdvances(BalanceSheetEntity balanceSheetEntity){
+        this.longTermLoansAndAdvances.add(balanceSheetEntity);
     }
 
-    public void addToTangibleAssets(double value,String narration){
-        this.fixedAssets.addToTangibleAssets(value,narration);
+    public void addToOtherNonCurrentAssets(BalanceSheetEntity balanceSheetEntity){
+        this.otherNonCurrentAssets.add(balanceSheetEntity);
     }
 
-    public void addToIntangibleAssets(double value,String narration){
-        this.fixedAssets.addToIntangibleAssets(value,narration);
-    }
-    public void addToCapitalWIP(double value,String narration){
-        this.fixedAssets.addToCapitalWIP(value,narration);
+    public void addToTangibleAssets(BalanceSheetEntity balanceSheetEntity){
+        this.fixedAssets.addToTangibleAssets(balanceSheetEntity);
     }
 
-    public void addToIntangibleUnderDevelopment(double value,String narration){
-        this.fixedAssets.addToIntangibleUnderDevelopment(value,narration);
+    public void addToIntangibleAssets(BalanceSheetEntity balanceSheetEntity){
+        this.fixedAssets.addToIntangibleAssets(balanceSheetEntity);
+    }
+    public void addToCapitalWIP(BalanceSheetEntity balanceSheetEntity){
+        this.fixedAssets.addToCapitalWIP(balanceSheetEntity);
+    }
+
+    public void addToIntangibleUnderDevelopment(BalanceSheetEntity balanceSheetEntity){
+        this.fixedAssets.addToIntangibleUnderDevelopment(balanceSheetEntity);
     }
 
     public FixedAssets getFixedAssets() {
         return fixedAssets;
     }
 
-    public BalanceSheetEntity getNonCurrentInvestments() {
+    public List<BalanceSheetEntity> getNonCurrentInvestments() {
         return nonCurrentInvestments;
     }
 
-    public BalanceSheetEntity getDeferredTaxAssets() {
+    public List<BalanceSheetEntity> getDeferredTaxAssets() {
         return deferredTaxAssets;
     }
 
-    public BalanceSheetEntity getLongTermLoansAndAdvances() {
+    public List<BalanceSheetEntity> getLongTermLoansAndAdvances() {
         return longTermLoansAndAdvances;
     }
 
-    public BalanceSheetEntity getOtherNonCurrentAssets() {
+    public List<BalanceSheetEntity> getOtherNonCurrentAssets() {
         return otherNonCurrentAssets;
     }
+    public List<BalanceSheetEntity> fetchAllEntries(){
+        List<BalanceSheetEntity> allEntries = new ArrayList<>();
+        allEntries.addAll(this.fixedAssets.fetchAllEntries());
+        allEntries.addAll(this.nonCurrentInvestments);
+        allEntries.addAll(this.deferredTaxAssets);
+        allEntries.addAll(this.longTermLoansAndAdvances);
+        allEntries.addAll(this.otherNonCurrentAssets);
+        return allEntries;
+    }
+
 }

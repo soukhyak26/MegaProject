@@ -50,6 +50,7 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
             case TAX_ACCOUNT:
             case GROSS_LOSS:
             case BUSINESS_DISCOUNT_ALLOWED_ACCOUNT:
+            case SUBSCRIBER_REWARDS_ACCOUNT:
                 profitAndLossAccount.debit(new DebitLedgerEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(),null,null, trialBalanceEntry.getBalanceAmount()));
                 break;
             case GROSS_PROFIT:
