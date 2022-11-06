@@ -2,20 +2,21 @@ package com.affaince.accounting.statements.bs.eqnlib;
 
 import com.affaince.accounting.statements.BalanceSheetEntity;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EquityAndLiabilities {
     private String merchantId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private ShareHoldersFunds shareHoldersFunds;
     private ShareAppPendingAllotment shareAppPendingAllotment;
     private NonCurrentLiabilities nonCurrentLiabilities;
     private CurrentLiabilities currentLiabilities;
 
-    public EquityAndLiabilities(String merchantId,LocalDate startDate,LocalDate endDate){
+    public EquityAndLiabilities(String merchantId, LocalDateTime startDate, LocalDateTime endDate){
         this.merchantId=merchantId;
         this.startDate=startDate;
         this.endDate=endDate;
@@ -70,11 +71,11 @@ public class EquityAndLiabilities {
         return merchantId;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -101,5 +102,18 @@ public class EquityAndLiabilities {
         allEntries.addAll(this.nonCurrentLiabilities.fetchAllEntries());
         allEntries.addAll(this.currentLiabilities.fetchAllEntries());
         return allEntries;
+    }
+
+    @Override
+    public String toString() {
+        return "EquityAndLiabilities{" +
+                "merchantId='" + merchantId + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", shareHoldersFunds=" + shareHoldersFunds +
+                ", shareAppPendingAllotment=" + shareAppPendingAllotment +
+                ", nonCurrentLiabilities=" + nonCurrentLiabilities +
+                ", currentLiabilities=" + currentLiabilities +
+                '}';
     }
 }

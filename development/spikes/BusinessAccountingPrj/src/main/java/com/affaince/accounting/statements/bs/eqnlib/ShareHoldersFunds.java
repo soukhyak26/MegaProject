@@ -32,4 +32,13 @@ public class ShareHoldersFunds {
         allEntries.addAll(this.moneyReceivedAgainstShareWarrants);
         return allEntries;
     }
+
+    @Override
+    public String toString() {
+        return "ShareHoldersFunds{" +
+                "shareCapital=" + shareCapital +
+                ", reservesAndSurplus=" + reservesAndSurplus +
+                ", moneyReceivedAgainstShareWarrants=" + moneyReceivedAgainstShareWarrants +
+                '}';
+    }
 }

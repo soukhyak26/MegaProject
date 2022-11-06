@@ -3,12 +3,12 @@ package com.affaince.accounting.statements.bs;
 import com.affaince.accounting.db.AccountDatabaseSimulator;
 import com.affaince.accounting.db.TrialBalanceDatabaseSimulator;
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
-import com.affaince.accounting.ledger.accounts.CreditLedgerEntry;
-import com.affaince.accounting.ledger.accounts.DebitLedgerEntry;
-import com.affaince.accounting.reconcile.AccountingPeriod;
+import com.affaince.accounting.ledger.accounts.LedgerAccount;
+import com.affaince.accounting.statements.BalanceSheetEntity;
 import com.affaince.accounting.trials.TrialBalance;
 import com.affaince.accounting.trials.TrialBalanceEntry;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,26 +26,53 @@ public class DefaultBalanceSheetPostingProcessor implements BalanceSheetPostingP
     }
 
     @Override
-    public BalanceSheet postToBalanceSheet(String merchantId, LocalDate startDateOfPeriod, LocalDate closureDateOfPeriod) {
+    public BalanceSheet postToBalanceSheet(String merchantId, LocalDateTime startDateOfPeriod, LocalDateTime closureDateOfPeriod) {
         TrialBalance trialBalance= trialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
         assert trialBalance != null;
         List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
         List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
         BalanceSheet balanceSheet = new BalanceSheet(merchantId,startDateOfPeriod,closureDateOfPeriod);
         for(TrialBalanceEntry trialBalanceEntry: creditEntries){
-            balanceSheet = postTrialBalanceEntry(merchantId,balanceSheet,trialBalanceEntry,startDateOfPeriod,closureDateOfPeriod);
+            AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
+            switch(accountIdentifier) {
+                case FIXED_ASSETS_ACCOUNT:
+                case CLOSING_STOCK_ACCOUNT:
+                case BUSINESS_CASH_ACCOUNT:
+                case BUSINESS_BANK_ACCOUNT:
+                case DISTRIBUTION_SUPPLIER_ACCOUNT:
+                case SUPPLIER_OF_GOODS_ACCOUNT:
+                case SERVICE_PROVIDER_ACCOUNT:
+                case BUSINESS_CAPITAL_ACCOUNT:
+                    BalanceSheetEntity entity = new BalanceSheetEntity(trialBalanceEntry.getAccountId(),
+                            trialBalanceEntry.getAccountIdentifier(),trialBalanceEntry.getBalanceAmount(),"");
+                   balanceSheet.addToCurrentCycleBalanceSheet(entity);
+                   break;
+            }
         }
         for(TrialBalanceEntry trialBalanceEntry: debitEntries){
-            balanceSheet = postTrialBalanceEntry(merchantId,balanceSheet,trialBalanceEntry,startDateOfPeriod,closureDateOfPeriod);
+            AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
+            switch(accountIdentifier) {
+                case FIXED_ASSETS_ACCOUNT:
+                case CLOSING_STOCK_ACCOUNT:
+                case BUSINESS_CASH_ACCOUNT:
+                case BUSINESS_BANK_ACCOUNT:
+                case DISTRIBUTION_SUPPLIER_ACCOUNT:
+                case SUPPLIER_OF_GOODS_ACCOUNT:
+                case SERVICE_PROVIDER_ACCOUNT:
+                case BUSINESS_CAPITAL_ACCOUNT:
+                    BalanceSheetEntity entity = new BalanceSheetEntity(trialBalanceEntry.getAccountId(),
+                            trialBalanceEntry.getAccountIdentifier(),trialBalanceEntry.getBalanceAmount(),"");
+                    balanceSheet.addToCurrentCycleBalanceSheet(entity);
+                    break;
+            }
         }
-        //posting complete ,now set closure date to current date
-        //return balanceProfitAndLossAccount(merchantId,profitAndLossAccount,startDate,closureDate);
+        LedgerAccount profitAndLossAccount = accountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId,"profitAndLoss", AccountIdentifier.PROFIT_AND_LOSS_ACCOUNT,startDateOfPeriod,closureDateOfPeriod);
+        BalanceSheetEntity entityProfitAndLoss = new BalanceSheetEntity(profitAndLossAccount.getAccountId(),
+                profitAndLossAccount.getAccountIdentifier(),profitAndLossAccount.getDebits().stream().mapToDouble(lae->lae.getAmount()).sum(),"");
+        balanceSheet.addToCurrentCycleBalanceSheet(entityProfitAndLoss);
         return balanceSheet;
     }
-    private BalanceSheet postTrialBalanceEntry(String merchantId, BalanceSheet balanceSheet, TrialBalanceEntry trialBalanceEntry, LocalDate startDate, LocalDate closureDate) {
-        AccountIdentifier accountIdentifier = trialBalanceEntry.getAccountIdentifier();
-        return balanceSheet;
-    }
+
 
 
 

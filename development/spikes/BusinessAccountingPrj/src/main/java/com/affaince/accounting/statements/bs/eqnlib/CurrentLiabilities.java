@@ -54,4 +54,14 @@ public class CurrentLiabilities {
         allEntries.addAll(this.shortTermProvisions);
         return allEntries;
     }
+
+    @Override
+    public String toString() {
+        return "CurrentLiabilities{" +
+                "shortTermBorrowings=" + shortTermBorrowings +
+                ", tradePayables=" + tradePayables +
+                ", otherCurrentLiabilities=" + otherCurrentLiabilities +
+                ", shortTermProvisions=" + shortTermProvisions +
+                '}';
+    }
 }

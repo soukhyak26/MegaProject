@@ -56,4 +56,14 @@ public class FixedAssets {
         allEntries.addAll(this.intangibleUnderDevelopment);
         return allEntries;
     }
+
+    @Override
+    public String toString() {
+        return "FixedAssets{" +
+                "tangibleAssets=" + tangibleAssets +
+                ", intangibleAssets=" + intangibleAssets +
+                ", capitalWIP=" + capitalWIP +
+                ", intangibleUnderDevelopment=" + intangibleUnderDevelopment +
+                '}';
+    }
 }

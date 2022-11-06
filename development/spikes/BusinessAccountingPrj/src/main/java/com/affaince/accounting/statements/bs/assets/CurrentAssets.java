@@ -81,4 +81,15 @@ public class CurrentAssets {
         return allEntries;
     }
 
+    @Override
+    public String toString() {
+        return "CurrentAssets{" +
+                "currentInvestments=" + currentInvestments +
+                ", inventories=" + inventories +
+                ", tradeReceivables=" + tradeReceivables +
+                ", cashAndCashEquivalents=" + cashAndCashEquivalents +
+                ", shortTermLoansAndAdvances=" + shortTermLoansAndAdvances +
+                ", otherCurrentAssets=" + otherCurrentAssets +
+                '}';
+    }
 }

@@ -2,19 +2,19 @@ package com.affaince.accounting.statements.bs.assets;
 
 
 import com.affaince.accounting.statements.BalanceSheetEntity;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Assets {
     private String merchantId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private NonCurrentAssets nonCurrentAssets;
     private CurrentAssets currentAssets;
 
-    public Assets(String merchantId,LocalDate startDate,LocalDate endDate){
+    public Assets(String merchantId, LocalDateTime startDate, LocalDateTime endDate){
         this.merchantId = merchantId;
         this.startDate=startDate;
         this.endDate = endDate;
@@ -74,11 +74,11 @@ public class Assets {
         return merchantId;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -95,5 +95,16 @@ public class Assets {
         allEntries.addAll(this.nonCurrentAssets.fetchAllEntries());
         allEntries.addAll(this.currentAssets.fetchAllEntries());
         return allEntries;
+    }
+
+    @Override
+    public String toString() {
+        return "Assets{" +
+                "merchantId='" + merchantId + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", nonCurrentAssets=" + nonCurrentAssets +
+                ", currentAssets=" + currentAssets +
+                '}';
     }
 }

@@ -22,4 +22,11 @@ public class ShareAppPendingAllotment {
         allEntries.add(this.value);
         return allEntries;
     }
+
+    @Override
+    public String toString() {
+        return "ShareAppPendingAllotment{" +
+                "value=" + value +
+                '}';
+    }
 }

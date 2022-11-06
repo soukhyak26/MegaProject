@@ -78,4 +78,14 @@ public class NonCurrentAssets {
         return allEntries;
     }
 
+    @Override
+    public String toString() {
+        return "NonCurrentAssets{" +
+                "fixedAssets=" + fixedAssets +
+                ", nonCurrentInvestments=" + nonCurrentInvestments +
+                ", deferredTaxAssets=" + deferredTaxAssets +
+                ", longTermLoansAndAdvances=" + longTermLoansAndAdvances +
+                ", otherNonCurrentAssets=" + otherNonCurrentAssets +
+                '}';
+    }
 }

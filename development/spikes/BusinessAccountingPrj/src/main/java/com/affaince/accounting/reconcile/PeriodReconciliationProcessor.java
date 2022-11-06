@@ -7,6 +7,9 @@ import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.accounting.pnl.ProfitAndLossAccount;
 import com.affaince.accounting.pnl.ProfitAndLossAccountPostingProcessor;
+import com.affaince.accounting.statements.BalanceSheetEntity;
+import com.affaince.accounting.statements.bs.BalanceSheet;
+import com.affaince.accounting.statements.bs.BalanceSheetPostingProcessor;
 import com.affaince.accounting.stock.ClosingStockAccount;
 import com.affaince.accounting.stock.OpeningStockAccount;
 import com.affaince.accounting.trading.TradingAccount;
@@ -30,6 +33,7 @@ public class PeriodReconciliationProcessor {
     private final TrialBalanceDatabaseSimulator trialBalanceDatabaseSimulator;
     private final OpeningStockDatabaseSimulator openingStockDatabaseSimulator;
     private final ClosingStockDatabaseSimulator closingStockDatabaseSimulator;
+    private final BalanceSheetPostingProcessor balanceSheetPostingProcessor;
     @Autowired
     public PeriodReconciliationProcessor(JournalDatabaseSimulator journalDatabaseSimulator,
                                          AccountDatabaseSimulator accountDatabaseSimulator,
@@ -39,7 +43,8 @@ public class PeriodReconciliationProcessor {
                                          TradingAccountPostingProcessor tradingAccountPostingProcessor,
                                          ProfitAndLossAccountPostingProcessor profitAndLossAccountPostingProcessor,
                                          OpeningStockDatabaseSimulator openingStockDatabaseSimulator,
-                                         ClosingStockDatabaseSimulator closingStockDatabaseSimulator){
+                                         ClosingStockDatabaseSimulator closingStockDatabaseSimulator,
+                                         BalanceSheetPostingProcessor balanceSheetPostingProcessor){
         this.journalDatabaseSimulator = journalDatabaseSimulator;
         this.accountDatabaseSimulator=accountDatabaseSimulator;
         this.ledgerBalancingScheduler=ledgerBalancingScheduler;
@@ -49,6 +54,7 @@ public class PeriodReconciliationProcessor {
         this.profitAndLossAccountPostingProcessor=profitAndLossAccountPostingProcessor;
         this.openingStockDatabaseSimulator = openingStockDatabaseSimulator;
         this.closingStockDatabaseSimulator = closingStockDatabaseSimulator;
+        this.balanceSheetPostingProcessor=balanceSheetPostingProcessor;
     }
     public void processStartOfPeriodOperations(String merchant, LocalDateTime startDate, LocalDateTime closureDate, AccountingPeriod accountingPeriod) {
         Journal journal = new Journal(merchant,startDate,closureDate);
@@ -75,7 +81,10 @@ public class PeriodReconciliationProcessor {
                 System.out.println("###########PnL################");
                 System.out.println(profitAndLossAccount);
                 System.out.println("###########END - PnL################");
-
+                BalanceSheet balanceSheet = balanceSheetPostingProcessor.postToBalanceSheet(merchant,startDate,closureDate);
+                System.out.println("((((((((((( Balance Sheet ))))))))))))))");
+                System.out.println( balanceSheet);
+                System.out.println("((((((((((( End - Balance Sheet ))))))))))))))");
             }else {
                 throw new RuntimeException("Trial Balance is not tallied");
             }

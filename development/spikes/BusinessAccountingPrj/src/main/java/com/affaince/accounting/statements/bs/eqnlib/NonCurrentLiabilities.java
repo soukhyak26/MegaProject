@@ -40,4 +40,14 @@ public class NonCurrentLiabilities {
         allEntries.addAll(this.longTermProvisions);
         return allEntries;
     }
+
+    @Override
+    public String toString() {
+        return "NonCurrentLiabilities{" +
+                "longTermBorrowings=" + longTermBorrowings +
+                ", deferredTaxLiabilities=" + deferredTaxLiabilities +
+                ", otherLongTermLiabilities=" + otherLongTermLiabilities +
+                ", longTermProvisions=" + longTermProvisions +
+                '}';
+    }
 }

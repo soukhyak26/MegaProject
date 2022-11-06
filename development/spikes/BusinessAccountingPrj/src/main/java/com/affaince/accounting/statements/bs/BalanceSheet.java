@@ -4,21 +4,24 @@ import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.accounting.statements.BalanceSheetEntity;
 import com.affaince.accounting.statements.bs.assets.Assets;
 import com.affaince.accounting.statements.bs.eqnlib.EquityAndLiabilities;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 public class BalanceSheet {
     private String merchantId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private EquityAndLiabilities pastCycleEquitiesAndLiabilities;
     private EquityAndLiabilities currentCycleEquitiesAndLiabilities;
     private Assets pastCycleAssets;
     private Assets currentCycleAssets;
 
-    public BalanceSheet(String merchantId, LocalDate startDate, LocalDate endDate) {
+    public BalanceSheet(String merchantId, LocalDateTime startDate, LocalDateTime endDate) {
         this.merchantId = merchantId;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.pastCycleAssets = new Assets(merchantId,startDate,endDate);
+        this.currentCycleAssets = new Assets(merchantId,startDate,endDate);
+        this.currentCycleEquitiesAndLiabilities = new EquityAndLiabilities(merchantId,startDate,endDate);
     }
 
     public void addToCurrentCycleBalanceSheet(BalanceSheetEntity balanceSheetEntity){
@@ -34,12 +37,14 @@ public class BalanceSheet {
             case SUPPLIER_OF_GOODS_ACCOUNT:
             case SERVICE_PROVIDER_ACCOUNT:
             case BUSINESS_CAPITAL_ACCOUNT:
+            case NET_PROFIT:
+            case NET_LOSS:
                 addToCurrentCycleEquitiesAndLiabilities(balanceSheetEntity);
                 break;
 
         }
     }
-    public void addToCurrentCycleAssets(BalanceSheetEntity balanceSheetEntity){
+    private void addToCurrentCycleAssets(BalanceSheetEntity balanceSheetEntity){
         AccountIdentifier accountIdentifier = balanceSheetEntity.getAccountIdentifier();
         switch (accountIdentifier) {
             case FIXED_ASSETS_ACCOUNT:
@@ -49,14 +54,12 @@ public class BalanceSheet {
                 currentCycleAssets.addToInventories(balanceSheetEntity);
                 break;
             case BUSINESS_CASH_ACCOUNT:
-                currentCycleAssets.addToCashAndCashEquivalents(balanceSheetEntity);
-                break;
             case BUSINESS_BANK_ACCOUNT:
                 currentCycleAssets.addToCashAndCashEquivalents(balanceSheetEntity);
                 break;
         }
     }
-    public void addToCurrentCycleEquitiesAndLiabilities(BalanceSheetEntity balanceSheetEntity){
+    private void addToCurrentCycleEquitiesAndLiabilities(BalanceSheetEntity balanceSheetEntity){
         AccountIdentifier accountIdentifier = balanceSheetEntity.getAccountIdentifier();
         switch (accountIdentifier) {
             case DISTRIBUTION_SUPPLIER_ACCOUNT:
@@ -75,11 +78,11 @@ public class BalanceSheet {
         return merchantId;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -97,5 +100,18 @@ public class BalanceSheet {
 
     public Assets getCurrentCycleAssets() {
         return currentCycleAssets;
+    }
+
+    @Override
+    public String toString() {
+        return "BalanceSheet{" +
+                "merchantId='" + merchantId + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", pastCycleEquitiesAndLiabilities=" + pastCycleEquitiesAndLiabilities +
+                ", currentCycleEquitiesAndLiabilities=" + currentCycleEquitiesAndLiabilities +
+                ", pastCycleAssets=" + pastCycleAssets +
+                ", currentCycleAssets=" + currentCycleAssets +
+                '}';
     }
 }

@@ -2,6 +2,8 @@ package com.affaince.accounting.statements;
 
 import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 
+import java.util.Objects;
+
 public class BalanceSheetEntity {
     private String accountId;
     private AccountIdentifier accountIdentifier;
@@ -37,5 +39,30 @@ public class BalanceSheetEntity {
 
     public void addToNarration(String addedNarration){
         narration = narration + "$" + addedNarration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BalanceSheetEntity entity = (BalanceSheetEntity) o;
+        return Double.compare(entity.value, value) == 0 &&
+                accountId.equals(entity.accountId) &&
+                accountIdentifier == entity.accountIdentifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId, accountIdentifier, value);
+    }
+
+    @Override
+    public String toString() {
+        return "BalanceSheetEntity{" +
+                "accountId='" + accountId + '\'' +
+                ", accountIdentifier=" + accountIdentifier +
+                ", value=" + value +
+                ", narration='" + narration + '\'' +
+                '}';
     }
 }
