@@ -135,7 +135,7 @@ public class BusinessAccountingController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/accounts/print",consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST, value = "/accounts/print",consumes = "application/json")
     public ResponseEntity<Object> printAccounts(@RequestBody PrintAccountsRequest request) {
         System.out.println("###########LEDGER################");
         printAccounts(request.getMerchantId(), request.getStartDate(), request.getEndDate());

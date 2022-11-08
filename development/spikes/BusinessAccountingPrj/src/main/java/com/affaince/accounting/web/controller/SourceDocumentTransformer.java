@@ -19,7 +19,7 @@ public class SourceDocumentTransformer {
         if (request.isTransactionOnCredit()) {
             builder.modeOfTransaction(ModeOfTransaction.ON_CREDIT);
         } else {
-            builder.modeOfTransaction(ModeOfTransaction.ON_CREDIT);
+            builder.modeOfTransaction(ModeOfTransaction.BY_PAYMENT);
         }
         builder.transactionEvent(request.getAccountingEvent())
                 .giverParticipant(request.getGiverPartyId(), request.getGiverParticipantType(), request.getExchangeableItem(), request.getGiverAmount())

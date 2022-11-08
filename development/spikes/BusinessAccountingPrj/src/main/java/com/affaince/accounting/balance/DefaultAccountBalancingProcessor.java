@@ -35,10 +35,10 @@ public class DefaultAccountBalancingProcessor implements AccountBalancingProcess
             DebitLedgerEntry openingDebitLedgerEntry = null;
             CreditLedgerEntry openingCreditLedgerEntry = null;
             if (null != closingDebitLedgerEntry) {
-                openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate(), "byBalanceBroughtDown", AccountIdentifier.BY_BALANCE_BROUGHT_DOWN, null, closingDebitLedgerEntry.getLedgerFolio(), closingDebitLedgerEntry.getAmount());
+                openingCreditLedgerEntry = new CreditLedgerEntry(ledgerAccount.getClosureDate().plusDays(1), "byBalanceBroughtDown", AccountIdentifier.BY_BALANCE_BROUGHT_DOWN, null, closingDebitLedgerEntry.getLedgerFolio(), closingDebitLedgerEntry.getAmount());
             }
             if (null != closingCreditLedgerEntry) {
-                openingDebitLedgerEntry = new DebitLedgerEntry(ledgerAccount.getClosureDate(), "toBalanceBroughtDown", AccountIdentifier.TO_BALANCE_BROUGHT_DOWN, null, closingCreditLedgerEntry.getLedgerFolio(), closingCreditLedgerEntry.getAmount());
+                openingDebitLedgerEntry = new DebitLedgerEntry(ledgerAccount.getClosureDate().plusDays(1), "toBalanceBroughtDown", AccountIdentifier.TO_BALANCE_BROUGHT_DOWN, null, closingCreditLedgerEntry.getLedgerFolio(), closingCreditLedgerEntry.getAmount());
             }
 
             // LedgerAccount ledgerAccountCurrentVersion = (LedgerAccount) ledgerAccount.clone();

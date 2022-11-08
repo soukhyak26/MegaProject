@@ -82,10 +82,8 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
         LedgerAccount capitalAccount = accountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId,"capital", AccountIdentifier.BUSINESS_CAPITAL_ACCOUNT,startDate,closureDate);
         if(isProfit){
             profitAndLossAccount.debit(new DebitLedgerEntry(closureDate, "netProfit", AccountIdentifier.NET_PROFIT, null,null,netValue));
-            capitalAccount.credit(new CreditLedgerEntry(closureDate,"netProfit",AccountIdentifier.NET_PROFIT,null,null,netValue));
         }else{
             profitAndLossAccount.credit(new CreditLedgerEntry(closureDate, "netLoss", AccountIdentifier.NET_LOSS,null,null, netValue));
-            capitalAccount.debit(new DebitLedgerEntry(closureDate,"netLoss",AccountIdentifier.NET_LOSS,null,null,netValue));
         }
         return profitAndLossAccount;
     }
