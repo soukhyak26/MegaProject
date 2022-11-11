@@ -63,16 +63,20 @@ public class DefaultTrialBalanceProcessor implements TrialBalanceProcessor {
         List<LedgerAccount> activeAccountsOfAMerchant = accountDatabaseSimulator.getAllActiveAccounts(merchantId, startDate, closureDate);
         TrialBalance trialBalance = new TrialBalance(merchantId, "1", closureDate.toLocalDate());
         for (LedgerAccount ledgerAccount : activeAccountsOfAMerchant) {
-            List<LedgerAccountEntry> creditLedgerEntries = ledgerAccount.getCredits().stream().filter(acc -> acc.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
-            List<LedgerAccountEntry> debitLedgerEntries = ledgerAccount.getDebits().stream().filter(acc -> acc.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
+            List<LedgerAccountEntry> creditLedgerEntries = ledgerAccount.getCredits().stream().
+                    filter(ledgerAccountEntry -> ledgerAccountEntry.getAccountIdentifier() != AccountIdentifier.BY_BALANCE_BROUGHT_DOWN ).
+                    collect(Collectors.toList());
+            List<LedgerAccountEntry> debitLedgerEntries = ledgerAccount.getDebits().stream().
+                    filter(ledgerAccountEntry -> ledgerAccountEntry.getAccountIdentifier() != AccountIdentifier.TO_BALANCE_BROUGHT_DOWN).
+                    collect(Collectors.toList());
             for (LedgerAccountEntry creditLedgerEntry : creditLedgerEntries) {
                 if (creditLedgerEntry.getAmount() > 0) {
-                    trialBalance.addToCreditEntries(new CreditTrialBalanceEntry(ledgerAccount.getAccountId(), ledgerAccount.getAccountIdentifier(), null, creditLedgerEntry.getAmount(), NatureOfBalance.CUSTOMERS));
+                    trialBalance.addToCreditEntries(new CreditTrialBalanceEntry(ledgerAccount.getAccountId(), ledgerAccount.getAccountIdentifier(), creditLedgerEntry.getPeerAccountNumber(),creditLedgerEntry.getAccountIdentifier(),null, creditLedgerEntry.getAmount(), NatureOfBalance.CUSTOMERS));
                 }
             }
             for (LedgerAccountEntry debitLedgerEntry : debitLedgerEntries) {
                 if (debitLedgerEntry.getAmount() > 0) {
-                    trialBalance.addToDebitEntries(new DebitTrialBalanceEntry(ledgerAccount.getAccountId(), ledgerAccount.getAccountIdentifier(), null, debitLedgerEntry.getAmount(), NatureOfBalance.CUSTOMERS));
+                    trialBalance.addToDebitEntries(new DebitTrialBalanceEntry(ledgerAccount.getAccountId(), ledgerAccount.getAccountIdentifier(), debitLedgerEntry.getPeerAccountNumber(),debitLedgerEntry.getAccountIdentifier(),null, debitLedgerEntry.getAmount(), NatureOfBalance.CUSTOMERS));
                 }
             }
         }

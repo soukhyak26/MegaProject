@@ -30,7 +30,7 @@ public class EquityAndLiabilities {
         this.shareHoldersFunds.addToShareCapital(balanceSheetEntity);
     }
     public void addToReservesAndSurplus(BalanceSheetEntity balanceSheetEntity){
-        this. shareHoldersFunds.addToReservesAndSurplus(balanceSheetEntity);
+        this.shareHoldersFunds.addToReservesAndSurplus(balanceSheetEntity);
     }
     public void addToMoneyReceivedAgainstShareWarrants(BalanceSheetEntity balanceSheetEntity){
         this.shareHoldersFunds.addToMoneyReceivedAgainstShareWarrants(balanceSheetEntity);

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLossAccountPostingProcessor{
     private final AccountDatabaseSimulator accountDatabaseSimulator;
@@ -29,8 +31,8 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
     public LedgerAccount postToProfitAndLossAccount(String merchantId, LocalDateTime startDate, LocalDateTime closureDate, AccountingPeriod accountingPeriod) {
         TrialBalance trialBalance= trialBalanceDatabaseSimulator.searchLatestTrialBalance(merchantId);
         assert trialBalance != null;
-        List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries();
-        List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries();
+        List<TrialBalanceEntry> creditEntries =trialBalance.getCreditEntries().stream().filter(ce->ce.getPeerAccountIdentifier()!=AccountIdentifier.BY_BALANCE_CARRIED_DOWN).collect(Collectors.toList());
+        List<TrialBalanceEntry> debitEntries = trialBalance.getDebitEntries().stream().filter(dr->dr.getPeerAccountIdentifier()!=AccountIdentifier.TO_BALANCE_CARRIED_DOWN).collect(Collectors.toList());;
         LedgerAccount profitAndLossAccount = accountDatabaseSimulator.searchActiveLedgerAccountsByAccountIdAndAccountIdentifier(merchantId, "profitAndLoss", AccountIdentifier.PROFIT_AND_LOSS_ACCOUNT,startDate,closureDate);
         for(TrialBalanceEntry trialBalanceEntry: creditEntries){
             profitAndLossAccount = postTrialBalanceEntry(merchantId,profitAndLossAccount,trialBalanceEntry,startDate,closureDate, accountingPeriod);
@@ -51,6 +53,7 @@ public class DefaultProfitAndLossAccountPostingProcessor implements ProfitAndLos
             case GROSS_LOSS:
             case BUSINESS_DISCOUNT_ALLOWED_ACCOUNT:
             case SUBSCRIBER_REWARDS_ACCOUNT:
+            case BUSINESS_SERVICES_AVAILED_ACCOUNT:
                 profitAndLossAccount.debit(new DebitLedgerEntry(closureDate, trialBalanceEntry.getAccountId(), trialBalanceEntry.getAccountIdentifier(),null,null, trialBalanceEntry.getBalanceAmount()));
                 break;
             case GROSS_PROFIT:

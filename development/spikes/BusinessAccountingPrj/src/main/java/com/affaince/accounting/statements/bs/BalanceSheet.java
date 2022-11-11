@@ -10,16 +10,13 @@ public class BalanceSheet {
     private String merchantId;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private EquityAndLiabilities pastCycleEquitiesAndLiabilities;
     private EquityAndLiabilities currentCycleEquitiesAndLiabilities;
-    private Assets pastCycleAssets;
     private Assets currentCycleAssets;
 
     public BalanceSheet(String merchantId, LocalDateTime startDate, LocalDateTime endDate) {
         this.merchantId = merchantId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.pastCycleAssets = new Assets(merchantId,startDate,endDate);
         this.currentCycleAssets = new Assets(merchantId,startDate,endDate);
         this.currentCycleEquitiesAndLiabilities = new EquityAndLiabilities(merchantId,startDate,endDate);
     }
@@ -31,6 +28,7 @@ public class BalanceSheet {
             case CLOSING_STOCK_ACCOUNT:
             case BUSINESS_CASH_ACCOUNT:
             case BUSINESS_BANK_ACCOUNT:
+            case SUBSCRIBER_ACCOUNT:
                 addToCurrentCycleAssets(balanceSheetEntity);
                 break;
             case DISTRIBUTION_SUPPLIER_ACCOUNT:
@@ -41,7 +39,6 @@ public class BalanceSheet {
             case NET_LOSS:
                 addToCurrentCycleEquitiesAndLiabilities(balanceSheetEntity);
                 break;
-
         }
     }
     private void addToCurrentCycleAssets(BalanceSheetEntity balanceSheetEntity){
@@ -56,6 +53,9 @@ public class BalanceSheet {
             case BUSINESS_CASH_ACCOUNT:
             case BUSINESS_BANK_ACCOUNT:
                 currentCycleAssets.addToCashAndCashEquivalents(balanceSheetEntity);
+                break;
+            case SUBSCRIBER_ACCOUNT:
+                currentCycleAssets.addToTradeReceivables(balanceSheetEntity);
                 break;
         }
     }
@@ -86,17 +86,11 @@ public class BalanceSheet {
         return endDate;
     }
 
-    public EquityAndLiabilities getPastCycleEquitiesAndLiabilities() {
-        return pastCycleEquitiesAndLiabilities;
-    }
 
     public EquityAndLiabilities getCurrentCycleEquitiesAndLiabilities() {
         return currentCycleEquitiesAndLiabilities;
     }
 
-    public Assets getPastCycleAssets() {
-        return pastCycleAssets;
-    }
 
     public Assets getCurrentCycleAssets() {
         return currentCycleAssets;
@@ -108,9 +102,7 @@ public class BalanceSheet {
                 "merchantId='" + merchantId + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", pastCycleEquitiesAndLiabilities=" + pastCycleEquitiesAndLiabilities +
                 ", currentCycleEquitiesAndLiabilities=" + currentCycleEquitiesAndLiabilities +
-                ", pastCycleAssets=" + pastCycleAssets +
                 ", currentCycleAssets=" + currentCycleAssets +
                 '}';
     }

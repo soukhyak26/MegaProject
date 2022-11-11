@@ -55,6 +55,7 @@ public class SalesReturnEventProcessor extends AbstractAccountingEventListener {
         return null;
     }
 
+/*
     public void onEvent(SourceDocument sourceDocument){
         super.onEvent(sourceDocument);
         double giverAmount = sourceDocument.getGiverParticipant().getAmountExchanged();
@@ -64,5 +65,6 @@ public class SalesReturnEventProcessor extends AbstractAccountingEventListener {
         }
         latestClosingStockAccount.addToBalanceAmount(giverAmount);
     }
+*/
 
 }

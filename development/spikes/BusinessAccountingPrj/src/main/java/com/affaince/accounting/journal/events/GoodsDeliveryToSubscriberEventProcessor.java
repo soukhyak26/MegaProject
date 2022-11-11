@@ -55,6 +55,7 @@ public class GoodsDeliveryToSubscriberEventProcessor extends AbstractAccountingE
     }
     // Subscriber consumes the stock by equivalent amount.
     // So Deduct that amount from ClosingStockAccount
+
     @Override
     public void onEvent(SourceDocument sourceDocument){
         super.onEvent(sourceDocument);
@@ -65,5 +66,6 @@ public class GoodsDeliveryToSubscriberEventProcessor extends AbstractAccountingE
         }
         latestClosingStockAccount.deductFromBalanceAccount(giverAmount);
     }
+
 
 }

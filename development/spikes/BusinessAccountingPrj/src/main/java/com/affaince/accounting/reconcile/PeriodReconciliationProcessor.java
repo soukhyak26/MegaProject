@@ -82,6 +82,7 @@ public class PeriodReconciliationProcessor {
                 System.out.println(profitAndLossAccount);
                 System.out.println("###########END - PnL################");
                 BalanceSheet balanceSheet = balanceSheetPostingProcessor.postToBalanceSheet(merchant,startDate,closureDate);
+
                 System.out.println("((((((((((( Balance Sheet ))))))))))))))");
                 System.out.println( balanceSheet);
                 System.out.println("((((((((((( End - Balance Sheet ))))))))))))))");

@@ -1,5 +1,6 @@
 package com.affaince.accounting.trials;
 
+import com.affaince.accounting.journal.qualifiers.AccountIdentifier;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -48,9 +49,15 @@ public class TrialBalance {
     }
 
     public boolean isTrialBalanceTallied(){
-        double creditBalance = creditEntries.stream().mapToDouble(crent->crent.getBalanceAmount()).sum();
+        double creditBalance = creditEntries.stream().
+                filter(tbe->tbe.getPeerAccountIdentifier() !=AccountIdentifier.BY_BALANCE_CARRIED_DOWN ).
+                mapToDouble(crent->crent.getBalanceAmount()).
+                sum();
         System.out.println("trial Balance :: credit balance : " +creditBalance);
-        double debitBalance = debitEntries.stream().mapToDouble(drent->drent.getBalanceAmount()).sum();
+        double debitBalance = debitEntries.stream().
+                filter(tbe->tbe.getPeerAccountIdentifier() !=AccountIdentifier.TO_BALANCE_CARRIED_DOWN ).
+                mapToDouble(drent->drent.getBalanceAmount()).
+                sum();
         System.out.println("trial balance :: debit balance : " + debitBalance);
         return creditBalance== debitBalance;
     }
