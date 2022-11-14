@@ -1,6 +1,9 @@
-import com.affaince.accounting.journal.gateway.AccountingCommandGateway;
-import com.affaince.accounting.journal.qualifiers.*;
-import com.affaince.accounting.transactions.SourceDocument;
+import com.affaince.subscription.accounting.journal.gateway.AccountingCommandGateway;
+import com.affaince.subscription.accounting.journal.qualifiers.AccountingEvent;
+import com.affaince.subscription.accounting.journal.qualifiers.ExchangeableItems;
+import com.affaince.subscription.accounting.journal.qualifiers.ModeOfTransaction;
+import com.affaince.subscription.accounting.journal.qualifiers.PartyTypes;
+import com.affaince.subscription.accounting.transactions.SourceDocument;
 import org.joda.time.LocalDateTime;
 
 public class Test {
