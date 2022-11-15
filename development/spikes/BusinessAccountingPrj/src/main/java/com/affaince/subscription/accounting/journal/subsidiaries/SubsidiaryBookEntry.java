@@ -1,6 +1,5 @@
 package com.affaince.subscription.accounting.journal.subsidiaries;
 
-import com.affaince.accounting.journal.qualifiers.*;
 import com.affaince.subscription.accounting.transactions.TransactionEntityDetail;
 import com.affaince.subscription.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.subscription.accounting.journal.qualifiers.PartyTypes;

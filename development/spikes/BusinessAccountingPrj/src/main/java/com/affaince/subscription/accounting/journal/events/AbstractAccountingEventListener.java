@@ -1,6 +1,5 @@
 package com.affaince.subscription.accounting.journal.events;
 
-import com.affaince.accounting.db.*;
 import com.affaince.subscription.accounting.db.*;
 import com.affaince.subscription.accounting.journal.entity.Journal;
 import com.affaince.subscription.accounting.journal.entity.JournalRecord;

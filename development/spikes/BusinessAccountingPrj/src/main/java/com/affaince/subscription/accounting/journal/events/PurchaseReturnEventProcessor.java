@@ -1,6 +1,5 @@
 package com.affaince.subscription.accounting.journal.events;
 
-import com.affaince.accounting.db.*;
 import com.affaince.subscription.accounting.journal.entity.ParticipantAccount;
 import com.affaince.subscription.accounting.journal.processor.CashBookJournalizingProcessor;
 import com.affaince.subscription.accounting.journal.processor.JournalizingProcessor;

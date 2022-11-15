@@ -8,8 +8,8 @@ import org.springframework.context.annotation.PropertySource;
 
 
 @SpringBootApplication
-@ComponentScan({"com.affaince.accounting"})
-@PropertySource({"classpath:application.properties","classpath:sysdatesetting.properties"})
+@ComponentScan({"com.affaince.subscription.accounting"})
+@PropertySource({"classpath:application.properties"})
 public class Application {
 
     public static void main(String[] args) {

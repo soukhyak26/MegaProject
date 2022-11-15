@@ -1,6 +1,5 @@
 package com.affaince.subscription.accounting.db;
 
-import com.affaince.accounting.ledger.accounts.*;
 import com.affaince.subscription.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.subscription.accounting.ledger.accounts.LedgerAccount;
 import com.affaince.subscription.accounting.ledger.accounts.NominalAccount;

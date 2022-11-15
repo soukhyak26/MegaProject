@@ -5,7 +5,6 @@ import com.affaince.subscription.accounting.db.JournalDatabaseSimulator;
 import com.affaince.subscription.accounting.db.PartyDatabaseSimulator;
 import com.affaince.subscription.accounting.journal.entity.Journal;
 import com.affaince.subscription.accounting.journal.entity.JournalRecord;
-import com.affaince.accounting.journal.events.*;
 import com.affaince.subscription.accounting.journal.events.*;
 import com.affaince.subscription.accounting.journal.gateway.AccountingCommandGateway;
 import com.affaince.subscription.accounting.journal.processor.factory.AccountingEventsRegistry;

@@ -1,7 +1,6 @@
 package com.affaince.subscription.accounting.journal.processor;
 
 import com.affaince.subscription.accounting.journal.entity.ParticipantAccount;
-import com.affaince.accounting.journal.events.*;
 import com.affaince.subscription.accounting.journal.processor.factory.AccountingEventsRegistry;
 import com.affaince.subscription.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.subscription.accounting.journal.qualifiers.AccountingEvent;
