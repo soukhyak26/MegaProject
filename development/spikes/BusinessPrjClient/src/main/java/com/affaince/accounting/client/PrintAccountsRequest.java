@@ -7,6 +7,12 @@ public class PrintAccountsRequest {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+    public PrintAccountsRequest(String merchantId, LocalDateTime startDate, LocalDateTime endDate) {
+        this.merchantId = merchantId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public PrintAccountsRequest() {
     }
 

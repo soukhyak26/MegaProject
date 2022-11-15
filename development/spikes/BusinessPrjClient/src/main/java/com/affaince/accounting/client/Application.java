@@ -50,40 +50,40 @@ public class Application {
        request.setB("This is B");
        request.setC("This is C");
        accountingClient.dummyCall(request);
-       accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59), AccountingPeriod.DAILY));
+       accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,12,31,23,59,59), AccountingPeriod.DAILY));
        accountingClient.investCapital();
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59),AccountingPeriod.DAILY));
+       // accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,1,1,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),AccountingPeriod.DAILY));
         accountingClient.receiveStockOfGoodsOnCredit();
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,10,0,0,0),new LocalDateTime(2023,1,10,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,20,0,0,0),new LocalDateTime(2023,1,20,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,20,0,0,0),new LocalDateTime(2023,1,20,23,59,59),AccountingPeriod.DAILY));
         accountingClient.receiveStockOfGoodsOnPayment();
         accountingClient.paymentToSupplierInLiuOfGoods();
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,20,0,0,0),new LocalDateTime(2023,1,20,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,20,0,0,0),new LocalDateTime(2023,1,20,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,22,0,0,0),new LocalDateTime(2023,1,22,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,22,0,0,0),new LocalDateTime(2023,1,22,23,59,59),AccountingPeriod.DAILY));
         accountingClient.returnOfGoodsPurchaseOnCredit();   // credit trading account 22 Jan 2023
         accountingClient.goodsDeliveredToSubscriberOnCredit();  //impact on trading account 22 Jan 2023
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,22,0,0,0),new LocalDateTime(2023,1,22,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,22,0,0,0),new LocalDateTime(2023,1,22,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,25,0,0,0),new LocalDateTime(2023,1,25,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,25,0,0,0),new LocalDateTime(2023,1,25,23,59,59),AccountingPeriod.DAILY));
         accountingClient.goodsDeliveredToSubscriberOnPayment(); //impact on trading account 25 Jan 2023
         accountingClient.goodsReturnedFromSubscriber(); //impact on trading account 25 Jan 2023
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,25,0,0,0),new LocalDateTime(2023,1,25,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,25,0,0,0),new LocalDateTime(2023,1,25,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,27,0,0,0),new LocalDateTime(2023,1,27,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,27,0,0,0),new LocalDateTime(2023,1,27,23,59,59),AccountingPeriod.DAILY));
         accountingClient.paymentReceivedFromSubscriber();// no impact on trading account 27 Jan 2023
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,27,0,0,0),new LocalDateTime(2023,1,27,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,27,0,0,0),new LocalDateTime(2023,1,27,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,4,0,0,0),new LocalDateTime(2023,2,4,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,4,0,0,0),new LocalDateTime(2023,2,4,23,59,59),AccountingPeriod.DAILY));
         accountingClient.receiveInvoiceOfDistributionServiceAvailed(); // impact on trading account 4 Feb 2023
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,4,0,0,0),new LocalDateTime(2023,2,4,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,4,0,0,0),new LocalDateTime(2023,2,4,23,59,59),AccountingPeriod.DAILY));
 
-        accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),AccountingPeriod.DAILY));
+        //accountingClient.startAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),AccountingPeriod.DAILY));
         accountingClient.paymentInLiuOfDistributionService();// no impact on trading account.20 Feb 2023
-        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,2,20,0,0,0),new LocalDateTime(2023,2,20,23,59,59),AccountingPeriod.DAILY));
+        accountingClient.endAccountingPeriod(new AccountingPeriodRequest("merchant1",new LocalDateTime(2023,1,1,0,0,0),new LocalDateTime(2023,12,31,23,59,59),AccountingPeriod.DAILY));
 
     }
 
