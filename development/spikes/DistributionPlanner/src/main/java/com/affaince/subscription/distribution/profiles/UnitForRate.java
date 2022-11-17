@@ -1,4 +1,4 @@
-package com.affaince.subscription.business.distribution.profiles;
+package com.affaince.subscription.distribution.profiles;
 
 public enum UnitForRate {
     WEIGHT_IN_GRAMS,

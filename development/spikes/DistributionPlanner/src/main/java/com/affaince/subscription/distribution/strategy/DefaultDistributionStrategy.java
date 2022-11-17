@@ -1,13 +1,13 @@
-package com.affaince.subscription.business.distribution.strategy;
+package com.affaince.subscription.distribution.strategy;
 
-import com.affaince.subscription.business.distribution.db.DefaultShippingProfileRepositoryMock;
-import com.affaince.subscription.business.distribution.db.DeliveryForecastView;
-import com.affaince.subscription.business.distribution.db.DeliveryForecastViewRepository;
-import com.affaince.subscription.business.distribution.db.DeliveryForecastViewRepositoryMock;
-import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionPortfolio;
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributor;
-import com.affaince.subscription.business.distribution.sampler.Period;
+import com.affaince.subscription.distribution.db.DefaultShippingProfileRepositoryMock;
+import com.affaince.subscription.distribution.db.DeliveryForecastView;
+import com.affaince.subscription.distribution.db.DeliveryForecastViewRepository;
+import com.affaince.subscription.distribution.db.DeliveryForecastViewRepositoryMock;
+import com.affaince.subscription.distribution.profiles.DefaultShippingProfile;
+import com.affaince.subscription.distribution.sampler.DeliveriesDistributionPortfolio;
+import com.affaince.subscription.distribution.sampler.DeliveriesDistributor;
+import com.affaince.subscription.distribution.sampler.Period;
 import org.joda.time.LocalDate;
 
 import java.util.List;

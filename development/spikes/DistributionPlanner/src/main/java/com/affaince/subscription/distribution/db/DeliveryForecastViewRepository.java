@@ -1,4 +1,4 @@
-package com.affaince.subscription.business.distribution.db;
+package com.affaince.subscription.distribution.db;
 
 import com.affaince.subscription.common.type.ForecastContentStatus;
 import com.affaince.subscription.common.vo.DeliveryForecastVersionId;

@@ -1,11 +1,11 @@
-package com.affaince.subscription.business.distribution.sampler;
+package com.affaince.subscription.distribution.sampler;
 
-import com.affaince.subscription.business.distribution.categories.PeriodWiseAndWeightWiseDeliveriesDistribution;
-import com.affaince.subscription.business.distribution.categories.ZoneGroupWiseDeliveriesDistribution;
-import com.affaince.subscription.business.distribution.db.DeliveryForecastView;
-import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
-import com.affaince.subscription.business.distribution.profiles.DistributionZoneGroup;
 import com.affaince.subscription.common.type.QuantityUnit;
+import com.affaince.subscription.distribution.categories.PeriodWiseAndWeightWiseDeliveriesDistribution;
+import com.affaince.subscription.distribution.categories.ZoneGroupWiseDeliveriesDistribution;
+import com.affaince.subscription.distribution.db.DeliveryForecastView;
+import com.affaince.subscription.distribution.profiles.DefaultShippingProfile;
+import com.affaince.subscription.distribution.profiles.DistributionZoneGroup;
 
 import java.util.ArrayList;
 import java.util.HashMap;

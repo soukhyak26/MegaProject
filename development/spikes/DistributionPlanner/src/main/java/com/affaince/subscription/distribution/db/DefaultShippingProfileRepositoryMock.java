@@ -1,6 +1,6 @@
-package com.affaince.subscription.business.distribution.db;
+package com.affaince.subscription.distribution.db;
 
-import com.affaince.subscription.business.distribution.profiles.*;
+import com.affaince.subscription.distribution.profiles.*;
 
 import java.util.ArrayList;
 import java.util.List;

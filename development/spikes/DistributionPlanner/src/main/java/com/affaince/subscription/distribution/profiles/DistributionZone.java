@@ -1,4 +1,4 @@
-package com.affaince.subscription.business.distribution.profiles;
+package com.affaince.subscription.distribution.profiles;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.affaince.subscription.business.distribution.strategy;
+package com.affaince.subscription.distribution.strategy;
 
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionPortfolio;
-import com.affaince.subscription.business.distribution.sampler.Period;
+import com.affaince.subscription.distribution.sampler.DeliveriesDistributionPortfolio;
+import com.affaince.subscription.distribution.sampler.Period;
 import org.joda.time.LocalDate;
 
 import java.util.Map;

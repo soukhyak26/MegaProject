@@ -1,9 +1,9 @@
-import com.affaince.subscription.business.distribution.db.DefaultShippingProfileRepositoryMock;
-import com.affaince.subscription.business.distribution.db.DeliveryForecastViewRepositoryMock;
-import com.affaince.subscription.business.distribution.sampler.DeliveriesDistributionPortfolio;
-import com.affaince.subscription.business.distribution.sampler.Period;
-import com.affaince.subscription.business.distribution.strategy.DefaultDistributionStrategy;
-import com.affaince.subscription.business.distribution.strategy.DistributionStrategy;
+import com.affaince.subscription.distribution.db.DefaultShippingProfileRepositoryMock;
+import com.affaince.subscription.distribution.db.DeliveryForecastViewRepositoryMock;
+import com.affaince.subscription.distribution.sampler.DeliveriesDistributionPortfolio;
+import com.affaince.subscription.distribution.sampler.Period;
+import com.affaince.subscription.distribution.strategy.DefaultDistributionStrategy;
+import com.affaince.subscription.distribution.strategy.DistributionStrategy;
 
 import java.util.Map;
 

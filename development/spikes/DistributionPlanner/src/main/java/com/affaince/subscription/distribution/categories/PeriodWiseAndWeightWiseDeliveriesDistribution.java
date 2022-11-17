@@ -1,8 +1,8 @@
-package com.affaince.subscription.business.distribution.categories;
+package com.affaince.subscription.distribution.categories;
 
-import com.affaince.subscription.business.distribution.db.DeliveryForecastView;
-import com.affaince.subscription.business.distribution.sampler.Period;
-import com.affaince.subscription.business.distribution.sampler.WeightIndicator;
+import com.affaince.subscription.distribution.db.DeliveryForecastView;
+import com.affaince.subscription.distribution.sampler.Period;
+import com.affaince.subscription.distribution.sampler.WeightIndicator;
 
 import java.util.List;
 import java.util.Map;

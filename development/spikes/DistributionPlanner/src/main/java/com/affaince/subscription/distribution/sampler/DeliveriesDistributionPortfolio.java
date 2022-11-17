@@ -1,8 +1,8 @@
-package com.affaince.subscription.business.distribution.sampler;
+package com.affaince.subscription.distribution.sampler;
 
-import com.affaince.subscription.business.distribution.categories.ZoneGroupWiseDeliveriesDistribution;
-import com.affaince.subscription.business.distribution.profiles.DefaultShippingProfile;
-import com.affaince.subscription.business.distribution.profiles.DistributionZoneGroup;
+import com.affaince.subscription.distribution.categories.ZoneGroupWiseDeliveriesDistribution;
+import com.affaince.subscription.distribution.profiles.DefaultShippingProfile;
+import com.affaince.subscription.distribution.profiles.DistributionZoneGroup;
 
 import java.util.HashMap;
 import java.util.Map;
