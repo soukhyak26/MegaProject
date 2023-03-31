@@ -20,11 +20,9 @@ public class CamPanel extends JPanel {
     private DaemonThread myThread = null;
     private  Mat frame = new Mat();
     private MatOfByte mem = new MatOfByte();
-    private VideoStreamWriter writer;
     public void CamPanel() {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         this.setBorder(blackline);
-        writer = new VideoStreamWriter();
     }
 
     public void startFrame() {
@@ -47,18 +45,26 @@ public class CamPanel extends JPanel {
         @Override
         public void run() {
             synchronized (this) {
-                VideoWriter writer = new VideoWriter("/Users/kulkarnm/videos/vid_001.avi", VideoWriter.fourcc('D', 'I', 'V', 'X'), 30, new Size(videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH), videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT)));
+                double fps = videoCapture.get(Videoio.CAP_PROP_FPS);
+                Size size = new Size(videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH), videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
+                int fourcc = VideoWriter.fourcc('M', 'J','P','G');
+                VideoWriter writer = new VideoWriter("E:\\videos\\vid_001.avi", fourcc, 20, size,true);
+                System.out.println(fourcc);
+                System.out.println(writer.isOpened());
                 while (runnable) {
                     if (videoCapture.grab()) {
                         try {
-                            videoCapture.retrieve(frame);
+                            videoCapture.read(frame);
+                            if (frame.empty())
+                                break;
+                            writer.write(frame);
                             Imgcodecs.imencode(".bmp", frame, mem);
                             Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
 
                             BufferedImage buff = (BufferedImage) im;
                             Graphics g = CamPanel.this.getGraphics();
                             boolean isImageDrawn = ImageDrawer.drawScaledImage(buff,CamPanel.this,g);
-                            writer.write(frame);
+
                             if (isImageDrawn) {
                                 if (runnable == false) {
                                     System.out.println("Going to wait()");

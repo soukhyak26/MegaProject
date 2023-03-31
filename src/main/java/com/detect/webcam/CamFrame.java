@@ -1,7 +1,6 @@
 package com.detect.webcam;
 
-import nu.pattern.OpenCV;
-import org.apache.log4j.Layout;
+import org.opencv.core.Core;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -64,7 +63,8 @@ public class CamFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        OpenCV.loadLocally();
+        //OpenCV.loadLocally();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         EventQueue.invokeLater(() -> {
             try {
                 Dimension ss = Toolkit.getDefaultToolkit ().getScreenSize ();
