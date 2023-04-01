@@ -1,4 +1,4 @@
-package com.detect.webcam;
+package com.detect.webcam.capture;
 
 import java.awt.Component;
 import java.awt.Graphics;

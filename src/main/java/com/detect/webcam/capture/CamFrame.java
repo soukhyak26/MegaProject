@@ -1,4 +1,4 @@
-package com.detect.webcam;
+package com.detect.webcam.capture;
 
 import org.opencv.core.Core;
 
