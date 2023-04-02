@@ -68,7 +68,7 @@ public class CamFrame extends JFrame {
         EventQueue.invokeLater(() -> {
             try {
                 Dimension ss = Toolkit.getDefaultToolkit ().getScreenSize ();
-                Dimension frameSize = new Dimension ( 500, 300 );
+                Dimension frameSize = new Dimension ( 800, 600 );
                 CamFrame camFrame = new CamFrame();
                 camFrame.setBounds ( ss.width / 2 - frameSize.width / 2,
                         ss.height / 2 - frameSize.height / 2,

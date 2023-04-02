@@ -3,6 +3,8 @@ package com.detect.webcam.capture;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
 
 public class CamPanel extends JPanel {
     private DaemonThread myThread = null;
@@ -30,7 +32,8 @@ public class CamPanel extends JPanel {
         protected volatile boolean runnable = false;
         @Override
         public void run() {
-            CamPanel.this.videoRecorder.recordVideo(CamPanel.this, this);
+            int majorityHumanCount = CamPanel.this.videoRecorder.recordVideo(CamPanel.this, this);
+            System.out.println("****Majority human count found in the video is *****" + majorityHumanCount);
         }
 
         public boolean isRunnable() {

@@ -13,6 +13,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class VideoRecorder {
     private VideoCapture videoCapture=null;
@@ -31,7 +34,8 @@ public class VideoRecorder {
         videoCapture.release();
         writer.release();
     }
-    public void recordVideo(CamPanel component, CamPanel.DaemonThread runnable){
+    public int recordVideo(CamPanel component, CamPanel.DaemonThread runnable){
+        List<Integer> frameWiseHumanCount = new ArrayList<>();
         synchronized (this) {
             while (runnable.isRunnable()) {
                 if (videoCapture.grab()) {
@@ -40,6 +44,7 @@ public class VideoRecorder {
                         if (frame.empty())
                             break;
                         int humanCount = humanDetector.detectAndDisplay(frame);
+                        frameWiseHumanCount.add(humanCount);
                         System.out.println("humanCount: " + humanCount);
                         writer.write(frame);
                         Imgcodecs.imencode(".bmp", frame, mem);
@@ -62,5 +67,27 @@ public class VideoRecorder {
                 }
             }
         }
+        return computeMajorityHumanCount(frameWiseHumanCount);
     }
+    private int computeMajorityHumanCount(List<Integer> frameWiseHumanCount){
+        HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+        for(int i = 1; i < frameWiseHumanCount.size(); i++)
+        {
+            if(hm.containsKey(frameWiseHumanCount.get(i)))
+            {
+                int count = hm.get(frameWiseHumanCount.get(i)) + 1;
+                if (count > frameWiseHumanCount.size() / 2) {
+                    return frameWiseHumanCount.get(i);
+                } else {
+                    hm.put(frameWiseHumanCount.get(i), count);
+                }
+            }
+            else {
+                hm.put(frameWiseHumanCount.get(i), 1);
+            }
+        }
+        return -1;
+
+    }
+
 }
