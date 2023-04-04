@@ -1,5 +1,6 @@
 package com.detect.webcam.capture;
 
+import nu.pattern.OpenCV;
 import org.opencv.core.Core;
 
 import javax.swing.*;
@@ -61,24 +62,4 @@ public class CamFrame extends JFrame {
         stop.addActionListener(e -> camPanel.stopFrame());
         return controlPanel;
     }
-
-    public static void main(String[] args) {
-        //OpenCV.loadLocally();
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        EventQueue.invokeLater(() -> {
-            try {
-                Dimension ss = Toolkit.getDefaultToolkit ().getScreenSize ();
-                Dimension frameSize = new Dimension ( 800, 600 );
-                CamFrame camFrame = new CamFrame();
-                camFrame.setBounds ( ss.width / 2 - frameSize.width / 2,
-                        ss.height / 2 - frameSize.height / 2,
-                        frameSize.width, frameSize.height);
-                camFrame.initUI();
-                camFrame.setVisible(true);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
-
 }

@@ -27,32 +27,32 @@ public class VideoRecorder {
         videoCapture= new VideoCapture(0);
         Size size = new Size(videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH), videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
         int fourcc = VideoWriter.fourcc('M', 'J','P','G');
-        writer = new VideoWriter("E:\\videos\\vid_001.avi", fourcc, 20, size,true);
+        writer = new VideoWriter("E:\\videos\\vid_001.avi", fourcc, 10, size,true);
         this.humanDetector = new HumanDetector();
     }
     public void release(){
         videoCapture.release();
         writer.release();
     }
-    public int recordVideo(CamPanel component, CamPanel.DaemonThread runnable){
+    public int recordVideo(CamPanel component, CamPanel.ProcessThread runnable){
         List<Integer> frameWiseHumanCount = new ArrayList<>();
         synchronized (this) {
             while (runnable.isRunnable()) {
                 if (videoCapture.grab()) {
                     try {
-                        videoCapture.read(frame);
+                        videoCapture.retrieve(frame);
                         if (frame.empty())
                             break;
                         int humanCount = humanDetector.detectAndDisplay(frame);
                         frameWiseHumanCount.add(humanCount);
                         System.out.println("humanCount: " + humanCount);
-                        writer.write(frame);
+
                         Imgcodecs.imencode(".bmp", frame, mem);
                         Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
                         BufferedImage buff = (BufferedImage) im;
                         Graphics g = component.getGraphics();
                         boolean isImageDrawn = ImageDrawer.drawScaledImage(buff,component,g);
-
+                        writer.write(frame);
                         if (isImageDrawn) {
                             if (runnable.isRunnable() == false) {
                                 System.out.println("Going to wait()");

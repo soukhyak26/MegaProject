@@ -3,11 +3,9 @@ package com.detect.webcam.capture;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.List;
 
 public class CamPanel extends JPanel {
-    private DaemonThread myThread = null;
+    private ProcessThread myThread = null;
     private VideoRecorder videoRecorder=null;
     public void CamPanel() {
         Border blackLine = BorderFactory.createLineBorder(Color.black);
@@ -16,7 +14,7 @@ public class CamPanel extends JPanel {
 
     public void startFrame() {
         this.videoRecorder = new VideoRecorder();
-        myThread = new DaemonThread();
+        myThread = new ProcessThread();
         Thread t = new Thread(myThread);
         t.setDaemon(true);
         myThread.runnable = true;
@@ -28,7 +26,7 @@ public class CamPanel extends JPanel {
         this.videoRecorder.release();
     }
 
-    class DaemonThread implements Runnable {
+    class ProcessThread implements Runnable {
         protected volatile boolean runnable = false;
         @Override
         public void run() {
