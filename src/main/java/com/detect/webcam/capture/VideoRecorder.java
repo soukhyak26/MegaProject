@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class VideoRecorder {
+   public static int humanCount;
     private VideoCapture videoCapture=null;
     private Mat frame = new Mat();
     private MatOfByte mem = new MatOfByte();
@@ -43,9 +44,12 @@ public class VideoRecorder {
                         videoCapture.retrieve(frame);
                         if (frame.empty())
                             break;
-                        int humanCount = humanDetector.detectAndDisplay(frame);
+                       humanCount = humanDetector.detectAndDisplay(frame);
                         frameWiseHumanCount.add(humanCount);
                         System.out.println("humanCount: " + humanCount);
+                        if (humanCount != 0){
+                            //ArduinoExecutor.serialPort();
+                        }
 
                         Imgcodecs.imencode(".bmp", frame, mem);
                         Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));

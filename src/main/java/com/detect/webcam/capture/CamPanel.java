@@ -26,6 +26,7 @@ public class CamPanel extends JPanel {
         this.videoRecorder.release();
     }
 
+
     class ProcessThread implements Runnable {
         protected volatile boolean runnable = false;
         @Override

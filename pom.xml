@@ -14,18 +14,19 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <opencv.version>4.7.0-0</opencv.version>
+        <jSerialComm.version>2.9.3</jSerialComm.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
- <!--       <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-io.version>2.11.0</commons-io.version>
-        <commons-lang.version>2.6</commons-lang.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <commons-cli.version>1.5.0</commons-cli.version>-->
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.openpnp</groupId>
             <artifactId>opencv</artifactId>
             <version>4.7.0-0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>${jSerialComm.version}</version>
         </dependency>
     </dependencies>
     <build>
