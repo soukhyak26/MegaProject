@@ -10,7 +10,7 @@ import java.awt.*;
 public class CamFrame extends JFrame {
    // JPanel contentPane;
     CamPanel camPanel;
-
+    ControlPanel controlPanel;
     public CamFrame() {
         setTitle("Video Capture");
         this.setSize(900, 700);
@@ -18,12 +18,11 @@ public class CamFrame extends JFrame {
     }
 
     public void initUI(){
-
         camPanel = new CamPanel();
-        JPanel controlPane = createControlPanel();
+        controlPanel  = new ControlPanel(camPanel);
         JComponent [] components = new JComponent[2];
         components[0] = camPanel;
-        components[1] = controlPane;
+        components[1] = controlPanel;
         createLayout(components);
 
     }
@@ -46,20 +45,5 @@ public class CamFrame extends JFrame {
         cns.anchor = GridBagConstraints.PAGE_START;
         cns.fill = GridBagConstraints.BOTH;
         pane.add(arg[1],cns);
-    }
-    public JPanel createControlPanel() {
-        JPanel controlPanel = new JPanel(new GridBagLayout());
-        Border blackline = BorderFactory.createLineBorder(Color.black);
-        controlPanel.setBorder(blackline);
-        JButton start = new JButton("Start");
-        start.setBackground(Color.yellow);
-        controlPanel.add(start);
-        start.addActionListener(e -> camPanel.startFrame());
-
-        JButton stop = new JButton("Stop");
-        stop.setBackground(Color.green);
-        controlPanel.add(stop);
-        stop.addActionListener(e -> camPanel.stopFrame());
-        return controlPanel;
     }
 }

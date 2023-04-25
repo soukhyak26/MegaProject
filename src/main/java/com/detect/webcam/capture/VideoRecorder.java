@@ -18,12 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class VideoRecorder {
-   public static int humanCount;
     private VideoCapture videoCapture=null;
     private Mat frame = new Mat();
     private MatOfByte mem = new MatOfByte();
     private VideoWriter writer;
     private HumanDetector humanDetector;
+    public Boolean isRunnable;
     public VideoRecorder(){
         videoCapture= new VideoCapture(0);
         Size size = new Size(videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH), videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
@@ -35,21 +35,18 @@ public class VideoRecorder {
         videoCapture.release();
         writer.release();
     }
-    public int recordVideo(CamPanel component, CamPanel.ProcessThread runnable){
-        List<Integer> frameWiseHumanCount = new ArrayList<>();
+    public int recordVideo(CamPanel component){
+
+        Integer humanCount=0;
         synchronized (this) {
-            while (runnable.isRunnable()) {
+            if (isRunnable) {
                 if (videoCapture.grab()) {
                     try {
                         videoCapture.retrieve(frame);
                         if (frame.empty())
-                            break;
+                            return 0;
                        humanCount = humanDetector.detectAndDisplay(frame);
-                        frameWiseHumanCount.add(humanCount);
                         System.out.println("humanCount: " + humanCount);
-                        if (humanCount != 0){
-                            //ArduinoExecutor.serialPort();
-                        }
 
                         Imgcodecs.imencode(".bmp", frame, mem);
                         Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
@@ -58,7 +55,7 @@ public class VideoRecorder {
                         boolean isImageDrawn = ImageDrawer.drawScaledImage(buff,component,g);
                         writer.write(frame);
                         if (isImageDrawn) {
-                            if (runnable.isRunnable() == false) {
+                            if (isRunnable == false) {
                                 System.out.println("Going to wait()");
                                 this.wait();
                             }
@@ -71,27 +68,7 @@ public class VideoRecorder {
                 }
             }
         }
-        return computeMajorityHumanCount(frameWiseHumanCount);
-    }
-    private int computeMajorityHumanCount(List<Integer> frameWiseHumanCount){
-        HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
-        for(int i = 1; i < frameWiseHumanCount.size(); i++)
-        {
-            if(hm.containsKey(frameWiseHumanCount.get(i)))
-            {
-                int count = hm.get(frameWiseHumanCount.get(i)) + 1;
-                if (count > frameWiseHumanCount.size() / 2) {
-                    return frameWiseHumanCount.get(i);
-                } else {
-                    hm.put(frameWiseHumanCount.get(i), count);
-                }
-            }
-            else {
-                hm.put(frameWiseHumanCount.get(i), 1);
-            }
-        }
-        return -1;
-
+        return humanCount;
     }
 
 }

@@ -34,10 +34,10 @@ public class ArduinoExecutor {
         // Time for the code in Arduino to rerun after Reset
 
     }
-    public static void communicateWithArduino(){
+    public void communicateWithArduino(int humanCount){
         try {
             byte[] WriteByte = new byte[1];
-            if(VideoRecorder.humanCount>0) {
+            if(humanCount>0) {
                 WriteByte[0] = 65; //send A
             }else{
                 WriteByte[0] = 20;
