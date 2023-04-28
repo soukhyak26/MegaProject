@@ -53,6 +53,7 @@ public class ControlPanel extends JPanel {
         this.add(stop);
     }
     public void startFrame(CamPanel camPanel){
+        videoRecorder.initialize();
         long startTime = System.currentTimeMillis();
 
         long endTime =0;

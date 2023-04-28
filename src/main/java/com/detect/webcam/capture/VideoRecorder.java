@@ -25,11 +25,13 @@ public class VideoRecorder {
     private HumanDetector humanDetector;
     public Boolean isRunnable;
     public VideoRecorder(){
+        this.humanDetector = new HumanDetector();
+    }
+    public void initialize(){
         videoCapture= new VideoCapture(0);
         Size size = new Size(videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH), videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
         int fourcc = VideoWriter.fourcc('M', 'J','P','G');
-        writer = new VideoWriter("E:\\videos\\vid_001.avi", fourcc, 10, size,true);
-        this.humanDetector = new HumanDetector();
+        writer = new VideoWriter("E:\\videos\\video_"+ System.currentTimeMillis() + ".avi", fourcc, 10, size,true);
     }
     public void release(){
         videoCapture.release();
