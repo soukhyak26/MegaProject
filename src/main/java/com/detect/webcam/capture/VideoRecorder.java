@@ -1,6 +1,7 @@
 package com.detect.webcam.capture;
 
 import com.detect.webcam.detect.HumanDetector;
+import com.detect.webcam.ui.CamPanel;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Size;
@@ -13,24 +14,23 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class VideoRecorder {
-    private VideoCapture videoCapture=null;
-    private Mat frame = new Mat();
-    private MatOfByte mem = new MatOfByte();
+    private VideoCapture videoCapture = null;
+    private final Mat frame = new Mat();
+    private final MatOfByte mem = new MatOfByte();
     private VideoWriter writer;
-    private HumanDetector humanDetector;
+    private final HumanDetector humanDetector;
     public Boolean isRunnable;
-    public VideoRecorder(){
+
+    public VideoRecorder() {
         this.humanDetector = new HumanDetector();
     }
-    public void initialize(){
-        videoCapture= new VideoCapture(0);
+
+    public void initialize() {
+        videoCapture = new VideoCapture(0);
         Size size = new Size(videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH), videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
-        int fourcc = VideoWriter.fourcc('M', 'J','P','G');
+        int fourcc = VideoWriter.fourcc('M', 'J', 'P', 'G');
         writer = new VideoWriter("E:\\videos\\video_"+ System.currentTimeMillis() + ".avi", fourcc, 10, size,true);
     }
     public void release(){

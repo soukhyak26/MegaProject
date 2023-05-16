@@ -1,4 +1,4 @@
-package com.detect.webcam.capture;
+package com.detect.webcam.ui;
 
 import javax.swing.*;
 import javax.swing.border.Border;

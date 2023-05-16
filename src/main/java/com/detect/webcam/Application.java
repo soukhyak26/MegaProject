@@ -1,6 +1,6 @@
 package com.detect.webcam;
 
-import com.detect.webcam.capture.CamFrame;
+import com.detect.webcam.ui.CamFrame;
 import nu.pattern.OpenCV;
 
 import java.awt.*;
