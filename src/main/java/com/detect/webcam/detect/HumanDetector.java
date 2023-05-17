@@ -12,7 +12,7 @@ import java.awt.image.DataBufferByte;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
+//A class responsible for Detecting Humans in each frame of a video
 public class HumanDetector {
 
     // a timer for acquiring the video stream
@@ -23,15 +23,19 @@ public class HumanDetector {
     private boolean cameraActive;
 
     // face cascade classifier
-    private CascadeClassifier faceCascade;
+    private final CascadeClassifier faceCascade;
     private int absoluteFaceSize;
-    private String classifierPath = "src/resources/lbpcascades/lbpcascade_frontalcatface.xml" ;
-    public HumanDetector(){
+    //the ready made training set used to training machine learning model
+    private final String classifierPath = "src/resources/lbpcascades/lbpcascade_frontalcatface.xml";
+
+    public HumanDetector() {
         this.faceCascade = new CascadeClassifier();
         boolean isClassifierLoaded = this.faceCascade.load(classifierPath);
         System.out.println("is classifier loaded? " + isClassifierLoaded);
         this.absoluteFaceSize = 0;
     }
+
+    //method to convert opencv matrix to buffered image
     private static BufferedImage matToBufferedImage(Mat original) {
         // init
         BufferedImage image = null;
@@ -58,13 +62,15 @@ public class HumanDetector {
                 Mat frame = grabFrame();
                 // convert and show the frame
                 Image imageToShow = matToBufferedImage(frame);
-                updateImageView(imageToShow);
             }
         };
         this.timer = Executors.newSingleThreadScheduledExecutor();
         this.timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS);
     }
 
+    //A Method to grab image in openCV matrix format
+    //It creates an empty matrix object
+    //Read frame from VideoCapture object into the matrix object
     private Mat grabFrame() {
         Mat frame = new Mat();
 
@@ -143,14 +149,10 @@ public class HumanDetector {
     }
 
 
-    private void updateImageView(Image image) {
-        //code to update image
-    }
-
     /**
      * On application close, stop the acquisition from the camera
      */
-    protected void setClosed() {
+    public void setClosed() {
         this.stopAcquisition();
     }
 }

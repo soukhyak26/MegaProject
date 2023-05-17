@@ -1,12 +1,20 @@
 package com.detect.webcam.capture;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 
-
+//A Utility class to reshape the image to be shown in CamPanel as per the size fo CamPanel
 public class ImageDrawer {
 
+    //The method receives image to be shown, panel in which the image is to be show and the graphics handle
+    // It first check the size ( width and height) of image
+    //it calculates aspect ratio of image as height/width
+    //Then it captures height and width of a panel/canvas, in which the image is to be displayed
+    //It calculates the aspect ration of the canvas/panel
+    //In case image width and height is less than canvas width and height then
+    //It resizes the dimensions of the image to fit to the canvas
+    // After fitting the image ot the canvas the reshaped image is drawn onto the canvas using graphics object.
+    //Thus when user changes the window size of the UI, which also changes the Cam Panel size,
+    // the image is automatically resized to fit to the resized canvas
     public static boolean drawScaledImage(Image image, Component canvas, Graphics g) {
         int imgWidth = image.getWidth(null);
         int imgHeight = image.getHeight(null);
