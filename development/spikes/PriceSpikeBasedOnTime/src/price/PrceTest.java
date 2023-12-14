@@ -1,7 +1,5 @@
 package price;
 
-import org.joda.time.DurationFieldType;
-import org.joda.time.LocalDate;
 
 import java.util.ListIterator;
 
@@ -18,7 +16,7 @@ public class PrceTest {
 
     public static void calculatePriceSet1(){
         LocalDate startDate = new LocalDate().withYear(2016).withMonthOfYear(1).withDayOfMonth(1);
-        PriceInput markPrice= new PriceInput(30.0,54.0,5.55,2.0,54,0,startDate,490);
+        price.PriceInput markPrice= new PriceInput(30.0,54.0,5.55,2.0,54,0,startDate,490);
 
         PriceInput pi2= new PriceInput(30.0,54.0,5.55,2.0,50,540,startDate.withFieldAdded(DurationFieldType.days(),10),10);
         PriceInput pi3= new PriceInput(30.0,54.0,2.54,2.0,-1.0,640,startDate.withFieldAdded(DurationFieldType.days(),10),10);

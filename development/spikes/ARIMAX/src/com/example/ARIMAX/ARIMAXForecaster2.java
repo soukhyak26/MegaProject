@@ -1,4 +1,6 @@
+/*
 package com.example.ARIMAX;
+
 
 import breeze.storage.Zero;
 import com.cloudera.sparkts.models.ARIMAX;
@@ -12,7 +14,9 @@ import scala.reflect.ClassTag;
 import java.io.*;
 import java.util.Arrays;
 
+
 public class ARIMAXForecaster2 {
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
         double[] M_demand = getTrainData(0, 1);
         double[] S1_demand = getTrainData(1, 2);
@@ -64,5 +68,7 @@ public class ARIMAXForecaster2 {
         Double[] filteredArray = Arrays.stream(train).skip(1).flatMap(line -> Arrays.stream(Arrays.copyOfRange(line.split(",", 3), col1, col2))).map(s->Double.parseDouble(s)).toArray(Double[]::new);
         return ArrayUtils.toPrimitive(filteredArray);
     }
+
 }
 
+*/

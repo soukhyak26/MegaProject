@@ -1,7 +1,7 @@
 package com.affaince.subscription.accounting.db;
 
-import com.affaince.subscription.accounting.transactions.Party;
 import com.affaince.subscription.accounting.journal.qualifiers.PartyTypes;
+import com.affaince.subscription.accounting.transactions.Party;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

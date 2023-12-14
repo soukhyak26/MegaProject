@@ -9,11 +9,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spark.version>1.6.0-cdh5.7.0</spark.version>
-        <java.version>1.8</java.version>
-        <sparkts.version>0.4.2</sparkts.version>
-        <breeze.version>0.12</breeze.version>
-        <scala.minor.version>2.11</scala.minor.version>
+        <java.version>1.10</java.version>
+        <sparkts.version>0.3.0</sparkts.version>
+        <scala.minor.version>2.13</scala.minor.version>
     </properties>
 
     <repositories>
@@ -58,28 +56,11 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -88,35 +69,47 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.10.4</version>
+            <version>2.13.12</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.10</artifactId>
-            <version>${spark.version}</version>
+            <artifactId>spark-core_2.13</artifactId>
+            <version>3.5.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_2.10</artifactId>
-            <version>${spark.version}</version>
+            <artifactId>spark-sql_2.13</artifactId>
+            <version>3.5.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-mllib_2.10</artifactId>
-            <version>${spark.version}</version>
+            <artifactId>spark-mllib_2.13</artifactId>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
-            <groupId>com.cloudera.sparkts</groupId>
-            <artifactId>sparkts</artifactId>
-            <version>${sparkts.version}</version>
+                <groupId>com.cloudera.sparkts</groupId>
+                <artifactId>sparkts</artifactId>
+                <version>${sparkts.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scala-library</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scalap</artifactId>
+                    </exclusion>
+                </exclusions>
         </dependency>
+
+<!--
         <dependency>
             <groupId>org.scalanlp</groupId>
-            <artifactId>breeze_${scala.minor.version}</artifactId>
-            <version>${breeze.version}</version>
+            <artifactId>breeze_3</artifactId>
+            <version>2.1.0</version>
             <exclusions>
-                <!-- This is included as a compile-scoped dependency by jtransforms, which is
-                     a dependency of breeze. -->
                 <exclusion>
                     <groupId>junit</groupId>
                     <artifactId>junit</artifactId>
@@ -127,13 +120,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
+-->
+
+<!--
         <dependency>
             <groupId>org.scalanlp</groupId>
             <artifactId>breeze-viz_${scala.minor.version}</artifactId>
             <version>${breeze.version}</version>
             <exclusions>
-                <!-- This is included as a compile-scoped dependency by jtransforms, which is
-                     a dependency of breeze. -->
+                &lt;!&ndash; This is included as a compile-scoped dependency by jtransforms, which is
+                     a dependency of breeze. &ndash;&gt;
                 <exclusion>
                     <groupId>junit</groupId>
                     <artifactId>junit</artifactId>
@@ -144,5 +140,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
+-->
     </dependencies>
 </project>

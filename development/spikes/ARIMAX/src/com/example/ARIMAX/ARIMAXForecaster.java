@@ -1,4 +1,6 @@
+/*
 package com.example.ARIMAX;
+
 
 import breeze.linalg.Options;
 import breeze.storage.Zero;
@@ -18,7 +20,12 @@ import java.util.Arrays;
 
 import static scala.None$.MODULE$;
 
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class ARIMAXForecaster {
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
         double[] gdpTrain = getTrainData(3, 4);
         double[] salesTrain = getTrainData(1, 2);
@@ -30,7 +37,7 @@ public class ARIMAXForecaster {
 
 
         ClassTag<Object> tag = scala.reflect.ClassTag$.MODULE$.apply(double.class);
-        Zero zero = Zero.DoubleZero$.MODULE$;
+        Zero zero = (Zero) Zero.DoubleZero$.MODULE$;
         DenseVector tsTrain = new DenseVector(gdpTrain);
         DenseMatrix xregTrainSpark = new DenseMatrix(salesTrain.length,2,ArrayUtils.addAll(salesTrain,adBudgetTrain));
         breeze.linalg.DenseMatrix xregTrain = xregTrainSpark.asBreeze().toDenseMatrix(tag,zero);
@@ -70,5 +77,7 @@ public class ARIMAXForecaster {
         Double[] filteredArray = Arrays.stream(train).skip(1).flatMap(line -> Arrays.stream(Arrays.copyOfRange(line.split(",", 4), col1, col2))).map(s->Double.parseDouble(s)).toArray(Double[]::new);
         return ArrayUtils.toPrimitive(filteredArray);
     }
+
 }
 
+*/

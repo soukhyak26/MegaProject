@@ -1,11 +1,12 @@
 package com.affaince.subscription.accounting.journal.subsidiaries;
 
-import com.affaince.subscription.accounting.transactions.TransactionEntityDetail;
 import com.affaince.subscription.accounting.journal.qualifiers.AccountIdentifier;
 import com.affaince.subscription.accounting.journal.qualifiers.PartyTypes;
+import com.affaince.subscription.accounting.transactions.TransactionEntityDetail;
 import org.joda.time.LocalDateTime;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //ONly for credit purchase of saleable goods

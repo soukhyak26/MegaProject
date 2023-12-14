@@ -16,7 +16,7 @@ public class AnnovaTest {
 
     private static final double SIGNIFICANCE_LEVEL = 0.05; // 99.9%
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public void annovaTest(){
         Map<Double, Double> xyDaily = new HashMap<>();
         Map<Double, Double> xyMonthly = new HashMap<>();
         double[] xDaily = null;
@@ -26,8 +26,11 @@ public class AnnovaTest {
         double[] xMonthly = null;
         double[] yMonthly = null;
 
+        try {
+            InputStream is = AnnovaTest.class.getClassLoader().getResourceAsStream("dailydata1.csv");
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader dailyDatafileReader = new BufferedReader(isr);
 
-        try (BufferedReader dailyDatafileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("dailydata1.csv"))))) {
             dailyReadings = dailyDatafileReader.lines().map(line -> line.trim().split(",")).map(sa -> Stream.of(sa).mapToDouble(Double::parseDouble).toArray()).toArray(double[][]::new);
             xDaily = new double[dailyReadings.length];
             yDaily = new double[dailyReadings.length];
@@ -35,8 +38,16 @@ public class AnnovaTest {
                 xDaily[i] = dailyReadings[i][0];
                 yDaily[i] = dailyReadings[i][1];
             }
+        }catch(Exception ex){
+            ex.printStackTrace();
         }
-        try (BufferedReader monthlyDatafileReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("dailydata3.csv"))))) {
+
+
+        try {
+            InputStream is = AnnovaTest.class.getClassLoader().getResourceAsStream("dailydata1.csv");
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader monthlyDatafileReader = new BufferedReader(isr);
+
             monthlyReadings = monthlyDatafileReader.lines().map(line -> line.trim().split(",")).map(sa -> Stream.of(sa).mapToDouble(Double::parseDouble).toArray()).toArray(double[][]::new);
             xMonthly = new double[monthlyReadings.length];
             yMonthly = new double[monthlyReadings.length];
@@ -44,7 +55,8 @@ public class AnnovaTest {
                 xMonthly[i] = monthlyReadings[i][0];
                 yMonthly[i] = monthlyReadings[i][1];
             }
-
+        }catch(Exception ex){
+            ex.printStackTrace();
         }
 
 /*
@@ -65,8 +77,15 @@ public class AnnovaTest {
         System.out.println("p-value:" + pValue);
         boolean rejectNullHypothesis = anova.anovaTest(classes, SIGNIFICANCE_LEVEL);
         System.out.println("reject null hipothesis " + (100 - SIGNIFICANCE_LEVEL * 100) + "% = " + rejectNullHypothesis);
+
     }
-    public static double findVariabilityAmongGroups(double[] interpolatedTotalSubscriptionsPerDay,double[] yDaily){
+    public static void main(String[] args) {
+        AnnovaTest test = new AnnovaTest();
+        test.annovaTest();
+    }
+
+
+    public double findVariabilityAmongGroups(double[] interpolatedTotalSubscriptionsPerDay,double[] yDaily){
         double interpolatedTotalSubscriptionsPerDayMean= findMean(interpolatedTotalSubscriptionsPerDay);
         double yDailyMean=findMean(yDaily);
         double grandSum=0;
@@ -84,7 +103,7 @@ public class AnnovaTest {
         System.out.println("percentageChange of Actual with Target: " + variationAmongGroups/interpolatedTotalSubscriptionsPerDayMean);
         return variationAmongGroups;
     }
-    public static double findMean(double [] array){
+    public double findMean(double [] array){
         double sum=0;
         for( int i=0;i<array.length;i++){
             sum +=array[i];

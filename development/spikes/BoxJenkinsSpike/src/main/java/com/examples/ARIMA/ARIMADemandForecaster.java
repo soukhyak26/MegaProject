@@ -1,8 +1,8 @@
+/*
 package com.examples.ARIMA;
 
 import com.cloudera.sparkts.BusinessDayFrequency;
 import com.cloudera.sparkts.DateTimeIndex;
-import com.cloudera.sparkts.api.java.DateTimeIndexFactory;
 import com.cloudera.sparkts.api.java.JavaTimeSeriesRDD;
 import com.cloudera.sparkts.api.java.JavaTimeSeriesRDDFactory;
 import com.cloudera.sparkts.stats.TimeSeriesStatisticalTests;
@@ -11,7 +11,7 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.mllib.linalg.Vector;
-import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.SQLContext;
@@ -28,12 +28,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+
 /**
  * Created by mandar on 18-06-2016.
  */
+
 public class ARIMADemandForecaster {
-/*
-    private static DataFrame loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext, String path) {
+
+    private static Dataset<Row> loadObservations(JavaSparkContext sparkContext, SQLContext sqlContext, String path) {
         JavaRDD<Row> rowRdd = sparkContext.textFile(path).map((String line) ->
         {
             String[] tokens = line.split("\t");
@@ -53,18 +55,18 @@ public class ARIMADemandForecaster {
     public static void main(String[] args) {
         SparkConf conf = new SparkConf().setAppName("Subscription Demand Forecasting Spike").setMaster("local");
         conf.set("spark.io.compression.codec", "org.apache.spark.io.LZ4CompressionCodec");
-        System.setProperty("hadoop.home.dir", "c:\\winutil");
+        //System.setProperty("hadoop.home.dir", "c:\\winutil");
         JavaSparkContext context = new JavaSparkContext(conf);
         SQLContext sqlContext = new SQLContext(context);
 
-        DataFrame tickerObs = loadObservations(context, sqlContext, "E:\\apps\\affaince\\development\\spikes\\BoxJenkinsSpike\\data\\demands.tsv");
+        Dataset<Row> tickerObs = loadObservations(context, sqlContext, "/Users/kulkarnm/app/affaince/development/spikes/BoxJenkinsSpike/data/demands.tsv");
 
         // Create an daily DateTimeIndex over August and September 2015
         ZoneId zone = ZoneId.systemDefault();
-        DateTimeIndex dtIndex = DateTimeIndexFactory.uniformFromInterval(
+        DateTimeIndex dtIndex = com.cloudera.sparkts.api.java.DateTimeIndexFactory.uniformFromInterval(
                 ZonedDateTime.of(LocalDateTime.parse("2015-01-01T00:00:00"), zone),
                 ZonedDateTime.of(LocalDateTime.parse("2016-12-15T00:00:00"), zone),
-                new BusinessDayFrequency(15, 0));
+                new BusinessDayFrequency(15,1));
 
         // Align the ticker data on the DateTimeIndex to create a TimeSeriesRDD
         JavaTimeSeriesRDD tickerTsrdd = JavaTimeSeriesRDDFactory.timeSeriesRDDFromObservations(
@@ -81,21 +83,12 @@ public class ARIMADemandForecaster {
         // Compute return rates
         JavaTimeSeriesRDD<String> returnRates = filled.returnRates();
 
-        // Compute Durbin-Watson stats for each series
-        JavaPairRDD<String, Double> dwStats = returnRates.mapValues(
-                (Vector x) -> TimeSeriesStatisticalTests.dwtest(x)
-        );
 
         class StatsComparator implements Comparator<Tuple2<String,Double>>, java.io.Serializable {
             public int compare(Tuple2<String, Double> a, Tuple2<String, Double> b) {
                 return a._2.compareTo(b._2);
             }
         }
-
-        System.out.println("*****"+ dwStats.min(new StatsComparator()));
-        System.out.println("*****"+dwStats.max(new StatsComparator()));
     }
-
-
-*/
 }
+

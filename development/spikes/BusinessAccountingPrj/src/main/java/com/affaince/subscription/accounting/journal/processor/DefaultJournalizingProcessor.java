@@ -1,15 +1,14 @@
 package com.affaince.subscription.accounting.journal.processor;
 
 import com.affaince.subscription.accounting.ids.IdGenerator;
-import com.affaince.subscription.accounting.journal.qualifiers.AccountQualifiers;
-import com.affaince.subscription.accounting.transactions.SourceDocument;
 import com.affaince.subscription.accounting.journal.entity.CreditJournalEntry;
 import com.affaince.subscription.accounting.journal.entity.DebitJournalEntry;
 import com.affaince.subscription.accounting.journal.entity.JournalRecord;
 import com.affaince.subscription.accounting.journal.entity.ParticipantAccount;
+import com.affaince.subscription.accounting.journal.qualifiers.AccountQualifiers;
+import com.affaince.subscription.accounting.transactions.SourceDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 import java.util.List;
 @Component

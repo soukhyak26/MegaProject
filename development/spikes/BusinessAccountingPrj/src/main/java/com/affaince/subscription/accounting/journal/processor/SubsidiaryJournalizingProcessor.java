@@ -3,8 +3,8 @@ package com.affaince.subscription.accounting.journal.processor;
 import com.affaince.subscription.accounting.journal.entity.ParticipantAccount;
 import com.affaince.subscription.accounting.journal.events.AccountingEventListener;
 import com.affaince.subscription.accounting.journal.processor.factory.AccountingEventsRegistry;
-import com.affaince.subscription.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.subscription.accounting.journal.qualifiers.AccountingEvent;
+import com.affaince.subscription.accounting.journal.qualifiers.ModeOfTransaction;
 import com.affaince.subscription.accounting.journal.subsidiaries.SubsidiaryBookEntry;
 import com.affaince.subscription.accounting.transactions.SourceDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 @Component
 public class SubsidiaryJournalizingProcessor {
     private AccountingEventsRegistry accountingEventsRegistry;

@@ -3,7 +3,8 @@ package com.affaince.subscription.accounting.ledger.accounts;
 import com.affaince.subscription.accounting.journal.qualifiers.AccountIdentifier;
 import org.joda.time.LocalDateTime;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class LedgerAccount {
     private final String merchantId;

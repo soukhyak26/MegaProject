@@ -13,7 +13,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
 @Component
 public class DefaultLedgerPostingProcessor implements LedgerPostingProcessor{
     private final AccountDatabaseSimulator accountDatabaseSimulator;
