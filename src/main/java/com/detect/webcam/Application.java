@@ -19,7 +19,6 @@ public class Application {
                         frameSize.width, frameSize.height);
                 camFrame.initUI();
                 camFrame.setVisible(true);
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

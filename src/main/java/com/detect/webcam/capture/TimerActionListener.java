@@ -5,7 +5,6 @@ import com.detect.webcam.ui.CamPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 //Action Listener which is invoked/called back by a timer after every 'interval', that is provided in Timer constructor
 // The actionPerformed method gets called after a specified interval and perform the desired periodic task implemented in the actionPerformed method
@@ -20,11 +19,11 @@ public class TimerActionListener implements ActionListener {
         this.videoRecorder = videoRecorder;
         this.arduinoExecutor = arduinoExecutor;
         this.camPanel = camPanel;
-        try {
+       /* try {
             this.arduinoExecutor.setUp();
         } catch (InterruptedException ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 
 
@@ -33,7 +32,7 @@ public class TimerActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("****action being performed after " + System.currentTimeMillis());
-        startProcess(camPanel);
+        //startProcess(camPanel);
     }
 
     //A Method does following activities
@@ -43,6 +42,7 @@ public class TimerActionListener implements ActionListener {
     // determine majority of the human counts per frame entered in a collection
     // pass the majority human count value to the Arduino Executor's communicateWithArduino method
     //When Human count is greater than 0, Arduino Executor will turn on LED,Els it will turn it off
+/*
     public void startProcess(CamPanel camPanel) {
         videoRecorder.initialize();
         long startTime = System.currentTimeMillis();
@@ -51,18 +51,19 @@ public class TimerActionListener implements ActionListener {
         java.util.List<Integer> frameWiseHumanCount = new ArrayList<>();
 
         while (timeLapsed < 3000) {
-            videoRecorder.isRunnable = true;
+            //videoRecorder.isRunnable = true;
             Integer humanCount = videoRecorder.recordVideo(camPanel);
             frameWiseHumanCount.add(humanCount);
             endTime = System.currentTimeMillis();
             timeLapsed = endTime - startTime;
         }
         Integer majorityHumanCount = computeMajorityHumanCount(frameWiseHumanCount);
-        arduinoExecutor.communicateWithArduino(majorityHumanCount);
+        //arduinoExecutor.communicateWithArduino(majorityHumanCount);
         System.out.println("****Majority human count found in the video is *****" + majorityHumanCount);
-        videoRecorder.isRunnable = false;
+        //videoRecorder.isRunnable = false;
 
     }
+*/
 
     //When a video is captured, it is divided into series of frames/images
     // each image is analysed for human count. The Human count value per frame is added to a collection(List)

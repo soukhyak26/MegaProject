@@ -23,7 +23,7 @@ public class ArduinoExecutor {
         int StopBits = SerialPort.ONE_STOP_BIT;
         int Parity = SerialPort.NO_PARITY;
 
-        mySerialPort = SerialPort.getCommPort("COM6"); //AvailablePorts[0];
+        mySerialPort = SerialPort.getCommPort("/dev/tty.usbserial-14110"); //AvailablePorts[0];
 
         mySerialPort.setComPortParameters(BaudRate, DataBits, StopBits, Parity);//Sets all serial port parameters at one time
         mySerialPort.openPort(); //open the port

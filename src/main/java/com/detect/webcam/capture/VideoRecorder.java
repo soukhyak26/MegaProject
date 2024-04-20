@@ -1,27 +1,21 @@
 package com.detect.webcam.capture;
 
 import com.detect.webcam.detect.HumanDetector;
-import com.detect.webcam.ui.CamPanel;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 //Class Responsible for Video Capturing, and Recording videos
 public class VideoRecorder {
-    private VideoCapture videoCapture = null;
     private final Mat frame = new Mat();
     private final MatOfByte mem = new MatOfByte();
-    private VideoWriter writer;
     private final HumanDetector humanDetector;
-    public Boolean isRunnable;
+    private VideoCapture videoCapture = null;
+    private VideoWriter writer;
+    //public Boolean isRunnable;
 
     public VideoRecorder() {
         this.humanDetector = new HumanDetector();
@@ -49,40 +43,40 @@ public class VideoRecorder {
     //detect Humans in each frame using Human Detector
     //redraw each frame in cam panel by rectangle surrounding human face
     //record video
+/*
     public int recordVideo(CamPanel component) {
 
         Integer humanCount = 0;
         synchronized (this) {
-            if (isRunnable) {
-                if (videoCapture.grab()) {
-                    try {
-                        videoCapture.retrieve(frame);
-                        if (frame.empty())
-                            return 0;
-                        humanCount = humanDetector.detectAndDisplay(frame);
-                        System.out.println("humanCount: " + humanCount);
+            if (videoCapture.grab()) {
+                try {
+                    videoCapture.retrieve(frame);
+                    if (frame.empty())
+                        return 0;
+                    humanCount = humanDetector.detectAndDisplay(frame);
+                    System.out.println("humanCount: " + humanCount);
 
-                        Imgcodecs.imencode(".bmp", frame, mem);
-                        Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
-                        BufferedImage buff = (BufferedImage) im;
-                        Graphics g = component.getGraphics();
-                        boolean isImageDrawn = ImageDrawer.drawScaledImage(buff,component,g);
-                        writer.write(frame);
-                        if (isImageDrawn) {
-                            if (isRunnable == false) {
-                                System.out.println("Going to wait()");
-                                this.wait();
-                            }
+                    Imgcodecs.imencode(".bmp", frame, mem);
+                    Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
+                    BufferedImage buff = (BufferedImage) im;
+                    Graphics g = component.getGraphics();
+                    boolean isImageDrawn = ImageDrawer.drawScaledImage(buff, component, g);
+                    writer.write(frame);
+                    if (isImageDrawn) {
+                        if (component.getMyThread() == false) {
+                            System.out.println("Going to wait()");
+                            this.wait();
                         }
-                        System.out.println("Done capturing and writing");
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
                     }
+                    System.out.println("Done capturing and writing");
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }
         return humanCount;
     }
+*/
 
 }

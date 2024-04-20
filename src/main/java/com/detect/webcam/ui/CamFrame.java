@@ -1,6 +1,7 @@
 package com.detect.webcam.ui;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 //The Class representing top frame of the User Interface
 //The frame encompasses two panels
@@ -8,7 +9,7 @@ import java.awt.*;
 //Control Panel containing buttons 'Start' and 'Stop" to control the process
 public class CamFrame extends JFrame {
     CamPanel camPanel;
-    ControlPanel controlPanel;
+    //ControlPanel controlPanel;
 
     public CamFrame() {
         setTitle("Video Capture");
@@ -16,16 +17,28 @@ public class CamFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    //A Method to initialize Frame
-    // It creates Cam Panel, Control Panel
-    //Then it creates GridBag Layout
-    //And then it adds both panels( one below the other) onto the frame
+    public JPanel createControlPanel() {
+        JPanel controlPanel = new JPanel(new GridBagLayout());
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+        controlPanel.setBorder(blackline);
+        JButton start = new JButton("Start");
+        start.setBackground(Color.yellow);
+        controlPanel.add(start);
+        start.addActionListener(e -> camPanel.startFrame());
+
+        JButton stop = new JButton("Stop");
+        stop.setBackground(Color.green);
+        controlPanel.add(stop);
+        stop.addActionListener(e -> camPanel.stopFrame());
+        return controlPanel;
+    }
+
     public void initUI() {
         camPanel = new CamPanel();
-        controlPanel = new ControlPanel(camPanel);
+        JPanel controlPane = createControlPanel();
         JComponent[] components = new JComponent[2];
         components[0] = camPanel;
-        components[1] = controlPanel;
+        components[1] = controlPane;
         createLayout(components);
 
     }
@@ -54,4 +67,5 @@ public class CamFrame extends JFrame {
         cns.fill = GridBagConstraints.BOTH;
         pane.add(arg[1],cns);
     }
+
 }

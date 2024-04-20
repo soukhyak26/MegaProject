@@ -49,7 +49,7 @@ public class ControlPanel extends JPanel {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                timer = new Timer(10000, new TimerActionListener(videoRecorder, arduinoExecutor, camPanel));
+                timer = new Timer(5000, new TimerActionListener(videoRecorder, arduinoExecutor, camPanel));
                 timer.start();
             }
         });
@@ -72,7 +72,7 @@ public class ControlPanel extends JPanel {
     //it stops video capturing
     //then stops timer, release video handle and arduino connection
     public void stopProcess() {
-        videoRecorder.isRunnable = false;
+        // videoRecorder.isRunnable = false;
         timer.stop();
 
         this.videoRecorder.release();
